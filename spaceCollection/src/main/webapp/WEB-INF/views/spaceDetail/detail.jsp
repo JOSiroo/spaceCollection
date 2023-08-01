@@ -114,7 +114,7 @@
 				<nav class="navbar navbar-expand-lg bg-light">
 				  <div class="container-fluid">
 				    <div class="collapse navbar-collapse" id="navbarNav">
-				      <ul class="navbar-nav">
+				      <ul class="nav justify-content-around bg-light" style="width: 100%">
 				        <li class="nav-item">
 				          <a class="nav-link active" aria-current="page" href="#">공간소개</a>
 				        </li>
@@ -138,12 +138,31 @@
 				  </div>
 				</nav>
 				
+				<h5>공간 소개</h5>
+				<p>
+					인천 예술회관역 도보 10분<br>
+					카페거리&먹자골목 내 위치<br>
+					
+					ㅁ 브라이덜 샤워 무료셋팅<br>
+					ㅁ 고급 드레스 17벌 무료 대여<br>
+					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+					ㅁ 음식 및 주류 섭취 가능<br>
+					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+				</p>
 				
+				<h5>공간 소개</h5>
+				<p>
+				[평일]<br>				
+				-데이 (월-금) 12~17(5H) : 60,000원<br>
+				-나잇 (월-목) 18~23(5H) : 80,000원<br>
+				-올나잇 (월-금) 24~10(10H) : 100,000원<br>
+				-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
+				</p>
+				
+				<div id="map"style="height:500px;"></div>
 				
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
-			
-			
 			
 			
 						
@@ -216,5 +235,16 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
+	<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+	
+	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	</script>
   </body>
   </html>
