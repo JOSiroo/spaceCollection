@@ -43,6 +43,8 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+	body{
+	overflow: visible;
 	}
 </style>
 <body>
@@ -120,9 +122,9 @@
 
 	<div class="section">
 		<div class="container">
-			<div class="row justify-content-between">
+			<div class="row justify-content-between" >
 			<!-- 섹션의 이미지 슬라이드 부분 -->
-				<div class="col-lg-7">
+				<div class="col-lg-7" style="height:100%">
 					<div class="img-property-slide-wrap">
 						<div class="img-property-slide">
 							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
@@ -132,33 +134,34 @@
 					</div>
 				<h1>공간명이 들어갈 자리 입니다</h1>
 				<br><br><br>
-				<nav class="navbar navbar-expand-lg bg-light bd-highlight custom-nav" style="justify-content:center !important;">
-				  <div>
-				    <div id="navbarNav">
-				      <ul class="nav nav-pills flex-column flex-sm-row bg-light" style="width: 100%">
-				        <li class="nav-item p-2 flex-fill bd-highlight">
-				          <a class="nav-link" href="javascript:void(0)">공간소개</a>
-				        </li>
-				        <li class="nav-item p-2 flex-fill bd-highlight">
-				          <a class="nav-link" href="javascript:void(0)">시설안내</a>
-				        </li>
-				        <li class="nav-item p-2 flex-fill bd-highlight">
-				          <a class="nav-link" href="javascript:void(0)">유의사항</a>
-				        </li>
-				        <li class="nav-item p-2 flex-fill bd-highlight">
-				          <a class="nav-link" href="javascript:void(0)">환불정책</a>
-				        </li>
-				        <li class="nav-item p-2 flex-fill bd-highlight">
-				          <a class="nav-link" href="javascript:void(0)">Q&A</a>
-				        </li>
-				        <li class="nav-item p-2 flex-fill bd-highlight">
-				          <a class="nav-link" href="javascript:void(0)">이용후기</a>
-				        </li>
-				      </ul>
-				    </div>
-				  </div>
-				</nav>
-				
+				<div class="sticky-top">
+					<nav class="navbar navbar-expand-lg bg-light bd-highlight sticky-top custom-nav" style="justify-content:center !important;">
+					  <div>
+					    <div  id="navbarNav">
+					      <ul class="nav nav-pills flex-column flex-sm-row bg-light" style="width: 100%">
+					        <li class="nav-item p-2 flex-fill bd-highlight">
+					          <a class="nav-link" href="javascript:void(0)">공간소개</a>
+					        </li>
+					        <li class="nav-item p-2 flex-fill bd-highlight">
+					          <a class="nav-link" href="javascript:void(0)">시설안내</a>
+					        </li>
+					        <li class="nav-item p-2 flex-fill bd-highlight">
+					          <a class="nav-link" href="javascript:void(0)">유의사항</a>
+					        </li>
+					        <li class="nav-item p-2 flex-fill bd-highlight">
+					          <a class="nav-link" href="javascript:void(0)">환불정책</a>
+					        </li>
+					        <li class="nav-item p-2 flex-fill bd-highlight">
+					          <a class="nav-link" href="javascript:void(0)">Q&A</a>
+					        </li>
+					        <li class="nav-item p-2 flex-fill bd-highlight">
+					          <a class="nav-link" href="javascript:void(0)">이용후기</a>
+					        </li>
+					      </ul>
+					    </div>
+					  </div>
+					</nav>
+				</div>
 				<h5 class = "detail-navTab">공간 소개</h5>
 				<p>
 					인천 예술회관역 도보 10분<br>
