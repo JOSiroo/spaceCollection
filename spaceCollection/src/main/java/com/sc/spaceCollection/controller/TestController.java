@@ -13,6 +13,6 @@ public class TestController {
 	@GetMapping("/")
 	public String test() {
 		logger.info("tqtqtqtqtqtqt");
-		return "test";
+		return "index";
 	}
 }
