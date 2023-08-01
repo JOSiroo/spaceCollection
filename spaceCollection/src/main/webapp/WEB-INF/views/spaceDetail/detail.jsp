@@ -24,7 +24,27 @@
 	<link rel="stylesheet" href="css/style.css">
 
 	<title>스페이스 클라우드</title>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('.nav-item').click(function(){
+			$(this).css('background', 'yellow');
+			$('.nav-item').not($(this)).css('background', 'white');
+		})
+	})
+		
+	
+	
+	</script>
 	</head>
+<style type="text/css">
+	.custom-nav{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+	}
+</style>
 <body>
 
 	<div class="site-mobile-menu site-navbar-target">
@@ -111,34 +131,35 @@
 						</div>
 					</div>
 				<h1>공간명이 들어갈 자리 입니다</h1>
-				<nav class="navbar navbar-expand-lg bg-light">
-				  <div class="container-fluid">
-				    <div class="collapse navbar-collapse" id="navbarNav">
-				      <ul class="nav justify-content-around bg-light" style="width: 100%">
-				        <li class="nav-item">
-				          <a class="nav-link active" aria-current="page" href="#">공간소개</a>
+				<br><br><br>
+				<nav class="navbar navbar-expand-lg bg-light bd-highlight custom-nav" style="justify-content:center !important;">
+				  <div>
+				    <div id="navbarNav">
+				      <ul class="nav nav-pills flex-column flex-sm-row bg-light" style="width: 100%">
+				        <li class="nav-item p-2 flex-fill bd-highlight">
+				          <a class="nav-link" href="javascript:void(0)">공간소개</a>
 				        </li>
-				        <li class="nav-item">
-				          <a class="nav-link" href="#">시설안내</a>
+				        <li class="nav-item p-2 flex-fill bd-highlight">
+				          <a class="nav-link" href="javascript:void(0)">시설안내</a>
 				        </li>
-				        <li class="nav-item">
-				          <a class="nav-link" href="#">유의사항</a>
+				        <li class="nav-item p-2 flex-fill bd-highlight">
+				          <a class="nav-link" href="javascript:void(0)">유의사항</a>
 				        </li>
-				        <li class="nav-item">
-				          <a class="nav-link" href="#">환불정책</a>
+				        <li class="nav-item p-2 flex-fill bd-highlight">
+				          <a class="nav-link" href="javascript:void(0)">환불정책</a>
 				        </li>
-				        <li class="nav-item">
-				          <a class="nav-link" href="#">Q&A</a>
+				        <li class="nav-item p-2 flex-fill bd-highlight">
+				          <a class="nav-link" href="javascript:void(0)">Q&A</a>
 				        </li>
-				        <li class="nav-item">
-				          <a class="nav-link" href="#">이용후기</a>
+				        <li class="nav-item p-2 flex-fill bd-highlight">
+				          <a class="nav-link" href="javascript:void(0)">이용후기</a>
 				        </li>
 				      </ul>
 				    </div>
 				  </div>
 				</nav>
 				
-				<h5>공간 소개</h5>
+				<h5 class = "detail-navTab">공간 소개</h5>
 				<p>
 					인천 예술회관역 도보 10분<br>
 					카페거리&먹자골목 내 위치<br>
@@ -149,8 +170,6 @@
 					ㅁ 음식 및 주류 섭취 가능<br>
 					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
 				</p>
-				
-				<h5>공간 소개</h5>
 				<p>
 				[평일]<br>				
 				-데이 (월-금) 12~17(5H) : 60,000원<br>
@@ -159,7 +178,80 @@
 				-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
 				</p>
 				
+				<h5 class = "detail-navTab">시설 안내</h5>
+				<p>
+				[평일]<br>				
+				-데이 (월-금) 12~17(5H) : 60,000원<br>
+				-나잇 (월-목) 18~23(5H) : 80,000원<br>
+				-올나잇 (월-금) 24~10(10H) : 100,000원<br>
+				-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
+					인천 예술회관역 도보 10분<br>
+					카페거리&먹자골목 내 위치<br>
+					
+					ㅁ 브라이덜 샤워 무료셋팅<br>
+					ㅁ 고급 드레스 17벌 무료 대여<br>
+					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+					ㅁ 음식 및 주류 섭취 가능<br>
+					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+						인천 예술회관역 도보 10분<br>
+					카페거리&먹자골목 내 위치<br>
+					
+					ㅁ 브라이덜 샤워 무료셋팅<br>
+					ㅁ 고급 드레스 17벌 무료 대여<br>
+					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+					ㅁ 음식 및 주류 섭취 가능<br>
+					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+						인천 예술회관역 도보 10분<br>
+					카페거리&먹자골목 내 위치<br>
+					
+					ㅁ 브라이덜 샤워 무료셋팅<br>
+					ㅁ 고급 드레스 17벌 무료 대여<br>
+					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+					ㅁ 음식 및 주류 섭취 가능<br>
+					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+				</p>
+				
+				<h5 class = "detail-navTab">유의사항</h5>
+				<p>
+					인천 예술회관역 도보 10분<br>
+					카페거리&먹자골목 내 위치<br>
+					
+					ㅁ 브라이덜 샤워 무료셋팅<br>
+					ㅁ 고급 드레스 17벌 무료 대여<br>
+					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+					ㅁ 음식 및 주류 섭취 가능<br>
+					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+						인천 예술회관역 도보 10분<br>
+					카페거리&먹자골목 내 위치<br>
+					
+					ㅁ 브라이덜 샤워 무료셋팅<br>
+					ㅁ 고급 드레스 17벌 무료 대여<br>
+					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+					ㅁ 음식 및 주류 섭취 가능<br>
+					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+					
+				</p>
+
+				<h5 class = "detail-navTab">환불정책</h5>
+				<p>
+				
+				</p>
+				
 				<div id="map"style="height:500px;"></div>
+				
+				
+				
+				<h5 class = "detail-navTab">Q&A</h5>
+				<p>
+				
+				</p>
+				
+				<h5 class = "detail-navTab">이용 후기</h5>
+				<p>
+				
+				</p>
+				
+				
 				
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
@@ -235,6 +327,7 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+    <script src="js/spaceDetail.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
