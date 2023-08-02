@@ -1,37 +1,64 @@
-<!-- /*
-* Template Name: Property
-* Template Author: Untree.co
-* Template URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
-
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap5" />
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-	<link rel="stylesheet" href="css/tiny-slider.css">
-	<link rel="stylesheet" href="css/aos.css">
-	<link rel="stylesheet" href="css/style.css">
-
-	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/form/top.jsp" %>
 <body>
+
+<div data-server-rendered="true" id="__nuxt"><!---->
+<div id="__layout"><div style="display:none;">
+<ul id="u_skip"><li><a href="#content_wraper">컨텐츠 바로가기</a></li></ul> 
+<div class="keyword" style="font-size:;" data-v-507b06b7>
+      파티룸
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/dance_studio.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      연습실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/shooting.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      촬영스튜디오
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/study.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      스터디룸
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/performance.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      공연장
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/kitchen.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      공유주방
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/dance_practice.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      댄스연습실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/rentalstudio.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      렌탈스튜디오
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/meeting.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      회의실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/broadcasting.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      라이브방송
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/cafe.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      카페
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/vocal_studio.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      보컬연습실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/horizon.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      호리존
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/seminar.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      세미나실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/conference.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      컨퍼런스
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/wedding.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      스몰웨딩
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/instrumental_room.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      악기연습실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/outdoor.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      실외촬영
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/lecture.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      강의실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/workingout.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      운동시설
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/gallery.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      갤러리
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/recording.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      녹음실
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/private_office.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      독립오피스
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/coworking_office.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      코워킹오피스
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/address_service.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      비상주서비스
+    </div></button></div><div class="wrap-btn" data-v-507b06b7 data-v-38823830><button class="btn-keyword" data-v-507b06b7><i class="icon" style="background-image:url(/img/icons/camping_service_new.svg);" data-v-507b06b7></i> <div class="keyword" style="font-size:;" data-v-507b06b7>
+      당일캠핑
+    </div></button></div></div></div></body>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -46,12 +73,12 @@
 		<div class="container">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">Property</a>
+					<a href="index.html" class="logo m-0 float-start">spaceCollection</a>
 
 					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 						<li class="active"><a href="index.html">Home</a></li>
 						<li class="has-children">
-							<a href="properties.html">Properties</a>
+							<a href="SpaceCollection.html">SpaceCollection</a>
 							<ul class="dropdown">
 								<li><a href="#">Buy Property</a></li>
 								<li><a href="#">Sell Property</a></li>
@@ -65,7 +92,7 @@
 								</li>
 							</ul>
 						</li>
-						<li><a href="services.html">�籸�Թٺ�</a></li>
+						<li><a href="services.html">Services</a></li>
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact Us</a></li>
 					</ul>
@@ -106,10 +133,10 @@
 		<div class="container">
 			<div class="row mb-5 align-items-center">
 				<div class="col-lg-6">
-					<h2 class="font-weight-bold text-primary heading">Popular Properties</h2>
+					<h2 class="font-weight-bold text-primary heading">Popular SpaceCollection</h2>
 				</div>
 				<div class="col-lg-6 text-lg-end">
-					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all properties</a></p>
+					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all SpaceCollection</a></p>
 				</div>
 			</div>
 			<div class="row">
@@ -125,7 +152,7 @@
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -146,14 +173,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_2.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -174,14 +201,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_3.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -202,14 +229,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_4.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -230,14 +257,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_5.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -258,14 +285,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_6.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -286,14 +313,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_7.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -314,14 +341,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_8.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -342,14 +369,14 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
 
-								<a href="property-single" class="img">
+								<a href="property-single.html" class="img">
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</a>
 
@@ -370,7 +397,7 @@
 											</span>
 										</div>
 
-										<a href="property-single" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -397,7 +424,7 @@
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="300">
 					<div class="box-feature">
 						<span class="flaticon-house"></span>
-						<h3 class="mb-3">Our Properties</h3>
+						<h3 class="mb-3">Our SpaceCollection</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -552,7 +579,7 @@
 							<span class="icon-home2"></span>
 						</span>
 						<div class="feature-text">
-							<h3 class="heading">2M Properties</h3>
+							<h3 class="heading">2M SpaceCollection</h3>
 							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
 						</div>
 					</div>
@@ -572,7 +599,7 @@
 							<span class="icon-security"></span>
 						</span>
 						<div class="feature-text">
-							<h3 class="heading">Legit Properties</h3>
+							<h3 class="heading">Legit SpaceCollection</h3>
 							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
 						</div>
 					</div>
@@ -582,19 +609,19 @@
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">3298</span></span>
-						<span class="caption text-black-50"># of Buy Properties</span>
+						<span class="caption text-black-50"># of Buy SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">2181</span></span>
-						<span class="caption text-black-50"># of Sell Properties</span>
+						<span class="caption text-black-50"># of Sell SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">9316</span></span>
-						<span class="caption text-black-50"># of All Properties</span>
+						<span class="caption text-black-50"># of All SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
@@ -688,96 +715,4 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="site-footer">
-		<div class="container">
-			
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="widget">
-						<h3>Contact</h3>
-						<address>43 Raymouth Rd. Baltemoer, London 3910</address>
-						<ul class="list-unstyled links">
-							<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-							<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-							<li><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
-						</ul>
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-4 -->
-				<div class="col-lg-4">
-					<div class="widget">
-						<h3>Sources</h3>
-						<ul class="list-unstyled float-start links">
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Services</a></li>
-							<li><a href="#">Vision</a></li>
-							<li><a href="#">Mission</a></li>
-							<li><a href="#">Terms</a></li>
-							<li><a href="#">Privacy</a></li>
-						</ul>
-						<ul class="list-unstyled float-start links">
-							<li><a href="#">Partners</a></li>
-							<li><a href="#">Business</a></li>
-							<li><a href="#">Careers</a></li>
-							<li><a href="#">Blog</a></li>
-							<li><a href="#">FAQ</a></li>
-							<li><a href="#">Creative</a></li>
-						</ul>
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-4 -->
-				<div class="col-lg-4">
-					<div class="widget">
-						<h3>Links</h3>
-						<ul class="list-unstyled links">
-							<li><a href="#">Our Vision</a></li>
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Contact us</a></li>
-						</ul>
-
-						<ul class="list-unstyled social">
-							<li><a href="#"><span class="icon-instagram"></span></a></li>
-							<li><a href="#"><span class="icon-twitter"></span></a></li>
-							<li><a href="#"><span class="icon-facebook"></span></a></li>
-							<li><a href="#"><span class="icon-linkedin"></span></a></li>
-							<li><a href="#"><span class="icon-pinterest"></span></a></li>
-							<li><a href="#"><span class="icon-dribbble"></span></a></li>
-						</ul>
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-4 -->
-			</div> <!-- /.row -->
-
-			<div class="row mt-5">
-				<div class="col-12 text-center">
-					<!-- 
-              **==========
-              NOTE: 
-              Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
-              **==========
-            -->
-
-            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> <!-- License information: https://untree.co/license/ -->
-            </p>
-
-          </div>
-        </div>
-      </div> <!-- /.container -->
-    </div> <!-- /.site-footer -->
-
-
-    <!-- Preloader -->
-    <div id="overlayer"></div>
-    <div class="loader">
-    	<div class="spinner-border" role="status">
-    		<span class="visually-hidden">Loading...</span>
-    	</div>
-    </div>
-
-
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/tiny-slider.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/counter.js"></script>
-    <script src="js/custom.js"></script>
-  </body>
-  </html>
+	<%@ include file="/WEB-INF/views/form/bottom.jsp" %>
