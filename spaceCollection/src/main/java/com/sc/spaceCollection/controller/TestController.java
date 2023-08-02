@@ -16,4 +16,10 @@ public class TestController {
 		logger.info("tqtqtqtqtqtqt");
 		return "index";
 	}
+	@GetMapping("/property-single")
+	public String test2() {
+		logger.info("tqtqtqtqtqtqt");
+		return "/spaceDetail/detail";
+
+	}
 }
