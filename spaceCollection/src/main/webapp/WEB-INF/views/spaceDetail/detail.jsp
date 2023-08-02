@@ -25,19 +25,17 @@
 
 	<title>스페이스 클라우드</title>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		$('.nav-item').click(function(){
-			$(this).css('background', 'yellow');
-			$('.nav-item').not($(this)).css('background', 'white');
-		})
-	})
-		
-	
-	
-	</script>
+
 	</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.nav-item').click(function(){
+		$(this).css('background', 'yellow');
+		$('.nav-item').not($(this)).css('background', 'white');
+	})
+})
+</script>
 <style type="text/css">
 	.custom-nav{
     padding-top: 0 !important;
@@ -124,7 +122,7 @@
 		<div class="container">
 			<div class="row justify-content-between" >
 			<!-- 섹션의 이미지 슬라이드 부분 -->
-				<div class="col-lg-7" style="height:100%">
+				<div class="col-lg-7">
 					<div class="img-property-slide-wrap">
 						<div class="img-property-slide">
 							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
@@ -162,100 +160,126 @@
 					  </div>
 					</nav>
 				</div>
-				<h5 class = "detail-navTab">공간 소개</h5>
-				<p>
-					인천 예술회관역 도보 10분<br>
-					카페거리&먹자골목 내 위치<br>
+				<br><br>
+				<div class="detail-content">
+					<div class = "detail-navTab">
+						<h5 >공간 소개</h5>
+						<p>
+							인천 예술회관역 도보 10분<br>
+							카페거리&먹자골목 내 위치<br>
+							
+							ㅁ 브라이덜 샤워 무료셋팅<br>
+							ㅁ 고급 드레스 17벌 무료 대여<br>
+							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+							ㅁ 음식 및 주류 섭취 가능<br>
+							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+						</p>
+						<p>
+						[평일]<br>				
+						-데이 (월-금) 12~17(5H) : 60,000원<br>
+						-나잇 (월-목) 18~23(5H) : 80,000원<br>
+						-올나잇 (월-금) 24~10(10H) : 100,000원<br>
+						-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
+						</p>
+					</div>
 					
-					ㅁ 브라이덜 샤워 무료셋팅<br>
-					ㅁ 고급 드레스 17벌 무료 대여<br>
-					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-					ㅁ 음식 및 주류 섭취 가능<br>
-					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-				</p>
-				<p>
-				[평일]<br>				
-				-데이 (월-금) 12~17(5H) : 60,000원<br>
-				-나잇 (월-목) 18~23(5H) : 80,000원<br>
-				-올나잇 (월-금) 24~10(10H) : 100,000원<br>
-				-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
-				</p>
-				
-				<h5 class = "detail-navTab">시설 안내</h5>
-				<p>
-				[평일]<br>				
-				-데이 (월-금) 12~17(5H) : 60,000원<br>
-				-나잇 (월-목) 18~23(5H) : 80,000원<br>
-				-올나잇 (월-금) 24~10(10H) : 100,000원<br>
-				-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
-					인천 예술회관역 도보 10분<br>
-					카페거리&먹자골목 내 위치<br>
+					<div  class = "detail-navTab">
+						<h5>시설 안내</h5>
+						<p>
+						[평일]<br>				
+						-데이 (월-금) 12~17(5H) : 60,000원<br>
+						-나잇 (월-목) 18~23(5H) : 80,000원<br>
+						-올나잇 (월-금) 24~10(10H) : 100,000원<br>
+						-나잇 + 올나잇 (월-목) 18~110(15H) : 150,000원<br>
+							인천 예술회관역 도보 10분<br>
+							카페거리&먹자골목 내 위치<br>
+							
+							ㅁ 브라이덜 샤워 무료셋팅<br>
+							ㅁ 고급 드레스 17벌 무료 대여<br>
+							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+							ㅁ 음식 및 주류 섭취 가능<br>
+							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+								인천 예술회관역 도보 10분<br>
+							카페거리&먹자골목 내 위치<br>
+							
+							ㅁ 브라이덜 샤워 무료셋팅<br>
+							ㅁ 고급 드레스 17벌 무료 대여<br>
+							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+							ㅁ 음식 및 주류 섭취 가능<br>
+							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+								인천 예술회관역 도보 10분<br>
+							카페거리&먹자골목 내 위치<br>
+							
+							ㅁ 브라이덜 샤워 무료셋팅<br>
+							ㅁ 고급 드레스 17벌 무료 대여<br>
+							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+							ㅁ 음식 및 주류 섭취 가능<br>
+							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+						</p>
+					</div>
 					
-					ㅁ 브라이덜 샤워 무료셋팅<br>
-					ㅁ 고급 드레스 17벌 무료 대여<br>
-					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-					ㅁ 음식 및 주류 섭취 가능<br>
-					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-						인천 예술회관역 도보 10분<br>
-					카페거리&먹자골목 내 위치<br>
+					<div  class = "detail-navTab">
+						<h5>유의사항</h5>
+						<p>
+							인천 예술회관역 도보 10분<br>
+							카페거리&먹자골목 내 위치<br>
+							
+							ㅁ 브라이덜 샤워 무료셋팅<br>
+							ㅁ 고급 드레스 17벌 무료 대여<br>
+							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+							ㅁ 음식 및 주류 섭취 가능<br>
+							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+								인천 예술회관역 도보 10분<br>
+							카페거리&먹자골목 내 위치<br>
+							
+							ㅁ 브라이덜 샤워 무료셋팅<br>
+							ㅁ 고급 드레스 17벌 무료 대여<br>
+							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
+							ㅁ 음식 및 주류 섭취 가능<br>
+							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+							
+						</p>
+					</div>
 					
-					ㅁ 브라이덜 샤워 무료셋팅<br>
-					ㅁ 고급 드레스 17벌 무료 대여<br>
-					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-					ㅁ 음식 및 주류 섭취 가능<br>
-					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-						인천 예술회관역 도보 10분<br>
-					카페거리&먹자골목 내 위치<br>
 					
-					ㅁ 브라이덜 샤워 무료셋팅<br>
-					ㅁ 고급 드레스 17벌 무료 대여<br>
-					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-					ㅁ 음식 및 주류 섭취 가능<br>
-					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-				</p>
-				
-				<h5 class = "detail-navTab">유의사항</h5>
-				<p>
-					인천 예술회관역 도보 10분<br>
-					카페거리&먹자골목 내 위치<br>
+					<div class = "detail-navTab">
+						<h5>환불정책</h5>
+						<p>
+						
+						</p>
+						<ol>
+							<li> <span style="font-weight: bold">이용 1일전 </span>총 금액의 100%환불</li> 
+							<li> <span style="font-weight: bold">이용 2일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 3일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 4일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 5일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 6일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 7일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 8일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 9일전 </span>환불 불가</li>
+							<li> <span style="font-weight: bold">이용 10일전 </span>환불 불가</li> 
+						</ol>
+						
+					</div>
 					
-					ㅁ 브라이덜 샤워 무료셋팅<br>
-					ㅁ 고급 드레스 17벌 무료 대여<br>
-					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-					ㅁ 음식 및 주류 섭취 가능<br>
-					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-						인천 예술회관역 도보 10분<br>
-					카페거리&먹자골목 내 위치<br>
 					
-					ㅁ 브라이덜 샤워 무료셋팅<br>
-					ㅁ 고급 드레스 17벌 무료 대여<br>
-					ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-					ㅁ 음식 및 주류 섭취 가능<br>
-					*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
+					<div id="map"style="height:500px;"></div>
 					
-				</p>
-
-				<h5 class = "detail-navTab">환불정책</h5>
-				<p>
-				
-				</p>
-				
-				<div id="map"style="height:500px;"></div>
-				
-				
-				
-				<h5 class = "detail-navTab">Q&A</h5>
-				<p>
-				
-				</p>
-				
-				<h5 class = "detail-navTab">이용 후기</h5>
-				<p>
-				
-				</p>
-				
-				
-				
+					
+					<div class = "detail-navTab">
+						<h5>Q&A</h5>
+						<p>
+						
+						</p>
+					</div>
+					
+					<div class = "detail-navTab">
+						<h5>이용 후기</h5>
+						<p>
+						
+						</p>
+					</div>
+				</div>
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
 			
@@ -268,11 +292,7 @@
 						<div style="margin-top: 5px">	
 							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 						</div>
-						
 						<div class="property-item">
-								<a href="property-single.html" class="img">
-									<img src="images/img_2.jpg" alt="Image" class="img-fluid">
-								</a>
 								<!-- 여기까지 오른쪽 박스 사진 -->
 								<div class="property-content">
 									<span class="price mb-2">₩10,000</span><span>/(시간단위)</span>
@@ -315,15 +335,6 @@
 	<!-- 여기까지 섹션-->				
 
 
-    <!-- Preloader -->
-    <div id="overlayer"></div>
-    <div class="loader">
-    	<div class="spinner-border" role="status">
-    		<span class="visually-hidden">Loading...</span>
-    	</div>
-    </div>
-
-
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
@@ -331,6 +342,7 @@
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/spaceDetail.js"></script>
+    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -342,5 +354,4 @@
 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 	var map = new kakao.maps.Map(mapContainer, mapOption); 
 	</script>
-  </body>
-  </html>
+<%@ include file="../form/bottom.jsp" %>
