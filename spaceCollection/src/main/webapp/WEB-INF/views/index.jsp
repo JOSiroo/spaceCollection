@@ -65,7 +65,7 @@
 								</li>
 							</ul>
 						</li>
-						<li><a href="services.html">Àç±¸´Ô¹Ùº¸</a></li>
+						<li><a href="services.html">asd</a></li>
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact Us</a></li>
 					</ul>

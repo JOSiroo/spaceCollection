@@ -9891,7 +9891,7 @@ textarea {
 
 .property-item .property-content {
   background: #fff;
-  padding: 30px;
+  padding: 3% 0% 0% 0%;
   font-size: 13px;
   position: relative;
   width: 100%;
@@ -10187,7 +10187,6 @@ textarea {
     color: #fff; }
 
 .agent-box {
-  margin-top: 50px;
   border: 2px solid #efefef;
   padding: 20px;
   border-radius: 4px; }
