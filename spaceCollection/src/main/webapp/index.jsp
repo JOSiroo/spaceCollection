@@ -16,12 +16,12 @@
 		<div class="container">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">Property</a>
+					<a href="index.html" class="logo m-0 float-start">spaceCollection</a>
 
 					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 						<li class="active"><a href="index.html">Home</a></li>
 						<li class="has-children">
-							<a href="properties.html">Properties</a>
+							<a href="SpaceCollection.html">SpaceCollection</a>
 							<ul class="dropdown">
 								<li><a href="#">Buy Property</a></li>
 								<li><a href="#">Sell Property</a></li>
@@ -76,10 +76,10 @@
 		<div class="container">
 			<div class="row mb-5 align-items-center">
 				<div class="col-lg-6">
-					<h2 class="font-weight-bold text-primary heading">Popular Properties</h2>
+					<h2 class="font-weight-bold text-primary heading">Popular SpaceCollection</h2>
 				</div>
 				<div class="col-lg-6 text-lg-end">
-					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all properties</a></p>
+					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all SpaceCollection</a></p>
 				</div>
 			</div>
 			<div class="row">
@@ -367,7 +367,7 @@
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="300">
 					<div class="box-feature">
 						<span class="flaticon-house"></span>
-						<h3 class="mb-3">Our Properties</h3>
+						<h3 class="mb-3">Our SpaceCollection</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -522,7 +522,7 @@
 							<span class="icon-home2"></span>
 						</span>
 						<div class="feature-text">
-							<h3 class="heading">2M Properties</h3>
+							<h3 class="heading">2M SpaceCollection</h3>
 							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
 						</div>
 					</div>
@@ -542,7 +542,7 @@
 							<span class="icon-security"></span>
 						</span>
 						<div class="feature-text">
-							<h3 class="heading">Legit Properties</h3>
+							<h3 class="heading">Legit SpaceCollection</h3>
 							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
 						</div>
 					</div>
@@ -552,19 +552,19 @@
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">3298</span></span>
-						<span class="caption text-black-50"># of Buy Properties</span>
+						<span class="caption text-black-50"># of Buy SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">2181</span></span>
-						<span class="caption text-black-50"># of Sell Properties</span>
+						<span class="caption text-black-50"># of Sell SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">9316</span></span>
-						<span class="caption text-black-50"># of All Properties</span>
+						<span class="caption text-black-50"># of All SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
