@@ -25,19 +25,17 @@
 
 	<title>스페이스 클라우드</title>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		$('.nav-item').click(function(){
-			$(this).css('background', 'yellow');
-			$('.nav-item').not($(this)).css('background', 'white');
-		})
-	})
-		
-	
-	
-	</script>
+
 	</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.nav-item').click(function(){
+		$(this).css('background', 'yellow');
+		$('.nav-item').not($(this)).css('background', 'white');
+	})
+})
+</script>
 <style type="text/css">
 	.custom-nav{
     padding-top: 0 !important;
@@ -294,11 +292,7 @@
 						<div style="margin-top: 5px">	
 							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 						</div>
-						
 						<div class="property-item">
-								<a href="property-single.html" class="img">
-									<img src="images/img_2.jpg" alt="Image" class="img-fluid">
-								</a>
 								<!-- 여기까지 오른쪽 박스 사진 -->
 								<div class="property-content">
 									<span class="price mb-2">₩10,000</span><span>/(시간단위)</span>
@@ -341,15 +335,6 @@
 	<!-- 여기까지 섹션-->				
 
 
-    <!-- Preloader -->
-    <div id="overlayer"></div>
-    <div class="loader">
-    	<div class="spinner-border" role="status">
-    		<span class="visually-hidden">Loading...</span>
-    	</div>
-    </div>
-
-
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
@@ -357,6 +342,7 @@
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/spaceDetail.js"></script>
+    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -368,5 +354,4 @@
 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 	var map = new kakao.maps.Map(mapContainer, mapOption); 
 	</script>
-  </body>
-  </html>
+<%@ include file="../form/bottom.jsp" %>
