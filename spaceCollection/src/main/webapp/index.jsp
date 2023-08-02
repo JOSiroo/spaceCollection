@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/form/top.jsp" %>
 <body>
 
-<div data-server-rendered="true" id="__nuxt"><!---->
+<div data-server-rendered="true" id="__nuxt">
 <div id="__layout"><div style="display:none;">
 <ul id="u_skip"><li><a href="#content_wraper">컨텐츠 바로가기</a></li></ul> 
 <div class="keyword" style="font-size:;" data-v-507b06b7>

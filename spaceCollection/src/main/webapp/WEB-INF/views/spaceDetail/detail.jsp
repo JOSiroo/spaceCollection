@@ -323,7 +323,7 @@ $(function(){
 									<!-- 요금 -->
 									<hr>
 									<div>
-										<span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+										<span class="d-block mb-2 text-black" style="font-weight: bold">5232 California Fake, Ave. 21BC</span>
 									<!-- 주소 -->
 									<hr>
 										<span class="city d-block mb-3">California, USA</span>
