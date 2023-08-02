@@ -44,6 +44,22 @@ $(function(){
 	body{
 	overflow: visible;
 	}
+	.ol-list{
+		font-weight: bold;
+	}
+	.ol-span{
+		font-weight: normal;
+	}
+	
+	.detail-navTab h5:after{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    height: 4px;
+    width: 20px;
+    background-color: #ffd014;
+	}
 </style>
 <body>
 
@@ -223,22 +239,23 @@ $(function(){
 						<p>
 							인천 예술회관역 도보 10분<br>
 							카페거리&먹자골목 내 위치<br>
-							
-							ㅁ 브라이덜 샤워 무료셋팅<br>
-							ㅁ 고급 드레스 17벌 무료 대여<br>
-							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-							ㅁ 음식 및 주류 섭취 가능<br>
-							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-								인천 예술회관역 도보 10분<br>
-							카페거리&먹자골목 내 위치<br>
-							
-							ㅁ 브라이덜 샤워 무료셋팅<br>
-							ㅁ 고급 드레스 17벌 무료 대여<br>
-							ㅁ 대형 프로젝트 빔(OTT이용가능)<br>
-							ㅁ 음식 및 주류 섭취 가능<br>
-							*테이블 + 드레스 + OTT이용은 리뷰 이벤트 참여시 셋팅<br>
-							
 						</p>
+						<ol>
+							<li class = "ol-list"> 예수전 필수 체크 사항 뒷정리 : 입실시 상태와 동일하게 청소 및 정리하고 퇴실 </li>
+							<br> 
+							<li class = "ol-list"> 정시 입실, 정시 퇴실이 기준입니다. (준비/정리 시간은 대여시간에 포함) </li>
+							<br> 
+							<li class = "ol-list"> 12시 이후 미성년자 불가능 </li>
+							<br> 
+							<li class = "ol-list"> 숙박시설이 아니기 때문에 세면도구 제공 안함 </li>
+							<br> 
+							<li class = "ol-list"> 주차가능, 4대까지 무료주차(추가는 조율) 문자 주면 출차 가능. </li>
+							<br> 
+							<li class = "ol-list"> 물품 파손시 현가 보상 청구됩니다. </li>
+							<br> 
+							<li class = "ol-list"> 음식물 및 주류 반입 가능, 취사 가능! (생선, 고기류는 아니됩니다..) </li>
+							<br> 
+						</ol>
 					</div>
 					
 					
@@ -248,18 +265,25 @@ $(function(){
 						
 						</p>
 						<ol>
-							<li> <span style="font-weight: bold">이용 1일전 </span>총 금액의 100%환불</li> 
-							<li> <span style="font-weight: bold">이용 2일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 3일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 4일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 5일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 6일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 7일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 8일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 9일전 </span>환불 불가</li>
-							<li> <span style="font-weight: bold">이용 10일전 </span>환불 불가</li> 
+							<li class = "ol-list"> 이용 8일전 <span class = "ol-span">총 금액의 100%환불</span></li>
+							<br> 
+							<li class = "ol-list"> 이용 7일전 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 6일전 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 5일전 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 4일전 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 3일전 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 2일전 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 전날 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
+							<li class = "ol-list"> 이용 당일 <span class = "ol-span">환불 불가</span></li> 
+							<br> 
 						</ol>
-						
 					</div>
 					
 					
