@@ -4,17 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class TestController {
-	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
-	
-	@GetMapping("/")
-	public String test() {
-		logger.info("tqtqtqtqtqtqt");
-		return "index";
-	}
-	
-	
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+
+
+    @GetMapping("/")
+    public String test() {
+        logger.info("tqtqtqtqtqtqt");
+        return "index";
+    }
+    @GetMapping("/property-single")
+    public String test2() {
+        logger.info("tqtqtqtqtqtqt");
+        return "/spaceDetail/detail";
+    }
 }
