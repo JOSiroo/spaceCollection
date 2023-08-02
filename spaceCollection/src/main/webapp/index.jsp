@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="inc/top.jsp" %>
+<%@ include file="form/top.jsp" %>
 <body>
 
 	<div class="site-mobile-menu site-navbar-target">
-		<div class="site-mobile-menu-header">
+		<div class="site-mobile-menu-header">s
 			<div class="site-mobile-menu-close">
 				<span class="icofont-close js-menu-toggle"></span>
 			</div>
