@@ -6,7 +6,6 @@
 */ -->
 <!doctype html>
 <html lang="en">
-	<%@ include file="inc/top.jsp" %>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
