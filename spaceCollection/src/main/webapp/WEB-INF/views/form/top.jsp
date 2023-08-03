@@ -4,8 +4,33 @@
 * Template URI: https://untree.co/
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="en">
+<style>
+	form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate {
+	    margin-top: 10px;
+   		 
+	}
+
+	.topSearch {
+	    width: 100%;
+        padding: 10px 0px 10px 150px;
+        position: relative;
+            
+	}
+	
+	input.form-control.px-4 {
+	    border-radius: 24px;
+	    border: 1px solid #f6f6f6;
+	    background-color: #d1d1d1;
+	    color: #333;
+	    box-shadow: 0 15px 30px -15px rgba(0, 0, 0, 0.1);
+	}
+	
+</style>
+
+<html lang="ko">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,11 +52,19 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/aos.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
-	<title>spaceCollection.com</title>
+	<title>SpaceCollection.com</title>
 </head>
 
 
 <body>
+	<div class="topSearch">
+	<form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+		<input type="text" class="form-control px-4" 
+		placeholder="지역, 공간유형, 공간명으로 찾아보세요">
+		<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+	</div>
+	
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -45,7 +78,7 @@
 		<div class="container">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">spaceCollection</a>
+					<a href="index.html" class="logo m-0 float-start">SpaceCollection</a>
 
 					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 						<li class="active"><a href="index.html">Home</a></li>
@@ -77,8 +110,4 @@
 			</div>
 		</div>
 	</nav>
-
-	<form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
-		<input type="text" class="form-control px-4" placeholder="Your ZIP code or City. e.g. New York">
-		<button type="submit" class="btn btn-primary">Search</button>
-	</form>
+	
