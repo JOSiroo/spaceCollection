@@ -197,7 +197,7 @@
             <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label>
           </div>
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료랑께</button>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료추카유~</button>
         </form>
       </div>
     </div>
