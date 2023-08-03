@@ -1,71 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/top.jsp" %>
-<body>
+<%@ include file="form/top.jsp" %>
 
-	<div class="site-mobile-menu site-navbar-target">
-		<div class="site-mobile-menu-header">
-			<div class="site-mobile-menu-close">
-				<span class="icofont-close js-menu-toggle"></span>
-			</div>
-		</div>
-		<div class="site-mobile-menu-body"></div>
-	</div>
+<style>
+.menu-bg-wrap {
+    margin-top: 60px;
+}
 
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">Property</a>
+.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate {
+    margin-top: 20px;
+    margin-right: 190px;
+}
 
-					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-						<li class="active"><a href="index.html">Home</a></li>
-						<li class="has-children">
-							<a href="properties.html">Properties</a>
-							<ul class="dropdown">
-								<li><a href="#">Buy Property</a></li>
-								<li><a href="#">Sell Property</a></li>
-								<li class="has-children">
-									<a href="#">Dropdown</a>
-									<ul class="dropdown">
-										<li><a href="#">Sub Menu One</a></li>
-										<li><a href="#">Sub Menu Two</a></li>
-										<li><a href="#">Sub Menu Three</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="contact.html">Contact Us</a></li>
-					</ul>
+</style>
 
-					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-						<span></span>
-					</a>
 
-				</div>
-			</div>
-		</div>
-	</nav>
+
 
 	<div class="hero">
-
 
 		<div class="hero-slide">
 			<div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
+			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
+		
+		
 		</div>
-
+		<div class="searchform">
+		</div>
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center">
-					<h1 class="heading" data-aos="fade-up">Easiest way to find your dream home</h1>
-					<form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
-						<input type="text" class="form-control px-4" placeholder="Your ZIP code or City. e.g. New York">
-						<button type="submit" class="btn btn-primary">Search</button>
-					</form>
+					<h1 class="heading" data-aos="fade-up">Welcome to the Space Collection</h1>
 				</div>
 			</div>
 		</div>
@@ -76,10 +43,10 @@
 		<div class="container">
 			<div class="row mb-5 align-items-center">
 				<div class="col-lg-6">
-					<h2 class="font-weight-bold text-primary heading">Popular Properties</h2>
+					<h2 class="font-weight-bold text-primary heading">Popular SpaceCollection</h2>
 				</div>
 				<div class="col-lg-6 text-lg-end">
-					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all properties</a></p>
+					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all SpaceCollection</a></p>
 				</div>
 			</div>
 			<div class="row">
@@ -367,7 +334,7 @@
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="300">
 					<div class="box-feature">
 						<span class="flaticon-house"></span>
-						<h3 class="mb-3">Our Properties</h3>
+						<h3 class="mb-3">Our SpaceCollection</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -522,7 +489,7 @@
 							<span class="icon-home2"></span>
 						</span>
 						<div class="feature-text">
-							<h3 class="heading">2M Properties</h3>
+							<h3 class="heading">2M SpaceCollection</h3>
 							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
 						</div>
 					</div>
@@ -542,7 +509,7 @@
 							<span class="icon-security"></span>
 						</span>
 						<div class="feature-text">
-							<h3 class="heading">Legit Properties</h3>
+							<h3 class="heading">Legit SpaceCollection</h3>
 							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
 						</div>
 					</div>
@@ -552,19 +519,19 @@
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">3298</span></span>
-						<span class="caption text-black-50"># of Buy Properties</span>
+						<span class="caption text-black-50"># of Buy SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">2181</span></span>
-						<span class="caption text-black-50"># of Sell Properties</span>
+						<span class="caption text-black-50"># of Sell SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">9316</span></span>
-						<span class="caption text-black-50"># of All Properties</span>
+						<span class="caption text-black-50"># of All SpaceCollection</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
@@ -658,4 +625,4 @@
 			</div>
 		</div>
 	</div>
-	<%@ include file="/WEB-INF/views/form/bottom.jsp" %>
+	<%@ include file="form/bottom.jsp" %>
