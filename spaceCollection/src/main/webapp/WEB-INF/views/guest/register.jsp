@@ -36,8 +36,25 @@
       -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
+    
+    .divCondition{
+    	font-size: 5px;
+    	color: #656565
+    }
   </style>
   <script>
+  $(function(){
+	  
+	  var $agreementAllAll = $('#agreementAll');
+	  $agreementAll.change(function () {
+	    var $this = $(this);
+	    var checked = $this.prop('checked');
+	    $('.custom-control-input').prop('checked', checked);
+
+	  });
+  	
+  });
+  	
     window.addEventListener('load', () => {
       const forms = document.getElementsByClassName('validation-form');
 
@@ -52,6 +69,7 @@
         }, false);
       });
     }, false);
+    
   </script>
 </head>
 <body>
@@ -69,7 +87,7 @@
                 아이디를 입력해주세요.
               </div>
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6">
               <label for="name">이름</label>
               <input type="text" class="form-control" id="name" placeholder="" value="" required>
               <div class="invalid-feedback">
@@ -79,14 +97,17 @@
           </div>
             <div class="mb-2">
               <label for="name">비밀번호</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="" required>
+              <input type="password" class="form-control" id="name" placeholder="" value="" required>
+              <div class="divCondition">-문자/숫자/특수문자 중 2가지 이상조합 (8~30자)<br>
+              -3개 이상 키보드 상 배열이 연속되거나 동일한 문자/숫자 제외
+              </div>
               <div class="invalid-feedback">
                 비밀번호를 입력해주세요.
               </div>
             </div>
             <div class="mb-2">
               <label for="name">비밀번호 확인</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="" required>
+              <input type="password" class="form-control" id="name" placeholder="" value="" required>
               <div class="invalid-feedback">
                 이름을 입력해주세요.
               </div>
@@ -99,19 +120,25 @@
               이메일을 입력해주세요.
             </div>
           </div>
-		  <div class="md-3">
-			  <label for="zipcode">우편번호</label>
-			  <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="" value="" required
-			  	style="width: 250px;">
-			  <span><input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
-			  	style="width: 130px; height: 50px; text-align: center;"></span>
-			  <div class="invalid-feedback">
-			    우편번호를 입력해주세요.
+          <div class="row">
+			  <div class="col-md-5 mb-3">
+				  <label for="zipcode">우편번호</label>
+				  <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="" value="" required
+				  	style="width: 250px;" onclick="sample6_execDaumPostcode()" readonly>
+				  <div class="invalid-feedback">
+				    우편번호를 입력해주세요.
+				  </div>
 			  </div>
-		  </div>
+			  <div class="col-md-3 mb-3">
+				<label>&nbsp;</label>
+				  <input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
+				  	style="width: 130px; height: 37px; text-align: center;">
+              </div>
+          </div>
           <div class="mb-3">
 			  <label for="address">주소</label>
-			  <input type="text" class="form-control" id="address" name="address" placeholder="서울특별시 강남구" required>
+			  <input type="text" class="form-control" id="address" name="address" placeholder="서울특별시 강남구" required
+			  	onclick="sample6_execDaumPostcode()" readonly>
 			  <div class="invalid-feedback">
 			    주소를 입력해주세요.
 			  </div>
@@ -151,10 +178,23 @@
             </div>
           </div>
            -->
+          <br>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="agreementAll">
+            <label class="custom-control-label" for="agreementAll">아래 약관의 모두 동의합니다.</label>
+          </div>
           <hr class="mb-4">
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="aggrement" required>
-            <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+            <input type="checkbox" class="custom-control-input" id="agreement1" required>
+            <label class="custom-control-label" for="agreement1">개인정보 수집 및 이용에 동의합니다.(필수)</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="agreement2" required>
+            <label class="custom-control-label" for="agreement2">본인은 만 14세 이상입니다.(필수)</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="agreement3" required>
+            <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label>
           </div>
           <div class="mb-4"></div>
           <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
@@ -168,6 +208,16 @@
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	$(function(){
+		
+	    $("#agreementAll").click(function(){
+	      
+	      var isChecked = $(this).prop("checked");
+	      $(".custom-control-input").prop("checked", isChecked);
+	      
+    });
+	});
+
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
