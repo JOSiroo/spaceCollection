@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="form/top.jsp" %>
+<%@ include file="/WEB-INF/views/form/top.jsp" %>
 <body>
 
 	<div class="site-mobile-menu site-navbar-target">
