@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 부분은 말그대로 별칭을 정하는 부분이라 아무렇게나 지정해도 된다  -->
+<mapper namespace="com.sc.spaceCollection.space.model.SpaceDAO">
+
+	<select id="selectByNo" resultType="spaceVo" parameterType="int">
+		select * from space
+		where space_num = #{spaceNum}
+	</select>
+</mapper>

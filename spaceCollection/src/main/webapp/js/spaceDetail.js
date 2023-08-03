@@ -9,8 +9,11 @@ const fourthTop = navItems[3].offsetTop
 const fifthTop = navItems[4].offsetTop
 const sixthTop = navItems[5].offsetTop
 	
+	
+	
 navTabs[0].onclick = function(){
 	window.scroll({top:firstTop, behavior: 'smooth'})
+	
 }
 navTabs[1].onclick = function(){
 	window.scroll({top:secondTop, behavior: 'smooth'})
