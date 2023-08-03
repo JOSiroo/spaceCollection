@@ -42,6 +42,7 @@
 	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 
@@ -57,6 +58,7 @@
 
 
 <body>
+
 	<div class="topSearch">
 	<form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
 		<input type="text" class="form-control px-4" 
@@ -65,6 +67,7 @@
 	</form>
 	</div>
 	
+
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -78,6 +81,7 @@
 		<div class="container">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
+
 					<a href="index.html" class="logo m-0 float-start">SpaceCollection</a>
 
 					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
@@ -110,4 +114,3 @@
 			</div>
 		</div>
 	</nav>
-	
