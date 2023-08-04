@@ -3,6 +3,8 @@ package com.sc.spaceCollection.admin.model;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sc.spaceCollecion.common.Encryption;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -11,19 +13,24 @@ public class AdminServiceImpl implements AdminService{
 	private final AdminDAO adminDao;
 
 	@Override
-	public int loginCheck(String userid, String pwd) {
-		String standPwd = adminDao.selectPwd(userid);
+	public int loginCheck(String adminId, String adminPwd) {
+		String salt = adminDao.selectSaltByAdminId(adminId);
+		String standardPwd = adminDao.selectPwdByAdminId(adminId);
+		
+		Encryption encryption = new Encryption();
+		String inputPwd = encryption.getEncryption(salt, adminPwd);
 		
 		int loginResult = 0;
-		if(standPwd==null || standPwd.isEmpty()) {
+		if(standardPwd==null || standardPwd.isEmpty()) {
 			loginResult = AdminService.USERID_NONE;
 		}else {
-			if(pwd.equals(standPwd)) {
+			if(standardPwd.equals(inputPwd)) {
 				loginResult = AdminService.LOGIN_OK;
 			}else {
 				loginResult = AdminService.PWD_DISAGREE;
 			}
 		}
+		
 		return loginResult;
 	}
 
