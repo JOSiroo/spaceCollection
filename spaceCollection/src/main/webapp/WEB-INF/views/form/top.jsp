@@ -105,6 +105,18 @@
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact Us</a></li>
 					</ul>
+					
+					<script type="text/javascript">
+					var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+					(function(){
+					var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+					s1.async=true;
+					s1.src='https://embed.tawk.to/64cc763c94cf5d49dc6853f9/1h6varo07';
+					s1.charset='UTF-8';
+					s1.setAttribute('crossorigin','*');
+					s0.parentNode.insertBefore(s1,s0);
+					})();
+					</script>
 
 					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
 						<span></span>
