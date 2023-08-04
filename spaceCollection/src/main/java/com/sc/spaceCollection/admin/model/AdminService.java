@@ -6,5 +6,5 @@ public interface AdminService {
 	int PWD_DISAGREE=2; //비밀번호 불일치
 	int USERID_NONE=3; //아이디 없음
 	
-	int loginCheck(String userid, String pwd);
+	int loginCheck(String adminId, String adminPwd);
 }

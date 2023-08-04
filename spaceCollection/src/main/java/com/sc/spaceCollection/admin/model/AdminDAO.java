@@ -4,5 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AdminDAO {
-	String selectPwd(String adminId);
+	String selectSaltByAdminId(String adminId);
+	String selectPwdByAdminId(String adminId);
 }
