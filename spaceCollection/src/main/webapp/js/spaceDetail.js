@@ -32,4 +32,21 @@ for (let i = 0; i < navTabs.length; i++) {
         window.scroll({ top: scrollTo, behavior: 'smooth' });
     };
 }
+
+
+const buttons = document.querySelectorAll('.button');
+
+    buttons.forEach(function(button, index) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        this.parentNode.classList.toggle('on');
+        
+        buttons.forEach(function(button2, index2) {
+          if ( index !== index2 ) {
+            button2.parentNode.classList.remove('on');
+          }
+        });
+      });
+    });
 	

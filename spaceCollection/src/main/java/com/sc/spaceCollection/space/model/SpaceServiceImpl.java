@@ -7,11 +7,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class SpaceServiceImpl implements SpaceService{
-	private final SpaceDAO spaceDao;
 	
-	@Override
-	public SpaceVO selectByNo(int spaceNo) {
-		return spaceDao.selectByNo(spaceNo);
-	}
 
 }
