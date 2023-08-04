@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="form/top.jsp" %>
+<%@ include file="WEB-INF/views/form/top.jsp" %>
 
 <style>
 .menu-bg-wrap {
@@ -25,10 +25,9 @@
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 		
+		</div>
 		
-		</div>
-		<div class="searchform">
-		</div>
+		
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center">
@@ -38,6 +37,9 @@
 		</div>
 	</div>
 
+<div class="searchform">
+		<%@ include file="/WEB-INF/views/form/main.jsp" %>
+		</div>
 
 	<div class="section">
 		<div class="container">
@@ -625,4 +627,4 @@
 			</div>
 		</div>
 	</div>
-	<%@ include file="form/bottom.jsp" %>
+	<%@ include file="WEB-INF/views/form/bottom.jsp" %>

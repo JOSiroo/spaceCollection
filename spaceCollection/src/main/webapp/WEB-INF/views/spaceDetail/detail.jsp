@@ -29,6 +29,59 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	
+	<!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+	    <script>
+        var IMP = window.IMP; 
+        IMP.init("imp04807210"); 
+      
+        var today = new Date();   
+        var hours = today.getHours(); // 시
+        var minutes = today.getMinutes();  // 분
+        var seconds = today.getSeconds();  // 초
+        var milliseconds = today.getMilliseconds();
+        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+
+        
+        var paymentType = "";
+        function setPaymentType(type){
+        	paymentType = type;
+        	if(paymentType === 'kakaopay'){
+        		document.getElementById('kakaopay').style.border = '#6d3bff 5px solid';	
+        		document.getElementById('kakaopay').style.borderRadius  = '1rem';	
+        		document.getElementById('kcp').style.border = 'none';	
+        	}else if(paymentType === 'kcp'){
+        		document.getElementById('kcp').style.border = '#6d3bff 5px solid';	
+        		document.getElementById('kcp').style.borderRadius  = '1rem';	
+        		document.getElementById('kakaopay').style.border = 'none';	
+        	}
+        }
+        
+        
+        function requestPay() {
+            IMP.request_pay({
+                pg : paymentType,
+                pay_method : 'card',
+                merchant_uid: "order_no_0004", 
+                name : '당근 10kg',
+                amount : 1000000,
+                buyer_email : 'Iamport@chai.finance',
+                buyer_name : '아임포트 기술지원팀',
+                buyer_tel : '010-1234-5678',
+                buyer_addr : '서울특별시 강남구 삼성동',
+                buyer_postcode : '123-456'
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                    console.log(rsp);
+                } else {
+                    console.log(rsp);
+                }
+            });
+        }
+    </script>
+	
 	<title>스페이스 클라우드</title>
 	
 
@@ -110,6 +163,9 @@ $(function(){
     color: black;
     text-decoration: none;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+	}
+	.payment_type{
+		display: inline-block;
 	}
 </style>
 <body>
@@ -385,8 +441,18 @@ $(function(){
 
 										<span class="city d-block">예약선택</span>
 										<hr>
+										<div style = "padding:1% 3% 1% 3%; text-align: center;">
+											<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
+												<img alt="" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
+											</div></a>
+											<a href = "javascript:void(0);"  style = "margin-left:20%;"><div class = "payment_type" id = "kcp" value = "kcp" onclick="setPaymentType('kcp')">
+												<img alt="" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
+											</div></a>
+										</div>
+										<hr>
 											<a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
-											<a href="property-single.html" class="btn btn-primary py-2 px-3">바로 예약하기</a>
+											<a onclick="requestPay()"  class="btn btn-primary py-2 px-7">결제하기</a>
+												<!-- <button onclick="requestPay()">결제하기</button> -->
 									</div>
 								</div>
 							</div> 
@@ -463,5 +529,7 @@ $(function(){
 		function closeOverlay() {
 		    overlay.setMap(null);     
 		}
+		
 	</script>
+		
 <%@ include file="../form/bottom.jsp" %>
