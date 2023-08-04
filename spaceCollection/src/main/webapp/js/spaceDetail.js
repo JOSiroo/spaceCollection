@@ -1,33 +1,14 @@
+const navTabs = document.getElementsByClassName("nav-item");
+const navItems = document.getElementsByClassName("detail-navTab");
 
-const navTabs = document.getElementsByClassName("nav-item")
-const navItems = document.getElementsByClassName("detail-navTab")
+// navItems의 offsetTop 값에 추가할 값을 설정합니다.
+const offsetValue = 60;
 
-const firstTop = navItems[0].offsetTop
-const secondTop = navItems[1].offsetTop
-const thirdTop = navItems[2].offsetTop
-const fourthTop = navItems[3].offsetTop
-const fifthTop = navItems[4].offsetTop
-const sixthTop = navItems[5].offsetTop
+// 각 navTabs 요소에 클릭 이벤트를 추가합니다.
+for (let i = 0; i < navTabs.length; i++) {
+    navTabs[i].onclick = function () {
+        const scrollTo = navItems[i].offsetTop - offsetValue;
+        window.scroll({ top: scrollTo, behavior: 'smooth' });
+    };
+}
 	
-	
-	
-navTabs[0].onclick = function(){
-	window.scroll({top:firstTop, behavior: 'smooth'})
-	
-}
-navTabs[1].onclick = function(){
-	window.scroll({top:secondTop, behavior: 'smooth'})
-}
-navTabs[2].onclick = function(){
-	window.scroll({top:thirdTop, behavior: 'smooth'})
-}
-navTabs[3].onclick = function(){
-	window.scroll({top:fourthTop, behavior: 'smooth'})
-}
-navTabs[4].onclick = function(){
-	window.scroll({top:fifthTop, behavior: 'smooth'})
-}
-navTabs[5].onclick = function(){
-	window.scroll({top:sixthTop, behavior: 'smooth'})
-}
-
