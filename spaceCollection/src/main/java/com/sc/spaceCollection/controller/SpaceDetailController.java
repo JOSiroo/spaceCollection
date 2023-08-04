@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
@@ -36,10 +37,16 @@ public class SpaceDetailController {
 			vo = entry.getKey();
 		}
 		
-		logger.info("공간 상세 페이지 resultMap.keySet = {}", vo);
+		RefundVO refundVo = spaceDetailService.selectRefund(vo.getRefundNum());
+		
+		logger.info("공간 상세 페이지 resultMap = {}", resultMap);
+		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
+		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
 		model.addAttribute("vo", vo);
-		model.addAttribute("map", resultMap);
+		model.addAttribute("map", resultMap.get(vo));
+		model.addAttribute("refundVo", refundVo);
+		
 		
 		return "spaceDetail/detail";
 	}

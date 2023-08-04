@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceDAO;
 import com.sc.spaceCollection.space.model.SpaceVO;
 
@@ -26,6 +27,10 @@ public class SpaceDetailServiceImpl implements SpaceDetailService{
 		resultMap.put(vo, list);
 		
 		return resultMap;
+	}
+
+	public RefundVO selectRefund(int refundNo) {
+		return spaceDetailDao.selectRefund(refundNo);
 	}
 
 	

@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceVO;
 
 @Mapper
 public interface SpaceDetailDAO {
 	SpaceVO selectByNo(int spaceNo);
 	List<Map<String, Object>> selectDetailByNo(int spaceNo);
+	RefundVO selectRefund(int refundNo);
 
 }
