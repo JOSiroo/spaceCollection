@@ -17,6 +17,10 @@
 			$('#btLogout').click(function() {
 				location.href="<c:url value='/admin/adminLogout'/>";
 			});
+			
+			$('#togglebtn').click(function() {
+				$('body').toggleClass('toggle-sidebar');
+			});
 		});
 	</script>
 <meta content="" name="description">
@@ -67,10 +71,10 @@
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
 		<div class="d-flex align-items-center justify-content-between">
-			<a href="index.html" class="logo d-flex align-items-center"> <img
-				src="assets/img/logo.png" alt=""> <span
+			<a href="<c:url value='/admin/adminMain'/>" class="logo d-flex align-items-center"> <img
+				src="<c:url value='/NiceAdmin-pro/assets/img/logo.png'/>" alt=""> <span
 				class="d-none d-lg-block">SpaceCollection</span>
-			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
+			</a> <i class="bi bi-list toggle-sidebar-btn" id="togglebtn"></i>
 		</div>
 		<!-- End Logo -->
 
@@ -227,7 +231,7 @@
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
 					href="#" data-bs-toggle="dropdown"><span
-						class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.adminUserid.value }</span>
+						class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.adminId }</span>
 				</a> <!-- End Profile Iamge Icon -->
 
 					<ul
@@ -302,7 +306,7 @@
 		<ul class="sidebar-nav" id="sidebar-nav">
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				href="index.html"> <i class="bi bi-grid"></i> <span>Dashboard</span>
+				href="<c:url value='/admin/adminMain'/>"> <i class="bi bi-grid"></i> <span>Dashboard</span>
 			</a></li>
 			<!-- End Dashboard Nav -->
 
