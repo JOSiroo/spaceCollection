@@ -80,6 +80,7 @@
                 }
             });
         }
+       
     </script>
 	
 	<title>스페이스 클라우드</title>
@@ -167,6 +168,51 @@ $(function(){
 	.payment_type{
 		display: inline-block;
 	}
+	
+	ul {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 16px;
+	  margin: 0;
+	  padding: 0;
+	  max-width: 500px;
+	  width: 100%;
+	  list-style: none;
+	}
+	
+	li {
+	  .button {
+	    display: block;
+	    padding: 20px;
+	    width: 100%;
+	    color: #000;
+	    text-align: left;
+	    background-color: white;
+	    border: 0;
+	    cursor: pointer;
+	  }
+	
+	  .content {
+	    display: none;
+	    margin: 0;
+	    padding: 20px;
+	    background-color: #fff;
+	    border-top: 1px solid #ddd;
+	  }
+	  
+	  &.on {
+	    .button {
+	      background-color: #fff;
+	      border : #6d3bff 4px solid;
+	      border-radius : 1rem;
+	      font-weight: bold;
+	    }
+	    
+	    .content {
+	      display: block;
+	    }
+	  }
+	}
 </style>
 <body>
 
@@ -178,46 +224,7 @@ $(function(){
 		</div>
 		<div class="site-mobile-menu-body"></div>
 	</div>
-<!-- 
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">Property</a>
 
-					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-						<li><a href="index.html">Home</a></li>
-						<li class="has-children">
-							<a href="properties.html">Properties</a>
-							<ul class="dropdown">
-								<li><a href="#">Buy Property</a></li>
-								<li><a href="#">Sell Property</a></li>
-								<li class="has-children">
-									<a href="#">Dropdown</a>
-									<ul class="dropdown">
-										<li><a href="#">Sub Menu One</a></li>
-										<li><a href="#">Sub Menu Two</a></li>
-										<li><a href="#">Sub Menu Three</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="about.html">About</a></li>
-						<li class="active"><a href="contact.html">Contact Us</a></li>
-					</ul>
-
-					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-						<span></span>
-					</a>
-
-				</div>
-			</div>
-		</div>
-	</nav>
- 
- 네비게이션탭 없애기 위한 주석
- -->
 
 	<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
 
@@ -273,17 +280,6 @@ $(function(){
 				    <span class="visually-hidden">Next</span>
 				  </button>
 				</div>
-				
-				
-				
-					<!-- <div class="img-property-slide-wrap">
-						<div class="img-property-slide">
-							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-							<img src="images/img_2.jpg" alt="Image" class="img-fluid">
-							<img src="images/img_3.jpg" alt="Image" class="img-fluid">
-						</div>
-					</div>-->
-					
 					
 				<br>
 				<h1>${vo.spaceName }</h1>
@@ -395,67 +391,67 @@ $(function(){
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
 					<div class="d-block agent-box p-3" style="border: 1px #6d3bff solid;  text-align: left;">
 					<h3 class="h5 text-primary" style="margin:4% 1% 5% 1%">공간명 : 스페이스</h3>
-						<div style="margin-top: 5px">	
-							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-						</div>
-						<div class="property-item">
-								<!-- 여기까지 오른쪽 박스 사진 -->
-								<div class="property-content">
-									<span class="price mb-2" style= "color:#6d3bff">₩10,000</span><span>/(시간단위)</span>
-									<!-- 요금 -->
-									<hr>
-									<div>
-										<span class="d-block mb-1 text-black" style="font-weight: bold; font-size: 15px">${vo.spaceZipcode } ${vo.spaceAddress } ${vo.spaceAddressDetail }</span>
-									<!-- 주소 -->
-									<hr>
-										<span class="city d-block mb-3">${vo.spaceAddress }, 대한민국</span>
-									<!-- 지역 -->
-									<hr>
-									<span class="d-block mb-1 text-black">
-									${vo.spaceInfo }
-									</span>
-									<hr>
-									<span class="tit">공간유형</span>
-									<span class="city text-black">${vo.spaceType }</span>
-									<hr>
-									<span class="tit">공간면적</span>
-									<span class="city d-block mb-1 text-black"></span>
-									<hr>
-									<span class="tit">수용인원</span>
-									<span class="city d-block mb-1 text-black"></span>
-									<hr>
-									
-									
-										<div class="specs d-flex mb-4 ">
-											<span class="d-block d-flex align-items-center me-3">
-												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
-											</span>
-											<span class="d-block d-flex align-items-center">
-												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
-											</span>
-										</div>
-										<div class="specs d-flex mb-4 " style="border-bottom:purple solid 2px;"></div>
-									<!-- 옵션 -->
-
-										<span class="city d-block">예약선택</span>
-										<hr>
-										<div style = "padding:1% 3% 1% 3%; text-align: center;">
-											<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
-												<img alt="" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
-											</div></a>
-											<a href = "javascript:void(0);"  style = "margin-left:20%;"><div class = "payment_type" id = "kcp" value = "kcp" onclick="setPaymentType('kcp')">
-												<img alt="" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
-											</div></a>
-										</div>
-										<hr>
-											<a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
-											<a onclick="requestPay()"  class="btn btn-primary py-2 px-7">결제하기</a>
-												<!-- <button onclick="requestPay()">결제하기</button> -->
+						<ul>
+						  <li>
+						    <button class="button">menu1</button>
+						    <div id="menu2" class="content">
+						    <div style="margin-top: 5px">	
+								<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+							</div>
+							<div class="property-item">
+									<!-- 여기까지 오른쪽 박스 사진 --> 
+							  <div class="property-content">
+								<span class="price mb-2" style= "color:#6d3bff">₩10,000</span><span>/(시간단위)</span>
+								<!-- 요금 -->
+								<hr>
+								<div>
+									<span class="d-block mb-1 text-black" style="font-weight: bold; font-size: 15px">${vo.spaceZipcode } ${vo.spaceAddress } ${vo.spaceAddressDetail }</span>
+								<!-- 주소 -->
+								<hr>
+									<span class="city d-block mb-3">${vo.spaceAddress }, 대한민국</span>
+								<!-- 지역 -->
+								<hr>
+								<span class="d-block mb-1 text-black">
+								${vo.spaceInfo }
+								</span>
+								<hr>
+								<span class="tit">공간유형</span>
+								<span class="city text-black">${vo.spaceType }</span>
+								<hr>
+								<span class="tit">공간면적</span>
+								<span class="city d-block mb-1 text-black"></span>
+								<hr>
+								<span class="tit">수용인원</span>
+								<span class="city d-block mb-1 text-black"></span>
+								<hr>
+									<div class="specs d-flex mb-4 ">
+										<span class="d-block d-flex align-items-center me-3">
+											<span class="icon-bed me-2"></span>
+											<span class="caption">2 beds</span>
+										</span>
+										<span class="d-block d-flex align-items-center">
+											<span class="icon-bath me-2"></span>
+											<span class="caption">2 baths</span>
+										</span>
 									</div>
-								</div>
-							</div> 
+									<div class="specs d-flex mb-4 " style="border-bottom:purple solid 2px;"></div>
+								<!-- 옵션 -->
+								</div>	
+							  </li>
+							  <li>
+							    <button class="button">menu2</button>
+							    <p id="menu2" class="content">description</p>  
+							  </li>
+							  <li>
+							    <button class="button">menu3</button>
+							    <p id="menu3" class="content">description</p>  
+							  </li>
+							  <li>
+							    <button class="button">menu4</button>
+							    <p id="menu4" class="content">description</p>  
+							  </li>
+							</ul>
+						</div> 
 							
 					</div>
 				</div>

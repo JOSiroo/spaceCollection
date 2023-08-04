@@ -1,0 +1,34 @@
+package com.sc.spaceCollection.spaceDetail.model;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.sc.spaceCollection.space.model.SpaceDAO;
+import com.sc.spaceCollection.space.model.SpaceVO;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class SpaceDetailServiceImpl implements SpaceDetailService{
+	private final SpaceDetailDAO spaceDetailDao;
+	
+	@Override
+	public Map<SpaceVO, List<Map<String, Object>>> selectDetailByNo(int spaceNo) {
+		SpaceVO vo = spaceDetailDao.selectByNo(spaceNo);
+		
+		List<Map<String, Object>> list = spaceDetailDao.selectDetailByNo(vo.getSpaceNum());
+		
+		Map<SpaceVO, List<Map<String,Object>>> resultMap = new HashMap<>();
+		resultMap.put(vo, list);
+		
+		return resultMap;
+	}
+
+	
+
+
+}
