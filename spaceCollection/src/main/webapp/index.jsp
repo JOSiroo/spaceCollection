@@ -38,7 +38,7 @@
 	</div>
 
 <div class="searchform">
-		<%-- <%@ include file="WEB-INF/views/form/main.jsp" %> --%>
+		<%@ include file="/WEB-INF/views/form/main.jsp" %>
 		</div>
 
 	<div class="section">
