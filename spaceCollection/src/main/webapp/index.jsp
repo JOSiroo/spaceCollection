@@ -25,10 +25,9 @@
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 		
+		</div>
 		
-		</div>
-		<div class="searchform">
-		</div>
+		
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center">
@@ -38,6 +37,9 @@
 		</div>
 	</div>
 
+<div class="searchform">
+		<%@ include file="/WEB-INF/views/form/main.jsp" %>
+		</div>
 
 	<div class="section">
 		<div class="container">
