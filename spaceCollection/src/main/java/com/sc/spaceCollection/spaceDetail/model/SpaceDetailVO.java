@@ -14,6 +14,7 @@ public class SpaceDetailVO extends SpaceVO{
 	private int sdMinPeople;
 	private int sdMaxPeople;
 	private String sdArea;
+	private String sdMinTime;
 	private int spaceNum;
 	private int facilityNum;
 }

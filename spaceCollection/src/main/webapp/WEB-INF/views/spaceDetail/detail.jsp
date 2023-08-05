@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="<c:url value = '/css/aos.css'/>">
 	<link rel="stylesheet" href="<c:url value = '/css/style.css'/>">
 	
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	
@@ -49,11 +50,11 @@
         function setPaymentType(type){
         	paymentType = type;
         	if(paymentType === 'kakaopay'){
-        		document.getElementById('kakaopay').style.border = '#6d3bff 5px solid';	
+        		document.getElementById('kakaopay').style.border = '#193D76 5px solid';	
         		document.getElementById('kakaopay').style.borderRadius  = '1rem';	
         		document.getElementById('kcp').style.border = 'none';	
         	}else if(paymentType === 'kcp'){
-        		document.getElementById('kcp').style.border = '#6d3bff 5px solid';	
+        		document.getElementById('kcp').style.border = '#193D76 5px solid';	
         		document.getElementById('kcp').style.borderRadius  = '1rem';	
         		document.getElementById('kakaopay').style.border = 'none';	
         	}
@@ -64,25 +65,24 @@
             IMP.request_pay({
                 pg : paymentType,
                 pay_method : 'card',
-                merchant_uid: "order_no_0004", 
+                merchant_uid: "order_no_0006", 
                 name : '당근 10kg',
                 amount : 1000000,
-                buyer_email : 'Iamport@chai.finance',
+                //buyer_email : 'Iamport@chai.finance',
                 buyer_name : '아임포트 기술지원팀',
                 buyer_tel : '010-1234-5678',
                 buyer_addr : '서울특별시 강남구 삼성동',
-                buyer_postcode : '123-456'
+                //buyer_postcode : '123-456'
             }, function (rsp) { // callback
                 if (rsp.success) {
                     console.log(rsp);
                 } else {
-                    console.log(rsp);
+                	alert('이미 완료된 결제건 입니다');
                 }
             });
         }
        
     </script>
-	
 	<title>스페이스 클라우드</title>
 	
 
@@ -155,7 +155,7 @@ $(function(){
     	margin-bottom : 10px;
     }
     .btn.btn-primary {
-    background: #6d3bff;
+    background: #193D76;
     color: #fff;
  	}   
     .nav-link {
@@ -170,7 +170,7 @@ $(function(){
 	}
 	
 	
-	accordionUl {
+	.accordionUl {
 	  display: flex;
 	  flex-direction: column;
 	  gap: 16px;
@@ -188,12 +188,62 @@ $(function(){
 	    width: 100%;
 	    color: #000;
 	    text-align: left;
+	    font-size : 18px;
+	    font-weight : bold;
 	    background-color: white;
+	    border: 4px #193D76 solid;
 	    border: 0;
 	    cursor: pointer;
 	  }
-	
 	  .content {
+	    display: none;
+	    margin: 0;
+	    background-color: #fff;
+	    border-top: 1px solid #ddd;
+	  }
+	  
+	  &.on {
+	    .button {
+			background-color: rgba(255, 208, 20, 0.9);
+			opacity : 0.8;
+		    border: 4px #193D76 solid;
+			border-radius : 1rem;
+			font-size : 18px;
+			font-weight : bold;	
+	    }
+	    .content {
+	      display: block;
+	    }
+	  }
+	}
+	
+	
+	.inAccordionUl {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 16px;
+	  margin: 0;
+	  padding: 0;
+	  max-width: 500px;
+	  width: 100%;
+	  list-style: none;
+	}
+	
+	.inAccordionLi {
+	  .inButton {
+	    display: block;
+	    padding: 20px;
+	    width: 100%;
+	    color: #000;
+	    text-align: left;
+	    font-size : 16px;
+	    font-weight : bold;
+	    background-color: white;
+	    border: 4px #193D76 solid;
+	    border-radius : 1rem;
+	    cursor: pointer;
+	  }
+	  .inContent {
 	    display: none;
 	    margin: 0;
 	    padding: 20px;
@@ -202,17 +252,44 @@ $(function(){
 	  }
 	  
 	  &.on {
-	    .button {
-	      background-color: #fff;
-	      border : #6d3bff 4px solid;
+	    .inButton {
+	      background-color: rgba(255, 208, 20, 0.9);
+	      opacity : 0.8;
+	      border: 4px #193D76 solid;
 	      border-radius : 1rem;
-	      font-weight: bold;
+	      font-size : 16px;
+    		font-weight : bold;
 	    }
-	    
-	    .content {
+	    .inContent {
 	      display: block;
 	    }
 	  }
+	}
+	<!-- 스와이프 시작 -->
+	.swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border : grey 1px solid;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+	<!-- 스와이프 끝 -->
+	
+	.facility-box{
+		padding : 0% 0% 6% 11%;
 	}
 	.facility-icon{
 		display: inline-block; 
@@ -221,6 +298,8 @@ $(function(){
 	.p-3{
 		border-radius: 0.75rem;
 	}
+	
+	
 </style>
 <body>
 
@@ -410,20 +489,28 @@ $(function(){
 						
 				<div class="col-lg-4">
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
-					<div class="d-block agent-box p-3" style="border: 4px #6d3bff solid;  text-align: left;">
-					<h3 class="h5 text-primary" style="margin:4% 1% 5% 1%">공간명 : 스페이스</h3>
+					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
+					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center;">공간 예약 정보</h3>
 						<ul class = "accordionUl">
 						<c:if test="${!empty map }">
 							<c:forEach var="detail" items="${map }">
 							  <li class = "accordionLi">
-							    <button class="button">${detail.SD_TYPE}</button>
+							    <button class="button">
+							    	${detail.SD_TYPE} 
+							    	<div style="float: right;">
+								    	<span class="price mb-2" style= "color:#193D76;">
+											<fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
+										</span>
+										<span style= "color:grey; font-weight: 400">/(시간단위)</span>
+									</div>
+							    </button>
 							    <div id="menu2" class="content">
 							    <div style="margin-top: 5px">	
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</div>
 								<div class="property-item">
 								  <div class="property-content">
-									<span class="price mb-2" style= "color:#6d3bff">
+									<span class="price mb-2" style= "color:#193D76">
 										<fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
 									</span>
 									<span>/(시간단위)</span>
@@ -438,7 +525,7 @@ $(function(){
 									</span>
 									<hr>
 									<span class="tit">공간유형</span>
-									<span class="city text-black">${vo.spaceType }</span>
+									<span class="city text-black">${detail.SD_TYPE}</span>
 									<hr>
 									<span class="tit">공간면적</span>
 									<span class="city text-black">${detail.SD_AREA }㎡</span>
@@ -456,20 +543,56 @@ $(function(){
 									<div class="specs d-flex mb-4 " style="border-bottom:#6d3bff solid 2px; margin-top:5px"></div>
 									</div>
 										<span class="city d-block">예약선택</span>
-								<hr>
-								<div style = "padding:1% 3% 1% 3%; text-align: center;">
-									<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
-										<img alt="" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
-									</div></a>
-									<a href = "javascript:void(0);"  style = "margin-left:20%;"><div class = "payment_type" id = "kcp" value = "kcp" onclick="setPaymentType('kcp')">
-										<img alt="" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
-									</div></a>
-								</div>
-								<hr>
-									<a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
-									<a href="property-single.html" class="btn btn-primary py-2 px-3">바로 예약하기</a>
-									<a onclick="requestPay()"  class="btn btn-primary py-2 px-7">결제하기</a>
-										<!-- <button onclick="requestPay()">결제하기</button> -->	
+									<hr>
+									<ul class = "inAccordionUl">
+									 <li class = "inAccordionLi">
+									    <button class="inButton">시간 단위 예약하기(최소 ${detail.SD_MIN_TIME}부터)</button>
+									    <div class = "inContent" style="width: 100%">
+									    <hr>
+									    
+										 <div class="swiper mySwiper">
+										    <div class="swiper-wrapper">
+										      <div class="swiper-slide">0</div>
+										      <div class="swiper-slide">1</div>
+										      <div class="swiper-slide">2</div>
+										      <div class="swiper-slide">3</div>
+										      <div class="swiper-slide">4</div>
+										      <div class="swiper-slide">5</div>
+										      <div class="swiper-slide">6</div>
+										      <div class="swiper-slide">7</div>
+										      <div class="swiper-slide">8</div>
+										      <div class="swiper-slide">9</div>
+										      <div class="swiper-slide">11</div>
+										      <div class="swiper-slide">12</div>
+										      <div class="swiper-slide">13</div>
+										      <div class="swiper-slide">14</div>
+										      <div class="swiper-slide">15</div>
+										      <div class="swiper-slide">16</div>
+										      <div class="swiper-slide">17</div>
+										      <div class="swiper-slide">18</div>
+										      <div class="swiper-slide">19</div>
+										      <div class="swiper-slide">20</div>
+										      <div class="swiper-slide">21</div>
+										      <div class="swiper-slide">22</div>
+										      <div class="swiper-slide">23</div>
+										      <div class="swiper-slide">24</div>
+										    </div>
+										  </div>
+									    <hr>
+										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
+												<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
+													<img alt="" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
+												</div></a>
+												<a href = "javascript:void(0);"  style = "margin-left:20%;"><div class = "payment_type" id = "kcp" value = "kcp" onclick="setPaymentType('kcp')">
+													<img alt="" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
+												</div></a>
+											</div>
+											<hr>
+												<a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
+												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7">결제하기</a>
+										</div>
+							  		</li>
+							  		</ul>
 								  </li>
 								  </c:forEach>
 							  </c:if>
@@ -502,8 +625,8 @@ $(function(){
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/spaceDetail.js"></script>
-    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
@@ -558,7 +681,19 @@ $(function(){
 		function closeOverlay() {
 		    overlay.setMap(null);     
 		}
-		
 	</script>
+	
+	
+	<script>
+	//스와이프 스크립트
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 5,
+      spaceBetween: 0,
+      freeMode: true,
+      pagination: {
+        clickable: true,
+      },
+    });
+  	</script>
 		
 <%@ include file="../form/bottom.jsp" %>

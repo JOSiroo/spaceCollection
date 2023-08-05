@@ -49,4 +49,18 @@ const buttons = document.querySelectorAll('.button');
         });
       });
     });
-	
+const inButtons = document.querySelectorAll('.inButton');
+
+    inButtons.forEach(function(button, index) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        this.parentNode.classList.toggle('on');
+        
+        inButtons.forEach(function(button2, index2) {
+          if ( index !== index2 ) {
+            button2.parentNode.classList.remove('on');
+          }
+        });
+      });
+    });
