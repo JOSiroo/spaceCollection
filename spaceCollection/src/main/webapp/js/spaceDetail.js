@@ -64,3 +64,45 @@ const inButtons = document.querySelectorAll('.inButton');
         });
       });
     });
+    
+    
+const timeSlots = document.querySelectorAll('.swiper-inBox');
+let selectedStartTime = null;
+
+timeSlots.forEach(function(slot) {
+    slot.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const clickedIndex = Array.from(timeSlots).indexOf(this);
+
+        if (selectedStartTime === null) {
+            selectedStartTime = clickedIndex;
+            this.classList.add('on');
+        } else {
+            const minIndex = Math.min(selectedStartTime, clickedIndex);
+            const maxIndex = Math.max(selectedStartTime, clickedIndex);
+
+            timeSlots.forEach(function(slot, index) {
+                if (index >= minIndex && index <= maxIndex) {
+                    slot.classList.add('on');
+                } else {
+                    slot.classList.remove('on');
+                }
+            });
+
+            selectedStartTime = null;
+        }
+    });
+});
+
+document.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('swiper-inBox')) {
+        timeSlots.forEach(function(slot) {
+            slot.classList.remove('on');
+        });
+        selectedStartTime = null;
+    }
+});
+
+
+   

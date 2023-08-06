@@ -272,14 +272,37 @@ $(function(){
     }
 
     .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border : grey 1px solid;
+		text-align: center;
+		font-size: 18px;
+		/*display: flex;*/
+		justify-content: center;
+		align-items: center;
+		
+		.swiper-p{
+			margin-bottom : 0.3rem;
+			text-align: left;
+		}
+		.swiper-inBox{
+	    	text-align: center;
+			font-size: 80%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border : grey 1px solid;
+			color: #cc8c28;
+			border: 2px solid #ffc000;
+			background-color: #ffd014;
+			padding: 17% 3% 19% 3%;
+			width: 100%;
+		}
+   		.on{
+			color: white;
+			font-size: 80%;
+			border: 2px solid navy;
+			background-color: #193D76;
+		}
     }
-
+    
     .swiper-slide img {
       display: block;
       width: 100%;
@@ -552,32 +575,20 @@ $(function(){
 									    
 										 <div class="swiper mySwiper">
 										    <div class="swiper-wrapper">
-										      <div class="swiper-slide">0</div>
-										      <div class="swiper-slide">1</div>
-										      <div class="swiper-slide">2</div>
-										      <div class="swiper-slide">3</div>
-										      <div class="swiper-slide">4</div>
-										      <div class="swiper-slide">5</div>
-										      <div class="swiper-slide">6</div>
-										      <div class="swiper-slide">7</div>
-										      <div class="swiper-slide">8</div>
-										      <div class="swiper-slide">9</div>
-										      <div class="swiper-slide">11</div>
-										      <div class="swiper-slide">12</div>
-										      <div class="swiper-slide">13</div>
-										      <div class="swiper-slide">14</div>
-										      <div class="swiper-slide">15</div>
-										      <div class="swiper-slide">16</div>
-										      <div class="swiper-slide">17</div>
-										      <div class="swiper-slide">18</div>
-										      <div class="swiper-slide">19</div>
-										      <div class="swiper-slide">20</div>
-										      <div class="swiper-slide">21</div>
-										      <div class="swiper-slide">22</div>
-										      <div class="swiper-slide">23</div>
-										      <div class="swiper-slide">24</div>
+											    <fmt:parseNumber var="openTime" integerOnly="true" type="number" value="${detail.SD_OPEN_TIME}" />
+											    <fmt:parseNumber var="closeTime" integerOnly="true" type="number" value="${detail.SD_CLOSE_TIME}" />
+											    <c:forEach begin="${openTime }" end="${closeTime }" var="i">
+										    			<div class="swiper-slide">
+										    				<p class = "swiper-p">${i}</p>
+										    				<button class = "swiper-inBox">
+										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
+										    				</button>
+										    			</div>
+										     	</c:forEach>
 										    </div>
 										  </div>
+										  <br>
+										  <a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
 									    <hr>
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
 												<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
@@ -687,13 +698,26 @@ $(function(){
 	<script>
 	//스와이프 스크립트
     var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 5,
+      slidesPerView: 6,
       spaceBetween: 0,
       freeMode: true,
       pagination: {
         clickable: true,
       },
-    });
+      on: {
+          transitionEnd: function () {
+              // 활성 슬라이드의 인덱스를 가져옵니다.
+              const activeSlideIndex = this.activeIndex;
+
+              // 활성 슬라이드에 있는 'on' 클래스를 유지합니다.
+              const activeSlideSlots = document.querySelectorAll('.swiper-slide-active .swiper-inBox.on');
+              activeSlideSlots.forEach(function (slot) {
+                  slot.classList.add('on');
+              });
+          }
+      }
+  });
+
   	</script>
 		
 <%@ include file="../form/bottom.jsp" %>
