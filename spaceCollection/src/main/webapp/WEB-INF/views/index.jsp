@@ -3,19 +3,19 @@
 <%@ include file="/WEB-INF/views/form/top.jsp" %>
 
 <style>
-.menu-bg-wrap {
-    margin-top: 60px;
-}
+
 
 .narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate {
     margin-top: 20px;
     margin-right: 190px;
 }
 
+a.logo.m-0.float-start {
+    font-size: 40px;
+    font-weight: bolder;
+}
+
 </style>
-
-
-
 
 	<div class="hero">
 
@@ -24,9 +24,7 @@
 			<div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
-		
 		</div>
-		
 		
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
