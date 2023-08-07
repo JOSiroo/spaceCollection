@@ -17,9 +17,6 @@ a.logo.m-0.float-start {
 
 </style>
 
-
-<%@ include file="/WEB-INF/views/form/side.jsp" %>
-
 	<div class="hero">
 
 		<div class="hero-slide">
@@ -27,9 +24,7 @@ a.logo.m-0.float-start {
 			<div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
-		
 		</div>
-		
 		
 		<div class="container">
 			<div class="row justify-content-center align-items-center">

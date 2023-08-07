@@ -16,12 +16,12 @@
 	}
 	
 	.navbar-toggler {
-	  color: #000000 !important;
+	  color: lightgray !important;
 	}
 	
 	.navbar {
 	    width: 100%;
-	    height: 80px; /* 헤더의 높이에 맞추기 */
+	    height: 80px; 
 	  }
 	  
 	.service_menu {
@@ -61,21 +61,18 @@
 	}
 	
 	button.navbar-toggler {
-    margin-left: 1400px;
+    margin-left: 1500px;
     margin-top: 120px;
     position: absolute;
     
 	}
 	
-	
 </style>
  
   </head>
  <body class="container-fluid ">
-	  <!-- 왼쪽 상단 배너 -->
-	  <nav class="navbar fixed-top">
-	
     <!-- 토글버튼  -->      
+	<div class="navbar fixed-top">
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" style="margin-right: 150px;">
       <i class="bi bi-list"></i>
     </button>
@@ -94,52 +91,39 @@
 	 	  
   </div>
       
-      
-      <!-- 메뉴 바(내 정보) -->
-		
-		
+     		<!-- 메뉴 바(내 정보) -->
 			<!-- 메뉴 바(관리) -->
 			<div class="row" style="margin-top: 30px; margin-bottom: 40px">
-				  
 				 <div class="col-sm-6">
 					    <a href="${pageContext.request.contextPath }/member_mypage">
 					  		  <i class="bi bi-person-video" ></i>
 					 	      <p>마이페이지</p></a>
 				 </div>
-				
 				  <div class="col-sm-6">
 					  <a href="${pageContext.request.contextPath }/member_reserve" >   
 					        <i class="bi bi-calendar-check" ></i>
 				 		  <p>예약 리스트</p></a> 
 				 </div>
-				 
-				 
-				 
 				   <div class="col-sm-6">
 					       <a href="${pageContext.request.contextPath }/member_review" >
 							<i class="bi bi-person-hearts" ></i>
 				 	 	  <p>이용 후기/Q&A</p></a>
 				 </div>
-			
-			
 				    <div class="col-sm-6">
 					  <a href="${pageContext.request.contextPath }/member_heart">
 				   		 <i class="bi bi-house-heart" ></i>
 				 	 	  <p>찜 리스트</p></a>
 				 </div>
-			
 				  <div class="col-sm-6 " style="text-align: center;">
 				    <a href="${pageContext.request.contextPath }/member_notice?nmstatus=1&nstatus=1" >   
 				     <i class="bi bi-info-circle" ></i>
 				   <p>공지사항</p></a> 
 				  </div>
-				  
 				  <div class="col-sm-6">
 				    <a href="${pageContext.request.contextPath }/member_faq?fmstatus=1&fstatus=1" >
 				     <i class="bi bi-question-diamond" ></i>
 				 	   <p>FAQ</p></a>
 				  </div>
-				  
 				  <div class="col-sm-6">
 					  <c:choose>
 					    <c:when test="${not empty loginMember}">
@@ -164,9 +148,6 @@
 				    <i class="bi bi-houses" ></i>
 				 	   <p>Home</p></a>
 				  </div>
-				
-				
-				   
 			</div>	      
       
         <!--Host센터 이동 --> 
@@ -174,14 +155,8 @@
       <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
        <p class="copyright">Powered by © itwill Corp.</p>
        </div>
-      <div>
-      	
-      </div>
-       
     </div>
-     <!-- 토글버튼 종료 -->
-  </div>
-</nav>
+  </div><!-- 토글버튼 종료 -->
   
   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
