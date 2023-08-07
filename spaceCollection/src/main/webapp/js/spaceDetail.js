@@ -1,3 +1,19 @@
+const paymentButtonss = document.querySelectorAll('.payment_type');
+
+	  paymentButtonss.forEach(function(button) {
+	      button.addEventListener('click', function(e) {
+	          e.preventDefault();
+
+	          paymentButtonss.forEach(function(btn) {
+	              btn.style.border = 'none';
+	          });
+
+	          this.style.border = '#193D76 5px solid';
+	          this.style.borderRadius = '1rem';
+	      });
+	  });
+
+
 const navTabs = document.getElementsByClassName("nav-item");
 const navItems = document.getElementsByClassName("detail-navTab");
 const stickyTop = document.querySelector(".sticky-top"); // sticky-top 요소 선택
@@ -100,8 +116,6 @@ function timeTableReset(){
 		
 	})
 }
-
-
 
 
    
