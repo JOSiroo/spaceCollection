@@ -34,7 +34,38 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-	    <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('.nav-item').click(function(){
+			$(this).css('background', '#ffd014');
+			$('.nav-item').not($(this)).css('background', 'white');
+		})
+		
+		$('.swiper-inBox').click(function(){
+		   	var result = 0;
+		    $('.swiper-inBox.on').each(function(){
+		        result += parseInt($(this).find('input[type=hidden]').val());
+		    });
+		    $('.hiddenPrice').val(result);
+		    
+		    var formattedTotalPrice = addComma(result);
+		    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		});
+	})
+	 function addComma(value){
+		    value = value+"";
+	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        return value; 
+	    }
+	</script>
+	<script>
+	  var payType = "";
+	  function paymentType(type){
+		  payType = type;
+	  }
+	      
+      
         var IMP = window.IMP; 
         IMP.init("imp04807210"); 
       
@@ -46,40 +77,28 @@
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         
-        var paymentType = "";
-        function setPaymentType(type){
-        	paymentType = type;
-        	if(paymentType === 'kakaopay'){
-        		document.getElementById('kakaopay').style.border = '#193D76 5px solid';	
-        		document.getElementById('kakaopay').style.borderRadius  = '1rem';	
-        		document.getElementById('kcp').style.border = 'none';	
-        	}else if(paymentType === 'kcp'){
-        		document.getElementById('kcp').style.border = '#193D76 5px solid';	
-        		document.getElementById('kcp').style.borderRadius  = '1rem';	
-        		document.getElementById('kakaopay').style.border = 'none';	
-        	}
-        }
-        
         
         function requestPay() {
+        	console.log(paymentType);
+        	console.log($('.hiddenPrice').val());
             IMP.request_pay({
-                pg : paymentType,
+                pg : payType,
                 pay_method : 'card',
-                merchant_uid: "order_no_0006", 
+                merchant_uid: "order_no_00123", 
                 name : '당근 10kg',
-                amount : 1000000,
-                //buyer_email : 'Iamport@chai.finance',
+                amount : $('.hiddenPrice').val(),
+                buyer_email : 'Iamport@chai.finance',
                 buyer_name : '아임포트 기술지원팀',
                 buyer_tel : '010-1234-5678',
                 buyer_addr : '서울특별시 강남구 삼성동',
-                //buyer_postcode : '123-456'
+                buyer_postcode : '123-456'
             }, function (rsp) { // callback
                 if (rsp.success) {
                     console.log(rsp);
                 } else {
-                	alert('이미 완료된 결제건 입니다');
+                    console.log(rsp);
                 }
-            });
+           });
         }
        
     </script>
@@ -87,30 +106,6 @@
 	
 
 	</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	$('.nav-item').click(function(){
-		$(this).css('background', '#ffd014');
-		$('.nav-item').not($(this)).css('background', 'white');
-	})
-	
-	$('.swiper-inBox').click(function(){
-	    var result = 0;
-	    $('.swiper-inBox.on').each(function(){
-	        result += parseInt($(this).find('input[type=hidden]').val());
-	    });
-	    
-	    var formattedTotalPrice = addComma(result);
-	    $('#totalPrice').text("₩" + formattedTotalPrice+ "원");
-	});
-})
- function addComma(value){
-	    value = value+"";
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return value; 
-    }
-</script>
 <style type="text/css">
 	.custom-nav{
     padding-top: 0 !important;
@@ -317,6 +312,15 @@ $(function(){
 			background-color: #193D76;
 		}
     }
+    .payment_type{
+		border:none;	
+	 	borderRadius : 1rem;
+    }
+    .payment_type.on{
+		border:#193D76 5px solid;	
+	 	borderRadius : 1rem;
+    }
+    
     
     .swiper-slide img {
       display: block;
@@ -537,7 +541,7 @@ $(function(){
 							    	${detail.SD_TYPE} 
 							    	<div style="float: right;">
 								    	<span class="price mb-2" style= "color:#193D76;">
-											<fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
+											 <fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
 										</span>
 										<span style= "color:grey; font-weight: 400">/(시간단위)</span>
 									</div>
@@ -549,7 +553,7 @@ $(function(){
 								<div class="property-item">
 								  <div class="property-content">
 									<span class="price mb-2" style= "color:#193D76">
-										<fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
+										 <fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
 									</span>
 									<span>/(시간단위)</span>
 									<hr>
@@ -601,30 +605,33 @@ $(function(){
 										    				</button>
 										    			</div>
 										     	</c:forEach>
-												</span>
 										    </div>
 										  </div>
 										  <br>
-									     	<span class="price mb-2" style= "color:#193D76" id = "totalPrice"></span>
+										  	<input type="hidden" class="hiddenPrice"/>
+								     	  	<span class="price mb-2 totalPrice" style= "color:#193D76" ></span>
 										  <br><br>
 										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()">초기화</button>
 										  <br><br>
 									    <hr>
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
-												<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
-													<img alt="" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
-												</div></a>
-												<a href = "javascript:void(0);"  style = "margin-left:20%;"><div class = "payment_type" id = "kcp" value = "kcp" onclick="setPaymentType('kcp')">
-													<img alt="" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
-												</div></a>
+										    <a href = "javascript:void(0);" style = "text-decoration: none;">
+												<div class="payment_type" value="kakaopay" onclick="paymentType('kakaopay')">
+													<img alt="" class = "payment_type" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
+												</div>
+											</a>
+											
+										    <a href = "javascript:void(0);" style = "text-decoration: none;" onclick="paymentType('kcp')">
+													<div class="payment_type" value = "kcp">
+														<img alt="" class = "payment_type" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
+													</div>
+											</a>
 											</div>
 											<hr>
 											<div style="text-align: center;">
-												<a href="property-single.html" class="btn btn-primary py-2 px-3" style="width: 45%">전화</a>
-												<div class="modal-dialog modal-dialog-centered">
-													
-												</div>
-												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 45%">결제하기</a>
+												<a href="property-single.html" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#myModal" style="width: 40%">전화</a>
+												
+												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 40%">결제하기</a>
 											</div>
 										</div>
 							  		</li>
@@ -636,9 +643,23 @@ $(function(){
 						</div> 
 					</div>
 				</div>
+				<div class="modal" id = "myModal" tabindex="-1" >
+				  <div class="modal-dialog">
+				    <div class="modal-content" style = "font-weight : bold">
+				      <div class="modal-header">
+				        <h4 class="modal-title" >${vo.spaceName}</h5>
+				      </div>
+				      <div class="modal-body">
+				        <p>전화번호 : ${vo.spacePhoneNum }</p>
+				      </div>
+				      <div class="modal-footer" style = "justify-content: center;">
+				        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			<!-- 여기까지 오른쪽 부분-->				
 			</div>
-		</div>
 	<!-- 여기까지 섹션-->				
 
 
@@ -706,8 +727,6 @@ $(function(){
 		    overlay.setMap(null);     
 		}
 	</script>
-	
-	
 	<script>
 	//스와이프 스크립트
     var swiper = new Swiper(".mySwiper", {
