@@ -89,20 +89,19 @@ timeSlots.forEach(function(slot) {
                     slot.classList.remove('on');
                 }
             });
-
             selectedStartTime = null;
         }
     });
 });
 
-document.addEventListener('click', function(e) {
-    if (!e.target.classList.contains('swiper-inBox')) {
-        timeSlots.forEach(function(slot) {
-            slot.classList.remove('on');
-        });
-        selectedStartTime = null;
-    }
-});
+function timeTableReset(){
+	timeSlots.forEach(function(slot){
+		slot.classList.remove('on');
+		
+	})
+}
+
+
 
 
    

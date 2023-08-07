@@ -94,7 +94,22 @@ $(function(){
 		$(this).css('background', '#ffd014');
 		$('.nav-item').not($(this)).css('background', 'white');
 	})
+	
+	$('.swiper-inBox').click(function(){
+	    var result = 0;
+	    $('.swiper-inBox.on').each(function(){
+	        result += parseInt($(this).find('input[type=hidden]').val());
+	    });
+	    
+	    var formattedTotalPrice = addComma(result);
+	    $('#totalPrice').text("₩" + formattedTotalPrice+ "원");
+	});
 })
+ function addComma(value){
+	    value = value+"";
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return value; 
+    }
 </script>
 <style type="text/css">
 	.custom-nav{
@@ -581,14 +596,19 @@ $(function(){
 										    			<div class="swiper-slide">
 										    				<p class = "swiper-p">${i}</p>
 										    				<button class = "swiper-inBox">
+										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
 										    				</button>
 										    			</div>
 										     	</c:forEach>
+												</span>
 										    </div>
 										  </div>
 										  <br>
-										  <a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
+									     	<span class="price mb-2" style= "color:#193D76" id = "totalPrice"></span>
+										  <br><br>
+										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()">초기화</button>
+										  <br><br>
 									    <hr>
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
 												<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
@@ -599,26 +619,19 @@ $(function(){
 												</div></a>
 											</div>
 											<hr>
-												<a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
-												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7">결제하기</a>
+											<div style="text-align: center;">
+												<a href="property-single.html" class="btn btn-primary py-2 px-3" style="width: 45%">전화</a>
+												<div class="modal-dialog modal-dialog-centered">
+													
+												</div>
+												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 45%">결제하기</a>
+											</div>
 										</div>
 							  		</li>
 							  		</ul>
 								  </li>
 								  </c:forEach>
 							  </c:if>
-							  <li class = "accordionLi">
-							    <button class="button">menu2</button>
-							    <p id="menu2" class="content">description</p>  
-							  </li>
-							  <li class = "accordionLi">
-							    <button class="button">menu3</button>
-							    <p id="menu3" class="content">description</p>  
-							  </li>
-							  <li class = "accordionLi">
-							    <button class="button">menu4</button>
-							    <p id="menu4" class="content">description</p>  
-							  </li>
 							</ul>
 						</div> 
 					</div>
@@ -701,9 +714,6 @@ $(function(){
       slidesPerView: 6,
       spaceBetween: 0,
       freeMode: true,
-      pagination: {
-        clickable: true,
-      },
       on: {
           transitionEnd: function () {
               // 활성 슬라이드의 인덱스를 가져옵니다.
