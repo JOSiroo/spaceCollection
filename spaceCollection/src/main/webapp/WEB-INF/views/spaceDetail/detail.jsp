@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/views/form/top.jsp" %>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<!-- jQuery -->
@@ -517,7 +517,8 @@ pageEncoding="UTF-8"%>
 							<c:forEach var="detail" items="${map }">
 							  <li class = "accordionLi">
 							    <button class="button">
-							    	${detail.SD_TYPE} 
+							    <input type="hidden" value="${detail.SD_NUM }">
+							    	<span>${detail.SD_TYPE}</span> 
 							    	<div style="float: right;">
 								    	<span class="price mb-2" style= "color:#193D76;">
 											 <fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
@@ -740,11 +741,30 @@ pageEncoding="UTF-8"%>
   	<script>
 	
 		var payType = "";
-	
+		var sdNum = "";
+		var sdName = "";
 	    function paymentType(type){
 	        payType = type;
 	    }
-	      
+	    const sdBt = document.querySelectorAll('.button');
+
+	    sdBt.forEach(function(button) {
+	        button.addEventListener('click', function(e) {
+	            e.preventDefault();
+
+	            const hiddenNum = this.querySelector('input[type="hidden"]');
+	            const hiddenName = this.querySelector('span').innerHTML;
+	            if (hiddenNum !== null) {
+	                const inputValue = hiddenNum.value;
+	                sdNum = inputValue;
+	                sdName = hiddenName;
+	                console.log("Input value: " + inputValue + "," + sdNum + "," + sdName + ", " + hiddenName);
+	            } else {
+	                console.log("Input element not found.");
+	            }
+	        });
+	    });
+
       
         var IMP = window.IMP; 
         IMP.init("imp04807210"); 
@@ -763,8 +783,8 @@ pageEncoding="UTF-8"%>
             IMP.request_pay({
                 pg : payType,
                 pay_method : 'card',
-                merchant_uid: "order_no_00123" + new Date().getMilliseconds(), 
-                name : '당근 10kg',
+                merchant_uid: ${vo.spaceNum}+"_"+ sdNum + new Date().getTime(), 
+                name : ${vo.spaceNum}+"_"+sdName,
                 amount : $('.hiddenPrice').val(),
                 buyer_email : 'Iamport@chai.finance',
                 buyer_name : '아임포트 기술지원팀',
@@ -772,11 +792,20 @@ pageEncoding="UTF-8"%>
                 buyer_addr : '서울특별시 강남구 삼성동',
                 buyer_postcode : '123-456'
             },   function (rsp) {
-                // callback
-                //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+            	if ( rsp.success ) {
+            		console.log(rsp);
+                    var msg = '결제가 완료되었습니다.';
+                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                    msg += '결제 금액 : ' + rsp.paid_amount;
+                   
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                }
+            	 alert(msg);
               }
             );
         }
     </script>
 		
-<%@ include file="../form/bottom.jsp" %>
+<%@ include file="../form/userBottom.jsp" %>
