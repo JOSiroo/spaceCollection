@@ -6,53 +6,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	
-	<title>SpaceCollection - 공간에 사람을 더하다.</title>
-	<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
-	<script type="text/javascript">
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+<title>SpaceCollection - 공간에 사람을 더하다.</title>
+<script type="text/javascript"
+	src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript">
 		$(function() {
+			$('#btLogout').click(function() {
+				location.href="<c:url value='/admin/adminLogout'/>";
+			});
 			
+			$('#togglebtn').click(function() {
+				$('body').toggleClass('toggle-sidebar');
+			});
 		});
 	</script>
-	<meta content="" name="description">
-	<meta content="" name="keywords">
-	
-	<!-- Favicons -->
-	<link href="<c:url value='/NiceAdmin-pro/assets/img/favicon.png'/>" rel="icon">
-	<link href="<c:url value='/NiceAdmin-pro/assets/img/apple-touch-icon.png'/>" rel="apple-touch-icon">
-	
-	<!-- Google Fonts -->
-	<link href="https://fonts.gstatic.com" rel="preconnect">
-	<link
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-		rel="stylesheet">
-	
-	<!-- Vendor CSS Files -->
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/bootstrap/css/bootstrap.min.css'/>"
-		rel="stylesheet">
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/bootstrap-icons/bootstrap-icons.css'/>"
-		rel="stylesheet">
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/boxicons/css/boxicons.min.css'/>"
-		rel="stylesheet">
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/quill/quill.snow.css'/>" rel="stylesheet">
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/quill/quill.bubble.css'/>" rel="stylesheet">
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/remixicon/remixicon.css'/>" rel="stylesheet">
-	<link href="<c:url value='/NiceAdmin-pro/assets/vendor/simple-datatables/style.css'/>" rel="stylesheet">
-	
-	<!-- Template Main CSS File -->
-	<link href="<c:url value='/NiceAdmin-pro/assets/css/style.css'/>" rel="stylesheet">
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+<!-- Favicons -->
+<link href="<c:url value='/NiceAdmin-pro/assets/img/favicon.png'/>"
+	rel="icon">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/img/apple-touch-icon.png'/>"
+	rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/bootstrap/css/bootstrap.min.css'/>"
+	rel="stylesheet">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/bootstrap-icons/bootstrap-icons.css'/>"
+	rel="stylesheet">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/boxicons/css/boxicons.min.css'/>"
+	rel="stylesheet">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/quill/quill.snow.css'/>"
+	rel="stylesheet">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/quill/quill.bubble.css'/>"
+	rel="stylesheet">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/remixicon/remixicon.css'/>"
+	rel="stylesheet">
+<link
+	href="<c:url value='/NiceAdmin-pro/assets/vendor/simple-datatables/style.css'/>"
+	rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="<c:url value='/NiceAdmin-pro/assets/css/style.css'/>"
+	rel="stylesheet">
 </head>
 <body>
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
 		<div class="d-flex align-items-center justify-content-between">
-			<a href="index.html" class="logo d-flex align-items-center"> <img
-				src="assets/img/logo.png" alt=""> <span
+			<a href="<c:url value='/admin/adminMain'/>" class="logo d-flex align-items-center"> <img
+				src="<c:url value='/NiceAdmin-pro/assets/img/logo.png'/>" alt=""> <span
 				class="d-none d-lg-block">SpaceCollection</span>
-			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
+			</a> <i class="bi bi-list toggle-sidebar-btn" id="togglebtn"></i>
 		</div>
 		<!-- End Logo -->
 
@@ -80,8 +102,7 @@
 				<li class="nav-item dropdown"><a class="nav-link nav-icon"
 					href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
 						<span class="badge bg-primary badge-number">4</span>
-				</a>
-				<!-- End Notification Icon -->
+				</a> <!-- End Notification Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -143,16 +164,14 @@
 						<li class="dropdown-footer"><a href="#">Show all
 								notifications</a></li>
 
-					</ul>
-					<!-- End Notification Dropdown Items --></li>
+					</ul> <!-- End Notification Dropdown Items --></li>
 				<!-- End Notification Nav -->
 
 				<li class="nav-item dropdown"><a class="nav-link nav-icon"
 					href="#" data-bs-toggle="dropdown"> <i
 						class="bi bi-chat-left-text"></i> <span
 						class="badge bg-success badge-number">3</span>
-				</a>
-				<!-- End Messages Icon -->
+				</a> <!-- End Messages Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -206,16 +225,14 @@
 						<li class="dropdown-footer"><a href="#">Show all messages</a>
 						</li>
 
-					</ul>
-					<!-- End Messages Dropdown Items --></li>
+					</ul> <!-- End Messages Dropdown Items --></li>
 				<!-- End Messages Nav -->
 
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
 					href="#" data-bs-toggle="dropdown"><span
-						class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.adminUserid.value }</span>
-				</a>
-				<!-- End Profile Iamge Icon -->
+						class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.adminId }</span>
+				</a> <!-- End Profile Iamge Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -227,14 +244,16 @@
 						</li>
 
 						<li><a class="dropdown-item d-flex align-items-center"
-							href="users-profile.html"> <i class="bi bi-person"></i> <span>내 프로필</span>
+							href="users-profile.html"> <i class="bi bi-person"></i> <span>내
+									프로필</span>
 						</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
 
 						<li><a class="dropdown-item d-flex align-items-center"
-							href="users-profile.html"> <i class="bi bi-gear"></i> <span>계정 설정</span>
+							href="users-profile.html"> <i class="bi bi-gear"></i> <span>계정
+									설정</span>
 						</a></li>
 						<li>
 							<hr class="dropdown-divider">
@@ -248,42 +267,38 @@
 							<hr class="dropdown-divider">
 						</li>
 
-						<li>
-							<a class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#basicModal"> 
-								<i class="bi bi-box-arrow-right"></i>
-								<span>로그아웃</span>
-							</a>
-							<!-- logoutModal -->
-							<div class="modal fade" id="basicModal" tabindex="-1">
-				                <div class="modal-dialog">
-				                  <div class="modal-content">
-				                    <div class="modal-header">
-				                      <h5 class="modal-title">로그아웃</h5>
-				                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				                    </div>
-				                    <div class="modal-body">
-				                      로그아웃 하시겠습니까?
-				                    </div>
-				                    <div class="modal-footer">
-				                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-				                      <button type="button" class="btn btn-primary">로그아웃</button>
-				                    </div>
-				                  </div>
-				                </div>
-				             </div>
-						</li>
-					</ul>
-					<!-- End Profile Dropdown Items --></li>
+						<li><a class="dropdown-item d-flex align-items-center"
+							data-bs-toggle="modal" href="#basicModal"> <i
+								class="bi bi-box-arrow-right"></i> <span>로그아웃</span>
+						</a></li>
+					</ul> <!-- End Profile Dropdown Items --></li>
 				<!-- End Profile Nav -->
 
 			</ul>
 		</nav>
 		<!-- End Icons Navigation -->
-		
 
 	</header>
 	<!-- End Header -->
-	
+		<!-- logoutModal -->
+		<div class="modal fade" id="basicModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">로그아웃</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">로그아웃 하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="btLogout">로그아웃</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 	<!-- ======= Sidebar ======= -->
 	<aside id="sidebar" class="sidebar">
@@ -291,7 +306,7 @@
 		<ul class="sidebar-nav" id="sidebar-nav">
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				href="index.html"> <i class="bi bi-grid"></i> <span>Dashboard</span>
+				href="<c:url value='/admin/adminMain'/>"> <i class="bi bi-grid"></i> <span>Dashboard</span>
 			</a></li>
 			<!-- End Dashboard Nav -->
 

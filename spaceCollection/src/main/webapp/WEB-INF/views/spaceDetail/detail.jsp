@@ -1,39 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap5" />
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-	<link rel="stylesheet" href="<c:url value = '/css/tiny-slider.css'/>">
-	<link rel="stylesheet" href="<c:url value = '/css/aos.css'/>">
-	<link rel="stylesheet" href="<c:url value = '/css/style.css'/>">
-	
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	
 	<!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-	    <script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('.nav-item').click(function(){
+			$(this).css('background', '#ffd014');
+			$('.nav-item').not($(this)).css('background', 'white');
+		})
+		
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
+		$('.swiper-inBox').click(function(){
+		   	var result = 0;
+		   	var formattedTotalPrice = "";
+		   	if($('.swiper-inBox.on').length > 0){
+			    $('.swiper-inBox.on').each(function(){
+			        result += parseInt($(this).find('input[type=hidden]').val());
+			    });
+			    $('.hiddenPrice').val(result);
+			    
+			    formattedTotalPrice = addComma(result);
+			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		   	}else{
+				$('.totalPrice').text("예약 시간을 선택해주세요.");
+			}
+		});
+	})
+	 function addComma(value){
+		    value = value+"";
+	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        return value; 
+	    }
+	</script>
+	<script>
+	  var payType = "";
+	  function paymentType(type){
+		  payType = type;
+	  }
+	      
+      
         var IMP = window.IMP; 
         IMP.init("imp04807210"); 
       
@@ -45,28 +60,16 @@
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         
-        var paymentType = "";
-        function setPaymentType(type){
-        	paymentType = type;
-        	if(paymentType === 'kakaopay'){
-        		document.getElementById('kakaopay').style.border = '#6d3bff 5px solid';	
-        		document.getElementById('kakaopay').style.borderRadius  = '1rem';	
-        		document.getElementById('kcp').style.border = 'none';	
-        	}else if(paymentType === 'kcp'){
-        		document.getElementById('kcp').style.border = '#6d3bff 5px solid';	
-        		document.getElementById('kcp').style.borderRadius  = '1rem';	
-        		document.getElementById('kakaopay').style.border = 'none';	
-        	}
-        }
-        
         
         function requestPay() {
+        	console.log(paymentType);
+        	console.log($('.hiddenPrice').val());
             IMP.request_pay({
-                pg : paymentType,
+                pg : payType,
                 pay_method : 'card',
-                merchant_uid: "order_no_0004", 
+                merchant_uid: "order_no_00123", 
                 name : '당근 10kg',
-                amount : 1000000,
+                amount : $('.hiddenPrice').val(),
                 buyer_email : 'Iamport@chai.finance',
                 buyer_name : '아임포트 기술지원팀',
                 buyer_tel : '010-1234-5678',
@@ -78,23 +81,13 @@
                 } else {
                     console.log(rsp);
                 }
-            });
+           });
         }
+       
     </script>
-	
-	<title>스페이스 클라우드</title>
-	
 
+	<title>스페이스 클라우드</title>
 	</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	$('.nav-item').click(function(){
-		$(this).css('background', '#ffd014');
-		$('.nav-item').not($(this)).css('background', 'white');
-	})
-})
-</script>
 <style type="text/css">
 	.custom-nav{
     padding-top: 0 !important;
@@ -154,7 +147,7 @@ $(function(){
     	margin-bottom : 10px;
     }
     .btn.btn-primary {
-    background: #6d3bff;
+    background: #193D76;
     color: #fff;
  	}   
     .nav-link {
@@ -167,8 +160,172 @@ $(function(){
 	.payment_type{
 		display: inline-block;
 	}
+	
+	
+	.accordionUl {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 16px;
+	  margin: 0;
+	  padding: 0;
+	  max-width: 500px;
+	  width: 100%;
+	  list-style: none;
+	}
+	
+	.accordionLi {
+	  .button {
+	    display: block;
+	    padding: 20px;
+	    width: 100%;
+	    color: #000;
+	    text-align: left;
+	    font-size : 18px;
+	    font-weight : bold;
+	    background-color: white;
+	    border: 4px #193D76 solid;
+	    border: 0;
+	    cursor: pointer;
+	  }
+	  .content {
+	    display: none;
+	    margin: 0;
+	    background-color: #fff;
+	    border-top: 1px solid #ddd;
+	  }
+	  
+	  &.on {
+	    .button {
+			background-color: rgba(255, 208, 20, 0.9);
+			opacity : 0.8;
+		    border: 4px #193D76 solid;
+			border-radius : 1rem;
+			font-size : 18px;
+			font-weight : bold;	
+	    }
+	    .content {
+	      display: block;
+	    }
+	  }
+	}
+	
+	
+	.inAccordionUl {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 16px;
+	  margin: 0;
+	  padding: 0;
+	  max-width: 500px;
+	  width: 100%;
+	  list-style: none;
+	}
+	
+	.inAccordionLi {
+	  .inButton {
+	    display: block;
+	    padding: 20px;
+	    width: 100%;
+	    color: #000;
+	    text-align: left;
+	    font-size : 16px;
+	    font-weight : bold;
+	    background-color: white;
+	    border: 4px #193D76 solid;
+	    border-radius : 1rem;
+	    cursor: pointer;
+	  }
+	  .inContent {
+	    display: none;
+	    margin: 0;
+	    padding: 20px;
+	    background-color: #fff;
+	    border-top: 1px solid #ddd;
+	  }
+	  
+	  &.on {
+	    .inButton {
+	      background-color: rgba(255, 208, 20, 0.9);
+	      opacity : 0.8;
+	      border: 4px #193D76 solid;
+	      border-radius : 1rem;
+	      font-size : 16px;
+    		font-weight : bold;
+	    }
+	    .inContent {
+	      display: block;
+	    }
+	  }
+	}
+	<!-- 스와이프 시작 -->
+	.swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+		text-align: center;
+		font-size: 18px;
+		/*display: flex;*/
+		justify-content: center;
+		align-items: center;
+		
+		.swiper-p{
+			margin-bottom : 0.3rem;
+			text-align: left;
+		}
+		.swiper-inBox{
+	    	text-align: center;
+			font-size: 80%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border : grey 1px solid;
+			color: #cc8c28;
+			border: 2px solid #ffc000;
+			background-color: #ffd014;
+			padding: 17% 3% 19% 3%;
+			width: 100%;
+		}
+   		.on{
+			color: white;
+			font-size: 80%;
+			border: 2px solid navy;
+			background-color: #193D76;
+		}
+    }
+    .payment_type{
+		border:none;	
+	 	borderRadius : 1rem;
+    }
+    .payment_type.on{
+		border:#193D76 5px solid;	
+	 	borderRadius : 1rem;
+    }
+    
+    
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+	<!-- 스와이프 끝 -->
+	
+	.facility-box{
+		padding : 0% 0% 6% 11%;
+	}
+	.facility-icon{
+		display: inline-block; 
+		margin: 2% 2% 2% 2%;
+	}
+	.p-3{
+		border-radius: 0.75rem;
+	}
+	
+	
 </style>
-<body>
+<section>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -178,46 +335,7 @@ $(function(){
 		</div>
 		<div class="site-mobile-menu-body"></div>
 	</div>
-<!-- 
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">Property</a>
 
-					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-						<li><a href="index.html">Home</a></li>
-						<li class="has-children">
-							<a href="properties.html">Properties</a>
-							<ul class="dropdown">
-								<li><a href="#">Buy Property</a></li>
-								<li><a href="#">Sell Property</a></li>
-								<li class="has-children">
-									<a href="#">Dropdown</a>
-									<ul class="dropdown">
-										<li><a href="#">Sub Menu One</a></li>
-										<li><a href="#">Sub Menu Two</a></li>
-										<li><a href="#">Sub Menu Three</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="about.html">About</a></li>
-						<li class="active"><a href="contact.html">Contact Us</a></li>
-					</ul>
-
-					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-						<span></span>
-					</a>
-
-				</div>
-			</div>
-		</div>
-	</nav>
- 
- 네비게이션탭 없애기 위한 주석
- -->
 
 	<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
 
@@ -273,17 +391,6 @@ $(function(){
 				    <span class="visually-hidden">Next</span>
 				  </button>
 				</div>
-				
-				
-				
-					<!-- <div class="img-property-slide-wrap">
-						<div class="img-property-slide">
-							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-							<img src="images/img_2.jpg" alt="Image" class="img-fluid">
-							<img src="images/img_3.jpg" alt="Image" class="img-fluid">
-						</div>
-					</div>-->
-					
 					
 				<br>
 				<h1>${vo.spaceName }</h1>
@@ -356,12 +463,25 @@ $(function(){
 					<div class = "detail-navTab">
 						<h5>환불정책</h5>
 						<div class = "nav-bar"></div>
-						<c:if test="${!empty vo.refundNum }">
+						<c:if test="${!empty refundVo }">
+						<c:set var="refund" value="${refundVo}" />
 							<ol>
-								<c:forEach var="warns" items="${fn:split(vo.spaceWarn, '||')}">
-									<li class = "ol-list"> ${warns}</li>
-									<br>
-								</c:forEach>
+								<li class = "ol-list">7일전 ${refund.refund7Day}</li>
+								<br>
+								<li class = "ol-list">6일전 ${refund.refund6Day}</li>
+								<br>
+								<li class = "ol-list">5일전 ${refund.refund5Day}</li>
+								<br>
+								<li class = "ol-list">4일전 ${refund.refund4Day}</li>
+								<br>
+								<li class = "ol-list">3일전 ${refund.refund3Day}</li>
+								<br>
+								<li class = "ol-list">2일전 ${refund.refund2Day}</li>
+								<br>
+								<li class = "ol-list">1일전 ${refund.refund1Day}</li>
+								<br>
+								<li class = "ol-list">당일 ${refund.refundDay}</li>
+								<br>
 							</ol>
 						</c:if>
 					</div>
@@ -388,83 +508,151 @@ $(function(){
 				</div>
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
-			
-			
-						
 				<div class="col-lg-4">
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
-					<div class="d-block agent-box p-3" style="border: 1px #6d3bff solid;  text-align: left;">
-					<h3 class="h5 text-primary" style="margin:4% 1% 5% 1%">공간명 : 스페이스</h3>
-						<div style="margin-top: 5px">	
-							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-						</div>
-						<div class="property-item">
-								<!-- 여기까지 오른쪽 박스 사진 -->
-								<div class="property-content">
-									<span class="price mb-2" style= "color:#6d3bff">₩10,000</span><span>/(시간단위)</span>
-									<!-- 요금 -->
+					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
+					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center;">공간 예약 정보</h3>
+						<ul class = "accordionUl">
+						<c:if test="${!empty map }">
+							<c:forEach var="detail" items="${map }">
+							  <li class = "accordionLi">
+							    <button class="button">
+							    <input type="hidden" value="${detail.SD_NUM }">
+							    	<span>${detail.SD_TYPE}</span> 
+							    	<div style="float: right;">
+								    	<span class="price mb-2" style= "color:#193D76;">
+											 <fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
+										</span>
+										<span style= "color:grey; font-weight: 400">/(시간단위)</span>
+									</div>
+							    </button>
+							    <div id="menu2" class="content">
+							    <div style="margin-top: 5px">	
+									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+								</div>
+								<div class="property-item">
+								  <div class="property-content">
+									<span class="price mb-2" style= "color:#193D76">
+										 <fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
+									</span>
+									<span>/(시간단위)</span>
 									<hr>
 									<div>
 										<span class="d-block mb-1 text-black" style="font-weight: bold; font-size: 15px">${vo.spaceZipcode } ${vo.spaceAddress } ${vo.spaceAddressDetail }</span>
-									<!-- 주소 -->
 									<hr>
 										<span class="city d-block mb-3">${vo.spaceAddress }, 대한민국</span>
-									<!-- 지역 -->
 									<hr>
 									<span class="d-block mb-1 text-black">
 									${vo.spaceInfo }
 									</span>
 									<hr>
 									<span class="tit">공간유형</span>
-									<span class="city text-black">${vo.spaceType }</span>
+									<span class="city text-black">${detail.SD_TYPE}</span>
 									<hr>
 									<span class="tit">공간면적</span>
-									<span class="city d-block mb-1 text-black"></span>
+									<span class="city text-black">${detail.SD_AREA }㎡</span>
 									<hr>
 									<span class="tit">수용인원</span>
-									<span class="city d-block mb-1 text-black"></span>
+									<span class="city text-black">최소 ${detail.SD_MIN_PEOPLE }명 ~ 최대${detail.SD_MAX_PEOPLE }명</span>
 									<hr>
-									
-									
-										<div class="specs d-flex mb-4 ">
-											<span class="d-block d-flex align-items-center me-3">
-												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
-											</span>
-											<span class="d-block d-flex align-items-center">
-												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
-											</span>
-										</div>
-										<div class="specs d-flex mb-4 " style="border-bottom:purple solid 2px;"></div>
-									<!-- 옵션 -->
-
-										<span class="city d-block">예약선택</span>
-										<hr>
-										<div style = "padding:1% 3% 1% 3%; text-align: center;">
-											<a href = "javascript:void(0);"><div class = "payment_type" id = "kakaopay" value="kakaopay" onclick="setPaymentType('kakaopay')">
-												<img alt="" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
-											</div></a>
-											<a href = "javascript:void(0);"  style = "margin-left:20%;"><div class = "payment_type" id = "kcp" value = "kcp" onclick="setPaymentType('kcp')">
-												<img alt="" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
-											</div></a>
-										</div>
-										<hr>
-											<a href="property-single.html" class="btn btn-primary py-2 px-3">전화</a>
-											<a onclick="requestPay()"  class="btn btn-primary py-2 px-7">결제하기</a>
-												<!-- <button onclick="requestPay()">결제하기</button> -->
+								    <div class = "facility-box" style = "display: inline-block;">
+										<c:forEach var="key" items="${detail.keySet()}">
+										    <c:if test="${fn:contains(key, 'FAC_')}" >
+												<img class = "facility-icon"src="<c:url value='/img/icons/facilityIcons/${key }.png'/>" width="70" height="70" >
+										    </c:if>
+										</c:forEach>
 									</div>
-								</div>
-							</div> 
-							
+									<div class="specs d-flex mb-4 " style="border-bottom:#6d3bff solid 2px; margin-top:5px"></div>
+									</div>
+										<span class="city d-block">예약선택</span>
+									<hr>
+									<ul class = "inAccordionUl">
+									 <li class = "inAccordionLi">
+									    <button class="inButton">시간 단위 예약하기(최소 ${detail.SD_MIN_TIME}부터)</button>
+									    <div class = "inContent" style="width: 100%">
+									    <hr>
+									    
+										 <div class="swiper mySwiper">
+										    <div class="swiper-wrapper">
+											    <fmt:parseNumber var="openTime" integerOnly="true" type="number" value="${detail.SD_OPEN_TIME}" />
+											    <fmt:parseNumber var="closeTime" integerOnly="true" type="number" value="${detail.SD_CLOSE_TIME}" />
+											    <c:forEach begin="${openTime }" end="${closeTime }" var="i">
+										    			<div class="swiper-slide">
+										    					<c:if test="${i == 0}">
+												    				<p class = "swiper-p">오전</p>
+												    				<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    					<c:if test="${i == 12}">
+												    				<p class = "swiper-p">오후</p>
+												    				<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    					<c:if test="${i != 0 && i != 12}">
+												    				<p class = "swiper-p">&nbsp;</p>
+										    						<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    				<button class = "swiper-inBox">
+										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
+										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
+										    				</button>
+										    			</div>
+										     	</c:forEach>
+										    </div>
+										  </div>
+										  <br>
+										  	<input type="hidden" class="hiddenPrice"/>
+								     	  	<span class="price mb-2 totalPrice" style= "color:#193D76" ></span>
+										  <br><br>
+										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()">초기화</button>
+										  <br><br>
+									    <hr>
+										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
+										    <a href = "javascript:void(0);" style = "text-decoration: none;">
+												<div class="payment_type" value="kakaopay" onclick="paymentType('kakaopay')">
+													<img alt="" class = "payment_type" src="<c:url value='/img/paymentIcons/kakaoPay.png'/>"width="75"/>
+												</div>
+											</a>
+											
+										    <a href = "javascript:void(0);" style = "text-decoration: none;" onclick="paymentType('kcp')">
+													<div class="payment_type" value = "kcp">
+														<img alt="" class = "payment_type" src="<c:url value='/img/paymentIcons/card.png'/>" width="75" style="border-radius: 1rem"/>
+													</div>
+											</a>
+											</div>
+											<hr>
+											<div style="text-align: center;">
+												<a href="property-single.html" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#myModal" style="width: 40%">전화</a>
+												
+												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 40%">결제하기</a>
+											</div>
+										</div>
+							  		</li>
+							  		</ul>
+								  </li>
+								  </c:forEach>
+							  </c:if>
+							</ul>
+						</div> 
 					</div>
+				</div>
+				<div class="modal" id = "myModal" tabindex="-1" >
+				  <div class="modal-dialog">
+				    <div class="modal-content" style = "font-weight : bold">
+				      <div class="modal-header">
+				        <h4 class="modal-title" >${vo.spaceName}</h5>
+				      </div>
+				      <div class="modal-body">
+				        <p>전화번호 : ${vo.spacePhoneNum }</p>
+				      </div>
+				      <div class="modal-footer" style = "justify-content: center;">
+				        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
 				</div>
 			<!-- 여기까지 오른쪽 부분-->				
 			</div>
-		</div>
-	</div>
 	<!-- 여기까지 섹션-->				
-
+</section>
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
@@ -473,8 +661,8 @@ $(function(){
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/spaceDetail.js"></script>
-    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
@@ -529,7 +717,95 @@ $(function(){
 		function closeOverlay() {
 		    overlay.setMap(null);     
 		}
-		
 	</script>
+	<script>
+	//스와이프 스크립트
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 6,
+      spaceBetween: 0,
+      freeMode: true,
+      on: {
+          transitionEnd: function () {
+              // 활성 슬라이드의 인덱스를 가져옵니다.
+              const activeSlideIndex = this.activeIndex;
+
+              // 활성 슬라이드에 있는 'on' 클래스를 유지합니다.
+              const activeSlideSlots = document.querySelectorAll('.swiper-slide-active .swiper-inBox.on');
+              activeSlideSlots.forEach(function (slot) {
+                  slot.classList.add('on');
+              });
+          }
+      }
+  });
+  	</script>
+  	<script>
+	
+		var payType = "";
+		var sdNum = "";
+		var sdName = "";
+	    function paymentType(type){
+	        payType = type;
+	    }
+	    const sdBt = document.querySelectorAll('.button');
+
+	    sdBt.forEach(function(button) {
+	        button.addEventListener('click', function(e) {
+	            e.preventDefault();
+
+	            const hiddenNum = this.querySelector('input[type="hidden"]');
+	            const hiddenName = this.querySelector('span').innerHTML;
+	            if (hiddenNum !== null) {
+	                const inputValue = hiddenNum.value;
+	                sdNum = inputValue;
+	                sdName = hiddenName;
+	                console.log("Input value: " + inputValue + "," + sdNum + "," + sdName + ", " + hiddenName);
+	            } else {
+	                console.log("Input element not found.");
+	            }
+	        });
+	    });
+
+      
+        var IMP = window.IMP; 
+        IMP.init("imp04807210"); 
+      
+        var today = new Date();   
+        var hours = today.getHours(); // 시
+        var minutes = today.getMinutes();  // 분
+        var seconds = today.getSeconds();  // 초
+        var milliseconds = today.getMilliseconds();
+        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+
+        
+        function requestPay() {
+        	console.log(paymentType);
+        	console.log($('.hiddenPrice').val());
+            IMP.request_pay({
+                pg : payType,
+                pay_method : 'card',
+                merchant_uid: ${vo.spaceNum}+"_"+ sdNum + new Date().getTime(), 
+                name : ${vo.spaceNum}+"_"+sdName,
+                amount : $('.hiddenPrice').val(),
+                buyer_email : 'Iamport@chai.finance',
+                buyer_name : '아임포트 기술지원팀',
+                buyer_tel : '010-1234-5678',
+                buyer_addr : '서울특별시 강남구 삼성동',
+                buyer_postcode : '123-456'
+            },   function (rsp) {
+            	if ( rsp.success ) {
+            		console.log(rsp);
+                    var msg = '결제가 완료되었습니다.';
+                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                    msg += '결제 금액 : ' + rsp.paid_amount;
+                   
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                }
+            	 alert(msg);
+              }
+            );
+        }
+    </script>
 		
-<%@ include file="../form/bottom.jsp" %>
+<%@ include file="../form/userBottom.jsp" %>
