@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/views/form/top.jsp" %>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<!-- jQuery -->
@@ -808,4 +808,4 @@ pageEncoding="UTF-8"%>
         }
     </script>
 		
-<%@ include file="../form/bottom.jsp" %>
+<%@ include file="../form/userBottom.jsp" %>
