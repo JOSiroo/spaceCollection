@@ -36,7 +36,7 @@
       
     </style>
   
-  	<h1>Please select a space.</h1>
+  	<h1>어떤 공간을 찾고 있나요?</h1>
     <div class="icon-container">
 	  <% for (int i = 1; i <= 12; i++) { %>
 	    <div class="icon" id="iconimag">
