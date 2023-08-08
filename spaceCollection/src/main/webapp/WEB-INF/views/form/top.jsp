@@ -49,7 +49,7 @@
 
 .topSearch {
 	width: 1000px;
-	padding: 10px 50px 0px 300px;
+    padding: 20px 40px 50px 260px;
 	margin-left: 450px;
 	scale: 0.8;
 	position: absolute;
@@ -57,6 +57,7 @@
 }
 
 #inputSearch {
+	width: 400px;
 	border-radius: 24px;
 	border: 1px solid #f6f6f6;
 	background-color: #d1d1d1;
@@ -104,7 +105,7 @@
 	.sidemenust {
     position: absolute;
     float: right;
-    margin-left: 1160px;
+    margin-left: 1170px;
     margin-top: 25px;
     width: 100px;
 	}
@@ -134,8 +135,7 @@
 						class="logo float-start" id="topLogo">SpaceCollection</a>
 
 					<div class="topbar">
-						<ul
-							class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 							<li class="active"><a href="index.html">Home</a></li>
 							<li class="has-children"><a href="SpaceCollection.html">SpaceCollection</a>
 								<ul class="dropdown">
@@ -156,9 +156,9 @@
 					
 
 					<div class="topSearch">
-						<form action="#"
-							class="narrow-w form-search d-flex align-items-stretch mb-3"
-							data-aos="fade-up" data-aos-delay="200">
+						<!-- <form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3"
+						data-aos="fade-up" data-aos-delay="200"> -->
+						<form class="narrow-w form-search d-flex align-items-stretch mb-3">
 							<input type="text" class="form-control px-4"
 								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
 							<button type="submit" class="btn btn-primary">Search</button>
