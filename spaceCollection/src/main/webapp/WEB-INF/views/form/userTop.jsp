@@ -16,7 +16,7 @@
 
 <!-- 사이드메뉴 -->
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 사이드메뉴 -->
@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 <!-- 공간 상세페이지용 cdn -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <style type="text/css">
@@ -112,6 +112,9 @@
 	#searchBt{
     width: 100px;
     margin-left: 10px;
+	}
+	#offcanvasDarkNavbar{
+	z-index:1051;
 	}
 </style>
 </head>
@@ -261,7 +264,7 @@
 					
 					
 					
-</div></div></div></div>
+</div></div></div></div></div>
 
 
 
