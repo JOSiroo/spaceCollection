@@ -16,5 +16,17 @@ public class BoardTypeServiceImpl implements BoardTypeService{
 	public List<BoardTypeVO> selectBoardType() {
 		return boardTypeDao.selectBoardType();
 	}
+
+	@Override
+	public int createBoard(BoardTypeVO vo) {
+		int result = 0;
+		int dupResult = boardTypeDao.boardTypeNameDupCheck(vo.getBoardTypeName());
+		if(dupResult < 1) {
+			result = boardTypeDao.insertBoardType(vo);
+		}else {
+			result = -1;
+		}
+		return result;
+	}
 	
 }

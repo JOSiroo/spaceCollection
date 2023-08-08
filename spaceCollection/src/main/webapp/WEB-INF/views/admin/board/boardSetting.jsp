@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	$(function() {
 		$('#boardBt').click(function() {
-			location.href="<c:url value='/admin/board/createBoard'/>";
+			location.href="<c:url value='/admin/board/boardCreate'/>";
 		});
 	});
 </script>
@@ -17,7 +17,7 @@
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
-				<li class="breadcrumb-item active">게시판 관리</li>
+				<li class="breadcrumb-item active">게시판 생성/관리</li>
 			</ol>
 		</nav>
 	</div>
@@ -29,7 +29,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">생성된 게시물</h5>
+ 						<h5 class="card-title" style="font-weight: bold;">생성된 게시판</h5>
 						<button type="button" class="btn btn-primary rounded-pill" id="boardBt">게시판 생성</button>
 
 						<table class="table">
@@ -56,8 +56,8 @@
 											<td>${vo.boardTypeName }</td>
 											<td>${vo.boardTypeCommentOk }</td>
 											<td>${vo.boardTypeFileOk }</td>
-											<td>${vo.boardTypeRegdate }</td>
-											<td>${vo.boardTypeRegdate }</td>
+											<td><fmt:formatDate value="${vo.boardTypeRegdate }" pattern="yyyy-MM-dd"/></td>
+											<td>${vo.boardTypeUse }</td>
 										</tr>
 									</c:forEach>
 								</c:if>

@@ -102,4 +102,45 @@ public class AdminController {
 		
 		model.addAttribute("list", list);
 	}
+	
+	@GetMapping("/board/boardCreate")
+	public void boardCreate() {
+		logger.info("게시판 생성 화면");
+	}
+	
+	@PostMapping("/board/boardCreate")
+	public String boardCreate(@ModelAttribute BoardTypeVO vo, Model model) {
+		logger.info("게시판 생성, 파라미터 vo = {}", vo);
+		
+		if(vo.getBoardTypeCommentOk()==null) {
+			vo.setBoardTypeCommentOk("Y");
+		}else {
+			vo.setBoardTypeCommentOk("N");
+		}
+		
+		if(vo.getBoardTypeFileOk()==null) {
+			vo.setBoardTypeFileOk("Y");
+		}else {
+			vo.setBoardTypeFileOk("N");
+		}
+		
+		if(vo.getBoardTypeUse()==null) {
+			vo.setBoardTypeUse("Y");
+		}else {
+			vo.setBoardTypeUse("N");
+		}
+		String msg = "게시판 생성에 실패하였습니다.", url = "/admin/board/boardCreate";
+		int result = boardTypeService.createBoard(vo);
+		if(result>0) {
+			msg = "게시판이 생성되었습니다.";
+			url = "/admin/board/boardSetting";
+		}else if(result<0){
+			msg = "이미 사용중인 게시판 이름입니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
 }
