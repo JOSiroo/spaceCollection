@@ -8,12 +8,40 @@
 	pageEncoding="UTF-8"%>
 <!doctype html>
 
+<html lang="ko">
+<head>
+<title>SpaceCollection.com</title>
+
+<meta charset="utf-8">
+
+<!-- 사이드메뉴 -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 사이드메뉴 -->
+
+<meta name="author" content="Untree.co">
+<link rel="shortcut icon" href="favicon.png">
+<meta name="description" content="" />
+<meta name="keywords" content="bootstrap, bootstrap5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/icomoon/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/flaticon/font/flaticon.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tiny-slider.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/aos.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
 <style type="text/css">
 
-form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
+/* form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
 	{
 	margin-top: 10px;
-}
+} */
 
 .topSearch {
 	width: 1000px;
@@ -24,7 +52,7 @@ form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
 	border-radius: 10px;
 }
 
-input.form-control.px-4 {
+#inputSearch {
 	border-radius: 24px;
 	border: 1px solid #f6f6f6;
 	background-color: #d1d1d1;
@@ -32,63 +60,56 @@ input.form-control.px-4 {
 	box-shadow: 0 15px 30px -15px rgba(0, 0, 0, 0.1);
 }
 
-a.logo.float-start {
+#topLogo {
 	font-size: 40px;
 	font-weight: bolder;
 	margin-left: 20px;
 	margin-top: 13px;
 }
 
+/* side */
+	a{
+	  text-decoration: none; 
+	  color: inherit;
+	}
+  
+	.sidemenubt {
+  	color: white !important;
+	}
+	
+	.service_menu {
+    padding: 18px 0 20px;
+    text-align: center;
+    color: #949494;
+    background: #f6f6f6;
+    height: 200px;
+    
+	}
+
+	.bi{
+	color:#193D76; 
+	font-size: 40px;
+	width: 50px;
+	height: 30px;
+	}
+	
+	#sidemenubtcl{
+	color:white;
+	}
+	
+	.sidemenust {
+    position: absolute;
+    float: right;
+    margin-left: 1160px;
+    margin-top: 25px;
+    width: 100px;
+	}
+
 </style>
-
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
-
-<meta name="description" content="" />
-<meta name="keywords" content="bootstrap, bootstrap5" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-	href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
-	rel="stylesheet">
-
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/fonts/icomoon/style.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/fonts/flaticon/font/flaticon.css">
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/tiny-slider.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/aos.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
-
-<title>SpaceCollection.com</title>
 </head>
 
-
 <body>
-
+	<!-- 스크롤 -->
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -97,14 +118,16 @@ a.logo.float-start {
 		</div>
 		<div class="site-mobile-menu-body"></div>
 	</div>
+	<!-- 스크롤끝-->
 
-	<nav class="site-nav">
+<!-- 상단메뉴 -->
+<nav class="site-nav">
 		<div class="container">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 
 					<a href="http://localhost:9091/spaceCollection/"
-						class="logo float-start">SpaceCollection</a>
+						class="logo float-start" id="topLogo">SpaceCollection</a>
 
 					<div class="topbar">
 						<ul
@@ -133,121 +156,113 @@ a.logo.float-start {
 							class="narrow-w form-search d-flex align-items-stretch mb-3"
 							data-aos="fade-up" data-aos-delay="200">
 							<input type="text" class="form-control px-4"
-								placeholder="지역, 공간유형, 공간명으로 찾아보세요">
+								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
 							<button type="submit" class="btn btn-primary">Search</button>
 						</form>
 					</div>
-
-
- <!-- 토글버튼  -->      
-	<div class="navbar fixed-top">
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" style="margin-right: 150px;">
-      <i class="bi bi-list"></i>
+					
+					
+<!-- 사이드시작  -->      
+<div class="sidemenust">
+    <button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" ">
+      <i class="bi bi-list" id="sidemenubtcl"></i>
     </button>
-
-    <!--토글버튼 클릭 시 나타나는 버튼  -->
+    
+    <!--사이드메뉴 시작-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" >
     <div class="offcanvas-header" style="background-color: #f6f6f6; text-align: center;">     	 		
-     
+		<div><a href="#"><h5> Space Collection</h5></a></div>	
+		<div><button type="button" class="btn-close text-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+  	</div>
+      
+      
+      <!-- 메뉴 바(내 정보) 추가하기!!!!!!!!!!!!!!!!!!!!! -->
 		
-		<div>	<a href="#"> 	
-     		  <h5> Space Collaction</h5>
-     </a> 	</div>	
-     	<div>
-	 <button type="button" class="btn-close text-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-		</div>	
-	 	  
-  </div>
-      
-     		<!-- 메뉴 바(내 정보) -->
-			<!-- 메뉴 바(관리) -->
-			<div class="row" style="margin-top: 30px; margin-bottom: 40px">
-				  
-				  
-				 <div class="col-sm-6">
-					    <a href="${pageContext.request.contextPath }/member_mypage">
-					  		  <i class="bi bi-person-video" ></i>
-					 	      <p>마이페이지</p></a>
-				 </div>
+		
+			<!-- 사이드메뉴 -->
+			<div class="sideform" style="margin-top: 30px; margin-bottom: 40px">
+			 	<div class="col-sm-6">
+				<a href="${pageContext.request.contextPath }/member_mypage">
+		  		<i class="bi bi-person-video" ></i>
+		 	    <p>마이페이지</p></a>
+		 	</div>
 				
-				  <div class="col-sm-6">
-					  <a href="${pageContext.request.contextPath }/member_reserve" >   
-					        <i class="bi bi-calendar-check" ></i>
-				 		  <p>예약 리스트</p></a> 
-				 </div>
-				 
-				 
-				 
-				   <div class="col-sm-6">
-					       <a href="${pageContext.request.contextPath }/member_review" >
-							<i class="bi bi-person-hearts" ></i>
-				 	 	  <p>이용 후기/Q&A</p></a>
-				 </div>
-			
-			
-				    <div class="col-sm-6">
-					  <a href="${pageContext.request.contextPath }/member_heart">
-				   		 <i class="bi bi-house-heart" ></i>
-				 	 	  <p>찜 리스트</p></a>
-				 </div>
-			
-				  <div class="col-sm-6 " style="text-align: center;">
-				    <a href="${pageContext.request.contextPath }/member_notice?nmstatus=1&nstatus=1" >   
-				     <i class="bi bi-info-circle" ></i>
-				   <p>공지사항</p></a> 
-				  </div>
-				  
-				  <div class="col-sm-6">
-				    <a href="${pageContext.request.contextPath }/member_faq?fmstatus=1&fstatus=1" >
-				     <i class="bi bi-question-diamond" ></i>
-				 	   <p>FAQ</p></a>
-				  </div>
-				  
-				  <div class="col-sm-6">
-					  <c:choose>
-					    <c:when test="${not empty loginMember}">
-					      <!-- 로그인한 경우 -->
-					      <a href="${pageContext.request.contextPath}/logout/member">
-					        <i class="bi bi-box-arrow-right"></i>
-					        <p>로그아웃</p>
-					      </a>
-					    </c:when>
-					    <c:otherwise>
-					      <!-- 로그인하지 않은 경우 -->
-					      <a href="${pageContext.request.contextPath}/login/member">
-					        <i class="bi bi-person-check"></i>
-					        <p>로그인</p>
-					      </a>
-					    </c:otherwise>
-					  </c:choose>
-				 </div>
-				  
-				  <div class="col-sm-6 ">
-				    <a href="${pageContext.request.contextPath }">
-				    <i class="bi bi-houses" ></i>
-				 	   <p>Home</p></a>
-				  </div>
-			</div>	      
-      
-        <!--Host센터 이동 --> 
-      <div class="service_menu">
-      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
-       <p class="copyright">Powered by © itwill Corp.</p>
-       </div>
-    </div>
-  </div><!-- 토글버튼 종료 -->
-
-
-					<!-- 사이드바 메뉴 -->
-					<%@ include file="/WEB-INF/views/form/side.jsp" %>
-					
-
+		  	<div class="col-sm-6">
+			  <a href="${pageContext.request.contextPath }/member_reserve" >   
+			        <i class="bi bi-calendar-check" ></i>
+		 		  <p>예약 리스트</p></a> 
+		 	</div>
+		 
+		   <div class="col-sm-6">
+			       <a href="${pageContext.request.contextPath }/member_review" >
+					<i class="bi bi-person-hearts" ></i>
+		 	 	  <p>이용 후기/Q&A</p></a>
+		 	</div>
+	
+		    <div class="col-sm-6">
+			  <a href="${pageContext.request.contextPath }/member_heart">
+		   		 <i class="bi bi-house-heart" ></i>
+		 	 	  <p>찜 리스트</p></a>
 			</div>
-		</div>
-		</div>
-	</nav>
+	
+		  <div class="col-sm-6 " style="text-align: center;">
+		    <a href="${pageContext.request.contextPath }/member_notice?nmstatus=1&nstatus=1" >   
+		     <i class="bi bi-info-circle" ></i>
+		   <p>공지사항</p></a> 
+		  </div>
+		  
+		  <div class="col-sm-6">
+		    <a href="${pageContext.request.contextPath }/member_faq?fmstatus=1&fstatus=1" >
+		     <i class="bi bi-question-diamond" ></i>
+		 	   <p>FAQ</p></a>
+		  </div>
+				  
+		  <div class="col-sm-6">
+			  <c:choose>
+			    <c:when test="${not empty loginMember}">
+			      <!-- 로그인한 경우 -->
+			      <a href="${pageContext.request.contextPath}/logout/member">
+			        <i class="bi bi-box-arrow-right"></i>
+			        <p>로그아웃</p>
+			      </a>
+			    </c:when>
+			    <c:otherwise>
+			      <!-- 로그인하지 않은 경우 -->
+			      <a href="${pageContext.request.contextPath}/login/member">
+			        <i class="bi bi-person-check"></i>
+			        <p>로그인</p>
+			      </a>
+			    </c:otherwise>
+			  </c:choose>
+		 </div>
+				  
+		  <div class="col-sm-6 ">
+		    <a href="${pageContext.request.contextPath }">
+		    <i class="bi bi-houses" ></i>
+		 	   <p>Home</p></a>
+		  </div>
 				
+	</div><!-- sideform -->	      
+      
+	      <!--Host이동 --> 
+	      <div class="service_menu">
+	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
+	      <p class="copyright">Powered by © itwill Corp.</p>
+	      </div>
+       
+    </div><!--사이드메뉴끝-->
+<!-- 사이드종료 -->
 					
+					
+					
+</div></div></div></div>
+
+
+
+	
+<!-- 상단메뉴 끝 -->	</nav>	
+		
+	<!-- 채팅api -->				
 	<script type="text/javascript">
 		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 		(function() {
@@ -269,3 +284,4 @@ a.logo.float-start {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
+	<!-- 채팅api 끝 -->	
