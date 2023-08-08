@@ -508,9 +508,6 @@ pageEncoding="UTF-8"%>
 				</div>
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
-			
-			
-						
 				<div class="col-lg-4">
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
 					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
