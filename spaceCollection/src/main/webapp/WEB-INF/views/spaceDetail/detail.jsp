@@ -19,15 +19,21 @@ pageEncoding="UTF-8"%>
 			$('.nav-item').not($(this)).css('background', 'white');
 		})
 		
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
 		$('.swiper-inBox').click(function(){
 		   	var result = 0;
-		    $('.swiper-inBox.on').each(function(){
-		        result += parseInt($(this).find('input[type=hidden]').val());
-		    });
-		    $('.hiddenPrice').val(result);
-		    
-		    var formattedTotalPrice = addComma(result);
-		    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		   	var formattedTotalPrice = "";
+		   	if($('.swiper-inBox.on').length > 0){
+			    $('.swiper-inBox.on').each(function(){
+			        result += parseInt($(this).find('input[type=hidden]').val());
+			    });
+			    $('.hiddenPrice').val(result);
+			    
+			    formattedTotalPrice = addComma(result);
+			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		   	}else{
+				$('.totalPrice').text("예약 시간을 선택해주세요.");
+			}
 		});
 	})
 	 function addComma(value){
@@ -574,7 +580,18 @@ pageEncoding="UTF-8"%>
 											    <fmt:parseNumber var="closeTime" integerOnly="true" type="number" value="${detail.SD_CLOSE_TIME}" />
 											    <c:forEach begin="${openTime }" end="${closeTime }" var="i">
 										    			<div class="swiper-slide">
-										    				<p class = "swiper-p">${i}</p>
+										    					<c:if test="${i == 0}">
+												    				<p class = "swiper-p">오전</p>
+												    				<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    					<c:if test="${i == 12}">
+												    				<p class = "swiper-p">오후</p>
+												    				<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    					<c:if test="${i != 0 && i != 12}">
+												    				<p class = "swiper-p">&nbsp;</p>
+										    						<p class = "swiper-p">${i}</p>
+										    					</c:if>
 										    				<button class = "swiper-inBox">
 										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
