@@ -10,7 +10,7 @@
 						<ul class="list-unstyled links">
 							<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
 							<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-							<li><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
+							<li><a href="mailto:info@mydomain.com">info@spacecloud.com</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-4 -->
