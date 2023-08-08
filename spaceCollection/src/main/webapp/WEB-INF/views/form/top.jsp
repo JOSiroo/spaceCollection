@@ -36,6 +36,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/aos.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
+<!-- 공간 상세페이지용 cdn -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 <style type="text/css">
 
 /* form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
