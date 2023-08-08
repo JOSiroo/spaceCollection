@@ -158,11 +158,10 @@
 						</ul>
 						<br>
 					
-
 					<div class="topSearch">
 						<!-- <form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3"
 						data-aos="fade-up" data-aos-delay="200"> -->
-						<form class="narrow-w form-search d-flex align-items-stretch mb-3">
+						<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
 							<input type="text" class="form-control px-4"
 								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
 							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>

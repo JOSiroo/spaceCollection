@@ -32,11 +32,14 @@
       h1{
        text-align: center;
        margin-bottom: 50px;
+       margin-top: 40px;
+	   font-size: 30px;
+	   font-weight: bold;
       }
       
     </style>
   
-  	<h1>어떤 공간을 찾고 있나요?</h1>
+  	<h1 >어떤 공간을 찾고 있나요?</h1>
     <div class="icon-container">
 	  <% for (int i = 1; i <= 12; i++) { %>
 	    <div class="icon" id="iconimag">
