@@ -9,11 +9,11 @@ public class ReservationVO {
 	private int reservationNum;
 	private int userNum;
 	private int sdNum;
-	private Timestamp reservationStartDay;
-	private Timestamp reservationStartHour;
-	private Timestamp reservationFinishDay;
-	private Timestamp reservationFinishHour;
+	private String reserveStartDay;
+	private String reserveStartHour;
+	private String reserveFinishDay;
+	private String reserveFinishHour;
 	private int reservePrice;
-	private Timestamp reservationPayDay;
+	private Timestamp reserverPayDay;
 	private int paymentNum;
 }

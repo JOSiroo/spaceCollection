@@ -42,50 +42,6 @@ pageEncoding="UTF-8"%>
 	        return value; 
 	    }
 	</script>
-	<script>
-	  var payType = "";
-	  function paymentType(type){
-		  payType = type;
-	  }
-	      
-      
-        var IMP = window.IMP; 
-        IMP.init("imp04807210"); 
-      
-        var today = new Date();   
-        var hours = today.getHours(); // 시
-        var minutes = today.getMinutes();  // 분
-        var seconds = today.getSeconds();  // 초
-        var milliseconds = today.getMilliseconds();
-        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
-
-        
-        
-        function requestPay() {
-        	console.log(paymentType);
-        	console.log($('.hiddenPrice').val());
-            IMP.request_pay({
-                pg : payType,
-                pay_method : 'card',
-                merchant_uid: "order_no_00123", 
-                name : '당근 10kg',
-                amount : $('.hiddenPrice').val(),
-                buyer_email : 'Iamport@chai.finance',
-                buyer_name : '아임포트 기술지원팀',
-                buyer_tel : '010-1234-5678',
-                buyer_addr : '서울특별시 강남구 삼성동',
-                buyer_postcode : '123-456'
-            }, function (rsp) { // callback
-                if (rsp.success) {
-                    console.log(rsp);
-                } else {
-                    console.log(rsp);
-                }
-           });
-        }
-       
-    </script>
-
 	<title>스페이스 클라우드</title>
 	</head>
 <style type="text/css">
@@ -781,20 +737,43 @@ pageEncoding="UTF-8"%>
         	console.log(paymentType);
         	console.log($('.hiddenPrice').val());
             IMP.request_pay({
-                pg : payType,
+               	pg : payType,
                 pay_method : 'card',
                 merchant_uid: ${vo.spaceNum}+"_"+ sdNum + new Date().getTime(), 
                 name : ${vo.spaceNum}+"_"+sdName,
                 amount : $('.hiddenPrice').val(),
+                custom_data : {START_DAY:'2023-08-08',
+			                	START_HOUR:'10',
+			                	END_DAY:'2023-08-08',
+			                	END_HOUR:'18',
+			                	SD_NUM:sdNum},
                 buyer_email : 'Iamport@chai.finance',
-                buyer_name : '아임포트 기술지원팀',
+                buyer_name : '2',
                 buyer_tel : '010-1234-5678',
                 buyer_addr : '서울특별시 강남구 삼성동',
                 buyer_postcode : '123-456'
             },   function (rsp) {
             	if ( rsp.success ) {
+            		console.log(rsp.custom_data);
             		console.log(rsp);
                     var msg = '결제가 완료되었습니다.';
+                    $.ajax({
+                        url: 'reservation/ajaxReservation', // 서버의 엔드포인트 URL
+                        method: 'GET', // POST 요청
+                        //dataType:'json',
+                        data: rsp,
+                        success: function(data) {
+                            // AJAX 요청이 성공한 경우
+                            $('#result').html(data.message); // 결과를 화면에 출력
+                        },
+                        error: function(xhr, status, error) {
+                            // AJAX 요청이 실패한 경우
+                            console.error('Error:', error);
+                        }
+                    });
+                    
+                    
+                    
                     msg += '상점 거래ID : ' + rsp.merchant_uid;
                     msg += '결제 금액 : ' + rsp.paid_amount;
                    
