@@ -106,6 +106,10 @@
     width: 100px;
 	}
 
+	#searchBt{
+    width: 100px;
+    margin-left: 10px;
+	}
 </style>
 </head>
 
@@ -157,7 +161,7 @@
 						<form class="narrow-w form-search d-flex align-items-stretch mb-3">
 							<input type="text" class="form-control px-4"
 								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
-							<button type="submit" class="btn btn-primary">Search</button>
+							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
 						</form>
 					</div>
 					
@@ -247,7 +251,7 @@
 	      <!--Host이동 --> 
 	      <div class="service_menu">
 	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
-	      <p class="copyright">Powered by © itwill Corp.</p>
+	      <p class="copyright">Powered by © nada Crew.</p>
 	      </div>
        
     </div><!--사이드메뉴끝-->
