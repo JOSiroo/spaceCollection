@@ -89,9 +89,20 @@
 	.bi{
 	color:#193D76; 
 	font-size: 40px;
-	 width: 50px;
-	  height: 30px;
+	width: 50px;
+	height: 30px;
+	}
 	
+	#sidemenubtcl{
+	color:white;
+	}
+	
+	.sidemenust {
+    position: absolute;
+    float: right;
+    margin-left: 1160px;
+    margin-top: 25px;
+    width: 100px;
 	}
 
 </style>
@@ -149,16 +160,12 @@
 							<button type="submit" class="btn btn-primary">Search</button>
 						</form>
 					</div>
-
-					<!-- 사이드바 메뉴 -->
-				 <%@ include file="/WEB-INF/views/form/side.jsp" %>
-					<!-- 사이드바 메뉴 끝-->
-
-<div class="navbar fixed-top">
-<div class="container-fluid">
-	  
-    <button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" style="margin-right: 150px;">
-      <i class="bi bi-list"></i>
+					
+					
+<!-- 사이드시작  -->      
+<div class="sidemenust">
+    <button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" ">
+      <i class="bi bi-list" id="sidemenubtcl"></i>
     </button>
     
     <!--사이드메뉴 시작-->
@@ -244,9 +251,12 @@
 	      </div>
        
     </div><!--사이드메뉴끝-->
-  </div><!-- container-fluid -->
-</div><!-- navbar fixed-top -->
 <!-- 사이드종료 -->
+					
+					
+					
+</div></div></div></div>
+
 
 
 	
