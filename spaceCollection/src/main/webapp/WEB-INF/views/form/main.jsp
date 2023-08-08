@@ -37,17 +37,13 @@
     </style>
   
   	<h1>Please select a space.</h1>
-    <div class="icon-container" >
-      <!-- 아이콘을 출력. -->
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon1.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon2.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon3.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon4.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon5.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon6.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon7.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon8.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon9.png"></a></div>
-      <div class="icon" id="iconimag"><img src="${pageContext.request.contextPath}/images/main_icon10.png"></a></div>
-     </div>
+    <div class="icon-container">
+	  <% for (int i = 1; i <= 12; i++) { %>
+	    <div class="icon" id="iconimag">
+	      <a href="">
+	        <img src="${pageContext.request.contextPath}/images/main_icon<%= i %>.png">
+	      </a>
+	    </div>
+	  <% } %>
+	</div>
 
