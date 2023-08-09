@@ -4,6 +4,9 @@
 
 <mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
 	<select id="selectByBoardTypeId" parameterType="String" resultType="boardVo">
-		select * from board where board_type_id=#{boardTypeId}
+		select * from board a join board_type b 
+		on a.board_type_id = b.board_type_id 
+		where board_type_name=#{boardTypeId}
+		order by board_reg_date desc
 	</select>
 </mapper>

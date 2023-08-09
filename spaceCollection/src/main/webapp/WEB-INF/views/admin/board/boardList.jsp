@@ -10,12 +10,11 @@
 <main id="main" class="main">
 
 	<div class="pagetitle">
-		<h1>게시판 수정</h1>
+		<h1>게시판 생성/관리</h1>
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
-				<li class="breadcrumb-item">게시판 생성/관리</li>
-				<li class="breadcrumb-item active">게시판 수정</li>
+				<li class="breadcrumb-item active">게시판 생성/관리</li>
 			</ol>
 		</nav>
 	</div>
@@ -27,53 +26,37 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">게시판 수정</h5>
- 						<form id="frm" action="<c:url value='/admin/board/boardEdit'/>" method="post">
- 							<input type="hidden" name="boardTypeId" value="${param.boardTypeId }">
- 							<div class="row mb-3">
-                  				<label for="boardTypeName" class="col-sm-2 col-form-label">게시판 이름</label>
-                  				<div class="col-sm-10">
-                    				<input type="text" class="form-control" name="boardTypeName" id="boardTypeName" value="${vo.boardTypeName }">
-                  				</div>
-                			</div>
-                			<div class="form-check form-switch">
-                      			<input class="form-check-input" type="checkbox" name="boardTypeCommentOk" id="boardTypeCommentOk"
-                      			<c:if test="${vo.boardTypeCommentOk=='Y'}">
-                      				checked = "checked";
-                      			</c:if>>
-                      			<label class="form-check-label" for="boardTypeCommentOk">댓글 사용 여부</label>
-                    		</div>
-                			<div class="form-check form-switch">
-                      			<input class="form-check-input" type="checkbox" name="boardTypeFileOk" id="boardTypeFileOk"
-                      			<c:if test="${vo.boardTypeFileOk=='Y'}">
-                      				checked = "checked";
-                      			</c:if>>
-                      			<label class="form-check-label" for="boardTypeFileOk">첨부파일 사용 여부</label>
-                    		</div>
-                    		<div class="row mb-3">
-                  				<label for="boardTypeFileNum" class="col-sm-2 col-form-label">첨부 파일 개수</label>
-                  				<div class="col-sm-10">
-                    				<input type="text" class="form-control" name="boardTypeFileNum" id="boardTypeFileNum" value="${vo.boardTypeFileNum }">
-                  				</div>
-                			</div>
-                    		<div class="row mb-3">
-                  				<label for="boardTypeFileSize" class="col-sm-2 col-form-label">첨부 파일 사이즈</label>
-                  				<div class="col-sm-10">
-                    				<input type="text" class="form-control" id="boardTypeFileSize" name="boardTypeFileSize" value="${vo.boardTypeFileSize }">
-                  				</div>
-                			</div>
-                			<div class="form-check form-switch">
-                      			<input class="form-check-input" type="checkbox" id="boardTypeUse" name="boardTypeUse"<c:if test="${vo.boardTypeUse=='Y'}">
-                      				checked = "checked";
-                      			</c:if>>
-                      			<label class="form-check-label" for="boardTypeUse">게시판 활성화</label>
-                    		</div>
-                			
-							<button type="button" class="btn btn-primary rounded-pill" id="editBt" data-bs-toggle="modal" data-bs-target="#confirm1">수정하기</button>
-							<button type="button" class="btn btn-secondary rounded-pill" id="cancelBt" data-bs-toggle="modal" data-bs-target="#confirm2">닫기</button>
-							
-						</form>
-						
+ 						<h5 class="card-title" style="font-weight: bold;">${param.boardTypeName }</h5>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">게시물 번호</th>
+									<th scope="col">제목</th>
+									<th scope="col">작성자</th>
+									<th scope="col">작성일</th>
+									<th scope="col">삭제여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${empty list }">
+									<tr>
+										<td colspan="5" style="text-align: center;">작성된 게시물이 없습니다.</td>
+									</tr>
+								</c:if>
+								<c:if test="${!empty list }">
+									<c:forEach var="vo" items="${list }">
+									
+											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
+												<td>${vo.boardNum }</td>
+												<td>${vo.boardTitle }</td>
+												<td>${vo.boardTypeCommentOk }</td>
+												<td>${vo.boardTypeFileOk }</td>
+												<td><fmt:formatDate value="${vo.boardTypeRegdate }" pattern="yyyy-MM-dd"/></td>
+											</tr>
+									</c:forEach>
+								</c:if>
+							</tbody>
+						</table>						
 				 	</div>
 				</div>
 

@@ -313,7 +313,7 @@
 			<!-- End Dashboard Nav -->
 			
 			<li class="nav-item"><a class="nav-link collapsed"
-				href="<c:url value='/admin/board/boardSetting'/>"> <i class="bi bi-menu-button-wide"></i>
+				href="<c:url value='/admin/board/boardTypeList'/>"> <i class="bi bi-menu-button-wide"></i>
 					<span>게시판 관리</span>
 			</a></li>
 			<!-- End Components Nav -->
