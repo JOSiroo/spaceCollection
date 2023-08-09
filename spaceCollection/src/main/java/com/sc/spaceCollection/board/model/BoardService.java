@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.board.model;
 
-public interface BoardService {
+import java.util.List;
 
+public interface BoardService {
+	List<BoardVO> selectByBoardTypeId(String boardTypeName);
 }

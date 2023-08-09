@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.board.model;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 
 @Data
@@ -11,9 +13,9 @@ public class BoardVO {
 	private int boardGroupNo;
 	private int boardStep;
 	private String boardDelFlag;
-	REVIEW_OUT_DATE
-	BOARD_SORT_NO
-	BOARD_TYPE_ID
-	USER_NUM
-	BOARD_REG_DATE
+	private Timestamp boardOutDate;
+	private int boardSortNo;
+	private String boardTypeId;
+	private int userNum;
+	private Timestamp boardRegDate;
 }
