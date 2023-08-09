@@ -249,4 +249,4 @@
 <br><br><br>
 
 
-<%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
+<%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
