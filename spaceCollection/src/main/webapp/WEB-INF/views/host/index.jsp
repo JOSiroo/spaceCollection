@@ -18,7 +18,7 @@
 	}
 	
 	.mainItem2 {font-size: 18px;}
-	
+  
 	.proposal {
 		width: 200px;
 		height: 65px;
