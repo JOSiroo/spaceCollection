@@ -12,4 +12,9 @@
 		values(#{reservationNum}, #{userNum}, #{sdNum}, #{reserveStartDay},#{reserveStartHour},
 		#{reserveFinishDay},#{reserveFinishHour},#{reservePrice},sysdate,#{paymentNum})
 	</insert>
+	<select id="selectReservationByDayAndNum" parameterType="reservationVo"
+		resultType="reservationVo">
+		select * from reservation
+		where reserve_start_day = #{reserveStartDay} and sd_num = ${sdNum}	
+	</select>
 </mapper>

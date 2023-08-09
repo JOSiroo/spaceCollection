@@ -13,6 +13,20 @@ public class ReservationServiceImpl implements ReservationService{
 	public int insertReservation(ReservationVO vo) {
 		return reservationDao.insertReservation(vo);
 	}
+
+	@Override
+	public Object selectReservationByDayAndNum(int sdNum, String reserveStartDay) {
+		ReservationVO vo = new ReservationVO();
+		vo.setSdNum(sdNum);
+		vo.setReserveStartDay(reserveStartDay);
+		vo = reservationDao.selectReservationByDayAndNum(vo);
+		
+		if(vo != null) {
+			return vo;
+		}else {
+			return "noData";
+		}
+	}
 	
 	
 }

@@ -2,6 +2,7 @@ package com.sc.spaceCollection.controller;
 
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,9 +66,27 @@ public class ReservationController {
 		
 		int cnt = reservationService.insertReservation(vo);
 		logger.info("예약 처리 결과, cnt = {}", cnt);
-
 	}
 	
+	@ResponseBody
+	@GetMapping("/ajaxSelectRes")
+	public Object selectReservationByDayAndNum(@RequestParam String sdNum,
+											@RequestParam String selectedDates) {
+		logger.info("ajax 예약조회 파라미터 sdNum = {}, selectedDates = {}", sdNum, selectedDates);
+		Map<String, Integer> resultMap = new HashMap<>();
+		
+		if(reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates).equals("noData")) {
+			logger.info("해당 날짜에 예약내역 없음");
+			return false;
+		}else {
+			ReservationVO vo = (ReservationVO)reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates);
+			logger.info("ajax 예약조회 결과 vo = {}",vo);
+
+			resultMap.put("startHour", Integer.parseInt(vo.getReserveStartHour()));
+			resultMap.put("endHour", Integer.parseInt(vo.getReserveFinishHour()));
+			return resultMap;
+		}
+	}
 }
 
 
