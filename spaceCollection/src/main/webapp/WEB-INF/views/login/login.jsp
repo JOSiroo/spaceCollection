@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>login</title>
+
   <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
   <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
   <!-- Bootstrap CSS -->
@@ -129,7 +130,7 @@
          	 <button class="btn btn-primary btn-lg btn-block" type="submit">로그인</button>
           </div>
           <div class="register">아직 스페이스컬렉션 회원이 아니신가요?
-          	<a href="#" class="register">회원가입</a>
+          	<a href="<c:url value='/guest/register'/>" class="register">회원가입</a>
           </div>
         </form>
       </div>
