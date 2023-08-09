@@ -4,17 +4,18 @@
 
 <style type="text/css">
 	.start {
-		margin-right: 90px;
-		padding: 10% 50px 20px 15%;
+		margin: 0 auto;
+		padding: 200px 0 130px;
 		background-image: url('https://partner.spacecloud.kr/static/media/icons_pc.d588971f.png');
-		background-size: 400px 400px;
+		background-size: 400px;
 		background-repeat: no-repeat;
-		background-position: right bottom;
-		max-width: 1500px;
+		background-position-x: 94%;
+    	background-position-y: 65%;
+		max-width: 1200px;
 	}
 	
 	.startMain {
-		margin-bottom: 80px;
+		margin-bottom: 20px;
 		letter-spacing: -2px;
 	}
 	
@@ -22,7 +23,9 @@
 		font-size: 40px;
 		font-weight: bold;
 		line-height: 35px;
-		margin-bottom: 60px;
+		margin-bottom: 70px;
+		color: #333;
+		letter-spacing: -2.5px;
 	}
 	
 	.mainItem2 {font-size: 18px; margin-bottom: 50px;}
@@ -50,8 +53,14 @@
 	}
 	
 	.mainItem3 {
-		font-size: 19px;
+		font-size: 21px;
 		margin-bottom: 60px;
+		font-weight: bold;
+	}
+	
+	.mainImg {
+		width: 400px;
+		height: 400px;
 	}
 	
 	.descriptionCard {
@@ -157,6 +166,14 @@
 		$('.proposal').click(function() {
 			window.open('https://kr.object.ncloudstorage.com/scloud-service/web/spacecloud_host_proposal_20220713.pdf');
 		});
+		
+		$('.registration').click(function() {
+			location.href = "<c:url value='/host/registration1' />";
+		});
+		
+		$('.regItem3').click(function() {
+			location.href = "<c:url value='/host/registration1' />";
+		});
 	});
 </script>
 
@@ -173,8 +190,11 @@
 				<button class="registration" >공간 등록하기</button>
 			</div>
 			<div class="mainItem3">
-				<p><b>| 등록 가능 공간 | </b>모임 · 촬영 · 스터디 · 연습 · 행사 · 공유오피스까지</p>
+				<p>| 등록 가능 공간 | 모임 · 촬영 · 스터디 · 연습 · 행사 · 공유오피스까지</p>
 			</div>
+			<!-- <div class="mainImage">
+				<img class="mainImg" src="https://partner.spacecloud.kr/static/media/icons_pc.d588971f.png">
+			</div> -->
 		</div>
 	</div>
 	
@@ -225,8 +245,8 @@
 			</div>
 		</div>
 	</div>
-
 </section>
+<br><br><br>
 
 
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
