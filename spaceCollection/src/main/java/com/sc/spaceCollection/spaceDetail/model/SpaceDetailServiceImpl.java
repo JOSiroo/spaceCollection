@@ -33,6 +33,11 @@ public class SpaceDetailServiceImpl implements SpaceDetailService{
 		return spaceDetailDao.selectRefund(refundNo);
 	}
 
+	@Override
+	public SpaceDetailVO selectJustDetailByNo(int sdNum) {
+		return spaceDetailDao.selectJustDetailByNo(sdNum);
+	}
+
 	
 
 

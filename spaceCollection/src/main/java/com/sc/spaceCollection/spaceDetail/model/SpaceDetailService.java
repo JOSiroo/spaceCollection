@@ -9,4 +9,5 @@ import com.sc.spaceCollection.space.model.SpaceVO;
 public interface SpaceDetailService {
 	Map<SpaceVO, List<Map<String, Object>>> selectDetailByNo(int spaceNo);
 	RefundVO selectRefund(int refundNo);
+	SpaceDetailVO selectJustDetailByNo(int sdNum);
 }
