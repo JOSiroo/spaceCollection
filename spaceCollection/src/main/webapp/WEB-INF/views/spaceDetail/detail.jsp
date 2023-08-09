@@ -655,9 +655,13 @@ pageEncoding="UTF-8"%>
                           console.log('data:', data);
                           if(data === false){
                         	  console.log('예약내역 없음');
+                        	  makeTimeTableOrigin(sdNum);
                           } else {
                              var begin = parseInt(data.startHour);
                              var end = parseInt(data.endHour);
+                        	  console.log('stH' + data.startHour);
+                        	  console.log('etH'+data.endHour);
+                        	  console.log('result'+data.result);
 							 makeTimeTable(begin, end, sdNum);                              
                           }
                       },
@@ -681,9 +685,19 @@ pageEncoding="UTF-8"%>
 				parent.find('.swiper-inBox.item-'+i+'th').css('background', 'grey');
 				parent.find('.swiper-inBox.item-'+i+'th').css('border', '2px solid black');
 				parent.find('.swiper-inBox.item-'+i+'th').css('color', 'black');
-				parent.find('.swiper-inBox.item-'+i+'th').css('font-weight', 'bold');
 				parent.find('.swiper-inBox.item-'+i+'th').text('예약됨');
 			}
+		}
+		
+		function makeTimeTableOrigin(sdNum){
+			var parent = sdNum.closest('.inAccordionLi');
+			console.log(sdNum.val());
+			var times = parent.children('.swiper-inBox');
+			
+			times.css('background','#ffd014');
+			times.css('border','2px solid #ffc000');
+			times.css('color','#cc8c28');
+			times.css('background','#ffd014');
 		}
 
 	});

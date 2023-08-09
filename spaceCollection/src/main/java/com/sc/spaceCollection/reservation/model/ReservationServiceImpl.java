@@ -2,12 +2,15 @@ package com.sc.spaceCollection.reservation.model;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.spaceDetail.model.SpaceDetailDAO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService{
 	private final ReservationDAO reservationDao;
+	private final SpaceDetailDAO sdDao;
 
 	@Override
 	public int insertReservation(ReservationVO vo) {
