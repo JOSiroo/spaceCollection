@@ -131,6 +131,7 @@
           </div>
           <div class="register">아직 스페이스컬렉션 회원이 아니신가요?
           	<a href="<c:url value='/guest/register'/>" class="register">회원가입</a>
+
           </div>
         </form>
       </div>
