@@ -10,6 +10,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <title>SpaceCollection - 공간에 사람을 더하다.</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
@@ -310,28 +311,11 @@
 					<span>메인보드</span>
 			</a></li>
 			<!-- End Dashboard Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed"
-				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-menu-button-wide"></i><span>게시판 관리</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-				</a>
-				<ul id="components-nav" class="nav-content collapse"
-					data-bs-parent="#sidebar-nav">
-					<li><a href="components-accordion.html"> <i
-							class="bi bi-circle"></i><span>Accordion</span>
-					</a></li>
-					<li><a href="components-badges.html"> <i
-							class="bi bi-circle"></i><span>Badges</span>
-					</a></li>
-
-					<li><a href="components-modal.html"> <i
-							class="bi bi-circle"></i><span>Modal</span>
-					</a></li>
-					<li><a href="<c:url value='/admin/board/boardSetting'/>"> <i
-							class="bi bi-circle"></i><span>게시판 생성/관리</span>
-				</ul></li>
+			
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="<c:url value='/admin/board/boardSetting'/>"> <i class="bi bi-menu-button-wide"></i>
+					<span>게시판 관리</span>
+			</a></li>
 			<!-- End Components Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"

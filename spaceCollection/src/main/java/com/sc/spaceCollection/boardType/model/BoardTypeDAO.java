@@ -9,4 +9,6 @@ public interface BoardTypeDAO {
 	List<BoardTypeVO> selectBoardType();
 	int boardTypeNameDupCheck(String boardTypeName);
 	int insertBoardType(BoardTypeVO vo);
+	BoardTypeVO selectByBoardTypeId(String boardTypeId);
+	int updateBoardType(BoardTypeVO vo);
 }

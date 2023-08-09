@@ -113,21 +113,21 @@ public class AdminController {
 		logger.info("게시판 생성, 파라미터 vo = {}", vo);
 		
 		if(vo.getBoardTypeCommentOk()==null) {
-			vo.setBoardTypeCommentOk("Y");
-		}else {
 			vo.setBoardTypeCommentOk("N");
+		}else {
+			vo.setBoardTypeCommentOk("Y");
 		}
 		
 		if(vo.getBoardTypeFileOk()==null) {
-			vo.setBoardTypeFileOk("Y");
-		}else {
 			vo.setBoardTypeFileOk("N");
+		}else {
+			vo.setBoardTypeFileOk("Y");
 		}
 		
 		if(vo.getBoardTypeUse()==null) {
-			vo.setBoardTypeUse("Y");
-		}else {
 			vo.setBoardTypeUse("N");
+		}else {
+			vo.setBoardTypeUse("Y");
 		}
 		String msg = "게시판 생성에 실패하였습니다.", url = "/admin/board/boardCreate";
 		int result = boardTypeService.createBoard(vo);
@@ -136,6 +136,58 @@ public class AdminController {
 			url = "/admin/board/boardSetting";
 		}else if(result<0){
 			msg = "이미 사용중인 게시판 이름입니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@GetMapping("/board/boardEdit")
+	public void boardEdit(@RequestParam String boardTypeId, Model model) {
+		logger.info("게시판 정보 출력, 파라미터 boardTypeId = {}", boardTypeId);
+		
+		BoardTypeVO vo = boardTypeService.selectByBoardTypeId(boardTypeId);
+		
+		model.addAttribute("vo", vo);
+		
+	}
+	
+	@RequestMapping("/board/boardEditn")
+	public String boardEditn(Model model) {
+		model.addAttribute("msg", "변경된 항목이 없습니다.");
+		model.addAttribute("url", "/admin/board/boardSetting");
+		
+		return "admin/common/message";
+	}
+	
+	@PostMapping("/board/boardEdit")
+	public String boardEdit(@ModelAttribute BoardTypeVO vo, Model model) {
+		logger.info("게시판 수정, 파라미터 vo = {}", vo);
+		
+		if(vo.getBoardTypeCommentOk()==null) {
+			vo.setBoardTypeCommentOk("N");
+		}else {
+			vo.setBoardTypeCommentOk("Y");
+		}
+		
+		if(vo.getBoardTypeFileOk()==null) {
+			vo.setBoardTypeFileOk("N");
+		}else {
+			vo.setBoardTypeFileOk("Y");
+		}
+		
+		if(vo.getBoardTypeUse()==null) {
+			vo.setBoardTypeUse("N");
+		}else {
+			vo.setBoardTypeUse("Y");
+		}
+		String msg = "게시판 수정에 실패하였습니다.", url = "/admin/board/boardEdit";
+		int result = boardTypeService.updateBoardType(vo);
+		if(result>0) {
+			msg = "게시판이 수정되었습니다.";
+			url = "/admin/board/boardSetting";
 		}
 		
 		model.addAttribute("msg", msg);
