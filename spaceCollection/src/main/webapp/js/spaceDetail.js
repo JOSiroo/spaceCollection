@@ -90,8 +90,8 @@ timeSlots.forEach(function(slot) {
         e.preventDefault();
 
         const clickedIndex = Array.from(timeSlots).indexOf(this);
-
-        if (selectedStartTime === null) {
+		
+       	if (selectedStartTime === null) {
             selectedStartTime = clickedIndex;
             this.classList.add('on');
         } else {
@@ -113,6 +113,7 @@ timeSlots.forEach(function(slot) {
 function timeTableReset(){
 	timeSlots.forEach(function(slot){
 		slot.classList.remove('on');
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
 		
 	})
 }

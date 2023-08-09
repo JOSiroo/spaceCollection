@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/top.jsp" %>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+
 
 <style>
 
@@ -36,7 +37,7 @@ a.logo.m-0.float-start {
 	</div>
 
 <div class="searchform">
-		<%@ include file="/WEB-INF/views/form/main.jsp" %>
+		<%@ include file="/WEB-INF/views/form/userMain.jsp" %>
 		</div>
 
 	<div class="section">
@@ -625,4 +626,4 @@ a.logo.m-0.float-start {
 			</div>
 		</div>
 	</div>
-	<%@ include file="form/bottom.jsp" %>
+	<%@ include file="form/userBottom.jsp" %>
