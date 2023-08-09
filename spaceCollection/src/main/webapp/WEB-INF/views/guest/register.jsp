@@ -2,16 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<!-- <html>
 <head>
 <meta charset="UTF-8">
-<title>register</title>
+<title>register</title> -->
+<%@include file="/WEB-INF/views/form/userTop.jsp" %>
+
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 
-  <style>
+<style>
     .registerBody {
       min-height: 100vh;
 
@@ -25,7 +27,8 @@
     .input-form {
       max-width: 680px;
 
-      margin-top: 80px;
+      margin-top: 180px;
+      margin-bottom: 100px;
       padding: 32px;
 
       background: #fff;
@@ -70,9 +73,10 @@
       });
     }, false);
     
+	    
   </script>
-</head>
-<body>
+<!-- </head>
+<body> -->
 <div class="registerBody">
   <div class="container">
     <div class="input-form-backgroud row">
@@ -97,7 +101,7 @@
           </div>
             <div class="mb-2">
               <label for="name">비밀번호</label>
-              <input type="password" class="form-control" id="name" placeholder="" value="" required>
+              <input type="password" class="form-control" id="password" placeholder="" value="" required>
               <div class="divCondition">-문자/숫자/특수문자 중 2가지 이상조합 (8~30자)<br>
               -3개 이상 키보드 상 배열이 연속되거나 동일한 문자/숫자 제외
               </div>
@@ -107,9 +111,9 @@
             </div>
             <div class="mb-2">
               <label for="name">비밀번호 확인</label>
-              <input type="password" class="form-control" id="name" placeholder="" value="" required>
+              <input type="password" class="form-control" id="chkPassword" placeholder="" value="" required>
               <div class="invalid-feedback">
-                이름을 입력해주세요.
+                비밀번호 확인을해주세요.
               </div>
             </div>
 
@@ -132,7 +136,7 @@
 			  <div class="col-md-3 mb-3">
 				<label>&nbsp;</label>
 				  <input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
-				  	style="width: 130px; height: 37px; text-align: center;">
+				  	style="width: 165px; height: 50px; text-align: center;">
               </div>
           </div>
           <div class="mb-3">
@@ -187,23 +191,26 @@
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="agreement1" required>
             <label class="custom-control-label" for="agreement1">개인정보 수집 및 이용에 동의합니다.(필수)</label>
+            <div class="invalid-feedback">
+              필수 항목을 체크해주세요.
+            </div>
           </div>
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="agreement2" required>
             <label class="custom-control-label" for="agreement2">본인은 만 14세 이상입니다.(필수)</label>
+            <div class="invalid-feedback">
+              필수 항목을 체크해주세요.
+            </div>
           </div>
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="agreement3" required>
             <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label>
           </div>
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+          <button class="btn btn-primary btn-lg btn-block" name="register" type="submit">가입 완료</button>
         </form>
       </div>
     </div>
-    <footer class="my-3 text-center text-small">
-      <p class="mb-1">&copy; 2021 YD</p>
-    </footer>
   </div>
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -215,7 +222,15 @@
 	      var isChecked = $(this).prop("checked");
 	      $(".custom-control-input").prop("checked", isChecked);
 	      
-    });
+    	});
+	    
+	    $("button[name=register]").click(function(){
+	    	var zipcode=$('#zipcode').val();
+	    	if($('#zipcode').val()==""){
+	    		alert("우편번호를 입력해주세요.");
+		    	return false;
+	    	}
+	    });
 	});
 
     function sample6_execDaumPostcode() {
@@ -267,5 +282,6 @@
     }
 </script>
 <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-</body>
-</html>
+<%@include file="/WEB-INF/views/form/userBottom.jsp" %>
+<!-- </body>
+</html> -->

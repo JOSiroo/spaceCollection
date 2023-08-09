@@ -4,21 +4,34 @@
 
 <style type="text/css">
 	.start {
-		padding: 200px 50px 0 40px;
+		margin: 0 auto;
+		padding: 200px 0 130px;
 		background-image: url('https://partner.spacecloud.kr/static/media/icons_pc.d588971f.png');
-		background-size: 400px 400px;
+		background-size: 400px;
 		background-repeat: no-repeat;
-		background-position: right center;
+		background-position-x: 94%;
+    	background-position-y: 65%;
+		max-width: 1200px;
+	}
+	
+	.startMain {
+		margin-bottom: 20px;
+		letter-spacing: -2px;
 	}
 	
 	.mainItem1 {
 		font-size: 40px;
 		font-weight: bold;
 		line-height: 35px;
+		margin-bottom: 70px;
+		color: #333;
+		letter-spacing: -2.5px;
 	}
 	
-	.mainItem2 {font-size: 18px;}
-  
+
+	.mainItem2 {font-size: 18px; margin-bottom: 50px;}
+	
+
 	.proposal {
 		width: 200px;
 		height: 65px;
@@ -42,7 +55,14 @@
 	}
 	
 	.mainItem3 {
-		font-size: 19px;
+		font-size: 21px;
+		margin-bottom: 60px;
+		font-weight: bold;
+	}
+	
+	.mainImg {
+		width: 400px;
+		height: 400px;
 	}
 	
 	.descriptionCard {
@@ -100,7 +120,7 @@
 	
 	.spaceRegistration {
 		background-color: #ffd014;
-		padding: 100px 50px 20px 40px;
+		padding: 80px 50px 60px 40px;
 	}
 	
 	.itemWrap {
@@ -127,12 +147,34 @@
 	    color: #333;
 	}
 	
+	.btReg {
+		width: 192px;
+	    margin: 60px auto 0;
+	    min-height: 64px;
+	    background-color: #3f64c7;
+	    border-radius: 4px;
+	    font-size: 17px;
+	    line-height: 1;
+	    letter-spacing: -.5px;
+	    color: white;
+	    font-weight: bold;
+	    border: 0;
+	}
+	
 </style>
 
 <script type="text/javascript">
 	$(function() {
 		$('.proposal').click(function() {
 			window.open('https://kr.object.ncloudstorage.com/scloud-service/web/spacecloud_host_proposal_20220713.pdf');
+		});
+		
+		$('.registration').click(function() {
+			location.href = "<c:url value='/host/registration1' />";
+		});
+		
+		$('.regItem3').click(function() {
+			location.href = "<c:url value='/host/registration1' />";
 		});
 	});
 </script>
@@ -143,18 +185,18 @@
 		<div class="startMain">
 			<div class="mainItem1">
 				<p>지금 MZ세대들을 위한</p>
-				<p>공간 비즈니스를 시작해보세요!</p>
+				<p>공간비즈니스를 시작해보세요!</p>
 			</div>
-			<br><br>
 			<div class="mainItem2">
 				<button class="proposal" >입점 제안서</button>
 				<button class="registration" >공간 등록하기</button>
 			</div>
-			<br><br>
 			<div class="mainItem3">
-				<p><b>| 등록 가능 공간 | </b>모임 · 촬영 · 스터디 · 연습 · 행사 · 공유오피스까지</p>
+				<p>| 등록 가능 공간 | 모임 · 촬영 · 스터디 · 연습 · 행사 · 공유오피스까지</p>
 			</div>
-			<br><br><br>
+			<!-- <div class="mainImage">
+				<img class="mainImg" src="https://partner.spacecloud.kr/static/media/icons_pc.d588971f.png">
+			</div> -->
 		</div>
 	</div>
 	
@@ -163,7 +205,7 @@
 			<div class="logo"></div>
 			<div class="text">
 				<p>대한민국 No.1 공간공유 플랫폼,</p>
-				<p>스페이스클라우드의 호스트가 되세요!</p>
+				<p>스페이스컬렉션의 호스트가 되세요!</p>
 			</div>
 		</div>
 		<br><br>
@@ -193,21 +235,20 @@
 		<div class="itemWrap">
 			<div class="regItem1">
 				<p>예약부터 마케팅까지,<br>
-					스페이스클라우드와 함께하세요</p>
+					스페이스컬렉션와 함께하세요</p>
 			</div>
 			<div class="regItem2">
-				<p>스페이스클라우드와 함께라면 호스트님의 공간 비지니스가 더 편리해집니다.<br>
-					스페이스클라우드에서 나만의 고객을 만나시고,<br>
+				<p>스페이스컬렉션와 함께라면 호스트님의 공간 비지니스가 더 편리해집니다.<br>
+					스페이스컬렉션에서 나만의 고객을 만나시고,<br>
 					광고, 통계, 정산 보고서를 통해 데이터 기반의 사업을 만들어가세요.</p>
 			</div>
-			
+			<div class="regItem3">
+				<button class="btReg" >공간 호스트 시작하기</button>
+			</div>
 		</div>
 	</div>
-
 </section>
+<br><br><br>
 
 
-
-
-</body>
- </html>
+<%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
