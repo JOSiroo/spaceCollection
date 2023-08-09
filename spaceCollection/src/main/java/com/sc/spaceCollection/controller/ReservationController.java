@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+
 import java.sql.Timestamp;
 import java.util.Map;
 
@@ -63,6 +64,7 @@ public class ReservationController {
 		
 		int cnt = reservationService.insertReservation(vo);
 		logger.info("예약 처리 결과, cnt = {}", cnt);
+
 	}
 	
 }
