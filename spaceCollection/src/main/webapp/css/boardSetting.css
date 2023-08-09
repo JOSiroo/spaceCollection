@@ -3,7 +3,9 @@
 #boardBt{
 	float: right;
 	margin-top: 16px;
+	margin-right: 5px;
 }
+
 
 h5{
 	float: left;
@@ -12,3 +14,4 @@ h5{
 #pageDiv{
 	width: 100%;
 }
+

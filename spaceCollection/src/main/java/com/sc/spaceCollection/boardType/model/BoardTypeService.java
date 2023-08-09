@@ -6,4 +6,6 @@ public interface BoardTypeService {
 	
 	List<BoardTypeVO> selectBoardType();
 	int createBoard(BoardTypeVO vo);
+	BoardTypeVO selectByBoardTypeId(String boardTypeId);
+	int updateBoardType(BoardTypeVO vo);
 }
