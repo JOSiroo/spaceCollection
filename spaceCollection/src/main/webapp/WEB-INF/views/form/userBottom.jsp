@@ -89,7 +89,7 @@
     </div> <!-- /.site-footer -->
 
 
-    <!-- Preloader -->
+    <!-- Preloader 
     <div id="overlayer"></div>
     <div class="loader">
     	<div class="spinner-border" role="status">
@@ -97,7 +97,7 @@
     	</div>
     </div>
 </footer>
-
+-->
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>

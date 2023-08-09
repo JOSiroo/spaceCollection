@@ -3541,7 +3541,6 @@ textarea.form-control-lg {
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.25rem;
     box-shadow: 0 0 0 0.25rem; }
-
 .sidemenubt-icon {
   display: inline-block;
   width: 1.5em;
@@ -3580,6 +3579,7 @@ textarea.form-control-lg {
       display: flex !important;
       -ms-flex-preferred-size: auto;
       flex-basis: auto; }
+
     .navbar-expand-sm .sidemenubt {
       display: none; }
     .navbar-expand-sm .offcanvas-header {
@@ -3641,6 +3641,7 @@ textarea.form-control-lg {
       display: flex !important;
       -ms-flex-preferred-size: auto;
       flex-basis: auto; }
+
     .navbar-expand-md .sidemenubt {
       display: none; }
     .navbar-expand-md .offcanvas-header {
@@ -3702,6 +3703,7 @@ textarea.form-control-lg {
       display: flex !important;
       -ms-flex-preferred-size: auto;
       flex-basis: auto; }
+
     .navbar-expand-lg .sidemenubt {
       display: none; }
     .navbar-expand-lg .offcanvas-header {
@@ -3763,6 +3765,7 @@ textarea.form-control-lg {
       display: flex !important;
       -ms-flex-preferred-size: auto;
       flex-basis: auto; }
+
     .navbar-expand-xl .sidemenubt {
       display: none; }
     .navbar-expand-xl .offcanvas-header {

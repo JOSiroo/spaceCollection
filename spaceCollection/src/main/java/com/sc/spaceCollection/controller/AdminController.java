@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.admin.model.AdminService;
 import com.sc.spaceCollection.admin.model.AdminVO;
+import com.sc.spaceCollection.boardType.model.BoardTypeService;
+import com.sc.spaceCollection.boardType.model.BoardTypeVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +30,7 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	private final AdminService adminService;
+	private final BoardTypeService boardTypeService;
 	
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
@@ -86,5 +91,56 @@ public class AdminController {
 		logger.info("관리자 메인화면");
 		
 		return "admin/adminMain";
+	}
+	
+	@RequestMapping("/board/boardSetting")
+	public void boardSetting(Model model) {
+		logger.info("게시판 종합 관리");
+		
+		List<BoardTypeVO> list = boardTypeService.selectBoardType();
+		logger.info("게시물 타입 조회결과, list.size = {}", list.size());
+		
+		model.addAttribute("list", list);
+	}
+	
+	@GetMapping("/board/boardCreate")
+	public void boardCreate() {
+		logger.info("게시판 생성 화면");
+	}
+	
+	@PostMapping("/board/boardCreate")
+	public String boardCreate(@ModelAttribute BoardTypeVO vo, Model model) {
+		logger.info("게시판 생성, 파라미터 vo = {}", vo);
+		
+		if(vo.getBoardTypeCommentOk()==null) {
+			vo.setBoardTypeCommentOk("Y");
+		}else {
+			vo.setBoardTypeCommentOk("N");
+		}
+		
+		if(vo.getBoardTypeFileOk()==null) {
+			vo.setBoardTypeFileOk("Y");
+		}else {
+			vo.setBoardTypeFileOk("N");
+		}
+		
+		if(vo.getBoardTypeUse()==null) {
+			vo.setBoardTypeUse("Y");
+		}else {
+			vo.setBoardTypeUse("N");
+		}
+		String msg = "게시판 생성에 실패하였습니다.", url = "/admin/board/boardCreate";
+		int result = boardTypeService.createBoard(vo);
+		if(result>0) {
+			msg = "게시판이 생성되었습니다.";
+			url = "/admin/board/boardSetting";
+		}else if(result<0){
+			msg = "이미 사용중인 게시판 이름입니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
 	}
 }

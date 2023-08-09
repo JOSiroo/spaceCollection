@@ -5,14 +5,13 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
-	<!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
 	<script type="text/javascript">
 	$(function(){
+
 		$('.nav-item').click(function(){
 			$(this).css('background', '#ffd014');
 			$('.nav-item').not($(this)).css('background', 'white');
@@ -34,7 +33,12 @@ pageEncoding="UTF-8"%>
 				$('.totalPrice').text("예약 시간을 선택해주세요.");
 			}
 		});
-	})
+		
+		 $("#datepicker").datepicker({
+		    	language: 'ko', 
+		    	inline: true,
+		    }); 
+	});
 	 function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -526,7 +530,11 @@ pageEncoding="UTF-8"%>
 									    <button class="inButton">시간 단위 예약하기(최소 ${detail.SD_MIN_TIME}부터)</button>
 									    <div class = "inContent" style="width: 100%">
 									    <hr>
-									    
+									    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
+										<div>
+											 <input type="text" id="datepicker">
+										</div>
+									    <hr>
 										 <div class="swiper mySwiper">
 										    <div class="swiper-wrapper">
 											    <fmt:parseNumber var="openTime" integerOnly="true" type="number" value="${detail.SD_OPEN_TIME}" />
@@ -785,5 +793,7 @@ pageEncoding="UTF-8"%>
             );
         }
     </script>
-		
+	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
+	<!--한국어  달력 쓰려면 추가 로드-->
+	<script src="<c:url value='/js/datepickerJs/i18n/datepicker.ko.js'/>"></script> 
 <%@ include file="../form/userBottom.jsp" %>

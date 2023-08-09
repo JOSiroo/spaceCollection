@@ -28,8 +28,10 @@
 		letter-spacing: -2.5px;
 	}
 	
+
 	.mainItem2 {font-size: 18px; margin-bottom: 50px;}
 	
+
 	.proposal {
 		width: 200px;
 		height: 65px;
