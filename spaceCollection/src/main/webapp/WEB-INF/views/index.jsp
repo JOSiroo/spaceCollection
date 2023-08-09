@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/top.jsp" %>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
 <style>
-.menu-bg-wrap {
-    margin-top: 60px;
-}
+
 
 .narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate {
     margin-top: 20px;
     margin-right: 190px;
 }
 
+a.logo.m-0.float-start {
+    font-size: 40px;
+    font-weight: bolder;
+}
+
 </style>
-
-
-
 
 	<div class="hero">
 
@@ -24,9 +24,7 @@
 			<div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
 			<div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
-		
 		</div>
-		
 		
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
@@ -38,7 +36,7 @@
 	</div>
 
 <div class="searchform">
-		<%@ include file="/WEB-INF/views/form/main.jsp" %>
+		<%@ include file="/WEB-INF/views/form/userMain.jsp" %>
 		</div>
 
 	<div class="section">
@@ -627,4 +625,4 @@
 			</div>
 		</div>
 	</div>
-	<%@ include file="form/bottom.jsp" %>
+	<%@ include file="form/userBottom.jsp" %>
