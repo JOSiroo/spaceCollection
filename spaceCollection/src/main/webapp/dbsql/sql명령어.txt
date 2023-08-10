@@ -1,6 +1,6 @@
 create or replace view board_boardType_user_view 
 as
-select b.BOARD_NUM, b.BOARD_TITLE, b.BOARD_REG_DATE,
+select bt.board_type_name, b.BOARD_NUM, b.BOARD_TITLE, b.BOARD_REG_DATE,
 u.USER_NUM, u.USER_ID
 from board b join board_type bt 
 on b.board_type_id = bt.board_type_id 

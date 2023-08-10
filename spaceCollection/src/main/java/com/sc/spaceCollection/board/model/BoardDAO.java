@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.sc.spaceCollecion.common.SearchVO;
+import com.sc.spaceCollection.common.SearchVO;
 
 @Mapper
 public interface BoardDAO {

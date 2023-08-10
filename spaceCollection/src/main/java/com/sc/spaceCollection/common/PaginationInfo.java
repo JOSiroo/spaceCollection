@@ -1,4 +1,4 @@
-package com.sc.spaceCollecion.common;
+package com.sc.spaceCollection.common;
 
 public class PaginationInfo {
 	/**
