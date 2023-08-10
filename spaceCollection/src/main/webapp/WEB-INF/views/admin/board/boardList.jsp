@@ -44,10 +44,10 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<c:forEach var="vo" items="${list }">
+									<c:forEach var="map" items="${list }">
 									
 											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
-												<td>${vo.boardNum }</td>
+												<td>${map.BOARD_TYPE_NAME }</td>
 												<td>${vo.boardTitle }</td>
 												<td>${vo.boardTypeCommentOk }</td>
 												<td>${vo.boardTypeFileOk }</td>

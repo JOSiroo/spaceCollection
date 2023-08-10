@@ -1,4 +1,4 @@
-package com.sc.spaceCollecion.common;
+package com.sc.spaceCollection.common;
 
 public class Utility {
 	public static String getFileInfo(String originalFileName,long fileSize) {

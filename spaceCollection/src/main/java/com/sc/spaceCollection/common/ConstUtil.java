@@ -1,4 +1,4 @@
-package com.sc.spaceCollecion.common;
+package com.sc.spaceCollection.common;
 
 public interface ConstUtil {
 	//게시판 페이징 처리 관련 상수

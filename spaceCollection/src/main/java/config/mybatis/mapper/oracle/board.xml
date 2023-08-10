@@ -4,6 +4,13 @@
 
 <mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
 	
+	<sql id="searchWhere">
+		<where>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				${searchCondition} like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</sql>
 	
 	<select id="selectBoardAll" parameterType="searchVo" resultType="map">
 		select *from
@@ -11,7 +18,7 @@
 			select rownum as RNUM, A.* from
 			(
 				select * from board_boardType_user_view
-			<include refid="searchWhere"></include>
+				<include refid="searchWhere"></include>
 			order by no desc
 			)A
 		)
