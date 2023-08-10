@@ -255,7 +255,9 @@ pageEncoding="UTF-8"%>
 	.p-3{
 		border-radius: 0.75rem;
 	}
-	
+	.datepicker{
+		width : 100%;
+	}
 	
 </style>
 <section>
@@ -628,7 +630,6 @@ pageEncoding="UTF-8"%>
 			  $(element).datepicker({
 			    language: 'ko',
 			    inline: true,
-			    
 			    onSelect: function(selectedDates, instance) {
 			      console.log("선택한 날짜:", selectedDates);
 			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
