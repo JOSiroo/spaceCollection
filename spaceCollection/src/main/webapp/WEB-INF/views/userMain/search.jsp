@@ -31,7 +31,27 @@
 	.dropdown-toggle{
 		width:100%;
 	}
+	
 }
+
+	.card {
+	    position: relative;
+	    display: -webkit-box;
+	    display: -ms-flexbox;
+	    display: flex;
+	    -webkit-box-orient: vertical;
+	    -webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	    flex-direction: column;
+	    min-width: 0;
+	    word-wrap: break-word;
+	    background-color: #fff;
+	    background-clip: border-box;
+	    border: 1px solid rgba(0, 0, 0, 0.125);
+	    border-radius: 0.25rem;
+	    width:95% !important;
+	    margin: 0% 0% 0% 0%;
+	}
 
 </style>
 <div class="search-wrapper"></div>
@@ -66,291 +86,267 @@
 <section class = "search-section">
 	<div class="container">
 	  <div class="row">
-	    <div class="col">
-	      <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
-	    <div class="col">
-	       <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
-	    <div class="col">
-	      <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
 	  </div>
+	  
 	  <div class="row">
-	    <div class="col">
-	      <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
-	    <div class="col">
-	       <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
-	    <div class="col">
-	       <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
 	  </div>
+	  
 	  <div class="row">
-	    <div class="col">
-	       <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
-	    <div class="col">
-	      <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
-	    <div class="col">
-	      <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
+	    <div class="col-sm-4">
+		    <div class="card" style="width: 18rem;">
+			  <div id="carouselExample" class="carousel slide">
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				    <div class="carousel-item">
+				      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
+				    </div>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				</div>
+			  	<div class="card-body">
+			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
-	    </div>
-	  </div>
-	  <div class="row">
-	    <div class="col">
-	      <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
-	    </div>
-	    <div class="col">
-	       <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			</div>
-	    </div>
-	    <div class="col">
-	       <div id="carouselExample" class="carousel slide">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
 			</div>
 	    </div>
 	  </div>
-	</div>
-
+  </div>
+	  
 </section>
 
 
