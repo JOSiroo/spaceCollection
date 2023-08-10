@@ -33,8 +33,27 @@
 	}
 
 	.icon {
-		width: 65px;
-		height: 65px;
+		width: 90px;
+		height: 90px;
+	}
+	
+	.main {
+		width: 855px;
+		margin-top: 50px;
+	}
+	
+	.accordion-header p {
+		padding: 15px 0 0 20px;
+		font-weight: bold;
+		font-size: 17px;
+	}
+	
+	.accordion-body p {
+		padding-top: 20px;
+		color: #333;
+		font-stretch: normal;
+    	font-style: normal;
+    	font-size: 16px;
 	}
 
 </style>
@@ -52,25 +71,25 @@
 		</div>
 	</article>
 
-	<article>
+	<article class="main">
 		<div class="accordion accordion-flush" id="accordionFlushExample">
 			<div class="accordion-item">
 				<h2 class="accordion-header">
 					<button class="accordion-button collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
 						aria-expanded="false" aria-controls="flush-collapseOne">
-						<label class="meeting"> 
 							<a> 
-								<img class="icon" src="<c:url value='https://kr.object.ncloudstorage.com/scloud-service/service/161647850_c9f8fff99aa0999813fb91775e74f348.png' />">
-								모임 공간
+								<img class="icon" src="<c:url value='/img/icons/kitchen.svg' />">
 							</a>
-						</label>
+							<p>공유 주방</p>
 					</button>
 				</h2>
 				<div id="flush-collapseOne" class="accordion-collapse collapse"
 					data-bs-parent="#accordionFlushExample">
 					<div class="accordion-body">
-					
+						<p>
+							여럿이 요리가 가능한 주방 시설과 용품 구비되어 있고, 공유주방으로 독립적 대관이 특화된 공간
+						</p>
 					</div>
 				</div>
 			</div>
@@ -79,18 +98,18 @@
 					<button class="accordion-button collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
 						aria-expanded="false" aria-controls="flush-collapseTwo">
-						<label class="meeting"> 
 							<a> 
-								<img class="icon" src="<c:url value='https://kr.object.ncloudstorage.com/scloud-service/service/161647851_15f1409aa52ae420c93d442eb4cfec53.png' />">
-								연습 공간
+								<img class="icon" src="<c:url value='/img/icons/vocal_studio.svg' />">
 							</a>
-						</label>
+							<p>보컬 연습실</p>
 						</button>
 				</h2>
 				<div id="flush-collapseTwo" class="accordion-collapse collapse"
 					data-bs-parent="#accordionFlushExample">
 					<div class="accordion-body">
-					
+						<p>
+							보컬, 발성, 스피치 등 육성을 기반으로 연습에 필요한 시설이 제공되는 독립 공간
+						</p>
 					</div>
 				</div>
 			</div>
@@ -99,18 +118,18 @@
 					<button class="accordion-button collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
 						aria-expanded="false" aria-controls="flush-collapseThree">
-						Accordion Item #3</button>
+							<a> 
+								<img class="icon" src="<c:url value='/img/icons/rentalstudio.svg' />">
+							</a>
+							<p>렌탈 스튜디오</p>
+						</button>
 				</h2>
 				<div id="flush-collapseThree" class="accordion-collapse collapse"
 					data-bs-parent="#accordionFlushExample">
 					<div class="accordion-body">
-						Placeholder content for this accordion, which is intended to
-						demonstrate the
-						<code>.accordion-flush</code>
-						class. This is the third item's accordion body. Nothing more
-						exciting happening here in terms of content, but just filling up
-						the space to make it look, at least at first glance, a bit more
-						representative of how this would look in a real-world application.
+						<p>
+							디자인과 컨셉이 있는, 쇼핑몰⋅화보⋅뮤직비디오⋅프로필⋅방송 등의 촬영이 가능한 실내 렌탈스튜디오 공간
+						</p>
 					</div>
 				</div>
 			</div>
@@ -121,7 +140,7 @@
 
 
 
-	<article>
+	<%-- <article>
 		<div class="boxForm">
 			<div class="boxWrapper">
 				<div class="boxInner">
@@ -137,7 +156,7 @@
 
 			</div>
 		</div>
-	</article>
+	</article> --%>
 </section>
 
 </body>
