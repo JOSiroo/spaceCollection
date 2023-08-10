@@ -47,6 +47,7 @@ public class ReservationController {
 		String endDay = (String) paymentData.get("custom_data[END_DAY]");
 		String endHour = (String) paymentData.get("custom_data[END_HOUR]");
 		int reservePrice = Integer.parseInt((String) paymentData.get("paid_amount"));
+		int reservePeople = Integer.parseInt((String) paymentData.get("custom_data[RESERVE_PEOPLE]"));
 		String paymentType = (String) paymentData.get("pg_provider");
 		logger.info("userId = {}, sdNum = {}, startDay = {}, endHour = {}", userId, sdNum, startDay, endHour);
 		logger.info("startHour = {}, endDay = {}, reservePrice = {}, paymentType = {}", startHour, endDay, reservePrice, paymentType);
@@ -68,6 +69,7 @@ public class ReservationController {
 		vo.setReserveFinishHour(endHour);
 		vo.setReservePrice(reservePrice);
 		vo.setPaymentNum(paymentNum);
+		vo.setReservePeople(reservePeople);
 		logger.info("vo세팅 결과, vo = {}", vo);
 		
 		int cnt = reservationService.insertReservation(vo);
