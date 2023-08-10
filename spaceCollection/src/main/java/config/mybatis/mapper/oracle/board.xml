@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
+	<select id="selectByBoardTypeId" parameterType="String" resultType="boardVo">
+		select * from board a join board_type b 
+		on a.board_type_id = b.board_type_id 
+		where board_type_name=#{boardTypeId}
+		order by board_reg_date desc
+	</select>
+</mapper>

@@ -1,110 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap5" />
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-	<link rel="stylesheet" href="<c:url value = '/css/tiny-slider.css'/>">
-	<link rel="stylesheet" href="<c:url value = '/css/aos.css'/>">
-	<link rel="stylesheet" href="<c:url value = '/css/style.css'/>">
-	
-	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	
-	<!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		$('.nav-item').click(function(){
-			$(this).css('background', '#ffd014');
-			$('.nav-item').not($(this)).css('background', 'white');
-		})
-		
-		$('.swiper-inBox').click(function(){
-		   	var result = 0;
-		    $('.swiper-inBox.on').each(function(){
-		        result += parseInt($(this).find('input[type=hidden]').val());
-		    });
-		    $('.hiddenPrice').val(result);
-		    
-		    var formattedTotalPrice = addComma(result);
-		    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
-		});
-	})
-	 function addComma(value){
-		    value = value+"";
-	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        return value; 
-	    }
-	</script>
-
-	<script>
-	  var payType = "";
-	  function paymentType(type){
-		  payType = type;
-	  }
-	      
-      
-        var IMP = window.IMP; 
-        IMP.init("imp04807210"); 
-      
-        var today = new Date();   
-        var hours = today.getHours(); // 시
-        var minutes = today.getMinutes();  // 분
-        var seconds = today.getSeconds();  // 초
-        var milliseconds = today.getMilliseconds();
-        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
-
-        
-        
-        function requestPay() {
-        	console.log(paymentType);
-        	console.log($('.hiddenPrice').val());
-            IMP.request_pay({
-                pg : payType,
-                pay_method : 'card',
-                merchant_uid: "order_no_00123", 
-                name : '당근 10kg',
-                amount : $('.hiddenPrice').val(),
-                buyer_email : 'Iamport@chai.finance',
-                buyer_name : '아임포트 기술지원팀',
-                buyer_tel : '010-1234-5678',
-                buyer_addr : '서울특별시 강남구 삼성동',
-                buyer_postcode : '123-456'
-            }, function (rsp) { // callback
-                if (rsp.success) {
-                    console.log(rsp);
-                } else {
-                    console.log(rsp);
-                }
-           });
-        }
-       
-    </script>
-
+    
+	
 	<title>스페이스 클라우드</title>
 	</head>
 <style type="text/css">
@@ -344,7 +249,7 @@
 	
 	
 </style>
-<body>
+<section>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -527,9 +432,6 @@
 				</div>
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
-			
-			
-						
 				<div class="col-lg-4">
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
 					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
@@ -539,7 +441,8 @@
 							<c:forEach var="detail" items="${map }">
 							  <li class = "accordionLi">
 							    <button class="button">
-							    	${detail.SD_TYPE} 
+							    <input type="hidden" value="${detail.SD_NUM }">
+							    	<span>${detail.SD_TYPE}</span> 
 							    	<div style="float: right;">
 								    	<span class="price mb-2" style= "color:#193D76;">
 											 <fmt:formatNumber value="${detail.SD_PRICE}" pattern="₩#,###"/>
@@ -592,20 +495,37 @@
 									    <button class="inButton">시간 단위 예약하기(최소 ${detail.SD_MIN_TIME}부터)</button>
 									    <div class = "inContent" style="width: 100%">
 									    <hr>
-									    
+									    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
+										<div>
+											 <input type="text" class="datepicker">
+											 <input type="hidden" class = 'calSdNum' value="${detail.SD_NUM }">
+										</div>
+									    <hr>
 										 <div class="swiper mySwiper">
 										    <div class="swiper-wrapper">
 											    <fmt:parseNumber var="openTime" integerOnly="true" type="number" value="${detail.SD_OPEN_TIME}" />
 											    <fmt:parseNumber var="closeTime" integerOnly="true" type="number" value="${detail.SD_CLOSE_TIME}" />
 											    <c:forEach begin="${openTime }" end="${closeTime }" var="i">
 										    			<div class="swiper-slide">
-										    				<p class = "swiper-p">${i}</p>
-										    				<button class = "swiper-inBox">
+										    					<c:if test="${i == 0}">
+												    				<p class = "swiper-p">오전</p>
+												    				<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    					<c:if test="${i == 12}">
+												    				<p class = "swiper-p">오후</p>
+												    				<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    					<c:if test="${i != 0 && i != 12}">
+												    				<p class = "swiper-p">&nbsp;</p>
+										    						<p class = "swiper-p">${i}</p>
+										    					</c:if>
+										    				<button class = "swiper-inBox item-${i }th">
 										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
-										    				</button>
+									    					</button>
 										    			</div>
 										     	</c:forEach>
+										     	
 										    </div>
 										  </div>
 										  <br>
@@ -662,7 +582,7 @@
 			<!-- 여기까지 오른쪽 부분-->				
 			</div>
 	<!-- 여기까지 섹션-->				
-
+</section>
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
@@ -673,6 +593,120 @@
     <script src="js/spaceDetail.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+
+		$('.nav-item').click(function(){
+			$(this).css('background', '#ffd014');
+			$('.nav-item').not($(this)).css('background', 'white');
+		})
+		
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
+		$('.swiper-inBox').click(function(){
+		   	var result = 0;
+		   	var formattedTotalPrice = "";
+		   	if($('.swiper-inBox.on').length > 0){
+			    $('.swiper-inBox.on').each(function(){
+			        result += parseInt($(this).find('input[type=hidden]').val());
+			    });
+			    $('.hiddenPrice').val(result);
+			    
+			    formattedTotalPrice = addComma(result);
+			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		   	}else{
+				$('.totalPrice').text("예약 시간을 선택해주세요.");
+			}
+		});
+		
+		/*$(".datepicker").datepicker({
+			  language: 'ko', 
+			  inline: true,
+			  onSelect: function(selectedDates, instance) {
+				  var sdNum = $(this).siblings('.calSdNum'); 
+				console.log(sdNum);z
+			    console.log('선택한 날짜:',selectedDates);
+			  }
+			});*/
+			
+		$(".datepicker").each(function(index, element) {
+			  var datepickerId = $(element).data("id");
+			  var sdNum = $(this).siblings('.calSdNum'); 
+			  
+			  $(element).datepicker({
+			    language: 'ko',
+			    inline: true,
+			    
+			    onSelect: function(selectedDates, instance) {
+			      console.log("선택한 날짜:", selectedDates);
+			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
+			      
+			      var requestData = {
+			                sdNum: sdNum.val(),
+			                selectedDates: selectedDates+""
+			            };
+			      
+			      $.ajax({
+			    	  url: 'reservation/ajaxSelectRes', // 서버의 엔드포인트 URL
+                      method: 'get', // 
+                      dataType:'json',
+                      data: requestData,
+                      success: function(data) {
+                          // AJAX 요청이 성공한 경우
+                          console.log('data:', data);
+                          if(data === false){
+                        	  console.log('예약내역 없음');
+                        	  makeTimeTableOrigin(sdNum);
+                          } else {
+                             var begin = parseInt(data.startHour);
+                             var end = parseInt(data.endHour);
+                        	  console.log('stH' + data.startHour);
+                        	  console.log('etH'+data.endHour);
+                        	  console.log('result'+data.result);
+							 makeTimeTable(begin, end, sdNum);                              
+                          }
+                      },
+                      error: function(xhr, status, error) {
+                          // AJAX 요청이 실패한 경우
+                          console.error('Error:', error);
+                      }
+			      })
+			      
+			    }
+			  });
+			});
+		function makeTimeTable(begin, end, sdNum){
+			console.log('begin = '+ begin);
+			console.log('end = ' + end);
+			console.log('sdNum = ' + sdNum.val());
+			var parent = sdNum.closest('.inAccordionLi');
+			var times = parent.children('.swiper-inBox');
+			
+			for(var i = begin; i <= end; i++){
+				parent.find('.swiper-inBox.item-'+i+'th').css('background', 'grey');
+				parent.find('.swiper-inBox.item-'+i+'th').css('border', '2px solid black');
+				parent.find('.swiper-inBox.item-'+i+'th').css('color', 'black');
+				parent.find('.swiper-inBox.item-'+i+'th').text('예약됨');
+			}
+		}
+		
+		function makeTimeTableOrigin(sdNum){
+			var parent = sdNum.closest('.inAccordionLi');
+			console.log(sdNum.val());
+			var times = parent.children('.swiper-inBox');
+			
+			times.css('background','#ffd014');
+			times.css('border','2px solid #ffc000');
+			times.css('color','#cc8c28');
+			times.css('background','#ffd014');
+		}
+
+	});
+	 function addComma(value){
+		    value = value+"";
+	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        return value; 
+	    }
+	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
@@ -751,11 +785,30 @@
   	<script>
 	
 		var payType = "";
-	
+		var sdNum = "";
+		var sdName = "";
 	    function paymentType(type){
 	        payType = type;
 	    }
-	      
+	    const sdBt = document.querySelectorAll('.button');
+
+	    sdBt.forEach(function(button) {
+	        button.addEventListener('click', function(e) {
+	            e.preventDefault();
+
+	            const hiddenNum = this.querySelector('input[type="hidden"]');
+	            const hiddenName = this.querySelector('span').innerHTML;
+	            if (hiddenNum !== null) {
+	                const inputValue = hiddenNum.value;
+	                sdNum = inputValue;
+	                sdName = hiddenName;
+	                console.log("Input value: " + inputValue + "," + sdNum + "," + sdName + ", " + hiddenName);
+	            } else {
+	                console.log("Input element not found.");
+	            }
+	        });
+	    });
+
       
         var IMP = window.IMP; 
         IMP.init("imp04807210"); 
@@ -772,22 +825,56 @@
         	console.log(paymentType);
         	console.log($('.hiddenPrice').val());
             IMP.request_pay({
-                pg : payType,
+               	pg : payType,
                 pay_method : 'card',
-                merchant_uid: "order_no_00123" + new Date().getMilliseconds(), 
-                name : '당근 10kg',
+                merchant_uid: ${vo.spaceNum}+"_"+ sdNum + new Date().getTime(), 
+                name : ${vo.spaceNum}+"_"+sdName,
                 amount : $('.hiddenPrice').val(),
+                custom_data : {START_DAY:'2023-08-08',
+			                	START_HOUR:'10',
+			                	END_DAY:'2023-08-08',
+			                	END_HOUR:'18',
+			                	SD_NUM:sdNum},
                 buyer_email : 'Iamport@chai.finance',
-                buyer_name : '아임포트 기술지원팀',
+                buyer_name : '2',
                 buyer_tel : '010-1234-5678',
                 buyer_addr : '서울특별시 강남구 삼성동',
                 buyer_postcode : '123-456'
             },   function (rsp) {
-                // callback
-                //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+            	if ( rsp.success ) {
+            		console.log(rsp.custom_data);
+            		console.log(rsp);
+                    var msg = '결제가 완료되었습니다.';
+                    $.ajax({
+                        url: 'reservation/ajaxReservation', // 서버의 엔드포인트 URL
+                        method: 'GET', // POST 요청
+                        //dataType:'json',
+                        data: rsp,
+                        success: function(data) {
+                            // AJAX 요청이 성공한 경우
+                            $('#result').html(data.message); // 결과를 화면에 출력
+                        },
+                        error: function(xhr, status, error) {
+                            // AJAX 요청이 실패한 경우
+                            console.error('Error:', error);
+                        }
+                    });
+                    
+                    
+                    
+                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                    msg += '결제 금액 : ' + rsp.paid_amount;
+                   
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                }
+            	 alert(msg);
               }
             );
         }
     </script>
-		
-<%@ include file="../form/bottom.jsp" %>
+	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
+	<!--한국어  달력 쓰려면 추가 로드-->
+	<script src="<c:url value='/js/datepickerJs/i18n/datepicker.ko.js'/>"></script> 
+<%@ include file="../form/userBottom.jsp" %>

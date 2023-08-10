@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/top.jsp" %>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+
 
 <style>
-
+*{
+font: 'nanum gothic', 맑은 고딕, 한컴돋움, 돋움;
+}
 
 .narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate {
     margin-top: 20px;
@@ -13,6 +16,9 @@
 a.logo.m-0.float-start {
     font-size: 40px;
     font-weight: bolder;
+}
+#hboldfont{
+font-weight: bold;
 }
 
 </style>
@@ -29,24 +35,24 @@ a.logo.m-0.float-start {
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center">
-					<h1 class="heading" data-aos="fade-up">Welcome to the Space Collection</h1>
+					<h1 class="heading" data-aos="fade-up">Space Collection에 오신 것을 환영합니다.</h1>
 				</div>
 			</div>
 		</div>
 	</div>
 
 <div class="searchform">
-		<%@ include file="/WEB-INF/views/form/main.jsp" %>
+		<%@ include file="/WEB-INF/views/userMain/userMain.jsp" %>
 		</div>
 
 	<div class="section">
 		<div class="container">
 			<div class="row mb-5 align-items-center">
 				<div class="col-lg-6">
-					<h2 class="font-weight-bold text-primary heading">Popular SpaceCollection</h2>
+					<h2 class="font-weight-bold text-primary heading">인기 스페이스 컬렉션</h2>
 				</div>
 				<div class="col-lg-6 text-lg-end">
-					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">View all SpaceCollection</a></p>
+					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
 				</div>
 			</div>
 			<div class="row">
@@ -75,15 +81,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -103,15 +109,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -131,15 +137,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -159,15 +165,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -187,15 +193,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -215,15 +221,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -243,15 +249,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -271,15 +277,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -299,15 +305,15 @@ a.logo.m-0.float-start {
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-bed me-2"></span>
-												<span class="caption">2 beds</span>
+												<span class="caption">2 침대</span>
 											</span>
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-bath me-2"></span>
-												<span class="caption">2 baths</span>
+												<span class="caption">2 욕실</span>
 											</span>
 										</div>
 
-										<a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
 							</div> <!-- .item -->
@@ -317,8 +323,8 @@ a.logo.m-0.float-start {
 
 
 						<div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-							<span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
-							<span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
+							<span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">이전</span>
+							<span class="next" data-controls="next" aria-controls="property" tabindex="-1">다음</span>
 						</div>
 
 					</div>
@@ -334,7 +340,7 @@ a.logo.m-0.float-start {
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="300">
 					<div class="box-feature">
 						<span class="flaticon-house"></span>
-						<h3 class="mb-3">Our SpaceCollection</h3>
+						<h3 class="mb-3" id="hboldfont">새로운 공간보기</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -342,7 +348,7 @@ a.logo.m-0.float-start {
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="500">
 					<div class="box-feature">
 						<span class="flaticon-building"></span>
-						<h3 class="mb-3">Property for Sale</h3>
+						<h3 class="mb-3" id="hboldfont">쉽게 공간 판매하기</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -350,7 +356,7 @@ a.logo.m-0.float-start {
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="400">
 					<div class="box-feature">
 						<span class="flaticon-house-3"></span>
-						<h3 class="mb-3">Real Estate Agent</h3>
+						<h3 class="mb-3" id="hboldfont">8월의 혜택</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -358,7 +364,7 @@ a.logo.m-0.float-start {
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
 					<div class="box-feature">
 						<span class="flaticon-house-1"></span>
-						<h3 class="mb-3">House for Sale</h3>
+						<h3 class="mb-3" id="hboldfont">시즌 공간 기획전</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
@@ -373,13 +379,13 @@ a.logo.m-0.float-start {
 		<div class="container">
 			<div class="row mb-5 align-items-center">
 				<div class="col-md-6">
-					<h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">Customer Says</h2>
+					<h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">생생한 이용자 리뷰</h2>
 				</div>
 				<div class="col-md-6 text-md-end">
 					<div id="testimonial-nav">
-						<span class="prev" data-controls="prev">Prev</span>
+						<span class="prev" data-controls="prev">이전</span>
 						
-						<span class="next" data-controls="next">Next</span>
+						<span class="next" data-controls="next">다음</span>
 					</div>
 				</div>
 			</div>
@@ -393,7 +399,7 @@ a.logo.m-0.float-start {
 				<div class="testimonial-slider">
 					<div class="item">
 						<div class="testimonial">
-							<img src="images/person_1-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4">
+							<img src="images/person_1-min.jpg" alt="Image" class="img-fluid  w-140 mb-4 rounded">
 							<div class="rate">
 								<span class="icon-star text-warning"></span>
 								<span class="icon-star text-warning"></span>
@@ -401,17 +407,19 @@ a.logo.m-0.float-start {
 								<span class="icon-star text-warning"></span>
 								<span class="icon-star text-warning"></span>
 							</div>
-							<h3 class="h5 text-primary mb-4">James Smith</h3>
+							
+							<!-- 리뷰 -->
+							<h3 class="h5 text-primary mb-4" >공간이름</h3>
 							<blockquote>
-								<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+								<p>&ldquo;리뷰내용&rdquo;</p>
 							</blockquote>
-							<p class="text-black-50">Designer, Co-founder</p>
+							<p class="text-black-50">가격정보(시간)</p>
 						</div>
 					</div>
 
 					<div class="item">
 						<div class="testimonial">
-							<img src="images/person_2-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4">
+							<img src="images/person_2-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4" id="revimg">
 							<div class="rate">
 								<span class="icon-star text-warning"></span>
 								<span class="icon-star text-warning"></span>
@@ -519,25 +527,25 @@ a.logo.m-0.float-start {
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">3298</span></span>
-						<span class="caption text-black-50"># of Buy SpaceCollection</span>
+						<span class="caption text-black-50"># 누적 공간 구매 사용자</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">2181</span></span>
-						<span class="caption text-black-50"># of Sell SpaceCollection</span>
+						<span class="caption text-black-50"># 누적 공간 판매 사용자</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">9316</span></span>
-						<span class="caption text-black-50"># of All SpaceCollection</span>
+						<span class="caption text-black-50"># 누적 공간 사용자</span>
 					</div>
 				</div>
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">7191</span></span>
-						<span class="caption text-black-50"># of Agents</span>
+						<span class="caption text-black-50"># 판매되는 공간 수</span>
 					</div>
 				</div>
 			</div>
@@ -625,4 +633,4 @@ a.logo.m-0.float-start {
 			</div>
 		</div>
 	</div>
-	<%@ include file="form/bottom.jsp" %>
+	<%@ include file="form/userBottom.jsp" %>

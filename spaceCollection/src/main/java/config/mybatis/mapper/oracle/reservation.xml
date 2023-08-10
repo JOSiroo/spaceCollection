@@ -7,9 +7,14 @@
 		<selectKey keyProperty="reservationNum" order="BEFORE" resultType="int">
 			select reservation_seq.nextval from dual
 		</selectKey>
-		insert into reservation
-		values(#{reservationNum}, #{userNum}, #{sdNum}, #{reservationStartDay},#{reservationStartHour},
-		#{reservationFinishDay},#{reservationFinishHour},#{reservePrice},#{reservationPayDay},#{paymentNum})
+		insert into reservation(RESERVATION_NUM,USER_NUM,SD_NUM,RESERVE_START_DAY,RESERVE_START_HOUR,
+								RESERVE_FINISH_DAY,RESERVE_FINISH_HOUR,RESERVE_PRICE,RESERVER_PAY_DAY,PAYMENT_NUM)
+		values(#{reservationNum}, #{userNum}, #{sdNum}, #{reserveStartDay},#{reserveStartHour},
+		#{reserveFinishDay},#{reserveFinishHour},#{reservePrice},sysdate,#{paymentNum})
 	</insert>
-	
+	<select id="selectReservationByDayAndNum" parameterType="reservationVo"
+		resultType="reservationVo">
+		select * from reservation
+		where reserve_start_day = #{reserveStartDay} and sd_num = ${sdNum}	
+	</select>
 </mapper>
