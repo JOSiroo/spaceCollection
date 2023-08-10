@@ -47,6 +47,7 @@ font-weight: bold;
 
 	<div class="section">
 		<div class="container">
+		
 			<div class="row mb-5 align-items-center">
 				<div class="col-lg-6">
 					<!-- <h2 class="font-weight-bold text-primary heading">인기 스페이스 컬렉션</h2> -->
@@ -56,25 +57,71 @@ font-weight: bold;
 					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
 				</div>
 			</div>
+			
+			
 			<div class="row">
-
+			
+			
 				<div class="col-12">
-
-
 					<div class="property-slider-wrap">
-
-
-
+					
 						<div class="property-slider">
-
-							<div class="property-item">
-
+							<div style="width:780px;text-align:center;">	
+								<c:if test="${empty list }">
+										<div class="line">해당하는 이벤트 상품이 없습니다.</div>
+									</c:if>	
+									<c:if test="${!empty list }">
+										<!-- 반복 시작 -->
+										<c:forEach var="vo" items="${list }">
+											<div class="divPd">
+												<a href
+											="<c:url value='/shop/product/productDetail?productNo=${vo.productNo }'/>">
+													<img src="<c:url value='/pd_images/${vo.imageURL}'/>" 
+														alt="${vo.productName } 이미지">
+													<br>
+													${vo.productName }<br>
+													<fmt:formatNumber value="${vo.sellPrice }" pattern="#,###" />원
+												</a>
+											</div>
+										</c:forEach>
+										<!-- 반복 끝 -->
+									</c:if>	
+								</div>   
+				
+							
+		<div class="property-item">
+		
+				<div style="width:2000px;text-align:center;">
+					<c:if test="${empty list }">
+							<div class="line">해당하는 상품이 없습니다.</div>
+					</c:if>	
+					<c:if test="${!empty list }">
+						<!-- 반복 시작 -->
+						<c:forEach var="vo" items="${list }">
+							<div class="divPd">
+								<a href="property-single.html" class="img"="<c:url value='/space/spaceDetail?spaceNo=${vo.spaceNo }'/>">
+									<img src="<c:url value='images/${vo. img} }'/>" alt="${vo.spaceName } Image" class="img-fluid">
+									<div class="property-content">
+									<div class="price mb-2"><span>${vo.spaceType }</span></div>
+									<%-- <fmt:formatNumber value="${vo.spacePrice }" pattern="#,###" />원 --%>
+									<div>
+									<span class="d-block mb-2 text-black-50">${vo.spaceAddress }</span>
+									<span class="city d-block mb-3">${vo.spaceTag }</span>
+									</div>
+									</div>
+								</a>
+									</div>
+						</c:forEach>
+						<!-- 반복 끝 -->
+					</c:if>	 
+									
 								<a href="property-single.html" class="img">
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</a>
 
 								<div class="property-content">
-									<div class="price mb-2"><span>$1,291,000</span></div>
+									<div class="price mb-2"><span>$1,291,000</span>
+									</div>
 									<div>
 										<span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
 										<span class="city d-block mb-3">California, USA</span>
@@ -93,10 +140,10 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
+							</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
-
 								<a href="property-single.html" class="img">
 									<img src="images/img_2.jpg" alt="Image" class="img-fluid">
 								</a>
@@ -355,8 +402,8 @@ font-weight: bold;
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="400">
 					<div class="box-feature">
 						<span class="flaticon-house-3"></span>
-						<h3 class="mb-3" id="hboldfont">8월의 혜택</h3>
-						<p><a href="#" class="learn-more">Learn More</a></p>
+						<h3 class="mb-3" id="hboldfont">시즌 이벤트</h3>
+						<p><a href="https://www.spacecloud.kr/focus/24" class="learn-more">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">

@@ -189,37 +189,37 @@
 			<!-- 사이드메뉴 -->
 			<div class="sideform" style="margin-top: 30px; margin-bottom: 40px;">
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="${pageContext.request.contextPath }/member_mypage">
+				<a href="<c:url value='/member_mypage' />">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>
 				
 		  	<div class="col-sm-6 " style="text-align: center;">
-			  <a href="${pageContext.request.contextPath }/member_reserve" >   
+			  <a href="<c:url value='/member_reserve' />">  
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
 		 
 		   <div class="col-sm-6 " style="text-align: center;">
-			       <a href="${pageContext.request.contextPath }/member_review" >
+			       <a href="<c:url value='/member_review' />">  
 					<i class="bi bi-person-hearts" ></i>
-		 	 	  <p>이용 후기/Q&A</p></a>
+		 	 	  <p>이용 후기</p></a>
 		 	</div>
 	
 		    <div class="col-sm-6 " style="text-align: center;">
-			  <a href="${pageContext.request.contextPath }/member_heart">
+			  <a href="<c:url value='/member_heart' />"> 
 		   		 <i class="bi bi-house-heart" ></i>
 		 	 	  <p>찜 리스트</p></a>
 			</div>
 	
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="${pageContext.request.contextPath }/member_notice?nmstatus=1&nstatus=1" >   
+		    <a href="https://www.spacecloud.kr/board/notice" >   
 		     <i class="bi bi-info-circle" ></i>
-		   <p>공지사항</p></a> 
+		   	<p>공지사항</p></a> 
 		  </div>
 		  
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="${pageContext.request.contextPath }/member_faq?fmstatus=1&fstatus=1" >
+		    <a href="https://www.goodchoice.kr/more/faq" >
 		     <i class="bi bi-question-diamond" ></i>
 		 	   <p>FAQ</p></a>
 		  </div>
@@ -244,9 +244,9 @@
 		 </div>
 				  
 		  <div class="col-sm-6 "  style="text-align: center;">
-		    <a href="${pageContext.request.contextPath }">
+		    <a href="https://www.spacecloud.kr/introduction">
 		    <i class="bi bi-houses" ></i>
-		 	   <p>Home</p></a>
+		 	   <p>회사소개</p></a>
 		  </div>
 				
 	</div><!-- sideform -->	      
