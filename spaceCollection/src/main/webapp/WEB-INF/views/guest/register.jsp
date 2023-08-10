@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>register</title> -->
 <%@include file="/WEB-INF/views/form/userTop.jsp" %>
-
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/guest.js'/>"></script>
   <!-- Bootstrap CSS -->
 <!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
@@ -85,24 +85,25 @@
         <form class="validation-form" novalidate>
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="userid">아이디</label>
-              <input type="text" class="form-control" id="nickname" placeholder="" value="" required>
+              <label for="userId">아이디</label>
+              <input type="text" class="form-control" name="userId" id="userId" placeholder="" value="" required>
+              <span class="error"></span>
               <div class="invalid-feedback">
                 아이디를 입력해주세요.
               </div>
             </div>
             <div class="col-md-6">
-              <label for="name">이름</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="" required>
+              <label for="userName">이름</label>
+              <input type="text" class="form-control" name="userName" id="userName" placeholder="" value="" required>
               <div class="invalid-feedback">
                 이름을 입력해주세요.
               </div>
             </div>
           </div>
             <div class="mb-2">
-              <label for="name">비밀번호</label>
-              <input type="password" class="form-control" id="password" placeholder="" value="" required>
-              <div class="divCondition">-문자/숫자/특수문자 중 2가지 이상조합 (8~30자)<br>
+              <label for="userPwd">비밀번호</label>
+              <input type="password" class="form-control" name="userPwd" id="userPwd" placeholder="" value="" required>
+              <div class="divCondition">-문자/숫자/특수문자 3가지 조합 (8~30자)<br>
               -3개 이상 키보드 상 배열이 연속되거나 동일한 문자/숫자 제외
               </div>
               <div class="invalid-feedback">
@@ -111,18 +112,21 @@
             </div>
             <div class="mb-2">
               <label for="name">비밀번호 확인</label>
-              <input type="password" class="form-control" id="chkPassword" placeholder="" value="" required>
+              <input type="password" class="form-control" id="chkPwd" placeholder="" value="" required>
               <div class="invalid-feedback">
                 비밀번호 확인을해주세요.
               </div>
             </div>
-
+		
           <div class="mb-3">
-            <label for="email">이메일</label>
-            <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+            <label for="userEmail">이메일</label>
+            <input type="email" class="form-control" name="userEmail" id="userEmail" placeholder="you@example.com" required>
             <div class="invalid-feedback">
               이메일을 입력해주세요.
             </div>
+          </div>
+          <div>
+          	<input type="button" class=> 
           </div>
           <div class="row">
 			  <div class="col-md-5 mb-3">
@@ -154,8 +158,8 @@
 		  </div>
           
           <div class="mb-3">
-            <label for="hp">휴대전화</label>
-            <input type="text" class="form-control" id="hp" placeholder="ex)010-1234-6789" required>
+            <label for="userHp">휴대전화</label>
+            <input type="text" class="form-control" name="userHp" id="userHp" placeholder="ex)010-1234-6789" required>
             <div class="invalid-feedback">
               휴대전화를 입력해주세요.
             </div>
@@ -207,12 +211,15 @@
             <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label>
           </div>
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" name="register" type="submit">가입 완료</button>
+          <button class="btn btn-primary btn-lg btn-block" id="register" name="register" type="submit">가입 완료</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+<input type ="text" name="chkId" id="chkId">
+<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	$(function(){
@@ -230,7 +237,67 @@
 	    		alert("우편번호를 입력해주세요.");
 		    	return false;
 	    	}
+	    	if (!validate_userId($('#userId').val())) {
+				alert("아이디는 영문, 숫자, _(밑줄문자)만 가능합니다");
+				$('#userId').focus();
+				return false;
+			}
+	    	
+	    	if (!validate_userPwd($('#userPwd').val())){
+	    		alert("비밀번호 양식이 맞지 않습니다.");
+	    		return false;
+	    	}
+			
+			if ($('#userPwd').val() != $('#chkPwd').val()) {
+				alert("비밀번호가 일치하지 않습니다.확인하세요");
+				$("#userPwd").focus();
+				return false;
+			}
+			
+			if (!validate_hp($("#userHp").val())
+					|| !validate_hp($("#userHp").val())) {
+				alert("전화번호는 숫자만 가능합니다");
+				$("#userHp").focus();
+				return false;
+				//event.preventDefault();
+			}
+			
+			
+			if($('#chkId').val()!='Y'){
+		         alert('아이디 중복확인을 해주세요.');
+		         $('#btnChkId').focus();
+		         return false;
+		    }
 	    });
+	    
+	    $('#userId').keyup(function(){
+			var userId = $('#userId').val();
+			if(validate_userId(userId) && userId.length>=2){
+				$.ajax({
+					url:"<c:url value='/guest/ajaxCheckId'/>",
+					type:"post",
+					data:"userId="+userId,
+					success:function(res){
+						var output="";
+						
+						if(res){
+							output="이미 등록된 아이디";
+							$('#chkId').val('N');							
+						}else{
+							output="사용 가능한 아이디";
+							$('#chkId').val('Y');						
+						}
+						$('.error').text(output);
+					},
+					error:function(xhr,status, error){
+						alert(status+" : " + error);
+					}
+				});
+			}else{
+				$('.error').text('아이디 규칙에 맞지 않습니다.');
+				$('#chkId').val('N');
+			}
+		});
 	});
 
     function sample6_execDaumPostcode() {
@@ -281,7 +348,6 @@
         }).open();
     }
 </script>
-<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 <%@include file="/WEB-INF/views/form/userBottom.jsp" %>
 <!-- </body>
 </html> -->

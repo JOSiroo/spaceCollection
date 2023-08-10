@@ -3,6 +3,7 @@ package com.sc.spaceCollection.guest.model;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public class GuestDAO {
-
+public interface GuestDAO {
+	int guestCheckId(String userId);
+	String selectPwd(String userId);
 }
