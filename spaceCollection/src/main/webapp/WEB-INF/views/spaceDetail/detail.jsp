@@ -948,7 +948,8 @@ pageEncoding="UTF-8"%>
                     START_HOUR: startHour,
                     END_DAY: selectedDate,
                     END_HOUR: endHour,
-                    SD_NUM: sdNum
+                    SD_NUM: sdNum,
+                    RESERVE_PEOPLE: $('.people').val()
                 },
                 buyer_email: buyerEmail,
                 buyer_name: buyerName,

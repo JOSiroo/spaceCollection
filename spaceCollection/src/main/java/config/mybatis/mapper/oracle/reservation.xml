@@ -8,9 +8,9 @@
 			select reservation_seq.nextval from dual
 		</selectKey>
 		insert into reservation(RESERVATION_NUM,USER_ID,SD_NUM,RESERVE_START_DAY,RESERVE_START_HOUR,
-								RESERVE_FINISH_DAY,RESERVE_FINISH_HOUR,RESERVE_PRICE,RESERVER_PAY_DAY,PAYMENT_NUM)
+								RESERVE_FINISH_DAY,RESERVE_FINISH_HOUR,RESERVE_PRICE,RESERVER_PAY_DAY,PAYMENT_NUM,RESERVE_PEOPLE)
 		values(#{reservationNum}, #{userId}, #{sdNum}, #{reserveStartDay},#{reserveStartHour},
-		#{reserveFinishDay},#{reserveFinishHour},#{reservePrice},sysdate,#{paymentNum})
+		#{reserveFinishDay},#{reserveFinishHour},#{reservePrice},sysdate,#{paymentNum},#{reservePeople})
 	</insert>
 	<select id="selectReservationByDayAndNum" parameterType="reservationVo"
 		resultType="reservationVo">
