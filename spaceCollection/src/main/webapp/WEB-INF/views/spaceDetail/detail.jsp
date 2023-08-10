@@ -13,6 +13,15 @@ pageEncoding="UTF-8"%>
 	<title>스페이스 클라우드</title>
 	</head>
 <style type="text/css">
+	.tempP{
+	margin:4% 1% 5% 1%; 
+	text-align: center; 
+	color:#6d3afb;
+	font-size: 12px;
+	font-weight: 500;
+    line-height: 1.5;
+    word-break: keep-all
+	}
 	.custom-nav{
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -95,6 +104,28 @@ pageEncoding="UTF-8"%>
 	  max-width: 500px;
 	  width: 100%;
 	  list-style: none;
+	  
+	  .btn-outline-secondary{
+	  	width : 20%;
+	  	font-weight: bold;
+	  	border: 0.2rem #193D76 solid !important;
+	  	text-align: center;
+	  	font-size:30px;
+	  	padding:0% 0% 0% 0%;
+	  }
+	  .form-control{
+	  	border: 0.2rem #193D76 solid !important;
+	  	font-weight: bold;
+	  	font-size:22px;
+	  	padding : 0;
+	  	text-align: center;
+	  	
+	  	
+	  }
+	  .form-control:disabled{
+	  		background:white;
+	  	}
+	  
 	}
 	
 	.accordionLi {
@@ -257,6 +288,17 @@ pageEncoding="UTF-8"%>
 	}
 	.datepicker{
 		width : 100%;
+		
+		.datepicker--cell.-focus-{
+			border: 1px solid #193D76;
+		}
+		
+		.datepicker--cell.-disabled-{
+			cursor: default;
+    		color: #aeaeae;
+			background: lightgrey;    		
+			border-radius: 0;
+		}
 	}
 	
 </style>
@@ -446,7 +488,9 @@ pageEncoding="UTF-8"%>
 				<div class="col-lg-4">
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
 					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
-					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center;">공간 예약 정보</h3>
+					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center; font-weight: bold">결제후 바로 예약 확정</h3>
+					<p class = "tempP">빠르고 확실한 예약을 위해 스페이스 클라우드에서<br>온라인 결제를 진행하세요 :-)</p>
+					<hr style = "border-color:#193D76; height: 3px;">
 						<ul class = "accordionUl">
 						<c:if test="${!empty map }">
 							<c:forEach var="detail" items="${map }">
@@ -546,6 +590,14 @@ pageEncoding="UTF-8"%>
 										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()">초기화</button>
 										  <br><br>
 									    <hr>
+									    	<span class="price mb-2" style= "color:#193D76" >인원 선택</span>
+									    	<br><br>
+									    	<div class="input-group mb-3">
+	 											<button class="btn btn-outline-secondary" type="button" id="button-addon1">&nbsp;-</button>
+		  										<input type="text" class="form-control" disabled aria-label="Example text with button addon" aria-describedby="button-addon1" value = "1">
+		  										<button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+											</div>
+									    
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
 										    <a href = "javascript:void(0);" style = "text-decoration: none;">
 												<div class="payment_type" value="kakaopay" onclick="paymentType('kakaopay')">
@@ -621,8 +673,8 @@ pageEncoding="UTF-8"%>
 			    console.log('선택한 날짜:',selectedDates);
 			  }
 			});*/
-			
-		$(".datepicker").each(function(index, element) {
+		
+			  $(".datepicker").each(function(index, element) {
 			  var datepickerId = $(element).data("id");
 			  var sdNum = $(this).siblings('.calSdNum'); 
 			  var sdPrice = $(this).siblings('.calSdPrice');
@@ -630,6 +682,8 @@ pageEncoding="UTF-8"%>
 			  $(element).datepicker({
 			    language: 'ko',
 			    inline: true,
+			    minDate: new Date(),
+			    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
 			    onSelect: function(selectedDates, instance) {
 			      console.log("선택한 날짜:", selectedDates);
 			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
