@@ -251,8 +251,8 @@ pageEncoding="UTF-8"%>
 			}
 			
 			&.reserved{
-				background:grey;
-				border:2px solid black;
+				background:rgba(0, 0, 0, 0.2);
+				border:2px solid rgba(0, 0, 0, 0.69);
 				color : black;
 			}
 		}
@@ -588,7 +588,7 @@ pageEncoding="UTF-8"%>
 										  	<input type="hidden" class="hiddenPrice"/>
 								     	  	<span class="price mb-2 totalPrice" style= "color:#193D76" ></span>
 										  <br><br>
-										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()">초기화</button>
+										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()" style="width:100%">초기화</button>
 										  <br><br>
 									    <hr>
 									    	<span class="price mb-2" style= "color:#193D76" >인원 선택</span>
@@ -598,7 +598,8 @@ pageEncoding="UTF-8"%>
 		  										<input type="text" class="form-control people" disabled aria-label="Example text with button addon" aria-describedby="button-addon1"  value = "1">
 		  										<button class="btn btn-outline-secondary peoplePlus" type="button" >+</button>
 											</div>
-									    
+											<input type= "hidden" class="min-people" value="${detail.SD_MIN_PEOPLE }">
+											<input type= "hidden" class="max-people" value="${detail.SD_MAX_PEOPLE }">
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
 										    <a href = "javascript:void(0);" style = "text-decoration: none;">
 												<div class="payment_type" value="kakaopay" onclick="paymentType('kakaopay')">
@@ -660,10 +661,27 @@ pageEncoding="UTF-8"%>
 	$(function(){
 
 		$('.peopleMinus').click(function(){
-			$('.people').val(parseInt($('.people').val())-1);
+			var people = $(this).siblings('.people');
+		    var minPeople = parseInt($(this).parent().siblings('.min-people').val());
+		    
+		    if(people.val() > minPeople){
+		        people.val(parseInt(people.val())-1);
+		    } else {
+		        alert('예약가능 최소 인원은' + minPeople + '명 입니다');
+		    }
 		});
+				
+		
+		
+		
 		$('.peoplePlus').click(function(){
-			$('.people').val(parseInt($('.people').val())+1);
+			var people = $(this).siblings('.people');
+		    var maxPeople = parseInt($(this).parent().siblings('.max-people').val());
+		    if(people.val() < maxPeople ){
+		    	people.val(parseInt(people.val())+1);
+		    } else {
+		        alert('예약가능 최대 인원은' + maxPeople + '명 입니다');
+		    }
 		});
 		
 		
