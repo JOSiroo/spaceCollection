@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -42,4 +43,10 @@ public class UserMainController {
     
 	*/
 	
+	@RequestMapping("/search")
+	public String search() {
+		logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}"/*, spaceType*/);
+		
+		return "userMain/search";
+	}
 }
