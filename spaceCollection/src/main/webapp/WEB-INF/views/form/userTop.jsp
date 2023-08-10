@@ -22,7 +22,7 @@
 <!-- 사이드메뉴 -->
 
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
+<link rel="shortcut icon" href="title_icon.jpg">
 <meta name="description" content="" />
 <meta name="keywords" content="bootstrap, bootstrap5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +38,7 @@
 <!-- 공간 상세페이지용 cdn -->
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepickerCss/datepicker.css">
 <style type="text/css">
 
 /* form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
@@ -161,8 +161,6 @@
 						<br>
 					
 					<div class="topSearch">
-						<!-- <form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3"
-						data-aos="fade-up" data-aos-delay="200"> -->
 						<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
 							<input type="text" class="form-control px-4"
 								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
@@ -189,26 +187,26 @@
 		
 		
 			<!-- 사이드메뉴 -->
-			<div class="sideform" style="margin-top: 30px; margin-bottom: 40px">
-			 	<div class="col-sm-6">
+			<div class="sideform" style="margin-top: 30px; margin-bottom: 40px;">
+			 	<div class="col-sm-6 " style="text-align: center;">
 				<a href="${pageContext.request.contextPath }/member_mypage">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>
 				
-		  	<div class="col-sm-6">
+		  	<div class="col-sm-6 " style="text-align: center;">
 			  <a href="${pageContext.request.contextPath }/member_reserve" >   
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
 		 
-		   <div class="col-sm-6">
+		   <div class="col-sm-6 " style="text-align: center;">
 			       <a href="${pageContext.request.contextPath }/member_review" >
 					<i class="bi bi-person-hearts" ></i>
 		 	 	  <p>이용 후기/Q&A</p></a>
 		 	</div>
 	
-		    <div class="col-sm-6">
+		    <div class="col-sm-6 " style="text-align: center;">
 			  <a href="${pageContext.request.contextPath }/member_heart">
 		   		 <i class="bi bi-house-heart" ></i>
 		 	 	  <p>찜 리스트</p></a>
@@ -220,13 +218,13 @@
 		   <p>공지사항</p></a> 
 		  </div>
 		  
-		  <div class="col-sm-6">
+		  <div class="col-sm-6 " style="text-align: center;">
 		    <a href="${pageContext.request.contextPath }/member_faq?fmstatus=1&fstatus=1" >
 		     <i class="bi bi-question-diamond" ></i>
 		 	   <p>FAQ</p></a>
 		  </div>
 				  
-		  <div class="col-sm-6">
+		  <div class="col-sm-6"  style="text-align: center;">
 			  <c:choose>
 			    <c:when test="${not empty loginMember}">
 			      <!-- 로그인한 경우 -->
@@ -245,7 +243,7 @@
 			  </c:choose>
 		 </div>
 				  
-		  <div class="col-sm-6 ">
+		  <div class="col-sm-6 "  style="text-align: center;">
 		    <a href="${pageContext.request.contextPath }">
 		    <i class="bi bi-houses" ></i>
 		 	   <p>Home</p></a>

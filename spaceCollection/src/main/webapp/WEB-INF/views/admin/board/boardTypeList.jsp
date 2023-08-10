@@ -6,7 +6,13 @@
 <script type="text/javascript">
 	$(function() {
 		$('#boardBt').click(function() {
-			location.href="<c:url value='/admin/board/boardCreate'/>";
+			location.href="<c:url value='/admin/board/boardTypeCreate'/>";
+		});
+		
+		$('tbody tr').hover(function() {
+			$(this).find('td').css("background-color", "#d1cece");
+		}, function() {
+			$(this).find('td').css("background-color", "white");
 		});
 	});
 </script>
@@ -51,14 +57,15 @@
 								</c:if>
 								<c:if test="${!empty list }">
 									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.boardTypeId }</td>
-											<td>${vo.boardTypeName }</td>
-											<td>${vo.boardTypeCommentOk }</td>
-											<td>${vo.boardTypeFileOk }</td>
-											<td><fmt:formatDate value="${vo.boardTypeRegdate }" pattern="yyyy-MM-dd"/></td>
-											<td>${vo.boardTypeUse }</td>
-										</tr>
+									
+											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
+												<td>${vo.boardTypeId }</td>
+												<td>${vo.boardTypeName }</td>
+												<td>${vo.boardTypeCommentOk }</td>
+												<td>${vo.boardTypeFileOk }</td>
+												<td><fmt:formatDate value="${vo.boardTypeRegdate }" pattern="yyyy-MM-dd"/></td>
+												<td>${vo.boardTypeUse }</td>
+											</tr>
 									</c:forEach>
 								</c:if>
 							</tbody>

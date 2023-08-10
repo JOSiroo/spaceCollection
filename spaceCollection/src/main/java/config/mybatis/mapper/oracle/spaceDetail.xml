@@ -15,6 +15,11 @@
 		select * from spaceDetail_facility_view
 		where space_num = #{spaceNum}		
 	</select>
+	<select id="selectJustDetailByNo" resultType="spaceDetailVo" 
+		parameterType = "int">
+		select * from space_Detail
+		where sd_num = #{sdNum}		
+	</select>
 	
 	<select id="selectRefund" resultType="refundVo" parameterType="int">
 		select * from refund

@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.admin.model.AdminService;
-import com.sc.spaceCollection.admin.model.AdminVO;
+import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.boardType.model.BoardTypeVO;
+import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,6 +33,7 @@ public class AdminController {
 	
 	private final AdminService adminService;
 	private final BoardTypeService boardTypeService;
+	private final BoardService boardService;
 	
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
@@ -93,7 +96,7 @@ public class AdminController {
 		return "admin/adminMain";
 	}
 	
-	@RequestMapping("/board/boardSetting")
+	@RequestMapping("/board/boardTypeList")
 	public void boardSetting(Model model) {
 		logger.info("게시판 종합 관리");
 		
@@ -103,37 +106,37 @@ public class AdminController {
 		model.addAttribute("list", list);
 	}
 	
-	@GetMapping("/board/boardCreate")
+	@GetMapping("/board/boardTypeCreate")
 	public void boardCreate() {
 		logger.info("게시판 생성 화면");
 	}
 	
-	@PostMapping("/board/boardCreate")
+	@PostMapping("/board/boardTypeCreate")
 	public String boardCreate(@ModelAttribute BoardTypeVO vo, Model model) {
 		logger.info("게시판 생성, 파라미터 vo = {}", vo);
 		
 		if(vo.getBoardTypeCommentOk()==null) {
-			vo.setBoardTypeCommentOk("Y");
-		}else {
 			vo.setBoardTypeCommentOk("N");
+		}else {
+			vo.setBoardTypeCommentOk("Y");
 		}
 		
 		if(vo.getBoardTypeFileOk()==null) {
-			vo.setBoardTypeFileOk("Y");
-		}else {
 			vo.setBoardTypeFileOk("N");
+		}else {
+			vo.setBoardTypeFileOk("Y");
 		}
 		
 		if(vo.getBoardTypeUse()==null) {
-			vo.setBoardTypeUse("Y");
-		}else {
 			vo.setBoardTypeUse("N");
+		}else {
+			vo.setBoardTypeUse("Y");
 		}
-		String msg = "게시판 생성에 실패하였습니다.", url = "/admin/board/boardCreate";
+		String msg = "게시판 생성에 실패하였습니다.", url = "/admin/board/boardTypeCreate";
 		int result = boardTypeService.createBoard(vo);
 		if(result>0) {
 			msg = "게시판이 생성되었습니다.";
-			url = "/admin/board/boardSetting";
+			url = "/admin/board/boardTypeList";
 		}else if(result<0){
 			msg = "이미 사용중인 게시판 이름입니다.";
 		}
@@ -142,5 +145,68 @@ public class AdminController {
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
+	}
+	
+	@GetMapping("/board/boardTypeEdit")
+	public void boardEdit(@RequestParam String boardTypeId, Model model) {
+		logger.info("게시판 정보 출력, 파라미터 boardTypeId = {}", boardTypeId);
+		
+		BoardTypeVO vo = boardTypeService.selectByBoardTypeId(boardTypeId);
+		
+		model.addAttribute("vo", vo);
+		
+	}
+	
+	@RequestMapping("/board/boardTypeEditn")
+	public String boardEditn(Model model) {
+		model.addAttribute("msg", "변경된 항목이 없습니다.");
+		model.addAttribute("url", "/admin/board/boardTypeList");
+		
+		return "admin/common/message";
+	}
+	
+	@PostMapping("/board/boardTypeEdit")
+	public String boardEdit(@ModelAttribute BoardTypeVO vo, Model model) {
+		logger.info("게시판 수정, 파라미터 vo = {}", vo);
+		
+		if(vo.getBoardTypeCommentOk()==null) {
+			vo.setBoardTypeCommentOk("N");
+		}else {
+			vo.setBoardTypeCommentOk("Y");
+		}
+		
+		if(vo.getBoardTypeFileOk()==null) {
+			vo.setBoardTypeFileOk("N");
+		}else {
+			vo.setBoardTypeFileOk("Y");
+		}
+		
+		if(vo.getBoardTypeUse()==null) {
+			vo.setBoardTypeUse("N");
+		}else {
+			vo.setBoardTypeUse("Y");
+		}
+		String msg = "게시판 수정에 실패하였습니다.", url = "/admin/board/boardTypeEdit";
+		int result = boardTypeService.updateBoardType(vo);
+		if(result>0) {
+			msg = "게시판이 수정되었습니다.";
+			url = "/admin/board/boardTypeList";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}	
+	
+	@RequestMapping("/board/boardList")
+	public void name(@ModelAttribute SearchVO searchVo, Model model) {
+		
+		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
+		
+		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
+		logger.info("게시물 조회 결과, list.size = {}", list.size());
+		
+		model.addAttribute("list", list);
 	}
 }

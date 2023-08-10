@@ -2,13 +2,17 @@ package com.sc.spaceCollection.controller;
 
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sc.spaceCollection.reservation.model.ReservationDAO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.reservation.model.ReservationVO;
+import com.sc.spaceCollection.space.model.SpaceVO;
+import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
+import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,13 +32,14 @@ import lombok.RequiredArgsConstructor;
 public class ReservationController {
 	private final static Logger logger = LoggerFactory.getLogger(ReservationController.class);
 	private final ReservationService reservationService;
+	private final SpaceDetailService sdService;
 	
 	@ResponseBody
 	@GetMapping("/ajaxReservation")
 	public void ajaxInsertReservation(@RequestParam Map<String, Object> paymentData) {
 		logger.info("예약 화면, 파라미터 paymentData = {}", paymentData);
 		ReservationVO vo = new ReservationVO();
-
+		
 		int userNum = Integer.parseInt((String) paymentData.get("buyer_name")); 
 		int sdNum =Integer.parseInt((String) paymentData.get("custom_data[SD_NUM]"));
 		String startDay = (String) paymentData.get("custom_data[START_DAY]");
@@ -64,9 +72,34 @@ public class ReservationController {
 		
 		int cnt = reservationService.insertReservation(vo);
 		logger.info("예약 처리 결과, cnt = {}", cnt);
-
 	}
 	
+	@ResponseBody
+	@GetMapping("/ajaxSelectRes")
+	public Object selectReservationByDayAndNum(@RequestParam String sdNum,
+											@RequestParam String selectedDates) {
+		logger.info("ajax 예약조회 파라미터 sdNum = {}, selectedDates = {}", sdNum, selectedDates);
+		Map<String, Integer> resultMap = new HashMap<>();
+
+		
+		if(reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates).equals("noData")) {
+			logger.info("해당 날짜에 예약내역 없음");
+			
+			SpaceDetailVO vo = sdService.selectJustDetailByNo(Integer.parseInt(sdNum));
+			
+			resultMap.put("result", 2);
+			resultMap.put("startHour", vo.getSdOpenTime());
+			resultMap.put("endHour",vo.getSdCloseTime());
+		}else {
+			ReservationVO vo = (ReservationVO)reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates);
+			logger.info("ajax 예약조회 결과 vo = {}",vo);
+
+			resultMap.put("result", 1);
+			resultMap.put("startHour", Integer.parseInt(vo.getReserveStartHour()));
+			resultMap.put("endHour", Integer.parseInt(vo.getReserveFinishHour()));
+		}
+		return resultMap;
+	}
 }
 
 

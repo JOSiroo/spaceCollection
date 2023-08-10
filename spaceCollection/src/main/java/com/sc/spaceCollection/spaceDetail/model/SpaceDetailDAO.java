@@ -13,5 +13,6 @@ public interface SpaceDetailDAO {
 	SpaceVO selectByNo(int spaceNo);
 	List<Map<String, Object>> selectDetailByNo(int spaceNo);
 	RefundVO selectRefund(int refundNo);
+	SpaceDetailVO selectJustDetailByNo(int sdNum);
 
 }

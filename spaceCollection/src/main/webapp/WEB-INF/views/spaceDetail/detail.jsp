@@ -5,42 +5,11 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
-	<!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		$('.nav-item').click(function(){
-			$(this).css('background', '#ffd014');
-			$('.nav-item').not($(this)).css('background', 'white');
-		})
-		
-		$('.totalPrice').text("예약 시간을 선택해주세요.");
-		$('.swiper-inBox').click(function(){
-		   	var result = 0;
-		   	var formattedTotalPrice = "";
-		   	if($('.swiper-inBox.on').length > 0){
-			    $('.swiper-inBox.on').each(function(){
-			        result += parseInt($(this).find('input[type=hidden]').val());
-			    });
-			    $('.hiddenPrice').val(result);
-			    
-			    formattedTotalPrice = addComma(result);
-			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
-		   	}else{
-				$('.totalPrice').text("예약 시간을 선택해주세요.");
-			}
-		});
-	})
-	 function addComma(value){
-		    value = value+"";
-	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        return value; 
-	    }
-	</script>
+    
+	
 	<title>스페이스 클라우드</title>
 	</head>
 <style type="text/css">
@@ -230,6 +199,7 @@ pageEncoding="UTF-8"%>
 			text-align: left;
 		}
 		.swiper-inBox{
+			
 	    	text-align: center;
 			font-size: 80%;
 			display: flex;
@@ -241,13 +211,21 @@ pageEncoding="UTF-8"%>
 			background-color: #ffd014;
 			padding: 17% 3% 19% 3%;
 			width: 100%;
+			
+	   		&.on{
+				color: white;
+				font-size: 80%;
+				border: 2px solid navy;
+				background-color: #193D76;
+			}
+			
+			&.reserved{
+				background:grey;
+				border:2px solid black;
+				color : black;
+			}
 		}
-   		.on{
-			color: white;
-			font-size: 80%;
-			border: 2px solid navy;
-			background-color: #193D76;
-		}
+		
     }
     .payment_type{
 		border:none;	
@@ -277,7 +255,9 @@ pageEncoding="UTF-8"%>
 	.p-3{
 		border-radius: 0.75rem;
 	}
-	
+	.datepicker{
+		width : 100%;
+	}
 	
 </style>
 <section>
@@ -526,7 +506,13 @@ pageEncoding="UTF-8"%>
 									    <button class="inButton">시간 단위 예약하기(최소 ${detail.SD_MIN_TIME}부터)</button>
 									    <div class = "inContent" style="width: 100%">
 									    <hr>
-									    
+									    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
+										<div>
+											 <input type="text" class="datepicker">
+											 <input type="hidden" class = 'calSdNum' value="${detail.SD_NUM }">
+											 <input type="hidden" class = 'calSdPrice' value="${detail.SD_PRICE }">
+										</div>
+									    <hr>
 										 <div class="swiper mySwiper">
 										    <div class="swiper-wrapper">
 											    <fmt:parseNumber var="openTime" integerOnly="true" type="number" value="${detail.SD_OPEN_TIME}" />
@@ -545,12 +531,12 @@ pageEncoding="UTF-8"%>
 												    				<p class = "swiper-p">&nbsp;</p>
 										    						<p class = "swiper-p">${i}</p>
 										    					</c:if>
-										    				<button class = "swiper-inBox">
-										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
+										    				<button class = "swiper-inBox item-${i }th" value="${detail.SD_PRICE }">
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
-										    				</button>
+									    					</button>
 										    			</div>
 										     	</c:forEach>
+										     	
 										    </div>
 										  </div>
 										  <br>
@@ -618,6 +604,119 @@ pageEncoding="UTF-8"%>
     <script src="js/spaceDetail.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+
+		$('.nav-item').click(function(){
+			$(this).css('background', '#ffd014');
+			$('.nav-item').not($(this)).css('background', 'white');
+		})
+		
+		/*$(".datepicker").datepicker({
+			  language: 'ko', 
+			  inline: true,
+			  onSelect: function(selectedDates, instance) {
+				  var sdNum = $(this).siblings('.calSdNum'); 
+				console.log(sdNum);z
+			    console.log('선택한 날짜:',selectedDates);
+			  }
+			});*/
+			
+		$(".datepicker").each(function(index, element) {
+			  var datepickerId = $(element).data("id");
+			  var sdNum = $(this).siblings('.calSdNum'); 
+			  var sdPrice = $(this).siblings('.calSdPrice');
+			  
+			  $(element).datepicker({
+			    language: 'ko',
+			    inline: true,
+			    onSelect: function(selectedDates, instance) {
+			      console.log("선택한 날짜:", selectedDates);
+			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
+			      $('.swiper-inBox').removeClass('on');
+			      
+			      var requestData = {
+			                sdNum: sdNum.val(),
+			                selectedDates: selectedDates+""
+			            };
+			      
+			      $.ajax({
+			    	  url: 'reservation/ajaxSelectRes', // 서버의 엔드포인트 URL
+                      method: 'get', // 
+                      dataType:'json',
+                      data: requestData,
+                      success: function(data) {
+                          // AJAX 요청이 성공한 경우
+                          console.log('data:', data);
+                          var begin = parseInt(data.startHour);
+                          var end = parseInt(data.endHour);
+                          var result = data.result;
+                          if(result === 2){
+                        	  console.log('예약내역 없음');
+                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
+                          } else if (result === 1){
+							  console.log('예약내역 있음');
+                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
+                          }
+                      },
+                      error: function(xhr, status, error) {
+                          // AJAX 요청이 실패한 경우
+                          console.error('Error:', error);
+                      }
+			      })
+			      
+			    }
+			  });
+			});
+		function makeTimeTable(result, begin, end, sdNum, sdPrice){
+			console.log("makeTimeTable");
+			console.log('sdPrice = '+ sdPrice.val());
+			console.log('result = '+ result);
+			console.log('begin = '+ begin);
+			console.log('end = ' + end);
+			console.log('sdNum = ' + sdNum.val());
+			var parent = sdNum.closest('.inAccordionLi');
+			var times = parent.children('.swiper-inBox');
+			
+			
+			if(result == 1){	//예약내역 있음!
+				for(var i = begin; i <= end; i++){
+					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
+					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
+					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
+				}	
+			}else{
+				parent.find('.swiper-inBox').removeClass('reserved');
+				parent.find('.swiper-inBox').prop('disabled', false);
+				parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+				parent.find('.swiper-inBox').val(sdPrice.val());
+			}
+		}
+
+	});
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
+			$('.swiper-inBox').click(function(){
+			   	var result = 0;
+			   	var formattedTotalPrice = "";
+			   	if($('.swiper-inBox.on').length > 0){
+				    $('.swiper-inBox.on').each(function(){
+				        result += parseInt($(this).val());
+				    });
+				    $('.hiddenPrice').val(result);
+				    
+				    formattedTotalPrice = addComma(result);
+				    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+			   	}else{
+					$('.totalPrice').text("예약 시간을 선택해주세요.");
+				}
+			});
+	
+	 function addComma(value){
+		    value = value+"";
+	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        return value; 
+	    }
+	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
@@ -785,5 +884,7 @@ pageEncoding="UTF-8"%>
             );
         }
     </script>
-		
+	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
+	<!--한국어  달력 쓰려면 추가 로드-->
+	<script src="<c:url value='/js/datepickerJs/i18n/datepicker.ko.js'/>"></script> 
 <%@ include file="../form/userBottom.jsp" %>
