@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 <style>
 .row{
-	padding: 1% 0% 2% 0%;
+	padding: 5% 0% 0% 0%;
 }
 
 .search-wrapper{
@@ -12,6 +12,8 @@
 .search-section{
 	height:100%;
 	padding-bottom:3%;
+	background: rgb(246, 246, 246);
+	min-height: 648px;
 }
 .dropdown-toggle{
 	display:inline-block;
