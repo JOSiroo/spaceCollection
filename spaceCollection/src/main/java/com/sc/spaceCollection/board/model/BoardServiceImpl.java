@@ -24,4 +24,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.selectBoardAll(searchVo);
 	}
 
+	@Override
+	public int getTotalRecord(SearchVO searchVo) {
+		return boardDao.getTotalRecord(searchVo);
+	}
+
 }

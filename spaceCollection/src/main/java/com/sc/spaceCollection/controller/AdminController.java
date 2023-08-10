@@ -17,12 +17,15 @@ import com.sc.spaceCollection.admin.model.AdminService;
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.boardType.model.BoardTypeVO;
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -200,13 +203,35 @@ public class AdminController {
 	}	
 	
 	@RequestMapping("/board/boardList")
-	public void name(@ModelAttribute SearchVO searchVo, Model model) {
-		
+	public void name(@RequestParam String boardTypeName, @ModelAttribute SearchVO searchVo, Model model) {
+		searchVo.setBoardTypeName(boardTypeName);
 		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
 		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+
+		//[2]SearchVo에 입력되지 않은 두 개의 변수에 값 셋팅
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		logger.info("게시물 조회 결과, list.size = {}", list.size());
-		
+
+		int totalRecord=boardService.getTotalRecord(searchVo);
+		logger.info("글 목록 전체 조회 - totalRecord={}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+
+		//3
 		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+	}
+
+	@RequestMapping("/board/boardWrite")
+	public void boardWrite(@RequestParam String boardTypeName, Model model) {
+		logger.info("게시물 작성 화면, 초기 게시판 설정 boardTypeName = {}", boardTypeName);
+		
+		model.addAttribute("boardTypeName", boardTypeName);
 	}
 }

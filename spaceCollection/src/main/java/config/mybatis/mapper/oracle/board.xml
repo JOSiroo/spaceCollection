@@ -7,7 +7,7 @@
 	<sql id="searchWhere">
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				${searchCondition} like '%' || #{searchKeyword} || '%'
+				and ${searchCondition} like '%' || #{searchKeyword} || '%'
 			</if>
 		</where>
 	</sql>
@@ -17,13 +17,14 @@
 		(
 			select rownum as RNUM, A.* from
 			(
-				select * from board_boardType_user_view
+				select * from board_boardType_user_view 
+				where board_type_name = #{boardTypeName} and BOARD_DEL_FLAG is null
 				<include refid="searchWhere"></include>
-			order by no desc
+			order by board_reg_date
 			)A
 		)
 		<![CDATA[
-		where RNUM> #{firstRecordIndex} 
+		where RNUM>#{firstRecordIndex} 
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
 

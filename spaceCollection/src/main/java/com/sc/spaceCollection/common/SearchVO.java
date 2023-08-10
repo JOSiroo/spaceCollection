@@ -13,6 +13,9 @@ public class SearchVO{
 
 	/** 검색키워드 */
 	private String searchKeyword = "";
+	
+	/** 게시판 분류 */
+	private String boardTypeName = "";
 
 	/** 검색 사용여부 */
 	private String searchUseYn = "";
@@ -47,6 +50,23 @@ public class SearchVO{
 		this.lastRecordIndex = bean.lastRecordIndex;
 		this.recordCountPerPage = bean.recordCountPerPage;
 	}
+	
+	
+	
+	
+	public String getBoardTypeName() {
+		return boardTypeName;
+	}
+
+
+
+
+	public void setBoardTypeName(String boardTypeName) {
+		this.boardTypeName = boardTypeName;
+	}
+
+
+
 
 	public String getSearchCondition() {
 		return searchCondition;
@@ -115,11 +135,9 @@ public class SearchVO{
 
 	@Override
 	public String toString() {
-		return "SearchVO [searchCondition=" + searchCondition
-				+ ", searchKeyword=" + searchKeyword + ", searchUseYn="
-				+ searchUseYn + ", currentPage=" + currentPage
-				+ ", blockSize=" + blockSize + ", firstRecordIndex="
-				+ firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
+		return "SearchVO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", boardTypeName="
+				+ boardTypeName + ", searchUseYn=" + searchUseYn + ", currentPage=" + currentPage + ", blockSize="
+				+ blockSize + ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
 				+ ", recordCountPerPage=" + recordCountPerPage + "]";
 	}
 
