@@ -594,9 +594,9 @@ pageEncoding="UTF-8"%>
 									    	<span class="price mb-2" style= "color:#193D76" >인원 선택</span>
 									    	<br><br>
 									    	<div class="input-group mb-3">
-	 											<button class="btn btn-outline-secondary" type="button" id="button-addon1">&nbsp;-</button>
-		  										<input type="text" class="form-control" disabled aria-label="Example text with button addon" aria-describedby="button-addon1" value = "1">
-		  										<button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+	 											<button class="btn btn-outline-secondary peopleMinus" type="button" >&nbsp;-</button>
+		  										<input type="text" class="form-control people" disabled aria-label="Example text with button addon" aria-describedby="button-addon1"  value = "1">
+		  										<button class="btn btn-outline-secondary peoplePlus" type="button" >+</button>
 											</div>
 									    
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
@@ -615,7 +615,6 @@ pageEncoding="UTF-8"%>
 											<hr>
 											<div style="text-align: center;">
 												<a href="property-single.html" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#myModal" style="width: 40%">전화</a>
-												
 												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 40%">결제하기</a>
 											</div>
 										</div>
@@ -660,6 +659,14 @@ pageEncoding="UTF-8"%>
 	<script type="text/javascript">
 	$(function(){
 
+		$('.peopleMinus').click(function(){
+			$('.people').val(parseInt($('.people').val())-1);
+		});
+		$('.peoplePlus').click(function(){
+			$('.people').val(parseInt($('.people').val())+1);
+		});
+		
+		
 		$('.nav-item').click(function(){
 			$(this).css('background', '#ffd014');
 			$('.nav-item').not($(this)).css('background', 'white');
@@ -763,6 +770,8 @@ pageEncoding="UTF-8"%>
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        return value; 
 	    }
+	 
+	 
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -819,6 +828,7 @@ pageEncoding="UTF-8"%>
 		    overlay.setMap(null);     
 		}
 	</script>
+	
 	<script>
 	//스와이프 스크립트
     var swiper = new Swiper(".mySwiper", {
@@ -894,9 +904,15 @@ pageEncoding="UTF-8"%>
             $.ajax({
                 url: 'guest/getUserInfo',
                 method: 'get',
-                dataType: 'json',
+                //dataType: 'json',
                 data: "userId=" + $('#userId').val(),
                 success: function(rsp) {
+                	
+                	if(rsp==""){
+                		alert('로그인 정보가 옳바르지 않습니다.');
+                		return false;
+                	}
+                	
                     buyerEmail = rsp.userNum;
                     buyerName = rsp.userName;
                     buyerTel = rsp.userHp;
@@ -908,7 +924,7 @@ pageEncoding="UTF-8"%>
                     callIMP(buyerEmail, buyerName, buyerTel, buyerAddr, buyerPostcode);
                 },
                 error: function(xhr, status, error) {
-                    console.log('rsp = ' + rsp);
+                	alert(status + " : " + error);
                 }
             });
         }

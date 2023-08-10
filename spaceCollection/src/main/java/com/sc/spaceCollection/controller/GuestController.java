@@ -48,7 +48,7 @@ public class GuestController {
 		//http://localhost:9091/herb/member/ajaxCheckId?userid=hong7
 	}
 	@ResponseBody
-	@RequestMapping("/getUserInfo")
+	@GetMapping("/getUserInfo")
 	public GuestVO getUserInfo(@RequestParam String userId) {
 		//1
 		logger.info("ajax 이용 - 회원정보 조회, 파라미터 userid={}", userId);
