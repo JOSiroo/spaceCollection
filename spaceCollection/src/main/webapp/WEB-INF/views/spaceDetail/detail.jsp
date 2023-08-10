@@ -303,7 +303,7 @@ pageEncoding="UTF-8"%>
 	
 </style>
 <section>
-
+	<input type="hidden" value="${userId}" id="userId">
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -553,6 +553,7 @@ pageEncoding="UTF-8"%>
 									    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
 										<div>
 											 <input type="text" class="datepicker">
+											 <input type="hidden" class = 'selectedDate'>
 											 <input type="hidden" class = 'calSdNum' value="${detail.SD_NUM }">
 											 <input type="hidden" class = 'calSdPrice' value="${detail.SD_PRICE }">
 										</div>
@@ -575,7 +576,7 @@ pageEncoding="UTF-8"%>
 												    				<p class = "swiper-p">&nbsp;</p>
 										    						<p class = "swiper-p">${i}</p>
 										    					</c:if>
-										    				<button class = "swiper-inBox item-${i }th" value="${detail.SD_PRICE }">
+										    				<button class = "swiper-inBox item-${i }th" value="${detail.SD_PRICE }" id="${i}">
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
 									    					</button>
 										    			</div>
@@ -664,16 +665,7 @@ pageEncoding="UTF-8"%>
 			$('.nav-item').not($(this)).css('background', 'white');
 		})
 		
-		/*$(".datepicker").datepicker({
-			  language: 'ko', 
-			  inline: true,
-			  onSelect: function(selectedDates, instance) {
-				  var sdNum = $(this).siblings('.calSdNum'); 
-				console.log(sdNum);z
-			    console.log('선택한 날짜:',selectedDates);
-			  }
-			});*/
-		
+			
 			  $(".datepicker").each(function(index, element) {
 			  var datepickerId = $(element).data("id");
 			  var sdNum = $(this).siblings('.calSdNum'); 
@@ -687,8 +679,9 @@ pageEncoding="UTF-8"%>
 			    onSelect: function(selectedDates, instance) {
 			      console.log("선택한 날짜:", selectedDates);
 			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
-			      $('.swiper-inBox').removeClass('on');
+			      $('.selectedDate').val(selectedDates);
 			      
+			      $('.swiper-inBox').removeClass('on');
 			      var requestData = {
 			                sdNum: sdNum.val(),
 			                selectedDates: selectedDates+""
@@ -885,57 +878,92 @@ pageEncoding="UTF-8"%>
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         
+        
         function requestPay() {
-        	console.log(paymentType);
-        	console.log($('.hiddenPrice').val());
+            console.log(paymentType);
+            console.log($('.hiddenPrice').val());
+            
+            // 아래 변수들을 선언
+            var buyerEmail = "";
+            var buyerName = "";
+            var buyerTel = "";
+            var buyerAddr = "";
+            var buyerPostcode = "";
+            
+			
+            $.ajax({
+                url: 'guest/getUserInfo',
+                method: 'get',
+                dataType: 'json',
+                data: "userId=" + $('#userId').val(),
+                success: function(rsp) {
+                    buyerEmail = rsp.userNum;
+                    buyerName = rsp.userName;
+                    buyerTel = rsp.userHp;
+                    buyerAddr = rsp.address + " " + rsp.addressDetail;
+                    buyerPostcode = rsp.zipcode;
+                    console.log("userid = " + rsp);
+
+                    // $.ajax 요청이 완료된 후에 IMP.request_pay 함수 실행
+                    callIMP(buyerEmail, buyerName, buyerTel, buyerAddr, buyerPostcode);
+                },
+                error: function(xhr, status, error) {
+                    console.log('rsp = ' + rsp);
+                }
+            });
+        }
+		
+        
+       
+        
+        function callIMP(buyerEmail, buyerName, buyerTel, buyerAddr, buyerPostcode) {
+       		var selectedDate = $('.selectedDate').val();
+            var startHour = $('.swiper-inBox.on').first().attr('id');
+            var endHour = $('.swiper-inBox.on').last().attr('id');
+             
             IMP.request_pay({
-               	pg : payType,
-                pay_method : 'card',
-                merchant_uid: ${vo.spaceNum}+"_"+ sdNum + new Date().getTime(), 
-                name : ${vo.spaceNum}+"_"+sdName,
-                amount : $('.hiddenPrice').val(),
-                custom_data : {START_DAY:'2023-08-08',
-			                	START_HOUR:'10',
-			                	END_DAY:'2023-08-08',
-			                	END_HOUR:'18',
-			                	SD_NUM:sdNum},
-                buyer_email : 'Iamport@chai.finance',
-                buyer_name : '2',
-                buyer_tel : '010-1234-5678',
-                buyer_addr : '서울특별시 강남구 삼성동',
-                buyer_postcode : '123-456'
-            },   function (rsp) {
-            	if ( rsp.success ) {
-            		console.log(rsp.custom_data);
-            		console.log(rsp);
+                pg: payType,
+                pay_method: 'card',
+                merchant_uid: ${vo.spaceNum} + "_" + sdNum + new Date().getTime(),
+                name: ${vo.spaceNum} + "_" + sdName,
+                amount: $('.hiddenPrice').val(),
+                custom_data: {
+                    START_DAY: selectedDate,
+                    START_HOUR: startHour,
+                    END_DAY: selectedDate,
+                    END_HOUR: endHour,
+                    SD_NUM: sdNum
+                },
+                buyer_email: buyerEmail,
+                buyer_name: buyerName,
+                buyer_tel: buyerTel,
+                buyer_addr: buyerAddr,
+                buyer_postcode: buyerPostcode
+            }, function(rsp) {
+                if (rsp.success) {
+                    console.log(rsp.custom_data);
+                    console.log(rsp);
                     var msg = '결제가 완료되었습니다.';
                     $.ajax({
-                        url: 'reservation/ajaxReservation', // 서버의 엔드포인트 URL
-                        method: 'GET', // POST 요청
-                        //dataType:'json',
+                        url: 'reservation/ajaxReservation',
+                        method: 'GET',
                         data: rsp,
                         success: function(data) {
-                            // AJAX 요청이 성공한 경우
-                            $('#result').html(data.message); // 결과를 화면에 출력
+                            $('#result').html(data.message);
                         },
                         error: function(xhr, status, error) {
-                            // AJAX 요청이 실패한 경우
                             console.error('Error:', error);
                         }
                     });
-                    
-                    
-                    
+
                     msg += '상점 거래ID : ' + rsp.merchant_uid;
                     msg += '결제 금액 : ' + rsp.paid_amount;
-                   
                 } else {
                     var msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
                 }
-            	 alert(msg);
-              }
-            );
+                alert(msg);
+            });
         }
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>

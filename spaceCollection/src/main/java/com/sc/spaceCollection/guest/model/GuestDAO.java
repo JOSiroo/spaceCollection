@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface GuestDAO {
 	int guestCheckId(String userId);
 	String selectPwd(String userId);
+	GuestVO selectUserInfo(String userId);
 }
