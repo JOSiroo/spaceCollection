@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.guest.model.GuestService;
+import com.sc.spaceCollection.guest.model.GuestVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,6 +46,19 @@ public class GuestController {
 		return bool;
 		
 		//http://localhost:9091/herb/member/ajaxCheckId?userid=hong7
+	}
+	@ResponseBody
+	@RequestMapping("/getUserInfo")
+	public GuestVO getUserInfo(@RequestParam String userId) {
+		//1
+		logger.info("ajax 이용 - 회원정보 조회, 파라미터 userid={}", userId);
+		
+		//2
+		GuestVO vo = new GuestVO();
+		vo =guestService.selectUserInfo(userId);
+		logger.info("회원정보 조회 결과, vo={}", vo);
+		
+		return vo;
 	}
 	
 	
