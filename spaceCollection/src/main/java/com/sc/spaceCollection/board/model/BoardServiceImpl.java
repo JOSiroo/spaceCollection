@@ -20,8 +20,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectBoardAll(SearchVO vo) {
-		return boardDao.selectBoardAll(vo);
+	public List<Map<String, Object>> selectBoardAll(SearchVO searchVo) {
+		return boardDao.selectBoardAll(searchVo);
 	}
 
 }

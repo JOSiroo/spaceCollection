@@ -7,5 +7,6 @@ import com.sc.spaceCollecion.common.SearchVO;
 
 public interface BoardService {
 	List<BoardVO> selectByBoardTypeId(String boardTypeName);
-	List<Map<String, Object>> selectBoardAll(SearchVO vo);
+	List<Map<String, Object>> selectBoardAll(SearchVO searchVo);
+	List<Map<String, Object>> selectBoardAll(String boardTypeName);
 }

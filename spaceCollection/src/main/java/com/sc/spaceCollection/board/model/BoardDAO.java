@@ -11,5 +11,6 @@ import com.sc.spaceCollecion.common.SearchVO;
 public interface BoardDAO {
 	List<BoardVO> selectByBoardTypeId(String boardTypeName);
 	List<Map<String, Object>> selectBoardAll(SearchVO searchVo);
+	List<Map<String, Object>> selectBoardAll(String boardTypeName);
 	int getTotalRecord(SearchVO searchVo);
 }
