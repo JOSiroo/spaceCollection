@@ -19,23 +19,27 @@ public class UserMainController {
 		return "index";
 	}
 	
-	/*//검색
-	@RequestMapping(value="/search", method= RequestMethod.GET)
-	public String search(@ModelAttribute("search") Search search,
-			Model model) {
-		//1
-		logger.info("공간 검색 결과 페이지");
-		
-		//2
-		 List<SpaceViewVO> list=SpaceViewService.searchSpaceview(); 
-		logger.info("공간 검색 조회 결과, list.size={}", list.size());
-		
-		//3
-		model.addAttribute("list", list);
-		
-		//4
-		return "userMain/search";
-	}*/
-	
+	/*
+    @GetMapping("/search")
+    public String search(@RequestParam("query") String query, Model model) {
+        // 검색 로직 처리
+        // 검색 결과를 얻어오는 코드 예시
+        List<SearchResult> searchResults = performSearch(query);
+        
+        model.addAttribute("results", searchResults);
+        return "search_results"; // 검색 결과를 보여줄 뷰의 이름
+    }
+
+   
+    private List<SearchResult> performSearch(String query) {
+        // 예시에서 데이터로 대체
+        List<SearchResult> dummyResults = new ArrayList<>();
+        dummyResults.add(new SearchResult("Result 1", "Description for Result 1"));
+        dummyResults.add(new SearchResult("Result 2", "Description for Result 2"));
+        dummyResults.add(new SearchResult("Result 3", "Description for Result 3"));
+        return dummyResults;
+    }
+    
+	*/
 	
 }
