@@ -199,6 +199,7 @@ pageEncoding="UTF-8"%>
 			text-align: left;
 		}
 		.swiper-inBox{
+			
 	    	text-align: center;
 			font-size: 80%;
 			display: flex;
@@ -210,13 +211,21 @@ pageEncoding="UTF-8"%>
 			background-color: #ffd014;
 			padding: 17% 3% 19% 3%;
 			width: 100%;
+			
+	   		&.on{
+				color: white;
+				font-size: 80%;
+				border: 2px solid navy;
+				background-color: #193D76;
+			}
+			
+			&.reserved{
+				background:grey;
+				border:2px solid black;
+				color : black;
+			}
 		}
-   		.on{
-			color: white;
-			font-size: 80%;
-			border: 2px solid navy;
-			background-color: #193D76;
-		}
+		
     }
     .payment_type{
 		border:none;	
@@ -499,6 +508,7 @@ pageEncoding="UTF-8"%>
 										<div>
 											 <input type="text" class="datepicker">
 											 <input type="hidden" class = 'calSdNum' value="${detail.SD_NUM }">
+											 <input type="hidden" class = 'calSdPrice' value="${detail.SD_PRICE }">
 										</div>
 									    <hr>
 										 <div class="swiper mySwiper">
@@ -519,8 +529,7 @@ pageEncoding="UTF-8"%>
 												    				<p class = "swiper-p">&nbsp;</p>
 										    						<p class = "swiper-p">${i}</p>
 										    					</c:if>
-										    				<button class = "swiper-inBox item-${i }th">
-										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
+										    				<button class = "swiper-inBox item-${i }th" value="${detail.SD_PRICE }">
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
 									    					</button>
 										    			</div>
@@ -601,23 +610,6 @@ pageEncoding="UTF-8"%>
 			$('.nav-item').not($(this)).css('background', 'white');
 		})
 		
-		$('.totalPrice').text("예약 시간을 선택해주세요.");
-		$('.swiper-inBox').click(function(){
-		   	var result = 0;
-		   	var formattedTotalPrice = "";
-		   	if($('.swiper-inBox.on').length > 0){
-			    $('.swiper-inBox.on').each(function(){
-			        result += parseInt($(this).find('input[type=hidden]').val());
-			    });
-			    $('.hiddenPrice').val(result);
-			    
-			    formattedTotalPrice = addComma(result);
-			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
-		   	}else{
-				$('.totalPrice').text("예약 시간을 선택해주세요.");
-			}
-		});
-		
 		/*$(".datepicker").datepicker({
 			  language: 'ko', 
 			  inline: true,
@@ -631,6 +623,7 @@ pageEncoding="UTF-8"%>
 		$(".datepicker").each(function(index, element) {
 			  var datepickerId = $(element).data("id");
 			  var sdNum = $(this).siblings('.calSdNum'); 
+			  var sdPrice = $(this).siblings('.calSdPrice');
 			  
 			  $(element).datepicker({
 			    language: 'ko',
@@ -639,6 +632,7 @@ pageEncoding="UTF-8"%>
 			    onSelect: function(selectedDates, instance) {
 			      console.log("선택한 날짜:", selectedDates);
 			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
+			      $('.swiper-inBox').removeClass('on');
 			      
 			      var requestData = {
 			                sdNum: sdNum.val(),
@@ -653,16 +647,15 @@ pageEncoding="UTF-8"%>
                       success: function(data) {
                           // AJAX 요청이 성공한 경우
                           console.log('data:', data);
-                          if(data === false){
+                          var begin = parseInt(data.startHour);
+                          var end = parseInt(data.endHour);
+                          var result = data.result;
+                          if(result === 2){
                         	  console.log('예약내역 없음');
-                        	  makeTimeTableOrigin(sdNum);
-                          } else {
-                             var begin = parseInt(data.startHour);
-                             var end = parseInt(data.endHour);
-                        	  console.log('stH' + data.startHour);
-                        	  console.log('etH'+data.endHour);
-                        	  console.log('result'+data.result);
-							 makeTimeTable(begin, end, sdNum);                              
+                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
+                          } else if (result === 1){
+							  console.log('예약내역 있음');
+                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
                           }
                       },
                       error: function(xhr, status, error) {
@@ -674,33 +667,49 @@ pageEncoding="UTF-8"%>
 			    }
 			  });
 			});
-		function makeTimeTable(begin, end, sdNum){
+		function makeTimeTable(result, begin, end, sdNum, sdPrice){
+			console.log("makeTimeTable");
+			console.log('sdPrice = '+ sdPrice.val());
+			console.log('result = '+ result);
 			console.log('begin = '+ begin);
 			console.log('end = ' + end);
 			console.log('sdNum = ' + sdNum.val());
 			var parent = sdNum.closest('.inAccordionLi');
 			var times = parent.children('.swiper-inBox');
 			
-			for(var i = begin; i <= end; i++){
-				parent.find('.swiper-inBox.item-'+i+'th').css('background', 'grey');
-				parent.find('.swiper-inBox.item-'+i+'th').css('border', '2px solid black');
-				parent.find('.swiper-inBox.item-'+i+'th').css('color', 'black');
-				parent.find('.swiper-inBox.item-'+i+'th').text('예약됨');
-			}
-		}
-		
-		function makeTimeTableOrigin(sdNum){
-			var parent = sdNum.closest('.inAccordionLi');
-			console.log(sdNum.val());
-			var times = parent.children('.swiper-inBox');
 			
-			times.css('background','#ffd014');
-			times.css('border','2px solid #ffc000');
-			times.css('color','#cc8c28');
-			times.css('background','#ffd014');
+			if(result == 1){	//예약내역 있음!
+				for(var i = begin; i <= end; i++){
+					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
+					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
+					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
+				}	
+			}else{
+				parent.find('.swiper-inBox').removeClass('reserved');
+				parent.find('.swiper-inBox').prop('disabled', false);
+				parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+				parent.find('.swiper-inBox').val(sdPrice.val());
+			}
 		}
 
 	});
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
+			$('.swiper-inBox').click(function(){
+			   	var result = 0;
+			   	var formattedTotalPrice = "";
+			   	if($('.swiper-inBox.on').length > 0){
+				    $('.swiper-inBox.on').each(function(){
+				        result += parseInt($(this).val());
+				    });
+				    $('.hiddenPrice').val(result);
+				    
+				    formattedTotalPrice = addComma(result);
+				    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+			   	}else{
+					$('.totalPrice').text("예약 시간을 선택해주세요.");
+				}
+			});
+	
 	 function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
