@@ -47,7 +47,7 @@
 									<c:forEach var="map" items="${list }">
 									
 											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
-												<td>${map.boardTypeName }</td>
+												<td>${map.BOARD_TYPE_NAME }</td>
 												<td>${vo.boardTitle }</td>
 												<td>${vo.boardTypeCommentOk }</td>
 												<td>${vo.boardTypeFileOk }</td>

@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sc.spaceCollecion.common.SearchVO;
 import com.sc.spaceCollection.admin.model.AdminService;
-import com.sc.spaceCollection.admin.model.AdminVO;
 import com.sc.spaceCollection.board.model.BoardService;
-import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.boardType.model.BoardTypeVO;
+import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -199,14 +197,14 @@ public class AdminController {
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
-	}
+	}	
 	
 	@RequestMapping("/board/boardList")
-	public void name(@RequestParam String boardTypeName, Model model) {
+	public void name(@ModelAttribute SearchVO searchVo, Model model) {
 		
-		logger.info("게시판별 게시물 보기, 파라미터 boardTypeName = {}", boardTypeName);
+		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
 		
-		List<Map<String, Object>> list = boardService.selectBoardAll(boardTypeName);
+		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		logger.info("게시물 조회 결과, list.size = {}", list.size());
 		
 		model.addAttribute("list", list);

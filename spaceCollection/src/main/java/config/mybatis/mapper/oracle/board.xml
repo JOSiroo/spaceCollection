@@ -3,16 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
-	<select id="selectBoardAll" parameterType="string" resultType="map">
-		select * from board_boardType_user_view where board_type_name = #{boardTypeName}
-	</select>
-	<!-- <sql id="searchWhere">
+	
+	<sql id="searchWhere">
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
 				${searchCondition} like '%' || #{searchKeyword} || '%'
 			</if>
 		</where>
-	</sql> -->
+	</sql>
 	
 	<select id="selectBoardAll" parameterType="searchVo" resultType="map">
 		select *from

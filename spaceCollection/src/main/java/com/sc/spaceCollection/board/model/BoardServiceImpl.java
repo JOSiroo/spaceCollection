@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.sc.spaceCollecion.common.SearchVO;
+import com.sc.spaceCollection.common.SearchVO;
 
 import lombok.RequiredArgsConstructor;
 
