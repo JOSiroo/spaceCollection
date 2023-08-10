@@ -24,13 +24,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.selectBoardAll(searchVo);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public int getTotalRecord(SearchVO searchVo) {
 		return boardDao.getTotalRecord(searchVo);
 	}
 
 }
-=======
-}
->>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection.git
