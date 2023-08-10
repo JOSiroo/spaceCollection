@@ -203,9 +203,9 @@ public class AdminController {
 	public void name(@RequestParam String boardTypeName, Model model) {
 		logger.info("게시판별 게시물 보기, 파라미터 boardTypeName = {}", boardTypeName);
 		
-		List<BoardVO> list = boardService.selectByBoardTypeId(boardTypeName);
-		logger.info("게시물 조회 결과, list.size = {}", list.size());
+		//List<BoardVO> list = boardService.selectByBoardTypeId(boardTypeName);
+		//logger.info("게시물 조회 결과, list.size = {}", list.size());
 		
-		model.addAttribute("list", list);
+		//model.addAttribute("list", list);
 	}
 }

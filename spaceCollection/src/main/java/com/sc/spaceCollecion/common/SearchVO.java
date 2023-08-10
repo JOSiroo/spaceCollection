@@ -1,12 +1,10 @@
 package com.sc.spaceCollecion.common;
 
-import lombok.Data;
 
 /**
  * 검색 정보를 담고있는 Bean
  * 페이징 처리 관련 변수 포함
 */
-
 public class SearchVO {
 	/** 검색조건 */
 	private String searchCondition = "";

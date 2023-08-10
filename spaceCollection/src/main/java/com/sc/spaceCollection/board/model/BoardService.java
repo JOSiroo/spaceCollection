@@ -6,6 +6,6 @@ import java.util.Map;
 import com.sc.spaceCollecion.common.SearchVO;
 
 public interface BoardService {
-	List<BoardVO> selectByBoardTypeId(String boardTypeName);
+	//List<BoardVO> selectByBoardTypeId(String boardTypeName);
 	List<Map<String, Object>> selectBoardAll(SearchVO vo);
 }

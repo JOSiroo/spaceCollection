@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 public class BoardServiceImpl implements BoardService{
 	private final BoardDAO boardDao;
 
-	@Override
+	/*@Override
 	public List<BoardVO> selectByBoardTypeId(String boardTypeName) {
 		return boardDao.selectByBoardTypeId(boardTypeName);
-	}
+	}*/
 
 	@Override
 	public List<Map<String, Object>> selectBoardAll(SearchVO vo) {
