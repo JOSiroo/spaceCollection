@@ -5,14 +5,22 @@
 .row{
 	padding: 5% 0% 0% 0%;
 }
+.row.top{
+	padding : 0% 0% 0% 0%;
+}
 .col.region{
 	text-align: center;
-	padding: 0% 0% 0% 0%;
+    padding: 6% 8% 3% 8%;
 }
 
-.dropdown-menu.show {
+.dropdown-menu.region.show {
    	display: block;
-   	padding: 10% 10% 10% 10%;
+   	padding: 10% 10% 0% 10%;
+    margin: 0% 0% 0% 14% !important;
+}
+.dropdown-menu.people.show {
+   	display: block;
+   	padding: 2% 0% 0% 0%
 }
 .search-wrapper{
 	height:144.5px;
@@ -66,7 +74,9 @@
 	}
 	.dropdounUl{
 		list-style-type: none;
-   		padding: 10% 5% 5% 5% !important;
+   		/*padding: 10% 5% 5% 5% !important;*/
+   		padding-left:0 !important;
+   		margin-bottom:0 !important;
 	}
 	.dropdownPeople{
 		padding:4% 3% 3% 3%;;
@@ -81,9 +91,19 @@
 	}
 	#peopleMinus{
 		border: #193D76 solid 2px !important;
+		
+    	padding-top: 10px !important;
+		padding-bottom: 10px !important;
+		padding-left: 20px !important;
+		padding-right: 20px !important;
 	}
 	#peoplePlus{
 		border: #193D76 solid 2px !important;
+		
+    	padding-top: 10px !important;
+		padding-bottom: 10px !important;
+		padding-left: 20px !important;
+		padding-right: 20px !important;
 	}
 	#people{
 		border: grey solid 2px !important;
@@ -97,11 +117,24 @@
 		box-sizing: border-box !important;
     	float: left !important;
     	width: 30%;
+    	height: 60px;
+   	    background: #ffd014;
+    	font-weight: bold;
+    	border : none;
+    	
+
 	}
 	#peopleApplyBtn{
 		box-sizing: border-box !important;
     	float: left !important;
-    	width: 60%;
+    	width: 70%;
+    	height: 60px;
+    	background:#193D76;
+    	font-weight: bold;
+    	color : white;
+    	border : none;
+    	
+
 	}
 	
 </style>
@@ -112,7 +145,7 @@
 		  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 		    지역
 		  </button>
-		  <div class="dropdown-menu">
+		  <div class="dropdown-menu region">
 			<div><input type="text" id="searchText"></div>
 				<ul class = "dropdounUl">
 					<li>
@@ -163,28 +196,26 @@
 			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 		   	 	인원
 		  	</button>
-			<div class="dropdown-menu">
+			<div class="dropdown-menu people">
 				<ul class = "dropdounUl">
 					<li>
-						<div class = "row">
+						<div class = "row top region">
 							<div class = "col region">
-								<div class="dropdown-menu">
-									<h5 style="float: left; margin-top:5%; font-weight: bold;">인원</h5>
-									<div class = "people-numGroup">
-										<div class="input-group mb-3">
-											 <input type="text" class="form-control" id = "people" disabled aria-label="Recipient's username with two button addons" value="1">
-											  <button class="btn btn-outline-secondary" id = "peopleMinus" type="button">-</button>
-											  <button class="btn btn-outline-secondary" id = "peoplePlus" type="button">+</button>
-										</div>
+									<h5 style="float: left; margin-top:3%; font-weight: bold;">인원</h5>
+									<div class="input-group mb-3">
+										<button class="btn btn-outline-secondary" id = "peopleMinus" type="button">-</button>
+										<input type="text" class="form-control" id = "people" disabled aria-label="Recipient's username with two button addons" value="1">
+										<button class="btn btn-outline-secondary" id = "peoplePlus" type="button">+</button>
 									</div>
-								</div>
 							</div>
 						</div>
-						<div class = "row">
+					</li>
+					<li>
+						<div class = "row top">
 							<div class = "col">
 								<div class="people-btnGroup">
-									<button class="btn btn-yellow filter" id ="peopleResetBtn">초기화</button>
-									<button class="btn btn-violet filter" id ="peopleApplyBtn">인원수 적용하기</button>
+									<button  id ="peopleResetBtn">초기화</button>
+									<button  id ="peopleApplyBtn">인원수 적용하기</button>
 								</div>
 							</div>
 						</div>
