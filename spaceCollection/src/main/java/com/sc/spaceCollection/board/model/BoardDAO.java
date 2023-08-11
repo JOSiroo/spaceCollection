@@ -12,4 +12,5 @@ public interface BoardDAO {
 	List<BoardVO> selectByBoardTypeId(String boardTypeName);
 	List<Map<String, Object>> selectBoardAll(SearchVO searchVo);
 	int getTotalRecord(SearchVO searchVo);
+	int insertBoard(BoardVO vo);
 }

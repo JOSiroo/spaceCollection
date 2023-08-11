@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.admin.model.AdminService;
 import com.sc.spaceCollection.board.model.BoardService;
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.boardType.model.BoardTypeVO;
 import com.sc.spaceCollection.common.ConstUtil;
@@ -232,6 +233,29 @@ public class AdminController {
 	public void boardWrite(@RequestParam String boardTypeName, Model model) {
 		logger.info("게시물 작성 화면, 초기 게시판 설정 boardTypeName = {}", boardTypeName);
 		
+		List<BoardTypeVO> list = boardTypeService.selectBoardType();
+		
 		model.addAttribute("boardTypeName", boardTypeName);
+		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping("/board/boardWriteSub")
+	public String boardWrite(@RequestParam String boardTypeName, @ModelAttribute BoardVO vo, Model model) {
+		logger.info("게시물 저장, 파라미터 vo = {}", vo);
+		
+		int cnt = boardService.insertBoard(vo);
+		logger.info("게시물 저장 결과, cnt = {}", cnt);
+		
+		String msg = "게시물 등록에 실패하였습니다. <br> 관리자에게 문의해주시기 바랍니다.", 
+				url = "/admin/board/boardWrite";
+		
+		if(cnt>0) {
+			msg = "게시물이 등록되었습니다.";
+			url = "/admin/board/boardList?boartTypeName="+boardTypeName;
+		}
+		
+		return "admin/common/message";
+		
+		
 	}
 }

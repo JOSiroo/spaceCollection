@@ -33,4 +33,12 @@
 		<include refid="searchWhere"></include>
 	</select>
 	
+	<insert id="insertBoard" parameterType="boardVo">
+		<selectKey keyProperty="boardNum" order="BEFORE" resultType="int">
+			select board_seq.nextval from dual
+		</selectKey>
+		insert into board(BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_VIEWS, BOARD_GROUP_NO, BOARD_STEP, BOARD_SORT_NO, BOARD_TYPE_ID, USER_NUM)
+		values(#{boardNum}, #{boardTitle}, #{boardContent}, #{boardViews}, #{boardNum}, 0, 0, #{boardTypeId}, #{userNum})
+	</insert>
+	
 </mapper>
