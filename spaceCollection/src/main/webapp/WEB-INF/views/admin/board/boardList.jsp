@@ -27,7 +27,11 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		
+		$('tbody tr').hover(function() {
+			$(this).find('td').css("background-color", "#d1cece");
+		}, function() {
+			$(this).find('td').css("background-color", "white");
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -73,14 +77,14 @@
 								</c:if>
 								<c:if test="${!empty list }">
 									<c:forEach var="map" items="${list }">
-									
-											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
-												<td><input type="checkbox" name="chk"></td>
-												<td>${map.BOARD_NUM }</td>
-												<td>${map.BOARD_TITLE }</td>
-												<td>${map.USER_ID }</td>
-												<td><fmt:formatDate value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd"/></td>
-											</tr>
+										<fmt:parseDate value="${map.BOARD_REG_DATE }" var="boardRegDate" pattern="yyyy-MM-dd"/>
+										<tr onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }'/>';" style="cursor:pointer;">
+											<td><input type="checkbox" name="chk"></td>
+											<td>${map.BOARD_NUM }</td>
+											<td>${map.BOARD_TITLE }</td>
+											<td>${map.USER_ID }</td>
+											<td><fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd"/></td>
+										</tr>
 									</c:forEach>
 								</c:if>
 							</tbody>
