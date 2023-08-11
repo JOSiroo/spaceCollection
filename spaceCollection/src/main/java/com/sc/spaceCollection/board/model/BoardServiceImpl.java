@@ -29,4 +29,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.getTotalRecord(searchVo);
 	}
 
+	@Override
+	public int insertBoard(BoardVO vo) {
+		return boardDao.insertBoard(vo);
+	}
+
 }

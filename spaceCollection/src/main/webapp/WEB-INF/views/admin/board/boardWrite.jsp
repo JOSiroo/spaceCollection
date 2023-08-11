@@ -6,7 +6,13 @@
 	$(function() {
 		CKEDITOR.replace('contents', {
 			uploadUrl : '<c:url value='/admin/board/boardWrite'/>',
-			filebrowserUploadUrl : '<c:url value='/admin/board/boardWrite'/>'
+			filebrowserUploadUrl : '<c:url value='/admin/board/boardWrite'/>',
+			width : '100%'
+			
+		});
+		
+		$('form').submit(function() {
+			$('#boardTypeName').val($('option:selected').text());
 		});
 	})
 </script>
@@ -32,27 +38,31 @@
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">게시물 작성</h5>
- 						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/board/boardList'/>">
+ 						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/board/boardWriteSub'/>">
 							<div id="searchDiv">
-								<div class="col-auto">
-									<button type="submit" class="btn btn-primary">검색</button>
-								</div>
-								<div class="col-sm-3" id="keyword">
-									<label class="visually-hidden" for="searchCondition">searchCondition</label>
-									<input type="text" class="form-control" id="searchCondition" name="searchCondition">
-								</div>
 								<div class="col-sm-3" id="select">
-									<select class="form-select" name="searchCondition" id="searchCondition">
-										<option value="board_title" <c:if test="${param.searchCondition=='board_title'}">
-						            		selected="selected"
-						            	</c:if> >제목</option>
-										<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
-						            		selected="selected"
-						            	</c:if> >작성자</option>
+									<label class="col-sm-2 col-form-label" for="boardTypeName">게시판 분류</label>
+									<select class="form-select" name="boardTypeId" id="boardTypeId">
+										<c:forEach var="boardTypeVo" items="${list }">
+											<option value="${boardTypeVo.boardTypeId }" <c:if test="${boardTypeName == boardTypeVo.boardTypeName}">
+							            		selected="selected"
+							            	</c:if> >${boardTypeVo.boardTypeName }</option>
+										</c:forEach>
 									</select>
 								</div>
+								
+								<div class="col-sm-3" id="keyword">
+									<label class="col-sm-2 col-form-label" for="boardTitle">제목</label>
+									<input type="text" class="form-control" id="boardTitle" name="boardTitle">
+									<input type="hidden" class="form-control" id="userid" name="userid" value="관리자">
+								</div>
+								
 							</div>
-							<textarea id="contents"></textarea>
+							<textarea name="boardContent" id="contents"></textarea>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-primary">등록</button>
+							</div>
+							<input type="hidden" name="boardTypeName">
 						</form>
 				 	</div>
 				</div>
