@@ -40,15 +40,16 @@ public class ReservationController {
 		logger.info("예약 화면, 파라미터 paymentData = {}", paymentData);
 		ReservationVO vo = new ReservationVO();
 		
-		int userNum = Integer.parseInt((String) paymentData.get("buyer_name")); 
+		String userId = (String) paymentData.get("buyer_name"); 
 		int sdNum =Integer.parseInt((String) paymentData.get("custom_data[SD_NUM]"));
 		String startDay = (String) paymentData.get("custom_data[START_DAY]");
 		String startHour = (String) paymentData.get("custom_data[START_HOUR]");
 		String endDay = (String) paymentData.get("custom_data[END_DAY]");
 		String endHour = (String) paymentData.get("custom_data[END_HOUR]");
 		int reservePrice = Integer.parseInt((String) paymentData.get("paid_amount"));
+		int reservePeople = Integer.parseInt((String) paymentData.get("custom_data[RESERVE_PEOPLE]"));
 		String paymentType = (String) paymentData.get("pg_provider");
-		logger.info("userNum = {}, sdNum = {}, startDay = {}, endHour = {}", userNum, sdNum, startDay, endHour);
+		logger.info("userId = {}, sdNum = {}, startDay = {}, endHour = {}", userId, sdNum, startDay, endHour);
 		logger.info("startHour = {}, endDay = {}, reservePrice = {}, paymentType = {}", startHour, endDay, reservePrice, paymentType);
 		
 		
@@ -60,7 +61,7 @@ public class ReservationController {
 		}
 		
 		
-		vo.setUserNum(userNum);
+		vo.setUserId(userId);
 		vo.setSdNum(sdNum);
 		vo.setReserveStartDay(startDay);
 		vo.setReserveStartHour(startHour);
@@ -68,6 +69,7 @@ public class ReservationController {
 		vo.setReserveFinishHour(endHour);
 		vo.setReservePrice(reservePrice);
 		vo.setPaymentNum(paymentNum);
+		vo.setReservePeople(reservePeople);
 		logger.info("vo세팅 결과, vo = {}", vo);
 		
 		int cnt = reservationService.insertReservation(vo);

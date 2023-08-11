@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ReservationVO {
 	private int reservationNum;
-	private int userNum;
+	private String userId;
 	private int sdNum;
 	private String reserveStartDay;
 	private String reserveStartHour;
@@ -15,5 +15,6 @@ public class ReservationVO {
 	private String reserveFinishHour;
 	private int reservePrice;
 	private Timestamp reserverPayDay;
+	private int reservePeople; 
 	private int paymentNum;
 }

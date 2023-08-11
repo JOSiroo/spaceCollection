@@ -47,33 +47,81 @@ font-weight: bold;
 
 	<div class="section">
 		<div class="container">
+		
 			<div class="row mb-5 align-items-center">
 				<div class="col-lg-6">
-					<h2 class="font-weight-bold text-primary heading">인기 스페이스 컬렉션</h2>
+					<!-- <h2 class="font-weight-bold text-primary heading">인기 스페이스 컬렉션</h2> -->
+					<h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">인기 스페이스 컬렉션</h2>
 				</div>
 				<div class="col-lg-6 text-lg-end">
 					<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
 				</div>
 			</div>
+			
+			
 			<div class="row">
-
+			
+			
 				<div class="col-12">
-
-
 					<div class="property-slider-wrap">
-
-
-
+					
 						<div class="property-slider">
-
-							<div class="property-item">
-
+							<div style="width:780px;text-align:center;">	
+								<c:if test="${empty list }">
+										<div class="line">해당하는 이벤트 상품이 없습니다.</div>
+									</c:if>	
+									<c:if test="${!empty list }">
+										<!-- 반복 시작 -->
+										<c:forEach var="vo" items="${list }">
+											<div class="divPd">
+												<a href
+											="<c:url value='/shop/product/productDetail?productNo=${vo.productNo }'/>">
+													<img src="<c:url value='/pd_images/${vo.imageURL}'/>" 
+														alt="${vo.productName } 이미지">
+													<br>
+													${vo.productName }<br>
+													<fmt:formatNumber value="${vo.sellPrice }" pattern="#,###" />원
+												</a>
+											</div>
+										</c:forEach>
+										<!-- 반복 끝 -->
+									</c:if>	
+								</div>   
+				
+							
+		<div class="property-item">
+		
+				<div style="width:2000px;text-align:center;">
+					<c:if test="${empty list }">
+							<div class="line">해당하는 상품이 없습니다.</div>
+					</c:if>	
+					<c:if test="${!empty list }">
+						<!-- 반복 시작 -->
+						<c:forEach var="vo" items="${list }">
+							<div class="divPd">
+								<a href="property-single.html" class="img"="<c:url value='/space/spaceDetail?spaceNo=${vo.spaceNo }'/>">
+									<img src="<c:url value='images/${vo. img} }'/>" alt="${vo.spaceName } Image" class="img-fluid">
+									<div class="property-content">
+									<div class="price mb-2"><span>${vo.spaceType }</span></div>
+									<%-- <fmt:formatNumber value="${vo.spacePrice }" pattern="#,###" />원 --%>
+									<div>
+									<span class="d-block mb-2 text-black-50">${vo.spaceAddress }</span>
+									<span class="city d-block mb-3">${vo.spaceTag }</span>
+									</div>
+									</div>
+								</a>
+									</div>
+						</c:forEach>
+						<!-- 반복 끝 -->
+					</c:if>	 
+									
 								<a href="property-single.html" class="img">
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</a>
 
 								<div class="property-content">
-									<div class="price mb-2"><span>$1,291,000</span></div>
+									<div class="price mb-2"><span>$1,291,000</span>
+									</div>
 									<div>
 										<span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
 										<span class="city d-block mb-3">California, USA</span>
@@ -92,10 +140,10 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
+							</div>
 							</div> <!-- .item -->
 
 							<div class="property-item">
-
 								<a href="property-single.html" class="img">
 									<img src="images/img_2.jpg" alt="Image" class="img-fluid">
 								</a>
@@ -341,7 +389,6 @@ font-weight: bold;
 					<div class="box-feature">
 						<span class="flaticon-house"></span>
 						<h3 class="mb-3" id="hboldfont">새로운 공간보기</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
 				</div>
@@ -349,23 +396,20 @@ font-weight: bold;
 					<div class="box-feature">
 						<span class="flaticon-building"></span>
 						<h3 class="mb-3" id="hboldfont">쉽게 공간 판매하기</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="400">
 					<div class="box-feature">
 						<span class="flaticon-house-3"></span>
-						<h3 class="mb-3" id="hboldfont">8월의 혜택</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
-						<p><a href="#" class="learn-more">Learn More</a></p>
+						<h3 class="mb-3" id="hboldfont">시즌 이벤트</h3>
+						<p><a href="https://www.spacecloud.kr/focus/24" class="learn-more">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
 					<div class="box-feature">
 						<span class="flaticon-house-1"></span>
 						<h3 class="mb-3" id="hboldfont">시즌 공간 기획전</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, accusamus.</p>
 						<p><a href="#" class="learn-more">Learn More</a></p>
 					</div>
 				</div>	
@@ -395,6 +439,9 @@ font-weight: bold;
 					
 				</div>
 			</div>
+			
+	
+	
 			<div class="testimonial-slider-wrap">
 				<div class="testimonial-slider">
 					<div class="item">
@@ -477,53 +524,12 @@ font-weight: bold;
 	</div>
 
 
-	<div class="section section-4 bg-light">
+
+	<div class="section section-15 bg-light">
 		<div class="container">
-			<div class="row justify-content-center  text-center mb-5">
-				<div class="col-lg-5">
-					<h2 class="font-weight-bold heading text-primary mb-4">Let's find home that's perfect for you</h2>
-					<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam enim pariatur similique debitis vel nisi qui reprehenderit.</p>
-				</div>
-			</div>
-			<div class="row justify-content-between mb-5">
-				<div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
-					<div class="img-about dots">
-						<img src="images/hero_bg_3.jpg" alt="Image" class="img-fluid">
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="d-flex feature-h">
-						<span class="wrap-icon me-3">
-							<span class="icon-home2"></span>
-						</span>
-						<div class="feature-text">
-							<h3 class="heading">2M SpaceCollection</h3>
-							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
-						</div>
-					</div>
-
-					<div class="d-flex feature-h">
-						<span class="wrap-icon me-3">
-							<span class="icon-person"></span>
-						</span>
-						<div class="feature-text">
-							<h3 class="heading">Top Rated Agents</h3>
-							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
-						</div>
-					</div>
-
-					<div class="d-flex feature-h">
-						<span class="wrap-icon me-3">
-							<span class="icon-security"></span>
-						</span>
-						<div class="feature-text">
-							<h3 class="heading">Legit SpaceCollection</h3>
-							<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iste.</p>   
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row section-counter mt-5">
+			
+		<div id="cccc" style="padding-left: 113px;">
+			<div class="row section-counter ">
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
 					<div class="counter-wrap mb-5 mb-lg-0">
 						<span class="number"><span class="countup text-primary">3298</span></span>
@@ -548,89 +554,17 @@ font-weight: bold;
 						<span class="caption text-black-50"># 판매되는 공간 수</span>
 					</div>
 				</div>
-			</div>
+				</div>
+				</div>
+				<div class="row justify-content-center  text-center mb-15" style= "margin-top: 40px;">
+				<div class="col-lg-15">
+					<h2 class="font-weight-bold heading text-primary mb-4" style= "font-weight: bold;"> SpaceCollection을 선택해주신 많은 고객님들께 감사드립니다. </h2>
+					<p class="text-black-50">우리의 다양한 공간 옵션은 회의, 세미나, 워크샵, 파티룸 및 이벤트 등 다양한 목적에 부합하도록 구성되었습니다. 
+					<br>당신의 아이디어와 목표를 현실로 이끌어 줄 공간을 찾아보세요. 지금 바로 예약하여 성공적인 첫 걸음을 내딛어보세요.</p>
+				</div>
+				</div>
+			
 		</div>
 	</div>
 
-	<div class="section">
-		<div class="row justify-content-center footer-cta" data-aos="fade-up">
-			<div class="col-lg-7 mx-auto text-center">
-				<h2 class="mb-4 ">Be a part of our growing real state agents</h2>
-				<p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">Apply for Real Estate agent</a></p>
-			</div> <!-- /.col-lg-7 -->
-		</div> <!-- /.row -->
-	</div>
-
-	<div class="section section-5 bg-light">
-		<div class="container">
-			<div class="row justify-content-center  text-center mb-5">
-				<div class="col-lg-6 mb-5">
-					<h2 class="font-weight-bold heading text-primary mb-4">Our Agents</h2>
-					<p class="text-black-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam enim pariatur similique debitis vel nisi qui reprehenderit totam? Quod maiores.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-					<div class="h-100 person">
-
-						<img src="images/person_1-min.jpg" alt="Image"
-						class="img-fluid">
-
-						<div class="person-contents">
-							<h2 class="mb-0"><a href="#">James Doe</a></h2>
-							<span class="meta d-block mb-3">Real Estate Agent</span>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere officiis inventore cumque tenetur laboriosam, minus culpa doloremque odio, neque molestias?</p>
-
-							<ul class="social list-unstyled list-inline dark-hover">
-								<li class="list-inline-item"><a href="#"><span class="icon-twitter"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-facebook"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-linkedin"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-instagram"></span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-					<div class="h-100 person">
-
-						<img src="images/person_2-min.jpg" alt="Image"
-						class="img-fluid">
-
-						<div class="person-contents">
-							<h2 class="mb-0"><a href="#">Jean Smith</a></h2>
-							<span class="meta d-block mb-3">Real Estate Agent</span>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere officiis inventore cumque tenetur laboriosam, minus culpa doloremque odio, neque molestias?</p>
-
-							<ul class="social list-unstyled list-inline dark-hover">
-								<li class="list-inline-item"><a href="#"><span class="icon-twitter"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-facebook"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-linkedin"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-instagram"></span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-					<div class="h-100 person">
-
-						<img src="images/person_3-min.jpg" alt="Image"
-						class="img-fluid">
-
-						<div class="person-contents">
-							<h2 class="mb-0"><a href="#">Alicia Huston</a></h2>
-							<span class="meta d-block mb-3">Real Estate Agent</span>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere officiis inventore cumque tenetur laboriosam, minus culpa doloremque odio, neque molestias?</p>
-
-							<ul class="social list-unstyled list-inline dark-hover">
-								<li class="list-inline-item"><a href="#"><span class="icon-twitter"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-facebook"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-linkedin"></span></a></li>
-								<li class="list-inline-item"><a href="#"><span class="icon-instagram"></span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<%@ include file="form/userBottom.jsp" %>

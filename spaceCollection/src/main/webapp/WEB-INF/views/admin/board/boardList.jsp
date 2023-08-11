@@ -1,20 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
+<style type="text/css">
+	#boardWriteBt{
+		float: right;
+		margin-top: 16px;
+		margin-right: 5px;
+	}	
+
+	h5{
+		float: left;
+	}
+	
+	#searchDiv>div {
+    	float: right;
+	}
+	
+	div#select {
+    	width: 114px;
+	}
+	
+	#searchDiv>div{
+		margin-left: 5px;
+	}
+	
+</style>
 <script type="text/javascript">
 	$(function() {
-		
 		
 	});
 </script>
 <main id="main" class="main">
 
 	<div class="pagetitle">
-		<h1>게시판 생성/관리</h1>
+		<h1>게시물 관리</h1>
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
-				<li class="breadcrumb-item active">게시판 생성/관리</li>
+				<li class="breadcrumb-item">게시판 생성/관리</li>
+				<li class="breadcrumb-item active">${param.boardTypeName }</li>
 			</ol>
 		</nav>
 	</div>
@@ -27,14 +51,18 @@
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">${param.boardTypeName }</h5>
+ 						<form method="post" action="<c:url value='/admin/board/boardWrite'/>">
+ 							<input type="hidden" value="${param.boardTypeName }" name="boardTypeName">
+	 						<button type="submit" class="btn btn-primary rounded-pill" id="boardWriteBt">게시물 작성</button>
+ 						</form>
 						<table class="table">
 							<thead>
 								<tr>
+									<th scope="col"><input type="checkbox" name="chkAll"></th>
 									<th scope="col">게시물 번호</th>
 									<th scope="col">제목</th>
 									<th scope="col">작성자</th>
 									<th scope="col">작성일</th>
-									<th scope="col">삭제여부</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -47,19 +75,69 @@
 									<c:forEach var="map" items="${list }">
 									
 											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
-												<td>${map.BOARD_TYPE_NAME }</td>
-												<td>${vo.boardTitle }</td>
-												<td>${vo.boardTypeCommentOk }</td>
-												<td>${vo.boardTypeFileOk }</td>
-												<td><fmt:formatDate value="${vo.boardTypeRegdate }" pattern="yyyy-MM-dd"/></td>
+												<td><input type="checkbox" name="chk"></td>
+												<td>${map.BOARD_NUM }</td>
+												<td>${map.BOARD_TITLE }</td>
+												<td>${map.USER_ID }</td>
+												<td><fmt:formatDate value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd"/></td>
 											</tr>
 									</c:forEach>
 								</c:if>
 							</tbody>
-						</table>						
-				 	</div>
+						</table>
+						<div class="divPage">
+						
+							<nav aria-label="...">
+								<ul class="pagination">
+									<c:if test="${pagingInfo.firstPage>1 }">
+										<li class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
+											<a class="page-link" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">Previous</a>
+							    		</li>
+									</c:if>	
+							    	<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">		
+										<c:if test="${i == pagingInfo.currentPage }">
+											<li class="page-item active" aria-current="page">
+									      		<a class="page-link" href="#">${i}</a>
+									    	</li>		
+								        </c:if>
+										<c:if test="${i != pagingInfo.currentPage }">		
+									         <li class="page-item">
+									         	<a class="page-link" aria-label="Previous" href="#" onclick="pageFunc(${i})">${i }</a>
+									         </li>
+									    </c:if>   		
+									</c:forEach>
+							      	<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
+							      		<li class="page-item <c:if test='${pagingInfo.lastPage >= pagingInfo.totalPage }'>disabled</c:if>">
+								      		<a class="page-link" href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
+								    	</li>
+									</c:if>
+							  	</ul>
+							</nav>
+						
+						</div>	
+						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/board/boardList'/>">
+							<div id="searchDiv">
+								<div class="col-auto">
+									<button type="submit" class="btn btn-primary">검색</button>
+								</div>
+								<div class="col-sm-3" id="keyword">
+									<label class="visually-hidden" for="searchCondition">searchCondition</label>
+									<input type="text" class="form-control" id="searchCondition" name="searchCondition">
+								</div>
+								<div class="col-sm-3" id="select">
+									<select class="form-select" name="searchCondition" id="searchCondition">
+										<option value="board_title" <c:if test="${param.searchCondition=='board_title'}">
+						            		selected="selected"
+						            	</c:if> >제목</option>
+										<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
+						            		selected="selected"
+						            	</c:if> >작성자</option>
+									</select>
+								</div>
+							</div>
+						</form>				
+					</div>
 				</div>
-
 			</div> 
 		</div>
 		
@@ -83,25 +161,6 @@
 		</div>
 	</div>
 	<!-- EndModal -->
-	<!-- Modal2 -->
-	<div class="modal fade" id="confirm2" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">게시판 수정 중지</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">게시판 수정을 중단하시겠습니까? <br> 작성된 내용은 저장되지 않습니다.</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-					<button class="btn btn-primary" id="cancelBt2">중단하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModa2 -->
 </main>
 <!-- End #main -->
 <!-- End #main -->
