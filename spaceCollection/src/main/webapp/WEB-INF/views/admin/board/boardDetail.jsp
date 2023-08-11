@@ -5,29 +5,24 @@
 <script type="text/javascript">
 	$(function() {
 		CKEDITOR.replace('contents', {
-			uploadUrl : '<c:url value='/admin/board/boardWrite'/>',
-			filebrowserUploadUrl : '<c:url value='/admin/board/boardWrite'/>',
+			uploadUrl : '<c:url value='/admin/board/boardDetail'/>',
+			filebrowserUploadUrl : '<c:url value='/admin/board/boardDetail'/>',
 			width : '100%'
 			
 		});
-		
-		$('form').submit(function() {
-			$('#boardTypeName').val($('option:selected').html());
-		});
-		
 		
 	})
 </script>
 <main id="main" class="main">
 
 	<div class="pagetitle">
-		<h1>게시판 생성/관리</h1>
+		<h1>게시물 상세보기</h1>
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">게시판 생성/관리</li>
 				<li class="breadcrumb-item">게시물 관리</li>
-				<li class="breadcrumb-item active">게시물 작성</li>
+				<li class="breadcrumb-item active">게시물 상세보기</li>
 			</ol>
 		</nav>
 	</div>
@@ -39,7 +34,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">게시물 작성</h5>
+ 						<h5 class="card-title" style="font-weight: bold;">게시물 상세보기</h5>
  						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/board/boardWriteSub'/>">
 							<div id="searchDiv">
 								<div class="col-sm-3" id="select">
