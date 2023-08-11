@@ -113,21 +113,26 @@
             <div class="mb-2">
               <label for="name">비밀번호 확인</label>
               <input type="password" class="form-control" id="chkPwd" placeholder="" value="" required>
+              <span class="errorPwd"></span>
               <div class="invalid-feedback">
                 비밀번호 확인을해주세요.
               </div>
             </div>
-		
-          <div class="mb-3">
-            <label for="userEmail">이메일</label>
-            <input type="email" class="form-control" name="userEmail" id="userEmail" placeholder="you@example.com" required>
-            <div class="invalid-feedback">
-              이메일을 입력해주세요.
-            </div>
-          </div>
-          <div>
-          	<input type="button" class=> 
-          </div>
+		    <div class="row">
+	            <div class="col-md-5 mb-3">
+	            	<label for="userEmail">이메일</label>
+	            	<input type="email" class="form-control" name="userEmail" id="userEmail" placeholder="you@example.com" required>
+		            <div class="invalid-feedback">
+		            	이메일을 입력해주세요.
+		            </div>
+		            <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6">
+	            </div>
+	          	<div class="col-md-3 mb-3">
+					<label>&nbsp;</label>
+					  <input type="button" class="btn btn-secondary" id="mail-Check-Btn" value="이메일 인증"
+					  	style="width: 165px; height: 50px; text-align: center;">
+	            </div>
+		    </div>
           <div class="row">
 			  <div class="col-md-5 mb-3">
 				  <label for="zipcode">우편번호</label>
@@ -278,27 +283,56 @@
 					type:"post",
 					data:"userId="+userId,
 					success:function(res){
-						var output="";
 						
 						if(res){
-							output="이미 등록된 아이디";
+							$('.error').text("이미 등록된 아이디").css("color","#ea5454");
 							$('#chkId').val('N');							
 						}else{
-							output="사용 가능한 아이디";
+							$('.error').text("사용 가능한 아이디").css("color","gray");
 							$('#chkId').val('Y');						
 						}
-						$('.error').text(output);
+						
 					},
 					error:function(xhr,status, error){
 						alert(status+" : " + error);
 					}
 				});
 			}else{
-				$('.error').text('아이디 규칙에 맞지 않습니다.');
+				$('.error').text('아이디 규칙에 맞지 않습니다.').css("color","#ea5454");
 				$('#chkId').val('N');
 			}
 		});
-	});
+	    
+	    $('#chkPwd').keyup(function(){
+	    	
+			if($('#chkPwd').val()!=$('#userPwd').val()){
+				$('.errorPwd').text('비밀번호가 일치하지 않습니다.').css("color","#ea5454");	
+			}else{
+				$('.errorPwd').text('비밀번호가 일치합니다.').css("color","gray");
+			}
+			
+		});
+	    
+	    $('#mail-Check-Btn').click(function() {
+			const eamil = $('#userEmail').val(); // 이메일 주소값 얻어오기!
+			console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
+			const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+			
+			$.ajax({
+				type : 'get',
+				url : '<c:url value ="/guest/checkEmail?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+				success : function (data) {
+					console.log("data : " +  data);
+					checkInput.attr('disabled',false);
+					code =data;
+					alert('인증번호가 전송되었습니다.')
+				}			
+			}); // end ajax
+		}); // end send eamil
+	    
+	});//window.document
+	
+	
 
     function sample6_execDaumPostcode() {
         new daum.Postcode({
