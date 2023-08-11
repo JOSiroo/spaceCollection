@@ -34,4 +34,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.insertBoard(vo);
 	}
 
+	@Override
+	public BoardVO selectByBoardNum(int boardNum) {
+		return boardDao.selectByBoardNum(boardNum);
+	}
+
 }
