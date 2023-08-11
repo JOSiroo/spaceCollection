@@ -133,6 +133,66 @@
 					</div>
 				</div>
 			</div>
+			<div class="accordion-item">
+				<h2 class="accordion-header">
+					<button class="accordion-button collapsed" type="button"
+						data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+						aria-expanded="false" aria-controls="flush-collapseThree">
+							<a> 
+								<img class="icon" src="<c:url value='/img/icons/rentalstudio.svg' />">
+							</a>
+							<p>렌탈 스튜디오</p>
+						</button>
+				</h2>
+				<div id="flush-collapseThree" class="accordion-collapse collapse"
+					data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body">
+						<p>
+							디자인과 컨셉이 있는, 쇼핑몰⋅화보⋅뮤직비디오⋅프로필⋅방송 등의 촬영이 가능한 실내 렌탈스튜디오 공간
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item">
+				<h2 class="accordion-header">
+					<button class="accordion-button collapsed" type="button"
+						data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+						aria-expanded="false" aria-controls="flush-collapseThree">
+							<a> 
+								<img class="icon" src="<c:url value='/img/icons/rentalstudio.svg' />">
+							</a>
+							<p>렌탈 스튜디오</p>
+						</button>
+				</h2>
+				<div id="flush-collapseThree" class="accordion-collapse collapse"
+					data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body">
+						<p>
+							디자인과 컨셉이 있는, 쇼핑몰⋅화보⋅뮤직비디오⋅프로필⋅방송 등의 촬영이 가능한 실내 렌탈스튜디오 공간
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item">
+				<h2 class="accordion-header">
+					<button class="accordion-button collapsed" type="button"
+						data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+						aria-expanded="false" aria-controls="flush-collapseThree">
+							<a> 
+								<img class="icon" src="<c:url value='/img/icons/rentalstudio.svg' />">
+							</a>
+							<p>렌탈 스튜디오</p>
+						</button>
+				</h2>
+				<div id="flush-collapseThree" class="accordion-collapse collapse"
+					data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body">
+						<p>
+							디자인과 컨셉이 있는, 쇼핑몰⋅화보⋅뮤직비디오⋅프로필⋅방송 등의 촬영이 가능한 실내 렌탈스튜디오 공간
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</article>
@@ -159,5 +219,4 @@
 	</article> --%>
 </section>
 
-</body>
-</html>
+<%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
