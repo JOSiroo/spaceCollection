@@ -261,21 +261,31 @@ public class AdminController {
 	}
 	
 	@GetMapping("/board/boardDetail")
-	public String name(@RequestParam(defaultValue = "0")int boardNum, Model model) {
+	public String name(@RequestParam(defaultValue = "0")int boardNum, @RequestParam String boardTypeName, Model model) {
 		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 		
 		if(boardNum==0) {
-			model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+			model.addAttribute("msg", "잘못된 URL 입니다.");
 			model.addAttribute("url", "/admin/board/boardList");
 			
 			return "admin/common/message";
 		}else {
 			BoardVO boardVo = boardService.selectByBoardNum(boardNum);
-			logger.info("게시물 상세조회 결과, boardVo = {}", boardVo);
 			
-			model.addAttribute("boardVo", boardVo);
-			
-			return "admin/board/boardDetail";
+			if(boardVo==null) {
+				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+				model.addAttribute("url", "/admin/board/boardList");
+				
+				return "admin/common/message";
+
+			}else {
+				logger.info("게시물 상세조회 결과, boardVo = {}", boardVo);
+				
+				model.addAttribute("boardVo", boardVo);
+				model.addAttribute("boardTypeName", boardTypeName);
+				
+				return "admin/board/boardDetail";
+			}
 		}
 		
 		
