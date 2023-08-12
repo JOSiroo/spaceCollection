@@ -378,9 +378,6 @@ pageEncoding="UTF-8"%>
 		        alert('예약가능 최소 인원은' + minPeople + '명 입니다');
 		    }
 		});
-				
-		
-		
 		
 		$('.peoplePlus').click(function(){
 			var people = $(this).siblings('.people');

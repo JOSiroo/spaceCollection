@@ -353,6 +353,30 @@
 	  
 	
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+		$('#peopleMinus').click(function(){
+			var people = $(this).siblings('#people');
+			if(people.val() > 1){
+		        people.val(parseInt(people.val())-1);
+			}
+		});
+		
+		$('#peoplePlus').click(function(){
+			var people = $(this).siblings('#people');
+		    	people.val(parseInt(people.val())+1);
+		});
+});
 
+//부트스트랩 드롭다운 요소들을 가져옴
+var dropdownItems = document.querySelectorAll('.dropdown-menu.people');
 
+// 각 드롭다운 요소에 클릭 이벤트 리스너 추가
+dropdownItems.forEach(function(item) {
+  item.addEventListener('click', function(event) {
+    event.stopPropagation(); // 클릭 이벤트 전파 중단
+  });
+});
+</script>
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
