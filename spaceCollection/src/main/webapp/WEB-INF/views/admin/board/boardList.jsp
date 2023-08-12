@@ -78,7 +78,7 @@
 								<c:if test="${!empty list }">
 									<c:forEach var="map" items="${list }">
 										<fmt:parseDate value="${map.BOARD_REG_DATE }" var="boardRegDate" pattern="yyyy-MM-dd"/>
-										<tr onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }'/>';" style="cursor:pointer;">
+										<tr onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME} }'/>';" style="cursor:pointer;">
 											<td><input type="checkbox" name="chk"></td>
 											<td>${map.BOARD_NUM }</td>
 											<td>${map.BOARD_TITLE }</td>
@@ -146,25 +146,7 @@
 		</div>
 		
 	</section>
-	<!-- Modal1 -->
-	<div class="modal fade" id="confirm1" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">게시판 수정</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">변경사항을 저장하시겠습니까??</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-					<button class="btn btn-primary" id="editBt2">저장하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal -->
+	
 </main>
 <!-- End #main -->
 <!-- End #main -->
