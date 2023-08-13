@@ -8,19 +8,55 @@
 .row.top{
 	padding : 0% 0% 0% 0%;
 }
+.row.region{
+	padding : 0% 0% 0% 0%;
+}
 .col.region{
 	text-align: center;
-    padding: 6% 8% 3% 8%;
+   	padding: 5% 0% 3% 0%;
+    border: 1px rgba(2, 0, 5, 0.2) solid;
+}
+.region-find{
+	margin-bottom:8%;
 }
 
-.dropdown-menu.region.show {
-   	display: block;
-   	padding: 10% 10% 0% 10%;
-    margin: 0% 0% 0% 14% !important;
+
+.row.people{
+	padding: 9% 7% 5% 9%;
 }
-.dropdown-menu.people.show {
+.col.people{
+	padding:0% 0% 0% 0%;
+}
+
+
+#searchText{
+	width : 65%;
+	height: 35px;
+}
+
+.region-findBtn{
+	border:none;
+	background:#193D76;
+	color : white;
+	width : 23%;
+	height: 35px;
+}
+
+.region-a{
+	display:contents;
+}
+
+
+.dropdown-menu.region.show {
+   	padding: 10% 8% 6% 8%;
+    margin: 0% 0% 0% 2% !important;
+    min-width: 24rem;
+}
+.dropdown-menu.people.show{
    	display: block;
-   	padding: 2% 0% 0% 0%
+   	padding: 2% 0% 0% 0% !important;
+   	padding-bottom: 0% !important;
+   	min-width: 22rem;
 }
 .search-wrapper{
 	height:144.5px;
@@ -51,7 +87,6 @@
 		width:70%;
 		float: right;
 	}
-	
 }
 
 	.card {
@@ -146,47 +181,66 @@
 		    지역
 		  </button>
 		  <div class="dropdown-menu region">
-			<div><input type="text" id="searchText"></div>
+			<div class = "region-find">
+				<svg width="25" height="25" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M9.55026 9.55053L13 13M9.46531 2.45285C11.4021 4.38973 11.4021 7.5297 9.46531 9.46709C7.52957 11.403 4.3888 11.403 2.45256 9.46709C0.515813 7.5297 0.515813 4.38973 2.45256 2.45285C4.38931 0.515464 7.52907 0.51597 9.46531 2.45285Z" stroke="#767676"/>
+				</svg>
+				<input type="text" id="searchText">
+				<button class = "region-findBtn">찾기</button>
+			</div>
 				<ul class = "dropdounUl">
 					<li>
-					<div class = "row">
-						<div class = "col region">종로구</div><div class = "col region">중구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">종로구</div></a>
+						<a href="#" class="region-a"><div class = "col region">중구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">용산구</div><div class = "col region">성동구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">용산구</div></a>
+						<a href="#" class="region-a"><div class = "col region">성동구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">광진구</div><div class = "col region">동대문구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">광진구</div></a>
+						<a href="#" class="region-a"><div class = "col region">동대문구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">중랑구</div><div class = "col region">성북구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">중랑구</div></a>
+						<a href="#" class="region-a"><div class = "col region">성북구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">강북구</div><div class = "col region">도봉구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">강북구</div></a>
+						<a href="#" class="region-a"><div class = "col region">도봉구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">노원구</div><div class = "col region">은평구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">노원구</div></a>
+						<a href="#" class="region-a"><div class = "col region">은평구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">서대문구</div><div class = "col region">마포구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">서대문구</div></a>
+						<a href="#" class="region-a"><div class = "col region">마포구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">양천구</div><div class = "col region">강서구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">양천구</div></a>
+						<a href="#" class="region-a"><div class = "col region">강서구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">구로구</div><div class = "col region">금천구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">구로구</div></a>
+						<a href="#" class="region-a"><div class = "col region">금천구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">영등포구</div><div class = "col region">동작구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">영등포구</div></a>
+						<a href="#" class="region-a"><div class = "col region">동작구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">관악구</div><div class = "col region">서초구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">관악구</div></a>
+						<a href="#" class="region-a"><div class = "col region">서초구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">강남구</div><div class = "col region">송파구</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">강남구</div></a>
+						<a href="#" class="region-a"><div class = "col region">송파구</div></a>
 					</div>
-					<div class = "row">
-						<div class = "col region">강동구</div><div class = "col region">-</div>
+					<div class = "row region">
+						<a href="#" class="region-a"><div class = "col region">강동구</div></a>
+						<a href="#" class="region-a"><div class = "col region">-</div></a>
 					</div>
 					</li>
 				</ul>
@@ -199,8 +253,8 @@
 			<div class="dropdown-menu people">
 				<ul class = "dropdounUl">
 					<li>
-						<div class = "row top region">
-							<div class = "col region">
+						<div class = "row top people">
+							<div class = "col people">
 									<h5 style="float: left; margin-top:3%; font-weight: bold;">인원</h5>
 									<div class="input-group mb-3">
 										<button class="btn btn-outline-secondary" id = "peopleMinus" type="button">-</button>
@@ -225,7 +279,7 @@
 		</div><!-- 인원 -->
 </div>
 	<button type="button" class="btn btn-outline-dark">필터</button>
-	<a href="<c:url value = '/userMain/search/map'/>"><button type="button" class="btn btn-outline-dark">지도</button></a>
+	<a href="<c:url value = '/search/map'/>"><button type="button" class="btn btn-outline-dark">지도</button></a>
 </div>
 
 
