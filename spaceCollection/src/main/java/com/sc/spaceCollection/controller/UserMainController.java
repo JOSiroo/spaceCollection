@@ -3,6 +3,7 @@ package com.sc.spaceCollection.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -81,5 +82,12 @@ public class UserMainController {
 		logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}"/*, spaceType*/);
 		
 		return "userMain/search";
+	}
+	
+	@GetMapping("/search/map")
+	public String map() {
+		logger.info("타입별 공간 지도 조회");
+		
+		return "userMain/map";
 	}
 }
