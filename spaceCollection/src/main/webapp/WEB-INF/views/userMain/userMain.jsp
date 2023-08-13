@@ -70,13 +70,19 @@
 		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 	  <div class="carousel-inner" >
 	    <div class="carousel-item active" >
-	      <img src="<c:url value='/images/couponView1.jpg' />" class="d-block w-100" alt="...">
+	    	<a href="https://www.spacecloud.kr/focus/23">
+	      	<img src="<c:url value='/images/couponView1.jpg' />" class="d-block w-100" alt="...">
+	      	</a>
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<c:url value='/images/couponView2.jpg' />" class="d-block w-100" alt="...">
+	    	<a href="https://www.spacecloud.kr/search?q=%EC%97%B0%EC%8A%B5%EC%8B%A4&page=1&check_coupon=true">
+	      	<img src="<c:url value='/images/couponView2.jpg' />" class="d-block w-100" alt="...">
+	      	</a>
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<c:url value='/images/couponView3.jpg' />" class="d-block w-100" alt="...">
+	    	<a href="">
+	      	<img src="<c:url value='/images/couponView3.jpg' />" class="d-block w-100" alt="...">
+	      	</a>
 	    </div>
 	  </div>
 	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">

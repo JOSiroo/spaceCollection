@@ -16,10 +16,10 @@ public class UserMainController {
 		return "index";
 	}
 	
-	//서비스
-	@RequestMapping("/service")
-	public String service() {
-		return "userMain/service";
+	//약관
+	@RequestMapping("userMain/userService")
+	public String userChek() {
+		return "userMain/userService";
 	}
 	
 	/*
@@ -53,7 +53,7 @@ public class UserMainController {
 	public String search(@RequestParam(required = false) 
 			String SpaceName, ModelMap model) {
 		//1
-		logger.info("우편번호 찾기, 파라미터 dong={}", dong);
+		logger.info("공간 검색, 파라미터 keyword={}", keyword);
 		
 		//2
 		List<SpaceVO> list=null;

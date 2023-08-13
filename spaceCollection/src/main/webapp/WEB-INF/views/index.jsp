@@ -389,14 +389,14 @@ font-weight: bold;
 					<div class="box-feature">
 						<span class="flaticon-house"></span>
 						<h3 class="mb-3" id="hboldfont">새로운 공간보기</h3>
-						<p><a href="#" class="learn-more">Learn More</a></p>
+						<p><a href="search" class="learn-more">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="500">
 					<div class="box-feature">
 						<span class="flaticon-building"></span>
-						<h3 class="mb-3" id="hboldfont">쉽게 공간 판매하기</h3>
-						<p><a href="#" class="learn-more">Learn More</a></p>
+						<h3 class="mb-3" id="hboldfont">공간 판매하기</h3>
+						<p><a href="host/index" class="learn-more">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="400">
@@ -410,7 +410,7 @@ font-weight: bold;
 					<div class="box-feature">
 						<span class="flaticon-house-1"></span>
 						<h3 class="mb-3" id="hboldfont">시즌 공간 기획전</h3>
-						<p><a href="#" class="learn-more">Learn More</a></p>
+						<p><a href="https://www.spacecloud.kr/event/2" class="learn-more">Learn More</a></p>
 					</div>
 				</div>	
 			</div>
