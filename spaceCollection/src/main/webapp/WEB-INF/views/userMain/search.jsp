@@ -295,6 +295,10 @@
 
 <section class = "search-section">
 	<div class="container">
+	<br>
+	<c:if test="${!empty totalRecord }">
+		<h4>총 ${totalRecord }건이 검색되었습니다</h4>
+	</c:if>
 	  <div class="row">
 	  <c:if test="${!empty spaceMap }">
 	  	<c:forEach var="space" items="${spaceMap}">
