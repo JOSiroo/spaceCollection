@@ -134,7 +134,7 @@ var a = 0;
 	        '            <div class="desc">' + 
 	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
 	        '                <div class="jibun ellipsis">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
-	        '                <div><h5 class = "h5" style="color:#193D76"><fmt:formatNumber value="${space.value}" pattern="₩#,###"/>원</h5></div>' + 
+	        '                <div><h5 class = "h5" style="color:#193D76"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5></div>' + 
 	        '            </div>' + 
 	        '        </div>' + 
 	        '    </div>' +    
