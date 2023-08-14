@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,13 +39,21 @@
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
   </style>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#checkEmail").click(function(){
+			$("form[name=frmEmail]").submit();
+		});
+	});
+</script>
 </head>
 <body id="mailCheckBody">
   <div class="container">
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">이메일 인증</h4>
-        <form class="validation-form" novalidate>
+        <form name="frmEmail" class="validation-form" method="post" novalidate>
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="checkEmail">이메일</label>
@@ -55,7 +64,7 @@
 	            </div>
 	          	<div class="col-md-3 mb-3">
 					<label>&nbsp;</label>
-					  <input type="button" class="btn btn-secondary" onclick="#" value="이메일 인증"
+					  <input type="button" class="btn btn-secondary" id="checkEmail" value="이메일 인증"
 					  	style="width: 125px;text-align: center;">
 	            </div>
 		    </div>	

@@ -13,4 +13,5 @@ public interface GuestService {
 	int guestCheckId(String userId);
 	int loginCheck(String userId,String userPwd);
 	GuestVO selectUserInfo(String userId);
+	int insertGuest(GuestVO guestVo);
 }

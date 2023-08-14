@@ -37,4 +37,9 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.selectUserInfo(userId);
 	}
 
+	@Override
+	public int insertGuest(GuestVO guestVo) {
+		return guestDao.insertGuest(guestVo);
+	}
+
 }
