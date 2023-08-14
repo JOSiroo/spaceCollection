@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html >
 <head>
@@ -52,6 +55,10 @@
 			파티룸
 		</div>
 	</div>
+	
+	<c:if test="${!empty spaceMap}">
+		<c:set var="space" value="${spaceMap}" />
+	</c:if>
 </header>
 <body>
 <div id="map" style="width:100%;height:1400px;"></div>
@@ -59,7 +66,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 <script>
-
 var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 mapOption = { 
     center: new kakao.maps.LatLng(37.498095, 127.027610), // 지도의 중심좌표
@@ -69,13 +75,13 @@ mapOption = {
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 var overlays = [];
 var contents = [];
-
-
-<c:forEach items="${spaceMap}" var = "space">{
-	//지도에 마커를 표시합니다 
+//33.450701+ (i/10)
+//126.570667 + (i/10)
+var a = 0;
+<c:forEach var ="i" items="${spaceMap}">	//지도에 마커를 표시합니다 
 	var marker = new kakao.maps.Marker({
 	map: map, 
-	position: new kakao.maps.LatLng(33.450701+ (i/10), 126.570667 + (i/10))
+	position: new kakao.maps.LatLng(${i.key.latitude} , ${i.key.longitude})
 	});
 	
 	//커스텀 오버레이에 표시할 컨텐츠 입니다
@@ -84,7 +90,7 @@ var contents = [];
 	content = '<div class="wrap">' + 
 	        '    <div class="info">' + 
 	        '        <div class="title">' + 
-	        '            카카오 스페이스닷원'+i+'' + 
+	        '			${i.key.spaceName} '+ 
 	        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
 	        '        </div>' + 
 	        '        <div class="body">' + 
@@ -92,8 +98,8 @@ var contents = [];
 	        '                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">' +
 	        '           </div>' + 
 	        '            <div class="desc">' + 
-	        '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' + 
-	        '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' + 
+	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
+	        '                <div class="jibun ellipsis">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
 	        '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
 	        '            </div>' + 
 	        '        </div>' + 
@@ -110,25 +116,32 @@ var contents = [];
 	contents.push(content);
 	overlays.push(overlay);
 	
+	var overlayToggle = createOverlayToggleFunction(overlay);
 
-    kakao.maps.event.addListener(marker, 'click', function (index) {
-        return function () {
-            for (var j = 0; j < overlays.length; j++) {
-                overlays[j].setMap(null); // 모든 overlay를 숨김
-            }
-            overlays[index].setMap(map); // 해당 인덱스의 overlay를 표시
-        };
-    }(i - 1));
-	//마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+    kakao.maps.event.addListener(marker, 'click', overlayToggle);
 </c:forEach>
 
-
 closeOverlay();
+
 //커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+function createOverlayToggleFunction(overlay) {
+    var visible = false; // 오버레이가 처음에는 보이지 않도록 설정
+
+    return function () {
+        if (visible) {
+            overlay.setMap(null); // 오버레이가 보이면 닫음
+        } else {
+            overlay.setMap(map); // 오버레이가 보이지 않으면 열음
+        }
+        visible = !visible; // 보이기/숨기기 상태 변경
+    };
+}
+
 function closeOverlay() {
     for (var i = 0; i < overlays.length; i++) {
         overlays[i].setMap(null); // 모든 overlay를 닫음
     }
 }
+
 </script>
 </html>
