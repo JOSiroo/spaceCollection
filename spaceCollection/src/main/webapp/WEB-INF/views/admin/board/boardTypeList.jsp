@@ -58,7 +58,7 @@
 								<c:if test="${!empty list }">
 									<c:forEach var="vo" items="${list }">
 									
-											<tr onclick="location.href='<c:url value='/admin/board/boardList?boardTypeName=${vo.boardTypeName }'/>';" style="cursor:pointer;">
+											<tr onclick="location.href='<c:url value='/admin/board/boardTypeEdit?boardTypeId=${vo.boardTypeId }'/>';" style="cursor:pointer;">
 												<td>${vo.boardTypeId }</td>
 												<td>${vo.boardTypeName }</td>
 												<td>${vo.boardTypeCommentOk }</td>
