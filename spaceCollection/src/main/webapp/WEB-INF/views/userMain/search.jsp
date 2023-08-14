@@ -288,7 +288,13 @@
 		</div><!-- 인원 -->
 </div>
 	<button type="button" class="btn btn-outline-dark">필터</button>
-	<a href="<c:url value = '/search/map'/>"><button type="button" class="btn btn-outline-dark">지도</button></a>
+	<c:if test="${!empty param.spaceType }">
+		<a href="<c:url value = '/search/map?spaceType=${param.spaceType}'/>">
+	</c:if>
+	<c:if test="${!empty param.spaceName }">
+		<a href="<c:url value = '/search/map?spaceType=${param.spaceName}'/>">
+	</c:if>
+	<button type="button" class="btn btn-outline-dark">지도</button></a>
 </div>
 
 
