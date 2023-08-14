@@ -327,7 +327,7 @@
 						  	<c:forEach items="${fn:split(space.key.spaceTag, '/')}" var="tags">
 							    <span>#${tags }</span>
 						    </c:forEach>
-					    <h5 class = "h5">
+					    <h5 class = "h5" style="color:#193D76">
 					    <fmt:formatNumber value="${space.value}" pattern="₩#,###"/>원
 					    </h5>
 				  </div>
@@ -340,7 +340,6 @@
 	  
 	
 </section>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
 		$('#peopleMinus').click(function(){

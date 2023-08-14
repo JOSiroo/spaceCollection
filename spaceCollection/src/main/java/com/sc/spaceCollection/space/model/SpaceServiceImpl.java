@@ -17,6 +17,11 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<SpaceVO> selectBySpaceType(String spaceType) {
 		return spaceDao.selectBySpaceType(spaceType);
 	}
+
+	@Override
+	public List<SpaceVO> selectBySpaceName(String spaceName) {
+		return spaceDao.selectBySpaceName(spaceName);
+	}
 	
 
 }

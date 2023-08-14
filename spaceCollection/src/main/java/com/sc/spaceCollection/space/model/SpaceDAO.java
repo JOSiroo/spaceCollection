@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SpaceDAO {
 	List<SpaceVO> selectBySpaceType(String spaceType);
+	List<SpaceVO> selectBySpaceName(String spaceName);
 }
