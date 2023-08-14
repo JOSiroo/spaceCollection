@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sc.spaceCollection.space.model.SpaceDAO">
+	<!-- <select id="searchSpace" parameterType="string" 
+		resultType="SpaceVO">
+		select * from spaceName
+		where spaceName like '%' || #{spaceName} || '%'
+	</select>
+
+    검색 결과 게시물 총 갯수 계산
+    <select id="NoticeCount" resultType="java.lang.Integer" parameterType="searchCriteria">
+    SELECT COUNT(*) FROM space 
+    LEFT JOIN noticeboardfile nbf ON (nb.NoticeNum = nbf.NoticeNum)
+    </select> -->
+    
+    </mapper>
