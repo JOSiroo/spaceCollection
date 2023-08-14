@@ -22,6 +22,11 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<SpaceVO> selectBySpaceName(String spaceName) {
 		return spaceDao.selectBySpaceName(spaceName);
 	}
+
+	@Override
+	public List<SpaceVO> selectBySpaceNum() {
+		return spaceDao.selectBySpaceNum();
+	}
 	
 
 }
