@@ -1,5 +1,8 @@
 package com.sc.spaceCollection.comments.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,11 @@ public class CommentServiceImpl implements CommentsService{
 	@Override
 	public int insertComments(CommentsVO vo) {
 		return commentsDao.insertComments(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectByBoardNum(int boardNum) {
+		return commentsDao.selectByBoardNum(boardNum);
 	}
 
 }
