@@ -59,8 +59,8 @@
 		    <a href="">
 		      <img src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>
-		  </div>
-		</c:forEach>
+		</div>
+	 </c:forEach>
 
 	</div>
 	</section>

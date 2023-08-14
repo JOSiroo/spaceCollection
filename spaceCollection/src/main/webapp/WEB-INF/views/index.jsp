@@ -90,7 +90,6 @@ font-weight: bold;
 				
 							
 		<div class="property-item">
-		
 				<div style="width:2000px;text-align:center;">
 					<c:if test="${empty list }">
 							<div class="line">해당하는 상품이 없습니다.</div>
@@ -114,7 +113,7 @@ font-weight: bold;
 						</c:forEach>
 						<!-- 반복 끝 -->
 					</c:if>	 
-									
+								<!-- 
 								<a href="property-single.html" class="img">
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</a>
@@ -141,7 +140,7 @@ font-weight: bold;
 									</div>
 								</div>
 							</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 								<a href="property-single.html" class="img">
@@ -168,7 +167,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 
@@ -196,7 +195,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 
@@ -224,7 +223,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 
@@ -252,7 +251,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 
@@ -280,7 +279,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 
@@ -308,7 +307,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> 
 
 							<div class="property-item">
 
@@ -336,7 +335,7 @@ font-weight: bold;
 										<a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 								</div>
-							</div> <!-- .item -->
+							</div> <
 
 							<div class="property-item">
 
@@ -365,7 +364,7 @@ font-weight: bold;
 									</div>
 								</div>
 							</div> <!-- .item -->
-
+							
 
 						</div>
 

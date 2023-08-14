@@ -59,9 +59,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 <script>
-$.ajax({
-	
-})
 
 var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 mapOption = { 
@@ -74,7 +71,7 @@ var overlays = [];
 var contents = [];
 
 
-for(var i = 1; i < 5; i++){
+<c:forEach items="${spaceMap}" var = "space">{
 	//지도에 마커를 표시합니다 
 	var marker = new kakao.maps.Marker({
 	map: map, 
@@ -123,7 +120,9 @@ for(var i = 1; i < 5; i++){
         };
     }(i - 1));
 	//마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-}
+</c:forEach>
+
+
 closeOverlay();
 //커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
 function closeOverlay() {
