@@ -10,4 +10,5 @@ public interface SpaceDetailService {
 	Map<SpaceVO, List<Map<String, Object>>> selectDetailByNo(int spaceNo);
 	RefundVO selectRefund(int refundNo);
 	SpaceDetailVO selectJustDetailByNo(int sdNum);
+	List<SpaceDetailVO> selectBySpaceNo(int spaceNo);
 }
