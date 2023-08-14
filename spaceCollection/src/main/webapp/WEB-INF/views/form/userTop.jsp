@@ -165,7 +165,7 @@
 					<div class="topSearch">
 						<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
 							<input type="text" class="form-control px-4"
-								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
+								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch" name="spaceName">
 							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
 						</form>
 					</div>
@@ -271,7 +271,8 @@
 	
 <!-- 상단메뉴 끝 -->	</nav>	
 		
-	<!-- 채팅api -->				
+	<!-- 채팅api -->			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
 	<script type="text/javascript">
 		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 		(function() {
@@ -283,6 +284,18 @@
 			s1.setAttribute('crossorigin', '*');
 			s0.parentNode.insertBefore(s1, s0);
 		})();
+		
+		
+	</script>
+	<script type="text/javascript">
+	$(function(){
+		$('#searchBt').click(function(){
+			if($('#inputSearch').val().length === 0){
+				alert('검색어를 입력하세요');
+				return false;
+			}
+		});
+	});
 	</script>
 
 	<a href="#"
