@@ -99,14 +99,15 @@
 	}
 	
 	.login {
-		height: 250px;
+		height: 220px;
 		background: #f6f6f6;
 		text-align: center;
 		font-weight: normal;
-		padding-top: 80px;
+		padding-top: 50px;
+		color: #949494;
+		font-size: 14px;
 	}
 	
-	.login a {color: #949494; font-size: 17px;}
 	
 	
 </style>
@@ -164,9 +165,11 @@
 	          </li>
 	        </ul>
 	        <div class="login">
+	        	<a href="#">스페이스컬렉션(사용자)으로 이동</a>
+	        	<br>
 	        	<a href="#">로그인, 로그아웃</a>
 	        	<br><br>
-	        	<a href="#">스페이스컬렉션(사용자)으로 이동</a>
+	        	<span>Powered by © nada Crew.</span>
 	        </div>
 	      </div>
 	    </div>
