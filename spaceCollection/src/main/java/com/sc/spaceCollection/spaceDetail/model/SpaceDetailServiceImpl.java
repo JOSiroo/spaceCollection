@@ -38,6 +38,11 @@ public class SpaceDetailServiceImpl implements SpaceDetailService{
 		return spaceDetailDao.selectJustDetailByNo(sdNum);
 	}
 
+	@Override
+	public List<SpaceDetailVO> selectBySpaceNo(int spaceNo) {
+		return spaceDetailDao.selectBySpaceNo(spaceNo);
+	}
+
 	
 
 
