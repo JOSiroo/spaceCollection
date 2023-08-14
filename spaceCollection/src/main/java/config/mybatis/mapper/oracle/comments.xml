@@ -10,4 +10,8 @@
 		insert into comments(COMMENT_NUM, COMMENT_CONTENT, BOARD_NUM, USER_NUM) 
 		values(#{commentNum}, #{commentContent}, #{boardNum}, #{userNum})
 	</insert>
+	
+	<select id="selectByBoardNum" parameterType="int" resultType="map">
+		select * from comments_view where board_num = #{boardNum} order by comment_num
+	</select>
 </mapper>

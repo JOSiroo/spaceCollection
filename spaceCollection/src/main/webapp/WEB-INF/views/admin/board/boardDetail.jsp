@@ -22,6 +22,10 @@
 	#submitBt{
 		margin-top: 10px;
 	}
+	
+	hr{
+		color: gray;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -96,6 +100,25 @@
 								<input type="hidden" name="boardNum" value="${map.BOARD_NUM }">							
 								<input type="hidden" name="userNum" value="9999999">							
 							</form>
+							
+							<hr>
+							<div>
+								<c:if test="${empty list }">
+									<span>등록된 댓글이 없습니다.</span>
+								</c:if>
+								<c:if test="${!empty list }">
+									<c:forEach var="comments" items="${list }">
+										<div>
+											<a href="#"><i class="bi bi-person-fill"></i><span>${comments.USER_ID }</span></a>
+											<p>${comments.COMMENT_CONTENT }</p>
+											<p style="white-space: pre;"><c:out value="${comments.COMMENT_CONTENT }"/></p>
+											<fmt:parseDate var="commentRegdate" value="${comments.COMMENT_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
+											<span><fmt:formatDate value="${commentRegdate }" pattern="yyyy-MM-dd HH:mm"/></span>
+											<hr>
+										</div>
+									</c:forEach>
+								</c:if>
+							</div>
 						</c:if>
 						<!-- 댓글 목록 -->
 				 	</div>

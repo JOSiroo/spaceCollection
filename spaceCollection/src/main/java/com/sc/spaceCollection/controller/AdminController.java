@@ -278,7 +278,7 @@ public class AdminController {
 			return "admin/common/message";
 		}else {
 			Map<String, Object> map = boardService.selectByBoardNum(boardNum);
-			
+			logger.info("게시물 상세조회 결과, map = {}", map);
 			if(map==null || map.isEmpty()) {
 				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
 				model.addAttribute("url", "/admin/board/boardList");
@@ -286,11 +286,14 @@ public class AdminController {
 				return "admin/common/message";
 
 			}else {
-				logger.info("게시물 상세조회 결과, map = {}", map);
 				String userid = (String)session.getAttribute("userid");
+				List<Map<String, Object>> list = commentsService.selectByBoardNum(boardNum);
+				logger.info("댓글 조회결과, list.size = {}", list.size());
+				
 				
 				model.addAttribute("userid", userid);
 				model.addAttribute("map", map);
+				model.addAttribute("list", list);
 				
 				return "admin/board/boardDetail";
 			}

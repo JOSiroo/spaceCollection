@@ -14,3 +14,8 @@ select b.*, u.user_name, u.user_id, bt.board_type_name, bt.BOARD_TYPE_COMMENT_OK
 bt.BOARD_TYPE_FILE_NUM, bt.BOARD_TYPE_FILE_SIZE from board b 
 join user_info u on b.user_num = u.user_num
 join board_type bt on b.board_type_id = bt.board_type_id;
+
+create or replace view comments_view
+as
+select c.*, u.user_id from comments c 
+join user_info u on c.user_num=u.user_num;
