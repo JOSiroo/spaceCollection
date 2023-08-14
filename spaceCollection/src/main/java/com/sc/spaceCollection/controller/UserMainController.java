@@ -24,128 +24,133 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class UserMainController {
-	private static final Logger logger = LoggerFactory.getLogger(UserMainController.class);
-	private final SpaceService spaceService;
-	private final SpaceDetailService sdService;
-	
-	//사용자메인화면
-	@RequestMapping("/")
-	public String home() {
-		
-		return "index";
-	}
-	
-	//약관
-	@RequestMapping("userMain/userService")
-	public String userChek() {
-		return "userMain/userService";
-	}
-	
+   private static final Logger logger = LoggerFactory.getLogger(UserMainController.class);
+   private final SpaceService spaceService;
+   private final SpaceDetailService sdService;
+   
+   //사용자메인화면
+   @RequestMapping("/")
+   public String home(Model model) {
+       List<SpaceVO> list = spaceService.selectBySpaceNum();
+       List<Integer> priceList = new ArrayList<>();
+       logger.info("새로운 공간 보여주기, list.size={}", list.size());
+       
+       model.addAttribute("list", list);
+       
+       return "index";
+   }
 
-	@GetMapping("/search")
-	public String search_get(@RequestParam(required = false) String spaceName,
-			@RequestParam(required = false) String spaceType, Model model) {
-		
-		if(spaceName != null && !spaceName.isEmpty()) {
-			logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
-			List<SpaceVO> list = spaceService.selectBySpaceName(spaceName);
-			List<Integer> priceList = new ArrayList();
-			Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
-			
-			for(int i = 0; i < list.size(); i++) {
-				List<SpaceDetailVO> sdList = new ArrayList<>();
-				sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-				int averagePrice = 0;
-				for(int j = 0; j < sdList.size(); j++) {
-					averagePrice += sdList.get(i).getSdPrice(); 
-				}
-				priceList.add(averagePrice/sdList.size());
-				
-				
-				resultMap.put(list.get(i), priceList.get(i));
-			}
-			logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultMap);
-			
-			model.addAttribute("spaceMap", resultMap);
-			model.addAttribute("totalRecord", resultMap.size());
-			
-		}else if(spaceType != null && !spaceType.isEmpty()) {
-			logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceType);
-			List<SpaceVO> list = spaceService.selectBySpaceType(spaceType);
-			List<Integer> priceList = new ArrayList();
-			Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
-			
-			for(int i = 0; i < list.size(); i++) {
-				List<SpaceDetailVO> sdList = new ArrayList<>();
-				sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-				int averagePrice = 0;
-				for(int j = 0; j < sdList.size(); j++) {
-					averagePrice += sdList.get(i).getSdPrice(); 
-				}
-				priceList.add(averagePrice/sdList.size());
-				
-				
-				resultMap.put(list.get(i), priceList.get(i));
-			}
-			logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap);
-			
-			model.addAttribute("spaceMap", resultMap);
-		}
-		
-		
-		return "userMain/search";
-	}
-	
-	
-	@GetMapping("/search/map")
-	public String map(@RequestParam(required = false) String spaceName,
-			@RequestParam(required = false) String spaceType, Model model) {
-		if(spaceName != null && !spaceName.isEmpty()) {
-			logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
-			List<SpaceVO> list = spaceService.selectBySpaceName(spaceName);
-			List<Integer> priceList = new ArrayList();
-			Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
-			
-			for(int i = 0; i < list.size(); i++) {
-				List<SpaceDetailVO> sdList = new ArrayList<>();
-				sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-				int averagePrice = 0;
-				for(int j = 0; j < sdList.size(); j++) {
-					averagePrice += sdList.get(i).getSdPrice(); 
-				}
-				priceList.add(averagePrice/sdList.size());
-				
-				
-				resultMap.put(list.get(i), priceList.get(i));
-			}
-			logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultMap);
-			
-			model.addAttribute("spaceMap", resultMap);
-			model.addAttribute("totalRecord", resultMap.size());
-			
-		}else if(spaceType != null && !spaceType.isEmpty()) {
-			logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceType);
-			List<SpaceVO> list = spaceService.selectBySpaceType(spaceType);
-			List<Integer> priceList = new ArrayList();
-			Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
-			
-			for(int i = 0; i < list.size(); i++) {
-				List<SpaceDetailVO> sdList = new ArrayList<>();
-				sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-				int averagePrice = 0;
-				for(int j = 0; j < sdList.size(); j++) {
-					averagePrice += sdList.get(i).getSdPrice(); 
-				}
-				priceList.add(averagePrice/sdList.size());
-				
-				
-				resultMap.put(list.get(i), priceList.get(i));
-			}
-			logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap);
-			
-			model.addAttribute("spaceMap", resultMap);
-		}
-		
-		return "userMain/map";
-	}
+   
+   //약관
+   @RequestMapping("userMain/userService")
+   public String userChek() {
+      return "userMain/userService";
+   }
+   
+   @GetMapping("/search")
+   public String search_get(@RequestParam(required = false) String spaceName,
+         @RequestParam(required = false) String spaceType, Model model) {
+      
+      if(spaceName != null && !spaceName.isEmpty()) {
+         logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
+         List<SpaceVO> list = spaceService.selectBySpaceName(spaceName);
+         List<Integer> priceList = new ArrayList();
+         Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
+         
+         for(int i = 0; i < list.size(); i++) {
+            List<SpaceDetailVO> sdList = new ArrayList<>();
+            sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+            int averagePrice = 0;
+            for(int j = 0; j < sdList.size(); j++) {
+               averagePrice += sdList.get(i).getSdPrice(); 
+            }
+            priceList.add(averagePrice/sdList.size());
+            
+            
+            resultMap.put(list.get(i), priceList.get(i));
+         }
+         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultMap);
+         
+         model.addAttribute("spaceMap", resultMap);
+         model.addAttribute("totalRecord", resultMap.size());
+         
+      }else if(spaceType != null && !spaceType.isEmpty()) {
+         logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceType);
+         List<SpaceVO> list = spaceService.selectBySpaceType(spaceType);
+         List<Integer> priceList = new ArrayList();
+         Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
+         
+         for(int i = 0; i < list.size(); i++) {
+            List<SpaceDetailVO> sdList = new ArrayList<>();
+            sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+            int averagePrice = 0;
+            for(int j = 0; j < sdList.size(); j++) {
+               averagePrice += sdList.get(i).getSdPrice(); 
+            }
+            priceList.add(averagePrice/sdList.size());
+            
+            
+            resultMap.put(list.get(i), priceList.get(i));
+         }
+         logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap);
+         
+         model.addAttribute("spaceMap", resultMap);
+      }
+      
+      
+      return "userMain/search";
+   }
+   
+   
+   @GetMapping("/search/map")
+   public String map(@RequestParam(required = false) String spaceName,
+         @RequestParam(required = false) String spaceType, Model model) {
+      if(spaceName != null && !spaceName.isEmpty()) {
+         logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
+         List<SpaceVO> list = spaceService.selectBySpaceName(spaceName);
+         List<Integer> priceList = new ArrayList();
+         Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
+         
+         for(int i = 0; i < list.size(); i++) {
+            List<SpaceDetailVO> sdList = new ArrayList<>();
+            sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+            int averagePrice = 0;
+            for(int j = 0; j < sdList.size(); j++) {
+               averagePrice += sdList.get(i).getSdPrice(); 
+            }
+            priceList.add(averagePrice/sdList.size());
+            
+            
+            resultMap.put(list.get(i), priceList.get(i));
+         }
+         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultMap);
+         
+         model.addAttribute("spaceMap", resultMap);
+         model.addAttribute("totalRecord", resultMap.size());
+         
+      }else if(spaceType != null && !spaceType.isEmpty()) {
+         logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceType);
+         List<SpaceVO> list = spaceService.selectBySpaceType(spaceType);
+         List<Integer> priceList = new ArrayList();
+         Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
+         
+         for(int i = 0; i < list.size(); i++) {
+            List<SpaceDetailVO> sdList = new ArrayList<>();
+            sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+            int averagePrice = 0;
+            for(int j = 0; j < sdList.size(); j++) {
+               averagePrice += sdList.get(i).getSdPrice(); 
+            }
+            priceList.add(averagePrice/sdList.size());
+            
+            
+            resultMap.put(list.get(i), priceList.get(i));
+         }
+         logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap);
+         
+         model.addAttribute("spaceMap", resultMap);
+      }
+      
+      return "userMain/map";
+   }
 }
