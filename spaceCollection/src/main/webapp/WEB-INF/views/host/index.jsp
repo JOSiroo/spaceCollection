@@ -134,6 +134,7 @@
 	    font-style: normal;
 	    line-height: 1.4;
 	    letter-spacing: -.5px;
+	    color: #333;
 	}
 	
 	.regItem2 {

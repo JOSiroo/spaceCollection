@@ -31,19 +31,14 @@
 <link rel="stylesheet" href="<c:url value='/css/aos.css' />">
 <link rel="stylesheet" href="<c:url value='/css/style.css' />">
 
-<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
-
-
-
 
 <style type="text/css">
 	* {margin: 0; padding: 0;}
 	
-	.headerMain {
-		background: #193D76;
+	.navbar {
+		background: #193D76 !important;
 		width: 100%;
-		height: 65px;
-		position: fixed;
+		height: 65px !important;
 	}
 	
 	.headerMain nav {
@@ -51,136 +46,97 @@
 		padding: 15px 15px 15px 15px;
 	}
 
-	.logo1 {
+	.navbar-brand {
 		color: white;
 		text-decoration: none;
-		font-size: 21px;
+		font-size: 25px;
+		float: left;
+		font-weight: bold;
 	}
 
 	.logo2 {
 		color: #ffd014;
-		font-size: 17px;
+		font-size: 18px;
 	}
 	
-	.btLogout {
-		border: 0.5px solid white;
+	.navbar-toggler {
+		color: #ffd014 !important;
+	}
+	
+	.offcanvas-header {
+		height: 150px;
+		background: #ffd014;
+		padding-right: 20px;
+	}
+	
+	.offcanvas-title {
+		width: 250px;  
 		color: white;
-		background: #193D76;
-		padding: 6px 6px 6px 6px;
-		font-size: 14px;
-		float: right;
+		font-weight: bold;
+		font-size: 25px;
 	}
 	
-	.menu{
-		float: right;
-		margin-left: 20px;
+	.nav-item {
+		height: 60px;
+		padding: 21px 25px 20px;
+		border-bottom: 1px solid gray;
 	}
 	
-	#header { 
-		width: 100%; 
-		height: 52px; 
-		background: #447e65; 
-		position: relative; 
-		overflow: hidden; 
-	}
+	.frofile {font-size: 16px; color: white; text-decoration: underline;}
 	
-	#mask { 
-		width: 100%; 
-		height: 100%; 
-		position: fixed; 
-		top: 0; left: 0; 
-		background: #000; 
-		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; 
-		filter: alpha(opacity=50); 
-		zoom: 1; 
-		opacity: 0.5; 
-		z-index: 9998; 
-		display: none; 
+	.offcanvas-body {
+		font-size: 19px; 
+		
+		
 	}
-	
-	.logo { 
-		font-size: 25px; 
-		color: #fff; 
-		position: absolute; 
-		top: 5px; 
-		left: 15px; 
-	}
-	
-	.btn_menu_open { 
-		background: none; 
-		border: 0; 
-		font-size: 15px; 
-		color: #fff; 
-		position: absolute; 
-		top: 15px; 
-		right: 15px; 
-		cursor: pointer; 
-	}
-	
-	.slide_menu { 
-		width: 80%; 
-		height: 100%; 
-		max-width: 360px; 
-		background: #fff; 
-		position: fixed; 
-		top: 0; right: 0; 
-		overflow-y: scroll; 
-		z-index: 9999; 
-		display: none; 
-	}
-	
-	.slide_menu .menu_close { 
-		width: 100%; 
-		height: 52px; 
-		background: #447e65; 
-		position: relative; 
-	}
-	
-	.slide_menu .btn_menu_close { 
-		background: none; 
-		border: 0; 
-		font-size: 15px; 
-		color: #fff; 
-		position: absolute; 
-		top: 15px; 
-		right: 15px; 
-		cursor: pointer; 
-	}
-	
-	.slide_menu .menu_list li { 
-		padding: 15px; 
-		border-bottom:1px solid #ccc; 
-		list-style: none; 
-	}
-	
-	.slide_menu .menu_list li a { font-size: 15px; color: #333; }
 	
 </style>
 
+<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript">
+
+</script>
+
 </head>
 <body>
-	<header class="headerMain">
-		<nav>
-			<a class="logo1" href="<c:url value='/host/index' />"></a>
-			<span class="logo2">호스트 센터</span>
-			
-			<button class="btLogout">호스트 로그아웃</button>
-			<div id="header">
-				<div id="mask"></div>
-				<h1><a href="<c:url value='/host/index' />" class="logo">SpaceCollection</a></h1>
-				<button type="button" class="btn_menu_open">
-					<img class="menu" alt="menu" src="<c:url value='/img/icons/menu.svg' />">
-				</button>
-				<div class="slide_menu">
-					<div class="menu_close"><button type="button" class="btn_menu_close">메뉴 닫기</button></div>
-					<ul class="menu_list">
-						<li><a href="#">메뉴 1</a></li>
-						<li><a href="#">메뉴 2</a></li>
-						<li><a href="#">메뉴 3</a></li>
-						<li><a href="#">메뉴 4</a></li>
-						<li><a href="#">메뉴 5</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
+	<nav class="navbar bg-body-tertiary fixed-top">
+	  <div class="container-fluid">
+	    <a class="navbar-brand" href="<c:url value='/host/index' />">SpaceCollection <span class="logo2">호스트센터</span></a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+	      <div class="offcanvas-header">
+	        <span class="offcanvas-title" id="offcanvasNavbarLabel">호스트(사용자 이름)</span>
+	        <a class="frofile" href="#">프로필 관리</a>
+	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	      </div>
+	      <div class="offcanvas-body">
+	      	<div class="">
+	      	
+	      	</div>
+	        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+	          <li class="nav-item" style="border-top: 1px solid gray;">
+	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />">호스트센터 홈</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">Link</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	              Dropdown
+	            </a>
+	            <ul class="dropdown-menu">
+	              <li><a class="dropdown-item" href="#">Action</a></li>
+	              <li><a class="dropdown-item" href="#">Another action</a></li>
+	              <li>
+	                <hr class="dropdown-divider">
+	              </li>
+	              <li><a class="dropdown-item" href="#">Something else here</a></li>
+	            </ul>
+	          </li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</nav>

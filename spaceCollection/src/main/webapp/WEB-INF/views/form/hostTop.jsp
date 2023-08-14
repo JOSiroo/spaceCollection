@@ -31,10 +31,6 @@
 <link rel="stylesheet" href="<c:url value='/css/aos.css' />">
 <link rel="stylesheet" href="<c:url value='/css/style.css' />">
 
-<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
-
-
-
 
 <style type="text/css">
 	* {margin: 0; padding: 0;}
@@ -76,6 +72,11 @@
 		margin-left: 20px;
 	}
 </style>
+
+<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript">
+
+</script>
 
 </head>
 <body>
