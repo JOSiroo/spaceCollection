@@ -268,9 +268,9 @@ pageEncoding="UTF-8"%>
 									    <hr>
 										 <div class="swiper mySwiper">
 										    <div class="swiper-wrapper">
-											    <fmt:parseNumber var="openTime" integerOnly="true" type="number" value="${detail.SD_OPEN_TIME}" />
-											    <fmt:parseNumber var="closeTime" integerOnly="true" type="number" value="${detail.SD_CLOSE_TIME}" />
-											    <c:forEach begin="${openTime }" end="${closeTime }" var="i">
+											    <fmt:parseNumber var="openTime" type="number" value="${detail.SD_OPEN_TIME}" />
+											    <fmt:parseNumber var="closeTime" type="number" value="${detail.SD_CLOSE_TIME}" />
+											    <c:forEach begin="${openTime}" end="${closeTime}" var="i">
 										    			<div class="swiper-slide">
 										    					<c:if test="${i == 0}">
 												    				<p class = "swiper-p">오전</p>
@@ -289,7 +289,6 @@ pageEncoding="UTF-8"%>
 									    					</button>
 										    			</div>
 										     	</c:forEach>
-										     	
 										    </div>
 										  </div>
 										  <br>
