@@ -60,7 +60,8 @@
 	}
 	
 	.navbar-toggler {
-		color: #ffd014 !important;
+		background: #ffd014 !important;
+		color: #193D76;
 	}
 	
 	.offcanvas-header {
@@ -77,18 +78,36 @@
 	}
 	
 	.nav-item {
-		height: 60px;
+		height: 65px;
 		padding: 21px 25px 20px;
 		border-bottom: 1px solid gray;
+		width: 100%;
 	}
 	
 	.frofile {font-size: 16px; color: white; text-decoration: underline;}
 	
 	.offcanvas-body {
-		font-size: 19px; 
-		
-		
+		font-size: 19px;
+		font-weight: bold;
 	}
+	
+	.offcanvas-body {width: 100%; padding: 0; margin: 0;}
+	
+	.nav-link {
+		padding-top: 0; 
+		position: relative;
+	}
+	
+	.login {
+		height: 250px;
+		background: #f6f6f6;
+		text-align: center;
+		font-weight: normal;
+		padding-top: 80px;
+	}
+	
+	.login a {color: #949494; font-size: 17px;}
+	
 	
 </style>
 
@@ -116,26 +135,39 @@
 	      	
 	      	</div>
 	        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-	          <li class="nav-item" style="border-top: 1px solid gray;">
-	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />">호스트센터 홈</a>
+	          <li class="nav-item">
+	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />" style="color: #6d3bff !important;">
+	            호스트센터 홈</a>
 	          </li>
 	          <li class="nav-item">
-	            <a class="nav-link" href="#">Link</a>
+	            <a class="nav-link" href="#">운영지표</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">정산</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">공지사항</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">도움말</a>
 	          </li>
 	          <li class="nav-item dropdown">
 	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	              Dropdown
+	              서비스 정보
 	            </a>
 	            <ul class="dropdown-menu">
-	              <li><a class="dropdown-item" href="#">Action</a></li>
-	              <li><a class="dropdown-item" href="#">Another action</a></li>
-	              <li>
-	                <hr class="dropdown-divider">
-	              </li>
-	              <li><a class="dropdown-item" href="#">Something else here</a></li>
+	              <li><a class="dropdown-item" href="#">이용약관</a></li>
+	              <li><a class="dropdown-item" href="#">개인정보 처리방침</a></li>
+	              <li><a class="dropdown-item" href="#">정산 및 환불정책</a></li>
+	              <li><a class="dropdown-item" href="#">공간 관리 정책</a></li>
 	            </ul>
 	          </li>
 	        </ul>
+	        <div class="login">
+	        	<a href="#">로그인, 로그아웃</a>
+	        	<br><br>
+	        	<a href="#">스페이스컬렉션(사용자)으로 이동</a>
+	        </div>
 	      </div>
 	    </div>
 	  </div>
