@@ -143,8 +143,9 @@
 					<div class="topbar">
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 							<li class="active"><a href="http://localhost:9091/spaceCollection/">Home</a></li>
-							<li class="has-children"><a href="SpaceCollection.html">SpaceCollection</a>
-								<ul class="dropdown">
+							<li><a href="<c:url value='/search' />">SpaceCollection</a>
+								<!-- <li class="has-children">
+									<ul class="dropdown">
 									<li><a href="#">Buy Property</a></li>
 									<li><a href="#">Sell Property</a></li>
 									<li class="has-children"><a href="#">Dropdown</a>
@@ -153,9 +154,10 @@
 											<li><a href="#">Sub Menu Two</a></li>
 											<li><a href="#">Sub Menu Three</a></li>
 										</ul></li>
-								</ul></li>
-							<li><a href="">이벤트</a></li>
-							<li><a href="https://ad.yanolja.com/intro">회사소개</a></li>
+								</ul> -->
+							</li>
+							<li><a href="https://www.spacecloud.kr/event">이벤트</a></li>
+							<li><a href="https://yanolja.in/about/">회사소개</a></li>
 							<li><a href="contact.html">문의사항</a></li>
 						</ul>
 						<br>
@@ -183,7 +185,7 @@
   	</div>
       
       
-      <!-- 메뉴 바(내 정보) 추가하기!!!!!!!!!!!!!!!!!!!!! -->
+      <!-- 메뉴 바(내 정보) 추가!!!!!!!!!!!!!!!!!!!!! -->
 		
 		
 			<!-- 사이드메뉴 -->

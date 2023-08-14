@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이용약관</title>
+<title>서비스 이용약관</title>
 </head>
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/more.css?rand=1690852276" />
@@ -12,54 +12,16 @@
 	<link rel="stylesheet" href="https://static.goodchoice.kr/yg-webview/css/terms/terms-basic-new.css">
 <body>
 
-	<!-- Sub Top -->
-	<div class="sub_top_wrap">
-		<div class="sub_top bg_kong_3">
-			<h2>더보기</h2>
-		</div>
-	</div>
-	<!-- //Sub Top -->
 
 	<!-- Content  -->
 	<div id="content" class="sub_wrap more_wrap">
 
 		<!-- Nav -->
-		<nav>
-    <ul>
-        <li><a href="/more/notice"
-                >공지사항</a></li>
-        <li><a href="/more/event"
-                >이벤트</a></li>
-        <li><a href="/more/faq"
-                >자주 묻는 질문</a></li>
-        <li><a href="/more/inquiry"
-                >1:1 문의</a></li>
-        <li><a href="/more/terms"
-                class="active">약관 및 정책</a></li>
-        <li><a href="/more/employment"
-                >채용 약관</a></li>
-    </ul>
-</nav>
 		<div class="align_rt">
 
 
 			<!-- Terms -->
 			<div class="faq terms_wrap">
-
-				<div class="mobile_top">약관 및 정책</div>
-
-				<!-- 상단 탭 버튼 -->
-				<div class="top_link half_4 terms_tab partner" data-default="term">
-					<ul>
-						<li><a href="https://www.goodchoice.kr/more/terms" class="on term">이용약관</a></li>
-						<li><a href="https://www.goodchoice.kr/more/terms/location" class="location">위치기반 서비스 이용약관</a></li>
-						<li><a href="https://www.goodchoice.kr/more/terms/privacy" class="privacy">개인정보 처리방침</a></li>
-						<li><a href="https://www.goodchoice.kr/more/terms/teenager" class="teenager">청소년 보호정책</a></li>
-						<li><a href="https://www.goodchoice.kr/more/terms/consumer" class="consumer">소비자 분쟁해결 기준</a></li>
-						<li class="partner"><a href="https://www.goodchoice.kr/more/terms/partner" class="partner">파트너 개인정보 처리방침</a></li>
-					</ul>
-				</div>
-				<!-- //상단 탭 버튼 -->
 
 				<!-- #1 이용약관 -->
 				<div class="terms terms_new"
@@ -68,7 +30,7 @@
 					<div class="txt policy_01">
 
 						<div class="terms_title">
-							<h2>스페이스컬렉션 이용약관</h2>
+							<h2>스페이스컬렉션 서비스 이용약관</h2>
 							<div class="term-select-wrap">
 								<span>시행일</span>
 								<select class="term-select">
