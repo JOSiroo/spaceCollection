@@ -56,11 +56,16 @@
 <body>
 <div id="map" style="width:100%;height:1400px;"></div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 <script>
+$.ajax({
+	
+})
+
 var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 mapOption = { 
-    center: new kakao.maps.LatLng(33.451475, 126.570528), // 지도의 중심좌표
+    center: new kakao.maps.LatLng(37.498095, 127.027610), // 지도의 중심좌표
     level: 3 // 지도의 확대 레벨
 }; 
 

@@ -2,17 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- namespace 부분은 말그대로 별칭을 정하는 부분이라 아무렇게나 지정해도 된다  -->
 <mapper namespace="com.sc.spaceCollection.space.model.SpaceDAO">
-	<!-- <select id="searchSpace" parameterType="string" 
-		resultType="SpaceVO">
-		select * from spaceName
-		where spaceName like '%' || #{spaceName} || '%'
+	<select id="selectBySpaceType" parameterType="String" resultType="spaceVo">
+		select * from space
+		where space_Type = #{spaceType}	
 	</select>
-
-    검색 결과 게시물 총 갯수 계산
-    <select id="NoticeCount" resultType="java.lang.Integer" parameterType="searchCriteria">
-    SELECT COUNT(*) FROM space 
-    LEFT JOIN noticeboardfile nbf ON (nb.NoticeNum = nbf.NoticeNum)
-    </select> -->
-    
-    </mapper>
+	<select id="selectBySpaceName" parameterType="String" resultType="spaceVo">
+		select * from space
+		where space_Name like '%' || #{spaceName} || '%'	
+	</select>
+	
+</mapper>
