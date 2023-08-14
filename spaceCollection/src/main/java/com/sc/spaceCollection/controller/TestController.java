@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	
-	
+	/*
 	@GetMapping("/")
 	public String test() {
 		logger.info("tqtqtqtqtqtqt");
 		return "index";
 	}
-
+*/
 }
