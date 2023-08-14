@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>서비스 이용약관</title>
-</head>
+	pageEncoding="UTF-8"%>
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/more.css?rand=1690852276" />
 	<link rel="stylesheet" href="https://static.goodchoice.kr/yg-webview/css/terms/terms-basic.css">
 	<link rel="stylesheet" href="https://static.goodchoice.kr/yg-webview/css/terms/terms-basic-new.css">
-<body>
-
-
+<style type="text/css">
+.terms .txt .term-accordion-content {
+  overflow: auto;
+  height: 0;
+  padding: 0;
+  background-color: #fafafa;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+</style>
+<section>
 	<!-- Content  -->
 	<div id="content" class="sub_wrap more_wrap">
 
@@ -51,14 +53,12 @@
 								</select>
 							</div>
 						</div>
-
 						<div class="term-basic-wrap">
-							
 <div class="term-accordion" data-accordion>
     <div class="term-accordion-title">
         <span>01.</span>제 1조 (목적)<i></i>
     </div>
-    <div class="term-accordion-content">
+    <div class="term-accordion-content"  style="display: none;">
         <p>이 약관은 주식회사 스페이스컬렉션컴퍼니(이하 "회사"라 함)가 운영하는 종합 여행·여가 플랫폼(이하 "플랫폼"이라 한다)에서 제공하는 예약 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 "회사"와 "이용자"의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.<br/>※「PC통신, 무선 등을 이용하는 경우에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」</p>
     </div>
 </div>
@@ -836,7 +836,10 @@
 	</div>
 </div>
 
-
-
-</body>
-</html>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
