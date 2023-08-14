@@ -21,7 +21,7 @@
 	        따라서 스페이스클라우드는 공간 거래정보 및 거래에 대해 책임지지
 	        않습니다.
 	      	</p></div> -->
-			
+			<div id="cccc" style="padding-left: 113px;">
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="widget">
@@ -46,7 +46,7 @@
 						</ul>
 						<ul class="list-unstyled float-start links">
 							<li><a href="#">FAQ</a></li>
-							<li><a href="#">서비스 이용 약관</a></li>
+							<li><a href="<c:url value='userMain/userService'/>">서비스 이용 약관</a></li>
 							<li><a href="#">개인정보 처리방침</a></li>
 							<li><a href="#">전자금융거래 이용약관</a></li>
 						</ul>
@@ -67,7 +67,7 @@
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-4 -->
-			</div> <!-- /.row -->
+			</div> <!-- /.row --></div>
 
 			<div class="row mt-5">
 				<div class="col-12 text-center">

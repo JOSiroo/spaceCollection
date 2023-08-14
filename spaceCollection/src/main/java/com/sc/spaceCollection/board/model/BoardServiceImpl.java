@@ -1,8 +1,11 @@
 package com.sc.spaceCollection.board.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
+import com.sc.spaceCollection.common.SearchVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +17,26 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> selectByBoardTypeId(String boardTypeName) {
 		return boardDao.selectByBoardTypeId(boardTypeName);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBoardAll(SearchVO searchVo) {
+		return boardDao.selectBoardAll(searchVo);
+	}
+
+	@Override
+	public int getTotalRecord(SearchVO searchVo) {
+		return boardDao.getTotalRecord(searchVo);
+	}
+
+	@Override
+	public int insertBoard(BoardVO vo) {
+		return boardDao.insertBoard(vo);
+	}
+
+	@Override
+	public BoardVO selectByBoardNum(int boardNum) {
+		return boardDao.selectByBoardNum(boardNum);
 	}
 
 }

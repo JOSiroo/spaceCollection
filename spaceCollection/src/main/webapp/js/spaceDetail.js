@@ -65,6 +65,8 @@ const buttons = document.querySelectorAll('.button');
         });
       });
     });
+    
+    
 const inButtons = document.querySelectorAll('.inButton');
 
     inButtons.forEach(function(button, index) {
@@ -82,7 +84,8 @@ const inButtons = document.querySelectorAll('.inButton');
     });
     
     
-const timeSlots = document.querySelectorAll('.swiper-inBox');
+
+let timeSlots = document.querySelectorAll('.swiper-inBox');
 let selectedStartTime = null;
 
 timeSlots.forEach(function(slot) {
@@ -90,25 +93,47 @@ timeSlots.forEach(function(slot) {
         e.preventDefault();
 
         const clickedIndex = Array.from(timeSlots).indexOf(this);
-		
-       	if (selectedStartTime === null) {
+
+        if (selectedStartTime === null) {
             selectedStartTime = clickedIndex;
+             timeSlots.forEach(function(slot){
+				slot.classList.remove('on');
+			});
             this.classList.add('on');
         } else {
+            timeSlots.forEach(function(slot) {
+                slot.classList.remove('on');
+            });
+
             const minIndex = Math.min(selectedStartTime, clickedIndex);
             const maxIndex = Math.max(selectedStartTime, clickedIndex);
 
-            timeSlots.forEach(function(slot, index) {
-                if (index >= minIndex && index <= maxIndex) {
-                    slot.classList.add('on');
-                } else {
-                    slot.classList.remove('on');
+            let hasReservedBetween = false;
+            
+            for (let i = minIndex + 1; i < maxIndex; i++) {
+                if (timeSlots[i].classList.contains('reserved')) {
+                    hasReservedBetween = true;
+                    break;
                 }
-            });
+            }
+
+            if (hasReservedBetween) {
+                alert('이미 예약된 날짜가 포함되어있습니다!');
+            } else {
+                timeSlots.forEach(function(slot, index) {
+                    if (index >= minIndex && index <= maxIndex) {
+                        slot.classList.add('on');
+                    }
+                });
+            }
+            
             selectedStartTime = null;
         }
     });
 });
+
+
+
 
 function timeTableReset(){
 	timeSlots.forEach(function(slot){
@@ -117,6 +142,7 @@ function timeTableReset(){
 		
 	})
 }
+
 
 
    

@@ -4,253 +4,14 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/spaceDetail.css">
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-	
 	<title>스페이스 클라우드</title>
-	</head>
-<style type="text/css">
-	.custom-nav{
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-	body{
-	overflow: visible;
-	}
-	.ol-list{
-		font-weight: bold;
-	}
-	.ol-span{
-		font-weight: normal;
-	}
-	
-	.detail-navTab h5:after{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    content: "";
-    height: 4px;
-    width: 20px;
-    background-color: #ffd014;
-	}
-	.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-    .wrap * {padding: 0;margin: 0;}
-    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 14px;font-weight: bold;}
-    .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-    .info .close:hover {cursor: pointer;}
-    .info .body {position: relative;overflow: hidden;}
-    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-    .info .link {color: #5085BB;}
-    
-    
-    .question-box{
-    	text-align: center;
-    	padding : 3% 3% 3% 3%;   
-    }
-    
-    .review-box{
-    	text-align: center;
-    	padding : 3% 3% 3% 3%;   	
-    }
-    
-    .detail-navTab{
-		margin-top : 15px;
-		 
-    }
-    .nav-bar{
-    	width: 20px; height: 3px; background: #ffd014;
-    	margin-bottom : 10px;
-    }
-    .btn.btn-primary {
-    background: #193D76;
-    color: #fff;
- 	}   
-    .nav-link {
-    display: block;
-    padding: 0.5rem 1rem;
-    color: black;
-    text-decoration: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
-	}
-	.payment_type{
-		display: inline-block;
-	}
-	
-	
-	.accordionUl {
-	  display: flex;
-	  flex-direction: column;
-	  gap: 16px;
-	  margin: 0;
-	  padding: 0;
-	  max-width: 500px;
-	  width: 100%;
-	  list-style: none;
-	}
-	
-	.accordionLi {
-	  .button {
-	    display: block;
-	    padding: 20px;
-	    width: 100%;
-	    color: #000;
-	    text-align: left;
-	    font-size : 18px;
-	    font-weight : bold;
-	    background-color: white;
-	    border: 4px #193D76 solid;
-	    border: 0;
-	    cursor: pointer;
-	  }
-	  .content {
-	    display: none;
-	    margin: 0;
-	    background-color: #fff;
-	    border-top: 1px solid #ddd;
-	  }
-	  
-	  &.on {
-	    .button {
-			background-color: rgba(255, 208, 20, 0.9);
-			opacity : 0.8;
-		    border: 4px #193D76 solid;
-			border-radius : 1rem;
-			font-size : 18px;
-			font-weight : bold;	
-	    }
-	    .content {
-	      display: block;
-	    }
-	  }
-	}
-	
-	
-	.inAccordionUl {
-	  display: flex;
-	  flex-direction: column;
-	  gap: 16px;
-	  margin: 0;
-	  padding: 0;
-	  max-width: 500px;
-	  width: 100%;
-	  list-style: none;
-	}
-	
-	.inAccordionLi {
-	  .inButton {
-	    display: block;
-	    padding: 20px;
-	    width: 100%;
-	    color: #000;
-	    text-align: left;
-	    font-size : 16px;
-	    font-weight : bold;
-	    background-color: white;
-	    border: 4px #193D76 solid;
-	    border-radius : 1rem;
-	    cursor: pointer;
-	  }
-	  .inContent {
-	    display: none;
-	    margin: 0;
-	    padding: 20px;
-	    background-color: #fff;
-	    border-top: 1px solid #ddd;
-	  }
-	  
-	  &.on {
-	    .inButton {
-	      background-color: rgba(255, 208, 20, 0.9);
-	      opacity : 0.8;
-	      border: 4px #193D76 solid;
-	      border-radius : 1rem;
-	      font-size : 16px;
-    		font-weight : bold;
-	    }
-	    .inContent {
-	      display: block;
-	    }
-	  }
-	}
-	<!-- 스와이프 시작 -->
-	.swiper {
-      width: 100%;
-      height: 100%;
-    }
 
-    .swiper-slide {
-		text-align: center;
-		font-size: 18px;
-		/*display: flex;*/
-		justify-content: center;
-		align-items: center;
-		
-		.swiper-p{
-			margin-bottom : 0.3rem;
-			text-align: left;
-		}
-		.swiper-inBox{
-	    	text-align: center;
-			font-size: 80%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border : grey 1px solid;
-			color: #cc8c28;
-			border: 2px solid #ffc000;
-			background-color: #ffd014;
-			padding: 17% 3% 19% 3%;
-			width: 100%;
-		}
-   		.on{
-			color: white;
-			font-size: 80%;
-			border: 2px solid navy;
-			background-color: #193D76;
-		}
-    }
-    .payment_type{
-		border:none;	
-	 	borderRadius : 1rem;
-    }
-    .payment_type.on{
-		border:#193D76 5px solid;	
-	 	borderRadius : 1rem;
-    }
-    
-    
-    .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-	<!-- 스와이프 끝 -->
-	
-	.facility-box{
-		padding : 0% 0% 6% 11%;
-	}
-	.facility-icon{
-		display: inline-block; 
-		margin: 2% 2% 2% 2%;
-	}
-	.p-3{
-		border-radius: 0.75rem;
-	}
-	
-	
-</style>
-<section>
-
+<section class = "sapceDetailSection">
+	<input type="hidden" value="${userId}" id="userId">
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -435,7 +196,9 @@ pageEncoding="UTF-8"%>
 				<div class="col-lg-4">
 				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
 					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
-					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center;">공간 예약 정보</h3>
+					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center; font-weight: bold">결제후 바로 예약 확정</h3>
+					<p class = "tempP">빠르고 확실한 예약을 위해 스페이스 클라우드에서<br>온라인 결제를 진행하세요 :-)</p>
+					<hr style = "border-color:#193D76; height: 3px;">
 						<ul class = "accordionUl">
 						<c:if test="${!empty map }">
 							<c:forEach var="detail" items="${map }">
@@ -498,7 +261,9 @@ pageEncoding="UTF-8"%>
 									    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
 										<div>
 											 <input type="text" class="datepicker">
+											 <input type="hidden" class = 'selectedDate'>
 											 <input type="hidden" class = 'calSdNum' value="${detail.SD_NUM }">
+											 <input type="hidden" class = 'calSdPrice' value="${detail.SD_PRICE }">
 										</div>
 									    <hr>
 										 <div class="swiper mySwiper">
@@ -519,8 +284,7 @@ pageEncoding="UTF-8"%>
 												    				<p class = "swiper-p">&nbsp;</p>
 										    						<p class = "swiper-p">${i}</p>
 										    					</c:if>
-										    				<button class = "swiper-inBox item-${i }th">
-										    					<input type="hidden" value="${detail.SD_PRICE }"/> 
+										    				<button class = "swiper-inBox item-${i }th" value="${detail.SD_PRICE }" id="${i}">
 										    					<fmt:formatNumber value="${detail.SD_PRICE}" pattern="#,###"/>
 									    					</button>
 										    			</div>
@@ -532,9 +296,18 @@ pageEncoding="UTF-8"%>
 										  	<input type="hidden" class="hiddenPrice"/>
 								     	  	<span class="price mb-2 totalPrice" style= "color:#193D76" ></span>
 										  <br><br>
-										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()">초기화</button>
+										  <button class="btn btn-primary py-2 px-3" onclick="timeTableReset()" style="width:100%">초기화</button>
 										  <br><br>
 									    <hr>
+									    	<span class="price mb-2" style= "color:#193D76" >인원 선택</span>
+									    	<br><br>
+									    	<div class="input-group mb-3">
+	 											<button class="btn btn-outline-secondary peopleMinus" type="button" >&nbsp;-</button>
+		  										<input type="text" class="form-control people" disabled aria-label="Example text with button addon" aria-describedby="button-addon1"  value = "1">
+		  										<button class="btn btn-outline-secondary peoplePlus" type="button" >+</button>
+											</div>
+											<input type= "hidden" class="min-people" value="${detail.SD_MIN_PEOPLE }">
+											<input type= "hidden" class="max-people" value="${detail.SD_MAX_PEOPLE }">
 										    <div style = "padding:1% 3% 1% 3%; text-align: center;">
 										    <a href = "javascript:void(0);" style = "text-decoration: none;">
 												<div class="payment_type" value="kakaopay" onclick="paymentType('kakaopay')">
@@ -551,7 +324,6 @@ pageEncoding="UTF-8"%>
 											<hr>
 											<div style="text-align: center;">
 												<a href="property-single.html" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#myModal" style="width: 40%">전화</a>
-												
 												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 40%">결제하기</a>
 											</div>
 										</div>
@@ -596,50 +368,50 @@ pageEncoding="UTF-8"%>
 	<script type="text/javascript">
 	$(function(){
 
+		$('.peopleMinus').click(function(){
+			var people = $(this).siblings('.people');
+		    var minPeople = parseInt($(this).parent().siblings('.min-people').val());
+		    
+		    if(people.val() > minPeople){
+		        people.val(parseInt(people.val())-1);
+		    } else {
+		        alert('예약가능 최소 인원은' + minPeople + '명 입니다');
+		    }
+		});
+		
+		$('.peoplePlus').click(function(){
+			var people = $(this).siblings('.people');
+		    var maxPeople = parseInt($(this).parent().siblings('.max-people').val());
+		    if(people.val() < maxPeople ){
+		    	people.val(parseInt(people.val())+1);
+		    } else {
+		        alert('예약가능 최대 인원은' + maxPeople + '명 입니다');
+		    }
+		});
+		
+		
 		$('.nav-item').click(function(){
 			$(this).css('background', '#ffd014');
 			$('.nav-item').not($(this)).css('background', 'white');
 		})
 		
-		$('.totalPrice').text("예약 시간을 선택해주세요.");
-		$('.swiper-inBox').click(function(){
-		   	var result = 0;
-		   	var formattedTotalPrice = "";
-		   	if($('.swiper-inBox.on').length > 0){
-			    $('.swiper-inBox.on').each(function(){
-			        result += parseInt($(this).find('input[type=hidden]').val());
-			    });
-			    $('.hiddenPrice').val(result);
-			    
-			    formattedTotalPrice = addComma(result);
-			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
-		   	}else{
-				$('.totalPrice').text("예약 시간을 선택해주세요.");
-			}
-		});
-		
-		/*$(".datepicker").datepicker({
-			  language: 'ko', 
-			  inline: true,
-			  onSelect: function(selectedDates, instance) {
-				  var sdNum = $(this).siblings('.calSdNum'); 
-				console.log(sdNum);z
-			    console.log('선택한 날짜:',selectedDates);
-			  }
-			});*/
 			
-		$(".datepicker").each(function(index, element) {
+			  $(".datepicker").each(function(index, element) {
 			  var datepickerId = $(element).data("id");
 			  var sdNum = $(this).siblings('.calSdNum'); 
+			  var sdPrice = $(this).siblings('.calSdPrice');
 			  
 			  $(element).datepicker({
 			    language: 'ko',
 			    inline: true,
-			    
+			    minDate: new Date(),
+			    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
 			    onSelect: function(selectedDates, instance) {
 			      console.log("선택한 날짜:", selectedDates);
 			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
+			      $('.selectedDate').val(selectedDates);
 			      
+			      $('.swiper-inBox').removeClass('on');
 			      var requestData = {
 			                sdNum: sdNum.val(),
 			                selectedDates: selectedDates+""
@@ -653,16 +425,15 @@ pageEncoding="UTF-8"%>
                       success: function(data) {
                           // AJAX 요청이 성공한 경우
                           console.log('data:', data);
-                          if(data === false){
+                          var begin = parseInt(data.startHour);
+                          var end = parseInt(data.endHour);
+                          var result = data.result;
+                          if(result === 2){
                         	  console.log('예약내역 없음');
-                        	  makeTimeTableOrigin(sdNum);
-                          } else {
-                             var begin = parseInt(data.startHour);
-                             var end = parseInt(data.endHour);
-                        	  console.log('stH' + data.startHour);
-                        	  console.log('etH'+data.endHour);
-                        	  console.log('result'+data.result);
-							 makeTimeTable(begin, end, sdNum);                              
+                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
+                          } else if (result === 1){
+							  console.log('예약내역 있음');
+                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
                           }
                       },
                       error: function(xhr, status, error) {
@@ -674,38 +445,56 @@ pageEncoding="UTF-8"%>
 			    }
 			  });
 			});
-		function makeTimeTable(begin, end, sdNum){
+		function makeTimeTable(result, begin, end, sdNum, sdPrice){
+			console.log("makeTimeTable");
+			console.log('sdPrice = '+ sdPrice.val());
+			console.log('result = '+ result);
 			console.log('begin = '+ begin);
 			console.log('end = ' + end);
 			console.log('sdNum = ' + sdNum.val());
 			var parent = sdNum.closest('.inAccordionLi');
 			var times = parent.children('.swiper-inBox');
 			
-			for(var i = begin; i <= end; i++){
-				parent.find('.swiper-inBox.item-'+i+'th').css('background', 'grey');
-				parent.find('.swiper-inBox.item-'+i+'th').css('border', '2px solid black');
-				parent.find('.swiper-inBox.item-'+i+'th').css('color', 'black');
-				parent.find('.swiper-inBox.item-'+i+'th').text('예약됨');
-			}
-		}
-		
-		function makeTimeTableOrigin(sdNum){
-			var parent = sdNum.closest('.inAccordionLi');
-			console.log(sdNum.val());
-			var times = parent.children('.swiper-inBox');
 			
-			times.css('background','#ffd014');
-			times.css('border','2px solid #ffc000');
-			times.css('color','#cc8c28');
-			times.css('background','#ffd014');
+			if(result == 1){	//예약내역 있음!
+				for(var i = begin; i <= end; i++){
+					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
+					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
+					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
+				}	
+			}else{
+				parent.find('.swiper-inBox').removeClass('reserved');
+				parent.find('.swiper-inBox').prop('disabled', false);
+				parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+				parent.find('.swiper-inBox').val(sdPrice.val());
+			}
 		}
 
 	});
+		$('.totalPrice').text("예약 시간을 선택해주세요.");
+			$('.swiper-inBox').click(function(){
+			   	var result = 0;
+			   	var formattedTotalPrice = "";
+			   	if($('.swiper-inBox.on').length > 0){
+				    $('.swiper-inBox.on').each(function(){
+				        result += parseInt($(this).val());
+				    });
+				    $('.hiddenPrice').val(result);
+				    
+				    formattedTotalPrice = addComma(result);
+				    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+			   	}else{
+					$('.totalPrice').text("예약 시간을 선택해주세요.");
+				}
+			});
+	
 	 function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        return value; 
 	    }
+	 
+	 
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -762,6 +551,7 @@ pageEncoding="UTF-8"%>
 		    overlay.setMap(null);     
 		}
 	</script>
+	
 	<script>
 	//스와이프 스크립트
     var swiper = new Swiper(".mySwiper", {
@@ -821,57 +611,99 @@ pageEncoding="UTF-8"%>
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         
+        
         function requestPay() {
-        	console.log(paymentType);
-        	console.log($('.hiddenPrice').val());
+            console.log(paymentType);
+            console.log($('.hiddenPrice').val());
+            
+            // 아래 변수들을 선언
+            var buyerEmail = "";
+            var buyerName = "";
+            var buyerTel = "";
+            var buyerAddr = "";
+            var buyerPostcode = "";
+            
+			
+            $.ajax({
+                url: 'guest/getUserInfo',
+                method: 'get',
+                //dataType: 'json',
+                data: "userId=" + $('#userId').val(),
+                success: function(rsp) {
+                	
+                	if(rsp==""){
+                		alert('로그인 정보가 옳바르지 않습니다.');
+                		return false;
+                	}
+                	
+                    buyerEmail = rsp.userNum;
+                    buyerName = rsp.userName;
+                    buyerTel = rsp.userHp;
+                    buyerAddr = rsp.address + " " + rsp.addressDetail;
+                    buyerPostcode = rsp.zipcode;
+                    console.log("userid = " + rsp);
+
+                    // $.ajax 요청이 완료된 후에 IMP.request_pay 함수 실행
+                    callIMP(buyerEmail, buyerName, buyerTel, buyerAddr, buyerPostcode);
+                },
+                error: function(xhr, status, error) {
+                	alert(status + " : " + error);
+                }
+            });
+        }
+		
+        
+       
+        
+        function callIMP(buyerEmail, buyerName, buyerTel, buyerAddr, buyerPostcode) {
+       		var selectedDate = $('.selectedDate').val();
+            var startHour = $('.swiper-inBox.on').first().attr('id');
+            var endHour = $('.swiper-inBox.on').last().attr('id');
+             
             IMP.request_pay({
-               	pg : payType,
-                pay_method : 'card',
-                merchant_uid: ${vo.spaceNum}+"_"+ sdNum + new Date().getTime(), 
-                name : ${vo.spaceNum}+"_"+sdName,
-                amount : $('.hiddenPrice').val(),
-                custom_data : {START_DAY:'2023-08-08',
-			                	START_HOUR:'10',
-			                	END_DAY:'2023-08-08',
-			                	END_HOUR:'18',
-			                	SD_NUM:sdNum},
-                buyer_email : 'Iamport@chai.finance',
-                buyer_name : '2',
-                buyer_tel : '010-1234-5678',
-                buyer_addr : '서울특별시 강남구 삼성동',
-                buyer_postcode : '123-456'
-            },   function (rsp) {
-            	if ( rsp.success ) {
-            		console.log(rsp.custom_data);
-            		console.log(rsp);
+                pg: payType,
+                pay_method: 'card',
+                merchant_uid: ${vo.spaceNum} + "_" + sdNum + new Date().getTime(),
+                name: ${vo.spaceNum} + "_" + sdName,
+                amount: $('.hiddenPrice').val(),
+                custom_data: {
+                    START_DAY: selectedDate,
+                    START_HOUR: startHour,
+                    END_DAY: selectedDate,
+                    END_HOUR: endHour,
+                    SD_NUM: sdNum,
+                    RESERVE_PEOPLE: $('.people').val()
+                },
+                buyer_email: buyerEmail,
+                buyer_name: buyerName,
+                buyer_tel: buyerTel,
+                buyer_addr: buyerAddr,
+                buyer_postcode: buyerPostcode
+            }, function(rsp) {
+                if (rsp.success) {
+                    console.log(rsp.custom_data);
+                    console.log(rsp);
                     var msg = '결제가 완료되었습니다.';
                     $.ajax({
-                        url: 'reservation/ajaxReservation', // 서버의 엔드포인트 URL
-                        method: 'GET', // POST 요청
-                        //dataType:'json',
+                        url: 'reservation/ajaxReservation',
+                        method: 'GET',
                         data: rsp,
                         success: function(data) {
-                            // AJAX 요청이 성공한 경우
-                            $('#result').html(data.message); // 결과를 화면에 출력
+                            $('#result').html(data.message);
                         },
                         error: function(xhr, status, error) {
-                            // AJAX 요청이 실패한 경우
                             console.error('Error:', error);
                         }
                     });
-                    
-                    
-                    
+
                     msg += '상점 거래ID : ' + rsp.merchant_uid;
                     msg += '결제 금액 : ' + rsp.paid_amount;
-                   
                 } else {
                     var msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
                 }
-            	 alert(msg);
-              }
-            );
+                alert(msg);
+            });
         }
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>

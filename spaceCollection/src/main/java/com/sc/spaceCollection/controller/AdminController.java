@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,16 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.admin.model.AdminService;
-import com.sc.spaceCollection.admin.model.AdminVO;
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.boardType.model.BoardTypeVO;
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.PaginationInfo;
+import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -197,15 +201,94 @@ public class AdminController {
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
-	}
+	}	
 	
 	@RequestMapping("/board/boardList")
-	public void name(@RequestParam String boardTypeName, Model model) {
-		logger.info("게시판별 게시물 보기, 파라미터 boardTypeName = {}", boardTypeName);
+	public void name(@RequestParam String boardTypeName, @ModelAttribute SearchVO searchVo, Model model) {
+		searchVo.setBoardTypeName(boardTypeName);
+		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
 		
-		List<BoardVO> list = boardService.selectByBoardTypeId(boardTypeName);
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+
+		//[2]SearchVo에 입력되지 않은 두 개의 변수에 값 셋팅
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+
+		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		logger.info("게시물 조회 결과, list.size = {}", list.size());
-		
+
+		int totalRecord=boardService.getTotalRecord(searchVo);
+		logger.info("글 목록 전체 조회 - totalRecord={}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+
+		//3
 		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);
+	}
+
+	@RequestMapping("/board/boardWrite")
+	public void boardWrite(@RequestParam String boardTypeName, Model model) {
+		logger.info("게시물 작성 화면, 초기 게시판 설정 boardTypeName = {}", boardTypeName);
+		
+		List<BoardTypeVO> list = boardTypeService.selectBoardType();
+		
+		model.addAttribute("boardTypeName", boardTypeName);
+		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping("/board/boardWriteSub")
+	public String boardWrite(@RequestParam String boardTypeName, @ModelAttribute BoardVO vo, Model model) {
+		logger.info("게시물 저장, 파라미터 vo = {}", vo);
+		
+		int cnt = boardService.insertBoard(vo);
+		logger.info("게시물 저장 결과, cnt = {}", cnt);
+		
+		String msg = "게시물 등록에 실패하였습니다. <br> 관리자에게 문의해주시기 바랍니다.", 
+				url = "/admin/board/boardWrite";
+		
+		if(cnt>0) {
+			msg = "게시물이 등록되었습니다.";
+			url = "/admin/board/boardList?boartTypeName="+boardTypeName;
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@GetMapping("/board/boardDetail")
+	public String name(@RequestParam(defaultValue = "0")int boardNum, @RequestParam String boardTypeName, Model model) {
+		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
+		
+		if(boardNum==0) {
+			model.addAttribute("msg", "잘못된 URL 입니다.");
+			model.addAttribute("url", "/admin/board/boardList");
+			
+			return "admin/common/message";
+		}else {
+			BoardVO boardVo = boardService.selectByBoardNum(boardNum);
+			
+			if(boardVo==null) {
+				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+				model.addAttribute("url", "/admin/board/boardList");
+				
+				return "admin/common/message";
+
+			}else {
+				logger.info("게시물 상세조회 결과, boardVo = {}", boardVo);
+				
+				model.addAttribute("boardVo", boardVo);
+				model.addAttribute("boardTypeName", boardTypeName);
+				
+				return "admin/board/boardDetail";
+			}
+		}
+		
+		
+		
 	}
 }

@@ -96,8 +96,7 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-8 mx-auto">
         <h1 class="mb-3" align="center">게스트 로그인</h1>
-        <form class="validation-form" novalidate>
-        
+        <form class="validation-form" method="post" action="<c:url value='/login/login'/>">
         <div style="margin-left: 17px;">
 			<a id="kakao-login-btn"></a>
 			<a id="naverIdLogin_loginButton" href="javascript:void(0)">
@@ -115,7 +114,7 @@
         <hr class="mb-4">
           <div class="row">
             <div class="col-md-11 mb-3" style="margin: 0px auto;">
-              <input type="text" class="form-control" id="userid" placeholder="아이디" value="" required>
+              <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디" value="" required>
               <div class="invalid-feedback">
                 아이디를 입력해주세요.
               </div>
@@ -123,7 +122,7 @@
           </div>
            <div class="row">
             <div class="col-md-11 mb-3" style="margin: 0px auto;">
-              <input type="password" class="form-control" id="nickname" placeholder="비밀번호" value="" required>
+              <input type="password" class="form-control" id="userPwd" name="userPwd" placeholder="비밀번호" value="" required>
               <div class="invalid-feedback">
                 비밀번호를 입력해주세요.
               </div>

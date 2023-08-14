@@ -17,8 +17,13 @@
 	</select>
 	<select id="selectJustDetailByNo" resultType="spaceDetailVo" 
 		parameterType = "int">
-		select * from spaceDetail
+		select * from space_Detail
 		where sd_num = #{sdNum}		
+	</select>
+	<select id="selectBySpaceNo" resultType="spaceDetailVo" 
+		parameterType = "int">
+		select * from space_Detail
+		where space_num = #{spaceNum}		
 	</select>
 	
 	<select id="selectRefund" resultType="refundVo" parameterType="int">

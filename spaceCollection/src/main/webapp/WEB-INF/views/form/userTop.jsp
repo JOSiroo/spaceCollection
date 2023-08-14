@@ -142,9 +142,10 @@
 
 					<div class="topbar">
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-							<li class="active"><a href="index.html">Home</a></li>
-							<li class="has-children"><a href="SpaceCollection.html">SpaceCollection</a>
-								<ul class="dropdown">
+							<li class="active"><a href="http://localhost:9091/spaceCollection/">Home</a></li>
+							<li><a href="<c:url value='/search' />">SpaceCollection</a>
+								<!-- <li class="has-children">
+									<ul class="dropdown">
 									<li><a href="#">Buy Property</a></li>
 									<li><a href="#">Sell Property</a></li>
 									<li class="has-children"><a href="#">Dropdown</a>
@@ -153,17 +154,18 @@
 											<li><a href="#">Sub Menu Two</a></li>
 											<li><a href="#">Sub Menu Three</a></li>
 										</ul></li>
-								</ul></li>
-							<li><a href="services.html">Services</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="contact.html">Contact Us</a></li>
+								</ul> -->
+							</li>
+							<li><a href="https://www.spacecloud.kr/event">이벤트</a></li>
+							<li><a href="https://yanolja.in/about/">회사소개</a></li>
+							<li><a href="contact.html">문의사항</a></li>
 						</ul>
 						<br>
 					
 					<div class="topSearch">
 						<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
 							<input type="text" class="form-control px-4"
-								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch">
+								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch" name="spaceName">
 							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
 						</form>
 					</div>
@@ -183,43 +185,43 @@
   	</div>
       
       
-      <!-- 메뉴 바(내 정보) 추가하기!!!!!!!!!!!!!!!!!!!!! -->
+      <!-- 메뉴 바(내 정보) 추가!!!!!!!!!!!!!!!!!!!!! -->
 		
 		
 			<!-- 사이드메뉴 -->
 			<div class="sideform" style="margin-top: 30px; margin-bottom: 40px;">
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="${pageContext.request.contextPath }/member_mypage">
+				<a href="<c:url value='/member_mypage' />">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>
 				
 		  	<div class="col-sm-6 " style="text-align: center;">
-			  <a href="${pageContext.request.contextPath }/member_reserve" >   
+			  <a href="<c:url value='/member_reserve' />">  
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
 		 
 		   <div class="col-sm-6 " style="text-align: center;">
-			       <a href="${pageContext.request.contextPath }/member_review" >
+			       <a href="<c:url value='/member_review' />">  
 					<i class="bi bi-person-hearts" ></i>
-		 	 	  <p>이용 후기/Q&A</p></a>
+		 	 	  <p>이용 후기</p></a>
 		 	</div>
 	
 		    <div class="col-sm-6 " style="text-align: center;">
-			  <a href="${pageContext.request.contextPath }/member_heart">
+			  <a href="<c:url value='/member_heart' />"> 
 		   		 <i class="bi bi-house-heart" ></i>
 		 	 	  <p>찜 리스트</p></a>
 			</div>
 	
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="${pageContext.request.contextPath }/member_notice?nmstatus=1&nstatus=1" >   
+		    <a href="https://www.spacecloud.kr/board/notice" >   
 		     <i class="bi bi-info-circle" ></i>
-		   <p>공지사항</p></a> 
+		   	<p>공지사항</p></a> 
 		  </div>
 		  
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="${pageContext.request.contextPath }/member_faq?fmstatus=1&fstatus=1" >
+		    <a href="https://www.goodchoice.kr/more/faq" >
 		     <i class="bi bi-question-diamond" ></i>
 		 	   <p>FAQ</p></a>
 		  </div>
@@ -244,9 +246,9 @@
 		 </div>
 				  
 		  <div class="col-sm-6 "  style="text-align: center;">
-		    <a href="${pageContext.request.contextPath }">
+		    <a href="https://www.spacecloud.kr/introduction">
 		    <i class="bi bi-houses" ></i>
-		 	   <p>Home</p></a>
+		 	   <p>회사소개</p></a>
 		  </div>
 				
 	</div><!-- sideform -->	      
@@ -269,7 +271,8 @@
 	
 <!-- 상단메뉴 끝 -->	</nav>	
 		
-	<!-- 채팅api -->				
+	<!-- 채팅api -->			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
 	<script type="text/javascript">
 		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 		(function() {
@@ -281,6 +284,18 @@
 			s1.setAttribute('crossorigin', '*');
 			s0.parentNode.insertBefore(s1, s0);
 		})();
+		
+		
+	</script>
+	<script type="text/javascript">
+	$(function(){
+		$('#searchBt').click(function(){
+			if($('#inputSearch').val().length === 0){
+				alert('검색어를 입력하세요');
+				return false;
+			}
+		});
+	});
 	</script>
 
 	<a href="#"
