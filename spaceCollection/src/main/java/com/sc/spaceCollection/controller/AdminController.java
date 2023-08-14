@@ -204,8 +204,7 @@ public class AdminController {
 	}	
 	
 	@RequestMapping("/board/boardList")
-	public void name(@RequestParam String boardTypeName, @ModelAttribute SearchVO searchVo, Model model) {
-		searchVo.setBoardTypeName(boardTypeName);
+	public void name(@ModelAttribute SearchVO searchVo, @RequestParam(required = false)String boardTypeName, Model model) {
 		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -216,6 +215,9 @@ public class AdminController {
 		//[2]SearchVo에 입력되지 않은 두 개의 변수에 값 셋팅
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		searchVo.setBoardTypeName(boardTypeName);
+		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardType();
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		logger.info("게시물 조회 결과, list.size = {}", list.size());
@@ -226,6 +228,8 @@ public class AdminController {
 
 		//3
 		model.addAttribute("list", list);
+		model.addAttribute("searchVo", searchVo);
+		model.addAttribute("boardTypeList", boardTypeList);
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
 
