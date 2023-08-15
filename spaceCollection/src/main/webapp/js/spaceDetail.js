@@ -65,6 +65,8 @@ const buttons = document.querySelectorAll('.button');
         });
       });
     });
+    
+    
 const inButtons = document.querySelectorAll('.inButton');
 
     inButtons.forEach(function(button, index) {

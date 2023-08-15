@@ -26,11 +26,11 @@ public class SpaceDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(SpaceDetailController.class);
 	private final SpaceDetailService spaceDetailService;
 	
-	@GetMapping("/property-single")
-	public String test2(@RequestParam int no, Model model) {
-		logger.info("공간 상세 페이지, 파라미터 no = {}", no);
+	@GetMapping("/detail")
+	public String test2(@RequestParam int spaceNo, Model model) {
+		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNo);
 		
-		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(no);
+		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNo);
 		SpaceVO vo = new SpaceVO();
 		
 		for (Entry<SpaceVO, List<Map<String, Object>>> entry : resultMap.entrySet()) {
