@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardVO selectByBoardNum(int boardNum) {
+	public Map<String, Object> selectByBoardNum(int boardNum) {
 		return boardDao.selectByBoardNum(boardNum);
 	}
 

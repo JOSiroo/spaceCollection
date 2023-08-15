@@ -42,6 +42,13 @@
     	margin-left: -38px;
 	}
 	
+	i.bi.bi-exclamation-circle {
+ 		color: #ffd600;
+   		font-size: 40px;
+   		display: block;
+   		margin-block: -13px;
+	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -56,8 +63,19 @@
 		});
 		
 		$('#searchBt').click(function() {
-			alert($('#boardFrm>input#boardTypeName').val());
-		});
+			if($('#searchKeyword').val().length<1){
+				event.preventDefault();
+				
+				$('#confirm1').modal("show");
+
+				$('#confirm').click(function() {
+					$('#searchKeyword').focus();
+				});
+				
+				
+			}
+		}); 
+			
 	});
 	
 	function pageFunc(curPage){
@@ -159,7 +177,7 @@
 						<div class="divPage">
 						
 							<nav aria-label="...">
-								<ul class="pagination">
+								<ul class="pagination justify-content-center">
 									<c:if test="${pagingInfo.firstPage>1 }">
 										<li class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
 											<a class="page-link" href="#" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">Previous</a>
@@ -214,6 +232,24 @@
 		</div>
 		
 	</section>
+	<!-- Modal1 -->
+	<div class="modal fade" id="confirm1" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">검색란을 입력해주세요.</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						data-bs-dismiss="modal" id="confirm">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal -->
 	
 </main>
 <!-- End #main -->
