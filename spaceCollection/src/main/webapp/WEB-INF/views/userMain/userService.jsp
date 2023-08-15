@@ -13,7 +13,23 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
+
+  .term-accordion {
+    cursor: pointer;
+  }
+  .term-accordion__open {
+    background-color: lightgray;
+  }
+  
 </style>
+
+<script>
+
+
+</script>
+
+
+
 <section>
 	<!-- Content  -->
 	<div id="content" class="sub_wrap more_wrap">
