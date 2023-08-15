@@ -39,12 +39,17 @@ public class UserMainController {
        
        return "index";
    }
-
    
    //약관
-   @RequestMapping("userMain/userService")
+   @RequestMapping("/userService")
    public String userChek() {
       return "userMain/userService";
+   }
+   
+   //이벤트
+   @RequestMapping("/event")
+   public String event() {
+	   return "userMain/event";
    }
    
    @GetMapping("/search")
