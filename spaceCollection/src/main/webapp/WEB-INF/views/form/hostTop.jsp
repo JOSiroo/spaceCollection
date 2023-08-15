@@ -35,11 +35,10 @@
 <style type="text/css">
 	* {margin: 0; padding: 0;}
 	
-	.headerMain {
-		background: #193D76;
+	.navbar {
+		background: #193D76 !important;
 		width: 100%;
-		height: 65px;
-		position: fixed;
+		height: 65px !important;
 	}
 	
 	.headerMain nav {
@@ -47,44 +46,172 @@
 		padding: 15px 15px 15px 15px;
 	}
 
-	.logo1 {
+	.navbar-brand {
 		color: white;
 		text-decoration: none;
-		font-size: 21px;
+		font-size: 25px;
+		float: left;
+		font-weight: bold;
 	}
 
 	.logo2 {
 		color: #ffd014;
-		font-size: 17px;
+		font-size: 18px;
 	}
 	
-	.btLogout {
-		border: 0.5px solid white;
+	.navbar-toggler {
+		background: #ffd014 !important;
+		color: #193D76;
+		margin-left: 15px;
+	}
+	
+	.offcanvas-header {
+		height: 180px;
+		background: #ffd014;
+		padding-right: 20px;
+	}
+	
+	.offcanvas-title {
+		width: 250px;  
 		color: white;
-		background: #193D76;
-		padding: 6px 6px 6px 6px;
-		font-size: 14px;
-		float: right;
+		font-weight: bold;
+		font-size: 25px;
 	}
 	
-	.menu{
-		float: right;
-		margin-left: 20px;
+	.nav-item {
+		height: 65px;
+		padding: 21px 25px 20px;
+		border-bottom: 1px solid gray;
+		width: 100%;
 	}
+	
+	.frofile {font-size: 16px; color: white; text-decoration: underline;}
+	
+	.offcanvas-body {
+		font-size: 19px;
+		font-weight: bold;
+	}
+	
+	.offcanvas-body {width: 100%; padding: 0; margin: 0;}
+	
+	.nav-link {
+		padding-top: 0; 
+		position: relative;
+	}
+	
+	.login {
+		height: 220px;
+		background: #f6f6f6;
+		text-align: center;
+		font-weight: normal;
+		padding-top: 50px;
+		color: #949494;
+		font-size: 14px;
+	}
+	
+	.management {
+		height: 150px;
+		background: #f6f6f6;
+		display: flex;
+	}
+	
+	.mng-item {
+		height: 130px;
+		width: 150px;
+		font-size: 15px;
+		padding: 47px 14px 0 17px;
+		border-right: 1px solid gray;
+		text-align: center;
+		background: white;
+		color: #656565;
+	}
+	
+	.btLogin {
+		border: 1px solid #ffd014;
+		background: #193D76;
+		padding: 7px;
+		width: 100px;
+		color: #ffd014;
+		font-size: 16px;
+	}
+	
 </style>
 
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
-
+	$(function() {
+		$('.btLogin').click(function() {
+			location.href="<c:url value='/login/login' />";
+		});
+	});
 </script>
 
 </head>
 <body>
-	<header class="headerMain">
-		<nav>
-			<a class="logo1" href="<c:url value='/host/index' />">SpaceCollection</a>
-			<span class="logo2">호스트 센터</span>
-			<img class="menu" alt="menu" src="<c:url value='/img/icons/menu.svg' />">
-			<button class="btLogout">호스트 로그아웃</button>
-		</nav>
-	</header>
+	<nav class="navbar bg-body-tertiary fixed-top">
+	  <div class="container-fluid">
+	    <a class="navbar-brand" href="<c:url value='/host/index' />">SpaceCollection <span class="logo2">호스트센터</span></a>
+	    <div class="d-flex flex-row-reverse">
+		    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <button type="button" class="btLogin" >로그인</button>
+	    </div>
+	    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+	      <div class="offcanvas-header">
+	        <span class="offcanvas-title" id="offcanvasNavbarLabel">호스트(사용자 이름)</span>
+	        <a class="frofile" href="#">프로필 관리</a>
+	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	      </div>
+	      <div class="offcanvas-body">
+	      	<div class="management">
+	      		<a class="mng-item" href="#">
+	      			예약 리스트 /<br>캘린더 관리
+	      		</a>
+	      		<a class="mng-item" href="#">
+	      			이용 후기 /<br>Q&A 관리
+	      		</a>
+	      		<a class="mng-item" href="#">
+	      			공간정보 관리
+	      		</a>
+	      	</div>
+	        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+	          <li class="nav-item">
+	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />" style="color: #6d3bff !important;">
+	            호스트센터 홈</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">운영지표</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">정산</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">공지사항</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="#">도움말</a>
+	          </li>
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	              서비스 정보
+	            </a>
+	            <ul class="dropdown-menu">
+	              <li><a class="dropdown-item" href="#">이용약관</a></li>
+	              <li><a class="dropdown-item" href="#">개인정보 처리방침</a></li>
+	              <li><a class="dropdown-item" href="#">정산 및 환불정책</a></li>
+	              <li><a class="dropdown-item" href="#">공간 관리 정책</a></li>
+	            </ul>
+	          </li>
+	        </ul>
+	        <div class="login">
+	        	<a href="#">스페이스컬렉션(사용자)으로 이동</a>
+	        	<br>
+	        	<a href="#">로그인, 로그아웃</a>
+	        	<br><br>
+	        	<span>Powered by © nada Crew.</span>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</nav>
