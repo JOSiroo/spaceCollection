@@ -53,7 +53,7 @@
     .info2 .title {padding: 7px 0px 0px 11px;height: 40px;background: #193D76;color:white;
     				font-size: 18px;font-weight: bold;
     				    margin-bottom: 10px;}
-    .info2 .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+    .info2 .close {position: absolute;top: 10px;right: 10px;color: white;width: 17px;height: 17px;}
     .info2 .close:hover {cursor: pointer;}
     .info2 .body2 {position: relative;overflow: hidden; width:90%; padding: 0% 0% 0% 4%;}
     .info2 .desc {position: relative;margin: 13px 0 0 13px;height: 75px;}
@@ -112,7 +112,7 @@ var a = 0;
 	        '    <div class="info2">' + 
 	        '        <div class="title">' + 
 	        '			${i.key.spaceName} '+
-	        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+	        '            <div class="close" onclick="closeOverlay()" title="닫기">X</div>' + 
 	        '        </div>' + 
 	        '        <div class="body2">' + 
 	        '            <div id="carouselExampleIndicators" class="carousel slide">'+
