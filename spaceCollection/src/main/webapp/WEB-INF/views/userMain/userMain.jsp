@@ -54,9 +54,9 @@
   	<section class="sectionIcon" >
   	<h1 >어떤 공간을 찾고 있나요?</h1>
     <div class="icon-container">
-	  <c:forEach var="i" begin="1" end="12">
+	  <c:forEach var="i" begin="5" end="16">
   		<div class="icon" id="iconimage${i}">
-		    <a href="">
+		    <a href="<c:url value='/search?spaceTypeNo=${i}' />">
 		      <img src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>
 		</div>

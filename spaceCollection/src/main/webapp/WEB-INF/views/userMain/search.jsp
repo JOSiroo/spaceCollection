@@ -301,7 +301,13 @@
 
 <section class = "search-section">
 	<div class="container">
+	  <c:if test="${!empty totalRecord}">
+		<h3 style = "padding-top:20px; font-weight: bold;">총 ${totalRecord }건이 검색되었습니다.</h5>
+	</c:if>	
 	  <div class="row">
+	  <c:if test="${empty spaceMap }">
+	  	<h1 style = "padding-top:20px; font-weight: bold; text-align:center"> 등록된 공간이 없어요!!</h1>
+	  </c:if>
 	  <c:if test="${!empty spaceMap }">
 	  	<c:forEach var="space" items="${spaceMap}">
 		    <div class="col-sm-4">

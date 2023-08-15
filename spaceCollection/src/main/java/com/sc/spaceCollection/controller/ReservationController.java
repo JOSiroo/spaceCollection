@@ -37,7 +37,7 @@ public class ReservationController {
 	
 	@ResponseBody
 	@GetMapping("/ajaxReservation")
-	public String ajaxInsertReservation(@RequestParam Map<String, Object> paymentData, Model model) {
+	public int ajaxInsertReservation(@RequestParam Map<String, Object> paymentData, Model model) {
 		logger.info("예약 화면, 파라미터 paymentData = {}", paymentData);
 		ReservationVO vo = new ReservationVO();
 		
@@ -75,10 +75,9 @@ public class ReservationController {
 		
 		int cnt = reservationService.insertReservation(vo);
 		logger.info("예약 처리 결과, cnt = {}", cnt);
+		logger.info("예약 처리 후 vo = {}", vo);
 		
-		model.addAttribute("vo", vo);
-		
-		return "reservation/showReservation";
+		return vo.getReservationNum();
 	}
 	
 	@ResponseBody
@@ -106,6 +105,11 @@ public class ReservationController {
 			resultMap.put("endHour", Integer.parseInt(vo.getReserveFinishHour()));
 		}
 		return resultMap;
+	}
+	@GetMapping("/showReservation")
+	public String showReservation(@RequestParam int reservationNum) {
+		logger.info("예약 내역 페이지");
+		return "reservation/showReservation";
 	}
 }
 
