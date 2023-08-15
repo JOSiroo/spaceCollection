@@ -106,7 +106,7 @@
 		font-weight: normal;
 		padding-top: 50px;
 		color: #949494;
-		font-size: 14px;
+		font-size: 15px;
 	}
 	
 	.management {
@@ -133,6 +133,7 @@
 		width: 100px;
 		color: #ffd014;
 		font-size: 16px;
+		text-align: center;
 	}
 	
 </style>
@@ -155,11 +156,23 @@
 		    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 		      <span class="navbar-toggler-icon"></span>
 		    </button>
-		    <button type="button" class="btLogin" >로그인</button>
+		    <c:if test="${empty sessionScope.userId }">
+		    	<a class="btLogin" href="<c:url value='/login/login' />">로그인</a>
+		    </c:if>
+		    <c:if test="${!empty sessionScope.userId }">
+		    	<a class="btLogin" >로그아웃</a>
+		    </c:if>
 	    </div>
 	    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 	      <div class="offcanvas-header">
-	        <span class="offcanvas-title" id="offcanvasNavbarLabel">호스트(사용자 이름)</span>
+	      	<c:if test="${empty sessionScope.userId }">
+		        <span class="offcanvas-title" id="offcanvasNavbarLabel">
+		        	<a href="<c:url value='/login/login' />" >로그인</a>
+		        </span>
+		    </c:if>
+	      	<c:if test="${empty sessionScope.userId }">
+		        <span class="offcanvas-title" id="offcanvasNavbarLabel">${sessionScope.userName }</span>
+		    </c:if>
 	        <a class="frofile" href="#">프로필 관리</a>
 	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	      </div>
@@ -205,9 +218,14 @@
 	          </li>
 	        </ul>
 	        <div class="login">
-	        	<a href="#">스페이스컬렉션(사용자)으로 이동</a>
+	        	<a href="<c:url value='/' />">스페이스컬렉션(사용자)으로 이동</a>
 	        	<br>
-	        	<a href="#">로그인, 로그아웃</a>
+	        	<c:if test="${empty sessionScope.userId }">
+		    	<a href="<c:url value='/login/login' />">로그인</a>
+			    </c:if>
+			    <c:if test="${!empty sessionScope.userId }">
+			    	<a href="<c:url value='/' />">로그아웃</a>
+			    </c:if>
 	        	<br><br>
 	        	<span>Powered by © nada Crew.</span>
 	        </div>
