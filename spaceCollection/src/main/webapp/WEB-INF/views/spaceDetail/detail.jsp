@@ -266,7 +266,7 @@ pageEncoding="UTF-8"%>
 											 <input type="hidden" class = 'calSdPrice' value="${detail.SD_PRICE }">
 										</div>
 									    <hr>
-										 <div class="swiper mySwiper">
+										 <div class="swiper mySwiper" style="visibility:hidden">
 										    <div class="swiper-wrapper">
 											    <fmt:parseNumber var="openTime" type="number" value="${detail.SD_OPEN_TIME}" />
 											    <fmt:parseNumber var="closeTime" type="number" value="${detail.SD_CLOSE_TIME}" />
@@ -409,7 +409,7 @@ pageEncoding="UTF-8"%>
 			      console.log("선택한 날짜:", selectedDates);
 			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
 			      $('.selectedDate').val(selectedDates);
-			      
+			      $('.mySwiper').css('visibility', 'visible');
 			      $('.swiper-inBox').removeClass('on');
 			      var requestData = {
 			                sdNum: sdNum.val(),
@@ -687,9 +687,10 @@ pageEncoding="UTF-8"%>
                         url: 'reservation/ajaxReservation',
                         method: 'GET',
                         data: rsp,
-                        success: function(data) {
-                            $('#result').html(data.message);
-	                		alert(msg);
+                        success: function(rsp) {
+                            //$('#result').html(data.message);
+	                		console.log(rsp);
+	        				location.href = "<c:url value='/reservation/showReservation?reservationNum="+rsp+"'/>"
                         },
                         error: function(xhr, status, error) {
                             console.error('Error:', error);

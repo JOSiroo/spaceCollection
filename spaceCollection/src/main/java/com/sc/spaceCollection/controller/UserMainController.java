@@ -54,7 +54,7 @@ public class UserMainController {
    
    @GetMapping("/search")
    public String search_get(@RequestParam(required = false) String spaceName,
-         @RequestParam(required = false) int spaceTypeNo, Model model) {
+         @RequestParam(defaultValue = "0") int spaceTypeNo, Model model) {
       
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
@@ -109,7 +109,7 @@ public class UserMainController {
    
    @GetMapping("/search/map")
    public String map(@RequestParam(required = false) String spaceName,
-         @RequestParam(required = false) int spaceTypeNo, Model model) {
+         @RequestParam(defaultValue = "0") int spaceTypeNo, Model model) {
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
          List<SpaceVO> list = spaceService.selectBySpaceName(spaceName);
