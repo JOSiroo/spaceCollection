@@ -310,13 +310,32 @@
 				href="<c:url value='/admin/adminMain'/>"> <i class="bi bi-grid"></i>
 					<span>메인보드</span>
 			</a></li>
-			<!-- End Dashboard Nav -->
+			<!-- 메인보드 끝 -->
 			
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="<c:url value='/admin/board/boardTypeList'/>"> <i class="bi bi-menu-button-wide"></i>
-					<span>게시판 관리</span>
-			</a></li>
-			<!-- End Components Nav -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-journal-text"></i><span>게시판 관리</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+				</a>
+				<ul id="board-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+					<li>
+						<a href="<c:url value='/admin/board/boardList'/>"> 
+							<i class="bi bi-circle"></i>
+							<span>게시물 관리</span>
+						</a>
+					</li>
+					<li>
+						<a href="<c:url value='/admin/board/boardTypeList'/>"> 
+							<i class="bi bi-circle"></i>
+							<span>게시판 생성/관리</span>
+						</a>
+					</li>
+					
+				</ul>
+			</li>
+			<!-- 게시판 관리 끝 -->
+			
+			
 
 			<li class="nav-item"><a class="nav-link collapsed"
 				data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">

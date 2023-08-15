@@ -16,9 +16,20 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
-
-
+<!--  -->
+<meta name="author" content="Untree.co">
+<link rel="shortcut icon" href="title_icon.jpg">
+<meta name="description" content="" />
+<meta name="keywords" content="bootstrap, bootstrap5" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="<c:url value='/fonts/icomoon/style.css' />">
+<link rel="stylesheet" href="<c:url value='/fonts/flaticon/font/flaticon.css' />">
+<link rel="stylesheet" href="<c:url value='/css/tiny-slider.css' />">
+<link rel="stylesheet" href="<c:url value='/css/aos.css' />">
+<link rel="stylesheet" href="<c:url value='/css/style.css' />">
 
 
 <style type="text/css">
@@ -61,6 +72,11 @@
 		margin-left: 20px;
 	}
 </style>
+
+<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript">
+
+</script>
 
 </head>
 <body>

@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-
-<footer>
+	
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<footer>
 	<div class="site-footer">
 		<div class="container">
 		
@@ -90,7 +89,7 @@
     </div> <!-- /.site-footer -->
 
 
-    <!-- Preloader -->
+    <!-- Preloader 
     <div id="overlayer"></div>
     <div class="loader">
     	<div class="spinner-border" role="status">
@@ -98,6 +97,12 @@
     	</div>
     </div>
 </footer>
-
-</body>
-</html>
+-->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+  </html>

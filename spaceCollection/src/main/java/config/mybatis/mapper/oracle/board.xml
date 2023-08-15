@@ -5,9 +5,20 @@
 <mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
 	
 	<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="boardTypeName!=null and boardTypeName!=''">
+			and board_type_name = #{boardTypeName}
+		</if>
+	</sql>
+	<sql id="searchWhere2">
 		<where>
 			<if test="searchKeyword!=null and searchKeyword!=''">
-				and ${searchCondition} like '%' || #{searchKeyword} || '%'
+				${searchCondition} like '%' || #{searchKeyword} || '%'			
+			</if>
+			<if test="searchKeyword==null or searchKeyword==''">
+				board_type_name = #{boardTypeName}
 			</if>
 		</where>
 	</sql>
@@ -18,9 +29,9 @@
 			select rownum as RNUM, A.* from
 			(
 				select * from board_boardType_user_view 
-				where board_type_name = #{boardTypeName} and BOARD_DEL_FLAG is null
-				<include refid="searchWhere"></include>
-			order by board_reg_date
+				where BOARD_DEL_FLAG is null 
+				<include refid="searchWhere"/>
+				order by board_reg_date desc
 			)A
 		)
 		<![CDATA[
@@ -30,7 +41,8 @@
 
 	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
 		select count(*) from board_boardType_user_view
-		<include refid="searchWhere"></include>
+		where BOARD_DEL_FLAG is null
+		<include refid="searchWhere"/>
 	</select>
 	
 	<insert id="insertBoard" parameterType="boardVo">
@@ -41,8 +53,7 @@
 		values(#{boardNum}, #{boardTitle}, #{boardContent}, #{boardViews}, #{boardNum}, 0, 0, #{boardTypeId}, #{userNum})
 	</insert>
 	
-	<select id="selectByBoardNum" parameterType="int" resultType="boardVo">
-		select * from board where board_num = #{boardNum}
+	<select id="selectByBoardNum" parameterType="int" resultType="map">
+		select * from board_view where board_num = #{boardNum}
 	</select>
-	
 </mapper>

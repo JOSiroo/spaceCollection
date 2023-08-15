@@ -18,6 +18,8 @@ import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.boardType.model.BoardTypeVO;
+import com.sc.spaceCollection.comments.model.CommentsService;
+import com.sc.spaceCollection.comments.model.CommentsVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
@@ -38,6 +40,7 @@ public class AdminController {
 	private final AdminService adminService;
 	private final BoardTypeService boardTypeService;
 	private final BoardService boardService;
+	private final CommentsService commentsService;
 	
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
@@ -204,8 +207,7 @@ public class AdminController {
 	}	
 	
 	@RequestMapping("/board/boardList")
-	public void name(@RequestParam String boardTypeName, @ModelAttribute SearchVO searchVo, Model model) {
-		searchVo.setBoardTypeName(boardTypeName);
+	public void name(@ModelAttribute SearchVO searchVo, @RequestParam(required = false)String boardTypeName, Model model) {
 		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -216,6 +218,9 @@ public class AdminController {
 		//[2]SearchVo에 입력되지 않은 두 개의 변수에 값 셋팅
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		searchVo.setBoardTypeName(boardTypeName);
+		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardType();
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		logger.info("게시물 조회 결과, list.size = {}", list.size());
@@ -226,6 +231,8 @@ public class AdminController {
 
 		//3
 		model.addAttribute("list", list);
+		model.addAttribute("searchVo", searchVo);
+		model.addAttribute("boardTypeList", boardTypeList);
 		model.addAttribute("pagingInfo", pagingInfo);
 	}
 
@@ -261,7 +268,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/board/boardDetail")
-	public String name(@RequestParam(defaultValue = "0")int boardNum, @RequestParam String boardTypeName, Model model) {
+	public String name(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
 		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 		
 		if(boardNum==0) {
@@ -270,25 +277,44 @@ public class AdminController {
 			
 			return "admin/common/message";
 		}else {
-			BoardVO boardVo = boardService.selectByBoardNum(boardNum);
-			
-			if(boardVo==null) {
+			Map<String, Object> map = boardService.selectByBoardNum(boardNum);
+			logger.info("게시물 상세조회 결과, map = {}", map);
+			if(map==null || map.isEmpty()) {
 				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
 				model.addAttribute("url", "/admin/board/boardList");
 				
 				return "admin/common/message";
 
 			}else {
-				logger.info("게시물 상세조회 결과, boardVo = {}", boardVo);
+				String userid = (String)session.getAttribute("userid");
+				List<Map<String, Object>> list = commentsService.selectByBoardNum(boardNum);
+				logger.info("댓글 조회결과, list.size = {}", list.size());
 				
-				model.addAttribute("boardVo", boardVo);
-				model.addAttribute("boardTypeName", boardTypeName);
+				
+				model.addAttribute("userid", userid);
+				model.addAttribute("map", map);
+				model.addAttribute("list", list);
 				
 				return "admin/board/boardDetail";
 			}
 		}
+	}
+	
+	@PostMapping("/board/boardDetail/commentsWrite")
+	public String name(@ModelAttribute CommentsVO vo, Model model) {
+		logger.info("댓글 등록, 파라미터 vo = {}", vo);
 		
+		int cnt = commentsService.insertComments(vo);
+		logger.info("댓글 등록 결과, cnt = {}", cnt);
+		logger.info("vo={}",vo);
+		String msg = "댓글 등록에 실패하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/board/boardDetail?boardNum=" + vo.getBoardNum();
+		if(cnt>0) {
+			msg = "댓글이 등록되었습니다.";
+		}
 		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
 		
+		return "admin/common/message";
 	}
 }
