@@ -289,7 +289,7 @@
 </div>
 	<button type="button" class="btn btn-outline-dark">필터</button>
 	<c:if test="${!empty param.spaceType }">
-		<a href="<c:url value = '/search/map?spaceType=${param.spaceType}'/>">
+		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/>">
 	</c:if>
 	<c:if test="${!empty param.spaceName }">
 		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>">

@@ -54,7 +54,7 @@ public class UserMainController {
    
    @GetMapping("/search")
    public String search_get(@RequestParam(required = false) String spaceName,
-         @RequestParam(required = false) String spaceType, Model model) {
+         @RequestParam(required = false) int spaceTypeNo, Model model) {
       
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
@@ -79,9 +79,9 @@ public class UserMainController {
          model.addAttribute("spaceMap", resultMap);
          model.addAttribute("totalRecord", resultMap.size());
          
-      }else if(spaceType != null && !spaceType.isEmpty()) {
-         logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceType);
-         List<SpaceVO> list = spaceService.selectBySpaceType(spaceType);
+      }else if(spaceTypeNo != 0) {
+         logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceTypeNo);
+         List<SpaceVO> list = spaceService.selectBySpaceType(spaceTypeNo);
          List<Integer> priceList = new ArrayList();
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
@@ -109,7 +109,7 @@ public class UserMainController {
    
    @GetMapping("/search/map")
    public String map(@RequestParam(required = false) String spaceName,
-         @RequestParam(required = false) String spaceType, Model model) {
+         @RequestParam(required = false) int spaceTypeNo, Model model) {
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
          List<SpaceVO> list = spaceService.selectBySpaceName(spaceName);
@@ -133,9 +133,9 @@ public class UserMainController {
          model.addAttribute("spaceMap", resultMap);
          model.addAttribute("totalRecord", resultMap.size());
          
-      }else if(spaceType != null && !spaceType.isEmpty()) {
-         logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceType);
-         List<SpaceVO> list = spaceService.selectBySpaceType(spaceType);
+      }else if(spaceTypeNo != 0 ) {
+         logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceTypeNo);
+         List<SpaceVO> list = spaceService.selectBySpaceType(spaceTypeNo);
          List<Integer> priceList = new ArrayList();
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          

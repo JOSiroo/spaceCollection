@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class ReservationController {
 	
 	@ResponseBody
 	@GetMapping("/ajaxReservation")
-	public void ajaxInsertReservation(@RequestParam Map<String, Object> paymentData) {
+	public String ajaxInsertReservation(@RequestParam Map<String, Object> paymentData, Model model) {
 		logger.info("예약 화면, 파라미터 paymentData = {}", paymentData);
 		ReservationVO vo = new ReservationVO();
 		
@@ -74,6 +75,10 @@ public class ReservationController {
 		
 		int cnt = reservationService.insertReservation(vo);
 		logger.info("예약 처리 결과, cnt = {}", cnt);
+		
+		model.addAttribute("vo", vo);
+		
+		return "reservation/showReservation";
 	}
 	
 	@ResponseBody

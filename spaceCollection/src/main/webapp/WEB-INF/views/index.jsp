@@ -76,7 +76,7 @@ a.btn.btn-primary.py-2.px-3 {
 					            <a href="<c:url value='/space/spaceDetail'/>?spaceNum=${vo.spaceNum}" class="img">
 					                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
 					                <div class="property-content">
-					                    <div class="price mb-2"><span>${vo.spaceType}</span></div>
+					                    <div class="price mb-2"><span>${vo.spaceTypeNo}</span></div>
 					                    <div>
 					                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
 					                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
