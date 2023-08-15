@@ -56,7 +56,7 @@
     <div class="icon-container">
 	  <c:forEach var="i" begin="5" end="16">
   		<div class="icon" id="iconimage${i}">
-		    <a href="<c:url value='/userMain/search?spaceTypeNo=${i}' />">
+		    <a href="<c:url value='/search?spaceTypeNo=${i}' />">
 		      <img src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>
 		</div>
