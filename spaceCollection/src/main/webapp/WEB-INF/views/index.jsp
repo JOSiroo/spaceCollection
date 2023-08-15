@@ -20,7 +20,9 @@ a.logo.m-0.float-start {
 #hboldfont{
 font-weight: bold;
 }
-
+a.btn.btn-primary.py-2.px-3 {
+    margin-bottom: 20px;
+}
 </style>
 
    <div class="hero">
@@ -43,15 +45,14 @@ font-weight: bold;
 
 <div class="searchform">
       <%@ include file="/WEB-INF/views/userMain/userMain.jsp" %>
-      </div>
+    </div>
 
    <div class="section">
       <div class="container">
       
          <div class="row mb-5 align-items-center">
             <div class="col-lg-6">
-               <!-- <h2 class="font-weight-bold text-primary heading">인기 스페이스 컬렉션</h2> -->
-               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">인기 스페이스 컬렉션</h2>
+               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">신규 스페이스 컬렉션</h2>
             </div>
             <div class="col-lg-6 text-lg-end">
                <p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
@@ -59,288 +60,36 @@ font-weight: bold;
          </div>
          
          
-         <div class="row">
-         
-         
-            <div class="col-12">
-               <div class="property-slider-wrap">
-               
-                  <div class="property-slider">
+    <div class="row">
+    <div class="col-12">
+       <div class="property-slider-wrap">
+          <div class="property-slider">
                      
             <div class="property-item">
-                  <div style="width:2000px;text-align:center;">
-                     <c:if test="${empty list }">
-         <div class="line">해당하는 상품이 없습니다.</div>
-         </c:if>   
-         <c:if test="${!empty list }">
-            <!-- 반복 시작 -->
-            <c:forEach var="vo" items="${list }">
-            <div class="property-item">
-            <a href="property-single.html" class="img"="<c:url value='/space/spaceDetail?spaceNum=${vo.spaceNum }'/>">
-            <img src="<c:url value='images/img_1.jpg '/>" alt="Image" class="img-fluid">
-            <div class="property-content">
-            <div class="price mb-2"><span>${vo.spaceType }</span></div>
-            <div>
-            <span class="d-block mb-2 text-black-50">${vo.spaceAddress }</span>
-            <span class="city d-block mb-3">${vo.spaceTag }</span>
-            </div></div></a></div></c:forEach>
-            <!-- 반복 끝 -->
-         </c:if>      
-                        <!-- 
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span>
-                           </div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div>
-                     </div> 
-
-                     <div class="property-item">
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> 
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> 
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> 
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_5.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> 
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_6.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> 
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_7.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> 
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_8.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> <
-
-                     <div class="property-item">
-
-                        <a href="property-single.html" class="img">
-                           <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-                        </a>
-
-                        <div class="property-content">
-                           <div class="price mb-2"><span>$1,291,000</span></div>
-                           <div>
-                              <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                              <span class="city d-block mb-3">California, USA</span>
-
-                              <div class="specs d-flex mb-4">
-                                 <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption">2 침대</span>
-                                 </span>
-                                 <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">2 욕실</span>
-                                 </span>
-                              </div>
-
-                              <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
-                           </div>
-                        </div>
-                     </div> <!-- .item -->
-                     
-
+	          	  <c:if test="${empty list}">
+				    <div class="line">해당하는 상품이 없습니다.</div>
+					</c:if>
+					<c:if test="${!empty list}">
+					    <!-- 반복 시작 -->
+					    <c:forEach var="vo" items="${list}">
+					        <div class="property-item">
+					            <a href="<c:url value='/space/spaceDetail'/>?spaceNum=${vo.spaceNum}" class="img">
+					                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
+					                <div class="property-content">
+					                    <div class="price mb-2"><span>${vo.spaceType}</span></div>
+					                    <div>
+					                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
+					                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
+					                        <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
+					                    </div>
+					                </div>
+					            </a>
+					        </div>
+					    </c:forEach>
+					    <!-- 반복 끝 -->
+					</c:if>
+            </div>
                   </div>
-
 
                   <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
                      <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">이전</span>
@@ -349,7 +98,6 @@ font-weight: bold;
 
                </div>
             </div>
-
          </div>
       </div>
    </div>
@@ -388,7 +136,6 @@ font-weight: bold;
          </div>
       </div>
    </section>
-
 
 
    <div class="section sec-testimonials">
@@ -539,4 +286,4 @@ font-weight: bold;
       </div>
    </div>
 
-   <%@ include file="form/userBottom.jsp" %>
+   <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>

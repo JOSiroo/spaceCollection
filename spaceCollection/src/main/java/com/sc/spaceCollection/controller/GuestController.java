@@ -2,28 +2,61 @@ package com.sc.spaceCollection.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/guest")
 @RequiredArgsConstructor
+@RequestMapping("/guest")
 public class GuestController {
 	private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
 	
 	private final GuestService guestService;
 	
+	private final Encryption encryption;
+	
 	@GetMapping("/register")
 	public void register_get() {
 		logger.info("회원가입 페이지");
+	}
+	
+	@PostMapping("/register")
+	public String register_post(@ModelAttribute GuestVO guestVo,Model model) {
+		logger.info("회원가입 처리, 파라미터 GuestVO={}",guestVo);
+		
+		String salt=encryption.getSalt();
+		guestVo.setSalt(salt);
+		logger.info("salt 불러오기 salt={}",salt);
+		
+		String hex=encryption.getEncryption(salt,guestVo.getUserPwd());
+		guestVo.setUserPwd(hex);
+		logger.info("userPwd=>hex변환 hex={}",hex);
+		
+		int cnt = guestService.insertGuest(guestVo);
+		
+		String msg="회원가입의 실패하셨습니다.", url="guest/register";
+		if(cnt>0) {
+			msg=guestVo.getUserId()+"님 가입을 추카드려요.";
+			url="login/login";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
 	}
 	
 	@ResponseBody
@@ -47,6 +80,8 @@ public class GuestController {
 		
 		//http://localhost:9091/herb/member/ajaxCheckId?userid=hong7
 	}
+	
+	
 	@ResponseBody
 	@GetMapping("/getUserInfo")
 	public GuestVO getUserInfo(@RequestParam String userId) {
@@ -60,7 +95,6 @@ public class GuestController {
 		
 		return vo;
 	}
-	
 	
 	
 }

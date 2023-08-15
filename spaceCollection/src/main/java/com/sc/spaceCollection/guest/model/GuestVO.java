@@ -19,4 +19,5 @@ public class GuestVO {
 	private String zipcode;
 	private String address;
 	private String addressDetail;
+	private String salt;
 }

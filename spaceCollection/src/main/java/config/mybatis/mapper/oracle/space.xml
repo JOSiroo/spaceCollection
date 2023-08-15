@@ -14,6 +14,7 @@
 	</select>
 	<select id="selectBySpaceNum" parameterType="int" resultType="spaceVo">
 		select * from space
-		order by space_num desc
+		order by space_num desc 
+		FETCH FIRST 9 row only
 	</select>
 </mapper>
