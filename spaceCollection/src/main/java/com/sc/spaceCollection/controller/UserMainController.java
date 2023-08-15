@@ -57,12 +57,12 @@ public class UserMainController {
          List<Integer> priceList = new ArrayList();
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
+         List<SpaceDetailVO> sdList = new ArrayList<>();
          for(int i = 0; i < list.size(); i++) {
-            List<SpaceDetailVO> sdList = new ArrayList<>();
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
             int averagePrice = 0;
             for(int j = 0; j < sdList.size(); j++) {
-               averagePrice += sdList.get(i).getSdPrice(); 
+            	averagePrice += sdList.get(j).getSdPrice(); 
             }
             priceList.add(averagePrice/sdList.size());
             
@@ -80,12 +80,12 @@ public class UserMainController {
          List<Integer> priceList = new ArrayList();
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
+         List<SpaceDetailVO> sdList = new ArrayList<>();
          for(int i = 0; i < list.size(); i++) {
-            List<SpaceDetailVO> sdList = new ArrayList<>();
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
             int averagePrice = 0;
             for(int j = 0; j < sdList.size(); j++) {
-               averagePrice += sdList.get(i).getSdPrice(); 
+            	averagePrice += sdList.get(j).getSdPrice(); 
             }
             priceList.add(averagePrice/sdList.size());
             
@@ -111,12 +111,12 @@ public class UserMainController {
          List<Integer> priceList = new ArrayList();
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
+         List<SpaceDetailVO> sdList = new ArrayList<>();
          for(int i = 0; i < list.size(); i++) {
-            List<SpaceDetailVO> sdList = new ArrayList<>();
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
             int averagePrice = 0;
             for(int j = 0; j < sdList.size(); j++) {
-               averagePrice += sdList.get(i).getSdPrice(); 
+            	averagePrice += sdList.get(j).getSdPrice(); 
             }
             priceList.add(averagePrice/sdList.size());
             
@@ -138,13 +138,16 @@ public class UserMainController {
             List<SpaceDetailVO> sdList = new ArrayList<>();
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
             int averagePrice = 0;
+            logger.info("sdList.size = {}" ,sdList.size());
+            
             for(int j = 0; j < sdList.size(); j++) {
-               averagePrice += sdList.get(i).getSdPrice(); 
+            	averagePrice += sdList.get(j).getSdPrice(); 
             }
             priceList.add(averagePrice/sdList.size());
             
-            
             resultMap.put(list.get(i), priceList.get(i));
+            
+            
          }
          logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap);
          

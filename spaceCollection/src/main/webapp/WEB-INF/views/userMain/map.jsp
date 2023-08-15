@@ -42,21 +42,28 @@
   	top: 30%;
   	margin-left:97%;
  }
- 	.wrap2 {position: absolute;left: 0;bottom: 40px;width: 300px;height: 420px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+ 
+	 .center{background: #193D76; color:white; padding:14% 24% 14% 24%; text-decoration:none; font-size:18px;border:white; border-radius: 2rem;}
+	 .center:hover{color:black; background: #ffd014}
+	    
+ 	.wrap2 {position: absolute;left: 0;bottom: 40px;width: 330px;height: 440px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap2 * {padding: 0;margin: 0;}
-    .wrap2 .info2 {width: 320px;height: 420px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap2 .info2 {width: 350px;height: 440px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info2 .title {padding: 7px 0px 0px 11px;height: 40px;background: white;
-    				border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;
+    .info2 .title {padding: 7px 0px 0px 11px;height: 40px;background: #193D76;color:white;
+    				font-size: 18px;font-weight: bold;
     				    margin-bottom: 10px;}
     .info2 .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
     .info2 .close:hover {cursor: pointer;}
-    .info2 .body2 {position: relative;overflow: hidden; width:90%; padding: 0% 0% 0% 3%;}
+    .info2 .body2 {position: relative;overflow: hidden; width:90%; padding: 0% 0% 0% 4%;}
     .info2 .desc {position: relative;margin: 13px 0 0 13px;height: 75px;}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
     .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
     .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info2 .link {color: #5085BB;}
+    
+    
+    
 </style>
 <header>
 	<div class = "mapHeader">
@@ -91,18 +98,21 @@ var contents = [];
 //126.570667 + (i/10)
 var a = 0;
 <c:forEach var ="i" items="${spaceMap}">	//지도에 마커를 표시합니다 
+	/*
 	var marker = new kakao.maps.Marker({
 	map: map, 
 	position: new kakao.maps.LatLng(${i.key.latitude} , ${i.key.longitude})
 	});
+	*/
 	
 	//커스텀 오버레이에 표시할 컨텐츠 입니다
 	//커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 	//별도의 이벤트 메소드를 제공하지 않습니다 
-	content = '<div class="wrap2">' + 
+	var content = '<div class="wrap2">' + 
 	        '    <div class="info2">' + 
 	        '        <div class="title">' + 
-	        '			${i.key.spaceName} '+ 
+	        '			${i.key.spaceName} '+
+	        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
 	        '        </div>' + 
 	        '        <div class="body2">' + 
 	        '            <div id="carouselExampleIndicators" class="carousel slide">'+
@@ -133,42 +143,53 @@ var a = 0;
 			'			</div>'+ 
 	        '            <div class="desc">' + 
 	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
-	        '                <div class="jibun ellipsis">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
-	        '                <div><h5 class = "h5" style="color:#193D76"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5></div>' + 
+	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:2%;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
+	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5></div>' + 
 	        '            </div>' + 
 	        '        </div>' + 
 	        '    </div>' +    
 	        '</div>';
-	//마커 위에 커스텀오버레이를 표시합니다
-	//마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-	var overlay = new kakao.maps.CustomOverlay({
-	content: content,
-	map: map,
-	position: marker.getPosition()       
+
+	
+	
+    var markerPosition = new kakao.maps.LatLng(${i.key.latitude}, ${i.key.longitude}); // 마커 위치
+    
+	var overlayz = new kakao.maps.CustomOverlay({
+		content: content,
+		map: map,
+		position: markerPosition       
 	});
 	
 	contents.push(content);
-	overlays.push(overlay);
+	overlays.push(overlayz);
 	
-	var overlayToggle = createOverlayToggleFunction(overlay);
 
-    kakao.maps.event.addListener(marker, 'click', overlayToggle);
+	
+	var markerContent = '<div class ="overlabel" style="margin : -16px 0px 0px -10px">'
+				        +  '<span class="left"></span>'
+				        +	'<a href="javascript:void(0);"onclick="createOverlayToggleFunction('+overlays.length+')"  class="center">'
+				        +	'<fmt:formatNumber value="${i.value}" pattern="₩#,###"/>'
+					    +	'</a>'
+				        +	'<span class="right"></span>'
+				        +	'</div>';
+
+	var customOverlay = new kakao.maps.CustomOverlay({
+	  position: markerPosition,
+	  content: markerContent,
+	});
+	
+	customOverlay.setMap(map);
+	
 </c:forEach>
-
 closeOverlay();
 
-//커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-function createOverlayToggleFunction(overlay) {
-    var visible = false; // 오버레이가 처음에는 보이지 않도록 설정
 
-    return function () {
-        if (visible) {
-            overlay.setMap(null); // 오버레이가 보이면 닫음
-        } else {
-            overlay.setMap(map); // 오버레이가 보이지 않으면 열음
-        }
-        visible = !visible; // 보이기/숨기기 상태 변경
-    };
+//커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+function createOverlayToggleFunction(overlayIndex) {
+    var overlay = overlays[overlayIndex-1];
+    if (overlay) {
+        overlay.setMap(map);
+    }
 }
 
 function closeOverlay() {
