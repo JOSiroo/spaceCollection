@@ -249,9 +249,7 @@
 		     <i class="bi bi-question-diamond" ></i>
 		 	   <p>FAQ</p></a>
 		  </div>
-				  
 		  
-				  
 		  <div class="col-sm-6 "  style="text-align: center;">
 		    <a href="https://www.spacecloud.kr/introduction">
 		    <i class="bi bi-houses" ></i>
@@ -259,7 +257,6 @@
 		  </div>
 				
 	</div><!-- sideform -->	      
-      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
 	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
