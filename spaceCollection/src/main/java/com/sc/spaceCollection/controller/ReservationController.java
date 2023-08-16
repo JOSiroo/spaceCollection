@@ -107,8 +107,12 @@ public class ReservationController {
 		return resultMap;
 	}
 	@GetMapping("/showReservation")
-	public String showReservation(@RequestParam int reservationNum) {
+	public String showReservation(@RequestParam int reservationNum, Model model) {
 		logger.info("예약 내역 페이지");
+		Map<String, Object> map = reservationService.showReservation(reservationNum);
+		logger.info("예약 내역 페이지, 조회결과 map.size = {}", map.size());
+		
+		model.addAttribute("map", map);
 		return "reservation/showReservation";
 	}
 }
