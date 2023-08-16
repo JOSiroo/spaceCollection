@@ -73,7 +73,7 @@ a.btn.btn-primary.py-2.px-3 {
 					    <!-- 반복 시작 -->
 					    <c:forEach var="vo" items="${list}">
 					        <div class="property-item">
-					            <a href="<c:url value='/space/spaceDetail'/>?spaceNum=${vo.spaceNum}" class="img">
+					            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
 					                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
 					                <div class="property-content">
 					                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
