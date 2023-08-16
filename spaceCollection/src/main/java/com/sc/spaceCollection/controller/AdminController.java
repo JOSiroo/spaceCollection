@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.admin.model.AdminService;
+import com.sc.spaceCollection.board.model.BoardListVO;
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
@@ -310,6 +311,22 @@ public class AdminController {
 		String msg = "댓글 등록에 실패하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/board/boardDetail?boardNum=" + vo.getBoardNum();
 		if(cnt>0) {
 			msg = "댓글이 등록되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@RequestMapping("/board/boardDelete")
+	public String boardDelete(@ModelAttribute BoardListVO listVo, Model model) {
+		logger.info("게시물 삭제, 파라미터 listVo = {}", listVo);
+		
+		String msg = "게시물 삭제에 실패하였습니다. 관리자에게 연락하시기 바랍니다.", url = "/admin/board/boardList";
+		int cnt = boardService.updateBoardDelFlag(listVo);
+		if(cnt>0) {
+			msg = "게시물이 삭제되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);

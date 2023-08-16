@@ -11,4 +11,5 @@ public interface BoardService {
 	int getTotalRecord(SearchVO searchVo);
 	int insertBoard(BoardVO vo);
 	Map<String, Object> selectByBoardNum(int boardNum);
+	int updateBoardDelFlag(BoardListVO listVo);
 }

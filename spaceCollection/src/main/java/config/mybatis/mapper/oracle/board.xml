@@ -56,4 +56,9 @@
 	<select id="selectByBoardNum" parameterType="int" resultType="map">
 		select * from board_view where board_num = #{boardNum}
 	</select>
+	
+	<update id="updateBoardDelFlag" parameterType="boardVo">
+		update board set BOARD_DEL_FLAG = 'Y' where BOARD_NUM = #{boardNum}
+	</update>
+	
 </mapper>
