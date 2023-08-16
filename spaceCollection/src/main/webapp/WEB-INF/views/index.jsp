@@ -80,7 +80,7 @@ a.btn.btn-primary.py-2.px-3 {
 					                    <div>
 					                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
 					                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
-					                        <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
+					                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
 					                    </div>
 					                </div>
 					            </a>
