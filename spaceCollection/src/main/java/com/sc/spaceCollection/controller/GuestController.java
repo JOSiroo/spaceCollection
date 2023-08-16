@@ -81,6 +81,30 @@ public class GuestController {
 		//http://localhost:9091/herb/member/ajaxCheckId?userid=hong7
 	}
 	
+	@RequestMapping("/findPwd")
+	public String findPwd() {
+		//1.
+		logger.info("비밀번호 찾기 페이지, 파라미터");
+		//2.
+		
+		//3.
+		
+		//4.
+		return "find/findPwd";
+	}
+	
+	@RequestMapping("/findId")
+	public String findId() {
+		//1.
+		logger.info("비밀번호 찾기 페이지, 파라미터");
+		//2.
+		
+		//3.
+		
+		//4.
+		return "find/findId";
+	}
+	
 	
 	@ResponseBody
 	@GetMapping("/getUserInfo")
@@ -95,6 +119,8 @@ public class GuestController {
 		
 		return vo;
 	}
+	
+	
 	
 	
 }

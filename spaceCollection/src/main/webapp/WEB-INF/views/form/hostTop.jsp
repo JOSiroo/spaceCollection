@@ -38,7 +38,7 @@
 	.navbar {
 		background: #193D76 !important;
 		width: 100%;
-		height: 65px !important;
+		height: 75px !important;
 	}
 	
 	.headerMain nav {
@@ -72,10 +72,11 @@
 	}
 	
 	.offcanvas-title {
-		width: 250px;  
+		width: 80%;  
 		color: white;
 		font-weight: bold;
 		font-size: 25px;
+		text-align: center;
 	}
 	
 	.nav-item {
@@ -85,7 +86,12 @@
 		width: 100%;
 	}
 	
-	.frofile {font-size: 16px; color: white; text-decoration: underline;}
+	.frofile {
+		font-size: 16px; 
+		color: white; 
+		text-decoration: underline;
+		width: 200px;
+	}
 	
 	.offcanvas-body {
 		font-size: 19px;
@@ -160,18 +166,18 @@
 		    	<a class="btLogin" href="<c:url value='/login/login' />">로그인</a>
 		    </c:if>
 		    <c:if test="${!empty sessionScope.userId }">
-		    	<a class="btLogin" >로그아웃</a>
+		    	<a class="btLogin" href="<c:url value='/login/logout' />" >로그아웃</a>
 		    </c:if>
 	    </div>
 	    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 	      <div class="offcanvas-header">
 	      	<c:if test="${empty sessionScope.userId }">
 		        <span class="offcanvas-title" id="offcanvasNavbarLabel">
-		        	<a href="<c:url value='/login/login' />" >로그인</a>
+		        	<a href="<c:url value='/login/login' />" style="color: white;" >로그인</a>
 		        </span>
 		    </c:if>
-	      	<c:if test="${empty sessionScope.userId }">
-		        <span class="offcanvas-title" id="offcanvasNavbarLabel">${sessionScope.userName }</span>
+	      	<c:if test="${!empty sessionScope.userId }">
+		        <span class="offcanvas-title" id="offcanvasNavbarLabel">${sessionScope.userId }</span>
 		    </c:if>
 	        <a class="frofile" href="#">프로필 관리</a>
 	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -224,7 +230,7 @@
 		    	<a href="<c:url value='/login/login' />">로그인</a>
 			    </c:if>
 			    <c:if test="${!empty sessionScope.userId }">
-			    	<a href="<c:url value='/' />">로그아웃</a>
+			    	<a href="<c:url value='/login/logout' />">로그아웃</a>
 			    </c:if>
 	        	<br><br>
 	        	<span>Powered by © nada Crew.</span>
