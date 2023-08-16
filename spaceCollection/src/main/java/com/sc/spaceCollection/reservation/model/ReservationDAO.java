@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ReservationDAO {
 	int insertReservation(ReservationVO vo);
 	ReservationVO selectReservationByDayAndNum(ReservationVO vo);
+	ReservationVO showReservation(int reservationNum);
 }

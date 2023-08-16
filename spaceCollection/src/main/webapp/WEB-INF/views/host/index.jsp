@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/hostTop2.jsp" %>
+<%@ include file="/WEB-INF/views/form/hostTop.jsp" %>
 
 <style type="text/css">
 	.start {
@@ -103,6 +103,7 @@
 		text-align: center;
 		font-weight: bold;
 		font-size: 19px;
+		color: black;
 	}
 	
 	.cardText {
@@ -116,6 +117,7 @@
 		font-weight: bold;
 		font-size: 40px;
 		text-align: center;
+		color: black;
 	}
 	
 	.spaceRegistration {

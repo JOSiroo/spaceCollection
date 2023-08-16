@@ -30,6 +30,11 @@ public class ReservationServiceImpl implements ReservationService{
 			return "noData";
 		}
 	}
+
+	@Override
+	public ReservationVO showReservation(int reservationNum) {
+		return reservationDao.showReservation(reservationNum);
+	}
 	
 	
 }

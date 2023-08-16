@@ -82,7 +82,7 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">회원가입</h4>
-        <form class="validation-form" novalidate>
+        <form class="validation-form" name="frmRegister" method="post" action="<c:url value='/guest/register'/>" novalidate>
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="userId">아이디</label>
@@ -125,7 +125,6 @@
 		            <div class="invalid-feedback">
 		            	이메일을 입력해주세요.
 		            </div>
-		            <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6">
 	            </div>
 	          	<div class="col-md-3 mb-3">
 					<label>&nbsp;</label>
@@ -222,7 +221,8 @@
     </div>
   </div>
 </div>
-<input type ="text" name="chkId" id="chkId">
+<input type ="hidden" name="chkId" id="chkId">
+<input type="text" name="chkEmail" id="chkEmail" value="N">
 <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -237,11 +237,6 @@
     	});
 	    
 	    $("button[name=register]").click(function(){
-	    	var zipcode=$('#zipcode').val();
-	    	if($('#zipcode').val()==""){
-	    		alert("우편번호를 입력해주세요.");
-		    	return false;
-	    	}
 	    	if (!validate_userId($('#userId').val())) {
 				alert("아이디는 영문, 숫자, _(밑줄문자)만 가능합니다");
 				$('#userId').focus();
@@ -273,6 +268,16 @@
 		         $('#btnChkId').focus();
 		         return false;
 		    }
+	    	var zipcode=$('#zipcode').val();
+	    	if($('#zipcode').val()==""){
+	    		alert("우편번호를 입력해주세요.");
+		    	return false;
+	    	}
+	    	
+	    	if($("#chkEmail").val()!="Y"){
+				alert("이메일 인증을 해주세요.");
+				return false;
+			}
 	    });
 	    
 	    $('#userId').keyup(function(){
@@ -301,9 +306,10 @@
 				$('.error').text('아이디 규칙에 맞지 않습니다.').css("color","#ea5454");
 				$('#chkId').val('N');
 			}
+			
 		});
 	    
-	    $('#chkPwd').keyup(function(){
+	    $('#chkPwd,#userPwd').keyup(function(){
 	    	
 			if($('#chkPwd').val()!=$('#userPwd').val()){
 				$('.errorPwd').text('비밀번호가 일치하지 않습니다.').css("color","#ea5454");	
@@ -314,21 +320,12 @@
 		});
 	    
 	    $('#mail-Check-Btn').click(function() {
-			const eamil = $('#userEmail').val(); // 이메일 주소값 얻어오기!
-			console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
-			const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
-			
-			$.ajax({
-				type : 'get',
-				url : '<c:url value ="/guest/checkEmail?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-				success : function (data) {
-					console.log("data : " +  data);
-					checkInput.attr('disabled',false);
-					code =data;
-					alert('인증번호가 전송되었습니다.')
-				}			
-			}); // end ajax
+	    	
+			window.open("${pageContext.request.contextPath}/email/emailCheck?userEmail="+$("#userEmail").val()
+						,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
+	    	
 		}); // end send eamil
+		
 	    
 	});//window.document
 	

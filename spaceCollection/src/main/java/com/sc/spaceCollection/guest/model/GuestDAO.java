@@ -7,4 +7,5 @@ public interface GuestDAO {
 	int guestCheckId(String userId);
 	String selectPwd(String userId);
 	GuestVO selectUserInfo(String userId);
+	int insertGuest(GuestVO guestVo);
 }
