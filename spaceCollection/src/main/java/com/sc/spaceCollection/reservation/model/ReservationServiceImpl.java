@@ -1,7 +1,10 @@
 package com.sc.spaceCollection.reservation.model;
 
+import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailDAO;
@@ -11,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService{
+	private final static Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 	private final ReservationDAO reservationDao;
 	private final SpaceDetailDAO sdDao;
 
@@ -34,8 +38,17 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public Map<String, Object> showReservation(int reservationNum) {
-		return reservationDao.showReservation(reservationNum);
+	public Map<String, Object> showReservation(int reservationNum, String userId) {
+		ReservationVO vo = new ReservationVO();
+		vo.setReservationNum(reservationNum);
+		vo.setUserId(userId);
+		logger.info("vo = {}", vo);
+		return reservationDao.showReservation(vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> reservationList(String userId) {
+		return reservationDao.reservationList(userId);
 	}
 	
 }

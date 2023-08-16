@@ -17,8 +17,12 @@
 		select * from reservation
 		where reserve_start_day = #{reserveStartDay} and sd_num = ${sdNum}	
 	</select>
-	<select id="showReservation" parameterType="int" resultType="map">
+	<select id="showReservation" parameterType="reservationVo" resultType="map">
 		select * from reservation_space_sd_view
-		where reservation_Num = #{reservationNum}
+		where reservation_Num = #{reservationNum} and user_id = #{userId}
+	</select>
+	<select id="reservationList" parameterType="string" resultType="map">
+		select * from reservation_space_sd_view
+		where user_id = #{userId}
 	</select>
 </mapper>

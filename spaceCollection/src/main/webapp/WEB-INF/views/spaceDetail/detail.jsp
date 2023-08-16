@@ -636,7 +636,7 @@ pageEncoding="UTF-8"%>
                 	}
                 	
                     buyerEmail = rsp.userNum;
-                    buyerName = rsp.userName;
+                    buyerName = rsp.userId;
                     buyerTel = rsp.userHp;
                     buyerAddr = rsp.address + " " + rsp.addressDetail;
                     buyerPostcode = rsp.zipcode;

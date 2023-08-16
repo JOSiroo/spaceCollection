@@ -25,6 +25,7 @@ import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -107,14 +108,37 @@ public class ReservationController {
 		return resultMap;
 	}
 	@GetMapping("/showReservation")
-	public String showReservation(@RequestParam int reservationNum, Model model) {
+	public String showReservation(@RequestParam int reservationNum, HttpSession session,Model model) {
 		logger.info("예약 내역 페이지");
-		Map<String, Object> map = reservationService.showReservation(reservationNum);
+		String userId = (String)session.getAttribute("userId");
+		logger.info("예약 내역 페이지, id = {}, reservationNum = {}", userId, reservationNum);
+		Map<String, Object> map = reservationService.showReservation(reservationNum, userId);
+		
+		if(map == null || map.isEmpty()) {
+			String msg = "잘못된 접근입니다", url = "/";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "common/message";
+		}
+
 		logger.info("예약 내역 페이지, 조회결과 map.size = {}", map.size());
 		
 		model.addAttribute("map", map);
 		return "reservation/showReservation";
 	}
+	
+	@GetMapping("/reservationList")
+	public String reservationList(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("예약 내역 조회 파라미터 userId = {}", userId);
+		List<Map<String,Object>> list = reservationService.reservationList(userId);
+		logger.info("예약 내역 조회 결과 list = {} ", list);
+		
+		model.addAttribute("list", list);
+		
+		return "reservation/reservationList";
+	}
+	
 }
 
 
