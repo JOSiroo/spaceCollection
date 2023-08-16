@@ -46,7 +46,7 @@
 						</ul>
 						<ul class="list-unstyled float-start links">
 							<li><a href="#">FAQ</a></li>
-							<li><a href="<c:url value='userMain/userService'/>">서비스 이용 약관</a></li>
+							<li><a href="<c:url value='/userService'/>">서비스 이용 약관</a></li>
 							<li><a href="#">개인정보 처리방침</a></li>
 							<li><a href="#">전자금융거래 이용약관</a></li>
 						</ul>
