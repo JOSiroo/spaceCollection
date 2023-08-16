@@ -40,10 +40,16 @@ public class UserMainController {
        return "index";
    }
    
-   //약관
-   @RequestMapping("/userService")
+   //서비스약관
+   @RequestMapping("/service")
    public String userChek() {
-      return "userMain/userService";
+      return "userMain/service";
+   }
+   
+   //회사소개
+   @RequestMapping("/about")
+   public String about() {
+      return "userMain/about";
    }
    
    //이벤트
