@@ -157,7 +157,7 @@
 								</ul> -->
 							</li>
 							<li><a href="<c:url value='/event'/>">이벤트</a></li>
-							<li><a href="https://yanolja.in/about/">회사소개</a></li>
+							<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
 						<!-- 로그인 안된 경우 -->
 							<c:if test="${empty sessionScope.userid }">
 								<li><a href="<c:url value='/login/login'/>">로그인</a></li>
@@ -251,7 +251,7 @@
 		  </div>
 		  
 		  <div class="col-sm-6 "  style="text-align: center;">
-		    <a href="https://www.spacecloud.kr/introduction">
+		    <a href="<c:url value='/about'/>">
 		    <i class="bi bi-houses" ></i>
 		 	   <p>회사소개</p></a>
 		  </div>
