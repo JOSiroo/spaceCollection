@@ -77,5 +77,14 @@ public class LoginController {
 		return "common/message";
 	}
 	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		logger.info("로그아웃");
+		
+		session.removeAttribute("userId");
+		
+		return "redirect:/";
+	}
+	
 
 }

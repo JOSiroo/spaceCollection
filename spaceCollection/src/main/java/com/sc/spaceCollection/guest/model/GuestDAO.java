@@ -8,4 +8,5 @@ public interface GuestDAO {
 	String selectPwd(String userId);
 	GuestVO selectUserInfo(String userId);
 	int insertGuest(GuestVO guestVo);
+	int selectCountEmail(String userEmail);
 }
