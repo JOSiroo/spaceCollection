@@ -300,53 +300,8 @@
 
 
 <section class = "search-section">
-	<div class="container">
-	  <c:if test="${!empty totalRecord}">
-		<h3 style = "padding-top:20px; font-weight: bold;">총 ${totalRecord }건이 검색되었습니다.</h5>
-	</c:if>	
-	  <div class="row">
-	  <c:if test="${empty spaceMap }">
-	  	<h1 style = "padding-top:20px; font-weight: bold; text-align:center"> 등록된 공간이 없어요!!</h1>
-	  </c:if>
-	  <c:if test="${!empty spaceMap }">
-	  	<c:forEach var="space" items="${spaceMap}">
-		    <div class="col-sm-4">
-			    <div class="card" style="width: 18rem;">
-				  <div id="carouselExample" class="carousel slide">
-					  <div class="carousel-inner">
-					    <div class="carousel-item active">
-					      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-					    </div>
-					    <div class="carousel-item">
-					      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-					    </div>
-					    <div class="carousel-item">
-					      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-					    </div>
-					  </div>
-					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Previous</span>
-					  </button>
-					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Next</span>
-					  </button>
-					</div><!-- 여까지 캐러셀 -->
-				  	<div class="card-body">
-					  	<a href = "<c:url value = '/detail?spaceNum=${space.key.spaceNum}'/>"><h5 class="h5">${space.key.spaceName}</h5></a>
-						  	<c:set var="tag" value=""/>
-						  	<c:forEach items="${fn:split(space.key.spaceTag, '/')}" var="tags">
-							    <span>#${tags }</span>
-						    </c:forEach>
-					    <h5 class = "h5" style="color:#193D76">
-					    <fmt:formatNumber value="${space.value}" pattern="₩#,###"/>원
-					    </h5>
-				  </div>
-				</div>
-		    </div>
-	    </c:forEach>
-	    </c:if>
+	<div class="container" >
+	  <div class="row" id = "data-container">
   </div>
 </div>
 	  
@@ -365,8 +320,95 @@ $(function(){
 			var people = $(this).siblings('#people');
 		    	people.val(parseInt(people.val())+1);
 		});
+		
+		$(window).on('scroll', function() {
+		    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+		        loadMoreData();
+		    }
+		});
 });
+	var currentPage = 1;
+	var page = 1;
+	var size = 21;
+	var isLoading = false;
+	var condition = "";
+	var keyword = "";
 
+	if(${!empty param.spaceTypeNo}){
+		condition = "spaceTypeNo";
+		keyword = "${param.spaceTypeNo}";
+	}else if(${!empty param.spaceName}){
+		condition = "spaceName";
+		keyword = "${param.spaceName}";
+	}
+
+	loadMoreData(currentPage);
+	
+function loadMoreData() {
+    if (isLoading) {
+        return;
+    }
+
+    isLoading = true;
+
+    $.ajax({
+        url: '<c:url value="/getSearchData?page='+page+'&size='+size+'&'+condition+'='+keyword+'"/>',
+        type:'get',
+        dataType: 'json',
+        success: function(data) {
+        	if(data != null){
+				makeList(data);
+                page++;
+			}
+        },
+        complete: function() {
+            isLoading = false;
+        }
+    });
+}
+	// Initial data load
+	loadMoreData();
+
+	function makeList(data) {
+	    var htmlStr = "";
+
+	    $.each(data, function() {
+	    	console.log(data);
+
+	        htmlStr += '<div class="col-sm-4">';
+	        htmlStr += '<div class="card" style="width: 18rem;">';
+	        htmlStr += '<div id="carouselExample" class="carousel slide">';
+	        htmlStr += '<div class="carousel-inner">';
+	        htmlStr += '<div class="carousel-item active">';
+	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
+	        htmlStr += '</div>';
+	        htmlStr += '<div class="carousel-item">';
+	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
+	        htmlStr += '</div>';
+	        htmlStr += '<div class="carousel-item">';
+	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
+	        htmlStr += '</div>';
+	        htmlStr += '</div>';
+	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">';
+	        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+	        htmlStr += '<span class="visually-hidden">Previous</span>';
+	        htmlStr += '</button>';
+	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">';
+	        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+	        htmlStr += '<span class="visually-hidden">Next</span>';
+	        htmlStr += '</button>';
+	        htmlStr += '</div>';
+	        htmlStr += '<div class="card-body">';
+	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
+	        htmlStr += '</div>';
+	        htmlStr += '</div>';
+	        htmlStr += '</div>';
+	    });
+	    $('#data-container').append(htmlStr);
+	}
+
+	
+	
 //부트스트랩 드롭다운 요소들을 가져옴
 var dropdownItems = document.querySelectorAll('.dropdown-menu.people');
 
