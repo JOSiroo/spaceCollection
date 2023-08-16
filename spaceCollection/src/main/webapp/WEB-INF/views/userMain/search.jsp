@@ -288,7 +288,7 @@
 		</div><!-- 인원 -->
 </div>
 	<button type="button" class="btn btn-outline-dark">필터</button>
-	<c:if test="${!empty param.spaceType }">
+	<c:if test="${!empty param.spaceTypeNo }">
 		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/>">
 	</c:if>
 	<c:if test="${!empty param.spaceName }">
