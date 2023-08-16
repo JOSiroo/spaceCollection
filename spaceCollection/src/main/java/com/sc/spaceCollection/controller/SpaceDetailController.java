@@ -27,10 +27,10 @@ public class SpaceDetailController {
 	private final SpaceDetailService spaceDetailService;
 	
 	@GetMapping("/detail")
-	public String test2(@RequestParam int spaceNo, Model model) {
-		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNo);
+	public String test2(@RequestParam int spaceNum, Model model) {
+		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNum);
 		
-		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNo);
+		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
 		SpaceVO vo = new SpaceVO();
 		
 		for (Entry<SpaceVO, List<Map<String, Object>>> entry : resultMap.entrySet()) {

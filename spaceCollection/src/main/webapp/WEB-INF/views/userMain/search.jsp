@@ -334,7 +334,7 @@
 					  </button>
 					</div><!-- 여까지 캐러셀 -->
 				  	<div class="card-body">
-					  	<a href = "<c:url value = '/detail?spaceNo=${space.key.spaceNum}'/>"><h5 class="h5">${space.key.spaceName}</h5></a>
+					  	<a href = "<c:url value = '/detail?spaceNum=${space.key.spaceNum}'/>"><h5 class="h5">${space.key.spaceName}</h5></a>
 						  	<c:set var="tag" value=""/>
 						  	<c:forEach items="${fn:split(space.key.spaceTag, '/')}" var="tags">
 							    <span>#${tags }</span>
