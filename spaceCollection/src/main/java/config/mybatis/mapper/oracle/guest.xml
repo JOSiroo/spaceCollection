@@ -32,4 +32,9 @@
 		where USER_ID=#{userId}
 	</select>
 	
+	<select id="selectCountEmail" parameterType="string" resultType="int">
+		select count(*) from USER_INFO
+		where USER_EMAIL=#{userEmail}
+	</select>
+	
 </mapper>

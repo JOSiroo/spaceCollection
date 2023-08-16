@@ -18,11 +18,17 @@
     .loginMain {
       min-height: 100vh;
 
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+      background: -webkit-gradient(linear, left bottom, right top, from(#F6F6F6), to(#F6F6F6));
+      background: -webkit-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
+      
+     /*background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
       background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
       background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
       background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);  */
     }
 
     .input-form {
@@ -129,9 +135,12 @@
             </div>
            </div>
            <div class="col-md-12 mb-3">
-          	<input type="checkbox" name="chkSave" id="chkSave" style="margin-left: 10px;">
+          	<input type="checkbox" name="chkSave" id="chkSave" style="margin-left: 20px;">
           	<label for="chkSave" style="font-size: 15px;">아이디 저장</label>
-          	<a href="#" style="color: black; font-size: 12px; float: right;">비밀번호 찾기</a>
+          	<a href="<c:url value=''/>" 
+          	style="color: black; font-size: 12px; float: right; margin-left: 5px; margin-right: 25px;"
+          	>비밀번호 찾기</a>
+          	<a href="#" style="color: black; font-size: 12px; float: right;">아이디 찾기</a>
            </div>
           <div class="col-md-12 mb-3">
          	 <button class="btn btn-primary btn-lg btn-block" id="login" type="submit">로그인</button>
