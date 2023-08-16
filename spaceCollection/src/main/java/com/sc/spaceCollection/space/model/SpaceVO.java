@@ -6,7 +6,7 @@ import lombok.Data;
 public class SpaceVO {
 	private int spaceNum;
 	private String spaceName;
-	private String spaceType;
+	private int spaceTypeNo;
 	private String spaceBusinessNum;
 	private String spaceZipcode;
 	private String spaceAddress;

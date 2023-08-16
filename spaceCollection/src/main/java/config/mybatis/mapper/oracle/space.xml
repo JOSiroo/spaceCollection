@@ -4,9 +4,9 @@
 
 <!-- namespace 부분은 말그대로 별칭을 정하는 부분이라 아무렇게나 지정해도 된다  -->
 <mapper namespace="com.sc.spaceCollection.space.model.SpaceDAO">
-	<select id="selectBySpaceType" parameterType="String" resultType="spaceVo">
+	<select id="selectBySpaceType" parameterType="int" resultType="spaceVo">
 		select * from space
-		where space_Type = #{spaceType}	
+		where space_Type_no = #{spaceTypeNo}	
 	</select>
 	<select id="selectBySpaceName" parameterType="String" resultType="spaceVo">
 		select * from space
@@ -14,6 +14,7 @@
 	</select>
 	<select id="selectBySpaceNum" parameterType="int" resultType="spaceVo">
 		select * from space
-		order by space_num desc
+		order by space_num desc 
+		FETCH FIRST 9 row only
 	</select>
 </mapper>

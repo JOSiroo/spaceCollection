@@ -156,9 +156,16 @@
 										</ul></li>
 								</ul> -->
 							</li>
-							<li><a href="https://www.spacecloud.kr/event">이벤트</a></li>
+							<li><a href="<c:url value='/event'/>">이벤트</a></li>
 							<li><a href="https://yanolja.in/about/">회사소개</a></li>
-							<li><a href="contact.html">문의사항</a></li>
+						<!-- 로그인 안된 경우 -->
+							<c:if test="${empty sessionScope.userid }">
+								<li><a href="<c:url value='/login/login'/>">로그인</a></li>
+							</c:if>
+						<!-- 로그인 된 경우 -->
+							<c:if test="${!empty sessionScope.userid }">
+								<li><a href="<c:url value='/login/logout'/>">로그아웃</a></li>
+							</c:if>
 						</ul>
 						<br>
 					
@@ -190,6 +197,23 @@
 		
 			<!-- 사이드메뉴 -->
 			<div class="sideform" style="margin-top: 30px; margin-bottom: 40px;">
+			
+			<div class="col-sm-6"  style="text-align: center;">
+			
+			<!-- 로그인 안된 경우 -->
+				<c:if test="${empty sessionScope.userid }">
+					<a href="<c:url value='/login/login'/>"><i class="bi bi-person-check"></i>
+			        <p>로그인</p></a>
+				</c:if>
+			<!-- 로그인 된 경우 -->
+				<c:if test="${!empty sessionScope.userid }">
+					<a href="<c:url value='/login/logout'/>">
+					<i class="bi bi-box-arrow-right"></i>
+			        <p>로그아웃</p></a>
+				</c:if>
+			  
+		 </div>
+			
 			 	<div class="col-sm-6 " style="text-align: center;">
 				<a href="<c:url value='/member_mypage' />">
 		  		<i class="bi bi-person-video" ></i>
@@ -225,26 +249,7 @@
 		     <i class="bi bi-question-diamond" ></i>
 		 	   <p>FAQ</p></a>
 		  </div>
-				  
-		  <div class="col-sm-6"  style="text-align: center;">
-			  <c:choose>
-			    <c:when test="${not empty loginMember}">
-			      <!-- 로그인한 경우 -->
-			      <a href="${pageContext.request.contextPath}/logout/member">
-			        <i class="bi bi-box-arrow-right"></i>
-			        <p>로그아웃</p>
-			      </a>
-			    </c:when>
-			    <c:otherwise>
-			      <!-- 로그인하지 않은 경우 -->
-			      <a href="${pageContext.request.contextPath}/login/member">
-			        <i class="bi bi-person-check"></i>
-			        <p>로그인</p>
-			      </a>
-			    </c:otherwise>
-			  </c:choose>
-		 </div>
-				  
+		  
 		  <div class="col-sm-6 "  style="text-align: center;">
 		    <a href="https://www.spacecloud.kr/introduction">
 		    <i class="bi bi-houses" ></i>
@@ -252,7 +257,6 @@
 		  </div>
 				
 	</div><!-- sideform -->	      
-      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
 	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>

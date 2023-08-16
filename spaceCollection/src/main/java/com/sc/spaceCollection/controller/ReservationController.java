@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class ReservationController {
 	
 	@ResponseBody
 	@GetMapping("/ajaxReservation")
-	public void ajaxInsertReservation(@RequestParam Map<String, Object> paymentData) {
+	public int ajaxInsertReservation(@RequestParam Map<String, Object> paymentData, Model model) {
 		logger.info("예약 화면, 파라미터 paymentData = {}", paymentData);
 		ReservationVO vo = new ReservationVO();
 		
@@ -74,6 +75,9 @@ public class ReservationController {
 		
 		int cnt = reservationService.insertReservation(vo);
 		logger.info("예약 처리 결과, cnt = {}", cnt);
+		logger.info("예약 처리 후 vo = {}", vo);
+		
+		return vo.getReservationNum();
 	}
 	
 	@ResponseBody
@@ -101,6 +105,15 @@ public class ReservationController {
 			resultMap.put("endHour", Integer.parseInt(vo.getReserveFinishHour()));
 		}
 		return resultMap;
+	}
+	@GetMapping("/showReservation")
+	public String showReservation(@RequestParam int reservationNum, Model model) {
+		logger.info("예약 내역 페이지");
+		Map<String, Object> map = reservationService.showReservation(reservationNum);
+		logger.info("예약 내역 페이지, 조회결과 map.size = {}", map.size());
+		
+		model.addAttribute("map", map);
+		return "reservation/showReservation";
 	}
 }
 

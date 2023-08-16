@@ -14,8 +14,8 @@ public class SpaceServiceImpl implements SpaceService{
 	private final SpaceDAO spaceDao;
 	
 	@Override
-	public List<SpaceVO> selectBySpaceType(String spaceType) {
-		return spaceDao.selectBySpaceType(spaceType);
+	public List<SpaceVO> selectBySpaceType(int spaceTypeNo) {
+		return spaceDao.selectBySpaceType(spaceTypeNo);
 	}
 
 	@Override

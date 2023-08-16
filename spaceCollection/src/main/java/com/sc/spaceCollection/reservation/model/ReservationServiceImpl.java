@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.reservation.model;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailDAO;
@@ -30,6 +32,10 @@ public class ReservationServiceImpl implements ReservationService{
 			return "noData";
 		}
 	}
-	
+
+	@Override
+	public Map<String, Object> showReservation(int reservationNum) {
+		return reservationDao.showReservation(reservationNum);
+	}
 	
 }
