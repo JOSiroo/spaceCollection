@@ -73,14 +73,14 @@ a.btn.btn-primary.py-2.px-3 {
 					    <!-- 반복 시작 -->
 					    <c:forEach var="vo" items="${list}">
 					        <div class="property-item">
-					            <a href="<c:url value='/space/spaceDetail'/>?spaceNum=${vo.spaceNum}" class="img">
+					            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
 					                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
 					                <div class="property-content">
 					                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
 					                    <div>
 					                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
 					                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
-					                        <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
+					                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
 					                    </div>
 					                </div>
 					            </a>

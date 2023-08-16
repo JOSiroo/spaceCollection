@@ -1,84 +1,180 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+	
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>슬라이드</title>
+   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 리셋 css -->
+  <link rel="stylesheet" href="./common/minireset.min.css">
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
+  <!-- og -->
+  <!-- index css -->
+  <link rel="stylesheet" href="./css/about.css">
+  <!-- index js -->
+  <script defer src="./js/about.js"></script>
+
+</head>
+  <title>회사소개</title>
   <link rel="stylesheet" href="CSS/style.css">
 </head>
 <style type="text/css">
-$carousel-control-color:             $white;
-$carousel-control-width:             15%;
-$carousel-control-opacity:           .5;
-$carousel-control-hover-opacity:     .9;
-$carousel-control-transition:        opacity .15s ease;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-$carousel-indicator-width:           30px;
-$carousel-indicator-height:          3px;
-$carousel-indicator-hit-area-height: 10px;
-$carousel-indicator-spacer:          3px;
-$carousel-indicator-opacity:         .5;
-$carousel-indicator-active-bg:       $white;
-$carousel-indicator-active-opacity:  1;
-$carousel-indicator-transition:      opacity .6s ease;
+li{
+  list-style-type: none;
+}
 
-$carousel-caption-width:             70%;
-$carousel-caption-color:             $white;
-$carousel-caption-padding-y:         1.25rem;
-$carousel-caption-spacer:            1.25rem;
+/* 보여줄 구간의 높이와 넓이 설정 */
+#slideShow{
+  width: 700px;
+  height: 500px;
+  position: relative;
+  margin: 50px auto;
+  overflow: hidden;   
+  /*리스트 형식으로 이미지를 일렬로 
+  정렬할 것이기 때문에, 500px 밖으로 튀어 나간 이미지들은
+  hidden으로 숨겨줘야됨*/
+}
 
-$carousel-control-icon-width:        2rem;
+img {
+    width: 500px;
+}
 
-$carousel-control-prev-icon-bg:      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$carousel-control-color}'><path d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/></svg>");
-$carousel-control-next-icon-bg:      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$carousel-control-color}'><path d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/></svg>");
+.slides{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2500px; /* 슬라이드할 사진과 마진 총 넓이 */
+  transition: left 0.5s ease-out; 
+  /*ease-out: 처음에는 느렸다가 점점 빨라짐*/
+}
 
-$carousel-transition-duration:       .6s;
-$carousel-transition:                transform $carousel-transition-duration ease-in-out; // Define transform transition first if using multiple transitions (e.g., `transform 2s ease, opacity .5s ease-out`)
+/* 첫 번째 슬라이드 가운데에 정렬하기위해
+첫번째 슬라이드만 margin-left조정 */
+.slides li:first-child{
+  margin-left: 100px;
+}
+
+/* 슬라이드들 옆으로 정렬 */
+.slides li:not(:last-child){
+  float: left;
+  margin-right: 100px;
+}
+
+.slides li{
+  float: left;
+}
+
+.controller span{
+  position:absolute;
+  background-color: transparent;
+  color: black;
+  text-align: center;
+  border-radius: 50%;
+  padding: 10px 20px;
+  top: 50%;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+/* 이전, 다음 화살표에 마우스 커서가 올라가 있을때 */
+.controller span:hover{
+  background-color: rgba(128, 128, 128, 0.11);
+}
+
+.prev{
+  left: 10px;
+}
+
+/* 이전 화살표에 마우스 커서가 올라가 있을때 
+이전 화살표가 살짝 왼쪽으로 이동하는 효과*/
+.prev:hover{
+  transform: translateX(-10px);
+}
+
+.next{
+  right: 10px;
+}
+
+/* 다음 화살표에 마우스 커서가 올라가 있을때 
+이전 화살표가 살짝 오른쪽으로 이동하는 효과*/
+.next:hover{
+  transform: translateX(10px);
+}
 </style>
 
 <body>
-  <div id="carouselExampleDark" class="carousel carousel-dark slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+<!-- 로고 -->
+  <div class="introLogo">
+    <p></p>
   </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <img src="..." class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      <img src="..." class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
+
+  <!--  <div class="topBtn">   -->
+  
+  <div class="topBtn">
+    <span>
+      <img src="./img/ind_arrow-down.svg" alt="아래 화살표" id="downArrow">
+      <a href="#" id="upArrow">
+        <img src="./img/index_arrow-up.svg" alt="위 화살표">
+      </a>
+    </span>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+<section class="sec1">
+      <div class="container">
+        <div class="sec1Txt txtBox">
+          <em>Space Collection</em>
+          <h1 class="title">
+            <p><span class="del">세상의</span></p>
+            <p><span class="del1">모든 공간</span></p>
+          </h1>
+          <div class="sTxtWrapper">
+            <p class="sTxt">
+              새로운 도시혁신 서비스로 머물기 좋은 도시를 만드는 소셜벤처</em>
+            </p>
+          </div>
+          <div class="hovBox">
+            <span>
+              <img src="./images/q.png" alt="물음표">
+            </span>
+            <a href="./whatWeDo.html">what we do</a>
+            <img src="./images/q.png" alt="물음표" class="gone">
+          </div>
+        </div>
+        </div>
+        </section>
+
+
+  <div id="slideShow">
+    <ul class="slides">
+    	<div>
+      <li><img src="images/about1.png" alt=""></li>
+      </div>
+    </ul>  
+    <ul class="slides">
+     <li><img src="images/about2.png" alt=""></li>
+      </ul>
+    <ul class="slides">
+      <li><img src="images/about3.pngg" alt=""></li>
+      </ul>
+    <p class="controller">
+      <!-- &lang: 왼쪽 방향 화살표
+      &rang: 오른쪽 방향 화살표 -->
+      <span class="prev">&lang;</span>  
+      <span class="next">&rang;</span>
+    </p>
+  </div>
   <script src="js/slideShow.js"></script>
 </body>
 </html>
