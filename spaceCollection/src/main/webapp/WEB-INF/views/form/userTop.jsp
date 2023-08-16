@@ -259,7 +259,7 @@
 	</div><!-- sideform -->	      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
-	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
+	      <a href="${pageContext.request.contextPath }/host/index">Host센터로 이동하기</a>
 	      <p class="copyright">Powered by © nada Crew.</p>
 	      </div>
        

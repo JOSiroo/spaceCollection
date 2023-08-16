@@ -73,27 +73,28 @@
 
 	<article class="main">
 		<div class="accordion accordion-flush" id="accordionFlushExample">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button"
-						data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-						aria-expanded="false" aria-controls="flush-collapseOne">
-							<a> 
-								<img class="icon" src="<c:url value='/img/icons/kitchen.svg' />">
-							</a>
-							<p>공유 주방</p>
-					</button>
-				</h2>
-				<div id="flush-collapseOne" class="accordion-collapse collapse"
-					data-bs-parent="#accordionFlushExample">
-					<div class="accordion-body">
-						<p>
-							여럿이 요리가 가능한 주방 시설과 용품 구비되어 있고, 공유주방으로 독립적 대관이 특화된 공간
-						</p>
+			<c:forEach var="list" items="${list }" >
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+							aria-expanded="false" aria-controls="flush-collapseOne">
+								<span> 
+									<img class="icon" src="<c:url value='/img/icons/kitchen.svg' />">
+								</span>
+								<p>${list.categoryName }</p>
+						</button>
+					</h2>
+					<div id="flush-collapseOne" class="accordion-collapse collapse"
+						data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body">
+							<p>${list.explanation }</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="accordion-item">
+			</c:forEach>
+		</div>
+			<%-- <div class="accordion-item">
 				<h2 class="accordion-header">
 					<button class="accordion-button collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
@@ -193,30 +194,10 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --%>
 
 	</article>
 
-
-
-
-	<%-- <article>
-		<div class="boxForm">
-			<div class="boxWrapper">
-				<div class="boxInner">
-					<input type="checkbox"> <label class="meeting"> <a>
-							<span class="icon"> <img alt="모임공간"
-								src="<c:url value='/img/icons/gathering.svg' />">
-						</span> 모임 공간
-					</a> <img alt="아래화살표" src="<c:url value='/img/icons/pngegg.png' />"
-						width="25px;" height="20px;">
-					</label>
-				</div>
-				<div class="blind"></div>
-
-			</div>
-		</div>
-	</article> --%>
 </section>
 
 <%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
