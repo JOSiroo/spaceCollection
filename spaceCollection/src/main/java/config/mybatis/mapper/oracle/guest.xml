@@ -5,7 +5,7 @@
 
 	<insert id="insertGuest" parameterType="guestVo">
 		<selectKey keyProperty="userNum" order="BEFORE" resultType="int">
-			select USER_INFO_SEQ.NEXTVAL from dual
+			select USER_INFO_SEQ.nextval from dual
 		</selectKey>
 		insert into USER_INFO(USER_NUM, USER_NAME, USER_HP, USER_ID, USER_PWD, USER_EMAIL, ZIPCODE
     		, ADDRESS, ADDRESS_DETAIL, SALT)
