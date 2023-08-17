@@ -17,7 +17,9 @@ import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.zzim.model.ZzimServiceImpl;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -27,7 +29,7 @@ public class SpaceDetailController {
 	private final SpaceDetailService spaceDetailService;
 	
 	@GetMapping("/detail")
-	public String test2(@RequestParam int spaceNum, Model model) {
+	public String test2(@RequestParam int spaceNum, HttpSession session,Model model) {
 		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNum);
 		
 		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
@@ -46,7 +48,6 @@ public class SpaceDetailController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("map", resultMap.get(vo));
 		model.addAttribute("refundVo", refundVo);
-		
 		
 		return "spaceDetail/detail";
 	}
