@@ -128,12 +128,18 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/reservationList")
-	@ResponseBody
 	public String reservationList(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("예약 내역 조회 파라미터 userId = {}", userId);
+		if(userId == null || userId.isEmpty()) {
+			
+			model.addAttribute("msg","예약 내역은 로그인 후 이용 가능합니다");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
 		List<Map<String,Object>> list = reservationService.reservationList(userId);
-		logger.info("예약 내역 조회 결과 list = {} ", list);
+		logger.info("예약 내역 조회 결과 list = {} ", list.size());
 		
 		model.addAttribute("list", list);
 		

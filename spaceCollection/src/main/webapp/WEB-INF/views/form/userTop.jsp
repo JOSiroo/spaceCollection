@@ -221,7 +221,7 @@
 		 	</div>
 				
 		  	<div class="col-sm-6 " style="text-align: center;">
-			  <a href="<c:url value='/member_reserve' />">  
+			  <a href="<c:url value='/reservation/reservationList' />">  
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
