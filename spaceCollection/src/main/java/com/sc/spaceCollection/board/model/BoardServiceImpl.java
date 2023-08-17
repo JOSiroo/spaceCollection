@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.sc.spaceCollection.common.SearchVO;
 
@@ -37,6 +38,24 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public Map<String, Object> selectByBoardNum(int boardNum) {
 		return boardDao.selectByBoardNum(boardNum);
+	}
+
+	@Override
+	public int updateBoardDelFlag(BoardListVO listVo) {
+		int cnt = 0;
+		
+		try {
+			for(BoardVO vo : listVo.getBoardItemList()) {
+				if(vo.getBoardNum() != 0) {
+					cnt = boardDao.updateBoardDelFlag(vo);
+				}
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			cnt = -1;
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return cnt;
 	}
 
 }
