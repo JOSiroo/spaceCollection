@@ -48,25 +48,36 @@
 			$('#boardTypeName').val($('option:selected').html());
 		});
 		
-		$('#boardTitle').keyup(function() {
-			var strLength = $(this).val().length;
-			$('#strCount').html('&nbsp;&nbsp(' + strLength);
-			var sliceStr = $(this).val().slice(0, 45);
-			
+		/* $('#boardTitle').keyup(function() {
+			let strLength = $(this).val().length;
 			if(strLength>45){
-				$('#boardTitle').val(sliceStr);
 				$('#confirm1').modal('show');
 				$('#confirm1').on('hidden.bs.modal', function (e) {
+				var sliceStr = $('#boardTitle').val().slice(0, 45);
+				$('#boardTitle').val(sliceStr);
 					$('#boardTitle').focus();
 				});
 			}
-		});
-			
-		$('#boardTitle').change(function() {
-			var strLength = $(this).val().length;
 			$('#strCount').html('&nbsp;&nbsp(' + strLength);
-		});
-		
+		}); */
+			
+		$('#boardTitle').keyup(function (e) {
+			let titleStr = $(this).val();
+		    
+		    // 글자수 세기
+		    if (titleStr.length == 0 || titleStr == '') {
+		    	$('#strCount').html('(0'+0);
+		    } else {
+		    	$('#strCount').html('&nbsp;&nbsp(' + titleStr.length);
+		    }
+		    
+		    // 글자수 제한
+		    if (titleStr.length > 45) {
+		    	// 45자 부터는 타이핑 되지 않도록
+		        $(this).val($(this).val().substring(0, 45));
+		        // 45자 넘으면 알림창 뜨도록
+		    };
+		});	
 		
 		$('input[type=submit]').click(function() {
 			$('#boardFrm').submit();
@@ -117,7 +128,7 @@
 								<div class="col-sm-3" id="keyword">
 									<label class="col-sm-2 col-form-label" for="boardTitle">제목</label>
 									<input type="text" class="form-control labelNext" id="boardTitle" name="boardTitle">
-									<span class="titleLimit" id="strCount">&nbsp;&nbsp;(0</span>
+									<span class="titleLimit" id="strCount"></span>
 									<span class="titleLimit" id="titleLimit">&nbsp;/45자 이내)</span>
 									<input type="hidden" class="form-control" id="userid" name="userid" value="관리자">
 								</div>
