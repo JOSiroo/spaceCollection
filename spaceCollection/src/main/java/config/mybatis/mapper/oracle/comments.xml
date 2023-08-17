@@ -14,4 +14,8 @@
 	<select id="selectByBoardNum" parameterType="int" resultType="map">
 		select * from comments_view where board_num = #{boardNum} order by comment_num
 	</select>
+	
+	<select id="countComments" parameterType="int" resultType="int">
+		select count(*) from comments where board_num = #{boardNum}
+	</select>
 </mapper>
