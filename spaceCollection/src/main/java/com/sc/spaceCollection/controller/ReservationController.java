@@ -128,6 +128,7 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/reservationList")
+	@ResponseBody
 	public String reservationList(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("예약 내역 조회 파라미터 userId = {}", userId);
@@ -137,6 +138,12 @@ public class ReservationController {
 		model.addAttribute("list", list);
 		
 		return "reservation/reservationList";
+	}
+	
+	@GetMapping("/zzim")
+	public void zzim(@RequestParam int spaceNum) {
+		logger.info("찜, 파라미터 spaceNum = {}", spaceNum);
+		
 	}
 	
 }

@@ -400,6 +400,8 @@ function loadMoreData() {
 	        htmlStr += '</div>';
 	        htmlStr += '<div class="card-body">';
 	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
+	        htmlStr += '<p>(우편) '+this.SPACE_ZIPCODE+',<br> '+this.SPACE_ADDRESS +this.SPACE_ADDRESS_DETAIL +' '+ this.SPACE_LOCATION+ '</p>';
+	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5>';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
@@ -407,7 +409,11 @@ function loadMoreData() {
 	    $('#data-container').append(htmlStr);
 	}
 
-	
+	 function addComma(value){
+		    value = value+"";
+	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        return value; 
+	    }
 	
 //부트스트랩 드롭다운 요소들을 가져옴
 var dropdownItems = document.querySelectorAll('.dropdown-menu.people');

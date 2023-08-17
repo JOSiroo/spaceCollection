@@ -189,6 +189,11 @@ function createOverlayToggleFunction(overlayIndex) {
     var overlay = overlays[overlayIndex-1];
     if (overlay) {
         overlay.setMap(map);
+        for(var i = 0; i < overlays.length; i++){
+        	if(i != overlayIndex-1){
+        		overlays[i].setMap(null); // 모든 overlay를 닫음		
+        	}
+        }
     }
 }
 
