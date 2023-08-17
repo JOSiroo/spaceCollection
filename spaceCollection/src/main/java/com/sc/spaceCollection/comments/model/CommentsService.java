@@ -6,4 +6,5 @@ import java.util.Map;
 public interface CommentsService {
 	int insertComments(CommentsVO vo);
 	List<Map<String, Object>> selectByBoardNum(int boardNum);
+	int countComments(int boardNum);
 }

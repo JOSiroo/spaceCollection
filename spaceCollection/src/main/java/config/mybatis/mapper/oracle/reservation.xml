@@ -22,7 +22,16 @@
 		where reservation_Num = #{reservationNum} and user_id = #{userId}
 	</select>
 	<select id="reservationList" parameterType="string" resultType="map">
-		select * from reservation_space_sd_view
-		where user_id = #{userId}
+		select * 
+		from(
+			select rownum as RNUM, A.*
+			from 
+			(
+				select * from reservation_space_sd_view
+				where user_id = #{userId}
+				order by reserve_start_day
+			)A
+		)
 	</select>
+	
 </mapper>

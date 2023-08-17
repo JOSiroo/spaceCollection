@@ -58,7 +58,6 @@
 	</select>
 	
 	<update id="updateBoardDelFlag" parameterType="boardVo">
-		update board set BOARD_DEL_FLAG = 'Y' where BOARD_NUM = #{boardNum}
+		update board set board_del_flag = 'Y' where board_num = #{boardNum}
 	</update>
-	
 </mapper>

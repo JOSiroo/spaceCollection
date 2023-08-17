@@ -23,6 +23,19 @@ font-weight: bold;
 a.btn.btn-primary.py-2.px-3 {
     margin-bottom: 20px;
 }
+
+.property-items-container {
+    display: flex;
+    flex-direction: row; /* Display items in a row */
+    justify-content: flex-end; /* Align items to the right */
+    gap: 20px; /* Add some spacing between items */
+}
+
+.property-item {
+    /* Add any specific styles for each property item */
+}
+
+
 </style>
 
    <div class="hero">
@@ -30,7 +43,6 @@ a.btn.btn-primary.py-2.px-3 {
       <div class="hero-slide">
          <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
          <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
-         <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
          <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
       </div>
       
@@ -60,12 +72,35 @@ a.btn.btn-primary.py-2.px-3 {
          </div>
          
          
+         
+          <div class="property-items-container">
+	  	  <c:forEach var="vo" items="${list}">
+	        <div class="property-item">
+	            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
+	                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
+	                <div class="property-content">
+	                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
+	                    <div>
+	                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
+	                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
+	                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
+	                    </div>
+	                </div>
+	            </a>
+	        </div>
+	    </c:forEach>
+		</div>
+         
+         
     <div class="row">
     <div class="col-12">
        <div class="property-slider-wrap">
           <div class="property-slider">
                      
-            <div class="property-item">
+   
+                     
+                     
+           <%--  <div class="property-item">
 	          	  <c:if test="${empty list}">
 				    <div class="line">해당하는 상품이 없습니다.</div>
 					</c:if>
@@ -73,14 +108,14 @@ a.btn.btn-primary.py-2.px-3 {
 					    <!-- 반복 시작 -->
 					    <c:forEach var="vo" items="${list}">
 					        <div class="property-item">
-					            <a href="<c:url value='/space/spaceDetail'/>?spaceNum=${vo.spaceNum}" class="img">
+					            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
 					                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
 					                <div class="property-content">
 					                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
 					                    <div>
 					                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
 					                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
-					                        <a href="property-single.html" class="btn btn-primary py-2 px-3">상세보기</a>
+					                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
 					                    </div>
 					                </div>
 					            </a>
@@ -88,7 +123,7 @@ a.btn.btn-primary.py-2.px-3 {
 					    </c:forEach>
 					    <!-- 반복 끝 -->
 					</c:if>
-            </div>
+            </div> --%>
                   </div>
 
                   <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">

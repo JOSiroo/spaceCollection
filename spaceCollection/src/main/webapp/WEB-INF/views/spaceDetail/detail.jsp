@@ -194,7 +194,21 @@ pageEncoding="UTF-8"%>
 			</div>
 			<!-- 여기까지 이미지 슬라이드 -->	
 				<div class="col-lg-4">
-				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->				
+				<!-- 여기부터 이미지 오른쪽 설명 블럭 -->	
+					<div style="margin-bottom : 4%; ">
+						<h5 style="font-weight: bold;display : inline-block;padding-top:11px;">세부공간 선택</h5>
+						<a href = "javascript:void(0)" onclick="zzim()"><div style = "display : inline-block; float : right; margin-right : 1%;padding-top:5px;" >
+							<img alt="" id = "zzim" src="<c:url value = '/img/icons/zzim.png'/>" width="35">
+						</div></a>
+						
+						<a href = ""><div style = "display : inline-block; float : right; margin-right : 5%;" >
+							<img alt="" src="<c:url value = '/img/icons/report.png'/>" width="41">
+						</div></a>
+						
+						<a href = ""><div style = "display : inline-block; float : right; margin-right : 4.5%;padding-top:3px;" >
+							<img alt="" src="<c:url value = '/img/icons/link.png'/>" width="37">
+						</div></a>
+					</div>			
 					<div class="d-block agent-box p-3" style="border: 4px #193D76 solid;  text-align: left;">
 					<h3 class="h5 text" style="margin:4% 1% 5% 1%; text-align: center; font-weight: bold">결제후 바로 예약 확정</h3>
 					<p class = "tempP">빠르고 확실한 예약을 위해 스페이스 클라우드에서<br>온라인 결제를 진행하세요 :-)</p>
@@ -704,6 +718,44 @@ pageEncoding="UTF-8"%>
                 }
             });
         }
+        
+   	var imgElement = document.getElementById('zzim');
+    function zzim(){
+    	
+		$.ajax({
+			url : "<c:url value = '/zzim?spaceNum=${vo.spaceNum}'/>",
+			method : 'get',
+			success:function(data){
+				if(data == 4){
+					imgElement.src = '<c:url value="/img/icons/zzim on.png"/>';
+				}else if(data == 5){
+					imgElement.src = '<c:url value="/img/icons/zzim.png"/>';
+				}else if(data == 0){
+					alert('로그인 해주세요ㅋ');
+					return false;
+				}
+			},
+			error:function(xht, status, error){
+				console.error('Error : ', error);
+			}
+		});
+    }
+    
+    $.ajax({
+		url : "<c:url value = '/showZzim?spaceNum=${vo.spaceNum}'/>",
+		method : 'get',
+		success:function(data){
+			if(data == 1){
+				imgElement.src = '<c:url value="/img/icons/zzim on.png"/>';
+			}else if(data == 2){
+				imgElement.src = '<c:url value="/img/icons/zzim.png"/>';
+			}
+		},
+		error:function(xht, status, error){
+			console.error('Error : ', error);
+		}
+	});
+    
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
 	<!--한국어  달력 쓰려면 추가 로드-->

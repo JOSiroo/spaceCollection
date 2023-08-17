@@ -269,7 +269,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/board/boardDetail")
-	public String name(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
+	public String boardDetail(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
 		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 		
 		if(boardNum==0) {
@@ -302,7 +302,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/board/boardDetail/commentsWrite")
-	public String name(@ModelAttribute CommentsVO vo, Model model) {
+	public String commentsWrite(@ModelAttribute CommentsVO vo, Model model) {
 		logger.info("댓글 등록, 파라미터 vo = {}", vo);
 		
 		int cnt = commentsService.insertComments(vo);
@@ -320,18 +320,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/board/boardDelete")
-	public String boardDelete(@ModelAttribute BoardListVO listVo, Model model) {
+	public String boardDelete(@ModelAttribute BoardListVO listVo, Model model) { 
 		logger.info("게시물 삭제, 파라미터 listVo = {}", listVo);
 		
-		String msg = "게시물 삭제에 실패하였습니다. 관리자에게 연락하시기 바랍니다.", url = "/admin/board/boardList";
 		int cnt = boardService.updateBoardDelFlag(listVo);
+		
+		String msg = "게시물 삭제 중 문제가 발생했습니다. 관리자에게 문의해주시기 바랍니다."
+				, url = "/admin/board/boardList";
 		if(cnt>0) {
-			msg = "게시물이 삭제되었습니다.";
+			msg = "게시물을 삭제하였습니다.";
 		}
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
+		
+		
 	}
 }

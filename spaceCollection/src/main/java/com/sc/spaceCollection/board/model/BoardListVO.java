@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class BoardListVO {
-	private List<BoardVO> boardItem;
+	private List<BoardVO> boardItemList;
 }
