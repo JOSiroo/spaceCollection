@@ -16,6 +16,7 @@ import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -118,6 +119,48 @@ public class GuestController {
 		logger.info("회원정보 조회 결과, vo={}", vo);
 		
 		return vo;
+	}
+	
+	@RequestMapping("/myPageMenu")
+	public void myPage() {
+		logger.info("마이페이지 처리");
+	}
+	
+	@GetMapping("/editInfo")
+	public void editInfo_get(HttpSession session, Model model) {
+		String userId=(String)session.getAttribute("userId");
+		logger.info("회원정보 수정 처리 페이지, 파라미터 userId={}",userId);
+		
+		GuestVO guestVo=guestService.selectUserInfo(userId);
+		logger.info("회원정보 불러오기 결과, guestVo={}",guestVo);
+		
+		model.addAttribute("guestVo",guestVo);
+		
+	}
+	
+	@GetMapping("/checkPwd")
+	public void checkPwd_get() {
+		logger.info("비밀번호 확인 페이지, [회원정보수정 단계]");
+	}
+	
+	@PostMapping("/checkPwd")
+	public String checkPwd_post(@RequestParam String userPwd,HttpSession session ,Model model) {
+		String userId=(String)session.getAttribute("userId");
+		logger.info("비밀번호 확인 처리, 파라미터 userId={},userPwd={}",userId,userPwd);
+		
+		int result = guestService.loginCheck(userId, userPwd);
+		logger.info("비밀번호 체크 결과, result={}",result);
+		
+		String msg="비밀번호가 일치하지 않습니다.", url="/guest/checkPwd";
+		if(result==GuestService.LOGIN_OK) {
+			msg="";
+			url="/guest/editInfo";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
 	}
 	
 	

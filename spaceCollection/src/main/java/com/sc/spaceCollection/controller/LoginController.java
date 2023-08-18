@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
@@ -27,6 +28,7 @@ public class LoginController {
 	private static final Logger logger=LoggerFactory.getLogger(LoginController.class);
 	
 	private final GuestService guestService;
+	private final Encryption encryption;
 	
 	@GetMapping("/login")
 	public String Login_get() {
@@ -39,12 +41,20 @@ public class LoginController {
 	public String Login_post(@RequestParam String userId, @RequestParam String userPwd,
 			@RequestParam(required = false) String chkSave, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
-		logger.info("사용자 로그인 처리, 파라미터");
-		// 2
-		int result = guestService.loginCheck(userId, userPwd);
+		
+		logger.info("사용자 로그인 처리, 파라미터 userId={}, userPwd={}, chkSave={}",userId, userPwd, chkSave);
+		
+		// 2 DB작업
+		String userSalt=guestService.selectUserSalt(userId);
+		logger.info("사용자 salt 불러오기 결과, userSalt={}",userSalt);
+		
+		String hex=encryption.getEncryption(userSalt, userPwd);
+		logger.info("hex값 변환 결과, hex={}",hex);
+		
+		String msg = "로그인 처리 실패", url = "/login/login";
+		int result = guestService.loginCheck(userId, hex);
 		logger.info("로그인 처리 결과, result={}", result);
 
-		String msg = "로그인 처리 실패", url = "/login/login";
 		if (result == GuestService.LOGIN_OK) {
 			msg = userId + "님 로그인되었습니다.";
 			url = "/";
