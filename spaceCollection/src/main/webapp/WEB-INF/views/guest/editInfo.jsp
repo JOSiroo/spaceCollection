@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>register</title> -->
 <%@include file="/WEB-INF/views/form/userTop.jsp" %>
-<%@include file="myPageMenu.jsp" %> %>
+<%@include file="myPageMenu.jsp" %>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/guest.js'/>"></script>
   <!-- Bootstrap CSS -->
@@ -82,12 +82,12 @@
   <div class="container">
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
-        <h4 class="mb-3">회원가입</h4>
+        <h4 class="mb-3">회원정보수정</h4>
         <form class="validation-form" name="frmRegister" method="post" action="<c:url value='/guest/register'/>" novalidate>
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="userId">아이디</label>
-              <input type="text" class="form-control" name="userId" id="userId" placeholder="" value="" required>
+              <input type="text" class="form-control" name="userId" id="userId"value="${guestVo.userId }" required>
               <span class="error"></span>
               <div class="invalid-feedback">
                 아이디를 입력해주세요.
@@ -95,7 +95,7 @@
             </div>
             <div class="col-md-6">
               <label for="userName">이름</label>
-              <input type="text" class="form-control" name="userName" id="userName" placeholder="" value="" required>
+              <input type="text" class="form-control" name="userName" id="userName" value="${guestVo.userName }" required>
               <div class="invalid-feedback">
                 이름을 입력해주세요.
               </div>
@@ -103,7 +103,7 @@
           </div>
             <div class="mb-2">
               <label for="userPwd">비밀번호</label>
-              <input type="password" class="form-control" name="userPwd" id="userPwd" placeholder="" value="" required>
+              <input type="password" class="form-control" name="userPwd" id="userPwd" value="" required>
               <div class="divCondition">-문자/숫자/특수문자 3가지 조합 (8~30자)<br>
               -3개 이상 키보드 상 배열이 연속되거나 동일한 문자/숫자 제외
               </div>
@@ -122,7 +122,8 @@
 		    <div class="row">
 	            <div class="col-md-5 mb-3">
 	            	<label for="userEmail">이메일</label>
-	            	<input type="email" class="form-control" name="userEmail" id="userEmail" placeholder="you@example.com" required>
+	            	<input type="email" class="form-control" name="userEmail" id="userEmail" 
+	            	placeholder="you@example.com" value="${guestVo.userEmail }" required>
 		            <div class="invalid-feedback">
 		            	이메일을 입력해주세요.
 		            </div>
@@ -136,7 +137,7 @@
           <div class="row">
 			  <div class="col-md-5 mb-3">
 				  <label for="zipcode">우편번호</label>
-				  <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="" value="" required
+				  <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="" value="${guestVo.zipcode }" required
 				  	style="width: 250px;" onclick="sample6_execDaumPostcode()" readonly>
 				  <div class="invalid-feedback">
 				    우편번호를 입력해주세요.
@@ -151,7 +152,7 @@
           <div class="mb-3">
 			  <label for="address">주소</label>
 			  <input type="text" class="form-control" id="address" name="address" placeholder="서울특별시 강남구" required
-			  	onclick="sample6_execDaumPostcode()" readonly>
+			  	onclick="sample6_execDaumPostcode()" value="${guestVo.address }" readonly>
 			  <div class="invalid-feedback">
 			    주소를 입력해주세요.
 			  </div>
@@ -159,7 +160,8 @@
           
           <div class="mb-3">
 		 	<label for="addressDetail">상세주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
-		  	<input type="text" class="form-control" id="addressDetail" name="addressDetail" placeholder="상세주소를 입력해주세요.">
+		  	<input type="text" class="form-control" id="addressDetail" name="addressDetail"
+		  		value="${guestVo.addressDetail }" placeholder="상세주소를 입력해주세요.">
 		  </div>
           
           <div class="mb-3">
@@ -192,31 +194,8 @@
           </div>
            -->
           <br>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="agreementAll">
-            <label class="custom-control-label" for="agreementAll">아래 약관의 모두 동의합니다.</label>
-          </div>
           <hr class="mb-4">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="agreement1" required>
-            <label class="custom-control-label" for="agreement1">개인정보 수집 및 이용에 동의합니다.(필수)</label>
-            <div class="invalid-feedback">
-              필수 항목을 체크해주세요.
-            </div>
-          </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="agreement2" required>
-            <label class="custom-control-label" for="agreement2">본인은 만 14세 이상입니다.(필수)</label>
-            <div class="invalid-feedback">
-              필수 항목을 체크해주세요.
-            </div>
-          </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="agreement3" required>
-            <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label>
-          </div>
-          <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" id="register" name="register" type="submit">가입 완료</button>
+          <button class="btn btn-primary btn-lg btn-block" id="register" name="register" type="submit">수정 완료</button>
         </form>
       </div>
     </div>

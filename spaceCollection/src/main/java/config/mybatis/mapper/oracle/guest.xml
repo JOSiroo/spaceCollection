@@ -17,12 +17,19 @@
 		resultType="int">
 		select count(*) from USER_INFO
 		where USER_ID=#{userId}
+		and USER_OUT_DATE is null
 	</select>
 	
 	<select id="selectPwd" parameterType="string"
 		resultType="string">
 		select USER_PWD from USER_INFO
 		where USER_ID=#{userId}
+		and USER_OUT_DATE is null
+	</select>
+	
+	<select id="selectUserSalt" parameterType="String" resultType="String">
+		select SALT from USER_INFO
+		WHERE USER_ID=#{userId}
 		and USER_OUT_DATE is null
 	</select>
 
