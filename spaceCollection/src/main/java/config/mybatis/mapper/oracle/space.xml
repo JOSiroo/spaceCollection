@@ -15,6 +15,11 @@
 				<if test="region!=null and region!=''">
 					and space_address like '%' || #{region} || '%'
 				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
+				</if>
+				
+				
 			)A	
 		)
 		<![CDATA[
@@ -31,6 +36,9 @@
 				where space_Name like '%' || #{spaceName} || '%'
 				<if test="region!=null and region!=''">
 					and space_address like '%' || #{region} || '%'
+				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
 				</if>
 			)A	
 		)
