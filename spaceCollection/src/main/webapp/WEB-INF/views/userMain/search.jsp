@@ -200,7 +200,7 @@
 				<ul class = "dropdounUl">
 					<li>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">종로구</div></a>
+						<a href="&region=종로" class="region-a"><div class = "col region">종로구</div></a>
 						<a href="#" class="region-a"><div class = "col region">중구</div></a>
 					</div>
 					<div class = "row region">
