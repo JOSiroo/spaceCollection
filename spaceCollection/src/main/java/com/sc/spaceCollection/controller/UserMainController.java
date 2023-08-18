@@ -79,14 +79,15 @@ public class UserMainController {
 		 @RequestParam(required = false) String spaceName,
          @RequestParam(defaultValue = "0") int spaceTypeNo,
          @RequestParam(required = false) String region,
+         @RequestParam(defaultValue = "99") int maxPeople,
          Model model) {
 	   
-	  logger.info("spaceRegion = {}", region); 
+	  logger.info("spaceRegion = {}, maxPeople = {}", region,maxPeople); 
 	   
 	  List<Map<String, Object>> list = new ArrayList<>();
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
-         list = spaceService.selectBySpaceName(page, size, spaceName,region);
+         list = spaceService.selectBySpaceName(page, size, spaceName,region,maxPeople);
             
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
          
@@ -95,7 +96,7 @@ public class UserMainController {
          
       }else if(spaceTypeNo != 0) {
 		  logger.info("타입별 공간 리스트 조회, 파라미터 spaceTypeNo = {}, page = {}, size = {}", spaceTypeNo,page, size);
-		  list = spaceService.selectBySpaceType(page, size, spaceTypeNo,region);
+		  list = spaceService.selectBySpaceType(page, size, spaceTypeNo,region,maxPeople);
 		  logger.info("타입별 공간 리스트 조회, 파라미터 list.size = {}", list.size());
          
          model.addAttribute("list", list);

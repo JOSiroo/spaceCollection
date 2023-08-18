@@ -14,6 +14,13 @@
 .row.region{
 	padding : 0% 0% 0% 0%;
 }
+.row.top.filter{
+	padding: 2% 4% 0% 7%;
+}
+.row.top.filter.facility{
+	margin-bottom: 7%;
+}
+
 .col.region{
 	text-align: center;
    	padding: 5% 0% 3% 0%;
@@ -30,8 +37,25 @@
 .col.people{
 	padding:0% 0% 0% 0%;
 }
-
-
+.col-3.filter{
+	padding:0% 0% 0% 0%;
+}
+.filterBtn{
+	border : 3px solid rgba(0, 0, 0, 0.3);
+	border-radius : 0.7rem;
+	background-color: white;
+	padding: 0% 8% 0% 8%;
+	height: 50px;
+    width: 98%;
+}
+.filterBtn:hover{
+	background-color: rgba(255, 208, 20, 0.74);
+	border : 3px solid #ffc000;
+}
+.filterBtn.selected{
+	background-color: rgba(255, 208, 20, 0.74);
+	border : 3px solid #ffc000;
+}
 #searchText{
 	width : 65%;
 	height: 35px;
@@ -60,6 +84,12 @@
    	padding: 2% 0% 0% 0% !important;
    	padding-bottom: 0% !important;
    	min-width: 22rem;
+}
+.dropdown-menu.filter.show{
+   	display: block;
+   	padding: 2% 0% 0% 0% !important;
+   	padding-bottom: 0% !important;
+   	min-width: 32rem;
 }
 .search-wrapper{
 	height:144.5px;
@@ -109,6 +139,7 @@
 	    border-radius: 0.25rem;
 	    width:95% !important;
 	    margin: 0% 0% 0% 0%;
+	    margin-bottom:8%;
 	}
 	.card-body{
 		padding: 6% 8% 4% 8%;
@@ -117,7 +148,9 @@
 	    	font-weight: bold	
     }
 	
-	
+	.dropdounUl.filter{
+		padding-top:5%;
+	}
 	.dropdounUl{
 		list-style-type: none;
    		/*padding: 10% 5% 5% 5% !important;*/
@@ -180,7 +213,68 @@
     	color : white;
     	border : none;
 	}
+	#filterResetBtn{
+		box-sizing: border-box !important;
+    	float: left !important;
+    	width: 30%;
+    	height: 60px;
+   	    background: #ffd014;
+    	font-weight: bold;
+    	border : none;
+    	
+
+	}
+	#filterApplyBtn{
+		box-sizing: border-box !important;
+    	float: left !important;
+    	width: 70%;
+    	height: 60px;
+    	background:#193D76;
+    	font-weight: bold;
+    	color : white;
+    	border : none;
+	}
+	.nodata{
+		font-weight:bold;
+		text-align: center;
+		margin-top:10%;
+	}
 	
+	
+	.priceDiv{
+		text-align:center;
+	}
+	.emptySpace{
+		display: inline-block;
+		width: 20%;
+		font-weight	:500;
+		font-size: 28px;
+	}
+	.form-floating{
+		width: 30%;
+		display: inline-block;
+		margin-bottom:8%;
+	}
+	.form-control{
+		border: grey 2px solid;
+	}
+	.form-control:disabled{
+		border: grey 2px solid;
+		background: white;
+	}
+	.noUi-connect{
+		background: #ffd014;
+	}
+	.noUi-handle {
+    border: 3px solid rgba(25, 61, 118, 0.5);
+    border-radius: 1rem;
+    background: #FFF;
+    cursor: default;
+    box-shadow: inset 0 0 1px #FFF, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;
+	}
+	.noUi-handle:hover{
+		background: lightgrey;
+	}
 </style>
 <div class="search-wrapper"></div>
 <div class = "asd">
@@ -278,7 +372,109 @@
 							<div class = "col">
 								<div class="people-btnGroup">
 									<button  id ="peopleResetBtn">초기화</button>
-									<button  id ="peopleApplyBtn">인원수 적용하기</button>
+									<button  id ="peopleApplyBtn" onclick="addPeopleParam()">인원수 적용하기</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div><!-- 인원 -->
+	<div class="dropdown">
+			<button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		   	 	필터
+		  	</button>
+			<div class="dropdown-menu filter">
+				<ul class = "dropdounUl filter">
+					<li>
+						<div class = "row top filter">
+							<div class = "col filter">
+									<div class = "priceDiv">
+										<div><h5 style="font-weight: bold;text-align: left;">가격</h5></div>
+										<br>
+										<div class="form-floating">
+									      <input type="text" disabled class="form-control" id="slider-snap-value-lower" placeholder="name@example.com" value="<fmt:formatNumber value='100000' pattern='#,###원'/>">
+									      <label for="floatingInputGrid">최소가격</label>
+									    </div>
+									    <div class = "emptySpace"> ~ </div>
+										<div class="form-floating">
+									      <input type="text" disabled class="form-control" id="slider-snap-value-upper" placeholder="name@example.com" value="<fmt:formatNumber value='100000' pattern='#,###원'/>">
+									      <label for="floatingInputGrid">최대가격</label>
+									    </div>
+										<div id="slider-snap"></div>
+									</div>
+							</div>
+						</div>
+					</li>
+					<br>
+					<br>
+					<li>
+						<div class = "row top filter">
+						<div><h5 style="font-weight: bold">편의 시설</h5></div>
+						<br>
+						<br>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="WIFI">WI-FI</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="PRINTER">프린터</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="CHAIR_TABLE">의자/테이블</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="SMOKE">흡연장</button>
+							</div>
+						</div>
+						<div class = "row top filter">
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="REST_ROOM">화장실</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="PC">PC/노트북</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="TV">TV/프로젝터</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="WHITE_BOARD">화이트보드</button>
+							</div>
+						</div>
+						<div class = "row top filter">
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="ELEVATOR">엘레베이터</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="PARKING">주차</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="DRINK">음료반입</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="FOOD">음식반입</button>
+							</div>
+						</div>
+						<div class = "row top filter facility">
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="FLOOR">플로어</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="COOK">취사가능</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="PET">애완동반</button>
+							</div>
+							<div class = "col-3 filter">
+								<button class = 'filterBtn' value="AUDIO">음향장비</button>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class = "row top">
+							<div class = "col">
+								<div class="people-btnGroup">
+									<button  id ="filterResetBtn" onclick="">초기화</button>
+									<button  id ="filterApplyBtn" onclick="addFilter()">필터 적용하기</button>
 								</div>
 							</div>
 						</div>
@@ -287,7 +483,7 @@
 			</div>
 		</div><!-- 인원 -->
 </div>
-	<button type="button" class="btn btn-outline-dark">필터</button>
+	
 	<c:if test="${!empty param.spaceTypeNo }">
 		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/>">
 	</c:if>
@@ -304,9 +500,10 @@
 	  <div class="row" id = "data-container">
   </div>
 </div>
-	  
-	
 </section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
 <script type="text/javascript">
 $(function(){
 		$('#peopleMinus').click(function(){
@@ -326,6 +523,18 @@ $(function(){
 		        loadMoreData();
 		    }
 		});
+		
+		$('#filterResetBtn').click(function(){
+			$('.filterBtn').removeClass('selected');
+		});
+		
+		$('.filterBtn').click(function(){
+			if($(this).hasClass('selected')){
+				$(this).removeClass('selected');
+			}else{
+				$(this).addClass('selected');
+			}
+		});
 });
 	var currentPage = 1;
 	var page = 1;
@@ -343,15 +552,17 @@ $(function(){
 	if(${!empty param.region}){
 		condition += "&region="+"${param.region}";
 	}
+	if(${!empty param.maxPeople}){
+		condition += "&maxPeople="+"${param.maxPeople}";
+	}
 	
 	
-	loadMoreData(currentPage);
-	
+	var noDataNum = 0;
 function loadMoreData() {
     if (isLoading) {
         return;
     }
-
+    
     isLoading = true;
 
     $.ajax({
@@ -363,6 +574,14 @@ function loadMoreData() {
 				makeList(data);
                 page++;
 			}
+        	if(data.length == 0 ){
+				if(noDataNum == 0){
+					noData();
+				}
+				noDataNum++;
+				return;
+        	}
+			
         },
         complete: function() {
             isLoading = false;
@@ -372,15 +591,15 @@ function loadMoreData() {
 	// Initial data load
 	loadMoreData();
 
+	var num =1;
 	function makeList(data) {
 	    var htmlStr = "";
-
 	    $.each(data, function() {
 	    	console.log(data);
 
 	        htmlStr += '<div class="col-sm-4">';
 	        htmlStr += '<div class="card" style="width: 18rem;">';
-	        htmlStr += '<div id="carouselExample" class="carousel slide">';
+	        htmlStr += '<div id="carouselExample'+num+'" class="carousel slide">';
 	        htmlStr += '<div class="carousel-inner">';
 	        htmlStr += '<div class="carousel-item active">';
 	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
@@ -392,11 +611,11 @@ function loadMoreData() {
 	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
-	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">';
+	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="prev">';
 	        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
 	        htmlStr += '<span class="visually-hidden">Previous</span>';
 	        htmlStr += '</button>';
-	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">';
+	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="next">';
 	        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
 	        htmlStr += '<span class="visually-hidden">Next</span>';
 	        htmlStr += '</button>';
@@ -404,13 +623,20 @@ function loadMoreData() {
 	        htmlStr += '<div class="card-body">';
 	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
 	        htmlStr += '<p>(우편) '+this.SPACE_ZIPCODE+',<br> '+this.SPACE_ADDRESS +this.SPACE_ADDRESS_DETAIL +' '+ this.SPACE_LOCATION+ '</p>';
-	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5>';
+	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5> 평균최대 인원'+this.AVGMAXPEOPLE+' 명';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
+	        num++;
 	    });
 	    $('#data-container').append(htmlStr);
 	}
+	
+	function noData(){
+		 var htmlStr = "<h1 class='nodata'>표시 할 공간이 없어요</h1>";
+		 $('#data-container').append(htmlStr);
+		 isLoading = true;
+	 }
 
 	 function addComma(value){
 		    value = value+"";
@@ -423,21 +649,67 @@ function loadMoreData() {
 		 
 		 var currentUrl = window.location.pathname; 
 		 var currentParam = window.location.search.substring(1);
-		 var resultUrl = currentUrl + "?"+currentParam;
+		 
+		 var resultUrl = "";
+		 var resultParam = "?";
 		 
 		 if(${!empty param.region}){
-			resultUrl = resultUrl.substring(0,resultUrl.lastIndexOf('&'));
+			var tempParam = currentParam.split('&');
+			 for(var i = 0; i < tempParam.length; i++){
+				 if(tempParam[i].indexOf('region') != -1){
+					tempParam[i] = "region=" + region;
+				 }
+				 if(i > 0){
+					 resultParam += "&" + tempParam[i]; 
+				 }else{
+					 resultParam += tempParam[i]; 
+				 }
+			 }
+			 resultUrl = currentUrl + resultParam;
+			 
+		 }else{
+			 var addRegion = "&region="+region;
+			 resultUrl = currentUrl + "?" + currentParam + addRegion;
 		 }
-		 
-		 var addRegion = "&region="+region;
-		 
-		 resultUrl += addRegion;
-
 		 location.href = resultUrl; 
 	 }
-	
+	 
+	 
+	 
+	 
+	 function addPeopleParam(){
+		 var people = document.getElementById('people').value;
+		 var currentUrl = window.location.pathname; 
+		 var currentParam = window.location.search.substring(1);
+		 
+		 var resultUrl = "";
+		 var resultParam = "?";
+		 
+		 if(${!empty param.maxPeople}){
+			var tempParam = currentParam.split('&');
+			 for(var i = 0; i < tempParam.length; i++){
+				 if(tempParam[i].indexOf('maxPeople') != -1){
+					tempParam[i] = "maxPeople=" + people;
+				 }
+				 if(i > 0){
+					 resultParam += "&" + tempParam[i]; 
+				 }else{
+					 resultParam += tempParam[i]; 
+				 }
+			 }
+			 resultUrl = currentUrl + resultParam;
+			 
+		 }else{
+			 var addPeople = "&maxPeople="+people;
+			 resultUrl = currentUrl + "?" + currentParam + addPeople;
+		 }
+		 location.href = resultUrl; 	 
+	 }
+	 
+
+		
 //부트스트랩 드롭다운 요소들을 가져옴
-var dropdownItems = document.querySelectorAll('.dropdown-menu.people');
+var dropdownItems = document.querySelectorAll('.dropdown-menu');
 
 // 각 드롭다운 요소에 클릭 이벤트 리스너 추가
 dropdownItems.forEach(function(item) {
@@ -445,5 +717,32 @@ dropdownItems.forEach(function(item) {
     event.stopPropagation(); // 클릭 이벤트 전파 중단
   });
 });
+
+
+var snapSlider = document.getElementById('slider-snap');
+
+noUiSlider.create(snapSlider, {
+    start: [5000, 300000],
+    connect: true,
+    range: {
+        'min': 5000,
+        'max': 300000
+    },
+	format: {
+    	to: (value) => parseFloat(value).toFixed(0),
+    	from: (value) => parseFloat(value).toFixed(0)
+	},
+});
+
+var snapValues = [
+	    document.getElementById('slider-snap-value-lower'),
+	    document.getElementById('slider-snap-value-upper')
+	];
+
+	snapSlider.noUiSlider.on('update', function (values, handle) {
+	    snapValues[handle].value = addComma(values[handle])+"원";
+	});
+	var priceRange = snapValues;
+
 </script>
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>

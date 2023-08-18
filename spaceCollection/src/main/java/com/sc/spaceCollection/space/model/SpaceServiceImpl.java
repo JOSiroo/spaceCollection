@@ -27,20 +27,20 @@ public class SpaceServiceImpl implements SpaceService{
 
 
 	@Override
-	public List<Map<String, Object>> selectBySpaceType(int page, int size, int spaceTypeNo,String region) {
+	public List<Map<String, Object>> selectBySpaceType(int page, int size, int spaceTypeNo,String region,int maxPeople) {
 		int startRow = (page - 1) * size + 1;  
 		int endRow = page * size;
 		logger.info("typeNo page = {}, size = {}, startRow = {}, endRow = {}", page,size,startRow,endRow);
-		return spaceDao.selectBySpaceType(startRow, endRow, spaceTypeNo, region);
+		return spaceDao.selectBySpaceType(startRow, endRow, spaceTypeNo, region,maxPeople);
 	}
 
 
 	@Override
-	public List<Map<String, Object>> selectBySpaceName(int page, int size, String spaceName,String region) {
+	public List<Map<String, Object>> selectBySpaceName(int page, int size, String spaceName,String region,int maxPeople) {
 		int startRow = (page - 1) * size + 1;  
 		int endRow = page * size;
 		logger.info("name page = {}, size = {}, startRow = {}, endRow = {}", page,size,startRow,endRow);
-		return spaceDao.selectBySpaceName(startRow, endRow, spaceName, region);
+		return spaceDao.selectBySpaceName(startRow, endRow, spaceName, region,maxPeople);
 	}
 
 
