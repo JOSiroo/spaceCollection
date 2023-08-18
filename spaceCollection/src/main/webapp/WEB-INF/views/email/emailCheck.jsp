@@ -14,11 +14,11 @@
     #mailCheckBody {
       min-height: 100vh;
 
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+      background: -webkit-gradient(linear, left bottom, right top, from(#F6F6F6), to(#F6F6F6));
+      background: -webkit-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
       width: 500px;
       margin: 0 auto;
       
