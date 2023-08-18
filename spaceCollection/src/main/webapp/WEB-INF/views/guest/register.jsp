@@ -163,7 +163,7 @@
           
           <div class="mb-3">
             <label for="userHp">휴대전화</label>
-            <input type="text" class="form-control" name="userHp" id="userHp" placeholder="ex)010-1234-6789" required>
+            <input type="text" class="form-control" name="userHp" id="userHp" placeholder="(-)를 제외한 전화번호를 입력해주세요 ex)01012346789" required>
             <div class="invalid-feedback">
               휴대전화를 입력해주세요.
             </div>
