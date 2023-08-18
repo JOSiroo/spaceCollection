@@ -18,8 +18,6 @@
 				<if test="maxPeople!=null and maxPeople!=''">
 					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
 				</if>
-				
-				
 			)A	
 		)
 		<![CDATA[
@@ -53,7 +51,6 @@
 		select * from space
 		where space_Name like '%' || #{spaceName} || '%'	
 	</select>
-	
 	
 	<select id="selectBySpaceNum" parameterType="int" resultType="spaceVo">
 		select * from space
