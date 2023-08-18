@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
 import com.sc.spaceCollection.admin.model.AdminService;
@@ -33,6 +35,7 @@ import com.sc.spaceCollection.boardType.model.BoardTypeVO;
 import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
 import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 
@@ -52,6 +55,7 @@ public class AdminController {
 	private final BoardTypeService boardTypeService;
 	private final BoardService boardService;
 	private final CommentsService commentsService;
+	private final FileUploadUtil fileuploadUtil;
 	
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
@@ -411,5 +415,20 @@ public class AdminController {
 					}
 				}
 					return null;
+	}
+	
+	@RequestMapping("/board/download")
+	public ModelAndView download(@RequestParam(defaultValue = "0") int no, @RequestParam String fileName, HttpServletRequest request) {
+		logger.info("다운로드 처리, 파라미터 no={}", no);
+		
+		//강제 다운로드 처리를 위한 뷰페이지로 보내준다
+		Map<String, Object> map = new HashMap<>();
+		//업로드 경로
+		String upPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+		File file = new File(upPath, fileName);
+		map.put("file", file);
+		//ModelAndView(String viewName, @Nullable Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("reboardDownloadView", map);
+		return mav;
 	}
 }

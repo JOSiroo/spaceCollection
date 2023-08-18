@@ -205,6 +205,7 @@
 													<fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd"/>
 												</td>
 											</tr>
+											<c:set var="i" value="${i+1 }"/>
 										</c:forEach>
 									</form>
 								</c:if>
