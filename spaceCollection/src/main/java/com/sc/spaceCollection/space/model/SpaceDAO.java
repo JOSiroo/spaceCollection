@@ -14,12 +14,19 @@ public interface SpaceDAO {
 												@Param("endRow") int endRow,
 												@Param("spaceTypeNo") int spaceTypeNo,
 												@Param("region") String region,
-												@Param("maxPeople") int maxPeople );
+												@Param("maxPeople") int maxPeople,
+												@Param("minPrice") int minPrice,
+												@Param("maxPrice") int maxPrice,
+												@Param("filterList") List<String> filterList);
+	
 	List<Map<String, Object>> selectBySpaceName(@Param("startRow")int startRow,
 												@Param("endRow") int endRow,
 												@Param("spaceName") String spaceName,
 												@Param("region") String region,
-												@Param("maxPeople") int maxPeople );
+												@Param("maxPeople") int maxPeople,
+												@Param("minPrice") int minPrice,
+												@Param("maxPrice") int maxPrice,
+												@Param("filterList") List<String> filterList);
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
