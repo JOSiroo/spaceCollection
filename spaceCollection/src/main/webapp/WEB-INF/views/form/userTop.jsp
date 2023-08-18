@@ -161,11 +161,11 @@
 							<li><a href="<c:url value='/event'/>">이벤트</a></li>
 							<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
 						<!-- 로그인 안된 경우 -->
-							<c:if test="${empty sessionScope.userid }">
+							<c:if test="${empty sessionScope.userId }">
 								<li><a href="<c:url value='/login/login'/>">로그인</a></li>
 							</c:if>
 						<!-- 로그인 된 경우 -->
-							<c:if test="${!empty sessionScope.userid }">
+							<c:if test="${!empty sessionScope.userId }">
 								<li><a href="<c:url value='/login/logout'/>">로그아웃</a></li>
 							</c:if>
 						</ul>
@@ -203,12 +203,12 @@
 			<div class="col-sm-6"  style="text-align: center;">
 			
 			<!-- 로그인 안된 경우 -->
-				<c:if test="${empty sessionScope.userid }">
+				<c:if test="${empty sessionScope.userId }">
 					<a href="<c:url value='/login/login'/>"><i class="bi bi-person-check"></i>
 			        <p>로그인</p></a>
 				</c:if>
 			<!-- 로그인 된 경우 -->
-				<c:if test="${!empty sessionScope.userid }">
+				<c:if test="${!empty sessionScope.userId }">
 					<a href="<c:url value='/login/logout'/>">
 					<i class="bi bi-box-arrow-right"></i>
 			        <p>로그아웃</p></a>
