@@ -55,6 +55,15 @@
 	input[type=file]{
 		margin-top: 10px;
 	}
+	
+	#btDiv{
+		margin-top: 10px;
+		float: right;
+	}
+	
+	#btDiv>button{
+		width: 100px;
+	}
 </style>
 <script type="text/javascript" src="<c:url value='/resource/ckeditor/ckeditor.js'/>"></script>
 <script type="text/javascript">
@@ -71,6 +80,20 @@
 		$('#submit').click(function() {
 			$('form').submit();
 		});
+		
+		$('#cancel').click(function() {
+			$('#confirm').addClass('historyback');
+			$('.modal-footer>#cancel').css('visibility', 'visible');
+			$('.modal-body').html("작성을 취소하시겠습니까? 작성된 내용은 저장되지 않습니다.");
+			$('#confirm1').modal('show');
+
+			$('.historyback').click(function() {
+				$(this).removeClass('historyback');
+				history.back();
+				
+			});
+		});
+		
 		
 		$('form').submit(function() {
 			if($('#boardTitle').val().trim().length<1){
@@ -189,14 +212,15 @@
 							<input type="hidden" name="boardTypeName" id="boardTypeName">
 							<input type="hidden" name="userNum" value="9999999">
 						</form>
-						<form class="row gx-3 gy-2 align-items-center" name="fileFrm" id="fileFrm" method="post" action="<c:url value='/admin/board/multiFileUpload'/>"
+						<form class="row gx-3 gy-2 align-items-center" name="fileFrm" id="fileFrm" method="post" action="<c:url value='/admin/board/fileUpload'/>"
 							enctype="multipart/form-data">
 							<div class="input-group" id="fileDiv">
 								<input multiple="multiple" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 							</div>
 						</form>
-						<div class="col-auto">
+						<div class="col-auto" id="btDiv">
 							<button type="button" class="btn btn-primary" id="submit">등록</button>
+							<button type="button" class="btn btn-secondary" id="cancel">취소</button>
 						</div>
 				 	</div>
 				</div>
@@ -215,6 +239,8 @@
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" id="cancel" style="visibility: hidden;">취소</button>
 					<button type="button" class="btn btn-primary"
 						data-bs-dismiss="modal" id="confirm">확인</button>
 				</div>
