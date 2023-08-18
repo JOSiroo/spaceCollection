@@ -137,10 +137,10 @@
            <div class="col-md-12 mb-3">
           	<input type="checkbox" name="chkSave" id="chkSave" style="margin-left: 20px;">
           	<label for="chkSave" style="font-size: 15px;">아이디 저장</label>
-          	<a href="<c:url value=''/>" 
+          	<a href="<c:url value='/guest/findPwd'/>" 
           	style="color: black; font-size: 12px; float: right; margin-left: 5px; margin-right: 25px;"
           	>비밀번호 찾기</a>
-          	<a href="#" style="color: black; font-size: 12px; float: right;">아이디 찾기</a>
+          	<a href="<c:url value='/guest/findId'/>" style="color: black; font-size: 12px; float: right;">아이디 찾기</a>
            </div>
           <div class="col-md-12 mb-3">
          	 <button class="btn btn-primary btn-lg btn-block" id="login" type="submit">로그인</button>
