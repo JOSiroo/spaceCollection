@@ -393,12 +393,12 @@
 										<div><h5 style="font-weight: bold;text-align: left;">가격</h5></div>
 										<br>
 										<div class="form-floating">
-									      <input type="text" disabled class="form-control" id="slider-snap-value-lower" placeholder="name@example.com" value="<fmt:formatNumber value='100000' pattern='#,###원'/>">
+									      <input type="text"  class="form-control" id="slider-snap-value-lower" placeholder="name@example.com" value="0">
 									      <label for="floatingInputGrid">최소가격</label>
 									    </div>
 									    <div class = "emptySpace"> ~ </div>
 										<div class="form-floating">
-									      <input type="text" disabled class="form-control" id="slider-snap-value-upper" placeholder="name@example.com" value="<fmt:formatNumber value='100000' pattern='#,###원'/>">
+									      <input type="text"  class="form-control" id="slider-snap-value-upper" placeholder="name@example.com" value="0">
 									      <label for="floatingInputGrid">최대가격</label>
 									    </div>
 										<div id="slider-snap"></div>
@@ -475,6 +475,9 @@
 								<div class="people-btnGroup">
 									<button  id ="filterResetBtn" onclick="">초기화</button>
 									<button  id ="filterApplyBtn" onclick="addFilter()">필터 적용하기</button>
+									<input type = "hidden" name="lowerPrice">
+									<input type = "hidden" name="upperPrice">
+									<input type = "hidden" name="filters">
 								</div>
 							</div>
 						</div>
@@ -536,6 +539,68 @@ $(function(){
 			}
 		});
 });
+var snapSlider = document.getElementById('slider-snap');
+var upperPrice = 0;
+var lowerPrice = 0;
+
+noUiSlider.create(snapSlider, {
+    start: [5000, 300000],
+    connect: true,
+    range: {
+        'min': 5000,
+        'max': 300000
+    },
+	format: {
+    	to: (value) => parseFloat(value).toFixed(0),
+    	from: (value) => parseFloat(value).toFixed(0)
+	},
+});
+
+	var snapValues = [
+	    document.getElementById('slider-snap-value-lower'),
+	    document.getElementById('slider-snap-value-upper')
+	];
+	    var lower = document.getElementById('slider-snap-value-lower');
+	    var upper = document.getElementById('slider-snap-value-upper');
+	
+	snapSlider.noUiSlider.on('update', function (values, handle) {
+	    var value = values[handle];
+	    	snapValues[handle].value = addComma(values[handle])+"원";
+	    	if(handle == 1){
+	    		upperPrice = values[handle];
+	    	}else{
+	    		lowerPrice = values[handle];
+	    	}
+	});
+	lower.addEventListener('change', function () {
+		lowerPrice = this.value;
+		snapSlider.noUiSlider.set([this.value, null]);
+	});
+
+	upper.addEventListener('change', function () {
+		upperPrice = this.value;
+		snapSlider.noUiSlider.set([null, this.value]);
+	});
+	
+	lowerPrice = 0;
+	upperPrice = 0;
+	
+	var filters = document.querySelectorAll('.filterBtn');
+	var filterList = [];
+	function addFilter(){
+		filters.forEach(function(item){
+			if(hasClass(item, 'selected')){
+				filterList.push(item.value);
+			}			
+		});
+		if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
+			alert('필터 조건을 선택해 주세요!');
+		}else{
+			addFilterParam(filterList, lowerPrice, upperPrice);			
+		}
+	}
+
+
 	var currentPage = 1;
 	var page = 1;
 	var size = 21;
@@ -554,6 +619,15 @@ $(function(){
 	}
 	if(${!empty param.maxPeople}){
 		condition += "&maxPeople="+"${param.maxPeople}";
+	}
+	if(${!empty param.filterList}){
+		condition += "&filterList="+"${param.filterList}";
+	}
+	if(${!empty param.lowerPrice}){
+		condition += "&lowerPrice="+"${param.lowerPrice}";
+	}
+	if(${!empty param.upperPrice}){
+		condition += "&upperPrice="+"${param.upperPrice}";
 	}
 	
 	
@@ -644,6 +718,10 @@ function loadMoreData() {
 	        return value; 
 	    }
 	 
+	 function hasClass(element, className) {
+		    return element.classList.contains(className);
+		}
+	 
 	 
 	 function addRegionParam(region){
 		 
@@ -706,6 +784,76 @@ function loadMoreData() {
 		 location.href = resultUrl; 	 
 	 }
 	 
+	 
+	 
+	 function addFilterParam(filterList, lowerPrice, upperPrice){
+		
+		var currentUrl = window.location.pathname; 
+		var currentParam = window.location.search.substring(1)+"";
+		 
+		var resultUrl = currentUrl;
+		var resultParam = "?";
+		var resultParameter = "";
+		
+		var filterArray = [];
+		if(lowerPrice !== 0){
+			filterArray.push("lowerPrice");
+		}
+		if(upperPrice !== 0){
+			filterArray.push("upperPrice");
+		}
+		if(filterList !== null){
+			filterArray.push("filterList");
+		}
+		
+		alert(filterArray.length);
+		
+		for(var i = 0; i < filterArray.length; i++){
+			var paramValue;
+			var paramName;
+			if(filterArray[i] === "lowerPrice"){
+				paramValue = lowerPrice;
+			}else if(filterArray[i] === "upperPrice"){
+				paramValue = upperPrice;
+			}else{
+				paramValue = filterList;
+			}
+			alert('시작전 currentParam = ' + currentParam);
+			var tempParam = currentParam.split('&');
+			alert("tampParam =  " + tempParam);
+			for(var k = 0; k < tempParam.length; k++){
+				 if(tempParam[k].indexOf(filterArray[i]) != -1){
+					alert('변환 전 tempParam[k]' + tempParam[k]);
+					tempParam[k] = filterArray[i]+"=" + paramValue;
+					alert('변환 후 tempParam[k]' + tempParam[k]);
+				 }
+				 
+				if(k > 0){
+				 	resultParam = "&" +tempParam[k]; 
+				 	alert("resultParam = " + resultParam);
+				}else{
+				 	resultParam += tempParam[k]; 
+				 	alert("resultParam = " + resultParam);
+				}
+				resultParameter += resultParam;
+				resultParam = "";
+			 	alert("resultParameter = " + resultParameter);
+			}
+			if(currentParam.indexOf(filterArray[i]) < 0){
+				var addParam = "&"+filterArray[i]+"="+paramValue;
+				alert(addParam);
+				resultParameter += addParam;
+				alert("파라미터 없을때 resultParameter = " + resultParameter);
+			}
+			currentParam = resultParameter;
+			alert("currentParam = " + currentParam);
+			resultParameter = "";
+		}
+		resultUrl += currentParam;
+		alert('다 끝나고 resultUrl = ' + resultUrl);
+		filterArray.length = 0;
+		location.href = resultUrl; 
+	 }
 
 		
 //부트스트랩 드롭다운 요소들을 가져옴
@@ -719,30 +867,9 @@ dropdownItems.forEach(function(item) {
 });
 
 
-var snapSlider = document.getElementById('slider-snap');
 
-noUiSlider.create(snapSlider, {
-    start: [5000, 300000],
-    connect: true,
-    range: {
-        'min': 5000,
-        'max': 300000
-    },
-	format: {
-    	to: (value) => parseFloat(value).toFixed(0),
-    	from: (value) => parseFloat(value).toFixed(0)
-	},
-});
-
-var snapValues = [
-	    document.getElementById('slider-snap-value-lower'),
-	    document.getElementById('slider-snap-value-upper')
-	];
-
-	snapSlider.noUiSlider.on('update', function (values, handle) {
-	    snapValues[handle].value = addComma(values[handle])+"원";
-	});
-	var priceRange = snapValues;
+	
+	
 
 </script>
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
