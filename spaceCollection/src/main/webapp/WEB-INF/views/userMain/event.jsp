@@ -26,8 +26,19 @@
 	img.img-fluid {
 	    scale: 0.6;
 	}
-	.event_card {
-   		 height: 960px;
+	
+	article {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+    
+    .registering_comment {
+    display: flex;
+    margin-top: 850px;
 	}
 	
 </style>
@@ -38,9 +49,10 @@
 				<div class="event_card">
 				<img src="images/event.png" alt="Image" class="img-fluid">
 				</div>
-				<div class="registering_comment">
-				<textarea placeholder="로그인 후 글을 작성하실 수 있습니다."></textarea> 
-				<button class="eSvCyg"><span class="cTmBHi">등록</span></button>
+				<div class="registering_comment"  style="position: absolute;">
+				<!-- <textarea placeholder="로그인 후 글을 작성하실 수 있습니다."></textarea>  -->
+				<input type="text" placeholder="로그인 후 글을 작성하실 수 있습니다." style="width: 800px;">
+				<button type="button" class="btn btn-primary btn-lg" style="scale: 0.8;">등록</button>
 				</div> <!---->
 				<div class="event_card_text">
 				</div>

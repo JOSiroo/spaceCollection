@@ -9,4 +9,5 @@ public interface GuestDAO {
 	GuestVO selectUserInfo(String userId);
 	int insertGuest(GuestVO guestVo);
 	int selectCountEmail(String userEmail);
+	String selectUserSalt(String userId);
 }

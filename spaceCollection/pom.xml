@@ -28,7 +28,7 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>3.0.2</version>
 		</dependency>
-
+		
 
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
@@ -60,10 +60,21 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
+		<!--메일 관련-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-			 <version>2.0.1.RELEASE</version> 
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>6.0.11</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		    <version>3.1.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>javax.mail-api</artifactId>
+		    <version>1.6.2</version>
 		</dependency>
 		<!-- jsp -->
 		<dependency>
@@ -91,12 +102,6 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.3.3</version>
-		</dependency>
-
-		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.4</version>
@@ -107,7 +112,17 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+        
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

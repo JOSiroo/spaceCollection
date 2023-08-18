@@ -35,14 +35,23 @@
   	margin-left : 1%;
  }
  .closeBtn{
+ 	font-weight: bold;
+ 	font-size:30px;
  	color : white;
  	float:right;
 	justify-content: center;
 	position: absolute;
-  	top: 30%;
-  	margin-left:97%;
+  	top: 16%;
+  	margin-left:97.7%;
  }
- 
+ .goSpace{
+ 	text-decoration: none;
+ 	color : white;
+ }
+ .goSpace:hover{
+ 	text-decoration: none;
+ 	color : white;
+ }
 	 .center{background: #193D76; color:white; padding:14% 24% 14% 24%; text-decoration:none; font-size:18px;border:white; border-radius: 2rem;}
 	 .center:hover{color:black; background: #ffd014}
 	    
@@ -70,9 +79,9 @@
 		<div class = "spaceType">
 			파티룸
 		</div>
-		<div class = "closeBtn">
-			파티룸
-		</div>
+		<a href="#" onclick="goBack()"><div class = "closeBtn">
+			X
+		</div></a>
 	</div>
 	
 	<c:if test="${!empty spaceMap}">
@@ -111,7 +120,7 @@ var a = 0;
 	var content = '<div class="wrap2">' + 
 	        '    <div class="info2">' + 
 	        '        <div class="title">' + 
-	        '			${i.key.spaceName} '+
+	        '			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum=${i.key.spaceNum}"/>">${i.key.spaceName}</a> '+
 	        '            <div class="close" onclick="closeOverlay()" title="닫기">X</div>' + 
 	        '        </div>' + 
 	        '        <div class="body2">' + 
@@ -201,6 +210,10 @@ function closeOverlay() {
     for (var i = 0; i < overlays.length; i++) {
         overlays[i].setMap(null); // 모든 overlay를 닫음
     }
+}
+
+function goBack(){
+	history.go(-1);
 }
 
 </script>

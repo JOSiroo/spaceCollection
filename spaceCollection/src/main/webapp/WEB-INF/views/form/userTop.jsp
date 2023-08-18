@@ -10,6 +10,7 @@
 
 <html lang="ko">
 <head>
+
 <title>SpaceCollection.com</title>
 
 <meta charset="utf-8">
@@ -39,6 +40,9 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepickerCss/datepicker.css">
+<link href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css" rel="stylesheet">
+
+
 <style type="text/css">
 
 /* form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
@@ -144,7 +148,8 @@
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 							<li class="active"><a href="http://localhost:9091/spaceCollection/">Home</a></li>
 							<li><a href="<c:url value='/search' />">SpaceCollection</a>
-								<!-- <li class="has-children">
+								<!-- 공간 대분류 카테고리별 나열하기 !!!
+								<li class="has-children">
 									<ul class="dropdown">
 									<li><a href="#">Buy Property</a></li>
 									<li><a href="#">Sell Property</a></li>
@@ -159,11 +164,11 @@
 							<li><a href="<c:url value='/event'/>">이벤트</a></li>
 							<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
 						<!-- 로그인 안된 경우 -->
-							<c:if test="${empty sessionScope.userid }">
+							<c:if test="${empty sessionScope.userId }">
 								<li><a href="<c:url value='/login/login'/>">로그인</a></li>
 							</c:if>
 						<!-- 로그인 된 경우 -->
-							<c:if test="${!empty sessionScope.userid }">
+							<c:if test="${!empty sessionScope.userId }">
 								<li><a href="<c:url value='/login/logout'/>">로그아웃</a></li>
 							</c:if>
 						</ul>
@@ -201,12 +206,12 @@
 			<div class="col-sm-6"  style="text-align: center;">
 			
 			<!-- 로그인 안된 경우 -->
-				<c:if test="${empty sessionScope.userid }">
+				<c:if test="${empty sessionScope.userId }">
 					<a href="<c:url value='/login/login'/>"><i class="bi bi-person-check"></i>
 			        <p>로그인</p></a>
 				</c:if>
 			<!-- 로그인 된 경우 -->
-				<c:if test="${!empty sessionScope.userid }">
+				<c:if test="${!empty sessionScope.userId }">
 					<a href="<c:url value='/login/logout'/>">
 					<i class="bi bi-box-arrow-right"></i>
 			        <p>로그아웃</p></a>
@@ -267,8 +272,7 @@
 <!-- 사이드종료 -->
 					
 					
-					
-</div></div></div></div></div>
+
 
 
 

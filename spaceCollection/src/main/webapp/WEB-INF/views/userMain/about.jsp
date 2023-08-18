@@ -109,7 +109,15 @@ section.sec3 {
 }
  
  
-
+.aboutall{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1500px;
+    margin: 0 auto;
+    }
+    
 </style>
 
 <body>
@@ -145,7 +153,7 @@ section.sec3 {
         </div>
         </section>
   
-
+<div class="aboutall">
 <section class="se1">
 <div class="se1span">
 <p>가장 쉽고,<br> 간편한 <br>공간 예약</p>
@@ -204,7 +212,7 @@ section.sec3 {
   </div> -->
   </div>
   </section>
-  
+  </div>
 <!-- </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>

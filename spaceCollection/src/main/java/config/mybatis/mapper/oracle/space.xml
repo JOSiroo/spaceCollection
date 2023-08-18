@@ -12,6 +12,12 @@
 			(
 				select * from space_sd_averagePrice_view
 				where space_Type_no = #{spaceTypeNo}
+				<if test="region!=null and region!=''">
+					and space_address like '%' || #{region} || '%'
+				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
+				</if>
 			)A	
 		)
 		<![CDATA[
@@ -26,6 +32,12 @@
 			(
 				select * from space_sd_averagePrice_view
 				where space_Name like '%' || #{spaceName} || '%'
+				<if test="region!=null and region!=''">
+					and space_address like '%' || #{region} || '%'
+				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
+				</if>
 			)A	
 		)
 		<![CDATA[
@@ -39,7 +51,6 @@
 		select * from space
 		where space_Name like '%' || #{spaceName} || '%'	
 	</select>
-	
 	
 	<select id="selectBySpaceNum" parameterType="int" resultType="spaceVo">
 		select * from space

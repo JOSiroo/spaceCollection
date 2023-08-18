@@ -10,10 +10,16 @@ import com.sc.spaceCollection.common.SearchVO;
 
 @Mapper
 public interface SpaceDAO {
-	List<Map<String, Object>> selectBySpaceType(@Param("startRow")int startRow,@Param("endRow") int endRow,
-									@Param("spaceTypeNo") int spaceTypeNo);
-	List<Map<String, Object>> selectBySpaceName(@Param("startRow")int startRow,@Param("endRow") int endRow,
-									@Param("spaceName") String spaceName);
+	List<Map<String, Object>> selectBySpaceType(@Param("startRow")int startRow,
+												@Param("endRow") int endRow,
+												@Param("spaceTypeNo") int spaceTypeNo,
+												@Param("region") String region,
+												@Param("maxPeople") int maxPeople );
+	List<Map<String, Object>> selectBySpaceName(@Param("startRow")int startRow,
+												@Param("endRow") int endRow,
+												@Param("spaceName") String spaceName,
+												@Param("region") String region,
+												@Param("maxPeople") int maxPeople );
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
