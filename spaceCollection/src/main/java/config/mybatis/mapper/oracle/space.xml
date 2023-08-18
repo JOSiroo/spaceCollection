@@ -4,14 +4,54 @@
 
 <!-- namespace 부분은 말그대로 별칭을 정하는 부분이라 아무렇게나 지정해도 된다  -->
 <mapper namespace="com.sc.spaceCollection.space.model.SpaceDAO">
-	<select id="selectBySpaceType" parameterType="int" resultType="spaceVo">
+	<select id="selectBySpaceType" resultType="map">
+		select * 
+		from(
+			select A.*, rownum as rn
+			from 
+			(
+				select * from space_sd_averagePrice_view
+				where space_Type_no = #{spaceTypeNo}
+				<if test="region!=null and region!=''">
+					and space_address like '%' || #{region} || '%'
+				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
+				</if>
+			)A	
+		)
+		<![CDATA[
+		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
+	
+	<select id="selectBySpaceName" resultType="map">
+		select * 
+		from(
+			select A.*, rownum as rn
+			from 
+			(
+				select * from space_sd_averagePrice_view
+				where space_Name like '%' || #{spaceName} || '%'
+				<if test="region!=null and region!=''">
+					and space_address like '%' || #{region} || '%'
+				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and AVGMAXPEOPLE <  #{maxPeople} ]]>
+				</if>
+			)A	
+		)
+		<![CDATA[
+		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
+	<select id="selectBySpaceTypeMap" parameterType="int" resultType="spaceVo">
 		select * from space
 		where space_Type_no = #{spaceTypeNo}	
 	</select>
-	<select id="selectBySpaceName" parameterType="String" resultType="spaceVo">
+	<select id="selectBySpaceNameMap" parameterType="String" resultType="spaceVo">
 		select * from space
 		where space_Name like '%' || #{spaceName} || '%'	
 	</select>
+	
 	<select id="selectBySpaceNum" parameterType="int" resultType="spaceVo">
 		select * from space
 		order by space_num desc 

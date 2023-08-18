@@ -5,7 +5,7 @@
 
 	<insert id="insertGuest" parameterType="guestVo">
 		<selectKey keyProperty="userNum" order="BEFORE" resultType="int">
-			select USER_INFO_SEQ.NEXTVAL from dual
+			select USER_INFO_SEQ.nextval from dual
 		</selectKey>
 		insert into USER_INFO(USER_NUM, USER_NAME, USER_HP, USER_ID, USER_PWD, USER_EMAIL, ZIPCODE
     		, ADDRESS, ADDRESS_DETAIL, SALT)
@@ -17,6 +17,7 @@
 		resultType="int">
 		select count(*) from USER_INFO
 		where USER_ID=#{userId}
+		and USER_OUT_DATE is null
 	</select>
 	
 	<select id="selectPwd" parameterType="string"
@@ -25,11 +26,22 @@
 		where USER_ID=#{userId}
 		and USER_OUT_DATE is null
 	</select>
+	
+	<select id="selectUserSalt" parameterType="String" resultType="String">
+		select SALT from USER_INFO
+		WHERE USER_ID=#{userId}
+		and USER_OUT_DATE is null
+	</select>
 
 	<select id="selectUserInfo" parameterType="string"
 		resultType="guestVo">
 		select * from USER_INFO
 		where USER_ID=#{userId}
+	</select>
+	
+	<select id="selectCountEmail" parameterType="string" resultType="int">
+		select count(*) from USER_INFO
+		where USER_EMAIL=#{userEmail}
 	</select>
 	
 </mapper>

@@ -23,4 +23,9 @@ public class CommentServiceImpl implements CommentsService{
 		return commentsDao.selectByBoardNum(boardNum);
 	}
 
+	@Override
+	public int countComments(int boardNum) {
+		return commentsDao.countComments(boardNum);
+	}
+
 }

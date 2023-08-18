@@ -9,4 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CommentsDAO {
 	int insertComments(CommentsVO vo);
 	List<Map<String, Object>> selectByBoardNum(int boardNum);
+	int countComments(int boardNum);
 }

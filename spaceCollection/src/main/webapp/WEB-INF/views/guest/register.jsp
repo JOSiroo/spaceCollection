@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>register</title> -->
 <%@include file="/WEB-INF/views/form/userTop.jsp" %>
+<%@include file="myPageMenu.jsp" %> %>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/guest.js'/>"></script>
   <!-- Bootstrap CSS -->
@@ -17,11 +18,11 @@
     .registerBody {
       min-height: 100vh;
 
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+      background: -webkit-gradient(linear, left bottom, right top, from(#F6F6F6), to(#F6F6F6));
+      background: -webkit-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
+      background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
     }
 
     .input-form {
@@ -163,7 +164,7 @@
           
           <div class="mb-3">
             <label for="userHp">휴대전화</label>
-            <input type="text" class="form-control" name="userHp" id="userHp" placeholder="ex)010-1234-6789" required>
+            <input type="text" class="form-control" name="userHp" id="userHp" placeholder="(-)를 제외한 전화번호를 입력해주세요 ex)01012346789" required>
             <div class="invalid-feedback">
               휴대전화를 입력해주세요.
             </div>

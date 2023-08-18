@@ -40,6 +40,9 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datepickerCss/datepicker.css">
+<link href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css" rel="stylesheet">
+
+
 <style type="text/css">
 
 /* form.narrow-w.form-search.d-flex.align-items-stretch.mb-3.aos-init.aos-animate
@@ -223,7 +226,7 @@
 		 	</div>
 				
 		  	<div class="col-sm-6 " style="text-align: center;">
-			  <a href="<c:url value='/member_reserve' />">  
+			  <a href="<c:url value='/reservation/reservationList' />">  
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
@@ -261,7 +264,7 @@
 	</div><!-- sideform -->	      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
-	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
+	      <a href="${pageContext.request.contextPath }/host/index">Host센터로 이동하기</a>
 	      <p class="copyright">Powered by © nada Crew.</p>
 	      </div>
        

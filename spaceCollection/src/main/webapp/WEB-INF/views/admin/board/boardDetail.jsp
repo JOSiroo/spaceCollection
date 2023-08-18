@@ -110,13 +110,15 @@
 									<c:forEach var="comments" items="${list }">
 										<div>
 											<a href="#"><i class="bi bi-person-fill"></i><span>${comments.USER_ID }</span></a>
-											<p>${comments.COMMENT_CONTENT }</p>
 											<p style="white-space: pre;"><c:out value="${comments.COMMENT_CONTENT }"/></p>
 											<fmt:parseDate var="commentRegdate" value="${comments.COMMENT_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
 											<span><fmt:formatDate value="${commentRegdate }" pattern="yyyy-MM-dd HH:mm"/></span>
 											<hr>
 										</div>
 									</c:forEach>
+									<div>
+										<a href="#">댓글 더 보기</a>
+									</div>
 								</c:if>
 							</div>
 						</c:if>
