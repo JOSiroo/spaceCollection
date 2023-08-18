@@ -10,6 +10,7 @@
 
 <html lang="ko">
 <head>
+
 <title>SpaceCollection.com</title>
 
 <meta charset="utf-8">
@@ -147,7 +148,8 @@
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 							<li class="active"><a href="http://localhost:9091/spaceCollection/">Home</a></li>
 							<li><a href="<c:url value='/search' />">SpaceCollection</a>
-								<!-- <li class="has-children">
+								<!-- 공간 대분류 카테고리별 나열하기 !!!
+								<li class="has-children">
 									<ul class="dropdown">
 									<li><a href="#">Buy Property</a></li>
 									<li><a href="#">Sell Property</a></li>
@@ -204,12 +206,12 @@
 			<div class="col-sm-6"  style="text-align: center;">
 			
 			<!-- 로그인 안된 경우 -->
-				<c:if test="${empty sessionScope.userid }">
+				<c:if test="${empty sessionScope.userId }">
 					<a href="<c:url value='/login/login'/>"><i class="bi bi-person-check"></i>
 			        <p>로그인</p></a>
 				</c:if>
 			<!-- 로그인 된 경우 -->
-				<c:if test="${!empty sessionScope.userid }">
+				<c:if test="${!empty sessionScope.userId }">
 					<a href="<c:url value='/login/logout'/>">
 					<i class="bi bi-box-arrow-right"></i>
 			        <p>로그아웃</p></a>
@@ -270,8 +272,7 @@
 <!-- 사이드종료 -->
 					
 					
-					
-</div></div></div></div></div>
+
 
 
 
