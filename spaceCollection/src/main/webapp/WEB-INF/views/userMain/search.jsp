@@ -278,7 +278,7 @@
 							<div class = "col">
 								<div class="people-btnGroup">
 									<button  id ="peopleResetBtn">초기화</button>
-									<button  id ="peopleApplyBtn">인원수 적용하기</button>
+									<button  id ="peopleApplyBtn" onclick="addPeopleParam()">인원수 적용하기</button>
 								</div>
 							</div>
 						</div>
@@ -343,6 +343,9 @@ $(function(){
 	if(${!empty param.region}){
 		condition += "&region="+"${param.region}";
 	}
+	if(${!empty param.maxPeople}){
+		condition += "&maxPeople="+"${param.maxPeople}";
+	}
 	
 	
 	loadMoreData(currentPage);
@@ -374,13 +377,13 @@ function loadMoreData() {
 
 	function makeList(data) {
 	    var htmlStr = "";
-
+		var num =1;
 	    $.each(data, function() {
 	    	console.log(data);
 
 	        htmlStr += '<div class="col-sm-4">';
 	        htmlStr += '<div class="card" style="width: 18rem;">';
-	        htmlStr += '<div id="carouselExample" class="carousel slide">';
+	        htmlStr += '<div id="carouselExample'+num+'" class="carousel slide">';
 	        htmlStr += '<div class="carousel-inner">';
 	        htmlStr += '<div class="carousel-item active">';
 	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
@@ -392,11 +395,11 @@ function loadMoreData() {
 	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
-	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">';
+	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="prev">';
 	        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
 	        htmlStr += '<span class="visually-hidden">Previous</span>';
 	        htmlStr += '</button>';
-	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">';
+	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="next">';
 	        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
 	        htmlStr += '<span class="visually-hidden">Next</span>';
 	        htmlStr += '</button>';
@@ -404,10 +407,11 @@ function loadMoreData() {
 	        htmlStr += '<div class="card-body">';
 	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
 	        htmlStr += '<p>(우편) '+this.SPACE_ZIPCODE+',<br> '+this.SPACE_ADDRESS +this.SPACE_ADDRESS_DETAIL +' '+ this.SPACE_LOCATION+ '</p>';
-	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5>';
+	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5> 평균최대 인원'+this.AVGMAXPEOPLE+' 명';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
 	        htmlStr += '</div>';
+	        num++;
 	    });
 	    $('#data-container').append(htmlStr);
 	}
@@ -423,18 +427,63 @@ function loadMoreData() {
 		 
 		 var currentUrl = window.location.pathname; 
 		 var currentParam = window.location.search.substring(1);
-		 var resultUrl = currentUrl + "?"+currentParam;
+		 
+		 var resultUrl = "";
+		 var resultParam = "?";
 		 
 		 if(${!empty param.region}){
-			resultUrl = resultUrl.substring(0,resultUrl.lastIndexOf('&'));
+			var tempParam = currentParam.split('&');
+			 for(var i = 0; i < tempParam.length; i++){
+				 if(tempParam[i].indexOf('region') != -1){
+					tempParam[i] = "region=" + region;
+				 }
+				 if(i > 0){
+					 resultParam += "&" + tempParam[i]; 
+				 }else{
+					 resultParam += tempParam[i]; 
+				 }
+			 }
+			 resultUrl = currentUrl + resultParam;
+			 
+		 }else{
+			 var addRegion = "&region="+region;
+			 resultUrl = currentUrl + "?" + currentParam + addRegion;
 		 }
-		 
-		 var addRegion = "&region="+region;
-		 
-		 resultUrl += addRegion;
-
 		 location.href = resultUrl; 
 	 }
+	 
+	 
+	 
+	 
+	 function addPeopleParam(){
+		 var people = document.getElementById('people').value;
+		 var currentUrl = window.location.pathname; 
+		 var currentParam = window.location.search.substring(1);
+		 
+		 var resultUrl = "";
+		 var resultParam = "?";
+		 
+		 if(${!empty param.maxPeople}){
+			var tempParam = currentParam.split('&');
+			 for(var i = 0; i < tempParam.length; i++){
+				 if(tempParam[i].indexOf('maxPeople') != -1){
+					tempParam[i] = "maxPeople=" + people;
+				 }
+				 if(i > 0){
+					 resultParam += "&" + tempParam[i]; 
+				 }else{
+					 resultParam += tempParam[i]; 
+				 }
+			 }
+			 resultUrl = currentUrl + resultParam;
+			 
+		 }else{
+			 var addPeople = "&maxPeople="+people;
+			 resultUrl = currentUrl + "?" + currentParam + addPeople;
+		 }
+		 location.href = resultUrl; 	 
+	 }
+	 
 	
 //부트스트랩 드롭다운 요소들을 가져옴
 var dropdownItems = document.querySelectorAll('.dropdown-menu.people');
