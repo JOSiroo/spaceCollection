@@ -806,8 +806,6 @@ function loadMoreData() {
 			filterArray.push("filterList");
 		}
 		
-		alert(filterArray.length);
-		
 		for(var i = 0; i < filterArray.length; i++){
 			var paramValue;
 			var paramName;
@@ -818,39 +816,28 @@ function loadMoreData() {
 			}else{
 				paramValue = filterList;
 			}
-			alert('시작전 currentParam = ' + currentParam);
 			var tempParam = currentParam.split('&');
-			alert("tampParam =  " + tempParam);
 			for(var k = 0; k < tempParam.length; k++){
 				 if(tempParam[k].indexOf(filterArray[i]) != -1){
-					alert('변환 전 tempParam[k]' + tempParam[k]);
 					tempParam[k] = filterArray[i]+"=" + paramValue;
-					alert('변환 후 tempParam[k]' + tempParam[k]);
 				 }
 				 
 				if(k > 0){
 				 	resultParam = "&" +tempParam[k]; 
-				 	alert("resultParam = " + resultParam);
 				}else{
 				 	resultParam += tempParam[k]; 
-				 	alert("resultParam = " + resultParam);
 				}
 				resultParameter += resultParam;
 				resultParam = "";
-			 	alert("resultParameter = " + resultParameter);
 			}
 			if(currentParam.indexOf(filterArray[i]) < 0){
 				var addParam = "&"+filterArray[i]+"="+paramValue;
-				alert(addParam);
 				resultParameter += addParam;
-				alert("파라미터 없을때 resultParameter = " + resultParameter);
 			}
 			currentParam = resultParameter;
-			alert("currentParam = " + currentParam);
 			resultParameter = "";
 		}
 		resultUrl += currentParam;
-		alert('다 끝나고 resultUrl = ' + resultUrl);
 		filterArray.length = 0;
 		location.href = resultUrl; 
 	 }
