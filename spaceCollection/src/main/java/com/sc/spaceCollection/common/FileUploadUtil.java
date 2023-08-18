@@ -69,9 +69,9 @@ public class FileUploadUtil {
 
 		if(ConstUtil.FILE_UPLOAD_TYPE.equals("test")) {
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
-				path=ConstUtil.FILE_UPLOAD_PATH_TEST;
+				path=request.getContextPath() + ConstUtil.FILE_UPLOAD_PATH_TEST;
 			}else if(pathFlag==ConstUtil.UPLOAD_IMAGE_FLAG) { //상품 이미지 업로드
-				path=ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
+				path=request.getContextPath() + ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
 			}
 		}else {  //deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
@@ -81,7 +81,7 @@ public class FileUploadUtil {
 			}
 
 			//실제 물리적인 경로 구하기
-			path=request.getSession().getServletContext().getRealPath(path);
+			//path=request.getSession().getServletContext().getRealPath(path);
 		}
 
 		logger.info("업로드 경로 : {}", path);
