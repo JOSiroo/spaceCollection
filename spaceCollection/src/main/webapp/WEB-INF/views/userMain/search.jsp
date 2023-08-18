@@ -200,56 +200,56 @@
 				<ul class = "dropdounUl">
 					<li>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">종로구</div></a>
-						<a href="#" class="region-a"><div class = "col region">중구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('종로구')"><div class = "col region">종로구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('중구')"><div class = "col region">중구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">용산구</div></a>
-						<a href="#" class="region-a"><div class = "col region">성동구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('용산구')"><div class = "col region">용산구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('성동구')"><div class = "col region">성동구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">광진구</div></a>
-						<a href="#" class="region-a"><div class = "col region">동대문구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('광진구')"><div class = "col region">광진구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('동대문구')"><div class = "col region">동대문구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">중랑구</div></a>
-						<a href="#" class="region-a"><div class = "col region">성북구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('중랑구')"><div class = "col region">중랑구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('성북구')"><div class = "col region">성북구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">강북구</div></a>
-						<a href="#" class="region-a"><div class = "col region">도봉구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강북구')"><div class = "col region">강북구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('도봉구')"><div class = "col region">도봉구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">노원구</div></a>
-						<a href="#" class="region-a"><div class = "col region">은평구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('노원구')"><div class = "col region">노원구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('은평구')"><div class = "col region">은평구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">서대문구</div></a>
-						<a href="#" class="region-a"><div class = "col region">마포구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('서대문구')"><div class = "col region">서대문구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('마포구')"><div class = "col region">마포구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">양천구</div></a>
-						<a href="#" class="region-a"><div class = "col region">강서구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('양천구')"><div class = "col region">양천구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강서구')"><div class = "col region">강서구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">구로구</div></a>
-						<a href="#" class="region-a"><div class = "col region">금천구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('구로구')"><div class = "col region">구로구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('금천구')"><div class = "col region">금천구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">영등포구</div></a>
-						<a href="#" class="region-a"><div class = "col region">동작구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('영등포구')"><div class = "col region">영등포구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('동작구')"><div class = "col region">동작구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">관악구</div></a>
-						<a href="#" class="region-a"><div class = "col region">서초구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('관악구')"><div class = "col region">관악구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('서초구')"><div class = "col region">서초구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">강남구</div></a>
-						<a href="#" class="region-a"><div class = "col region">송파구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강남구')"><div class = "col region">강남구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('송파구')"><div class = "col region">송파구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">강동구</div></a>
-						<a href="#" class="region-a"><div class = "col region">-</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강동구')"><div class = "col region">강동구</div></a>
+						<a href="#" class="region-a" ><div class = "col region">-</div></a>
 					</div>
 					</li>
 				</ul>
@@ -335,13 +335,16 @@ $(function(){
 	var keyword = "";
 
 	if(${!empty param.spaceTypeNo}){
-		condition = "spaceTypeNo";
-		keyword = "${param.spaceTypeNo}";
+		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
 	}else if(${!empty param.spaceName}){
-		condition = "spaceName";
-		keyword = "${param.spaceName}";
+		condition = "spaceName="+"${param.spaceName}";
 	}
-
+	
+	if(${!empty param.region}){
+		condition += "&region="+"${param.region}";
+	}
+	
+	
 	loadMoreData(currentPage);
 	
 function loadMoreData() {
@@ -352,7 +355,7 @@ function loadMoreData() {
     isLoading = true;
 
     $.ajax({
-        url: '<c:url value="/getSearchData?page='+page+'&size='+size+'&'+condition+'='+keyword+'"/>',
+        url: '<c:url value="/getSearchData?page='+page+'&size='+size+'&'+condition+'"/>',
         type:'get',
         dataType: 'json',
         success: function(data) {
@@ -414,6 +417,24 @@ function loadMoreData() {
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        return value; 
 	    }
+	 
+	 
+	 function addRegionParam(region){
+		 
+		 var currentUrl = window.location.pathname; 
+		 var currentParam = window.location.search.substring(1);
+		 var resultUrl = currentUrl + "?"+currentParam;
+		 
+		 if(${!empty param.region}){
+			resultUrl = resultUrl.substring(0,resultUrl.lastIndexOf('&'));
+		 }
+		 
+		 var addRegion = "&region="+region;
+		 
+		 resultUrl += addRegion;
+
+		 location.href = resultUrl; 
+	 }
 	
 //부트스트랩 드롭다운 요소들을 가져옴
 var dropdownItems = document.querySelectorAll('.dropdown-menu.people');
