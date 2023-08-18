@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 
-
 <style>
 *{
 font: 'nanum gothic', 맑은 고딕, 한컴돋움, 돋움;
@@ -58,7 +57,8 @@ a.btn.btn-primary.py-2.px-3 {
 <div class="searchform">
       <%@ include file="/WEB-INF/views/userMain/userMain.jsp" %>
     </div>
-
+    
+	
    <div class="section">
       <div class="container">
       
