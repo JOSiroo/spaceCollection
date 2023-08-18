@@ -523,7 +523,10 @@ $(function(){
 		        loadMoreData();
 		    }
 		});
-	
+		
+		$('#filterResetBtn').click(function(){
+			$('.filterBtn').removeClass('selected');
+		});
 		
 		$('.filterBtn').click(function(){
 			if($(this).hasClass('selected')){
