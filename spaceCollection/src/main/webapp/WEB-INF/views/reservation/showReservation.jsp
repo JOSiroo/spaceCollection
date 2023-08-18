@@ -22,6 +22,9 @@
 	font-size: 21px;
 	margin-bottom:12px;
 }
+.text-center{
+	margin-bottom:4%;
+}
 h4{
 color:#193D76;
 font-weight : bold;
@@ -35,14 +38,36 @@ font-weight : bold;
     padding-left: 8%;	
 }
 .reserveBt{
-	width: 5%;
-	height: 40px;
+	width: 6%;
+	height:55px;
+	border:none;
+	font-size: 20px;
+	font-weight: bold;
+	
 }
+#reservationList{
+	background : #ffd014;
+}
+#reservationList:hover{
+	background : white;
+	border:#ffd014 4px solid;
+}
+
+#home{
+	background :#193D76;
+	color:white;
+}
+#home:hover{
+	background : white;
+	border:#193D76 4px solid;
+	color:black;
+}
+
 </style>
 <section>
 	<div class="asd"></div>
 	<div class="receiption">
-		<h1 style = "margin-bottom:3%;">예약 완료!</h1>
+		<h1 style = "margin-bottom:2%; font-weight: 800">예약 완료!</h1>
 		<div class="container text-center">
 			<div class="row row-cols-auto">
 				<div class="col-2"><h4>공간 정보</h4></div>
@@ -62,6 +87,21 @@ font-weight : bold;
 				<div class="col-2">주소</div>
 				<div class="col-6">(우)${map.SPACE_ZIPCODE} ${map.SPACE_ADDRESS}
 					${map.SPACE_ADDRESS_DETAIL} ${map.SPACE_LOCATION}</div>
+			</div>
+			<div class="row row-cols-auto">
+				<div class="col-2">연락처</div>
+				<div class="col-6">
+					<c:if test='${fn:length(map.SPACE_PHONE_NUM) > 9}'>
+						${fn:substring(map.SPACE_PHONE_NUM, 0, 3)} -
+						${fn:substring(map.SPACE_PHONE_NUM, 3, 7)} -
+						${fn:substring(map.SPACE_PHONE_NUM, 7, 11)}  						
+					</c:if>
+					<c:if test='${fn:length(map.SPACE_PHONE_NUM) eq 9}'>
+						${fn:substring(map.SPACE_PHONE_NUM, 0, 2)} -
+						${fn:substring(map.SPACE_PHONE_NUM, 2, 4)} -
+						${fn:substring(map.SPACE_PHONE_NUM, 4, 9)}  						
+					</c:if>
+				</div>
 			</div>
 			<br>
 			<div class="row row-cols-auto">
@@ -100,8 +140,16 @@ font-weight : bold;
 			<div class="col-6">${map.RESERVATION_NUM}</div>
 		</div>
 		</div><!-- 아래는 컨테이너 밖에있는거임 -->
-		<button class = 'reserveBt'>예약 내역</button>
-		<button class = 'reserveBt'>홈</button>
+		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>
+		<button class = 'reserveBt' id = "home" onclick="home()">홈</button>
 	</div>
 </section>
+<script type="text/javascript">
+	function reservationList(){
+		location.href = "<c:url value = '/reservation/reservationList'/>";
+	}
+	function home(){
+		location.href = "<c:url value = '/'/>";
+	}
+</script>
 <%@ include file="../form/userBottom.jsp"%>

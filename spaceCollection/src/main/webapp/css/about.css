@@ -1,5 +1,43 @@
 @charset "utf-8";
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*color: white;*/
+}
+
+
+span.sTxt {
+    font-weight: bold;
+}
+/*p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: black;
+    padding-right: 76px;
+}*/
+.rightdiv{
+    scale: 0.6;
+    float: right;
+}
+
+img {
+    width: 500px;
+}
+
+.appimg{
+	width:180px;
+}
+
+.appbox {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.google, .apple {
+  margin-right: 10px; 
+} 
 .reservation-text{
 	 font-size:15px
 	 }
@@ -87,12 +125,22 @@ header .container {
 /* index common */
 section {
   font-family: "Yanolja", "Noto Sans KR", sans-serif;
-  height: 100vh;
+  height: 80vh;
   justify-content: center;
   align-items: center;
 }
-span {
+.se1span {
   display: block;
+    font-size: 40px;
+    font-weight: bold;
+    float: left;
+    margin: 230px 0px 0px 330px;
+  background: url(../images/bagr.png) top right / contain no-repeat; 
+    color: #2a2828;
+}
+
+.carousel-item.active {
+    padding-right: 100px;
 }
 em {
   font-style: normal;
@@ -291,7 +339,7 @@ a {
 
 /* container section1,2 안 txtBox */
 .container .txtBox em {
-  font-size: 0.9vw;
+  font-size: 25px;
 }
 .container .txtBox h1 p {
   font-size: 3.646vw;
@@ -413,6 +461,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 .sec1 .container {
   display: flex;
@@ -440,7 +489,7 @@ a {
 /* **** sec2 **** */
 .sec2 {
   color: black;
-  background: url(../images/about.png) no-repeat 50% / cover;
+  background: url(https://www.spacecloud.kr/_nuxt/img/app_start_pc.1658f3c.png) no-repeat 50% / cover;
   height: 100vh;
 }
 .container .sec2Txt.txtBox .hovBox {

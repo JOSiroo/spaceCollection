@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
-	#boardWriteBt{
+	#boardWriteBt, #boardDeleteBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
+		margin-bottom: 20px;
 	}	
 
 	h5{
@@ -49,6 +50,10 @@
    		margin-block: -13px;
 	}
 	
+	td>span {
+		color: red;
+	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -65,16 +70,28 @@
 		$('#searchBt').click(function() {
 			if($('#searchKeyword').val().length<1){
 				event.preventDefault();
-				
+				$('#confirm1 .modal-body').html("검색어를 입력해주세요.");
 				$('#confirm1').modal("show");
-
-				$('#confirm').click(function() {
-					$('#searchKeyword').focus();
-				});
-				
-				
 			}
-		}); 
+		});
+		
+		$('input[name=chkAll]').click(function() {
+			var checkState = $(this).is(':checked')
+			$('td>input[type=checkbox]').prop('checked', checkState);
+		});
+		
+		$('#boardDeleteBt').click(function() {
+			if($('td>input[type=checkbox]:checked').length<1){
+				$('#confirm1 .modal-body').html("삭제할 게시물을 선택해주세요.");
+				$('#confirm1').modal("show");
+			}else{
+				$('#confirm2 .modal-body').html("선택된 게시물을 삭제하시겠습니까?");
+				$('#confirm2').modal("show");
+				$('#okBt').click(function() {
+					$('form[name=trFrm]').submit();
+				});
+			}
+		});
 			
 	});
 	
@@ -140,7 +157,8 @@
 									</select>
                   				</div>
                 			</div>
-	 						<button type="submit" class="btn btn-primary rounded-pill" id="boardWriteBt">게시물 작성</button>
+                			<button type="button" class="btn btn-secondary" id="boardDeleteBt">게시물 삭제</button>
+	 						<button type="submit" class="btn btn-primary " id="boardWriteBt">게시물 작성</button>
  						</form>
 						<table class="table">
 							<thead>
@@ -160,17 +178,35 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<c:forEach var="map" items="${list }">
-										<fmt:parseDate value="${map.BOARD_REG_DATE }" var="boardRegDate" pattern="yyyy-MM-dd"/>
-										<tr onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-											<td><input type="checkbox" name="chk"></td>
-											<td>${map.BOARD_NUM }</td>
-											<td>${map.BOARD_TYPE_NAME }</td>
-											<td>${map.BOARD_TITLE }</td>
-											<td>${map.USER_ID }</td>
-											<td><fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd"/></td>
-										</tr>
-									</c:forEach>
+									<form name="trFrm" method="post" action="<c:url value='/admin/board/boardDelete'/>">
+										<c:set var="i" value="0"/>
+										<c:forEach var="map" items="${list }">
+											<fmt:parseDate value="${map.BOARD_REG_DATE }" var="boardRegDate" pattern="yyyy-MM-dd"/>
+											<tr>
+												<td>
+													<input type="checkbox" name="boardItemList[${i }].boardNum" value="${map.BOARD_NUM }">
+												</td>
+												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
+													${map.BOARD_NUM }
+												</td>
+												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
+													${map.BOARD_TYPE_NAME }
+												</td>
+												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
+													${map.BOARD_TITLE }
+													<c:if test="${map.BOARD_TYPE_COMMENT_OK == 'Y' }">
+														<span>(${map.COMMENTCOUNT })</span>
+													</c:if> 
+												</td>
+												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
+													${map.USER_ID }
+												</td>
+												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
+													<fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd"/>
+												</td>
+											</tr>
+										</c:forEach>
+									</form>
 								</c:if>
 							</tbody>
 						</table>
@@ -180,7 +216,7 @@
 								<ul class="pagination justify-content-center">
 									<c:if test="${pagingInfo.firstPage>1 }">
 										<li class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
-											<a class="page-link" href="#" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">Previous</a>
+											<a class="page-link" href="#" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
 							    		</li>
 									</c:if>	
 							    	<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">		
@@ -197,7 +233,7 @@
 									</c:forEach>
 							      	<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
 							      		<li class="page-item <c:if test='${pagingInfo.lastPage >= pagingInfo.totalPage }'>disabled</c:if>">
-								      		<a class="page-link" href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a>
+								      		<a class="page-link" href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
 								    	</li>
 									</c:if>
 							  	</ul>
@@ -241,7 +277,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">검색란을 입력해주세요.</div>
+				<div class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
 						data-bs-dismiss="modal" id="confirm">확인</button>
@@ -249,7 +285,26 @@
 			</div>
 		</div>
 	</div>
-	<!-- EndModal -->
+	<!-- EndModal1 -->
+	<!-- Moda2 -->
+	<div class="modal fade" id="confirm2" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="bi bi-exclamation-circle" style="color: red;"></i></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-danger" id="okBt">삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal2 -->
 	
 </main>
 <!-- End #main -->

@@ -157,13 +157,13 @@
 								</ul> -->
 							</li>
 							<li><a href="<c:url value='/event'/>">이벤트</a></li>
-							<li><a href="https://yanolja.in/about/">회사소개</a></li>
+							<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
 						<!-- 로그인 안된 경우 -->
-							<c:if test="${empty sessionScope.userid }">
+							<c:if test="${empty sessionScope.userId }">
 								<li><a href="<c:url value='/login/login'/>">로그인</a></li>
 							</c:if>
 						<!-- 로그인 된 경우 -->
-							<c:if test="${!empty sessionScope.userid }">
+							<c:if test="${!empty sessionScope.userId }">
 								<li><a href="<c:url value='/login/logout'/>">로그아웃</a></li>
 							</c:if>
 						</ul>
@@ -221,7 +221,7 @@
 		 	</div>
 				
 		  	<div class="col-sm-6 " style="text-align: center;">
-			  <a href="<c:url value='/member_reserve' />">  
+			  <a href="<c:url value='/reservation/reservationList' />">  
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
@@ -251,7 +251,7 @@
 		  </div>
 		  
 		  <div class="col-sm-6 "  style="text-align: center;">
-		    <a href="https://www.spacecloud.kr/introduction">
+		    <a href="<c:url value='/about'/>">
 		    <i class="bi bi-houses" ></i>
 		 	   <p>회사소개</p></a>
 		  </div>
@@ -259,7 +259,7 @@
 	</div><!-- sideform -->	      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
-	      <a href="${pageContext.request.contextPath }/host">Host센터로 이동하기</a>
+	      <a href="${pageContext.request.contextPath }/host/index">Host센터로 이동하기</a>
 	      <p class="copyright">Powered by © nada Crew.</p>
 	      </div>
        

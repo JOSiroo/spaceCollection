@@ -200,56 +200,56 @@
 				<ul class = "dropdounUl">
 					<li>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">종로구</div></a>
-						<a href="#" class="region-a"><div class = "col region">중구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('종로구')"><div class = "col region">종로구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('중구')"><div class = "col region">중구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">용산구</div></a>
-						<a href="#" class="region-a"><div class = "col region">성동구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('용산구')"><div class = "col region">용산구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('성동구')"><div class = "col region">성동구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">광진구</div></a>
-						<a href="#" class="region-a"><div class = "col region">동대문구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('광진구')"><div class = "col region">광진구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('동대문구')"><div class = "col region">동대문구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">중랑구</div></a>
-						<a href="#" class="region-a"><div class = "col region">성북구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('중랑구')"><div class = "col region">중랑구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('성북구')"><div class = "col region">성북구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">강북구</div></a>
-						<a href="#" class="region-a"><div class = "col region">도봉구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강북구')"><div class = "col region">강북구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('도봉구')"><div class = "col region">도봉구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">노원구</div></a>
-						<a href="#" class="region-a"><div class = "col region">은평구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('노원구')"><div class = "col region">노원구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('은평구')"><div class = "col region">은평구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">서대문구</div></a>
-						<a href="#" class="region-a"><div class = "col region">마포구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('서대문구')"><div class = "col region">서대문구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('마포구')"><div class = "col region">마포구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">양천구</div></a>
-						<a href="#" class="region-a"><div class = "col region">강서구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('양천구')"><div class = "col region">양천구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강서구')"><div class = "col region">강서구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">구로구</div></a>
-						<a href="#" class="region-a"><div class = "col region">금천구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('구로구')"><div class = "col region">구로구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('금천구')"><div class = "col region">금천구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">영등포구</div></a>
-						<a href="#" class="region-a"><div class = "col region">동작구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('영등포구')"><div class = "col region">영등포구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('동작구')"><div class = "col region">동작구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">관악구</div></a>
-						<a href="#" class="region-a"><div class = "col region">서초구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('관악구')"><div class = "col region">관악구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('서초구')"><div class = "col region">서초구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">강남구</div></a>
-						<a href="#" class="region-a"><div class = "col region">송파구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강남구')"><div class = "col region">강남구</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('송파구')"><div class = "col region">송파구</div></a>
 					</div>
 					<div class = "row region">
-						<a href="#" class="region-a"><div class = "col region">강동구</div></a>
-						<a href="#" class="region-a"><div class = "col region">-</div></a>
+						<a href="#" class="region-a" onclick="addRegionParam('강동구')"><div class = "col region">강동구</div></a>
+						<a href="#" class="region-a" ><div class = "col region">-</div></a>
 					</div>
 					</li>
 				</ul>
@@ -288,7 +288,7 @@
 		</div><!-- 인원 -->
 </div>
 	<button type="button" class="btn btn-outline-dark">필터</button>
-	<c:if test="${!empty param.spaceType }">
+	<c:if test="${!empty param.spaceTypeNo }">
 		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/>">
 	</c:if>
 	<c:if test="${!empty param.spaceName }">
@@ -300,53 +300,8 @@
 
 
 <section class = "search-section">
-	<div class="container">
-	  <c:if test="${!empty totalRecord}">
-		<h3 style = "padding-top:20px; font-weight: bold;">총 ${totalRecord }건이 검색되었습니다.</h5>
-	</c:if>	
-	  <div class="row">
-	  <c:if test="${empty spaceMap }">
-	  	<h1 style = "padding-top:20px; font-weight: bold; text-align:center"> 등록된 공간이 없어요!!</h1>
-	  </c:if>
-	  <c:if test="${!empty spaceMap }">
-	  	<c:forEach var="space" items="${spaceMap}">
-		    <div class="col-sm-4">
-			    <div class="card" style="width: 18rem;">
-				  <div id="carouselExample" class="carousel slide">
-					  <div class="carousel-inner">
-					    <div class="carousel-item active">
-					      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-					    </div>
-					    <div class="carousel-item">
-					      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-					    </div>
-					    <div class="carousel-item">
-					      <img src="<c:url value='/images/img_8.jpg'/>" class="d-block w-100" alt="...">
-					    </div>
-					  </div>
-					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Previous</span>
-					  </button>
-					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-					    <span class="visually-hidden">Next</span>
-					  </button>
-					</div><!-- 여까지 캐러셀 -->
-				  	<div class="card-body">
-					  	<a href = "<c:url value = '/detail?spaceNo=${space.key.spaceNum}'/>"><h5 class="h5">${space.key.spaceName}</h5></a>
-						  	<c:set var="tag" value=""/>
-						  	<c:forEach items="${fn:split(space.key.spaceTag, '/')}" var="tags">
-							    <span>#${tags }</span>
-						    </c:forEach>
-					    <h5 class = "h5" style="color:#193D76">
-					    <fmt:formatNumber value="${space.value}" pattern="₩#,###"/>원
-					    </h5>
-				  </div>
-				</div>
-		    </div>
-	    </c:forEach>
-	    </c:if>
+	<div class="container" >
+	  <div class="row" id = "data-container">
   </div>
 </div>
 	  
@@ -365,8 +320,122 @@ $(function(){
 			var people = $(this).siblings('#people');
 		    	people.val(parseInt(people.val())+1);
 		});
+		
+		$(window).on('scroll', function() {
+		    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+		        loadMoreData();
+		    }
+		});
 });
+	var currentPage = 1;
+	var page = 1;
+	var size = 21;
+	var isLoading = false;
+	var condition = "";
+	var keyword = "";
 
+	if(${!empty param.spaceTypeNo}){
+		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
+	}else if(${!empty param.spaceName}){
+		condition = "spaceName="+"${param.spaceName}";
+	}
+	
+	if(${!empty param.region}){
+		condition += "&region="+"${param.region}";
+	}
+	
+	
+	loadMoreData(currentPage);
+	
+function loadMoreData() {
+    if (isLoading) {
+        return;
+    }
+
+    isLoading = true;
+
+    $.ajax({
+        url: '<c:url value="/getSearchData?page='+page+'&size='+size+'&'+condition+'"/>',
+        type:'get',
+        dataType: 'json',
+        success: function(data) {
+        	if(data != null){
+				makeList(data);
+                page++;
+			}
+        },
+        complete: function() {
+            isLoading = false;
+        }
+    });
+}
+	// Initial data load
+	loadMoreData();
+
+	function makeList(data) {
+	    var htmlStr = "";
+
+	    $.each(data, function() {
+	    	console.log(data);
+
+	        htmlStr += '<div class="col-sm-4">';
+	        htmlStr += '<div class="card" style="width: 18rem;">';
+	        htmlStr += '<div id="carouselExample" class="carousel slide">';
+	        htmlStr += '<div class="carousel-inner">';
+	        htmlStr += '<div class="carousel-item active">';
+	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
+	        htmlStr += '</div>';
+	        htmlStr += '<div class="carousel-item">';
+	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
+	        htmlStr += '</div>';
+	        htmlStr += '<div class="carousel-item">';
+	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
+	        htmlStr += '</div>';
+	        htmlStr += '</div>';
+	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">';
+	        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+	        htmlStr += '<span class="visually-hidden">Previous</span>';
+	        htmlStr += '</button>';
+	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">';
+	        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+	        htmlStr += '<span class="visually-hidden">Next</span>';
+	        htmlStr += '</button>';
+	        htmlStr += '</div>';
+	        htmlStr += '<div class="card-body">';
+	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
+	        htmlStr += '<p>(우편) '+this.SPACE_ZIPCODE+',<br> '+this.SPACE_ADDRESS +this.SPACE_ADDRESS_DETAIL +' '+ this.SPACE_LOCATION+ '</p>';
+	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5>';
+	        htmlStr += '</div>';
+	        htmlStr += '</div>';
+	        htmlStr += '</div>';
+	    });
+	    $('#data-container').append(htmlStr);
+	}
+
+	 function addComma(value){
+		    value = value+"";
+	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        return value; 
+	    }
+	 
+	 
+	 function addRegionParam(region){
+		 
+		 var currentUrl = window.location.pathname; 
+		 var currentParam = window.location.search.substring(1);
+		 var resultUrl = currentUrl + "?"+currentParam;
+		 
+		 if(${!empty param.region}){
+			resultUrl = resultUrl.substring(0,resultUrl.lastIndexOf('&'));
+		 }
+		 
+		 var addRegion = "&region="+region;
+		 
+		 resultUrl += addRegion;
+
+		 location.href = resultUrl; 
+	 }
+	
 //부트스트랩 드롭다운 요소들을 가져옴
 var dropdownItems = document.querySelectorAll('.dropdown-menu.people');
 

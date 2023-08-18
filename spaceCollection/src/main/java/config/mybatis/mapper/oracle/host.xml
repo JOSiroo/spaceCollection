@@ -4,12 +4,27 @@
 
 <mapper namespace="com.sc.spaceCollection.host.model.HostDAO">
 	
-
-
-	<select id="selectUserInfo" parameterType="String"
-		resultType="guestVo">
-		select * from USER_INFO
-		where USER_ID=#{userId}
+	<select id="selectSpaceTypeView" parameterType="int" resultType="map">
+		select * from SpaceTypeView
+		where categoryNo = ${categoryNo}
+	</select>
+	
+	<resultMap type="SpaceTypeAllVo" id="selectSpace">
+		<association property="spaceTypeVO" column="spaceTypeNo" javaType="spaceTypeVO">
+			<id property="spaceTypeNo" column="spacetypeno" jdbcType="BIGINT"/>
+			<result property="spaceTypeName" column="spacetypename" jdbcType="VARCHAR" />
+			<result property="categoryNo" column="categoryno" jdbcType="BIGINT" />
+			<result property="explanation" column="explanation" jdbcType="VARCHAR" />
+			<result property="categoryName" column="categoryname" jdbcType="VARCHAR" />
+		</association>
+		<collection property="spaceTypeList" javaType="ArrayList" ofType="map" column="categoryno"
+			select="selectSpaceTypeView">
+		</collection>
+	</resultMap>
+	
+	<select id="selectSpaceType" parameterType="int" resultMap="selectSpace">
+		select * from spaceType
+		where categoryNo = ${categoryNo}
 	</select>
 	
 </mapper>
