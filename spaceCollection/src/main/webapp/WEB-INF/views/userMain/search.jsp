@@ -538,7 +538,13 @@ $(function(){
 				$(this).addClass('selected');
 			}
 		});
+		
+		
 });
+	
+	
+
+	//금액 범위 지정하는 range bar 관련 영역
 	var snapSlider = document.getElementById('slider-snap');
 	var upperPrice = 0;
 	var lowerPrice = 0;
@@ -547,17 +553,17 @@ $(function(){
 	
 	if(${!empty param.minPrice}){
 		lower.value = addComma(${param.minPrice})+"원";
-		lowerPrice =${param.minPrice};
+		lowerPrice ="${param.minPrice}";
 	}else{
 		lowerPrice = 0;
 	}
 	if(${!empty param.maxPrice}){
 		upper.value = addComma(${param.maxPrice})+"원";
-		upperPrice = ${param.maxPrice};
+		upperPrice = "${param.maxPrice}";
 	}else{
 		upperPrice = 300000;
 	}
-
+	
 	noUiSlider.create(snapSlider, {
 	    start: [lowerPrice, upperPrice],
 	    connect: true,
@@ -568,7 +574,7 @@ $(function(){
 		format: {
 	    	to: (value) => parseFloat(value).toFixed(0),
 	    	from: (value) => parseFloat(value).toFixed(0)
-		},
+		}
 	});
 
 	var snapValues = [
@@ -596,10 +602,9 @@ $(function(){
 		snapSlider.noUiSlider.set([null, this.value]);
 	});
 	
-	lowerPrice = 0;
-	upperPrice = 0;
 	
-	
+	//선택된(selected) 필터요소들을 filterList에 추가한 뒤 addFilterParam를 호출하는 함수 
+	var selectedFilter = [];
 	var filters = document.querySelectorAll('.filterBtn');
 	var filterList = [];
 	function addFilter(){
@@ -611,18 +616,19 @@ $(function(){
 		if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
 			alert('필터 조건을 선택해 주세요!');
 		}else{
-			addFilterParam(filterList, lowerPrice, upperPrice);			
+			addFilterParam(filterList, lowerPrice, upperPrice);		
 		}
 	}
 
-
+	//ajax이용 무한스크롤 페이징 관련 변수들
 	var currentPage = 1;
 	var page = 1;
 	var size = 21;
 	var isLoading = false;
 	var condition = "";
 	var keyword = "";
-
+	
+	//ajax로 처리된 파라미터들이 있으면 url에 파라미터 추가하는 영역
 	if(${!empty param.spaceTypeNo}){
 		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
 	}else if(${!empty param.spaceName}){
@@ -637,6 +643,14 @@ $(function(){
 	}
 	if(${!empty param.filterList}){
 		condition += "&filterList="+"${param.filterList}";
+		selectedFilter = "${param.filterList}".split(',');
+		for(var i = 0; i < selectedFilter.length; i++){
+			filters.forEach(function(item){
+				if(item.value === selectedFilter[i]){
+					item.classList.add('selected');
+				}			
+			});
+		}
 	}
 	if(${!empty param.minPrice}){
 		condition += "&minPrice="+"${param.minPrice}";
@@ -645,7 +659,7 @@ $(function(){
 		condition += "&maxPrice="+"${param.maxPrice}";
 	}
 	
-	
+	//무한스크롤 ajax 함수 영역
 	var noDataNum = 0;
 function loadMoreData() {
     if (isLoading) {
@@ -677,9 +691,10 @@ function loadMoreData() {
         }
     });
 }
-	// Initial data load
-	loadMoreData();
 
+	loadMoreData();
+	
+	// ajax로 불러온 데이터들 html 생성하는 함수
 	var num =1;
 	function makeList(data) {
 	    var htmlStr = "";
@@ -721,23 +736,26 @@ function loadMoreData() {
 	    $('#data-container').append(htmlStr);
 	}
 	
+	//ajax로 불러올 데이터가 없을때 호출하는 함수
 	function noData(){
 		 var htmlStr = "<h1 class='nodata'>표시 할 공간이 없어요</h1>";
 		 $('#data-container').append(htmlStr);
 		 isLoading = true;
 	 }
-
+	
+	//#,### 포멧 적용시키는 정규식 함수
 	 function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        return value; 
 	    }
-	 
+	 //html태그(element)의 클래스명에 className이 포함되는지 검사하는 함수
 	 function hasClass(element, className) {
 		    return element.classList.contains(className);
 		}
 	 
 	 
+	//지역 파라미터를 추가한 URL 반환하는 함수
 	 function addRegionParam(region){
 		 
 		 var currentUrl = window.location.pathname; 
@@ -767,9 +785,7 @@ function loadMoreData() {
 		 location.href = resultUrl; 
 	 }
 	 
-	 
-	 
-	 
+	//인원 파라미터를 추가한 URL 반환하는 함수
 	 function addPeopleParam(){
 		 var people = document.getElementById('people').value;
 		 var currentUrl = window.location.pathname; 
@@ -800,7 +816,7 @@ function loadMoreData() {
 	 }
 	 
 	 
-	 
+	 //필터조건(가격,시설) 파라미터를 추가한 URL 반환하는 함수
 	 function addFilterParam(filterList, lowerPrice, upperPrice){
 		
 		var currentUrl = window.location.pathname; 
@@ -817,7 +833,7 @@ function loadMoreData() {
 		if(upperPrice !== 0){
 			filterArray.push("maxPrice");
 		}
-		if(filterList !== null){
+		if(filterList.length !== 0){
 			filterArray.push("filterList");
 		}
 		

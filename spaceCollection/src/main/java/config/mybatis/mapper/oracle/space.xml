@@ -43,7 +43,7 @@
 			select A.*, rownum as rn
 			from 
 			(
-				select * from space_sd_averagePrice_view
+				select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
 				where space_Name like '%' || #{spaceName} || '%'
 				<if test="region!=null and region!=''">
 					and space_address like '%' || #{region} || '%'
