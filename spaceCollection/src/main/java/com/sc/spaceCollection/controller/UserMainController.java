@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,8 +66,6 @@ public class UserMainController {
 	   return "userMain/event";
    }
    
-   
-   
    @RequestMapping("/search")
    public String search_request() {
 	   logger.info("검색창");
@@ -80,14 +80,24 @@ public class UserMainController {
          @RequestParam(defaultValue = "0") int spaceTypeNo,
          @RequestParam(required = false) String region,
          @RequestParam(defaultValue = "99") int maxPeople,
+         @RequestParam(defaultValue = "0") int minPrice,
+         @RequestParam(defaultValue = "300000") int maxPrice,
+         @RequestParam(required = false) String filterList,
          Model model) {
+	   List<String> filterItem = null;
+	  if(filterList != null && !filterList.isEmpty()) {
+		  filterItem = Arrays.asList(filterList.split(","));
+	  }
 	   
+	  logger.info("filterList = {}", filterList); 
 	  logger.info("spaceRegion = {}, maxPeople = {}", region,maxPeople); 
+	  logger.info("minPrice = {}, maxPrice = {}", minPrice,maxPrice); 
 	   
 	  List<Map<String, Object>> list = new ArrayList<>();
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
-         list = spaceService.selectBySpaceName(page, size, spaceName,region,maxPeople);
+         list = spaceService.selectBySpaceName(page, size, spaceName,
+        		 region,maxPeople,minPrice,maxPrice,filterItem);
             
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
          
@@ -96,7 +106,8 @@ public class UserMainController {
          
       }else if(spaceTypeNo != 0) {
 		  logger.info("타입별 공간 리스트 조회, 파라미터 spaceTypeNo = {}, page = {}, size = {}", spaceTypeNo,page, size);
-		  list = spaceService.selectBySpaceType(page, size, spaceTypeNo,region,maxPeople);
+		  list = spaceService.selectBySpaceType(page, size, spaceTypeNo,
+	        		 region,maxPeople,minPrice,maxPrice,filterItem);
 		  logger.info("타입별 공간 리스트 조회, 파라미터 list.size = {}", list.size());
          
          model.addAttribute("list", list);

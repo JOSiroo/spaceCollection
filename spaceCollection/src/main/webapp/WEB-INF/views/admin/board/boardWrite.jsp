@@ -33,40 +33,108 @@
 	#strCount{
 		float: left;
 	}
+	
+	i.bi.bi-exclamation-circle {
+ 		color: #ffd600;
+   		font-size: 40px;
+   		display: block;
+   		margin-block: -13px;
+	}
+	
+	form#fileFrm>* {
+    	width: 100%;
+	}
+	
+	#fileDiv{
+		width: 100%;
+		border: solid 1px rgb(212,212,212);
+		margin-top: 20px;
+		padding-bottom: 10px;
+	}
+	
+	input[type=file]{
+		margin-top: 10px;
+	}
+	
+	#btDiv{
+		margin-top: 10px;
+		float: right;
+	}
+	
+	#btDiv>button{
+		width: 100px;
+	}
 </style>
 <script type="text/javascript" src="<c:url value='/resource/ckeditor/ckeditor.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
+		$('#strCount').html('&nbsp;&nbsp('+0);
+		
 		CKEDITOR.replace('contents', {
 			uploadUrl : '<c:url value='/admin/board/boardWrite'/>',
-			filebrowserUploadUrl : '<c:url value='/admin/board/boardWrite'/>',
+			filebrowserUploadUrl : '<c:url value='/admin/board/fileUpload'/>',
 			width : '100%'
 			
 		});
 		
+		$('#submit').click(function() {
+			$('form').submit();
+		});
+		
+		$('#cancel').click(function() {
+			$('#confirm').addClass('historyback');
+			$('.modal-footer>#cancel').css('visibility', 'visible');
+			$('.modal-body').html("작성을 취소하시겠습니까? 작성된 내용은 저장되지 않습니다.");
+			$('#confirm1').modal('show');
+
+			$('.historyback').click(function() {
+				$(this).removeClass('historyback');
+				history.back();
+				
+			});
+		});
+		
+		
 		$('form').submit(function() {
+			if($('#boardTitle').val().trim().length<1){
+				$('#confirm').addClass('titleFocus');
+				$('.modal-body').html("제목을 입력하세요.");
+		        $('#confirm1').modal('show');
+
+		        $('.titleFocus').click(function() {
+					$('#boardTitle').val('');
+					$('#boardTitle').focus();
+					$(this).removeClass('titleFocus');
+				}); 
+				
+				return false;
+			}
+			
+			var content = CKEDITOR.instances.contents.getData();
+			
+			if(content==""){
+				$('#confirm').addClass('contentFocus');
+				$('.modal-body').html("게시물 내용을 입력하세요.");
+		        $('#confirm1').modal('show');
+		        
+				$('.contentFocus').click(function() {
+					CKEDITOR.instances.contents.focus();
+					$(this).removeClass('contentFocus');
+				}); 
+				
+				return false;
+			}
+			
 			$('#boardTypeName').val($('option:selected').html());
 		});
 		
-		/* $('#boardTitle').keyup(function() {
-			let strLength = $(this).val().length;
-			if(strLength>45){
-				$('#confirm1').modal('show');
-				$('#confirm1').on('hidden.bs.modal', function (e) {
-				var sliceStr = $('#boardTitle').val().slice(0, 45);
-				$('#boardTitle').val(sliceStr);
-					$('#boardTitle').focus();
-				});
-			}
-			$('#strCount').html('&nbsp;&nbsp(' + strLength);
-		}); */
 			
 		$('#boardTitle').keyup(function (e) {
 			let titleStr = $(this).val();
 		    
 		    // 글자수 세기
 		    if (titleStr.length == 0 || titleStr == '') {
-		    	$('#strCount').html('(0'+0);
+		    	$('#strCount').html('&nbsp;&nbsp('+0);
 		    } else {
 		    	$('#strCount').html('&nbsp;&nbsp(' + titleStr.length);
 		    }
@@ -76,18 +144,23 @@
 		    	// 45자 부터는 타이핑 되지 않도록
 		        $(this).val($(this).val().substring(0, 45));
 		        // 45자 넘으면 알림창 뜨도록
+		        $('.modal-body').html("제목은 45자를 초과할 수 없습니다.");
+		        $('#confirm1').modal('show');
+				$('#confirm1').on('hidden.bs.modal', function (e) {
+					$('#boardTitle').focus();
+				});
 		    };
 		});	
 		
 		$('input[type=submit]').click(function() {
 			$('#boardFrm').submit();
 		});
-	});
 		
-	document.myForm.addEventListener("keydown", evt => {
-	    if ((evt.keyCode || evt.which) === 13) {
-	        evt.preventDefault();
-	    }
+		var i = 0;
+		
+		$('input[type=file]').change(function() {
+			
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -112,7 +185,8 @@
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">게시물 작성</h5>
- 						<form class="row gx-3 gy-2 align-items-center" name="boardFrm" id="boardFrm" method="post" action="<c:url value='/admin/board/boardWriteSub'/>"
+ 						<form class="row gx-3 gy-2 align-items-center" name="boardFrm" id="boardFrm" method="post" 
+ 						action="<c:url value='/admin/board/boardWriteSub'/>" enctype="multipart/form-data"
  							onkeydown="return event.key != 'Enter';">
 							<div id="searchDiv">
 								<div class="col-sm-3" id="select">
@@ -135,12 +209,19 @@
 								
 							</div>
 							<textarea name="boardContent" id="contents"></textarea>
-							<div class="col-auto">
-								<button type="submit" class="btn btn-primary">등록</button>
-							</div>
 							<input type="hidden" name="boardTypeName" id="boardTypeName">
 							<input type="hidden" name="userNum" value="9999999">
 						</form>
+						<form class="row gx-3 gy-2 align-items-center" name="fileFrm" id="fileFrm" method="post" action="<c:url value='/admin/board/fileUpload'/>"
+							enctype="multipart/form-data">
+							<div class="input-group" id="fileDiv">
+								<input multiple="multiple" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+							</div>
+						</form>
+						<div class="col-auto" id="btDiv">
+							<button type="button" class="btn btn-primary" id="submit">등록</button>
+							<button type="button" class="btn btn-secondary" id="cancel">취소</button>
+						</div>
 				 	</div>
 				</div>
 
@@ -158,6 +239,8 @@
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" id="cancel" style="visibility: hidden;">취소</button>
 					<button type="button" class="btn btn-primary"
 						data-bs-dismiss="modal" id="confirm">확인</button>
 				</div>
