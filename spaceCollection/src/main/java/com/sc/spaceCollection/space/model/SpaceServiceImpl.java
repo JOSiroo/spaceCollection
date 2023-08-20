@@ -30,11 +30,12 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<Map<String, Object>> selectBySpaceType(int page, int size, int spaceTypeNo,
 														String region,int maxPeople,
 														int minPrice, int maxPrice,
-														List<String> filterList) {
+														List<String> filterList,
+														String order) {
 		int startRow = (page - 1) * size + 1;  
 		int endRow = page * size;
-		logger.info("typeNo page = {}, size = {}, startRow = {}, endRow = {}", page,size,startRow,endRow);
-		return spaceDao.selectBySpaceType(startRow, endRow, spaceTypeNo, region,maxPeople,minPrice,maxPrice,filterList);
+		logger.info("typeNo page = {}, size = {}, startRow = {}, endRow = {}, order = {}", page,size,startRow,endRow,order);
+		return spaceDao.selectBySpaceType(startRow, endRow, spaceTypeNo, region,maxPeople,minPrice,maxPrice,filterList,order);
 	}
 
 
@@ -42,11 +43,12 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<Map<String, Object>> selectBySpaceName(int page, int size, String spaceName,
 														String region,int maxPeople,
 														int minPrice, int maxPrice,
-														List<String> filterList) {
+														List<String> filterList,
+														String order) {
 		int startRow = (page - 1) * size + 1;  
 		int endRow = page * size;
-		logger.info("name page = {}, size = {}, startRow = {}, endRow = {}", page,size,startRow,endRow);
-		return spaceDao.selectBySpaceName(startRow, endRow, spaceName, region,maxPeople,minPrice,maxPrice,filterList);
+		logger.info("name page = {}, size = {}, startRow = {}, endRow = {}, order = {}", page,size,startRow,endRow,order);
+		return spaceDao.selectBySpaceName(startRow, endRow, spaceName, region,maxPeople,minPrice,maxPrice,filterList,order);
 	}
 
 

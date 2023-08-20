@@ -17,7 +17,8 @@ public interface SpaceDAO {
 												@Param("maxPeople") int maxPeople,
 												@Param("minPrice") int minPrice,
 												@Param("maxPrice") int maxPrice,
-												@Param("filterList") List<String> filterList);
+												@Param("filterList") List<String> filterList,
+												@Param("order") String order);
 	
 	List<Map<String, Object>> selectBySpaceName(@Param("startRow")int startRow,
 												@Param("endRow") int endRow,
@@ -26,7 +27,8 @@ public interface SpaceDAO {
 												@Param("maxPeople") int maxPeople,
 												@Param("minPrice") int minPrice,
 												@Param("maxPrice") int maxPrice,
-												@Param("filterList") List<String> filterList);
+												@Param("filterList") List<String> filterList,
+												@Param("order") String order);
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();

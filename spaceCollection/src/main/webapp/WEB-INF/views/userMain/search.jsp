@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
+
 .row{
 	padding: 5% 0% 0% 0%;
 }
@@ -73,7 +74,9 @@
 	display:contents;
 }
 
-
+.menu{
+	width:100% !important; 
+}
 .dropdown-menu.region.show {
    	padding: 10% 8% 6% 8%;
     margin: 0% 0% 0% 2% !important;
@@ -111,7 +114,8 @@
 		width: 28%;
 	}
 	.dropdown{
-		width:100%;
+		margin-left: 2%;
+		width: 26%;
 	}
 	.dropdown-toggle{
 		width:100%;
@@ -167,6 +171,9 @@
 	}
 	.people-numGroup{
 		padding:0% 0% 0% 0%;
+	}
+	.btn.btn-outline-dark{
+		border: lightgrey 2px solid !important;
 	}
 	#peopleMinus{
 		border: #193D76 solid 2px !important;
@@ -275,12 +282,20 @@
 	.noUi-handle:hover{
 		background: lightgrey;
 	}
+	.order-select{
+	    width: 8%;
+	    margin-left: 64.2%;
+	    padding-top: 36px;
+	}
+	.select-option:hover{
+		background-color: #ffd014 !important;
+	}
 </style>
 <div class="search-wrapper"></div>
 <div class = "asd">
 <div class="btn-group">
 	<div class="dropdown">
-		  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		  <button class="btn btn-secondary dropdown-toggle menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 		    지역
 		  </button>
 		  <div class="dropdown-menu region">
@@ -350,7 +365,7 @@
 		</div><!-- 지역 -->
 	</div>
 		<div class="dropdown">
-			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<button class="btn btn-secondary dropdown-toggle menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 		   	 	인원
 		  	</button>
 			<div class="dropdown-menu people">
@@ -381,7 +396,7 @@
 			</div>
 		</div><!-- 인원 -->
 	<div class="dropdown">
-			<button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			<button class="btn btn-outline-dark dropdown-toggle menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 		   	 	필터
 		  	</button>
 			<div class="dropdown-menu filter">
@@ -485,20 +500,26 @@
 				</ul>
 			</div>
 		</div><!-- 인원 -->
-</div>
-	
 	<c:if test="${!empty param.spaceTypeNo }">
-		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/>">
+		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/> "style="margin-left:3%; width:24%">
 	</c:if>
 	<c:if test="${!empty param.spaceName }">
-		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>">
+		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>"style="margin-left:3%; width:24%;">
 	</c:if>
-	<button type="button" class="btn btn-outline-dark">지도</button></a>
+	<button type="button" class="btn btn-outline-dark menu" >지도</button></a>
+</div>
 </div>
 
-
-
 <section class = "search-section">
+<div class="order-select">
+		<select class="form-select" id="order-select" onfocus='this.size=4;' onblur='this.size=0;' 
+            onchange='this.size=1; this.blur();'>
+		  <option class = "select-option" selected>정렬</option>
+		  <option value="avgprice_desc" class = "select-option">가격 높은순</option>
+		  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
+		  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
+		</select>
+	</div>
 	<div class="container" >
 	  <div class="row" id = "data-container">
   </div>
@@ -538,7 +559,13 @@ $(function(){
 				$(this).addClass('selected');
 			}
 		});
+		
+		
 });
+	
+	
+
+	//금액 범위 지정하는 range bar 관련 영역
 	var snapSlider = document.getElementById('slider-snap');
 	var upperPrice = 0;
 	var lowerPrice = 0;
@@ -547,17 +574,17 @@ $(function(){
 	
 	if(${!empty param.minPrice}){
 		lower.value = addComma(${param.minPrice})+"원";
-		lowerPrice =${param.minPrice};
+		lowerPrice ="${param.minPrice}";
 	}else{
 		lowerPrice = 0;
 	}
 	if(${!empty param.maxPrice}){
 		upper.value = addComma(${param.maxPrice})+"원";
-		upperPrice = ${param.maxPrice};
+		upperPrice = "${param.maxPrice}";
 	}else{
 		upperPrice = 300000;
 	}
-
+	
 	noUiSlider.create(snapSlider, {
 	    start: [lowerPrice, upperPrice],
 	    connect: true,
@@ -568,7 +595,7 @@ $(function(){
 		format: {
 	    	to: (value) => parseFloat(value).toFixed(0),
 	    	from: (value) => parseFloat(value).toFixed(0)
-		},
+		}
 	});
 
 	var snapValues = [
@@ -596,10 +623,9 @@ $(function(){
 		snapSlider.noUiSlider.set([null, this.value]);
 	});
 	
-	lowerPrice = 0;
-	upperPrice = 0;
 	
-	
+	//선택된(selected) 필터요소들을 filterList에 추가한 뒤 addFilterParam를 호출하는 함수 
+	var selectedFilter = [];
 	var filters = document.querySelectorAll('.filterBtn');
 	var filterList = [];
 	function addFilter(){
@@ -611,18 +637,27 @@ $(function(){
 		if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
 			alert('필터 조건을 선택해 주세요!');
 		}else{
-			addFilterParam(filterList, lowerPrice, upperPrice);			
+			addFilterParam(filterList, lowerPrice, upperPrice);		
 		}
 	}
+	
+	//가격순,베스트순 select박스 선택시 파라미터 적용하는 함수
+	const selectElement = document.getElementById("order-select");
 
-
+	selectElement.addEventListener("change", function(event) {
+	    const selectedValue = event.target.value;
+		addOrderParam(selectedValue);	    
+	});
+	
+	//ajax이용 무한스크롤 페이징 관련 변수들
 	var currentPage = 1;
 	var page = 1;
 	var size = 21;
 	var isLoading = false;
 	var condition = "";
 	var keyword = "";
-
+	
+	//ajax로 처리된 파라미터들이 있으면 url에 파라미터 추가하는 영역
 	if(${!empty param.spaceTypeNo}){
 		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
 	}else if(${!empty param.spaceName}){
@@ -637,6 +672,14 @@ $(function(){
 	}
 	if(${!empty param.filterList}){
 		condition += "&filterList="+"${param.filterList}";
+		selectedFilter = "${param.filterList}".split(',');
+		for(var i = 0; i < selectedFilter.length; i++){
+			filters.forEach(function(item){
+				if(item.value === selectedFilter[i]){
+					item.classList.add('selected');
+				}			
+			});
+		}
 	}
 	if(${!empty param.minPrice}){
 		condition += "&minPrice="+"${param.minPrice}";
@@ -644,8 +687,11 @@ $(function(){
 	if(${!empty param.maxPrice}){
 		condition += "&maxPrice="+"${param.maxPrice}";
 	}
+	if(${!empty param.order}){
+		condition += "&order="+"${param.order}";
+	}
 	
-	
+	//무한스크롤 ajax 함수 영역
 	var noDataNum = 0;
 function loadMoreData() {
     if (isLoading) {
@@ -677,9 +723,10 @@ function loadMoreData() {
         }
     });
 }
-	// Initial data load
-	loadMoreData();
 
+	loadMoreData();
+	
+	// ajax로 불러온 데이터들 html 생성하는 함수
 	var num =1;
 	function makeList(data) {
 	    var htmlStr = "";
@@ -721,23 +768,26 @@ function loadMoreData() {
 	    $('#data-container').append(htmlStr);
 	}
 	
+	//ajax로 불러올 데이터가 없을때 호출하는 함수
 	function noData(){
 		 var htmlStr = "<h1 class='nodata'>표시 할 공간이 없어요</h1>";
 		 $('#data-container').append(htmlStr);
 		 isLoading = true;
 	 }
-
+	
+	//#,### 포멧 적용시키는 정규식 함수
 	 function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        return value; 
 	    }
-	 
+	 //html태그(element)의 클래스명에 className이 포함되는지 검사하는 함수
 	 function hasClass(element, className) {
 		    return element.classList.contains(className);
 		}
 	 
 	 
+	//지역 파라미터를 추가한 URL 반환하는 함수
 	 function addRegionParam(region){
 		 
 		 var currentUrl = window.location.pathname; 
@@ -767,9 +817,7 @@ function loadMoreData() {
 		 location.href = resultUrl; 
 	 }
 	 
-	 
-	 
-	 
+	//인원 파라미터를 추가한 URL 반환하는 함수
 	 function addPeopleParam(){
 		 var people = document.getElementById('people').value;
 		 var currentUrl = window.location.pathname; 
@@ -800,7 +848,7 @@ function loadMoreData() {
 	 }
 	 
 	 
-	 
+	 //필터조건(가격,시설) 파라미터를 추가한 URL 반환하는 함수
 	 function addFilterParam(filterList, lowerPrice, upperPrice){
 		
 		var currentUrl = window.location.pathname; 
@@ -817,7 +865,7 @@ function loadMoreData() {
 		if(upperPrice !== 0){
 			filterArray.push("maxPrice");
 		}
-		if(filterList !== null){
+		if(filterList.length !== 0){
 			filterArray.push("filterList");
 		}
 		
@@ -857,6 +905,34 @@ function loadMoreData() {
 		location.href = resultUrl; 
 	 }
 
+	 //필터조건(가격,시설) 파라미터를 추가한 URL 반환하는 함수
+	 function addOrderParam(selectedValue){
+		 var currentUrl = window.location.pathname; 
+		 var currentParam = window.location.search.substring(1);
+		 
+		 var resultUrl = "";
+		 var resultParam = "?";
+		 
+		 if(${!empty param.order}){
+			var tempParam = currentParam.split('&');
+			 for(var i = 0; i < tempParam.length; i++){
+				 if(tempParam[i].indexOf('order') != -1){
+					tempParam[i] = "order=" + selectedValue;
+				 }
+				 if(i > 0){
+					 resultParam += "&" + tempParam[i]; 
+				 }else{
+					 resultParam += tempParam[i]; 
+				 }
+			 }
+			 resultUrl = currentUrl + resultParam;
+			 
+		 }else{
+			 var addOrder = "&order="+selectedValue;
+			 resultUrl = currentUrl + "?" + currentParam + addOrder;
+		 }
+		 location.href = resultUrl; 	
+	 }
 		
 //부트스트랩 드롭다운 요소들을 가져옴
 var dropdownItems = document.querySelectorAll('.dropdown-menu');

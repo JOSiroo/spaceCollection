@@ -16,7 +16,7 @@
 					and space_address like '%' || #{region} || '%'
 				</if>
 				<if test="maxPeople!=null and maxPeople!=''">
-					<![CDATA[ and MAXPEOPLE <  #{maxPeople} ]]>
+					<![CDATA[ and MAXPEOPLE >=  #{maxPeople} ]]>
 				</if>
 				<if test="minPrice!=null and minPrice!=''">
 					<![CDATA[ and AVGPRICE >  #{minPrice} ]]> 
@@ -30,7 +30,9 @@
 					   FAC_${item} = 'Y'
 				    </foreach>
 				</if>
-				
+				<if test="order!=null and order!=''">
+					  <![CDATA[ ORDER BY ${order} ]]>
+				</if>
 			)A	
 		)
 		<![CDATA[
@@ -43,13 +45,13 @@
 			select A.*, rownum as rn
 			from 
 			(
-				select * from space_sd_averagePrice_view
+				select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
 				where space_Name like '%' || #{spaceName} || '%'
 				<if test="region!=null and region!=''">
 					and space_address like '%' || #{region} || '%'
 				</if>
 				<if test="maxPeople!=null and maxPeople!=''">
-					<![CDATA[ and MAXPEOPLE <  #{maxPeople} ]]>
+					<![CDATA[ and MAXPEOPLE >=  #{maxPeople} ]]>
 				</if>
 				<if test="minPrice!=null and minPrice!=''">
 					<![CDATA[ and AVGPRICE >  #{minPrice} ]]> 
@@ -62,6 +64,9 @@
 					<foreach item="item" collection="filterList" separator="and">
 					   FAC_${item} = 'Y'
 				    </foreach>
+				</if>
+				<if test="order!=null and order!=''">
+					  <![CDATA[ ORDER BY ${order} ]]>
 				</if>
 			)A	
 		)
