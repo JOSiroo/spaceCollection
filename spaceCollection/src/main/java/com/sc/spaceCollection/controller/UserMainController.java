@@ -79,7 +79,7 @@ public class UserMainController {
 		 @RequestParam(required = false) String spaceName,
          @RequestParam(defaultValue = "0") int spaceTypeNo,
          @RequestParam(required = false) String region,
-         @RequestParam(defaultValue = "99") int maxPeople,
+         @RequestParam(defaultValue = "0") int maxPeople,
          @RequestParam(defaultValue = "0") int minPrice,
          @RequestParam(defaultValue = "300000") int maxPrice,
          @RequestParam(required = false) String filterList,

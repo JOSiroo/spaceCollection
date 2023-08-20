@@ -517,7 +517,7 @@
 		  <option class = "select-option" selected>정렬</option>
 		  <option value="avgprice_desc" class = "select-option">가격 높은순</option>
 		  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
-		  <option value="zzim_desc" class = "select-option">베스트 공간순</option>
+		  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
 		</select>
 	</div>
 	<div class="container" >
