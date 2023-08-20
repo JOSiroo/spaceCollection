@@ -30,7 +30,9 @@
 					   FAC_${item} = 'Y'
 				    </foreach>
 				</if>
-				
+				<if test="order!=null and order!=''">
+					  <![CDATA[ ORDER BY ${order} ]]>
+				</if>
 			)A	
 		)
 		<![CDATA[
@@ -62,6 +64,9 @@
 					<foreach item="item" collection="filterList" separator="and">
 					   FAC_${item} = 'Y'
 				    </foreach>
+				</if>
+				<if test="order!=null and order!=''">
+					order by #{order}
 				</if>
 			)A	
 		)
