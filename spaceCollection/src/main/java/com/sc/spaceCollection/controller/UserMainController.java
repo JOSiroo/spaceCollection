@@ -79,15 +79,23 @@ public class UserMainController {
 		 @RequestParam(required = false) String spaceName,
          @RequestParam(defaultValue = "0") int spaceTypeNo,
          @RequestParam(required = false) String region,
-         @RequestParam(defaultValue = "99") int maxPeople,
+         @RequestParam(defaultValue = "0") int maxPeople,
          @RequestParam(defaultValue = "0") int minPrice,
          @RequestParam(defaultValue = "300000") int maxPrice,
          @RequestParam(required = false) String filterList,
+         @RequestParam(required = false) String order,
          Model model) {
+	   
 	   List<String> filterItem = null;
 	  if(filterList != null && !filterList.isEmpty()) {
 		  filterItem = Arrays.asList(filterList.split(","));
 	  }
+	  
+	  logger.info("변환 전 oredr = {}", order);
+	  if(order != null && !order.isEmpty()) {
+		  order = order.replace("_", " ");
+	  }
+	  logger.info("변환 후 oredr = {}", order);
 	   
 	  logger.info("filterList = {}", filterList); 
 	  logger.info("spaceRegion = {}, maxPeople = {}", region,maxPeople); 
@@ -97,7 +105,7 @@ public class UserMainController {
       if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
          list = spaceService.selectBySpaceName(page, size, spaceName,
-        		 region,maxPeople,minPrice,maxPrice,filterItem);
+        		 region,maxPeople,minPrice,maxPrice,filterItem,order);
             
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
          
@@ -107,7 +115,7 @@ public class UserMainController {
       }else if(spaceTypeNo != 0) {
 		  logger.info("타입별 공간 리스트 조회, 파라미터 spaceTypeNo = {}, page = {}, size = {}", spaceTypeNo,page, size);
 		  list = spaceService.selectBySpaceType(page, size, spaceTypeNo,
-	        		 region,maxPeople,minPrice,maxPrice,filterItem);
+	        		 region,maxPeople,minPrice,maxPrice,filterItem,order);
 		  logger.info("타입별 공간 리스트 조회, 파라미터 list.size = {}", list.size());
          
          model.addAttribute("list", list);
