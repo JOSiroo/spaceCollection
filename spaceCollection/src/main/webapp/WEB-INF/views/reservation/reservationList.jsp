@@ -67,6 +67,10 @@
 	background : white;
 	border:#ffd014 4px solid;
 }
+.canceled:hover{
+	border:black 4px solid;
+	background-color: white !important;
+}
 </style>
 <section>
 	<div class="asd"></div>
@@ -95,7 +99,12 @@
 						</div>
 					</div>
 					<div class = "col-2 reserveBtn">
+					<c:if test="${map.RESERVATION_DEL_FLAG != 'Y'}">
 						<button class = "goReservation" onclick = "goReservation(${map.RESERVATION_NUM})">예약 보러가기</button>
+					</c:if>
+					<c:if test="${map.RESERVATION_DEL_FLAG == 'Y' }">
+						<button class = "goReservation canceled" onclick = "goReservation(${map.RESERVATION_NUM})" style = "background: lightgrey;">환불됨</button>
+					</c:if>
 					</div>
 				</div>
 				<div></div>

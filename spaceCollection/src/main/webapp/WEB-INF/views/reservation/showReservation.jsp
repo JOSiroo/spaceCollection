@@ -62,6 +62,11 @@ font-weight : bold;
 	border:#193D76 4px solid;
 	color:black;
 }
+#cancle:hover{
+	background : white;
+	border:#dc3545 4px solid;
+	color:black;	
+}
 
 </style>
 <section>
@@ -139,7 +144,12 @@ font-weight : bold;
 			<div class="col-2">예약번호</div>
 			<div class="col-6">${map.RESERVATION_NUM}</div>
 		</div>
+			<div class="row row-cols-auto">
+			<div class="col-2">예약고유번호</div>
+			<div class="col-6">${map.RESERVATION_UID}</div>
+		</div>
 		</div><!-- 아래는 컨테이너 밖에있는거임 -->
+		<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
 		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>
 		<button class = 'reserveBt' id = "home" onclick="home()">홈</button>
 	</div>
@@ -151,5 +161,36 @@ font-weight : bold;
 	function home(){
 		location.href = "<c:url value = '/'/>";
 	}
+</script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+  function cancelPay() {
+	  if(confirm('예약을 취소하시겠습니까?')){
+	    jQuery.ajax({
+	      // 예: http://www.myservice.com/payments/cancel
+	      "url": "<c:url value='/reservation/showReservation/cancle'/>", 
+	      "type": "POST",
+	      "contentType": "application/json",
+	      "data": JSON.stringify({
+	        "merchant_uid": "${map.RESERVATION_UID}", // 예: ORD20180131-0000011
+	        "cancel_request_amount": "${map.RESERVE_PRICE}", // 환불금액
+	        "reason": "예약 환불" // 환불사유
+	      }),
+	      "dataType": "json"
+	    }).done(function(result) { // 환불 성공시 로직 
+	        alert("환불 성공");
+	    	location.href = "<c:url value='/reservation/reservationList'/>"
+	    }).fail(function(error) { // 환불 실패시 로직
+	     	console.log(error.status);
+	    	if(error.status === 200){
+	    		alert("환불 성공");
+		    	location.href = "<c:url value='/reservation/reservationList'/>"	
+	    	}
+	    });
+	  }
+  }
 </script>
 <%@ include file="../form/userBottom.jsp"%>

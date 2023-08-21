@@ -17,4 +17,5 @@ public class ReservationVO {
 	private Timestamp reserverPayDay;
 	private int reservePeople; 
 	private int paymentNum;
+	private String reservationUid;
 }

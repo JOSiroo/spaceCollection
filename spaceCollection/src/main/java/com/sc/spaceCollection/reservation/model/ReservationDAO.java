@@ -11,4 +11,5 @@ public interface ReservationDAO {
 	ReservationVO selectReservationByDayAndNum(ReservationVO vo);
 	Map<String, Object> showReservation(ReservationVO vo);
 	List<Map<String,Object>> reservationList(String userId);
+	int canceledReservation(String reservationUid);
 }
