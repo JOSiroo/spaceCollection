@@ -654,7 +654,7 @@ pageEncoding="UTF-8"%>
                     buyerTel = rsp.userHp;
                     buyerAddr = rsp.address + " " + rsp.addressDetail;
                     buyerPostcode = rsp.zipcode;
-                    console.log("userid = " + rsp);
+                    console.log("userid = " + rsp.userId);
 
                     // $.ajax 요청이 완료된 후에 IMP.request_pay 함수 실행
                     callIMP(buyerEmail, buyerName, buyerTel, buyerAddr, buyerPostcode);
