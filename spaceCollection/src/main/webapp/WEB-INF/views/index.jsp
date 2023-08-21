@@ -158,14 +158,14 @@ a.btn.btn-primary.py-2.px-3 {
                <div class="box-feature">
                   <span class="flaticon-house-3"></span>
                   <h3 class="mb-3" id="hboldfont">시즌 이벤트</h3>
-                  <p><a href="https://www.spacecloud.kr/focus/24" class="learn-more">Learn More</a></p>
+                  <p><a href="http://localhost:9091/spaceCollection/event" class="learn-more">Learn More</a></p>
                </div>
             </div>
             <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
                <div class="box-feature">
                   <span class="flaticon-house-1"></span>
-                  <h3 class="mb-3" id="hboldfont">시즌 공간 기획전</h3>
-                  <p><a href="https://www.spacecloud.kr/event/2" class="learn-more">Learn More</a></p>
+                  <h3 class="mb-3" id="hboldfont">공간 기획전</h3>
+                  <p><a href="https://www.spacecloud.kr/focus/25" class="learn-more">Learn More</a></p>
                </div>
             </div>   
          </div>

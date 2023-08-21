@@ -8,9 +8,9 @@
 			select reservation_seq.nextval from dual
 		</selectKey>
 		insert into reservation(RESERVATION_NUM,USER_ID,SD_NUM,RESERVE_START_DAY,RESERVE_START_HOUR,
-								RESERVE_FINISH_DAY,RESERVE_FINISH_HOUR,RESERVE_PRICE,RESERVER_PAY_DAY,PAYMENT_NUM,RESERVE_PEOPLE)
+								RESERVE_FINISH_DAY,RESERVE_FINISH_HOUR,RESERVE_PRICE,RESERVER_PAY_DAY,PAYMENT_NUM,RESERVE_PEOPLE,reservation_uid)
 		values(#{reservationNum}, #{userId}, #{sdNum}, #{reserveStartDay},#{reserveStartHour},
-		#{reserveFinishDay},#{reserveFinishHour},#{reservePrice},sysdate,#{paymentNum},#{reservePeople})
+		#{reserveFinishDay},#{reserveFinishHour},#{reservePrice},sysdate,#{paymentNum},#{reservePeople},#{reservationUid})
 	</insert>
 	<select id="selectReservationByDayAndNum" parameterType="reservationVo"
 		resultType="reservationVo">
@@ -18,7 +18,7 @@
 		where reserve_start_day = #{reserveStartDay} and sd_num = ${sdNum}	
 	</select>
 	<select id="showReservation" parameterType="reservationVo" resultType="map">
-		select * from reservation_space_sd_view
+		select * from reservationShow_view
 		where reservation_Num = #{reservationNum} and user_id = #{userId}
 	</select>
 	<select id="reservationList" parameterType="string" resultType="map">
@@ -27,11 +27,16 @@
 			select rownum as RNUM, A.*
 			from 
 			(
-				select * from reservation_space_sd_view
+				select * from RESERVATION_SPACE_SD_VIEW
 				where user_id = #{userId}
 				order by reserve_start_day
 			)A
 		)
 	</select>
+	<update id="canceledReservation" parameterType="string">
+		update reservation
+		set reservation_del_flag = 'Y'
+		where reservation_uid = #{reservationUid}
+	</update>
 	
 </mapper>
