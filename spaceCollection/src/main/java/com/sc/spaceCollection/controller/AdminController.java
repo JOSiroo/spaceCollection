@@ -431,4 +431,20 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView("reboardDownloadView", map);
 		return mav;
 	}
+	
+	@RequestMapping("board/boardWrite_file")
+	@ResponseBody
+	public String boardWrite_file(@RequestParam String boardTypeName, Model model) {
+		logger.info("ajax - 파일 사용여부 조회, 파라미터 boardTypeName = {}", boardTypeName);
+		
+		BoardTypeVO boardTypeVo = new BoardTypeVO();
+		boardTypeVo = boardTypeService.selectByBoardTypeName(boardTypeName);
+		logger.info("파일 사용여부 조회 결과, boardTypeVo = {}", boardTypeVo);
+		
+		model.addAttribute("boardTypeVo",boardTypeVo);
+		
+		return "admin/board/boardWrite";
+		
+		
+	}
 }

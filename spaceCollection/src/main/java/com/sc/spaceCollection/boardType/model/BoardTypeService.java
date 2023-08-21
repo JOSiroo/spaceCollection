@@ -8,4 +8,5 @@ public interface BoardTypeService {
 	int createBoard(BoardTypeVO vo);
 	BoardTypeVO selectByBoardTypeId(String boardTypeId);
 	int updateBoardType(BoardTypeVO vo);
+	BoardTypeVO selectByBoardTypeName(String boardTypeName);
 }

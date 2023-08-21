@@ -30,4 +30,8 @@
 		board_type_file_ok = #{boardTypeFileOk}, board_type_file_num = #{boardTypeFileNum}, board_type_file_size = #{boardTypeFileSize},
 		board_type_use = #{boardTypeUse} where board_type_id = #{boardTypeId} 
 	</update>
+	
+	<select id="selectByBoardTypeName" parameterType="string" resultType="boardTypeVo">
+		select * from board_type where board_type_name = #{boartTypeName}
+	</select>
 </mapper>

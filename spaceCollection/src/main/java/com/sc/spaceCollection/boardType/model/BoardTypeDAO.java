@@ -11,4 +11,5 @@ public interface BoardTypeDAO {
 	int insertBoardType(BoardTypeVO vo);
 	BoardTypeVO selectByBoardTypeId(String boardTypeId);
 	int updateBoardType(BoardTypeVO vo);
+	BoardTypeVO selectByBoardTypeName(String boardTypeName);
 }

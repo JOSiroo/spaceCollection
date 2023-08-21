@@ -182,6 +182,21 @@
 			       maxAppend ++;
 			   }
 		});
+		
+		$('select').change(function() {
+			$.ajax({
+				url : "<c:url value='/admin/board/boardWrite_file'/>",
+				type: 'get',
+				data: "boardTypeName=" + $('select>option:selected').val(),
+				dataType: 'json',
+				success:function(res){
+					var result
+				},
+				error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+			});	
+		});
 	});
 </script>
 <main id="main" class="main">
