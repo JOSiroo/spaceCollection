@@ -64,6 +64,19 @@
 	#btDiv>button{
 		width: 100px;
 	}
+	
+	#fileDiv>div{
+		width: 85%;
+		float: left;
+	}
+	
+	#fileDiv>button {
+		width: 100px;
+		margin-top: 10px;
+		float: right;
+	}
+	
+	
 </style>
 <script type="text/javascript" src="<c:url value='/resource/ckeditor/ckeditor.js'/>"></script>
 <script type="text/javascript">
@@ -158,8 +171,16 @@
 		
 		var i = 0;
 		
-		$('input[type=file]').change(function() {
-			
+		$('#fileDiv>button').click(function() {
+			if(i >= $('#boardTypeFileNum').val()){
+			      event.preventDefault();
+			      $('.modal-body').html("첨부파일 개수는 " + $('#boardTypeFileNum').val() + "개까지 첨부가능합니다.");
+			      $('#confirm1').modal('show');
+			      
+			   }else{
+			       $(this).append('<input type="file" name="" class="files"> <button type="button" class="_add" onclick="addDel(this);">삭제</button></li>'); 
+			       maxAppend ++;
+			   }
 		});
 	});
 </script>
@@ -212,12 +233,20 @@
 							<input type="hidden" name="boardTypeName" id="boardTypeName">
 							<input type="hidden" name="userNum" value="9999999">
 						</form>
-						<form class="row gx-3 gy-2 align-items-center" name="fileFrm" id="fileFrm" method="post" action="<c:url value='/admin/board/fileUpload'/>"
-							enctype="multipart/form-data">
-							<div class="input-group" id="fileDiv">
-								<input multiple="multiple" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-							</div>
-						</form>
+						<c:if test="${boardTypeVo.boardTypeFileOk =='Y' }">
+							<form class="row gx-3 gy-2 align-items-center" name="fileFrm" id="fileFrm" method="post" action="<c:url value='/admin/board/fileUpload'/>"
+								enctype="multipart/form-data">
+								<div id="fileDiv">
+									<div class="input-group">
+										<input multiple="multiple" type="file" class="form-control" id="fileItems" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+										name="fileItems">
+									</div>
+									<button type="button" class="btn btn-primary">추가</button>
+								</div>
+							</form>
+							<input type="hidden" id="boardTypeFileNum" value="${boardTypeVo.boardTypeFileNum }">
+							<input type="hidden" id="boardTypeFileSize" value="${boardTypeVo.boardTypeFileSize }">
+						</c:if>
 						<div class="col-auto" id="btDiv">
 							<button type="button" class="btn btn-primary" id="submit">등록</button>
 							<button type="button" class="btn btn-secondary" id="cancel">취소</button>
