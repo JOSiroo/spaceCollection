@@ -18,4 +18,5 @@
 	<select id="countComments" parameterType="int" resultType="int">
 		select count(*) from comments where board_num = #{boardNum}
 	</select>
+	
 </mapper>

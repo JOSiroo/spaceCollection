@@ -54,16 +54,22 @@ public class UserMainController {
    public String about() {
       return "userMain/about";
    }
-   //회사소개
-   @RequestMapping("/a2")
-   public String a2() {
-	   return "userMain/a2";
+   //사업자
+   @RequestMapping("/Certificate")
+   public String Certificate() {
+	   return "userMain/Certificate";
    }
    
-   //이벤트
+   /*//이벤트
    @RequestMapping("/event")
    public String event() {
 	   return "userMain/event";
+   }*/
+   
+   //자주묻는질문
+   @RequestMapping("/FAQ")
+   public String FAQ() {
+	   return "userMain/FAQ";
    }
    
    @RequestMapping("/search")
