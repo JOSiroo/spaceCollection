@@ -24,8 +24,17 @@
 
 .col.region{
 	text-align: center;
-   	padding: 5% 0% 3% 0%;
-    border: 1px rgba(2, 0, 5, 0.2) solid;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0.7rem;
+    background-color: white;
+    padding: 3% 8% 0% 8%;
+    height: 50px;
+    width: 98%;
+    margin: 0% 1% 2% 1%;
+}
+.col.region:hover{
+	background-color: rgba(255, 208, 20, 0.74);
+	border : 3px solid #ffc000;
 }
 .region-find{
 	margin-bottom:8%;
@@ -60,6 +69,7 @@
 #searchText{
 	width : 65%;
 	height: 35px;
+	padding-left: 5%;
 }
 
 .region-findBtn{
@@ -287,8 +297,17 @@
 	    margin-left: 64.2%;
 	    padding-top: 36px;
 	}
+	#order-selectBox{
+		margin-bottom:15px;
+	}
 	.select-option:hover{
 		background-color: #ffd014 !important;
+	}
+	.all-reset{
+		display : inline-block;
+		text-align:center;
+		padding: 0% 0% 0% 0%;
+		width: 100%;
 	}
 </style>
 <div class="search-wrapper"></div>
@@ -303,10 +322,10 @@
 				<svg width="25" height="25" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M9.55026 9.55053L13 13M9.46531 2.45285C11.4021 4.38973 11.4021 7.5297 9.46531 9.46709C7.52957 11.403 4.3888 11.403 2.45256 9.46709C0.515813 7.5297 0.515813 4.38973 2.45256 2.45285C4.38931 0.515464 7.52907 0.51597 9.46531 2.45285Z" stroke="#767676"/>
 				</svg>
-				<input type="text" id="searchText">
-				<button class = "region-findBtn">찾기</button>
+				<input type="text" id="searchText"  placeholder='"구" 를 입력하세요'>
+				<button class = "region-findBtn" onclick="regionFind()">찾기</button>
 			</div>
-				<ul class = "dropdounUl">
+				<ul class = "dropdounUl" style="padding: 1% 5% 4% 5% !important;">
 					<li>
 					<div class = "row region">
 						<a href="#" class="region-a" onclick="addRegionParam('종로구')"><div class = "col region">종로구</div></a>
@@ -488,7 +507,7 @@
 						<div class = "row top">
 							<div class = "col">
 								<div class="people-btnGroup">
-									<button  id ="filterResetBtn" onclick="">초기화</button>
+									<button  id ="filterResetBtn" onclick="resetFilter()">초기화</button>
 									<button  id ="filterApplyBtn" onclick="addFilter()">필터 적용하기</button>
 									<input type = "hidden" name="lowerPrice">
 									<input type = "hidden" name="upperPrice">
@@ -512,13 +531,14 @@
 
 <section class = "search-section">
 <div class="order-select">
-		<select class="form-select" id="order-select" onfocus='this.size=4;' onblur='this.size=0;' 
+		<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
             onchange='this.size=1; this.blur();'>
 		  <option class = "select-option" selected>정렬</option>
 		  <option value="avgprice_desc" class = "select-option">가격 높은순</option>
 		  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
 		  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
 		</select>
+	<a class = "all-reset" onclick="allReset()"><button type="button" class="btn btn-secondary menu" >모든 조건 초기화</button></a>
 	</div>
 	<div class="container" >
 	  <div class="row" id = "data-container">
@@ -541,6 +561,10 @@ $(function(){
 			var people = $(this).siblings('#people');
 		    	people.val(parseInt(people.val())+1);
 		});
+		$('#peopleResetBtn').click(function(){
+			var people = $('#people');
+			people.val(1);
+		})
 		
 		$(window).on('scroll', function() {
 		    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -549,7 +573,6 @@ $(function(){
 		});
 		
 		$('#filterResetBtn').click(function(){
-			$('.filterBtn').removeClass('selected');
 		});
 		
 		$('.filterBtn').click(function(){
@@ -562,6 +585,16 @@ $(function(){
 		
 		
 });
+
+	function allReset(){
+		var tempParam = "";
+		if(${!empty param.spaceTypeNo}){
+			tempParam = "spaceTypeNo=${param.spaceTypeNo}";
+		}else if(${!empty param.spaceName}){
+			tempParam = "spaceName=${param.spaceName}";
+		}
+		location.href = "<c:url value = '/search?"+tempParam+"'/>";
+	}
 	
 	
 
@@ -623,6 +656,16 @@ $(function(){
 		snapSlider.noUiSlider.set([null, this.value]);
 	});
 	
+	var filterItems = document.querySelectorAll('.filterBtn');
+	function resetFilter(){
+		filterItems.forEach(function(item){
+			item.classList.remove('selected');
+		});
+		var upper = 300000;
+		var lower = 5000;
+		snapSlider.noUiSlider.set([lower, null]);
+		snapSlider.noUiSlider.set([null, upper]);
+	}
 	
 	//선택된(selected) 필터요소들을 filterList에 추가한 뒤 addFilterParam를 호출하는 함수 
 	var selectedFilter = [];
@@ -642,7 +685,7 @@ $(function(){
 	}
 	
 	//가격순,베스트순 select박스 선택시 파라미터 적용하는 함수
-	const selectElement = document.getElementById("order-select");
+	const selectElement = document.getElementById("order-selectBox");
 
 	selectElement.addEventListener("change", function(event) {
 	    const selectedValue = event.target.value;
@@ -879,6 +922,7 @@ function loadMoreData() {
 			}else{
 				paramValue = filterList;
 			}
+			
 			var tempParam = currentParam.split('&');
 			for(var k = 0; k < tempParam.length; k++){
 				 if(tempParam[k].indexOf(filterArray[i]) != -1){
@@ -905,7 +949,7 @@ function loadMoreData() {
 		location.href = resultUrl; 
 	 }
 
-	 //필터조건(가격,시설) 파라미터를 추가한 URL 반환하는 함수
+	 //필터조건(가격 높은순, 낮은순) 파라미터를 추가한 URL 반환하는 함수
 	 function addOrderParam(selectedValue){
 		 var currentUrl = window.location.pathname; 
 		 var currentParam = window.location.search.substring(1);
@@ -932,6 +976,15 @@ function loadMoreData() {
 			 resultUrl = currentUrl + "?" + currentParam + addOrder;
 		 }
 		 location.href = resultUrl; 	
+	 }
+	 
+	 function regionFind(){
+		 var inputRegion = document.getElementById("searchText").value;
+		 if(inputRegion.length === 0){
+			 alert('검색어를 입력해 주세요');
+		 }else{
+			 addRegionParam(inputRegion);
+		 }
 	 }
 		
 //부트스트랩 드롭다운 요소들을 가져옴

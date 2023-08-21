@@ -73,11 +73,11 @@
 		<![CDATA[
 		where rn >= #{startRow} and rn <= #{endRow} ]]>
 	</select>
-	<select id="selectBySpaceTypeMap" parameterType="int" resultType="spaceVo">
+	<select id="selectBySpaceTypeMap" resultType="spaceVo">
 		select * from space
 		where space_Type_no = #{spaceTypeNo}	
 	</select>
-	<select id="selectBySpaceNameMap" parameterType="String" resultType="spaceVo">
+	<select id="selectBySpaceNameMap" resultType="spaceVo">
 		select * from space
 		where space_Name like '%' || #{spaceName} || '%'	
 	</select>
