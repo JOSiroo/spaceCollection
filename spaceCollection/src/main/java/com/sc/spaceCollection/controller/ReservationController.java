@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +36,8 @@ public class ReservationController {
 	private final static Logger logger = LoggerFactory.getLogger(ReservationController.class);
 	private final ReservationService reservationService;
 	private final SpaceDetailService sdService;
+
+	
 	
 	@ResponseBody
 	@GetMapping("/ajaxReservation")
@@ -51,8 +54,10 @@ public class ReservationController {
 		int reservePrice = Integer.parseInt((String) paymentData.get("paid_amount"));
 		int reservePeople = Integer.parseInt((String) paymentData.get("custom_data[RESERVE_PEOPLE]"));
 		String paymentType = (String) paymentData.get("pg_provider");
+		String reservationUid = (String) paymentData.get("pg_tid");
 		logger.info("userId = {}, sdNum = {}, startDay = {}, endHour = {}", userId, sdNum, startDay, endHour);
 		logger.info("startHour = {}, endDay = {}, reservePrice = {}, paymentType = {}", startHour, endDay, reservePrice, paymentType);
+		logger.info("merchant_uid = {}", reservationUid);
 		
 		
 		int paymentNum = 0;
@@ -72,6 +77,7 @@ public class ReservationController {
 		vo.setReservePrice(reservePrice);
 		vo.setPaymentNum(paymentNum);
 		vo.setReservePeople(reservePeople);
+		vo.setReservationUid(reservationUid);
 		logger.info("vo세팅 결과, vo = {}", vo);
 		
 		int cnt = reservationService.insertReservation(vo);
@@ -121,7 +127,7 @@ public class ReservationController {
 			return "common/message";
 		}
 
-		logger.info("예약 내역 페이지, 조회결과 map.size = {}", map.size());
+		logger.info("예약 내역 페이지, 조회결과 map.size = {}", map);
 		
 		model.addAttribute("map", map);
 		return "reservation/showReservation";
@@ -150,6 +156,18 @@ public class ReservationController {
 	public void zzim(@RequestParam int spaceNum) {
 		logger.info("찜, 파라미터 spaceNum = {}", spaceNum);
 		
+	}
+	
+	@PostMapping("/showReservation/cancle")
+	public String reserve_cancle(@RequestBody Map<String, Object> cancelData) {
+		String merchant_uid = (String)cancelData.get("merchant_uid");
+		int price = Integer.parseInt((String)cancelData.get("cancel_request_amount"));
+		int cancelTaxFreeAmount = 0;
+		reservationService.refundPayment(merchant_uid,price,cancelTaxFreeAmount);
+		
+		int cnt = reservationService.canceledReservation(merchant_uid);
+		logger.info("환불하기 결과,cnt = {}", cnt);
+		return "reservation/reservationList";
 	}
 	
 }
