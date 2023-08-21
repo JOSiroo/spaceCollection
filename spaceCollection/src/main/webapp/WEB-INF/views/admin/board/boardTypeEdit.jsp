@@ -18,7 +18,7 @@
 		});
 		
 		$('#cancelBt2').click(function() {
-			location.href="<c:url value='/admin/board/boardTypeSetting'/>";
+			location.href="<c:url value='/admin/board/boardTypeList'/>";
 		});
 		
 		
