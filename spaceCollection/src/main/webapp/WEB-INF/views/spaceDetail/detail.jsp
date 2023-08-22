@@ -9,7 +9,16 @@ pageEncoding="UTF-8"%>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>스페이스 클라우드</title>
+<style type="text/css">
 
+#QNAWrite{
+    padding: 0% 0% 0% 0%;
+    height: 40px;
+    float: right;
+    width: 20%;
+    margin: 0% 0% 4% 82%;
+}
+</style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
 	<div class="site-mobile-menu site-navbar-target">
@@ -179,7 +188,37 @@ pageEncoding="UTF-8"%>
 						<h5>Q&A</h5>
 						<div class = "nav-bar"></div>
 						<div class = "question-box">
-							<h4>등록된 질문이 없습니다.</h1>
+						<div class = 'row'>
+							<button type="button" class="btn btn-primary" id = "QNAWrite"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+								질문 등록하기
+							</button>
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header" style=" background: #ffd014;">
+							        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">질문 작성하기</h1>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <form>
+							          <div class="mb-3">
+							            <label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
+								            질문:
+							            </label>
+							            <textarea class="form-control" id="message-text" rows="10"></textarea>
+							          </div>
+							        </form>
+							        <p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
+							      </div>
+							      <div class="modal-footer" style="padding:2% 30% 2% 0%;">
+							        <button type="button" class="btn" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+							        <button type="button" onclick="QnAWriteBtn()" class="btn" style="background: #193D76; color:white" >등록</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</div>
+							<h4>등록된 질문이 없습니다.</h4>
 						</div>
 					</div>
 					
@@ -187,7 +226,7 @@ pageEncoding="UTF-8"%>
 						<h5>이용 후기</h5>
 						<div class = "nav-bar"></div>
 						<div class = "review-box">
-							<h4>등록된 후기가 없습니다</h1>								
+							<h4>등록된 후기가 없습니다</h4>								
 						</div>
 					</div>
 				</div>
@@ -501,11 +540,38 @@ pageEncoding="UTF-8"%>
 				}
 			});
 	
+			function QnAWriteBtn(){
+				alert('asdsad');
+				var qnaContent = document.getElementById('message-text').value;
+				var userId = document.getElementById('userId').value;
+				var spaceNum = ${vo.spaceNum};
+				
+				 $.ajax({
+					url:"<c:url value='/writeQnA'/>",
+					type:"POST",
+					dataType:"json",
+					data:{
+						qnaContent:qnaContent,
+						userId:userId,
+						spaceNum:spaceNum
+					},
+					success:function(){
+						
+					},
+					complete:function(){
+
+					}
+				 });
+			 }
+			
+			
+			
 	 function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        return value; 
 	    }
+	 
 	 
 	 
 	</script>
