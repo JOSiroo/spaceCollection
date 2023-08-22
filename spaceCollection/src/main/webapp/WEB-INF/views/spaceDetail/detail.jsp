@@ -22,6 +22,9 @@ pageEncoding="UTF-8"%>
   	 animation: shake 0.5s 0.08s;
   	 color:red !important;
   }
+  .modal-content{
+  	margin-top: 50% !important;
+  }
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
