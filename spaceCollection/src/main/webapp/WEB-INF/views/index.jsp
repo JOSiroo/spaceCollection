@@ -69,29 +69,35 @@ a.btn.btn-primary.py-2.px-3 {
 	               <p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
 	            </div>
 	         </div>
-	         
-	          <div class="property-items-container">
-			  	  	<c:forEach var="vo" items="${list}">
-				        <div class="property-item">
-				            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
-				                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
-				                <div class="property-content">
-				                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
-				                    <div>
-				                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
-				                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
-				                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
-				                    </div>
-				                </div>
-				            </a>
-				        </div>
-			    	</c:forEach>
-				</div>
+	         <div class="row">
+				<div class="col-12">
+					<div class="property-slider-wrap">
+						<div class="property-slider">
+							<c:forEach var="vo" items="${list}">
+							  	  <div class="property-item">
+							  	  <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
+										<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+									</a>
+									<div class="property-content">
+										<div class="price mb-2"><span>$1,291,000</span></div>
+										<div>
+											<span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
+											<span class="city d-block mb-3">${vo.spaceAddress}</span>
+											<a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
+										</div>
+									</div>
+							  	</div>
+					    	</c:forEach>
+				    	</div>
+				    	 <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
+				             <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">이전</span>
+				             <span class="next" data-controls="next" aria-controls="property" tabindex="-1">다음</span>
+				       </div> 
+			    	</div>
+		    	</div>
+			</div>
        </div>
-      <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-             <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">이전</span>
-             <span class="next" data-controls="next" aria-controls="property" tabindex="-1">다음</span>
-       </div> 
+     
      </div>
                      
     <%-- <div class="row">
