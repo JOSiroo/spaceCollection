@@ -36,7 +36,6 @@ a.btn.btn-primary.py-2.px-3 {
 
 </style>
    <div class="hero">
-
       <div class="hero-slide">
          <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
          <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
