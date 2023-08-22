@@ -14,7 +14,7 @@
 	border-right:2px solid lightgrey;
 }
 .list-Wrapper {
-	padding: 4% 27% 4% 27%;
+	padding: 4% 20% 4% 20%;
 	text-align: center;
 }
 .row.wrapper{
@@ -74,7 +74,7 @@
 </style>
 <section>
 	<div class="asd"></div>
-	<h1 style = "text-align: center; margin-top : 1%; font-weight: 700;"> 예약 내역 </h1>
+	<h1 style = "text-align: center; margin-top : 1%;padding-top:4%; font-weight: 700;"> 예약 내역 </h1>
 	<br>
 	<hr>
 	<div class="list-Wrapper">
