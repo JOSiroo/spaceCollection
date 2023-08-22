@@ -82,6 +82,41 @@ public class GuestController {
 		//http://localhost:9091/herb/member/ajaxCheckId?userid=hong7
 	}
 	
+	
+	@ResponseBody
+	@GetMapping("/getUserInfo")
+	public GuestVO getUserInfo(@RequestParam String userId) {
+		//1
+		logger.info("ajax 이용 - 회원정보 조회, 파라미터 userid={}", userId);
+		
+		//2
+		GuestVO vo = new GuestVO();
+		vo =guestService.selectUserInfo(userId);
+		logger.info("회원정보 조회 결과, vo={}", vo);
+		
+		return vo;
+	}
+	
+	@PostMapping("/checkPwd")
+	public String checkPwd_post(@RequestParam String userPwd,HttpSession session ,Model model) {
+		String userId=(String)session.getAttribute("userId");
+		logger.info("비밀번호 확인 처리, 파라미터 userId={},userPwd={}",userId,userPwd);
+		
+		int result = guestService.loginCheck(userId, userPwd);
+		logger.info("비밀번호 체크 결과, result={}",result);
+		
+		String msg="비밀번호가 일치하지 않습니다.", url="/guest/myPage/checkPwd";
+		if(result==GuestService.LOGIN_OK) {
+			msg="";
+			url="/guest/myPage/editInfo";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
 	@RequestMapping("/findPwd")
 	public String findPwd() {
 		//1.
@@ -106,24 +141,11 @@ public class GuestController {
 		return "find/findId";
 	}
 	
-	
-	@ResponseBody
-	@GetMapping("/getUserInfo")
-	public GuestVO getUserInfo(@RequestParam String userId) {
-		//1
-		logger.info("ajax 이용 - 회원정보 조회, 파라미터 userid={}", userId);
-		
-		//2
-		GuestVO vo = new GuestVO();
-		vo =guestService.selectUserInfo(userId);
-		logger.info("회원정보 조회 결과, vo={}", vo);
-		
-		return vo;
-	}
-	
-	@RequestMapping("/myPageMenu")
-	public void myPage() {
+	@RequestMapping("/myPage")
+	public String myPage() {
 		logger.info("마이페이지 처리");
+		
+		return "guest/myPage/myProfile";
 	}
 	
 	@GetMapping("/editInfo")
@@ -139,28 +161,9 @@ public class GuestController {
 	}
 	
 	@GetMapping("/checkPwd")
-	public void checkPwd_get() {
+	public String checkPwd_get() {
 		logger.info("비밀번호 확인 페이지, [회원정보수정 단계]");
-	}
-	
-	@PostMapping("/checkPwd")
-	public String checkPwd_post(@RequestParam String userPwd,HttpSession session ,Model model) {
-		String userId=(String)session.getAttribute("userId");
-		logger.info("비밀번호 확인 처리, 파라미터 userId={},userPwd={}",userId,userPwd);
-		
-		int result = guestService.loginCheck(userId, userPwd);
-		logger.info("비밀번호 체크 결과, result={}",result);
-		
-		String msg="비밀번호가 일치하지 않습니다.", url="/guest/checkPwd";
-		if(result==GuestService.LOGIN_OK) {
-			msg="";
-			url="/guest/editInfo";
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
+		return "guest/myPage/checkPwd";
 	}
 	
 	
