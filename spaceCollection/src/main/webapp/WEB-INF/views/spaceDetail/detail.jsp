@@ -18,6 +18,21 @@ pageEncoding="UTF-8"%>
     width: 20%;
     margin: 0% 0% 4% 82%;
 }
+.textLimit.limit{
+  	 animation: shake 0.5s 0.08s;
+  	 color:red !important;
+  }
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+  
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -205,6 +220,8 @@ pageEncoding="UTF-8"%>
 							            <label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
 								            질문:
 							            </label>
+							            <label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>
+							            
 							            <textarea class="form-control" id="message-text" rows="10"></textarea>
 							          </div>
 							        </form>
@@ -523,6 +540,8 @@ pageEncoding="UTF-8"%>
 		}
 
 	});
+	
+	
 		$('.totalPrice').text("예약 시간을 선택해주세요.");
 			$('.swiper-inBox').click(function(){
 			   	var result = 0;
@@ -540,29 +559,32 @@ pageEncoding="UTF-8"%>
 				}
 			});
 	
-			function QnAWriteBtn(){
-				alert('asdsad');
-				var qnaContent = document.getElementById('message-text').value;
-				var userId = document.getElementById('userId').value;
-				var spaceNum = ${vo.spaceNum};
-				
-				 $.ajax({
-					url:"<c:url value='/writeQnA'/>",
-					type:"POST",
-					dataType:"json",
-					data:{
-						qnaContent:qnaContent,
-						userId:userId,
-						spaceNum:spaceNum
-					},
-					success:function(){
-						
-					},
-					complete:function(){
-
+		function QnAWriteBtn(){
+			var qnaContent = document.getElementById('message-text').value;
+			var userId = document.getElementById('userId').value;
+			var spaceNum = ${vo.spaceNum};
+			console.log(qnaContent + ", " + userId + ", " + spaceNum);
+			 $.ajax({
+				url:"<c:url value='/writeQnA'/>",
+				type:"POST",
+				dataType:"json",
+				data:{
+					qnaContent:qnaContent,
+					spaceNum:spaceNum
+				},
+				success:function(rsp){
+					if(rsp === 1){
+						alert('QnA 등록 완료!');
+					}else if(rsp === 0){
+						alert('QnA 등록 실패!');
 					}
-				 });
-			 }
+				},
+				complete:function(rsp){
+					alert(rsp);
+				}
+			 });
+		 }
+				
 			
 			
 			
@@ -573,6 +595,20 @@ pageEncoding="UTF-8"%>
 	    }
 	 
 	 
+	 
+	 var qnaText = document.getElementById('message-text');
+	 var textLimit = document.getElementsByClassName('textLimit');
+	 	qnaText.addEventListener('input',function(){
+	 		if(this.value.length >= 200){
+				var truncatedValue = this.value.substring(0, 200); // 200자로 잘라낸 값
+		        this.value = truncatedValue;
+				textLimit[0].classList.add('limit');
+		        textLimit[0].textContent = "최대 200/ 200자 제한";
+	 		}else{
+	 			textLimit[0].classList.remove('limit');
+	 			textLimit[0].textContent="최대 " + this.value.length + "/ 200자 제한";
+	 		}
+	 });
 	 
 	</script>
 	<script>
