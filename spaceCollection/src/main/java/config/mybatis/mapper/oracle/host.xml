@@ -4,27 +4,22 @@
 
 <mapper namespace="com.sc.spaceCollection.host.model.HostDAO">
 	
-	<select id="selectSpaceTypeView" parameterType="int" resultType="map">
-		select * from SpaceTypeView
-		where categoryNo = ${categoryNo}
-	</select>
-	
 	<resultMap type="SpaceTypeAllVo" id="selectSpace">
-		<association property="spaceTypeVO" column="spaceTypeNo" javaType="spaceTypeVO">
-			<id property="spaceTypeNo" column="spacetypeno" jdbcType="BIGINT"/>
-			<result property="spaceTypeName" column="spacetypename" jdbcType="VARCHAR" />
-			<result property="categoryNo" column="categoryno" jdbcType="BIGINT" />
-			<result property="explanation" column="explanation" jdbcType="VARCHAR" />
-			<result property="categoryName" column="categoryname" jdbcType="VARCHAR" />
-		</association>
-		<collection property="spaceTypeList" javaType="ArrayList" ofType="map" column="categoryno"
-			select="selectSpaceTypeView">
+		<collection property="spaceTypeList" javaType="ArrayList" ofType="map" column="categoryNo"
+			select="selectSpaceType">
 		</collection>
 	</resultMap>
 	
-	<select id="selectSpaceType" parameterType="int" resultMap="selectSpace">
-		select * from spaceType
-		where categoryNo = ${categoryNo}
+	<!-- (메인)공간 카테고리 조회 -->
+	<select id="selectSpaceCategory" parameterType="int" resultMap="selectSpace">
+		select * from SpaceTypeCategory
+		where categoryNo = #{categoryNo}
+	</select>
+	
+	<!-- 공간 카테고리별 타입 조회 -->
+	<select id="selectSpaceType" parameterType="int" resultType="SpaceTypeAllVO">
+		select * from spaceTypeView
+		where categoryNo = #{categoryNo}
 	</select>
 	
 </mapper>
