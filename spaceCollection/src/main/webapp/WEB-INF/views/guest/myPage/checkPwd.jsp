@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ include file="../form/userTop.jsp" %>
+<%@ include file="../../form/userTop.jsp" %>
 <%@ include file="myPageMenu.jsp" %>
 <script type="text/javascript">
 	$(function(){
@@ -102,4 +102,4 @@
 		</div>
 	</form>
 </section>
-<%@ include file="../form/userBottom.jsp" %>
+<%@ include file="../../form/userBottom.jsp" %>
