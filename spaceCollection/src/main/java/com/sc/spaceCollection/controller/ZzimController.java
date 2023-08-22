@@ -1,10 +1,14 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -71,5 +75,25 @@ public class ZzimController {
 		logger.info("찜 결과 : result = {}",result);
 		
 		return result;
+	}
+	@RequestMapping("/zzimList")
+	public String zzimList_show() {
+		return "zzim/zzimList";
+	}
+	
+	@GetMapping("/getZzimList")
+	@ResponseBody
+	public List<Map<String,Object>> zzimList(HttpSession session,@RequestParam int page, @RequestParam int size, Model model ) {
+		String userId =(String)session.getAttribute("userId");
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		
+		
+		
+		logger.info("찜 목록 조회, 파라미터 Usernum = {}",userNum);
+		List<Map<String, Object>> list = zzimService.showZzimList(page, size, userNum);
+		logger.info("찜 목록 조회, 파라미터 결과 = {}",list);
+		
+		model.addAttribute("list", list);
+		return list;
 	}
 }

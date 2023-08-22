@@ -309,6 +309,23 @@
 		padding: 0% 0% 0% 0%;
 		width: 100%;
 	}
+	
+	#all-resetBtn{
+		border: rgba(204,140,40, 0.6) 10px solid;
+		font-weight:bold;
+		font-size : 15px;
+	    background: #ffd014;
+		border-radius: 30px;
+	    padding-top: 15px;
+	    padding-bottom: 15px;
+	    padding-left: 30px;
+	    padding-right: 30px;
+	    border-width: 2px;
+	}
+	#all-resetBtn:hover{
+		border: #ffd014 4px solid;
+		background: white;
+	}
 </style>
 <div class="search-wrapper"></div>
 <div class = "asd">
@@ -538,7 +555,7 @@
 		  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
 		  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
 		</select>
-	<a class = "all-reset" onclick="allReset()"><button type="button" class="btn btn-secondary menu" >모든 조건 초기화</button></a>
+	<a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >전체 초기화</button></a>
 	</div>
 	<div class="container" >
 	  <div class="row" id = "data-container">
