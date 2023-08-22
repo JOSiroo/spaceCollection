@@ -31,13 +31,42 @@
 		float: right;
 		cursor: pointer;
 	}
+	
+	#fileSpan{
+		float: right;
+	}
+	
+	li>a{
+		clear: both;
+		color: #555555;
+	}
+	li {
+		list-style: none;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#fileList').hide();
-		$('#files').click(function() {
+		$('#fileSpan').click(function() {
 			$('#fileList').toggle();
 		});
+		
+		
+		/* $('li>a').click(function() {
+			$.ajax({
+				
+				url : "<c:url value='/admin/board/download'/>",
+				type: 'get',
+				data: "boardTypeName=" + $('select>option:selected').val(),
+				dataType: 'json',
+				success:function(res){
+					
+				},
+				error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+			});	
+		}); */
 	});
 </script>
 <main id="main" class="main">
@@ -74,30 +103,27 @@
 						</p>
 						
 						<hr>
-						<div id="files">
-							<span><i class="bi bi-folder"></i> 첨부파일 : ${fn:length(spaceFileList) }</span>
-							<div id="fileList">
-							a
-							a
-							a
-							
+						<c:if test="${!empty spaceFileList }">
+							<div id="files">
+								<span id="fileSpan"><i class="bi bi-folder"></i> 첨부파일 : ${fn:length(spaceFileList) }</span>
+								<br>
+								<div id="fileList">
+									<ul>
+										<c:forEach var="spaceFileVo" items="${spaceFileList }">
+											<li>
+												<a href="<c:url value='/admin/board/download?boardNum=${spaceFileVo.imgForeignKey }&fileName=${spaceFileVo.imgTempName }'/>">
+													<i class="bi bi-files"></i> ${spaceFileVo.imgOriginalName }
+												</a>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
 							</div>
-						</div>
+						</c:if>
 						<div>
 							<!-- 내용 -->
 							<div>
 								${map.BOARD_CONTENT }
-							</div>
-							<!-- 첨부파일 -->
-							<div>
-							<c:if test="${map.BOARD_TYPE_FILE_OK=='Y' }">
-								<c:if test="">
-								
-								</c:if>
-								<c:if test="">
-								
-								</c:if>
-							</c:if>
 							</div>
 						</div>
 						<hr>
