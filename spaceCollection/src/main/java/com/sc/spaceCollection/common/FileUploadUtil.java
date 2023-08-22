@@ -69,9 +69,10 @@ public class FileUploadUtil {
 
 		if(ConstUtil.FILE_UPLOAD_TYPE.equals("test")) {
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
-				path=ConstUtil.FILE_UPLOAD_PATH_TEST;
+				//path=request.getContextPath() + ConstUtil.FILE_UPLOAD_PATH_TEST;
+				path=request.getSession().getServletContext().getRealPath(ConstUtil.FILE_UPLOAD_PATH_TEST);
 			}else if(pathFlag==ConstUtil.UPLOAD_IMAGE_FLAG) { //상품 이미지 업로드
-				path=ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST;				
+				path=request.getSession().getServletContext().getRealPath(ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST);				
 			}
 		}else {  //deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실

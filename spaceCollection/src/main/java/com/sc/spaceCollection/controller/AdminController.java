@@ -466,17 +466,18 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/board/download")
-	public ModelAndView download(@RequestParam(defaultValue = "0") int no, @RequestParam String fileName, HttpServletRequest request) {
-		logger.info("다운로드 처리, 파라미터 no={}", no);
+	public ModelAndView download(@RequestParam(defaultValue = "0") int boardNum, @RequestParam String fileName, HttpServletRequest request) {
+		logger.info("다운로드 처리, 파라미터 boardNum={}", boardNum);
 		
 		//강제 다운로드 처리를 위한 뷰페이지로 보내준다
 		Map<String, Object> map = new HashMap<>();
 		//업로드 경로
 		String upPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+		
 		File file = new File(upPath, fileName);
 		map.put("file", file);
 		//ModelAndView(String viewName, @Nullable Map<String, ?> model)
-		ModelAndView mav = new ModelAndView("reboardDownloadView", map);
+		ModelAndView mav = new ModelAndView("boardDownloadView", map);
 		return mav;
 	}
 	
