@@ -38,6 +38,8 @@ import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,6 +58,8 @@ public class AdminController {
 	private final BoardService boardService;
 	private final CommentsService commentsService;
 	private final FileUploadUtil fileuploadUtil;
+	private final SpaceFileService spaceFileService;
+	
 	
 	@GetMapping("/adminLogin")
 	public String adminLogin() {
@@ -261,11 +265,119 @@ public class AdminController {
 		model.addAttribute("list", list);
 	}
 	
-	@RequestMapping("/board/boardWriteSub")
-	public String boardWrite(@RequestParam String boardTypeName, @ModelAttribute BoardVO vo, Model model) {
-		logger.info("게시물 저장, 파라미터 vo = {}", vo);
+	@RequestMapping("board/boardWrite_file")
+	@ResponseBody
+	public BoardTypeVO boardWrite_file(@RequestParam String boardTypeName) {
+		logger.info("Ajax - 파일사용 유무 확인, 파라미터 boardTypeName = {}", boardTypeName);
 		
-		int cnt = boardService.insertBoard(vo);
+		BoardTypeVO boardTypeVo = boardTypeService.selectByBoardTypeName(boardTypeName);
+		logger.info("Ajax - 조회 결과, boardTypeVo = {}", boardTypeVo);
+		
+		return boardTypeVo;
+	}
+	
+	//CK 이미지 첨부
+	@PostMapping("/board/fileUpload")
+	@ResponseBody
+	public String fileUpload(HttpServletRequest request, HttpServletResponse response,
+			MultipartHttpServletRequest multiFile) throws IOException {
+		//Json 객체 생성
+		JsonObject json = new JsonObject();
+		// Json 객체를 출력하기 위해 PrintWriter 생성
+		PrintWriter printWriter = null;
+		OutputStream out = null;
+		//파일을 가져오기 위해 MultipartHttpServletRequest 의 getFile 메서드 사용
+		MultipartFile file = multiFile.getFile("upload");
+		//파일이 비어있지 않고(비어 있다면 null 반환)
+		if (file != null) {
+			// 파일 사이즈가 0보다 크고, 파일이름이 공백이 아닐때
+			if (file.getSize() > 0 && StringUtils.isNotBlank(file.getName())) {
+				if (file.getContentType().toLowerCase().startsWith("image/")) {
+
+					try {
+						//파일 이름 설정
+						String fileName = file.getName();
+						//바이트 타입설정
+						byte[] bytes;
+						//파일을 바이트 타입으로 변경
+						bytes = file.getBytes();
+						//파일이 실제로 저장되는 경로 
+						String uploadPath = request.getServletContext().getRealPath("/board_images/");
+						//저장되는 파일에 경로 설정
+						File uploadFile = new File(uploadPath);
+						if (!uploadFile.exists()) {
+							uploadFile.mkdirs();
+						}
+						//파일이름을 랜덤하게 생성
+						fileName = UUID.randomUUID().toString();
+						//업로드 경로 + 파일이름을 줘서  데이터를 서버에 전송
+						uploadPath = uploadPath + "/" + fileName;
+						out = new FileOutputStream(new File(uploadPath));
+						out.write(bytes);
+
+						//클라이언트에 이벤트 추가
+						printWriter = response.getWriter();
+						response.setContentType("text/html");
+
+						//파일이 연결되는 Url 주소 설정
+						String fileUrl = request.getContextPath() + "/board_images/" + fileName;
+
+						//생성된 jason 객체를 이용해 파일 업로드 + 이름 + 주소를 CkEditor에 전송
+						json.addProperty("uploaded", 1);
+						json.addProperty("fileName", fileName);
+						json.addProperty("url", fileUrl);
+						printWriter.println(json);
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						if(out !=null) {
+							out.close();
+						}
+						if(printWriter != null) {
+							printWriter.close();
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	//첨부파일 첨부
+	@RequestMapping("/board/boardWriteSub")
+	public String boardWrite(@RequestParam String boardTypeName, @ModelAttribute BoardVO vo, @ModelAttribute SpaceFileVO spaceFileVo,
+			HttpServletRequest request, HttpServletResponse response,  MultipartHttpServletRequest multiFile, Model model) throws IOException {
+		logger.info("게시물 저장, 파라미터 vo = {}, spaceFileVo = {}", vo, spaceFileVo);
+
+		String fileName = "", originalFileName = "";
+		long fileSize = 0;
+		int cnt = 0;
+		try {
+			List<Map<String, Object>> list = fileuploadUtil.fileupload(request, ConstUtil.UPLOAD_FILE_FLAG);
+			logger.info("list.size = {}", list.size());
+			cnt = boardService.insertBoard(vo);
+			logger.info("cnt = {}", cnt);
+			
+			for(Map<String, Object>map : list) {
+				if(map.get("fileName")!=null && map.get("fileName")!=""){
+				fileName = (String)map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize = (long)map.get("fileSize");
+				
+				spaceFileVo.setImgForeignKey(vo.getBoardNum());
+				spaceFileVo.setImgOriginalName(originalFileName);
+				spaceFileVo.setImgTempName(fileName);
+				spaceFileVo.setImgSize(fileSize);
+				logger.info("spaceFileVo = {}", spaceFileVo);
+				
+				cnt = spaceFileService.insertSpaceFile(spaceFileVo);
+				}
+			}
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		logger.info("게시물 저장 결과, cnt = {}", cnt);
 		
 		String msg = "게시물 등록에 실패하였습니다. <br> 관리자에게 문의해주시기 바랍니다.", 
@@ -293,7 +405,8 @@ public class AdminController {
 			return "admin/common/message";
 		}else {
 			Map<String, Object> map = boardService.selectByBoardNum(boardNum);
-			logger.info("게시물 상세조회 결과, map = {}", map);
+			List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+			logger.info("게시물 상세조회 결과, map = {}, spaceFileList.size = {}", map, spaceFileList.size());
 			if(map==null || map.isEmpty()) {
 				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
 				model.addAttribute("url", "/admin/board/boardList");
@@ -301,11 +414,12 @@ public class AdminController {
 				return "admin/common/message";
 
 			}else {
+				
 				String userid = (String)session.getAttribute("userid");
 				List<Map<String, Object>> list = commentsService.selectByBoardNum(boardNum);
 				logger.info("댓글 조회결과, list.size = {}", list.size());
 				
-				
+				model.addAttribute("spaceFileList", spaceFileList);
 				model.addAttribute("userid", userid);
 				model.addAttribute("map", map);
 				model.addAttribute("list", list);
@@ -351,72 +465,6 @@ public class AdminController {
 		return "admin/common/message";
 	}
 	
-	@PostMapping("/board/fileUpload")
-	@ResponseBody
-	public String fileUpload(HttpServletRequest request, HttpServletResponse response,
-			MultipartHttpServletRequest multiFile) throws IOException {
-		//Json 객체 생성
-				JsonObject json = new JsonObject();
-				// Json 객체를 출력하기 위해 PrintWriter 생성
-				PrintWriter printWriter = null;
-				OutputStream out = null;
-				//파일을 가져오기 위해 MultipartHttpServletRequest 의 getFile 메서드 사용
-				MultipartFile file = multiFile.getFile("upload");
-				//파일이 비어있지 않고(비어 있다면 null 반환)
-				if (file != null) {
-					// 파일 사이즈가 0보다 크고, 파일이름이 공백이 아닐때
-					if (file.getSize() > 0 && StringUtils.isNotBlank(file.getName())) {
-						if (file.getContentType().toLowerCase().startsWith("image/")) {
-
-							try {
-								//파일 이름 설정
-								String fileName = file.getName();
-								//바이트 타입설정
-								byte[] bytes;
-								//파일을 바이트 타입으로 변경
-								bytes = file.getBytes();
-								//파일이 실제로 저장되는 경로 
-								String uploadPath = request.getServletContext().getRealPath("/board_images/");
-								//저장되는 파일에 경로 설정
-								File uploadFile = new File(uploadPath);
-								if (!uploadFile.exists()) {
-									uploadFile.mkdirs();
-								}
-								//파일이름을 랜덤하게 생성
-								fileName = UUID.randomUUID().toString();
-								//업로드 경로 + 파일이름을 줘서  데이터를 서버에 전송
-								uploadPath = uploadPath + "/" + fileName;
-								out = new FileOutputStream(new File(uploadPath));
-								out.write(bytes);
-								
-								//클라이언트에 이벤트 추가
-								printWriter = response.getWriter();
-								response.setContentType("text/html");
-								
-								//파일이 연결되는 Url 주소 설정
-								String fileUrl = request.getContextPath() + "/board_images/" + fileName;
-								
-								//생성된 jason 객체를 이용해 파일 업로드 + 이름 + 주소를 CkEditor에 전송
-								json.addProperty("uploaded", 1);
-								json.addProperty("fileName", fileName);
-								json.addProperty("url", fileUrl);
-								printWriter.println(json);
-							} catch (IOException e) {
-								e.printStackTrace();
-							} finally {
-								if(out !=null) {
-									out.close();
-								}
-								if(printWriter != null) {
-									printWriter.close();
-								}
-							}
-						}
-					}
-				}
-					return null;
-	}
-	
 	@RequestMapping("/board/download")
 	public ModelAndView download(@RequestParam(defaultValue = "0") int no, @RequestParam String fileName, HttpServletRequest request) {
 		logger.info("다운로드 처리, 파라미터 no={}", no);
@@ -432,19 +480,4 @@ public class AdminController {
 		return mav;
 	}
 	
-	@RequestMapping("board/boardWrite_file")
-	@ResponseBody
-	public String boardWrite_file(@RequestParam String boardTypeName, Model model) {
-		logger.info("ajax - 파일 사용여부 조회, 파라미터 boardTypeName = {}", boardTypeName);
-		
-		BoardTypeVO boardTypeVo = new BoardTypeVO();
-		boardTypeVo = boardTypeService.selectByBoardTypeName(boardTypeName);
-		logger.info("파일 사용여부 조회 결과, boardTypeVo = {}", boardTypeVo);
-		
-		model.addAttribute("boardTypeVo",boardTypeVo);
-		
-		return "admin/board/boardWrite";
-		
-		
-	}
 }

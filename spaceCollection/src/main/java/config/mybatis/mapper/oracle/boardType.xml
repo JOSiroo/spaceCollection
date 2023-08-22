@@ -32,6 +32,6 @@
 	</update>
 	
 	<select id="selectByBoardTypeName" parameterType="string" resultType="boardTypeVo">
-		select * from board_type where board_type_name = #{boartTypeName}
+		select * from board_type where board_type_name = #{boardTypeName}
 	</select>
 </mapper>
