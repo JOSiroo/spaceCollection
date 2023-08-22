@@ -1,5 +1,8 @@
 package com.sc.spaceCollection.zzim.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -57,6 +60,14 @@ public class ZzimServiceImpl implements ZzimService{
 			result = ZZIM_EXIST;
 		}
 		return result;
+	}
+
+	@Override
+	public List<Map<String,Object>> showZzimList(int page, int size, int userNum) {
+		
+		int startRow = (page - 1) * size + 1;  
+		int endRow = page * size;
+		return zzimDao.showZzimList(startRow, endRow, userNum);
 	}
 	
 }

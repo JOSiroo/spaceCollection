@@ -24,4 +24,18 @@
 		delete zzim
 		where ZZIM_NUM = #{zzimNum}
 	</delete>
+	<select id="showZzimList" resultType="map">
+		select * 
+		from(
+			select A.*, rownum as rn
+			from 
+			(
+				select * from ZZIM_SPACE_VIEW
+				where user_num = #{userNum} 
+			)A	
+		)
+		<![CDATA[
+		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
+	
 </mapper>

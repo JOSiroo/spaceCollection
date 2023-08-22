@@ -34,11 +34,8 @@ a.btn.btn-primary.py-2.px-3 {
     /* Add any specific styles for each property item */
 }
 
-
 </style>
-
    <div class="hero">
-
       <div class="hero-slide">
          <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
          <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
@@ -54,88 +51,53 @@ a.btn.btn-primary.py-2.px-3 {
       </div>
    </div>
 
-<div class="searchform">
+<div class="section">
       <%@ include file="/WEB-INF/views/userMain/userMain.jsp" %>
     </div>
     
-	
    <div class="section">
       <div class="container">
       
-         <div class="row mb-5 align-items-center">
-            <div class="col-lg-6">
-               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">신규 스페이스 컬렉션</h2>
-            </div>
-            <div class="col-lg-6 text-lg-end">
-               <p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
-            </div>
-         </div>
-         
-         
-         
-          <div class="property-items-container">
-	  	  <c:forEach var="vo" items="${list}">
-	        <div class="property-item">
-	            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
-	                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
-	                <div class="property-content">
-	                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
-	                    <div>
-	                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
-	                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
-	                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
-	                    </div>
-	                </div>
-	            </a>
-	        </div>
-	    </c:forEach>
-		</div>
-         
-         
-    <div class="row">
-    <div class="col-12">
-       <div class="property-slider-wrap">
-          <div class="property-slider">
-                     
-   
-                     
-                     
-           <%--  <div class="property-item">
-	          	  <c:if test="${empty list}">
-				    <div class="line">해당하는 상품이 없습니다.</div>
-					</c:if>
-					<c:if test="${!empty list}">
-					    <!-- 반복 시작 -->
-					    <c:forEach var="vo" items="${list}">
-					        <div class="property-item">
-					            <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
-					                <img src="<c:url value='images/img_1.jpg'/>" alt="Image" class="img-fluid">
-					                <div class="property-content">
-					                    <div class="price mb-2"><span>${vo.spaceName}</span></div>
-					                    <div>
-					                        <span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
-					                        <span class="city d-block mb-3">${vo.spaceAddress}</span>
-					                        <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
-					                    </div>
-					                </div>
-					            </a>
-					        </div>
-					    </c:forEach>
-					    <!-- 반복 끝 -->
-					</c:if>
-            </div> --%>
-                  </div>
+	         <div class="row mb-5 align-items-center">
+	            <div class="col-lg-6">
+	               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">신규 스페이스 컬렉션</h2>
+	            </div>
+	            <div class="col-lg-6 text-lg-end">
+	               <p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
+	            </div>
+	         </div>
+	         <div class="row">
+				<div class="col-12">
+					<div class="property-slider-wrap">
+						<div class="property-slider">
+							<c:forEach var="vo" items="${list}">
+							  	  <div class="property-item">
+							  	  <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
+										<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+									</a>
+									<div class="property-content">
+										<div class="price mb-2"><span>$1,291,000</span></div>
+										<div>
+											<span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
+											<span class="city d-block mb-3">${vo.spaceAddress}</span>
+											<a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
+										</div>
+									</div>
+							  	</div>
+					    	</c:forEach>
+				    	</div>
+				    	 <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
+				             <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">이전</span>
+				             <span class="next" data-controls="next" aria-controls="property" tabindex="-1">다음</span>
+				       </div> 
+			    	</div>
+		    	</div>
+			</div>
+       </div>
+     
+     </div>
 
-                  <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-                     <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">이전</span>
-                     <span class="next" data-controls="next" aria-controls="property" tabindex="-1">다음</span>
-                  </div>
-
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+               
 
    <section class="features-1">
       <div class="container">
