@@ -9,8 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="https://ssl.nexon.com/s3/membership/global.css" />
 	<link rel="stylesheet" type="text/css" href="https://ssl.nexon.com/s3/membership/find2.css" />
 
-    
-
 <script type="text/javascript">
 	try {
     (function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-PSZ9ZLQ');
@@ -28,7 +26,7 @@
 </head>
 <body>
 	<script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodystart.js" charset="euc-kr"></script>
-	<script type="text/javascript">	
+<!-- 	<script type="text/javascript">	
 		$(function () {
 
 						// 팝업 사이즈 재조정
@@ -48,9 +46,14 @@
 <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
 <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="ItEwsBUJoCYs9H6JTwHuyTs6cSwqPYt8hMQrErpWZCWlFiZxTl3qfoCZk0F2kwasD9wofDqAl8GT8L5apa4W6Ey/NRRCbR9g8SsNY/DI/Ov+heQn4/1Nhsw0+zanHW4dIB2pJj+TBsu7ry7U7KquHTVaWMBZFIaNjDjxUpJKzUASzGXs5nSfqAoz3Y3WLJL8iSnkNxJdyZKRDI0a6KyBfMB2ZvwaznEi5ocitPR6FK/cUuQ2XOoCllA+WCbyS6NpV4MR1w==" />
-</div>
-
+</div> -->
 <script type="text/javascript">
+	$(function(){
+		$("#ucSelectAuthMethod_btnConfirmOwnEmail").click(function(){
+			window.open("${pageContext.request.contextPath}/email/emailCheck?type=findId"
+					,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
+		});
+	});
 //<![CDATA[
 var theForm = document.forms['m_form'];
 if (!theForm) {
@@ -64,10 +67,12 @@ function __doPostBack(eventTarget, eventArgument) {
     }
 }
 //]]>
+
+	
 </script>
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 //<![CDATA[
 function WebForm_OnSubmit() {
 
@@ -78,7 +83,7 @@ function WebForm_OnSubmit() {
 return true;
 }
 //]]>
-</script>
+</script> -->
 
 <div class="aspNetHidden">
 
@@ -88,7 +93,7 @@ return true;
 		<!-- 실제 컨텐츠 영역 -->
 		
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(function () {
 		$("#ucSelectAuthMethod_btnConfirmMobilePhone").addPostbackHandler({
 			handler: function () {
@@ -114,7 +119,7 @@ return true;
 		$('#Certification_hResponse').val(response);
 		__doPostBack("ucSelectAuthMethod$btnConfirmCard", "");
 	};
-</script>
+</script> -->
 <div class="popupFind2">
 	<ul class="find2Tab">
 		<li class="id"><a class="on">스페이스 컬렉션ID찾기</a></li>
@@ -124,7 +129,7 @@ return true;
 	<div class="contents">
 		<p class="stit">스페이스 컬렉션ID 찾기를 위한 본인확인 방법을 선택해주세요.</p>
 		<ul class="authNType">
-		<li><a href="#" id="ucSelectAuthMethod_btnConfirmOwnEmail" name="ucSelectAuthMethod$btnConfirmOwnEmail" memberbutton="true" class="auth4" finda2sopt="UEmail">
+			<li><a href="<c:url value='/email/emailCheck?type=findId'/>" id="ucSelectAuthMethod_btnConfirmOwnEmail" name="ucSelectAuthMethod$btnConfirmOwnEmail" memberbutton="true" class="auth4" finda2sopt="UEmail">
 					<span class="txt1">이메일 인증</span>
 					<span class="txt2">등록된 이메일로 인증</span>
 					<span class="txt3">인증하기</span>
@@ -144,9 +149,6 @@ return true;
 <input type="hidden" id="Certification_hResponse_data" name="Certification_hResponse_data" value="" />
 
 <script type="text/javascript">MemberA2S.Contents("MEMBERS_FIND_ID", "TryFindId");	//A001 </script>
-		
-    
-
 				<script type='text/javascript'>
 					$('[memberbutton=true]').click(
 						function(event)
