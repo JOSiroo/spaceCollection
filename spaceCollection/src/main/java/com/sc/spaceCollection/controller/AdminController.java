@@ -38,6 +38,7 @@ import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.common.Utility;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
@@ -242,6 +243,7 @@ public class AdminController {
 		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardType();
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
+		
 		logger.info("게시물 조회 결과, list.size = {}", list.size());
 
 		int totalRecord=boardService.getTotalRecord(searchVo);
