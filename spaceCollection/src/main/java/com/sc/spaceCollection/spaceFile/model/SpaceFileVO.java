@@ -8,5 +8,5 @@ public class SpaceFileVO {
 	private String imgOriginalName; 
 	private long imgSize;  
 	private String imgTempName; 
-	private int imgforeignKey;
+	private int imgForeignKey;
 }

@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileDAO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
 import lombok.RequiredArgsConstructor;
 

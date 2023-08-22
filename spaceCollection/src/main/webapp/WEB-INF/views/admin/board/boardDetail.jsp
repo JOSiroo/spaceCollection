@@ -26,10 +26,18 @@
 	hr{
 		color: gray;
 	}
+	
+	#files{
+		float: right;
+		cursor: pointer;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
-		
+		$('#fileList').hide();
+		$('#files').click(function() {
+			$('#fileList').toggle();
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -61,11 +69,20 @@
 						<!-- 아이디 -->
 						<!-- 게시시간 -->
 						<p><i class="bi bi-person-fill"></i>${map.USER_ID }<br>
-						<fmt:parseDate var="regdate" value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
-						<fmt:formatDate value="${regdate }" pattern="yyyy-MM-dd HH:mm"/> 조회 0
+							<fmt:parseDate var="regdate" value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
+							<fmt:formatDate value="${regdate }" pattern="yyyy-MM-dd HH:mm"/> 조회 0
 						</p>
 						
 						<hr>
+						<div id="files">
+							<span><i class="bi bi-folder"></i> 첨부파일 : ${fn:length(spaceFileList) }</span>
+							<div id="fileList">
+							a
+							a
+							a
+							
+							</div>
+						</div>
 						<div>
 							<!-- 내용 -->
 							<div>
