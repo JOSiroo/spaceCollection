@@ -3,16 +3,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sc.spaceCollection.host.model.HostDAO">
-	
-	<!-- 공간 카테고리 조회 -->
-	<select id="selectSpaceCategory"  resultType="map">
-		select * from space_type_category
+
+	<!-- Category 정보 조회 -->
+	<select id="selectSpaceCategory" resultType="SpaceTypeVo">
+		SELECT category_no FROM space_type_category
 	</select>
-	
-	<!-- 공간 카테고리별 타입 조회 -->
-	<select id="selectSpaceType" parameterType="int" resultType="SpaceTypeAllVO">
-		select * from spaceTypeView
-		where category_no = #{categoryNo}
+
+	<!-- Category 별 SpaceType 정보 조회 -->
+	<select id="selectSpaceTypeByCategory" parameterType="String"
+		resultMap="spaceTypeAllResultMap">
+		SELECT * FROM spaceTypeView
+		WHERE category_no = #{categoryNo}
 	</select>
-	
+
+	<!-- resultMap 정의 -->
+	<resultMap id="spaceTypeAllResultMap" type="SpaceTypeAllVO">
+		<association property="spaceTypeVo"
+			resultMap="spaceTypeResultMap" />
+		<collection property="spaceTypeList"
+			ofType="map">
+			<id column="space_type_no" />
+			<result column="space_type_name" property="spaceTypeName" />
+			<result column="category_no" property="categoryNo" />
+			<result column="explanation" property="explanation" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="spaceTypeResultMap" type="SpaceTypeVO">
+		<id property="spaceTypeNo" column="space_type_no" />
+		<result property="spaceTypeName" column="space_type_name" />
+		<result property="categoryNo" column="category_no" />
+		<result property="explanation" column="explanation" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
+
+
 </mapper>
