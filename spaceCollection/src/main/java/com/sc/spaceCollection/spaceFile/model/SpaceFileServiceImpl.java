@@ -22,8 +22,8 @@ public class SpaceFileServiceImpl implements SpaceFileService{
 	}
 
 	@Override
-	public int updateSpaceFileByImgNum(SpaceFileVO vo) {
-		return spaceFileDao.updateSpaceFileByImgNum(vo);
+	public int deleteSpaceFileByImgeTempName(String imgTempName) {
+		return spaceFileDao.deleteSpaceFileByImgeTempName(imgTempName);
 	}
 	
 	

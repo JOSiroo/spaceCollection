@@ -28,4 +28,14 @@ public class CommentServiceImpl implements CommentsService{
 		return commentsDao.countComments(boardNum);
 	}
 
+	@Override
+	public int updateComments(CommentsVO vo) {
+		return commentsDao.updateComments(vo);
+	}
+
+	@Override
+	public int updateCommentsDelFlag(int commentNum) {
+		return commentsDao.updateCommentsDelFlag(commentNum);
+	}
+
 }
