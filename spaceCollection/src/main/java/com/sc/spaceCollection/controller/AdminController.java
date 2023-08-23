@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -504,23 +506,38 @@ public class AdminController {
 	}
 	
 	@PostMapping("/board/boardEdit")
-	public String boardEdit(@ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
+	public String boardEdit(@RequestParam String boardTypeName, @ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
 				HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile, Model model) {
 		logger.info("게시판 수정, 파라미터 boardVo = {}, spaceFileListVo = {}", boardVo, spaceFileListVo);
-		
-		for(SpaceFileVO vo : spaceFileListVo.getSpaceFileItems()) {
-			String uploadPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
-			File file = new File(uploadPath, vo.getImgTempName());
-			if(file.exists()) {
-				boolean bool = file.delete();
-				
-				logger.info("파일 삭제 여부, bool", bool);
+		logger.info("boardTypeName이 왜 두번 찍히냐 시발 = {}", boardTypeName);
+		String btn = boardTypeName.substring(0, boardTypeName.indexOf(","));
+		String transBtn = "";
+		try {
+			transBtn = URLEncoder.encode(btn, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		int cnt = 0;
+		if(spaceFileListVo.getSpaceFileItems()!=null && !spaceFileListVo.getSpaceFileItems().isEmpty()) {
+			for(SpaceFileVO vo : spaceFileListVo.getSpaceFileItems()) {
+				if(vo.getImgTempName()!=null && !vo.getImgTempName().isEmpty()) {
+					cnt = spaceFileService.deleteSpaceFileByImgeTempName(vo.getImgTempName());
+					logger.info("db 파일 삭제 결과, cnt = {}", cnt);
+					
+					String uploadPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+					File file = new File(uploadPath, vo.getImgTempName());
+					if(file.exists()) {
+						boolean bool = file.delete();
+						
+						logger.info("파일 삭제 여부, bool={}", bool);
+					}
+				}
 			}
 		}
 		
 		String fileName = "", originalFileName = "";
 		long fileSize = 0;
-		int cnt = 0;
+		cnt = 0;
 		try {
 			List<Map<String, Object>> list = fileuploadUtil.fileupload(request, ConstUtil.UPLOAD_FILE_FLAG);
 			logger.info("list.size = {}", list.size());
@@ -539,9 +556,12 @@ public class AdminController {
 				logger.info("spaceFileVo = {}", spaceFileVo);
 				
 				cnt = spaceFileService.insertSpaceFile(spaceFileVo);
-				
+				logger.info("파일 db저장 결과, cnt = {}", cnt);
 				}
 			}
+			
+			cnt = boardService.updateBoard(boardVo);
+			logger.info("게시물 수정 결과, cnt = {}", cnt);
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -550,7 +570,7 @@ public class AdminController {
 		logger.info("게시물 저장 결과, cnt = {}", cnt);
 		
 		
-		return "redirect:/admin/board/boardList";
+		return "redirect:/admin/board/boardDetail?boardNum="+boardVo.getBoardNum()+"&boardTypeName="+transBtn;
 	}
 	
 }

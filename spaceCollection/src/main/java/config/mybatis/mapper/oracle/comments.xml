@@ -12,11 +12,23 @@
 	</insert>
 	
 	<select id="selectByBoardNum" parameterType="int" resultType="map">
-		select * from comments_view where board_num = #{boardNum} and COMMENT_DEL_FLAG is null order by comment_num
+		select * from comments_view where board_num = #{boardNum} and COMMENT_DEL_FLAG is null 
+		and 
+		<![CDATA[
+		rownum<=5]]>
+		order by comment_num
 	</select>
 	
 	<select id="countComments" parameterType="int" resultType="int">
 		select count(*) from comments where board_num = #{boardNum} and COMMENT_DEL_FLAG is null
 	</select>
+	
+	<update id="updateComments" parameterType="commentsVo">
+		update comments set COMMENT_CONTENT = #{commentContent} where comment_num = #{commentNum}
+	</update>
+	
+	<update id="updateCommentsDelFlag" parameterType="int">
+		update comments set COMMENT_DEL_FLAG = 'Y' where comment_num = #{commentNum}
+	</update>
 	
 </mapper>

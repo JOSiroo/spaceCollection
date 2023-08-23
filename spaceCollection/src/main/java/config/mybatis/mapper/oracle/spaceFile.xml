@@ -15,8 +15,7 @@
 		select * from space_file where img_foreign_key = #{boardNum}
 	</select>
 	
-	<update id="updateSpaceFileByImgNum" parameterType="spaceFileVo">
-		update space_file set IMG_ORIGINAL_NAME = #{imgOriginalName}, IMG_SIZE = #{imgSize}, 
-		IMG_TEMP_NAME = #{imgTempName}
-	</update>	
+	<delete id="deleteSpaceFileByImgeTempName" parameterType="string">
+		delete from space_file where IMG_TEMP_NAME = #{imgTempName} 
+	</delete>	
 </mapper>
