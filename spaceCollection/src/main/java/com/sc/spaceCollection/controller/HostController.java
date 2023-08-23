@@ -29,7 +29,7 @@ public class HostController {
 		return "host/index";
 	}
 	
-	@GetMapping("/registration1")
+	@GetMapping("/registration")
 	public String registration1(Model model) {
 		//1
 		logger.info("공간 등록 첫페이지 보여주기");
@@ -49,13 +49,13 @@ public class HostController {
 		model.addAttribute("list", space);
 		
 		//4
-		return "host/registration1";
+		return "host/registration";
 	}
 	
-	@RequestMapping("/report")
-	public String report() {
+	@RequestMapping("/report/account")
+	public String account() {
 		//1
-		logger.info("report 페이지");
+		logger.info("report/정산완료 페이지");
 		
 		//2
 		
@@ -64,7 +64,22 @@ public class HostController {
 		
 		
 		//4
-		return "host/report";
+		return "host/report/account";
+	}
+	
+	@RequestMapping("/report/draft")
+	public String draft() {
+		//1
+		logger.info("report/정산 예정 페이지");
+		
+		//2
+		
+		
+		//3
+		
+		
+		//4
+		return "host/report/draft";
 	}
 	
 	

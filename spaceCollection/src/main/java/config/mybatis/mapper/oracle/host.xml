@@ -10,7 +10,7 @@
 		</collection>
 	</resultMap>
 	
-	<!-- (메인)공간 카테고리 조회 -->
+	<!-- 공간 카테고리 조회 -->
 	<select id="selectSpaceCategory" parameterType="int" resultMap="selectSpace">
 		select * from SpaceTypeCategory
 		where categoryNo = #{categoryNo}
