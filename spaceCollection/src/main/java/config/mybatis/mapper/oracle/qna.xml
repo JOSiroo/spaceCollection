@@ -10,4 +10,9 @@
 		insert into qna(QNA_NUM,QNA_CONTENT,QNA_REG_DATE,USER_NUM,SPACE_NUM)
 		values(#{qnaNum},#{qnaContent},sysdate,#{userNum},#{spaceNum})
 	</insert>
+	
+	<select id="selectQnaBySpaceNum" parameterType="int" resultType="map">
+		select * from qna_sd_view
+		where space_num = #{spaceNum}
+	</select>
 </mapper>

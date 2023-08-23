@@ -16,7 +16,7 @@ pageEncoding="UTF-8"%>
     height: 40px;
     float: right;
     width: 20%;
-    margin: 0% 0% 4% 82%;
+    margin: 0% 0% 2% 82%;
 }
 .textLimit.limit{
   	 animation: shake 0.5s 0.08s;
@@ -25,6 +25,21 @@ pageEncoding="UTF-8"%>
   .modal-content{
   	margin-top: 50% !important;
   }
+  .qnaHead{
+  	font-size:20px;
+  	font-weight: bold;
+  	margin-right:79%;
+  	margin-bottom:15px;
+  }
+  .qnaBody{
+  	font-size:16px;
+  	padding: 1% 5% 0% 5% !important;
+  	text-align: left;
+  	color:black;
+  	margin-bottom:10px;
+  }
+  
+  
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
@@ -203,9 +218,9 @@ pageEncoding="UTF-8"%>
 					<!-- 지도 -->
 					
 					<div class = "detail-navTab">
-						<h5>Q&A</h5>
+						<h5 style="display: inline-block;color:#193D76">Q&A &nbsp; ${fn:length(qnaList)} </h5>
+						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
 						<div class = "nav-bar"></div>
-						<div class = "question-box">
 						<div class = 'row'>
 							<button type="button" class="btn btn-primary" id = "QNAWrite"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 								질문 등록하기
@@ -215,7 +230,7 @@ pageEncoding="UTF-8"%>
 							    <div class="modal-content">
 							      <div class="modal-header" style=" background: #ffd014;">
 							        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">질문 작성하기</h1>
-							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							        <button type="button" class="btn-close" onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
 							        <form>
@@ -231,14 +246,27 @@ pageEncoding="UTF-8"%>
 							        <p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
 							      </div>
 							      <div class="modal-footer" style="padding:2% 30% 2% 0%;">
-							        <button type="button" class="btn" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+							        <button type="button" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
 							        <button type="button" onclick="QnAWriteBtn()" class="btn" style="background: #193D76; color:white" >등록</button>
 							      </div>
 							    </div>
 							  </div>
 							</div>
 						</div>
+						<div class = "question-box">
+						<c:if test="${empty qnaList }">
 							<h4>등록된 질문이 없습니다.</h4>
+						</c:if>
+						<c:if test="${!empty qnaList }">
+							<c:forEach var="qna" items="${qnaList }">
+								<div>
+									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
+									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
+									<div style="font-size:14px;margin-right:81%;color:lightgrey;"><span>${qna.QNA_REG_DATE}</span></div>
+								</div>
+								<hr>
+							</c:forEach>
+						</c:if>
 						</div>
 					</div>
 					
@@ -566,6 +594,10 @@ pageEncoding="UTF-8"%>
 			var qnaContent = document.getElementById('message-text').value;
 			var userId = document.getElementById('userId').value;
 			var spaceNum = ${vo.spaceNum};
+			if(userId == null || userId == ""){
+				alert('질문을 하려면 로그인을 해야합니다.')
+				return false;
+			}
 			console.log(qnaContent + ", " + userId + ", " + spaceNum);
 			 $.ajax({
 				url:"<c:url value='/writeQnA'/>",
@@ -587,7 +619,10 @@ pageEncoding="UTF-8"%>
 				}
 			 });
 		 }
-				
+	
+	function resetQna(){
+		document.getElementById('message-text').value="";
+	}
 			
 			
 			
