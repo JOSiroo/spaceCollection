@@ -149,7 +149,15 @@ font-weight : bold;
 			<div class="col-6">${map.RESERVATION_UID}</div>
 		</div>
 		</div><!-- 아래는 컨테이너 밖에있는거임 -->
-		<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
+		<jsp:useBean id="now" class="java.util.Date" />
+		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
+		<fmt:parseDate value="${map.RESERVE_START_DAY}" var="parsedDate" pattern="yyyy-MM-dd" />
+		<c:if test="${now.before(parsedDate)}">
+			<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
+		</c:if>
+		<c:if test="${now.after(parsedDate)}">
+			<button class = 'btn-success reserveBt' id = "cancle" onclick="goReview()">리뷰작성</button>
+		</c:if>
 		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>
 		<button class = 'reserveBt' id = "home" onclick="home()">홈</button>
 	</div>
@@ -191,6 +199,9 @@ font-weight : bold;
 	    	}
 	    });
 	  }
+  }
+  function goReview(){
+	  location.href="<c:url value='/detail?spaceNum="+${map.SPACE_NUM}+"'/>";
   }
 </script>
 <%@ include file="../form/userBottom.jsp"%>

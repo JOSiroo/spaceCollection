@@ -32,7 +32,6 @@ public class QnaController {
 		int cnt = 0;
 		String userId = (String)session.getAttribute("userId");
 		if(userId == null || userId.isEmpty()) {
-			logger.info("없네");
 			return cnt;
 		}else {
 			logger.info("qnaContent = {}, userId = {}, spaceNum = {}",qnaContent,userId,spaceNum);
