@@ -43,5 +43,10 @@ public class BoardTypeServiceImpl implements BoardTypeService{
 	public BoardTypeVO selectByBoardTypeName(String boardTypeName) {
 		return boardTypeDao.selectByBoardTypeName(boardTypeName);
 	}
+
+	@Override
+	public List<BoardTypeVO> selectBoardTypeUse() {
+		return boardTypeDao.selectBoardTypeUse();
+	}
 	
 }

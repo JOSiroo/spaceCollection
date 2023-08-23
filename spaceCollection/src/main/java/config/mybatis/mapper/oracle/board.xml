@@ -29,7 +29,7 @@
 			select rownum as RNUM, A.* from
 			(
 				select * from board_boardType_user_view 
-				where BOARD_DEL_FLAG is null 
+				where BOARD_DEL_FLAG is null and BOARD_TYPE_USE ='Y' 
 				<include refid="searchWhere"/>
 				order by board_reg_date desc
 			)A
