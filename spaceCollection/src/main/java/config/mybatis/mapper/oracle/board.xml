@@ -60,4 +60,8 @@
 	<update id="updateBoardDelFlag" parameterType="boardVo">
 		update board set board_del_flag = 'Y' where board_num = #{boardNum}
 	</update>
+	
+	<update id="updateBoard" parameterType="boardVo">
+		update board set BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent} where BOARD_NUM = #{boardNum}
+	</update>
 </mapper>

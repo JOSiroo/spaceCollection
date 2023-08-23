@@ -39,6 +39,7 @@ import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.common.Utility;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileListVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
@@ -500,6 +501,56 @@ public class AdminController {
 		model.addAttribute("map", map);
 		model.addAttribute("spaceFileList", spaceFileList);
 		
+	}
+	
+	@PostMapping("/board/boardEdit")
+	public String boardEdit(@ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
+				HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile, Model model) {
+		logger.info("게시판 수정, 파라미터 boardVo = {}, spaceFileListVo = {}", boardVo, spaceFileListVo);
+		
+		for(SpaceFileVO vo : spaceFileListVo.getSpaceFileItems()) {
+			String uploadPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+			File file = new File(uploadPath, vo.getImgTempName());
+			if(file.exists()) {
+				boolean bool = file.delete();
+				
+				logger.info("파일 삭제 여부, bool", bool);
+			}
+		}
+		
+		String fileName = "", originalFileName = "";
+		long fileSize = 0;
+		int cnt = 0;
+		try {
+			List<Map<String, Object>> list = fileuploadUtil.fileupload(request, ConstUtil.UPLOAD_FILE_FLAG);
+			logger.info("list.size = {}", list.size());
+			
+			SpaceFileVO spaceFileVo = new SpaceFileVO();
+			for(Map<String, Object>map : list) {
+				if(map.get("fileName")!=null && map.get("fileName")!=""){
+				fileName = (String)map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize = (long)map.get("fileSize");
+				
+				spaceFileVo.setImgForeignKey(boardVo.getBoardNum());
+				spaceFileVo.setImgOriginalName(originalFileName);
+				spaceFileVo.setImgTempName(fileName);
+				spaceFileVo.setImgSize(fileSize);
+				logger.info("spaceFileVo = {}", spaceFileVo);
+				
+				cnt = spaceFileService.insertSpaceFile(spaceFileVo);
+				
+				}
+			}
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("게시물 저장 결과, cnt = {}", cnt);
+		
+		
+		return "redirect:/admin/board/boardList";
 	}
 	
 }
