@@ -21,4 +21,9 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.selectQnaBySpaceNum(spaceNum);
 	}
 
+	@Override
+	public int deleteQna(int qnaNum) {
+		return qnaDao.deleteQna(qnaNum);
+	}
+
 }

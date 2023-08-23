@@ -1,8 +1,8 @@
 package com.sc.spaceCollection.host.model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HostService {
-	List<SpaceCategoryVO> selectSpaceCategory();
-	List<SpaceTypeVO> selectSpaceByCategoryNo(int categoryNo);
+	List<Map<String, Object>> selectSpaceType();
 }
