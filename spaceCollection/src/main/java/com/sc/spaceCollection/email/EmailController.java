@@ -28,8 +28,8 @@ public class EmailController {
 	@RequestMapping("/sendEmail")
 	public String email(@RequestParam(required = false) String userEmail, String type, Model model) {
 		
-		String authCode="난수생성클래스";
-		
+		int authCode=(int)(Math.random() * 899999) + 100000;//100000~999999 난수 생성
+		logger.info("난수 생성처리, authCode={}",authCode);
 		String receiver = userEmail; //받는사람 이메일 주소
 		String subject = "스페이크 컬렉션 인증메일 입니다.";
 		String content = "인증번호는 : "+authCode+" 입니다";

@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SpaceFileDAO {
 	int insertSpaceFile(SpaceFileVO vo);
 	List<SpaceFileVO> selectSpaceFileByBoardNum(int boardNum);
+	int updateSpaceFileByImgNum(SpaceFileVO vo);
 }

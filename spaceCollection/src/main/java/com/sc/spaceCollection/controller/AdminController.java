@@ -39,6 +39,7 @@ import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.common.Utility;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileListVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
@@ -240,7 +241,7 @@ public class AdminController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		searchVo.setBoardTypeName(boardTypeName);
-		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardType();
+		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardTypeUse();
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		
@@ -261,7 +262,7 @@ public class AdminController {
 	public void boardWrite(@RequestParam String boardTypeName, Model model) {
 		logger.info("게시물 작성 화면, 초기 게시판 설정 boardTypeName = {}", boardTypeName);
 		
-		List<BoardTypeVO> list = boardTypeService.selectBoardType();
+		List<BoardTypeVO> list = boardTypeService.selectBoardTypeUse();
 		
 		model.addAttribute("boardTypeName", boardTypeName);
 		model.addAttribute("list", list);
@@ -487,6 +488,69 @@ public class AdminController {
 	public void boardEdit(@RequestParam(defaultValue = "0")int boardNum, Model model) {
 		logger.info("게시물 수정, 파라미터 boardNum", boardNum);
 		
+		List<BoardTypeVO> list = boardTypeService.selectBoardTypeUse();
+		logger.info("게시물타입 조회결과, list.size = {}", list.size());
+		
+		Map<String, Object> map = boardService.selectByBoardNum(boardNum);
+		logger.info("게시물 내용 조회결과, map = {}", map);
+		
+		List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+		logger.info("첨부파일 조회결과, spaceFileList.size = {}", spaceFileList.size());
+		
+		model.addAttribute("list", list);
+		model.addAttribute("map", map);
+		model.addAttribute("spaceFileList", spaceFileList);
+		
+	}
+	
+	@PostMapping("/board/boardEdit")
+	public String boardEdit(@ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
+				HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile, Model model) {
+		logger.info("게시판 수정, 파라미터 boardVo = {}, spaceFileListVo = {}", boardVo, spaceFileListVo);
+		
+		for(SpaceFileVO vo : spaceFileListVo.getSpaceFileItems()) {
+			String uploadPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+			File file = new File(uploadPath, vo.getImgTempName());
+			if(file.exists()) {
+				boolean bool = file.delete();
+				
+				logger.info("파일 삭제 여부, bool", bool);
+			}
+		}
+		
+		String fileName = "", originalFileName = "";
+		long fileSize = 0;
+		int cnt = 0;
+		try {
+			List<Map<String, Object>> list = fileuploadUtil.fileupload(request, ConstUtil.UPLOAD_FILE_FLAG);
+			logger.info("list.size = {}", list.size());
+			
+			SpaceFileVO spaceFileVo = new SpaceFileVO();
+			for(Map<String, Object>map : list) {
+				if(map.get("fileName")!=null && map.get("fileName")!=""){
+				fileName = (String)map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize = (long)map.get("fileSize");
+				
+				spaceFileVo.setImgForeignKey(boardVo.getBoardNum());
+				spaceFileVo.setImgOriginalName(originalFileName);
+				spaceFileVo.setImgTempName(fileName);
+				spaceFileVo.setImgSize(fileSize);
+				logger.info("spaceFileVo = {}", spaceFileVo);
+				
+				cnt = spaceFileService.insertSpaceFile(spaceFileVo);
+				
+				}
+			}
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("게시물 저장 결과, cnt = {}", cnt);
+		
+		
+		return "redirect:/admin/board/boardList";
 	}
 	
 }

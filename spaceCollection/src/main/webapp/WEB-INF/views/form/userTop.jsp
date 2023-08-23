@@ -220,7 +220,7 @@
 		 </div>
 			
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="<c:url value='/member_mypage' />">
+				<a href="<c:url value='/guest/myPage/checkPwd' />">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>
@@ -250,8 +250,20 @@
 		  </div>
 		  
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="https://www.goodchoice.kr/more/faq" >
+		    <a href="<c:url value='/'/>">
 		     <i class="bi bi-question-diamond" ></i>
+		 	   <p>QnA</p></a>
+		  </div>
+		  
+		  <div class="col-sm-6 "  style="text-align: center;">
+		    <a href="<c:url value='/'/>">
+		    <i class="bi bi-ticket-perforated"></i>
+		 	   <p>쿠폰함</p></a>
+		  </div>
+		  
+		  <div class="col-sm-6 " style="text-align: center;">
+		    <a href="<c:url value='/FAQ'/>">
+		     <i class="bi bi-book"></i>
 		 	   <p>FAQ</p></a>
 		  </div>
 		  
