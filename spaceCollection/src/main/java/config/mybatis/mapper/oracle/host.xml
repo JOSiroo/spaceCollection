@@ -4,22 +4,15 @@
 
 <mapper namespace="com.sc.spaceCollection.host.model.HostDAO">
 	
-	<resultMap type="SpaceTypeAllVo" id="selectSpace">
-		<collection property="spaceTypeList" javaType="ArrayList" ofType="map" column="categoryNo"
-			select="selectSpaceType">
-		</collection>
-	</resultMap>
-	
 	<!-- 공간 카테고리 조회 -->
-	<select id="selectSpaceCategory" parameterType="int" resultMap="selectSpace">
-		select * from SpaceTypeCategory
-		where categoryNo = #{categoryNo}
+	<select id="selectSpaceCategory"  resultType="map">
+		select * from space_type_category
 	</select>
 	
 	<!-- 공간 카테고리별 타입 조회 -->
 	<select id="selectSpaceType" parameterType="int" resultType="SpaceTypeAllVO">
 		select * from spaceTypeView
-		where categoryNo = #{categoryNo}
+		where category_no = #{categoryNo}
 	</select>
 	
 </mapper>
