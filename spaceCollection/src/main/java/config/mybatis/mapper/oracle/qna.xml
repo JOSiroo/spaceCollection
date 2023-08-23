@@ -15,4 +15,9 @@
 		select * from qna_sd_view
 		where space_num = #{spaceNum}
 	</select>
+	
+	<delete id="deleteQna" parameterType="int">
+		delete qna
+		where qna_num = #{qnaNum}
+	</delete>
 </mapper>
