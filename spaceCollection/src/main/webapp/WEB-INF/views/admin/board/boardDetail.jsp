@@ -19,17 +19,45 @@
     	width: 100%;
 	}
 	
-	#submitBt{
+	#submitBt, #editBt, #listBt{
 		margin-top: 10px;
 	}
 	
 	hr{
 		color: gray;
 	}
+	
+	#files{
+		float: right;
+		
+	
+	#fileSpan{
+		float: right;
+		cursor: pointer;
+	}
+	}
+	
+	li>a{
+		color: #555555;
+		float: left;
+		margin-right: 30px;
+		margin-top: 7px;
+	}
+	li {
+		list-style: none;
+	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
+		$('#fileList').hide();
+		$('#fileSpan').click(function() {
+			$('#fileList').toggle();
+		});
 		
+		$('#listBt').click(function() {
+			location.href="<c:url value='/admin/board/boardList'/>";
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -54,33 +82,35 @@
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">게시물 상세보기</h5>
- 						<!-- 게시판 종류 -->
  						<span>${map.BOARD_TYPE_NAME }</span>
-						<!-- 제목 -->
 						<h4>${map.BOARD_TITLE }</h4>
-						<!-- 아이디 -->
-						<!-- 게시시간 -->
 						<p><i class="bi bi-person-fill"></i>${map.USER_ID }<br>
-						<fmt:parseDate var="regdate" value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
-						<fmt:formatDate value="${regdate }" pattern="yyyy-MM-dd HH:mm"/> 조회 0
+							<fmt:parseDate var="regdate" value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
+							<fmt:formatDate value="${regdate }" pattern="yyyy-MM-dd HH:mm"/> 조회 0
 						</p>
 						
 						<hr>
+						<c:if test="${!empty spaceFileList }">
+							<div id="files">
+								<span id="fileSpan"><i class="bi bi-folder"></i> 첨부파일 : ${fn:length(spaceFileList) }</span>
+								<br>
+								<div id="fileList" class="card">
+									<ul>
+										<c:forEach var="spaceFileVo" items="${spaceFileList }">
+											<li>
+												<a href="<c:url value='/admin/board/download?boardNum=${spaceFileVo.imgForeignKey }&fileName=${spaceFileVo.imgTempName }'/>">
+													<i class="bi bi-files"></i> ${spaceFileVo.imgOriginalName }
+												</a>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+						</c:if>
 						<div>
 							<!-- 내용 -->
 							<div>
 								${map.BOARD_CONTENT }
-							</div>
-							<!-- 첨부파일 -->
-							<div>
-							<c:if test="${map.BOARD_TYPE_FILE_OK=='Y' }">
-								<c:if test="">
-								
-								</c:if>
-								<c:if test="">
-								
-								</c:if>
-							</c:if>
 							</div>
 						</div>
 						<hr>
@@ -96,6 +126,8 @@
 				                </div>
 				                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   					<button type="submit" class="btn btn-primary right" id="submitBt">댓글 등록</button>
+                  					<button type="button" class="btn btn-secondary right" id="editBt">수정</button>
+                  					<button type="button" class="btn btn-secondary right" id="listBt">목록</button>
 								</div>
 								<input type="hidden" name="boardNum" value="${map.BOARD_NUM }">							
 								<input type="hidden" name="userNum" value="9999999">							

@@ -1,13 +1,15 @@
 create or replace view board_boardType_user_view
 as
-select bt.*, b.BOARD_NUM, b.BOARD_TITLE, b.BOARD_REG_DATE, b.BOARD_DEL_FLAG,
-u.USER_NUM, u.USER_ID, nvl(c.commentCount, 0) as commentCount
+select bt."BOARD_TYPE_ID",bt."BOARD_TYPE_NAME",bt."BOARD_TYPE_COMMENT_OK",bt."BOARD_TYPE_FILE_OK",bt."BOARD_TYPE_FILE_NUM",bt."BOARD_TYPE_FILE_SIZE",bt."BOARD_TYPE_USE",bt."BOARD_TYPE_REGDATE", b.BOARD_NUM, b.BOARD_TITLE, b.BOARD_REG_DATE, b.BOARD_DEL_FLAG,
+u.USER_NUM, u.USER_ID, nvl(c.commentCount, 0) as commentCount, nvl(sf.fileCount, 0) as fileCount
 from board b join board_type bt 
 on b.board_type_id = bt.board_type_id 
 join user_info u 
 on b.user_num = u.user_num
 left outer join (select board_num, count(*) as commentCount from comments group by board_num)c
 on b.board_num = c.board_num
+left outer join (select img_foreign_key, count(*) as fileCount from space_file group by img_foreign_key)sf
+on b.board_num = sf.img_foreign_key
 order by board_reg_date desc;
 
 

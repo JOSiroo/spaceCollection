@@ -238,7 +238,7 @@
 		 	</div>
 	
 		    <div class="col-sm-6 " style="text-align: center;">
-			  <a href="<c:url value='/member_heart' />"> 
+			  <a href="<c:url value='/zzimList' />"> 
 		   		 <i class="bi bi-house-heart" ></i>
 		 	 	  <p>찜 리스트</p></a>
 			</div>

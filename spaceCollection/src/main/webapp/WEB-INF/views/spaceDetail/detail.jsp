@@ -16,8 +16,41 @@ pageEncoding="UTF-8"%>
     height: 40px;
     float: right;
     width: 20%;
-    margin: 0% 0% 4% 82%;
+    margin: 0% 0% 2% 82%;
 }
+.textLimit.limit{
+  	 animation: shake 0.5s 0.08s;
+  	 color:red !important;
+  }
+  .modal-content{
+  	margin-top: 50% !important;
+  }
+  .qnaHead{
+  	font-size:20px;
+  	font-weight: bold;
+  	margin-right:79%;
+  	margin-bottom:15px;
+  }
+  .qnaBody{
+  	font-size:16px;
+  	padding: 1% 5% 0% 5% !important;
+  	text-align: left;
+  	color:black;
+  	margin-bottom:10px;
+  }
+  
+  
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+  
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -185,9 +218,9 @@ pageEncoding="UTF-8"%>
 					<!-- 지도 -->
 					
 					<div class = "detail-navTab">
-						<h5>Q&A</h5>
+						<h5 style="display: inline-block;color:#193D76">Q&A &nbsp; ${fn:length(qnaList)} </h5>
+						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
 						<div class = "nav-bar"></div>
-						<div class = "question-box">
 						<div class = 'row'>
 							<button type="button" class="btn btn-primary" id = "QNAWrite"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 								질문 등록하기
@@ -197,7 +230,7 @@ pageEncoding="UTF-8"%>
 							    <div class="modal-content">
 							      <div class="modal-header" style=" background: #ffd014;">
 							        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">질문 작성하기</h1>
-							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							        <button type="button" class="btn-close" onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
 							        <form>
@@ -205,20 +238,35 @@ pageEncoding="UTF-8"%>
 							            <label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
 								            질문:
 							            </label>
+							            <label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>
+							            
 							            <textarea class="form-control" id="message-text" rows="10"></textarea>
 							          </div>
 							        </form>
 							        <p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
 							      </div>
 							      <div class="modal-footer" style="padding:2% 30% 2% 0%;">
-							        <button type="button" class="btn" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+							        <button type="button" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
 							        <button type="button" onclick="QnAWriteBtn()" class="btn" style="background: #193D76; color:white" >등록</button>
 							      </div>
 							    </div>
 							  </div>
 							</div>
 						</div>
+						<div class = "question-box">
+						<c:if test="${empty qnaList }">
 							<h4>등록된 질문이 없습니다.</h4>
+						</c:if>
+						<c:if test="${!empty qnaList }">
+							<c:forEach var="qna" items="${qnaList }">
+								<div>
+									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
+									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
+									<div style="font-size:14px;margin-right:81%;color:lightgrey;"><span>${qna.QNA_REG_DATE}</span></div>
+								</div>
+								<hr>
+							</c:forEach>
+						</c:if>
 						</div>
 					</div>
 					
@@ -523,6 +571,8 @@ pageEncoding="UTF-8"%>
 		}
 
 	});
+	
+	
 		$('.totalPrice').text("예약 시간을 선택해주세요.");
 			$('.swiper-inBox').click(function(){
 			   	var result = 0;
@@ -540,29 +590,39 @@ pageEncoding="UTF-8"%>
 				}
 			});
 	
-			function QnAWriteBtn(){
-				alert('asdsad');
-				var qnaContent = document.getElementById('message-text').value;
-				var userId = document.getElementById('userId').value;
-				var spaceNum = ${vo.spaceNum};
-				
-				 $.ajax({
-					url:"<c:url value='/writeQnA'/>",
-					type:"POST",
-					dataType:"json",
-					data:{
-						qnaContent:qnaContent,
-						userId:userId,
-						spaceNum:spaceNum
-					},
-					success:function(){
-						
-					},
-					complete:function(){
-
+		function QnAWriteBtn(){
+			var qnaContent = document.getElementById('message-text').value;
+			var userId = document.getElementById('userId').value;
+			var spaceNum = ${vo.spaceNum};
+			if(userId == null || userId == ""){
+				alert('질문을 하려면 로그인을 해야합니다.')
+				return false;
+			}
+			console.log(qnaContent + ", " + userId + ", " + spaceNum);
+			 $.ajax({
+				url:"<c:url value='/writeQnA'/>",
+				type:"POST",
+				dataType:"json",
+				data:{
+					qnaContent:qnaContent,
+					spaceNum:spaceNum
+				},
+				success:function(rsp){
+					if(rsp === 1){
+						alert('QnA 등록 완료!');
+					}else if(rsp === 0){
+						alert('QnA 등록 실패!');
 					}
-				 });
-			 }
+				},
+				complete:function(rsp){
+					alert(rsp);
+				}
+			 });
+		 }
+	
+	function resetQna(){
+		document.getElementById('message-text').value="";
+	}
 			
 			
 			
@@ -573,6 +633,20 @@ pageEncoding="UTF-8"%>
 	    }
 	 
 	 
+	 
+	 var qnaText = document.getElementById('message-text');
+	 var textLimit = document.getElementsByClassName('textLimit');
+	 	qnaText.addEventListener('input',function(){
+	 		if(this.value.length >= 200){
+				var truncatedValue = this.value.substring(0, 200); // 200자로 잘라낸 값
+		        this.value = truncatedValue;
+				textLimit[0].classList.add('limit');
+		        textLimit[0].textContent = "최대 200/ 200자 제한";
+	 		}else{
+	 			textLimit[0].classList.remove('limit');
+	 			textLimit[0].textContent="최대 " + this.value.length + "/ 200자 제한";
+	 		}
+	 });
 	 
 	</script>
 	<script>
