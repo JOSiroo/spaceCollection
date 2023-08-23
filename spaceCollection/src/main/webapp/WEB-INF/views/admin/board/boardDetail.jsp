@@ -58,6 +58,16 @@
 		$('#listBt').click(function() {
 			location.href="<c:url value='/admin/board/boardList'/>";
 		});
+		
+		$('form[name=commentsFrm]').submit(function() {
+			if($('textarea').val()==''){
+				$('#confirm').addClass('contentFocus');
+				$('.modal-body').html("게시물 내용을 입력하세요.");
+		        $('#confirm1').modal('show');
+				
+				return false;
+			}
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -122,7 +132,7 @@
 							<form name="commentsFrm" method="post" action="<c:url value='/admin/board/boardDetail/commentsWrite'/>">
 								<label for="commentsContent">댓글</label>
 								<div class="col-sm-10" id="commentDiv">
-				                	<textarea class="form-control" style="height: 100px" name="commentContent" id=""></textarea>
+				                	<textarea class="form-control" style="height: 100px" name="commentContent"></textarea>
 				                </div>
 				                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   					<button type="submit" class="btn btn-primary right" id="submitBt">댓글 등록</button>

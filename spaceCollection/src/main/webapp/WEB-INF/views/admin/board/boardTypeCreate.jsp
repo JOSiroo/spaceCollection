@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
+<style type="text/css">
+	form>div{
+		margin-top: 10px;
+	}
+	
+	form>button{
+		float: right;
+	}
+	
+	#createBt{
+		margin-right: 5px;
+	}
+	
+</style>
 <script type="text/javascript">
 	$(function() {
 		$('#boardTypeFileNum').val(0);
@@ -60,11 +74,11 @@
                     				<input type="text" class="form-control" name="boardTypeName" id="boardTypeName">
                   				</div>
                 			</div>
-                			<div class="form-check form-switch">
+                			<div class="form-check form-switch" id="boardTypeCommentOkDiv">
                       			<input class="form-check-input" type="checkbox" name="boardTypeCommentOk" id="boardTypeCommentOk">
                       			<label class="form-check-label" for="boardTypeCommentOk">댓글 사용 여부</label>
                     		</div>
-                			<div class="form-check form-switch">
+                			<div class="form-check form-switch" id="boardTypeFileOkDiv">
                       			<input class="form-check-input" type="checkbox" name="boardTypeFileOk" id="boardTypeFileOk">
                       			<label class="form-check-label" for="boardTypeFileOk">첨부파일 사용 여부</label>
                     		</div>
@@ -85,8 +99,8 @@
                       			<label class="form-check-label" for="boardTypeUse">게시판 활성화</label>
                     		</div>
                 			
-							<button type="button" class="btn btn-primary rounded-pill" id="createBt" data-bs-toggle="modal" data-bs-target="#confirm1">생성하기</button>
 							<button type="button" class="btn btn-secondary rounded-pill" id="cancelBt" data-bs-toggle="modal" data-bs-target="#confirm2">닫기</button>
+							<button type="button" class="btn btn-primary rounded-pill" id="createBt" data-bs-toggle="modal" data-bs-target="#confirm1">생성하기</button>
 							
 						</form>
 						
