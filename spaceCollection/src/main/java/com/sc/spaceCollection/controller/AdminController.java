@@ -240,7 +240,7 @@ public class AdminController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		searchVo.setBoardTypeName(boardTypeName);
-		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardType();
+		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardTypeUse();
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		
@@ -261,7 +261,7 @@ public class AdminController {
 	public void boardWrite(@RequestParam String boardTypeName, Model model) {
 		logger.info("게시물 작성 화면, 초기 게시판 설정 boardTypeName = {}", boardTypeName);
 		
-		List<BoardTypeVO> list = boardTypeService.selectBoardType();
+		List<BoardTypeVO> list = boardTypeService.selectBoardTypeUse();
 		
 		model.addAttribute("boardTypeName", boardTypeName);
 		model.addAttribute("list", list);
@@ -486,6 +486,19 @@ public class AdminController {
 	@GetMapping("/board/boardEdit")
 	public void boardEdit(@RequestParam(defaultValue = "0")int boardNum, Model model) {
 		logger.info("게시물 수정, 파라미터 boardNum", boardNum);
+		
+		List<BoardTypeVO> list = boardTypeService.selectBoardTypeUse();
+		logger.info("게시물타입 조회결과, list.size = {}", list.size());
+		
+		Map<String, Object> map = boardService.selectByBoardNum(boardNum);
+		logger.info("게시물 내용 조회결과, map = {}", map);
+		
+		List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+		logger.info("첨부파일 조회결과, spaceFileList.size = {}", spaceFileList.size());
+		
+		model.addAttribute("list", list);
+		model.addAttribute("map", map);
+		model.addAttribute("spaceFileList", spaceFileList);
 		
 	}
 	

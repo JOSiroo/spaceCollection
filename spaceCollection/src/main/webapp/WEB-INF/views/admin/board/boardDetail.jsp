@@ -47,6 +47,15 @@
 		list-style: none;
 	}
 	
+	i.bi.bi-exclamation-circle{
+ 		color: #ffd600;
+   		font-size: 40px;
+   		display: block;
+   		margin-block: -13px;
+	}
+	
+	
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -60,14 +69,19 @@
 		});
 		
 		$('form[name=commentsFrm]').submit(function() {
-			if($('textarea').val()==''){
-				$('#confirm').addClass('contentFocus');
-				$('.modal-body').html("게시물 내용을 입력하세요.");
+			if($('textarea').val().trim()==''){
+				$('#modalBt').html("확인");
+				$('.modal-body').html("댓글을 입력해주세요.");
 		        $('#confirm1').modal('show');
 				
-				return false;
+				event.preventDefault();
 			}
 		});
+		
+		$('#editBt').click(function() {
+			location.href="/spaceCollection/admin/board/boardEdit?boardNum="+$('input[name=boardNum]').val();
+		});
+		
 	});
 </script>
 <main id="main" class="main">
@@ -164,14 +178,30 @@
 								</c:if>
 							</div>
 						</c:if>
-						<!-- 댓글 목록 -->
 				 	</div>
 				</div>
 
 			</div> 
 		</div>
 	</section>
-
+	<!-- Modal -->
+	<div class="modal fade" id="confirm1" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						data-bs-dismiss="modal" id="modalBt"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal -->
 </main>
 
 <%@ include file="../../form/adminBottom.jsp"%>    

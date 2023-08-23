@@ -76,13 +76,18 @@
 		float: right;
 	}
 	
+	i.bi.bi-exclamation-circle{
+ 		color: #ffd600;
+   		font-size: 40px;
+   		display: block;
+   		margin-block: -13px;
+	}
+	
 	
 </style>
 <script type="text/javascript" src="<c:url value='/resource/ckeditor/ckeditor.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
-		
-		$.start();
 		$('#strCount').html('&nbsp;&nbsp('+0);
 		
 		CKEDITOR.replace('contents', {
@@ -178,43 +183,6 @@
 		});
 		
 	});
-		
-		$.start = function(){
-			$.ajax({
-		
-			url : "<c:url value='/admin/board/boardWrite_file'/>",
-			type: 'get',
-			data: "boardTypeName=" + $('select>option:selected').val(),
-			dataType: 'json',
-			success:function(res){
-				$('#boardTypeName').val(res.boardTypeName);
-				$('input[name=boardTypeId]').val(res.boardTypeId);
-				if(res.boardTypeFileOk=='Y'){
-					$('#fileDiv').show();
-					
-					var a = 0;
-					var file="";
-					
-						for(var i=0; i<res.boardTypeFileNum; i++){
-					var	filePlus = "<div class='input-group'>"
-						+"<input type='file' class='form-control' id='fileItems' aria-describedby='inputGroupFileAddon04' aria-label='Upload' name='file"+a+"Items'>"
-						+"</div>";
-						file += filePlus;
-						a++;
-					}
-					
-					$('#ajaxInput').html(file);
-				}else{
-					$('#fileDiv').hide();
-				}
-				
-			},
-			error:function(xhr, status, error){
-				alert(status + " : " + error);
-			}
-		});	
-	
-	}
 </script>
 <main id="main" class="main">
 
@@ -225,7 +193,7 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">게시판 생성/관리</li>
 				<li class="breadcrumb-item">게시물 관리</li>
-				<li class="breadcrumb-item active">게시물 작성</li>
+				<li class="breadcrumb-item active">게시물 수정</li>
 			</ol>
 		</nav>
 	</div>
@@ -237,45 +205,53 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">게시물 작성</h5>
+ 						<h5 class="card-title" style="font-weight: bold;">게시물 수정</h5>
  						<form class="row gx-3 gy-2 align-items-center" name="boardFrm" id="boardFrm" method="post" 
  						action="<c:url value='/admin/board/boardWriteSub'/>" enctype="multipart/form-data"
  							onkeydown="return event.key != 'Enter';">
 							<div id="searchDiv">
 								<div class="col-sm-3" id="select">
 									<label class="col-sm-2 col-form-label" for="boardTypeName">게시판 분류</label>
-									<select class="form-select labelNext " name="boardTypeName" id="boardTypeId">
-										<c:forEach var="boardTypeVo" items="${list }">
-											<option value="${boardTypeVo.boardTypeName }" <c:if test="${boardTypeName == boardTypeVo.boardTypeName}">
-							            		selected="selected"
-							            	</c:if> >${boardTypeVo.boardTypeName }</option>
-										</c:forEach>
-									</select>
+									<input type="text" name="boardTypeName" class="form-control labelNext" value="${map.BOARD_TYPE_NAME }" readonly="readonly">
 								</div>
 								<div class="col-sm-3" id="keyword">
 									<label class="col-sm-2 col-form-label" for="boardTitle">제목</label>
-									<input type="text" class="form-control labelNext" id="boardTitle" name="boardTitle">
+									<input type="text" class="form-control labelNext" id="boardTitle" name="boardTitle" value="${map.BOARD_TITLE }">
 									<span class="titleLimit" id="strCount"></span>
 									<span class="titleLimit" id="titleLimit">&nbsp;/45자 이내)</span>
 									<input type="hidden" class="form-control" id="userid" name="userid" value="관리자">
 								</div>
 								
 							</div>
-							<textarea name="boardContent" id="contents"></textarea>
+							<textarea name="boardContent" id="contents">${map.BOARD_CONTENT }</textarea>
 							<input type="hidden" name="boardTypeName" id="boardTypeName">
 							<input type="hidden" name="userNum" value="9999999">
 							<input type="hidden" name="fileOk">
 							<input type="hidden" name="boardTypeId">
-						
-							<div id="fileDiv">
-								<div class="input-group" id="ajaxInput">
+							<c:if test="${map.BOARD_TYPE_FILE_OK == 'Y' }">
+								<div id="fileDiv">
+									<div class="input-group" id="ajaxInput">
+										<c:forEach var="spaceFileVo" items="${spaceFileList }">
+												<div class='input-group'>
+													<input type='file' class='form-control' id='fileItems' aria-describedby='inputGroupFileAddon04' 
+														aria-label='Upload' name='file"+a+"Items' value="${spaceFileVo.imgOriginalName }">
+												</div>					
+										</c:forEach>
+										<c:set var="cnt" value="${map.BOARD_TYPE_FILE_NUM - fn:length(spaceFileList) }"/>
+										<c:forEach begin="1" end="${cnt }">
+												<div class='input-group'>
+													<input type='file' class='form-control' id='fileItems' aria-describedby='inputGroupFileAddon04' 
+														aria-label='Upload' name='file"+a+"Items'>
+												</div>					
+										</c:forEach>
+									</div>
 								</div>
-							</div>
+							</c:if>
 						</form>
 							<input type="hidden" id="boardTypeFileSize" value="${boardTypeVo.boardTypeFileSize }">
 						
 						<div class="col-auto" id="btDiv">
-							<button type="button" class="btn btn-primary" id="submit">등록</button>
+							<button type="button" class="btn btn-primary" id="submit">수정</button>
 							<button type="button" class="btn btn-secondary" id="cancel">취소</button>
 						</div>
 				 	</div>
