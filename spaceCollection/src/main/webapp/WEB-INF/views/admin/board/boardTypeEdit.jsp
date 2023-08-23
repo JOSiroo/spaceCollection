@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
+<style type="text/css">
+	form>button{
+		float: right;
+	}
+	
+	#editBt{
+		margin-right: 5px;
+	}
+</style>
 <script type="text/javascript">
 	$(function() {
 		backupForm();
@@ -108,8 +117,8 @@
                       			<label class="form-check-label" for="boardTypeUse">게시판 활성화</label>
                     		</div>
                 			
-							<button type="button" class="btn btn-primary rounded-pill" id="editBt" data-bs-toggle="modal" data-bs-target="#confirm1">수정하기</button>
 							<button type="button" class="btn btn-secondary rounded-pill" id="cancelBt" data-bs-toggle="modal" data-bs-target="#confirm2">닫기</button>
+							<button type="button" class="btn btn-primary rounded-pill" id="editBt" data-bs-toggle="modal" data-bs-target="#confirm1">수정하기</button>
 							
 						</form>
 						

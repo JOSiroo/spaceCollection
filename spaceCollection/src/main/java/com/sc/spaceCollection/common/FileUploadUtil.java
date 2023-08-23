@@ -26,7 +26,7 @@ public class FileUploadUtil {
 			int pathFlag) throws IllegalStateException, IOException {
 		//파일 업로드 처리
 		MultipartHttpServletRequest multiRequest 
-			= (MultipartHttpServletRequest) request;
+		= (MultipartHttpServletRequest) request;
 
 		Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
 		//List<MultipartFile> files =multiRequest.getFiles("upfile");
@@ -63,6 +63,7 @@ public class FileUploadUtil {
 		return resultList;
 	}
 
+
 	public String getUploadPath(HttpServletRequest request, int pathFlag) {
 		//업로드 경로 구하기
 		String path="";
@@ -95,7 +96,7 @@ public class FileUploadUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String result = sdf.format(d);
 		logger.info("날짜 밀리초 : {}", result);
-		
+
 		return result;
 	}
 
@@ -104,10 +105,10 @@ public class FileUploadUtil {
 		int idx = originName.lastIndexOf(".");
 		String fName = originName.substring(0,idx); //ab
 		String ext = originName.substring(idx); //.txt
-		
+
 		String result = fName+"_"+getDateTimeStamp()+ ext;
 		logger.info("변경된 파일명 : {}", result);
-		
+
 		return result;
 	}
 }
