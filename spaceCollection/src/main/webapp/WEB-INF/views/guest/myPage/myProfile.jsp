@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="../../form/userTop.jsp" %>
-<%@include file="myPageMenu.jsp" %>
+<%-- <%@include file="myPageMenu.jsp" %> --%>
 
 <style type="text/css">
 	.wrapProfile{
@@ -36,7 +36,6 @@
 	
 	h1{
 		padding:50px;
-		margin-left: 200px;
 		text-align: center;
 	}
 	
@@ -46,20 +45,20 @@
 		margin-left: 30%;
 	}
 	
-	#profileTitle{
-		background: #193d76;
-		color: #d1d8e4;
-		padding: 17px;
-		border-radius: 10px 10px 0 0;
-		font-weight: bold;
-		
-	}
 	.tbProfile{
 		background: white;
 		width: 584px;
 		border: 0.5px solid	#193d76;
 		border-bottom: none;
+		border-radius: 20px 20px 0 0;
 		padding-top: 30px;
+	}
+	
+	.tbProfile tr:first-child{
+		background: #193d76;
+		color: #d1d8e4;
+		padding: 17px;
+		font-weight: bold;
 	}
 	
 	.tbProfile th{
@@ -120,10 +119,10 @@
 	    <input id="file-input" type="file" style="display: none;"/>
 	</div>
 	<div class="profileInfo">
-		<div>
-			<div id="profileTitle">내 프로필</div>
-		</div>
 		<table class="tbProfile">
+			<tr>
+				<th colspan="2" style="color: white;">내 프로필</th>
+			</tr>
 			<tr>
 				<th>
 					<label>이름</label>

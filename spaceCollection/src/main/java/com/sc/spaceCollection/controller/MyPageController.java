@@ -66,5 +66,11 @@ public class MyPageController {
 		
 		return "common/message";
 	}
+	
+	@RequestMapping("/myReview")
+	public String myReview() {
+		logger.info("나의리뷰 페이지 처리");
+		return "guest/myPage/myReview";
+	}
 
 }

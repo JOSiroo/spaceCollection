@@ -31,7 +31,7 @@
 </style>
 <aside id="guestAside">
 	<div class="list-group">
-	  <a href="<c:url value='/guest/checkPwd'/>" class="list-group-item list-group-item-action">내 프로필</a>
+	  <a href="<c:url value='/guest/myPage/checkPwd'/>" class="list-group-item list-group-item-action">내 프로필</a>
 	  <a href="#" class="list-group-item list-group-item-action">공간 예약리스트</a>
 	  <a href="#" class="list-group-item list-group-item-action">나의 공간 찜</a>
 	  <a href="#" class="list-group-item list-group-item-action">나의 쿠폰</a>
