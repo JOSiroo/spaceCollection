@@ -97,25 +97,7 @@ public class GuestController {
 		return vo;
 	}
 	
-	@PostMapping("/checkPwd")
-	public String checkPwd_post(@RequestParam String userPwd,HttpSession session ,Model model) {
-		String userId=(String)session.getAttribute("userId");
-		logger.info("비밀번호 확인 처리, 파라미터 userId={},userPwd={}",userId,userPwd);
-		
-		int result = guestService.loginCheck(userId, userPwd);
-		logger.info("비밀번호 체크 결과, result={}",result);
-		
-		String msg="비밀번호가 일치하지 않습니다.", url="/guest/myPage/checkPwd";
-		if(result==GuestService.LOGIN_OK) {
-			msg="";
-			url="/guest/myPage/editInfo";
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
-	}
+
 	
 	@RequestMapping("/findPwd")
 	public String findPwd() {
@@ -141,13 +123,6 @@ public class GuestController {
 		return "find/findId";
 	}
 	
-	@RequestMapping("/myPage")
-	public String myPage() {
-		logger.info("마이페이지 처리");
-		
-		return "guest/myPage/myProfile";
-	}
-	
 	@GetMapping("/editInfo")
 	public void editInfo_get(HttpSession session, Model model) {
 		String userId=(String)session.getAttribute("userId");
@@ -159,14 +134,7 @@ public class GuestController {
 		model.addAttribute("guestVo",guestVo);
 		
 	}
-	
-	@GetMapping("/checkPwd")
-	public String checkPwd_get() {
-		logger.info("비밀번호 확인 페이지, [회원정보수정 단계]");
-		return "guest/myPage/checkPwd";
-	}
-	
-	
+
 	
 	
 }
