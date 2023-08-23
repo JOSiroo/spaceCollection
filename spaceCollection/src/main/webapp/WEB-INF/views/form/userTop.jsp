@@ -220,7 +220,7 @@
 		 </div>
 			
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="<c:url value='/member_mypage' />">
+				<a href="<c:url value='/guest/myPage/checkPwd' />">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>

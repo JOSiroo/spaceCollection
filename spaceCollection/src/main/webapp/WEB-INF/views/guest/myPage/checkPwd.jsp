@@ -79,7 +79,7 @@
 	
 </style>
 <section class="userModify">
-	<form name="frmCheckPwd" method="post" action="<c:url value='/guest/checkPwd'/>">
+	<form name="frmCheckPwd" method="post" action="<c:url value='/guest/myPage/checkPwd'/>">
 		<h1>회원정보확인</h1>
 		<b>${sessionScope.userId }님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</b>
 		<table style="border: 1px solid #193D76;" id="checkPwdTable">

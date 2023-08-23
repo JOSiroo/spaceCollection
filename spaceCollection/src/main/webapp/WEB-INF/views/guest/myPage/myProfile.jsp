@@ -129,7 +129,8 @@
 					<label>이름</label>
 				</th>
 				<td>
-					박희수
+					박희수<br>
+					<a href="#" class="editInfo">변경하기</a>
 				</td>
 			</tr>
 			<tr>
