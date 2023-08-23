@@ -118,5 +118,10 @@ public class ReservationServiceImpl implements ReservationService{
 	public int canceledReservation(String reservationUid) {
 		return reservationDao.canceledReservation(reservationUid);
 	}
+
+	@Override
+	public Map<String, Object> reservationReview(int reservationNum) {
+		return reservationDao.reservationReview(reservationNum);
+	}
 	
 }
