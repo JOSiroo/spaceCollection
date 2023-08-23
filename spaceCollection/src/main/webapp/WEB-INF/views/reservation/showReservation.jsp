@@ -201,7 +201,16 @@ font-weight : bold;
 	  }
   }
   function goReview(){
-	  location.href="<c:url value='/detail?spaceNum="+${map.SPACE_NUM}+"'/>";
+	  const popupWidth = 1000;
+	  const popupHeight = 800;
+
+	  const leftPosition = (window.screen.width - popupWidth) / 2;
+	  const topPosition = (window.screen.height - popupHeight) / 2;
+
+
+	  window.open("<c:url value='/writeReview?spaceNum="+${map.SPACE_NUM}+"&reservationNum="+${map.RESERVATION_NUM}+"'/>", 'PopupWin',
+	  'width='+popupWidth+',height='+popupHeight+',left='+leftPosition+',top='+topPosition+'');
   }
+  
 </script>
 <%@ include file="../form/userBottom.jsp"%>
