@@ -7,7 +7,8 @@ import lombok.Data;
 
 @Data
 public class SpaceTypeAllVO {
-	private SpaceCategoryVO spaceCategoryVo;
+	private SpaceTypeVO spaceTypeVo;
 	
+	//view 정보 담을 list
 	private List<Map<String, Object>> spaceTypeList;
 }
