@@ -74,21 +74,25 @@
 	<article class="main">
 		<div class="accordion accordion-flush" id="accordionFlushExample">
 			<c:forEach var="type" items="${type }" >
-				<div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-							aria-expanded="false" aria-controls="flush-collapseOne">
-							<p>${type.categoryName }</p>
-						</button>
-					</h2>
-					<div id="flush-collapseOne" class="accordion-collapse collapse"
-						data-bs-parent="#accordionFlushExample">
-						<div class="accordion-body">
-							<p>${type.explanation }</p>
+				<c:forEach var="map" items="${type }">
+						<c:forEach var="map2" items="${map2 }">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+								aria-expanded="false" aria-controls="flush-collapseOne">
+								<p>${map2.categoryName }</p>
+							</button>
+						</h2>
+						<div id="flush-collapseOne" class="accordion-collapse collapse"
+							data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								<p>${map.spaceTypeName }</p>
+							</div>
 						</div>
 					</div>
-				</div>
+						</c:forEach>
+				</c:forEach>
 			</c:forEach>
 		</div>
 			<%-- <div class="accordion-item">
