@@ -30,23 +30,29 @@ public class HostController {
 	}
 	
 	@GetMapping("/registration")
-	public String registration1(Model model) {
+	public String registration(Model model) {
 		//1
 		logger.info("공간 등록 첫페이지 보여주기");
 		
 		//2
-		List<Map<String, Object>> space = hostService.selectSpaceType();
-		logger.info("공간 리스트 조회, 결과 space.size = {}", space.size());
+		List<Map<String, Object>> type = null;
+		List<Map<String, Object>> category = hostService.selectSpaceCategory();
+		logger.info("카테고리 ={}",category);
 		
-		
-		for (int i = 0; i < space.size(); i++) {
+		for (int i = 0; i < category.size(); i++) {
+			Map<String, Object> map = category.get(i);
+			logger.info("맵 ={}",map);
 			
+			int categoryNo = Integer.parseInt(String.valueOf(map.get("CATEGORY_NO")));
+			logger.info("카테고리번호 = {}", categoryNo);
+			
+			type = hostService.selectSpaceType(categoryNo);
+			logger.info("공간타입 카테고리번호로 조회, type.size = {}", type.size());
 		}
 		
-		logger.info("공간타입 카테고리번호로 조회, list.size = {}", space.size());
 
 		//3
-		model.addAttribute("list", space);
+		model.addAttribute("type", type);
 		
 		//4
 		return "host/registration";

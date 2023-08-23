@@ -14,12 +14,16 @@ public class HostServiceImpl implements HostService {
 	private final HostDAO hostDao;
 
 	@Override
-	public List<Map<String, Object>> selectSpaceType() {
-		return hostDao.selectSpaceType();
+	public List<Map<String, Object>> selectSpaceType(int categoryNo) {
+		return hostDao.selectSpaceType(categoryNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSpaceCategory() {
+		return hostDao.selectSpaceCategory();
 	}
 
 
-	
 	
 
 }

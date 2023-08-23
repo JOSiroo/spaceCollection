@@ -73,22 +73,19 @@
 
 	<article class="main">
 		<div class="accordion accordion-flush" id="accordionFlushExample">
-			<c:forEach var="list" items="${list }" >
+			<c:forEach var="type" items="${type }" >
 				<div class="accordion-item">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
 							aria-expanded="false" aria-controls="flush-collapseOne">
-								<span> 
-									<img class="icon" src="<c:url value='/img/icons/kitchen.svg' />">
-								</span>
-								<p>${list.categoryName }</p>
+							<p>${type.categoryName }</p>
 						</button>
 					</h2>
 					<div id="flush-collapseOne" class="accordion-collapse collapse"
 						data-bs-parent="#accordionFlushExample">
 						<div class="accordion-body">
-							<p>${list.explanation }</p>
+							<p>${type.explanation }</p>
 						</div>
 					</div>
 				</div>
