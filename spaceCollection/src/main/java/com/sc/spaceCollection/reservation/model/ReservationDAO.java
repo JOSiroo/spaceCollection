@@ -12,4 +12,5 @@ public interface ReservationDAO {
 	Map<String, Object> showReservation(ReservationVO vo);
 	List<Map<String,Object>> reservationList(String userId);
 	int canceledReservation(String reservationUid);
+	Map<String,Object> reservationReview(int reservationNum);
 }

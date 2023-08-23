@@ -3,6 +3,7 @@ package com.sc.spaceCollection.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +39,9 @@ public class QnaController {
 			int userNum = guestService.selectUserInfo(userId).getUserNum();
 			
 			QnaVO vo = new QnaVO();
+			
+			qnaContent = qnaContent.replace("\n","<br>");
+			
 			vo.setQnaContent(qnaContent);
 			vo.setUserNum(userNum);
 			vo.setSpaceNum(spaceNum);
@@ -48,6 +52,18 @@ public class QnaController {
 			
 			return cnt;
 		}
-			
+		
+	}
+	@GetMapping("/deleteQnA")
+	public String deleteQna(@RequestParam int qnaNum,int spaceNum) {
+		logger.info("qna삭제, 파라미터 qnaNum = {}, spaceNum = {}", qnaNum, spaceNum);
+		
+		int cnt = qnaService.deleteQna(qnaNum);
+		logger.info("qna삭제 결과, cnt = {}", cnt);
+		
+		return "redirect:/detail?spaceNum="+spaceNum;
 	}
 }
+
+
+

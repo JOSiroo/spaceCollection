@@ -483,4 +483,10 @@ public class AdminController {
 		return mav;
 	}
 	
+	@GetMapping("/board/boardEdit")
+	public void boardEdit(@RequestParam(defaultValue = "0")int boardNum, Model model) {
+		logger.info("게시물 수정, 파라미터 boardNum", boardNum);
+		
+	}
+	
 }
