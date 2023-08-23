@@ -6,4 +6,5 @@ import java.util.Map;
 public interface QnaService {
 	int insertQna(QnaVO vo);
 	List<Map<String, Object>> selectQnaBySpaceNum(int spaceNum);
+	int deleteQna(int qnaNum);
 }

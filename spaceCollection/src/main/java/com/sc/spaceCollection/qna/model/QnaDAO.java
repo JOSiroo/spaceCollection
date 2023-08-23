@@ -9,4 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface QnaDAO {
 	int insertQna(QnaVO vo);
 	List<Map<String, Object>> selectQnaBySpaceNum(int spaceNum);
+	int deleteQna(int qnaNum);
 }

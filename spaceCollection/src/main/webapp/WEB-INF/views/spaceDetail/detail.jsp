@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%>
   .qnaHead{
   	font-size:20px;
   	font-weight: bold;
-  	margin-right:79%;
+  	margin-right:78.7%;
   	margin-bottom:15px;
   }
   .qnaBody{
@@ -218,7 +218,7 @@ pageEncoding="UTF-8"%>
 					<!-- 지도 -->
 					
 					<div class = "detail-navTab">
-						<h5 style="display: inline-block;color:#193D76">Q&A &nbsp; ${fn:length(qnaList)} </h5>
+						<h5 style="display: inline-block;color:#193D76">Q&A&nbsp;${fn:length(qnaList)} </h5>
 						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
 						<div class = "nav-bar"></div>
 						<div class = 'row'>
@@ -262,7 +262,12 @@ pageEncoding="UTF-8"%>
 								<div>
 									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
 									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
-									<div style="font-size:14px;margin-right:81%;color:lightgrey;"><span>${qna.QNA_REG_DATE}</span></div>
+									<div style="font-size:14px;margin-right:12%;color:lightgrey;">
+										<span>${qna.QNA_REG_DATE}</span>
+										<c:if test="${sessionScope.userId == qna.USER_ID}">
+											<a href="#"style="font-size:14px;margin-left:69%;" onclick="deleteQna(${qna.QNA_NUM})">삭제하기</a>
+										</c:if>
+									</div>
 								</div>
 								<hr>
 							</c:forEach>
@@ -613,11 +618,9 @@ pageEncoding="UTF-8"%>
 					}else if(rsp === 0){
 						alert('QnA 등록 실패!');
 					}
-				},
-				complete:function(rsp){
-					alert(rsp);
 				}
 			 });
+			 location.reload();
 		 }
 	
 	function resetQna(){
@@ -763,7 +766,12 @@ pageEncoding="UTF-8"%>
         var milliseconds = today.getMilliseconds();
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
-        
+        function deleteQna(qnaNum){
+			if(confirm('qna를 삭제하시겠습니까?')){
+				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${vo.spaceNum}+"'/>"
+						
+			}
+        }
         
         function requestPay() {
             console.log(paymentType);
