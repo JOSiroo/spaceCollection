@@ -19,7 +19,7 @@
     	width: 100%;
 	}
 	
-	#submitBt{
+	#submitBt, #editBt, #listBt{
 		margin-top: 10px;
 	}
 	
@@ -29,20 +29,24 @@
 	
 	#files{
 		float: right;
-		cursor: pointer;
-	}
+		
 	
 	#fileSpan{
 		float: right;
+		cursor: pointer;
+	}
 	}
 	
 	li>a{
-		clear: both;
 		color: #555555;
+		float: left;
+		margin-right: 30px;
+		margin-top: 7px;
 	}
 	li {
 		list-style: none;
 	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -51,22 +55,9 @@
 			$('#fileList').toggle();
 		});
 		
-		
-		/* $('li>a').click(function() {
-			$.ajax({
-				
-				url : "<c:url value='/admin/board/download'/>",
-				type: 'get',
-				data: "boardTypeName=" + $('select>option:selected').val(),
-				dataType: 'json',
-				success:function(res){
-					
-				},
-				error:function(xhr, status, error){
-					alert(status + " : " + error);
-				}
-			});	
-		}); */
+		$('#listBt').click(function() {
+			location.href="<c:url value='/admin/board/boardList'/>";
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -91,12 +82,8 @@
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">게시물 상세보기</h5>
- 						<!-- 게시판 종류 -->
  						<span>${map.BOARD_TYPE_NAME }</span>
-						<!-- 제목 -->
 						<h4>${map.BOARD_TITLE }</h4>
-						<!-- 아이디 -->
-						<!-- 게시시간 -->
 						<p><i class="bi bi-person-fill"></i>${map.USER_ID }<br>
 							<fmt:parseDate var="regdate" value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
 							<fmt:formatDate value="${regdate }" pattern="yyyy-MM-dd HH:mm"/> 조회 0
@@ -107,7 +94,7 @@
 							<div id="files">
 								<span id="fileSpan"><i class="bi bi-folder"></i> 첨부파일 : ${fn:length(spaceFileList) }</span>
 								<br>
-								<div id="fileList">
+								<div id="fileList" class="card">
 									<ul>
 										<c:forEach var="spaceFileVo" items="${spaceFileList }">
 											<li>
@@ -139,6 +126,8 @@
 				                </div>
 				                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   					<button type="submit" class="btn btn-primary right" id="submitBt">댓글 등록</button>
+                  					<button type="button" class="btn btn-secondary right" id="editBt">수정</button>
+                  					<button type="button" class="btn btn-secondary right" id="listBt">목록</button>
 								</div>
 								<input type="hidden" name="boardNum" value="${map.BOARD_NUM }">							
 								<input type="hidden" name="userNum" value="9999999">							
