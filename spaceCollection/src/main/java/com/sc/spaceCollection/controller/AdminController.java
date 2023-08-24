@@ -400,39 +400,36 @@ public class AdminController {
 	}
 	
 	@GetMapping("/board/boardDetail")
-	public String boardDetail(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
-		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
-		
-		if(boardNum==0) {
-			model.addAttribute("msg", "잘못된 URL 입니다.");
-			model.addAttribute("url", "/admin/board/boardList");
-			
-			return "admin/common/message";
-		}else {
-			Map<String, Object> map = boardService.selectByBoardNum(boardNum);
-			List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
-			logger.info("게시물 상세조회 결과, map = {}, spaceFileList.size = {}", map, spaceFileList.size());
-			if(map==null || map.isEmpty()) {
-				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
-				model.addAttribute("url", "/admin/board/boardList");
-				
-				return "admin/common/message";
+	   public String boardDetail(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
+	      logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
+	      
+	      if(boardNum==0) {
+	         model.addAttribute("msg", "잘못된 URL 입니다.");
+	         model.addAttribute("url", "/admin/board/boardList");
+	         
+	         return "admin/common/message";
+	      }else {
+	         Map<String, Object> map = boardService.selectByBoardNum(boardNum);
+	         List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+	         logger.info("게시물 상세조회 결과, map = {}, spaceFileList.size = {}", map, spaceFileList.size());
+	         if(map==null || map.isEmpty()) {
+	            model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+	            model.addAttribute("url", "/admin/board/boardList");
+	            
+	            return "admin/common/message";
 
-			}else {
-				
-				String userid = (String)session.getAttribute("userid");
-				List<Map<String, Object>> list = commentsService.selectByBoardNum(boardNum);
-				logger.info("댓글 조회결과, list.size = {}", list.size());
-				
-				model.addAttribute("spaceFileList", spaceFileList);
-				model.addAttribute("userid", userid);
-				model.addAttribute("map", map);
-				model.addAttribute("list", list);
-				
-				return "admin/board/boardDetail";
-			}
-		}
-	}
+	         }else {
+	            
+	            String userid = (String)session.getAttribute("userid");
+	            
+	            model.addAttribute("spaceFileList", spaceFileList);
+	            model.addAttribute("userid", userid);
+	            model.addAttribute("map", map);
+	            
+	            return "admin/board/boardDetail";
+	         }
+	      }
+	   }
 	
 	@PostMapping("/board/boardDetail/commentsWrite")
 	public String commentsWrite(@ModelAttribute CommentsVO vo, Model model) {
