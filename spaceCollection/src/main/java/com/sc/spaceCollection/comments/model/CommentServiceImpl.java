@@ -28,4 +28,9 @@ public class CommentServiceImpl implements CommentsService{
 		return commentsDao.countComments(boardNum);
 	}
 
+	@Override
+	public List<Map<String, Object>> selecteventByBoardNum(int boardNum) {
+		return commentsDao.selecteventByBoardNum(boardNum);
+	}
+
 }

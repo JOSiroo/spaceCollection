@@ -58,4 +58,15 @@ public class BoardServiceImpl implements BoardService{
 		return cnt;
 	}
 
+	@Override
+	public List<UserBoardVO> selectByeventBoard() {
+		return boardDao.selectByeventBoard();
+	}
+
+	@Override
+	public Map<String, Object> selectByeventBoardNum(int boardNum) {
+		return boardDao.selectByeventBoardNum(boardNum);
+	}
+
+
 }
