@@ -13,4 +13,5 @@ public interface CommentsDAO {
    List<Map<String, Object>> selectByBoardNum(CommentsVO commentsVo);
    int updateComments(CommentsVO vo);
    int updateCommentsDelFlag(int commentNum);
+
 }

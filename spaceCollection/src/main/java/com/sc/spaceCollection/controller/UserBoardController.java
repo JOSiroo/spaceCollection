@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,12 +46,28 @@ public class UserBoardController {
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
 		logger.info("이벤트 게시물 조회결과");
-		List<UserBoardVO> list = boardService.selectByeventBoard();
-		logger.info("이벤트 게시물 조회결과, list.size = {}", list.size());
-		logger.info("이벤트 게시물 조회결과, UserBoardVO = {}", list);
 		
-		model.addAttribute("list", list);
-		return "userMain/board/boardList"; 
+		List<Map<String, Object>> mapList = boardService.selectByeventBoard();
+		logger.info("게시물 상세조회 결과, mapList = {}", mapList);
+		
+		/*
+		 * List<UserBoardVO> list = boardService.selectByeventBoard();
+		 * logger.info("이벤트 게시물 조회결과, list.size = {}", list.size());
+		 * logger.info("이벤트 게시물 조회결과, UserBoardVO = {}", list);
+		 */
+		
+		List<String> strList = new ArrayList<>();
+		
+		for(int i = 0; i < mapList.size(); i++) {
+			Map<String, Object> map = mapList.get(i);
+			String str = ((String) map.get("BOARD_CONTENT")).split("</p>")[0];
+			/* String str1 = str.substring(str.indexOf("src=\""), str.indexOf("\"")); */
+			
+			map.put("boardContent", str);
+			/* logger.info("str1:{}", str1); */
+			logger.info("strList: {}", map.get("boardContent"));
+		}
+		return "userMain/board/boardList";
 	}
 	
 	@GetMapping("/boardDetail")
