@@ -1,7 +1,9 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sc.spaceCollection.host.model.HostService;
+import com.sc.spaceCollection.host.model.SpaceTypeVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,23 +33,34 @@ public class HostController {
 	}
 	
 	@GetMapping("/registration")
-	public String registration1(Model model) {
+	public String registration(Model model) {
 		//1
 		logger.info("공간 등록 첫페이지 보여주기");
 		
 		//2
-		List<Map<String, Object>> space = hostService.selectSpaceType();
-		logger.info("공간 리스트 조회, 결과 space.size = {}", space.size());
+		List<List<Map<String, Object>>> type = new ArrayList<>();
+		List<SpaceTypeVO> map = new ArrayList<>();
+		List<SpaceTypeVO> category = hostService.selectSpaceCategory();
+		logger.info("카테고리 ={}",category);
 		
-		
-		for (int i = 0; i < space.size(); i++) {
+		for (int i = 0; i < category.size(); i++) {
+			map.add(category.get(i));
+			logger.info("맵 ={}",map);
+			
+			String categoryName = map.get(i).getCategoryName();
+			logger.info("카테고리번호 = {}", categoryName);
+			
+			List<Map<String, Object>> space = hostService.selectSpaceType(categoryName);
+			logger.info("스페이스 = {}", space);
+			type.add(space); 
+			logger.info("공간타입 카테고리번호로 조회, type.size = {}", type.size());
 			
 		}
-		
-		logger.info("공간타입 카테고리번호로 조회, list.size = {}", space.size());
+		logger.info("타입 = {}", type);
 
 		//3
-		model.addAttribute("list", space);
+		model.addAttribute("type", type);
+		model.addAttribute("map2", map);
 		
 		//4
 		return "host/registration";

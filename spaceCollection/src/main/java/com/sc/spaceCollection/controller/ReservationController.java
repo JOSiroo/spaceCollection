@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.reservation.model.ReservationDAO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.reservation.model.ReservationVO;
@@ -117,6 +118,14 @@ public class ReservationController {
 	public String showReservation(@RequestParam int reservationNum, HttpSession session,Model model) {
 		logger.info("예약 내역 페이지");
 		String userId = (String)session.getAttribute("userId");
+		
+		if(userId == null || userId.isEmpty()) {
+			String msg = "잘못된 접근입니다", url = "/";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "common/message";
+		}
+		
 		logger.info("예약 내역 페이지, id = {}, reservationNum = {}", userId, reservationNum);
 		Map<String, Object> map = reservationService.showReservation(reservationNum, userId);
 		
@@ -125,6 +134,13 @@ public class ReservationController {
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 			return "common/message";
+		}
+		
+		boolean isReviewd = reservationService.isReviewd(reservationNum, userId);
+		if(isReviewd) {
+			model.addAttribute("isReviewed", true);
+		}else {
+			model.addAttribute("isReviewed", false);
 		}
 
 		logger.info("예약 내역 페이지, 조회결과 map.size = {}", map);

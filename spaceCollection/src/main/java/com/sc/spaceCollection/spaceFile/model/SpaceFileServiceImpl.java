@@ -20,6 +20,11 @@ public class SpaceFileServiceImpl implements SpaceFileService{
 	public List<SpaceFileVO> selectSpaceFileByBoardNum(int boardNum) {
 		return spaceFileDao.selectSpaceFileByBoardNum(boardNum);
 	}
+
+	@Override
+	public int deleteSpaceFileByImgeTempName(String imgTempName) {
+		return spaceFileDao.deleteSpaceFileByImgeTempName(imgTempName);
+	}
 	
 	
 }

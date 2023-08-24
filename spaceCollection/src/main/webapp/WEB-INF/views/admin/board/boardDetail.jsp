@@ -47,10 +47,41 @@
 		list-style: none;
 	}
 	
+	i.bi.bi-exclamation-circle{
+ 		color: #ffd600;
+   		font-size: 40px;
+   		display: block;
+   		margin-block: -13px;
+	}
+	
+	a~p{
+		margin-top: 10px;
+	}
+	
+	#commentsDel, #commentsEdit{
+		color: #555555;
+		float: right;
+		margin-left: 10px;
+		cursor: pointer;
+	}
+	
+	#cmmentsMoreDiv{
+		text-align: center;
+	}
+	
+	#cmmentsMoreDiv>a{
+		color: #555555;
+	}
+	
+	
+	
+	
 </style>
 <script type="text/javascript">
 	$(function() {
+		$('#okBt').hide();
 		$('#fileList').hide();
+		
 		$('#fileSpan').click(function() {
 			$('#fileList').toggle();
 		});
@@ -60,14 +91,28 @@
 		});
 		
 		$('form[name=commentsFrm]').submit(function() {
-			if($('textarea').val()==''){
-				$('#confirm').addClass('contentFocus');
-				$('.modal-body').html("게시물 내용을 입력하세요.");
+			if($('textarea').val().trim()==''){
+				$('#cancelBt').html("확인");
+				$('.modal-body').html("댓글을 입력해주세요.");
 		        $('#confirm1').modal('show');
 				
-				return false;
+				event.preventDefault();
 			}
 		});
+		
+		$('#editBt').click(function() {
+			location.href="/spaceCollection/admin/board/boardEdit?boardNum="+$('input[name=boardNum]').val();
+		});
+		
+		$('#commentsDel').click(function() {
+			$('#okBt').show();
+			$('#cancelBt').html("취소");
+			$('#okBt').html("삭제");
+			$('.modal-body').html("댓글을 삭제하시겠습니까?");
+			
+			$('#confirm1').modal('show');
+		});
+		
 	});
 </script>
 <main id="main" class="main">
@@ -94,7 +139,7 @@
  						<h5 class="card-title" style="font-weight: bold;">게시물 상세보기</h5>
  						<span>${map.BOARD_TYPE_NAME }</span>
 						<h4>${map.BOARD_TITLE }</h4>
-						<p><i class="bi bi-person-fill"></i>${map.USER_ID }<br>
+						<p><a href="#"><i class="bi bi-person-fill"></i>${map.USER_ID }</a><br>
 							<fmt:parseDate var="regdate" value="${map.BOARD_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
 							<fmt:formatDate value="${regdate }" pattern="yyyy-MM-dd HH:mm"/> 조회 0
 						</p>
@@ -124,8 +169,6 @@
 							</div>
 						</div>
 						<hr>
-						<!-- 사용자명 검색 -->
-						<a href="#"><i class="bi bi-person-fill"></i><span>${map.USER_ID }</span>님의 게시글 더보기></a>
 						<!-- 좋아요 댓글수 -->
 						<!-- 댓글쓰기란 -->
 						<c:if test="${map.BOARD_TYPE_COMMENT_OK=='Y' }">
@@ -152,26 +195,44 @@
 									<c:forEach var="comments" items="${list }">
 										<div>
 											<a href="#"><i class="bi bi-person-fill"></i><span>${comments.USER_ID }</span></a>
+											<span id="commentsDel">삭제</span><span id="commentsEdit">수정</span>
 											<p style="white-space: pre;"><c:out value="${comments.COMMENT_CONTENT }"/></p>
 											<fmt:parseDate var="commentRegdate" value="${comments.COMMENT_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
 											<span><fmt:formatDate value="${commentRegdate }" pattern="yyyy-MM-dd HH:mm"/></span>
 											<hr>
 										</div>
 									</c:forEach>
-									<div>
+									<div id="cmmentsMoreDiv">
 										<a href="#">댓글 더 보기</a>
 									</div>
 								</c:if>
 							</div>
 						</c:if>
-						<!-- 댓글 목록 -->
 				 	</div>
 				</div>
 
 			</div> 
 		</div>
 	</section>
-
+	<!-- Modal -->
+	<div class="modal fade" id="confirm1" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" id="cancelBt"></button>
+					<button type="button" class="btn btn-danger" id="okBt"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal -->
 </main>
 
 <%@ include file="../../form/adminBottom.jsp"%>    

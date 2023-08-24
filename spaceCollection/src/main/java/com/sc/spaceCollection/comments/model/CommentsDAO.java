@@ -10,4 +10,6 @@ public interface CommentsDAO {
 	int insertComments(CommentsVO vo);
 	List<Map<String, Object>> selectByBoardNum(int boardNum);
 	int countComments(int boardNum);
+	int updateComments(CommentsVO vo);
+	int updateCommentsDelFlag(int commentNum);
 }
