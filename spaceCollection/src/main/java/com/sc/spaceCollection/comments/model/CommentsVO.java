@@ -8,9 +8,10 @@ import lombok.Data;
 public class CommentsVO {
 	private int commentNum;
 	private String commentContent;
-	private Timestamp commentRegdate;
+	private Timestamp commentRegDate;
 	private String commentDelFlag;
 	private Timestamp commentOutdate;
 	private int boardNum;
 	private int userNum;
+	private int addNum;
 }
