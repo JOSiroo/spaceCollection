@@ -51,10 +51,6 @@
 		border-radius: 0 0 20px 0;
 	}
 	
-	.tbReview td{
-		text-align: left;
-	}
-	
 	.spaceInfo{
 		font-size: 12px;
 		font-style: normal;
@@ -73,17 +69,9 @@
 		margin-left: 0;
 	}
 	
-	.tbReview tr:nth-last-child(3){
-		border: 2px solid #484848;;
-		border-bottom: none;
-	}
-	.tbReview tr:nth-last-child(2){
-		border-left: 2px solid #484848;;
-		border-right: 2px solid #484848;;
-	}
-	.tbReview tr:last-child{
+	.review_content{
 		border: 2px solid #484848;
-		border-top: none;
+		border-radius: 0 0 3rem 0;
 	}
 </style>
 
@@ -98,61 +86,50 @@
 	    <input id="file-input" type="file" style="display: none;"/>
 	</div>
 	<div class="reViewInfo">
-		<table class="tbReview">
-			<tr>
+		<div class="tbReview">
 			<hr>
-				<th>
-					<a href="#" style="font-size: 20px; color: #484848;">푸토어 프로덕션 케이스 〉</a>
-				</th>
-				<td></td>
-			</tr>
-			<tr>
-				<th>
-					<label>전화번호</label> <span class="spaceInfo">02-798-7155</span>
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<label>위치</label> <span class="spaceInfo">서울특별시 서초구 동산로 19길</span>
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<label>태그</label><br>
-					<span class="spaceInfo">#보컬연습실 #레슨실대여 #악기연습실 #강남연습실 #셀프녹음실</span>
-				</th>
-			</tr>
-			<tr>
-				<th>
+			<div>
+				<a href="#" style="font-size: 20px; color: #484848;">푸토어 프로덕션 케이스 〉</a>
+			</div>
+			<div>
+				<label>전화번호</label> <span class="spaceInfo">02-798-7155</span>
+			</div>
+			<div>
+				<label>위치</label> <span class="spaceInfo">서울특별시 서초구 동산로 19길</span>
+			</div>
+			<div>
+				<label>태그</label><br>
+				<span class="spaceInfo">#보컬연습실 #레슨실대여 #악기연습실 #강남연습실 #셀프녹음실</span>
+			</div>
+			<div class="review_content">
+				<div>
 					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
 					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
 					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
 					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
 					<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
-				</th>
-			</tr>
-			<tr>
-				<th>
+				</div>
+				<div>
 					<label>이름</label> 
 					<span class="spaceInfo"> | 2021.09.07</span>
-				</th>
-			</tr>
-			<tr>
-				<th>
+				</div>
+				<div>
 					<div id="content">
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용아 ;빨리해결해주셈짜증남 현기증나요
+						아 여기 대충 이런이런 곳이였고 좋았다는 내용
+						아 여기 대충 이런이런 곳이였고 좋았다는 내용
+						아 여기 대충 이런이런 곳이였고 좋았다는 내용
 						아 여기 대충 이런이런 곳이였고 좋았다는 내용
 						아 여기 대충 이런이런 곳이였고 좋았다는 내용
 						아 여기 대충 이런이런 곳이였고 좋았다는 내용
 						아 여기 대충 이런이런 곳이였고 좋았다는 내용
 					</div>
-				</th>
-			</tr>
-		</table>
-		<div class="footProfile">
-			<hr>
-			<a href="#" class="editInfo" style="margin-left: 210px;">1 2 3 4 5 6 7 8 9 10</a> 
-		</div> 
+				</div>
+			</div>
+			<div class="footProfile">
+				<hr>
+				<a href="#" class="editInfo" style="margin-left: 210px;">1 2 3 4 5 6 7 8 9 10</a> 
+			</div> 
+		</div>
 	</div>
 </div>
 <%@include file="../../form/userBottom.jsp" %>
