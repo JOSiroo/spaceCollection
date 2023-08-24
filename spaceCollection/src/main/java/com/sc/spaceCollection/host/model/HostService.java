@@ -4,6 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface HostService {
-	List<SpaceTypeVO> selectSpaceCategory();
-	List<Map<String, Object>> selectSpaceType(String categoryName);
+	List<SpaceTypeVO> selectSpaceType(int categoryNo);
+	List<SpaceCategoryAllVO> selectSpaceCategory();
 }
