@@ -222,9 +222,10 @@ pageEncoding="UTF-8"%>
 						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
 						<div class = "nav-bar"></div>
 						<div class = 'row'>
-							<button type="button" class="btn btn-primary" id = "QNAWrite"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+							<button type="button" class="btn btn-primary" id = "QNAWrite" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 								질문 등록하기
 							</button>
+							<c:if test="${!empty sessionScope.userId}">
 							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
@@ -246,12 +247,13 @@ pageEncoding="UTF-8"%>
 							        <p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
 							      </div>
 							      <div class="modal-footer" style="padding:2% 30% 2% 0%;">
-							        <button type="button" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+							        <button type="button" id="modalQuit" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
 							        <button type="button" onclick="QnAWriteBtn()" class="btn" style="background: #193D76; color:white" >등록</button>
 							      </div>
 							    </div>
 							  </div>
 							</div>
+							</c:if>
 						</div>
 						<div class = "question-box">
 						<c:if test="${empty qnaList }">
@@ -498,7 +500,7 @@ pageEncoding="UTF-8"%>
 		$('.nav-item').click(function(){
 			$(this).css('background', '#ffd014');
 			$('.nav-item').not($(this)).css('background', 'white');
-		})
+		});
 		
 			
 			  $(".datepicker").each(function(index, element) {
@@ -545,11 +547,12 @@ pageEncoding="UTF-8"%>
                           // AJAX 요청이 실패한 경우
                           console.error('Error:', error);
                       }
-			      })
+			      });
 			      
 			    }
 			  });
 			});
+			  
 		function makeTimeTable(result, begin, end, sdNum, sdPrice){
 			console.log("makeTimeTable");
 			console.log('sdPrice = '+ sdPrice.val());
@@ -574,8 +577,18 @@ pageEncoding="UTF-8"%>
 				parent.find('.swiper-inBox').val(sdPrice.val());
 			}
 		}
+		
 
 	});
+		$('#QNAWrite').click(function(){
+			var userid = $('#userId').val();
+			if(userid.length === 0){
+				alert('질문 등록은 로그인 이후 가능합니다');
+				$('#modalQuit').trigger('click');
+			}
+		});	
+	
+		
 	
 	
 		$('.totalPrice').text("예약 시간을 선택해주세요.");
