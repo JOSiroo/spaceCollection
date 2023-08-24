@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.userInfo.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,9 @@ public class UserInfoServiceImpl implements UserInfoService{
 	public int getTotalRecord(SearchVO vo) {
 		return userInfoDao.getTotalRecord(vo);
 	}
-	
-	
-	
+
+	@Override
+	public Map<String, Object> selectByUserNum(int userNum) {
+		return userInfoDao.selectByUserNum(userNum);
+	}
 }

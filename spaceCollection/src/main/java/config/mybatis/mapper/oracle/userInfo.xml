@@ -29,4 +29,9 @@
 		select count(*) from user_info where USER_OUT_TYPE is null and <![CDATA[user_num<9999999]]>
 		<include refid="searchWhere"/>
 	</select>
+	
+	<select id="selectByUserNum" parameterType="int" resultType="map">
+		select * from user_info where user_num = #{userNum}
+	</select>
 </mapper>
+
