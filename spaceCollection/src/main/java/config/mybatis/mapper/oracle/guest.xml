@@ -44,4 +44,10 @@
 		where USER_EMAIL=#{userEmail}
 	</select>
 	
+	<select id="selectuserId" parameterType="int" resultType="string">
+		select user_Id from USER_INFO
+		where USER_Num=#{userNum}
+	</select>
+	
+	
 </mapper>
