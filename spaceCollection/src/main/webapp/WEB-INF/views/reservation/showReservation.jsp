@@ -177,7 +177,7 @@ font-weight : bold;
 				<button class = 'btn-success reviewBt' id = "review" onclick="goReview()">리뷰작성</button>
 			</c:if>
 			<c:if test="${isReviewed}">
-				<button class = 'btn-success reviewBt' id = "review" onclick="">리뷰보기</button>
+				<button class = 'btn-success reviewBt' id = "review" onclick="goSpace()">리뷰보기</button>
 			</c:if>
 		</c:if>
 		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>
@@ -190,6 +190,9 @@ font-weight : bold;
 	}
 	function home(){
 		location.href = "<c:url value = '/'/>";
+	}
+	function goSpace(){
+		location.href = "<c:url value = '/detail?spaceNum=${map.SPACE_NUM}'/>";
 	}
 	function goReview(){
 		  const popupWidth = 700;
@@ -232,5 +235,6 @@ font-weight : bold;
 	    });
 	  }
   }
+  
 </script>
 <%@ include file="../form/userBottom.jsp"%>
