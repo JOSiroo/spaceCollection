@@ -173,7 +173,12 @@ font-weight : bold;
 			<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
 		</c:if>
 		<c:if test="${now.after(parsedDate)}">
-			<button class = 'btn-success reviewBt' id = "review" onclick="goReview()">리뷰작성</button>
+			<c:if test="${!isReviewed}">
+				<button class = 'btn-success reviewBt' id = "review" onclick="goReview()">리뷰작성</button>
+			</c:if>
+			<c:if test="${isReviewed}">
+				<button class = 'btn-success reviewBt' id = "review" onclick="">리뷰보기</button>
+			</c:if>
 		</c:if>
 		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>
 		<button class = 'reserveBt' id = "home" onclick="home()">홈</button>
