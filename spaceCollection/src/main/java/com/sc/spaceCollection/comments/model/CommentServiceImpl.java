@@ -31,6 +31,9 @@ public class CommentServiceImpl implements CommentsService{
 	@Override
 	public List<Map<String, Object>> selecteventByBoardNum(int boardNum) {
 		return commentsDao.selecteventByBoardNum(boardNum);
+	}
+	
+	@Override
 	public int updateComments(CommentsVO vo) {
 		return commentsDao.updateComments(vo);
 	}
