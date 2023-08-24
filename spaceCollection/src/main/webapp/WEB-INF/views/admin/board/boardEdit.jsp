@@ -241,7 +241,6 @@
 							<textarea name="boardContent" id="contents">${map.BOARD_CONTENT }</textarea>
 							<input type="hidden" name="boardTypeId" id="boardTypeId" value="${map.BOARD_TYPE_ID }">
 							<input type="hidden" name="boardNum" id="boardNum" value="${param.boardNum }">
-							<input type="hidden" name="boardTypeName" id="boardTypeName" value="${map.BOARD_TYPE_NAME }">
 							<input type="hidden" name="userNum" value="9999999">
 							<input type="hidden" name="fileOk">
 							<input type="hidden" name="boardTypeId">
