@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CommentsService {
+
    int insertComments(CommentsVO vo);
    int countComments(int boardNum); 
    List<Map<String, Object>> selecteventByBoardNum(int boardNum);

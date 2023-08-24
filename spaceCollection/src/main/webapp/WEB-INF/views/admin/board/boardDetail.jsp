@@ -29,12 +29,15 @@
 	
 	#files{
 		float: right;
-		
+	}
 	
 	#fileSpan{
 		float: right;
 		cursor: pointer;
 	}
+	
+	#fileList{
+		padding-top: 5px;
 	}
 	
 	li>a{
@@ -43,6 +46,7 @@
 		margin-right: 30px;
 		margin-top: 7px;
 	}
+	
 	li {
 		list-style: none;
 	}
@@ -65,20 +69,23 @@
 		cursor: pointer;
 	}
 	
-	#cmmentsMoreDiv{
+	#commentsMoreDiv{
 		text-align: center;
 	}
 	
-	#cmmentsMoreDiv>a{
+	#commentsMoreDiv>span{
 		color: #555555;
+		cursor: pointer;
 	}
 	
-	
-	
-	
+	.commentEditBt{
+		margin-top: 10px;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
+		$.commentsLoad();
+		
 		$('#okBt').hide();
 		$('#fileList').hide();
 		
@@ -92,6 +99,7 @@
 		
 		$('form[name=commentsFrm]').submit(function() {
 			if($('textarea').val().trim()==''){
+				$('#okBt').hide();
 				$('#cancelBt').html("확인");
 				$('.modal-body').html("댓글을 입력해주세요.");
 		        $('#confirm1').modal('show');
@@ -103,17 +111,116 @@
 		$('#editBt').click(function() {
 			location.href="/spaceCollection/admin/board/boardEdit?boardNum="+$('input[name=boardNum]').val();
 		});
-		
-		$('#commentsDel').click(function() {
-			$('#okBt').show();
-			$('#cancelBt').html("취소");
-			$('#okBt').html("삭제");
-			$('.modal-body').html("댓글을 삭제하시겠습니까?");
-			
-			$('#confirm1').modal('show');
-		});
-		
 	});
+	
+	function commentEdit(evt) {
+		var str = "";
+		str += "<form name='commentsEditFrm' method='post>";
+		str += "<div class='col-sm-10' id='commentDiv'>";
+		str += "<textarea class='form-control' style='height: 100px' name='commentContent'></textarea>";
+		str += "</div>";
+		str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
+		str += "<button type='submit' class='btn btn-primary right commentEditBt' name='commentEditBt'>댓글 수정</button>";
+		str += "</div>";
+		str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
+		str += "<input type='hidden' name='commentNum'>";
+		str += "<input type='hidden' name='userNum' value='9999999'>";
+		str += "</form>";
+		str += "<hr>";
+		var commentNum = $(evt).parent().prev().val();
+		
+		$(evt).parent().replaceWith(str);
+		$('input[name=commentNum]').val(commentNum);
+		
+		
+		$('.commentEditBt').click(function() {
+			$.ajax({
+				url : "<c:url value='/admin/board/boardDetail/ajax_commentsEdit'/>",
+				type : 'post',
+				data : $('form[name=commentsEditFrm]').serializeArray(),
+				dataType : 'json',
+				success:function(){
+					$.commentsLoad();
+				},error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+			});
+		});
+	}
+	
+	function moreComment() {
+		$('input[name=addNum]').val(parseInt($('input[name=addNum]').val())+5);
+		$.commentsLoad();
+	}
+	
+	function commentDelete(evt) {
+		var commentNum = $(evt).parent().find("input[name=commentNum]").val()
+		$('#okBt').show();
+		$('#cancelBt').html("취소");
+		$('#okBt').html("삭제");
+		$('#okBt').addClass('deleteComments');
+		$('.modal-body').html("댓글을 삭제하시겠습니까?");
+		$('#confirm1').modal('show');
+		$('.deleteComments').click(function() {
+			$(this).removeClass('deleteComments');
+			$.ajax({
+				url : "<c:url value='/admin/board/boardDetail/ajax_commentsDelete'/>",
+				type : 'get',
+				data : "commentNum="+commentNum,
+				dataType : 'json',
+				success:function(){
+					$.commentsLoad();
+				},error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+			});
+			$('#confirm1').modal('hide');	
+		});
+	}
+	
+	$.commentsLoad = function(){
+		$.ajax({
+	
+			url : "<c:url value='/admin/board/boardDetail/ajax_commentLoad'/>",
+			type: 'get',
+			data: "boardNum=" + $('input[name=boardNum]').val() + "&addNum=" + $('input[name=addNum]').val(),
+			dataType: 'json',
+			success:function(res){
+				var str = "";
+				if(res!=null && res.length>0){
+					$('#ajaxComments').html("");
+					
+					$.each(res, function() {
+						str = "<input type='hidden' class='commentNum' value='"+this.COMMENT_NUM+"'>"
+							+ "<div>"					
+							+ "<a href='#'><i class='bi bi-person-fill'></i><span>"+this.USER_ID+"</span></a>"
+							+ "<span id='commentsDel' class='commentsDel' onClick='commentDelete(this)'>삭제</span>"
+							+ "<span id='commentsEdit' class='commentsEdit' onClick='commentEdit(this)'>수정</span>"
+							+ "<p style='white-space: pre;'>"+this.COMMENT_CONTENT+"</p>"
+							+ "<span>"+this.COMMENT_REG_DATE+"</span>"
+							+ "<input type='hidden' name='commentNum' value='"+this.COMMENT_NUM+"'>"
+							+ "<hr>"
+							+ "</div>";
+						$('#ajaxComments').append(str);
+					});
+					
+					if($('input[name=addNum]').val() == res.length){
+						$('#commentsMoreDiv').html("<span onClick='moreComment()'>댓글 더 보기</span>");
+					}else{
+						$('#commentsMoreDiv').html("");
+					}
+					
+				}else{
+					str = "<span>등록된 댓글이 없습니다.</span>"
+					$('#ajaxComments').append(str);
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
 </script>
 <main id="main" class="main">
 
@@ -187,25 +294,12 @@
 							</form>
 							
 							<hr>
-							<div>
-								<c:if test="${empty list }">
-									<span>등록된 댓글이 없습니다.</span>
-								</c:if>
-								<c:if test="${!empty list }">
-									<c:forEach var="comments" items="${list }">
-										<div>
-											<a href="#"><i class="bi bi-person-fill"></i><span>${comments.USER_ID }</span></a>
-											<span id="commentsDel">삭제</span><span id="commentsEdit">수정</span>
-											<p style="white-space: pre;"><c:out value="${comments.COMMENT_CONTENT }"/></p>
-											<fmt:parseDate var="commentRegdate" value="${comments.COMMENT_REG_DATE }" pattern="yyyy-MM-dd HH:mm"/>
-											<span><fmt:formatDate value="${commentRegdate }" pattern="yyyy-MM-dd HH:mm"/></span>
-											<hr>
-										</div>
-									</c:forEach>
-									<div id="cmmentsMoreDiv">
-										<a href="#">댓글 더 보기</a>
-									</div>
-								</c:if>
+							<input type="hidden" name="addNum" value="5">
+							<div id="ajaxComments">
+							
+							</div>
+							<div id="commentsMoreDiv">
+								
 							</div>
 						</c:if>
 				 	</div>

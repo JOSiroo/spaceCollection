@@ -11,12 +11,13 @@
 		values(#{commentNum}, #{commentContent}, #{boardNum}, #{userNum})
 	</insert>
 	
-	<select id="selectByBoardNum" parameterType="int" resultType="map">
-		select * from comments_view where board_num = #{boardNum} and COMMENT_DEL_FLAG is null 
-		and 
+	<select id="selectByBoardNum" parameterType="commentsVo" resultType="map">
+		select a.* from
+		(select * from comments_view where board_num = #{boardNum} and COMMENT_DEL_FLAG is null 
+		order by comment_num desc)a 
 		<![CDATA[
-		rownum<=5]]>
-		order by comment_num
+		where rownum<=#{addNum}]]>
+		
 	</select>
 	
 	<select id="countComments" parameterType="int" resultType="int">
