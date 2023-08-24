@@ -129,7 +129,6 @@
 			});
 		});
 		
-		
 		$('form').submit(function() {
 			if($('#boardTitle').val().trim().length<1){
 				$('#confirm').addClass('titleFocus');

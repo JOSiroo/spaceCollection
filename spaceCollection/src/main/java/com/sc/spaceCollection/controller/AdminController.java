@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +40,6 @@ import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
-import com.sc.spaceCollection.common.Utility;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileListVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
@@ -398,38 +399,56 @@ public class AdminController {
 	}
 	
 	@GetMapping("/board/boardDetail")
-	public String boardDetail(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
-		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
-		
-		if(boardNum==0) {
-			model.addAttribute("msg", "잘못된 URL 입니다.");
-			model.addAttribute("url", "/admin/board/boardList");
-			
-			return "admin/common/message";
-		}else {
-			Map<String, Object> map = boardService.selectByBoardNum(boardNum);
-			List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
-			logger.info("게시물 상세조회 결과, map = {}, spaceFileList.size = {}", map, spaceFileList.size());
-			if(map==null || map.isEmpty()) {
-				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
-				model.addAttribute("url", "/admin/board/boardList");
-				
-				return "admin/common/message";
+	   public String boardDetail(@RequestParam(defaultValue = "0")int boardNum, HttpSession session, Model model) {
+	      logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
+	      
+	      if(boardNum==0) {
+	         model.addAttribute("msg", "잘못된 URL 입니다.");
+	         model.addAttribute("url", "/admin/board/boardList");
+	         
+	         return "admin/common/message";
+	      }else {
+	         Map<String, Object> map = boardService.selectByBoardNum(boardNum);
+	         List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+	         logger.info("게시물 상세조회 결과, map = {}, spaceFileList.size = {}", map, spaceFileList.size());
+	         if(map==null || map.isEmpty()) {
+	            model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+	            model.addAttribute("url", "/admin/board/boardList");
+	            
+	            return "admin/common/message";
+
 
 			}else {
 				
 				String userid = (String)session.getAttribute("userid");
-				List<Map<String, Object>> list = commentsService.selectByBoardNum(boardNum);
-				logger.info("댓글 조회결과, list.size = {}", list.size());
 				
 				model.addAttribute("spaceFileList", spaceFileList);
 				model.addAttribute("userid", userid);
 				model.addAttribute("map", map);
-				model.addAttribute("list", list);
 				
 				return "admin/board/boardDetail";
 			}
 		}
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentLoad")
+	@ResponseBody
+	public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, @RequestParam(defaultValue = "0")int addNum) {
+		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
+		
+		CommentsVO commentsVo = new CommentsVO();
+		commentsVo.setBoardNum(boardNum);
+		commentsVo.setAddNum(addNum);
+		
+		List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVo);
+		for(Map<String, Object> map : list) {
+			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 10));
+			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
+		}
+
+		logger.info("ajax - 댓글 조회결과, list.size = {}", list.size());
+		
+		return list;
 	}
 	
 	@PostMapping("/board/boardDetail/commentsWrite")
@@ -504,23 +523,38 @@ public class AdminController {
 	}
 	
 	@PostMapping("/board/boardEdit")
-	public String boardEdit(@ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
+	public String boardEdit(@RequestParam String boardTypeName, @ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
 				HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile, Model model) {
 		logger.info("게시판 수정, 파라미터 boardVo = {}, spaceFileListVo = {}", boardVo, spaceFileListVo);
+		logger.info("boardTypeName이 왜 두번 찍히냐 시발 = {}", boardTypeName);
 		
-		for(SpaceFileVO vo : spaceFileListVo.getSpaceFileItems()) {
-			String uploadPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
-			File file = new File(uploadPath, vo.getImgTempName());
-			if(file.exists()) {
-				boolean bool = file.delete();
-				
-				logger.info("파일 삭제 여부, bool", bool);
+		String transBtn = "";
+		try {
+			transBtn = URLEncoder.encode(boardTypeName, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		int cnt = 0;
+		if(spaceFileListVo.getSpaceFileItems()!=null && !spaceFileListVo.getSpaceFileItems().isEmpty()) {
+			for(SpaceFileVO vo : spaceFileListVo.getSpaceFileItems()) {
+				if(vo.getImgTempName()!=null && !vo.getImgTempName().isEmpty()) {
+					cnt = spaceFileService.deleteSpaceFileByImgeTempName(vo.getImgTempName());
+					logger.info("db 파일 삭제 결과, cnt = {}", cnt);
+					
+					String uploadPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+					File file = new File(uploadPath, vo.getImgTempName());
+					if(file.exists()) {
+						boolean bool = file.delete();
+						
+						logger.info("파일 삭제 여부, bool={}", bool);
+					}
+				}
 			}
 		}
 		
 		String fileName = "", originalFileName = "";
 		long fileSize = 0;
-		int cnt = 0;
+		cnt = 0;
 		try {
 			List<Map<String, Object>> list = fileuploadUtil.fileupload(request, ConstUtil.UPLOAD_FILE_FLAG);
 			logger.info("list.size = {}", list.size());
@@ -539,9 +573,12 @@ public class AdminController {
 				logger.info("spaceFileVo = {}", spaceFileVo);
 				
 				cnt = spaceFileService.insertSpaceFile(spaceFileVo);
-				
+				logger.info("파일 db저장 결과, cnt = {}", cnt);
 				}
 			}
+			
+			cnt = boardService.updateBoard(boardVo);
+			logger.info("게시물 수정 결과, cnt = {}", cnt);
 			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -550,7 +587,29 @@ public class AdminController {
 		logger.info("게시물 저장 결과, cnt = {}", cnt);
 		
 		
-		return "redirect:/admin/board/boardList";
+		return "redirect:/admin/board/boardDetail?boardNum="+boardVo.getBoardNum()+"&boardTypeName="+transBtn;
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsDelete")
+	@ResponseBody
+	public int ajax_commentsDelete(@RequestParam(defaultValue = "0")int commentNum) {
+		logger.info("ajax - 댓글 삭제, 파라미터 commentNum = {}", commentNum);
+		
+		int cnt = commentsService.updateCommentsDelFlag(commentNum);
+		logger.info("ajax - 댓글 삭제 결과, cnt = {}", cnt);
+		
+		return cnt;
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
+	@ResponseBody
+	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
+		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
+		
+		int cnt = commentsService.updateComments(commentsVo);
+		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
+		
+		return cnt;
 	}
 	
 }
