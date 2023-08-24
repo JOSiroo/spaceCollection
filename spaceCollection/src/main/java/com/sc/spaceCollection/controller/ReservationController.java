@@ -117,6 +117,14 @@ public class ReservationController {
 	public String showReservation(@RequestParam int reservationNum, HttpSession session,Model model) {
 		logger.info("예약 내역 페이지");
 		String userId = (String)session.getAttribute("userId");
+		
+		if(userId == null || userId.isEmpty()) {
+			String msg = "잘못된 접근입니다", url = "/";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "common/message";
+		}
+		
 		logger.info("예약 내역 페이지, id = {}, reservationNum = {}", userId, reservationNum);
 		Map<String, Object> map = reservationService.showReservation(reservationNum, userId);
 		
