@@ -1,5 +1,10 @@
 package com.sc.spaceCollection.userInfo.model;
 
-public interface UserInfoService {
+import java.util.List;
 
+import com.sc.spaceCollection.common.SearchVO;
+
+public interface UserInfoService {
+	List<UserInfoVO> selectMember(SearchVO vo);
+	int getTotalRecord(SearchVO vo);
 }

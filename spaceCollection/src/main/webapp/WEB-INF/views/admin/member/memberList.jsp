@@ -111,18 +111,13 @@
 <main id="main" class="main">
 
 	<div class="pagetitle">
-		<h1>게시물 관리</h1>
+		<h1>회원 관리</h1>
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
-				<li class="breadcrumb-item">게시물 관리</li>
+				<li class="breadcrumb-item">회원 관리</li>
 				<li class="breadcrumb-item active">
-					<c:if test="${empty param.boardTypeName }">
-						전체보기
-					</c:if> 
-					<c:if test="${!empty param.boardTypeName }">
-						${param.boardTypeName }
-					</c:if> 
+					회원관리 
 				</li>
 			</ol>
 		</nav>
@@ -135,39 +130,13 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">
- 							<c:if test="${!empty param.boardTypeName }">
- 								${param.boardTypeName }
- 							</c:if> 
- 							<c:if test="${empty param.boardTypeName }">
- 								전체조회
- 							</c:if> 
- 						</h5>
+ 						<h5 class="card-title" style="font-weight: bold;">회원관리</h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/board/boardList'/>">
  							<input type="hidden" name="currentPage">
- 							<input type="hidden" name="boardTypeName" value="${param.boardTypeName}">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
- 						<form name="boardTypeNameFrm" method="post" action="<c:url value='/admin/board/boardWrite'/>">
- 							<div class="row mb-3">
-                  				<label for="boardTypeName" class="col-sm-2 col-form-label">게시판 분류</label>
-                  				<div id="boardTypeselectDiv" class="col-sm-10">
-                    				<select class="form-select" name="boardTypeName" id="boardTypeName">
-                    					<option value="">전체조회</option>
-                    					<c:forEach var="boardTypeList" items="${boardTypeList }">
-                    						<option value="${boardTypeList.boardTypeName }" 
-                    						<c:if test="${boardTypeList.boardTypeName==param.boardTypeName}">
-						            		selected="selected"</c:if>
-						            		<c:if test="${boardTypeList.boardTypeName==searchVo.boardTypeName}">selected="selected"</c:if> >
-						            	 ${boardTypeList.boardTypeName }</option>
-                    					</c:forEach>
-									</select>
-                  				</div>
-                			</div>
-                			<button type="button" class="btn btn-secondary" id="boardDeleteBt">게시물 삭제</button>
-	 						<button type="submit" class="btn btn-primary " id="boardWriteBt">게시물 작성</button>
- 						</form>
+                		<button type="button" class="btn btn-secondary" id="boardDeleteBt">회원 탈퇴</button>
 						<table class="table">
 							<colgroup>
 								<col style="width: 5%";  />
@@ -180,53 +149,41 @@
 							<thead>
 								<tr>
 									<th scope="col"><input type="checkbox" name="chkAll"></th>
-									<th scope="col">게시물 번호</th>
-									<th scope="col">게시판 분류</th>
-									<th scope="col">제목</th>
-									<th scope="col">작성자</th>
-									<th scope="col">작성일</th>
+									<th scope="col">회원 번호</th>
+									<th scope="col">이름</th>
+									<th scope="col">아이디</th>
+									<th scope="col">이메일</th>
+									<th scope="col">가입일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:if test="${empty list }">
 									<tr>
-										<td colspan="6" style="text-align: center;">작성된 게시물이 없습니다.</td>
+										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
 									<form name="trFrm" method="post" action="<c:url value='/admin/board/boardDelete'/>">
 										<c:set var="i" value="0"/>
-										<c:forEach var="map" items="${list }">
-											<fmt:parseDate value="${map.BOARD_REG_DATE }" var="boardRegDate" pattern="yyyy-MM-dd"/>
+										<c:forEach var="userInfoVo" items="${list }">
 											<tr>
 												<td>
-													<input type="checkbox" name="boardItemList[${i }].boardNum" value="${map.BOARD_NUM }">
+													<input type="checkbox" name="userInfoItemList[${i }].userNum" value="${userInfoVo.userNum }">
 												</td>
-												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-													${map.BOARD_NUM }
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+													${userInfoVo.userNum }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-													${map.BOARD_TYPE_NAME }
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+													${userInfoVo.userName }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-													<c:if test="${fn:length(map.BOARD_TITLE)>23 }">
-														${fn:substring(map.BOARD_TITLE, 0, 23) } ...
-													</c:if>
-													<c:if test="${fn:length(map.BOARD_TITLE)<=23 }">
-														${map.BOARD_TITLE }
-													</c:if>
-													<c:if test="${map.FILECOUNT>0 }">
-														<i class="bi bi-link-45deg"></i>
-													</c:if>
-													<c:if test="${map.BOARD_TYPE_COMMENT_OK == 'Y' }">
-														<span>(${map.COMMENTCOUNT })</span>
-													</c:if> 
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+													${userInfoVo.userId }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-													${map.USER_ID }
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+													${userInfoVo.userEmail }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-													<fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd"/>
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
 												</td>
 											</tr>
 											<c:set var="i" value="${i+1 }"/>
@@ -276,15 +233,14 @@
 								</div>
 								<div class="col-sm-3" id="select">
 									<select class="form-select" name="searchCondition" id="searchCondition">
-										<option value="board_title" <c:if test="${param.searchCondition=='board_title'}">
-						            		selected="selected"
-						            	</c:if> >제목</option>
 										<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
 						            		selected="selected"
-						            	</c:if> >작성자</option>
+						            	</c:if> >아이디</option>
+										<option value="user_name" <c:if test="${param.searchCondition=='user_name'}">
+						            		selected="selected"
+						            	</c:if> >이름</option>
 									</select>
 								</div>
-								<input type="hidden" name="boardTypeName" value="${param.boardTypeName }">
 							</div>
 						</form>				
 					</div>

@@ -229,7 +229,7 @@ public class AdminController {
 	}	
 	
 	@RequestMapping("/board/boardList")
-	public void name(@ModelAttribute SearchVO searchVo, @RequestParam(required = false)String boardTypeName, Model model) {
+	public void boardList(@ModelAttribute SearchVO searchVo, @RequestParam(required = false)String boardTypeName, Model model) {
 		logger.info("게시판별 게시물 보기, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
