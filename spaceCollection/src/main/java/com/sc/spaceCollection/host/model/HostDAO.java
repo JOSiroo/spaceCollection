@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface HostDAO {
-	List<SpaceTypeVO> selectSpaceCategory();
-	List<Map<String, Object>> selectSpaceType(String categoryName);
+	List<SpaceTypeVO> selectSpaceType(int categoryNo);
+	List<SpaceCategoryAllVO> selectSpaceCategory();
 }

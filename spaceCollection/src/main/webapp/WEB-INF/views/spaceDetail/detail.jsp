@@ -262,10 +262,10 @@ pageEncoding="UTF-8"%>
 								<div>
 									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
 									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
-									<div style="font-size:14px;margin-right:12%;color:lightgrey;">
-										<span>${qna.QNA_REG_DATE}</span>
+									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
+										<span style="padding-right: 0%;">${qna.QNA_REG_DATE}</span>
 										<c:if test="${sessionScope.userId == qna.USER_ID}">
-											<a href="#"style="font-size:14px;margin-left:69%;" onclick="deleteQna(${qna.QNA_NUM})">삭제하기</a>
+											<a href="#"style="font-size:14px;margin-left:72%;" onclick="deleteQna(${qna.QNA_NUM})">삭제하기</a>
 										</c:if>
 									</div>
 								</div>
