@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
-	#boardWriteBt, #boardDeleteBt{
+	
+	#memberDeleteBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
@@ -17,7 +18,7 @@
 		text-align: center;
 	}
 	
-	td:not(td:nth-child(4)){
+	td{
 		text-align: center;
 	}
 	
@@ -31,24 +32,6 @@
 	
 	#searchDiv>div{
 		margin-left: 5px;
-	}
-	
-	form[name=boardTypeNameFrm] {
-  	  clear: both;	
-	}
-	
-	form[name=boardTypeNameFrm]>div {
- 	   width: 500px;
- 	   float: left;
-	}
-	
-	form[name=boardTypeNameFrm]>div>label {
- 	   width: 140px;
-	}
-
-	div#boardTypeselectDiv {
-    	width: 200px;
-    	margin-left: -38px;
 	}
 	
 	i.bi.bi-exclamation-circle {
@@ -71,10 +54,6 @@
 			$(this).find('td').css("background-color", "white");
 		});
 		
-		$('#boardTypeName').change(function() {
-			location.href = "/spaceCollection/admin/board/boardList?boardTypeName="+$('#boardTypeName>option:selected').val();
-		});
-		
 		$('#searchBt').click(function() {
 			if($('#searchKeyword').val().length<1){
 				event.preventDefault();
@@ -88,12 +67,12 @@
 			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('#boardDeleteBt').click(function() {
+		$('#memberDeleteBt').click(function() {
 			if($('td>input[type=checkbox]:checked').length<1){
-				$('#confirm1 .modal-body').html("삭제할 게시물을 선택해주세요.");
+				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 게시물을 삭제하시겠습니까?");
+				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키키겠습니까?");
 				$('#confirm2').modal("show");
 				$('#okBt').click(function() {
 					$('form[name=trFrm]').submit();
@@ -131,12 +110,12 @@
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;"><a>회원관리</a></h5>
- 						<form name="frmPage" method="post" action="<c:url value='/admin/board/boardList'/>">
+ 						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
-                		<button type="button" class="btn btn-secondary" id="boardDeleteBt">회원 탈퇴</button>
+                		<button type="button" class="btn btn-secondary" id="memberDeleteBt">회원 탈퇴</button>
 						<table class="table">
 							<colgroup>
 								<col style="width: 5%";  />
@@ -163,7 +142,7 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/board/boardDelete'/>">
+									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberDelete'/>">
 										<c:set var="i" value="0"/>
 										<c:forEach var="userInfoVo" items="${list }">
 											<tr>
@@ -222,7 +201,7 @@
 							</nav>
 						
 						</div>	
-						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
+						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
 							<div id="searchDiv">
 								<div class="col-auto">
 									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
