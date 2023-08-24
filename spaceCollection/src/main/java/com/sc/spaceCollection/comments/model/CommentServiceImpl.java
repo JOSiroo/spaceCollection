@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentsService{
-	
 	private final CommentsDAO commentsDao;
 	
 	@Override
@@ -19,8 +18,8 @@ public class CommentServiceImpl implements CommentsService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectByBoardNum(int boardNum) {
-		return commentsDao.selectByBoardNum(boardNum);
+	public List<Map<String, Object>> selectByBoardNum(CommentsVO commentsVo) {
+		return commentsDao.selectByBoardNum(commentsVo);
 	}
 
 	@Override
@@ -33,6 +32,7 @@ public class CommentServiceImpl implements CommentsService{
 		return commentsDao.selecteventByBoardNum(boardNum);
 	}
 	
+
 	@Override
 	public int updateComments(CommentsVO vo) {
 		return commentsDao.updateComments(vo);

@@ -8,7 +8,4 @@ public class SpaceTypeVO {
 	private String spaceTypeName;
 	private int categoryNo;
 	private String explanation;
-	
-	private String categoryName;
-	
 }

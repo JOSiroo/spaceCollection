@@ -31,7 +31,7 @@
 	font-size: 24px;
 	font-weight: bold;
 	border-right : 2px solid lightgrey;
-	padding-top: 4%;
+	padding-top: 6%;
 }
 .col-5{
 	border-right : 2px solid lightgrey;
