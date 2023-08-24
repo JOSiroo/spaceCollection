@@ -3,28 +3,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sc.spaceCollection.host.model.HostDAO">
-	
-	<select id="selectSpaceTypeView" parameterType="int" resultType="map">
-		select * from SpaceTypeView
-		where categoryNo = ${categoryNo}
+
+	<!-- Category 정보 조회 -->
+	<select id="selectSpaceCategory" resultType="SpaceTypeVo">
+		SELECT category_no FROM space_type_category
 	</select>
-	
-	<resultMap type="SpaceTypeAllVo" id="selectSpace">
-		<association property="spaceTypeVO" column="spaceTypeNo" javaType="spaceTypeVO">
-			<id property="spaceTypeNo" column="spacetypeno" jdbcType="BIGINT"/>
-			<result property="spaceTypeName" column="spacetypename" jdbcType="VARCHAR" />
-			<result property="categoryNo" column="categoryno" jdbcType="BIGINT" />
-			<result property="explanation" column="explanation" jdbcType="VARCHAR" />
-			<result property="categoryName" column="categoryname" jdbcType="VARCHAR" />
-		</association>
-		<collection property="spaceTypeList" javaType="ArrayList" ofType="map" column="categoryno"
-			select="selectSpaceTypeView">
+
+	<!-- Category 별 SpaceType 정보 조회 -->
+	<select id="selectSpaceTypeByCategory" parameterType="String"
+		resultMap="spaceTypeAllResultMap">
+		SELECT * FROM spaceTypeView
+		WHERE category_no = #{categoryNo}
+	</select>
+
+	<!-- resultMap 정의 -->
+	<resultMap id="spaceTypeAllResultMap" type="SpaceTypeAllVO">
+		<association property="spaceTypeVo"
+			resultMap="spaceTypeResultMap" />
+		<collection property="spaceTypeList"
+			ofType="map">
+			<id column="space_type_no" />
+			<result column="space_type_name" property="spaceTypeName" />
+			<result column="category_no" property="categoryNo" />
+			<result column="explanation" property="explanation" />
 		</collection>
 	</resultMap>
-	
-	<select id="selectSpaceType" parameterType="int" resultMap="selectSpace">
-		select * from spaceType
-		where categoryNo = ${categoryNo}
-	</select>
-	
+
+	<resultMap id="spaceTypeResultMap" type="SpaceTypeVO">
+		<id property="spaceTypeNo" column="space_type_no" />
+		<result property="spaceTypeName" column="space_type_name" />
+		<result property="categoryNo" column="category_no" />
+		<result property="explanation" column="explanation" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
+
+
 </mapper>

@@ -13,6 +13,14 @@
 		float: left;
 	}
 	
+	th{
+		text-align: center;
+	}
+	
+	td:not(td:nth-child(4)){
+		text-align: center;
+	}
+	
 	#searchDiv>div {
     	float: right;
 	}
@@ -161,6 +169,14 @@
 	 						<button type="submit" class="btn btn-primary " id="boardWriteBt">게시물 작성</button>
  						</form>
 						<table class="table">
+							<colgroup>
+								<col style="width: 5%";  />
+								<col style="width:12%";  />
+								<col style="width:12%;" />
+								<col style="width:40%;" />
+								<col style="width:15%;" />		
+								<col style="width:15%;" />		
+							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col"><input type="checkbox" name="chkAll"></th>
@@ -193,7 +209,15 @@
 													${map.BOARD_TYPE_NAME }
 												</td>
 												<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';" style="cursor:pointer;">
-													${map.BOARD_TITLE }
+													<c:if test="${fn:length(map.BOARD_TITLE)>23 }">
+														${fn:substring(map.BOARD_TITLE, 0, 23) } ...
+													</c:if>
+													<c:if test="${fn:length(map.BOARD_TITLE)<=23 }">
+														${map.BOARD_TITLE }
+													</c:if>
+													<c:if test="${map.FILECOUNT>0 }">
+														<i class="bi bi-link-45deg"></i>
+													</c:if>
 													<c:if test="${map.BOARD_TYPE_COMMENT_OK == 'Y' }">
 														<span>(${map.COMMENTCOUNT })</span>
 													</c:if> 

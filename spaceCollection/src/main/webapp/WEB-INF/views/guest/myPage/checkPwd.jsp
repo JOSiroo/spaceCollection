@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ include file="../form/userTop.jsp" %>
+<%@ include file="../../form/userTop.jsp" %>
 <%@ include file="myPageMenu.jsp" %>
 <script type="text/javascript">
 	$(function(){
@@ -79,7 +79,7 @@
 	
 </style>
 <section class="userModify">
-	<form name="frmCheckPwd" method="post" action="<c:url value='/guest/checkPwd'/>">
+	<form name="frmCheckPwd" method="post" action="<c:url value='/guest/myPage/checkPwd'/>">
 		<h1>회원정보확인</h1>
 		<b>${sessionScope.userId }님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</b>
 		<table style="border: 1px solid #193D76;" id="checkPwdTable">
@@ -102,4 +102,4 @@
 		</div>
 	</form>
 </section>
-<%@ include file="../form/userBottom.jsp" %>
+<%@ include file="../../form/userBottom.jsp" %>

@@ -38,5 +38,16 @@
 		set reservation_del_flag = 'Y'
 		where reservation_uid = #{reservationUid}
 	</update>
+	<select id="reservationReview" parameterType="int">
+		select * from reservation_sd_view
+		where reservation_num = #{reservationNum}
+	</select>
+	<select id="isReviewd" resultType="int">
+		select count(*)
+		from review r,
+			user_info u
+		where u.user_num = r.user_num 
+		and reservation_num = #{reservationNum} and u.user_id = #{userId}
+	</select>
 	
 </mapper>

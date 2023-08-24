@@ -53,11 +53,12 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">이메일 인증</h4>
-        <form name="frmEmail" class="validation-form" method="post" novalidate>
+        <form name="frmEmail" class="validation-form" method="post" action="<c:url value='/email/sendEmail'/>" novalidate>
+        <input type="text" name="type" value="${param.type }">
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="checkEmail">이메일</label>
-	            	<input type="email" class="form-control" name="userEmail" id="userEmail" value="${userEmail }" placeholder="이메일" required>
+	            	<input type="email" class="form-control" name="userEmail" id="userEmail" value="${param.userEmail }" placeholder="이메일" required>
 		            <div class="invalid-feedback">
 		            	이메일을 입력해주세요.
 		            </div>

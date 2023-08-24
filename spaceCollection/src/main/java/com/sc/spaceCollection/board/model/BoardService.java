@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
 public interface BoardService {
 	List<BoardVO> selectByBoardTypeId(String boardTypeName);
@@ -14,4 +15,5 @@ public interface BoardService {
 	int updateBoardDelFlag(BoardListVO listVo);
 	List<UserBoardVO> selectByeventBoard();
 	Map<String, Object> selectByeventBoardNum(int boardNum);
+	int updateBoard(BoardVO vo);
 }

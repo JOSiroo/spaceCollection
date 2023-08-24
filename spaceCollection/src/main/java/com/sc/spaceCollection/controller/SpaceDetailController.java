@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sc.spaceCollection.qna.model.QnaService;
+import com.sc.spaceCollection.qna.model.QnaVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class SpaceDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(SpaceDetailController.class);
 	private final SpaceDetailService spaceDetailService;
+	private final QnaService qnaService;
 	
 	@GetMapping("/detail")
 	public String test2(@RequestParam int spaceNum, HttpSession session,Model model) {
@@ -34,7 +37,7 @@ public class SpaceDetailController {
 		
 		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
 		SpaceVO vo = new SpaceVO();
-		
+		List<Map<String, Object>> qnaList = qnaService.selectQnaBySpaceNum(spaceNum);
 		for (Entry<SpaceVO, List<Map<String, Object>>> entry : resultMap.entrySet()) {
 			vo = entry.getKey();
 		}
@@ -42,10 +45,12 @@ public class SpaceDetailController {
 		RefundVO refundVo = spaceDetailService.selectRefund(vo.getRefundNum());
 		
 		logger.info("공간 상세 페이지 resultMap = {}", resultMap);
+		logger.info("공간 상세 페이지 qnaList = {}", qnaList);
 		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
 		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("map", resultMap.get(vo));
 		model.addAttribute("refundVo", refundVo);
 		

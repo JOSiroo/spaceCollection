@@ -220,7 +220,7 @@
 		 </div>
 			
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="<c:url value='/member_mypage' />">
+				<a href="<c:url value='/guest/myPage/checkPwd' />">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>
@@ -238,7 +238,7 @@
 		 	</div>
 	
 		    <div class="col-sm-6 " style="text-align: center;">
-			  <a href="<c:url value='/member_heart' />"> 
+			  <a href="<c:url value='/zzimList' />"> 
 		   		 <i class="bi bi-house-heart" ></i>
 		 	 	  <p>찜 리스트</p></a>
 			</div>

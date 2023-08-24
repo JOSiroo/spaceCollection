@@ -8,4 +8,6 @@ public interface CommentsService {
 	List<Map<String, Object>> selectByBoardNum(int boardNum);
 	int countComments(int boardNum);
 	List<Map<String, Object>> selecteventByBoardNum(int boardNum);
+	int updateComments(CommentsVO vo);
+	int updateCommentsDelFlag(int commentNum);
 }

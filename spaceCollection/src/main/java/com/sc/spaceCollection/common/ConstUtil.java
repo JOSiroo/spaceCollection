@@ -11,11 +11,11 @@ public interface ConstUtil {
 	
 	//자료실 파일 저장 경로
 	String FILE_UPLOAD_PATH="board_files";
-	String FILE_UPLOAD_PATH_TEST="\board_files";
+	String FILE_UPLOAD_PATH_TEST="\\board_files";
 	
 	//관리자 페이지 - 상품 등록시 상품 이미지 저장 경로
 	String IMAGE_FILE_UPLOAD_PATH="board_images";
-	String IMAGE_FILE_UPLOAD_PATH_TEST="\board_images";
+	String IMAGE_FILE_UPLOAD_PATH_TEST="\\board_images";
 	
 	//자료실 업로드인지, 상품 등록시 업로드인지 구분값
 	int UPLOAD_FILE_FLAG=1;  //자료실 업로드

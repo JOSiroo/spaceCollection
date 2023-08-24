@@ -10,4 +10,6 @@ public interface ReservationService {
 	List<Map<String,Object>> reservationList(String userId);
 	public void refundPayment(String tid, int cancelAmount,int cancelTaxFreeAmount);
 	int canceledReservation(String reservationUid);
+	Map<String,Object> reservationReview(int reservationNum);
+	boolean isReviewd(int reservationNum, String userId);
 }

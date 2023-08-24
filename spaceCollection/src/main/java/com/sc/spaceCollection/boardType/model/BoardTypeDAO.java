@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BoardTypeDAO {
 	List<BoardTypeVO> selectBoardType();
+	List<BoardTypeVO> selectBoardTypeUse();
 	int boardTypeNameDupCheck(String boardTypeName);
 	int insertBoardType(BoardTypeVO vo);
 	BoardTypeVO selectByBoardTypeId(String boardTypeId);

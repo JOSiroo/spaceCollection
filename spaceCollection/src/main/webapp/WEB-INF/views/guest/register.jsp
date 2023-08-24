@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>register</title> -->
 <%@include file="/WEB-INF/views/form/userTop.jsp" %>
-<%@include file="myPageMenu.jsp" %> %>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/guest.js'/>"></script>
   <!-- Bootstrap CSS -->
@@ -130,7 +129,7 @@
 	          	<div class="col-md-3 mb-3">
 					<label>&nbsp;</label>
 					  <input type="button" class="btn btn-secondary" id="mail-Check-Btn" value="이메일 인증"
-					  	style="width: 165px; height: 50px; text-align: center;">
+					  	style="width: 165px; height: 50px; text-align: center;" >
 	            </div>
 		    </div>
           <div class="row">
@@ -322,7 +321,7 @@
 	    
 	    $('#mail-Check-Btn').click(function() {
 	    	
-			window.open("${pageContext.request.contextPath}/email/emailCheck?userEmail="+$("#userEmail").val()
+			window.open("${pageContext.request.contextPath}/email/emailCheck?userEmail="+$("#userEmail").val()+"&type=register"
 						,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
 	    	
 		}); // end send eamil

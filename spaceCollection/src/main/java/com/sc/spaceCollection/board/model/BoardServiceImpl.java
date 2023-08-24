@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileDAO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,7 +61,6 @@ public class BoardServiceImpl implements BoardService{
 		return cnt;
 	}
 
-	@Override
 	public List<UserBoardVO> selectByeventBoard() {
 		return boardDao.selectByeventBoard();
 	}
@@ -67,6 +69,8 @@ public class BoardServiceImpl implements BoardService{
 	public Map<String, Object> selectByeventBoardNum(int boardNum) {
 		return boardDao.selectByeventBoardNum(boardNum);
 	}
-
+	public int updateBoard(BoardVO vo) {
+		return boardDao.updateBoard(vo);
+	}
 
 }
