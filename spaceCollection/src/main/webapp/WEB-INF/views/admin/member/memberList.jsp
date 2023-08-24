@@ -130,7 +130,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">회원관리</h5>
+ 						<h5 class="card-title" style="font-weight: bold;"><a>회원관리</a></h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/board/boardList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
@@ -222,7 +222,7 @@
 							</nav>
 						
 						</div>	
-						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/board/boardList'/>">
+						<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
 							<div id="searchDiv">
 								<div class="col-auto">
 									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
