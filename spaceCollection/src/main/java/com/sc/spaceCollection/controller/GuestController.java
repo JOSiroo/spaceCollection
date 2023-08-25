@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
@@ -101,26 +103,33 @@ public class GuestController {
 	
 	@RequestMapping("/findPwd")
 	public String findPwd() {
-		//1.
 		logger.info("비밀번호 찾기 페이지, 파라미터");
-		//2.
-		
-		//3.
-		
-		//4.
 		return "find/findPwd";
 	}
 	
 	@RequestMapping("/findId")
 	public String findId() {
-		//1.
 		logger.info("비밀번호 찾기 페이지, 파라미터");
-		//2.
-		
-		//3.
-		
-		//4.
 		return "find/findId";
+	}
+	
+	@RequestMapping("/completeFindId")
+	public String completeFindId(@RequestParam String userEmail,Model model) {
+		logger.info("아이디 찾기 성공, 파라미터 userEmail={}",userEmail);
+		
+		if(userEmail==null || userEmail.isEmpty()) {
+			String msg="잘못된 url입니다.", url="/";
+			model.addAttribute("msg",msg);
+			model.addAttribute("url",url);
+			return "common/message";
+		}
+		
+		List<GuestVO> guestVo = guestService.selectUserIdByEmail(userEmail);
+		logger.info("아이디 찾기 성공, 유저 정보 guestVo={}",guestVo);
+		
+		model.addAttribute("guestVo",guestVo);
+		
+		return "find/completeFindId";
 	}
 	
 	@GetMapping("/editInfo")

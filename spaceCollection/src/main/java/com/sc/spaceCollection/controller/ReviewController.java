@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -61,5 +63,18 @@ public class ReviewController {
 		model.addAttribute("result", cnt);
 		
 		return cnt;
+	}
+	
+	@RequestMapping("/myReview")
+	public String myReview(HttpSession session,Model model) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("나의 리뷰 페이지, 파라미터 userId={}",userId);
+		
+		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId);
+		logger.info("나의 리뷰 불러오기 결과, map={}",reviewMap);
+		
+		model.addAttribute("reviewMap",reviewMap);
+		
+		return "review/myReview";
 	}
 }

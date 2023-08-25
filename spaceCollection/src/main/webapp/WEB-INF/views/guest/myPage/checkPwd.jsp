@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ include file="../../form/userTop.jsp" %>
-<%@ include file="myPageMenu.jsp" %>
 <script type="text/javascript">
 	$(function(){
 		$('input[type=submit]').click(function(){
@@ -17,12 +16,17 @@
 <style type="text/css">
 
 	.userModify{
-		margin: 0 auto;
-		max-width: 730px;
-	    margin-top: 190px;
-	    margin-bottom: 300px;
-	    padding: 32px;
-	    margin-left: 200px;
+		width: 100%;
+		margin-top: 250px;
+		margin-bottom: 250px;
+		display: flex;
+		justify-content: center;
+		
+	}
+	.align_center{
+		width: 1500px;
+		display: flex;
+		justify-content: center;
 	}
 	
 	.userModify td {
@@ -78,28 +82,30 @@
 	
 	
 </style>
-<section class="userModify">
-	<form name="frmCheckPwd" method="post" action="<c:url value='/guest/myPage/checkPwd'/>">
-		<h1>회원정보확인</h1>
-		<b>${sessionScope.userId }님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</b>
-		<table style="border: 1px solid #193D76;" id="checkPwdTable">
-			<tr>
-				<td>아이디(이메일)</td>
-				<td style="border-bottom: 1px solid gray; text-align: left;">
-				${sessionScope.userId }</td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td>
-					<input type="password" name="userPwd" placeholder="">
-					<span class="error"></span>
-				</td>
-			</tr>
-		</table>
-		<div class="modifyBt">
-			<input type="submit" value="확인" class="button">
-			<input type="button" value="취소" class="button">
-		</div>
-	</form>
-</section>
+<div class="userModify">
+	<div class="align_center">
+		<form name="frmCheckPwd" method="post" action="<c:url value='/guest/myPage/checkPwd'/>">
+			<h1>회원정보확인</h1>
+			<b>${sessionScope.userId }님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</b>
+			<table style="border: 1px solid #193D76;" id="checkPwdTable">
+				<tr>
+					<td>아이디(이메일)</td>
+					<td style="border-bottom: 1px solid gray; text-align: left;">
+					${sessionScope.userId }</td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td>
+						<input type="password" name="userPwd" placeholder="">
+						<span class="error"></span>
+					</td>
+				</tr>
+			</table>
+			<div class="modifyBt">
+				<input type="submit" value="확인" class="button">
+				<input type="button" value="취소" class="button">
+			</div>
+		</form>
+	</div>
+</div>
 <%@ include file="../../form/userBottom.jsp" %>

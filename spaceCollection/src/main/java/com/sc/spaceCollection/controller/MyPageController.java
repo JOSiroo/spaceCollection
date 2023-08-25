@@ -26,8 +26,9 @@ public class MyPageController {
 	private final Encryption encryption;
 	
 	@RequestMapping("/myProfile")
-	public String myPage() {
-		logger.info("마이페이지 처리");
+	public String myPage(HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("마이페이지 처리, 파라미터 userId={}",userId);
 		
 		return "guest/myPage/myProfile";
 	}
@@ -65,12 +66,6 @@ public class MyPageController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
-	}
-	
-	@RequestMapping("/myReview")
-	public String myReview() {
-		logger.info("나의리뷰 페이지 처리");
-		return "guest/myPage/myReview";
 	}
 
 }
