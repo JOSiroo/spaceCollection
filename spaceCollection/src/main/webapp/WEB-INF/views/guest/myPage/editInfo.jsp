@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>register</title> -->
 <%@include file="/WEB-INF/views/form/userTop.jsp" %>
-<%@include file="myPageMenu.jsp" %>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/guest.js'/>"></script>
   <!-- Bootstrap CSS -->
