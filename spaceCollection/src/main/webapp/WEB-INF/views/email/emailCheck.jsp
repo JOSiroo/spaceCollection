@@ -64,8 +64,22 @@
 			}
 			
 			if($("#acNumber").val()===$("#authCode").val()){
-				/* var userEmail= $("#acEmail").val(); */
-				location.href = "<c:url value='/guest/completeFindId?userEmail=${acEamil }'/>";
+				userEmail= $("#acEmail").val();
+				var type="${param.type}";
+				var link="";
+				if(type==="findId"){
+					link = "<c:url value='/guest/completeFindId?userEmail=${acEamil }'/>";
+				}else if(type==="findPwd"){
+					
+				}else if(type==="register"){
+					alert("이메일 인증이 완료되었습니다!");
+					opener.$("#userEmail").val(userEmail);
+					opener.$("#userEmail").attr('readonly',true);
+					opener.$("#chkEmail").val("Y");
+					self.close();
+				}
+				
+				location.href = link;
 			}else{
 				alert("인증번호가 일치하지 않습니다.");
 				return false;
@@ -109,6 +123,7 @@
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">이메일 인증</h4>
         <form name="frmEmail" class="validation-form" method="post" action="<c:url value='/email/sendEmail'/>" novalidate>
+        <input type="hidden" name="type" value="${param.type }">
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="checkEmail">이메일</label>
