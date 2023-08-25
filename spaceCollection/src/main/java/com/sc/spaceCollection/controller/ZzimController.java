@@ -77,7 +77,8 @@ public class ZzimController {
 		return result;
 	}
 	@RequestMapping("/zzimList")
-	public String zzimList_show() {
+	public String zzimList_show(@RequestParam(required = false) HttpSession session,Model model) {
+		
 		return "zzim/zzimList";
 	}
 	

@@ -67,6 +67,23 @@ font-weight : bold;
 	border:#dc3545 4px solid;
 	color:black;	
 }
+.reviewBt{
+	width: 6%;
+	height:55px;
+	border:none;
+	font-size: 20px;
+	font-weight: bold;
+}
+.reviewBt:hover{
+	width: 6%;
+	height:55px;
+	background:white;
+	color:black;
+	border:#198754 4px solid;
+	font-size: 20px;
+	font-weight: bold;
+}
+
 
 </style>
 <section>
@@ -156,7 +173,12 @@ font-weight : bold;
 			<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
 		</c:if>
 		<c:if test="${now.after(parsedDate)}">
-			<button class = 'btn-success reserveBt' id = "cancle" onclick="goReview()">리뷰작성</button>
+			<c:if test="${!isReviewed}">
+				<button class = 'btn-success reviewBt' id = "review" onclick="goReview()">리뷰작성</button>
+			</c:if>
+			<c:if test="${isReviewed}">
+				<button class = 'btn-success reviewBt' id = "review" onclick="goSpace()">리뷰보기</button>
+			</c:if>
 		</c:if>
 		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>
 		<button class = 'reserveBt' id = "home" onclick="home()">홈</button>
@@ -168,6 +190,19 @@ font-weight : bold;
 	}
 	function home(){
 		location.href = "<c:url value = '/'/>";
+	}
+	function goSpace(){
+		location.href = "<c:url value = '/detail?spaceNum=${map.SPACE_NUM}'/>";
+	}
+	function goReview(){
+		  const popupWidth = 700;
+		  const popupHeight = 600;
+
+		  const leftPosition = (window.screen.width - popupWidth) / 2;
+		  const topPosition = (window.screen.height - popupHeight) / 2;
+
+		  window.open("<c:url value='/writeReview?spaceNum=${map.SPACE_NUM}&reservationNum=${map.RESERVATION_NUM}&userId=${map.USER_ID}'/>"
+				  ,'PopupWin','width='+popupWidth+',height='+popupHeight+',left='+leftPosition+',top='+topPosition+''); 
 	}
 </script>
 <script
@@ -199,17 +234,6 @@ font-weight : bold;
 	    	}
 	    });
 	  }
-  }
-  function goReview(){
-	  const popupWidth = 1000;
-	  const popupHeight = 800;
-
-	  const leftPosition = (window.screen.width - popupWidth) / 2;
-	  const topPosition = (window.screen.height - popupHeight) / 2;
-
-
-	  window.open("<c:url value='/writeReview?spaceNum="+${map.SPACE_NUM}+"&reservationNum="+${map.RESERVATION_NUM}+"'/>", 'PopupWin',
-	  'width='+popupWidth+',height='+popupHeight+',left='+leftPosition+',top='+topPosition+'');
   }
   
 </script>

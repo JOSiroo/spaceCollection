@@ -11,12 +11,35 @@
 		values(#{commentNum}, #{commentContent}, #{boardNum}, #{userNum})
 	</insert>
 	
-	<select id="selectByBoardNum" parameterType="int" resultType="map">
-		select * from comments_view where board_num = #{boardNum} and COMMENT_DEL_FLAG is null order by comment_num
+	<select id="selectByBoardNum" parameterType="commentsVo" resultType="map">
+		select a.* from
+		(select * from comments_view where board_num = #{boardNum} and COMMENT_DEL_FLAG is null 
+		order by comment_num desc)a 
+		<![CDATA[
+		where rownum<=#{addNum}]]>
+		
 	</select>
 	
 	<select id="countComments" parameterType="int" resultType="int">
 		select count(*) from comments where board_num = #{boardNum} and COMMENT_DEL_FLAG is null
 	</select>
 	
+	<!--이벤트 댓글 쓰기 -->
+	<insert id="eventComments" parameterType="commentsVo">
+		<selectKey keyProperty="commentNum" order="BEFORE" resultType="commentsVo">
+			select comments_seq.nextval from dual
+		</selectKey>
+		insert into comments(COMMENT_NUM, COMMENT_CONTENT, BOARD_NUM, USER_NUM) 
+		values(#{commentNum}, #{commentContent}, #{boardNum}, #{userNum})
+	</insert>
+	<select id="selecteventByBoardNum" parameterType="int" resultType="map">
+		select * from user_Comments_View where board_num = #{boardNum} order by comment_num
+	</select>
+	<update id="updateComments" parameterType="commentsVo">
+		update comments set COMMENT_CONTENT = #{commentContent} where comment_num = #{commentNum}
+	</update>
+	
+	<update id="updateCommentsDelFlag" parameterType="int">
+		update comments set COMMENT_DEL_FLAG = 'Y' where comment_num = #{commentNum}
+	</update>
 </mapper>

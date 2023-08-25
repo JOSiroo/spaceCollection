@@ -10,8 +10,7 @@
 		where space_num = #{spaceNum}
 	</select>
 	
-	<select id="selectDetailByNo" resultType="map" 
-		parameterType = "int">
+	<select id="selectDetailByNo" resultType="map" parameterType = "int">
 		select * from spaceDetail_facility_view
 		where space_num = #{spaceNum}		
 	</select>

@@ -161,7 +161,7 @@
 										</ul></li>
 								</ul> -->
 							</li>
-							<li><a href="<c:url value='/event'/>">시즌 이벤트</a></li>
+							<li><a href="<c:url value='/user/boardList'/>">시즌 이벤트</a></li>
 							<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
 						<!-- 로그인 안된 경우 -->
 							<c:if test="${empty sessionScope.userId }">
@@ -232,7 +232,7 @@
 		 	</div>
 		 
 		   <div class="col-sm-6 " style="text-align: center;">
-			       <a href="<c:url value='/member_review' />">  
+			       <a href="<c:url value='/myReview' />">  
 					<i class="bi bi-person-hearts" ></i>
 		 	 	  <p>이용 후기</p></a>
 		 	</div>

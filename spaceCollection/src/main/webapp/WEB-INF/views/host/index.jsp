@@ -173,11 +173,11 @@
 		});
 		
 		$('.registration').click(function() {
-			location.href = "<c:url value='/host/registration1' />";
+			location.href = "<c:url value='/host/registration/registration1' />";
 		});
 		
 		$('.regItem3').click(function() {
-			location.href = "<c:url value='/host/registration1' />";
+			location.href = "<c:url value='/host/registration/registration1' />";
 		});
 	});
 </script>

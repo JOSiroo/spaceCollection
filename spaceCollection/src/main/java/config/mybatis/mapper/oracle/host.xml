@@ -3,16 +3,27 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sc.spaceCollection.host.model.HostDAO">
+	<!-- 카테고리가 메인이고 resultmap에는 메인에 대한걸 작성 
+	컬렉션은 select category에서 가져온 categoryno로 type을 조회한다. -->
 	
-	<!-- 공간 카테고리 조회 -->
-	<select id="selectSpaceCategory"  resultType="map">
-		select * from space_type_category
+	<select id="selectSpaceType" resultType="SpaceTypeVO" parameterType="int">
+		select * from space_type
+		where category_no = #{categoryNo}
 	</select>
 	
-	<!-- 공간 카테고리별 타입 조회 -->
-	<select id="selectSpaceType" parameterType="int" resultType="SpaceTypeAllVO">
-		select * from spaceTypeView
-		where category_no = #{categoryNo}
+	<resultMap type="SpaceCategoryAllVO" id="spaceTypeResultMap">
+		<association property="spaceCategoryVo" column="categoryNo" javaType="SpaceCategoryVO" >
+			<id property="categoryNo" column="category_no" jdbcType="BIGINT" />
+			<result property="categoryName" column="category_name" jdbcType="VARCHAR" />
+		</association>
+		<collection property="spaceTypeList" javaType="ArrayList" ofType="map" 
+			column="category_no" select="selectSpaceType">
+		</collection>
+	</resultMap>
+
+	<select id="selectSpaceCategory" resultMap="spaceTypeResultMap">
+		select * from space_type_category
+		order by category_no
 	</select>
 	
 </mapper>

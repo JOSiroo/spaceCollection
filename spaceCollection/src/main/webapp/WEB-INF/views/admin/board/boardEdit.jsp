@@ -83,6 +83,21 @@
    		margin-block: -13px;
 	}
 	
+	#ajaxInput span{
+		margin-top: 5px;
+		margin-bottom: 5px;
+		margin-right: 20px;
+	}
+	
+	#deleteFileBt{
+		margin-left: 15px;
+	}
+	
+	.input-group i{
+		display: block;
+		margin-top: 5px; 
+		cursor: pointer;
+	}
 	
 </style>
 <script type="text/javascript" src="<c:url value='/resource/ckeditor/ckeditor.js'/>"></script>
@@ -113,7 +128,6 @@
 				
 			});
 		});
-		
 		
 		$('form').submit(function() {
 			if($('#boardTitle').val().trim().length<1){
@@ -175,11 +189,12 @@
 		$('input[type=submit]').click(function() {
 			$('#boardFrm').submit();
 		});
-		
-		var i = 0;
-		
-		$('select').change(function() {
-			$.start();
+		var a = 5;
+		$('.input-group i').click(function() {
+			$(this).parent().find("span").replaceWith("<div class='input-group'><input type='file' class='form-control' id='fileItems' aria-describedby='inputGroupFileAddon04' aria-label='Upload' name='file"+a+"Items'></div>");
+			$(this).parent().find("input[type=hidden]").attr("disabled", false);
+			$(this).replaceWith("");
+			a = a+1;
 		});
 		
 	});
@@ -207,7 +222,7 @@
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">게시물 수정</h5>
  						<form class="row gx-3 gy-2 align-items-center" name="boardFrm" id="boardFrm" method="post" 
- 						action="<c:url value='/admin/board/boardWriteSub'/>" enctype="multipart/form-data"
+ 						action="<c:url value='/admin/board/boardEdit'/>" enctype="multipart/form-data"
  							onkeydown="return event.key != 'Enter';">
 							<div id="searchDiv">
 								<div class="col-sm-3" id="select">
@@ -224,25 +239,32 @@
 								
 							</div>
 							<textarea name="boardContent" id="contents">${map.BOARD_CONTENT }</textarea>
-							<input type="hidden" name="boardTypeName" id="boardTypeName">
+							<input type="hidden" name="boardTypeId" id="boardTypeId" value="${map.BOARD_TYPE_ID }">
+							<input type="hidden" name="boardNum" id="boardNum" value="${param.boardNum }">
 							<input type="hidden" name="userNum" value="9999999">
 							<input type="hidden" name="fileOk">
 							<input type="hidden" name="boardTypeId">
 							<c:if test="${map.BOARD_TYPE_FILE_OK == 'Y' }">
 								<div id="fileDiv">
 									<div class="input-group" id="ajaxInput">
+										<c:set var="i" value="0"/>
 										<c:forEach var="spaceFileVo" items="${spaceFileList }">
 												<div class='input-group'>
-													<input type='file' class='form-control' id='fileItems' aria-describedby='inputGroupFileAddon04' 
-														aria-label='Upload' name='file"+a+"Items' value="${spaceFileVo.imgOriginalName }">
-												</div>					
+													<span>${spaceFileVo.imgOriginalName }</span>
+													<i class="bi bi-x-square-fill"></i>
+													<input type="hidden" name="spaceFileItems[${i }].imgTempName" value="${spaceFileVo.imgTempName }" disabled="disabled">
+													<input type="hidden" name="spaceFileItems[${i }].imgForeignKey" value="${spaceFileVo.imgForeignKey }" disabled="disabled">
+												</div>
+												<c:set var="i" value="${i+1 }"/>
 										</c:forEach>
 										<c:set var="cnt" value="${map.BOARD_TYPE_FILE_NUM - fn:length(spaceFileList) }"/>
+										<c:set var="a" value="0"/>
 										<c:forEach begin="1" end="${cnt }">
 												<div class='input-group'>
 													<input type='file' class='form-control' id='fileItems' aria-describedby='inputGroupFileAddon04' 
-														aria-label='Upload' name='file"+a+"Items'>
-												</div>					
+														aria-label='Upload' name='file${a }Items'>
+												</div>
+												<c:set var="a" value="${a+1 }"/>					
 										</c:forEach>
 									</div>
 								</div>

@@ -11,10 +11,10 @@ import java.util.Map;
 public class ApiExamCaptchaImage {
 
     public static void main(String[] args) {
-        String clientId = "YOUR_CLIENT_ID"; //애플리케이션 클라이언트 아이디값";
-        String clientSecret = "YOUR_CLIENT_SECRET"; //애플리케이션 클라이언트 시크릿값";
+        String clientId = "_w2MbHAObKkDYPDgmbHR"; //애플리케이션 클라이언트 아이디값";
+        String clientSecret = "spVJnrMWRL"; //애플리케이션 클라이언트 시크릿값";
 
-        String key = "CAPTCHA_KEY"; // https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
+        String key = "t521bp3qM7Qyk2X2"; // https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
         String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=" + key;
 
         Map<String, String> requestHeaders = new HashMap<>();

@@ -14,4 +14,8 @@
 	<select id="selectSpaceFileByBoardNum" parameterType="int" resultType="spaceFileVo">
 		select * from space_file where img_foreign_key = #{boardNum}
 	</select>
+	
+	<delete id="deleteSpaceFileByImgeTempName" parameterType="string">
+		delete from space_file where IMG_TEMP_NAME = #{imgTempName} 
+	</delete>	
 </mapper>

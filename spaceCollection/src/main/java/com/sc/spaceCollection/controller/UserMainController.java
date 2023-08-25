@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.controller;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,14 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
-import com.sc.spaceCollection.spaceDetail.model.SpaceDetailListVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 
@@ -30,6 +29,16 @@ public class UserMainController {
    private static final Logger logger = LoggerFactory.getLogger(UserMainController.class);
    private final SpaceService spaceService;
    private final SpaceDetailService sdService;
+   
+   @RequestMapping("/board")
+   public String test() {
+      return "userMain/board/boardList";
+   }
+   
+   @RequestMapping("/list")
+   public String listtest() {
+      return "userMain/board/list2";
+   }
    
    //사용자메인화면
    @RequestMapping("/")
@@ -49,22 +58,29 @@ public class UserMainController {
       return "userMain/service";
    }
    
+   //이벤트
+   @RequestMapping("/event")
+   public String event() {
+	   return "userMain/event";
+   }
+   
    //회사소개
    @RequestMapping("/about")
    public String about() {
       return "userMain/about";
    }
+   
    //사업자
    @RequestMapping("/Certificate")
    public String Certificate() {
 	   return "userMain/Certificate";
    }
    
-   /*//이벤트
-   @RequestMapping("/event")
-   public String event() {
-	   return "userMain/event";
-   }*/
+   //사업자
+   @RequestMapping("/Certificate2")
+   public String Certificate2() {
+	   return "userMain/Certificate2";
+   }
    
    //자주묻는질문
    @RequestMapping("/FAQ")
@@ -126,7 +142,6 @@ public class UserMainController {
          
          model.addAttribute("list", list);
       }
-      
       return list;
    }
    
