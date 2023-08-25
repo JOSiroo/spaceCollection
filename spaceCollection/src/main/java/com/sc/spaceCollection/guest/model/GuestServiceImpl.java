@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.guest.model;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -45,6 +47,16 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public String selectUserSalt(String userId) {
 		return guestDao.selectUserSalt(userId);
+	}
+
+	@Override
+	public int selectCountEmail(String userEmail) {
+		return guestDao.selectCountEmail(userEmail);
+	}
+
+	@Override
+	public List<GuestVO> selectUserIdByEmail(String userEmail) {
+		return guestDao.selectUserIdByEmail(userEmail);
 	}
 
 }

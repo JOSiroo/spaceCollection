@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sc.spaceCollection.guest.model.GuestService;
+
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ public class EmailController {
 	private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 	
 	private final EmailSender emailSender;
+	private final GuestService guestService;
 	
 	@RequestMapping("/emailCheck")
 	public String emailCheck() {
@@ -26,7 +29,16 @@ public class EmailController {
 	}
 	
 	@RequestMapping("/sendEmail")
-	public String email(@RequestParam(required = false) String userEmail, String type, Model model) {
+	public String sendeMail(@RequestParam(required = false) String userEmail, Model model) {
+		
+		logger.info("이메일 인증 처리, 파라미터 userEmail={}",userEmail);
+		int cnt = guestService.selectCountEmail(userEmail);
+		if(cnt<0) {
+			String msg="등록된 이메일이 없습니다.", url="/email/emailCheck";
+			model.addAttribute("msg",msg);
+			model.addAttribute("url",url);
+			return "common/message";
+		}
 		
 		int authCode=(int)(Math.random() * 899999) + 100000;//100000~999999 난수 생성
 		logger.info("난수 생성처리, authCode={}",authCode);
@@ -35,6 +47,7 @@ public class EmailController {
 		String content = "인증번호는 : "+authCode+" 입니다";
 		String sender = "pcdno3@naver.com"; //보내는 사람의 이메일 주소
 							//앞서 설정한 본인의 Naver Email
+		logger.info("메일 발송처리, 파라미터 receiver={},content={}",receiver,content);
 		try {
 			emailSender.sendEmail(subject, content, receiver, sender);
 			logger.info("메일 발송 성공!");
@@ -45,8 +58,10 @@ public class EmailController {
 		}
 		
 		model.addAttribute("authCode",authCode);
-		model.addAttribute("type",type);
+		model.addAttribute("acEamil",userEmail);
 		return "email/emailCheck";
 		
 	}
+	
+	
 }

@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.guest.model;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -10,4 +12,5 @@ public interface GuestDAO {
 	int insertGuest(GuestVO guestVo);
 	int selectCountEmail(String userEmail);
 	String selectUserSalt(String userId);
+	List<GuestVO> selectUserIdByEmail(String userEmail);
 }
