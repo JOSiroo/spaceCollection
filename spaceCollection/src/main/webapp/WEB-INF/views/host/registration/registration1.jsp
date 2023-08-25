@@ -129,17 +129,17 @@
 		<form name="frmRegi1" method="post" action="<c:url value='/host/registration/registration2' />" >
 		
 			<div class="accordion accordion-flush" id="accordionFlushExample">
-				<c:forEach var="AllVo" items="${type }">
+				<c:forEach var="AllVo" items="${type }" varStatus="loopStatus">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
-								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${loopStatus.index}"
 								aria-expanded="false" aria-controls="flush-collapseOne">
 								<span>${AllVo.spaceCategoryVo.categoryName }</span>
 							</button>
 						</h2>
-						<c:forEach var="list" items="${AllVo.spaceTypeList}">
-							<div id="flush-collapseOne" class="accordion-collapse collapse"
+						<c:forEach var="list" items="${AllVo.spaceTypeList}" >
+							<div id="flush-collapseOne${loopStatus.index}" class="accordion-collapse collapse"
 								data-bs-parent="#accordionFlushExample">
 								<div class="accordion-body">
 									<div class="dropdown">
