@@ -1,27 +1,32 @@
 package com.sc.spaceCollection.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.sc.spaceCollection.controller.LoginInterceptor;
 
 //Configuration을 붙혀서 설정파일임을 알려줘야함
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer{
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(new LoginInterceptor())
-//		.addPathPatterns("/shop/cart/*", "/shop/order/*", //저런 경로를 가진 것들은 인터셉트를 거치고 가도록 설정함
-//				"/login/memberEdit","/login/memberOut");
-//		
-//		registry.addInterceptor(new AdminLoginInterceptor())
-//		.excludePathPatterns("/admin/login/adminLogin") //exclude - 제외하고
-//		.addPathPatterns("/admin/**");
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginInterceptor())
+		.addPathPatterns("/host/registration/*", "/host/report/*", //저런 경로를 가진 것들은 인터셉트를 거치고 가도록 설정함
+				"/shop/memberEdit","/login/memberOut");
+		
+		/*
+		 * registry.addInterceptor(new AdminLoginInterceptor())
+		 * .excludePathPatterns("/admin/login/adminLogin") //exclude - 제외하고
+		 * .addPathPatterns("/admin/**");
+		 */
+	}
 }
-/*
+
 
 		
-*/
+
 
 	
 
