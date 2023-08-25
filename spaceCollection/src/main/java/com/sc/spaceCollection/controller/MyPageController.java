@@ -26,8 +26,9 @@ public class MyPageController {
 	private final Encryption encryption;
 	
 	@RequestMapping("/myProfile")
-	public String myPage() {
-		logger.info("마이페이지 처리");
+	public String myPage(HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("마이페이지 처리, 파라미터 userId={}",userId);
 		
 		return "guest/myPage/myProfile";
 	}

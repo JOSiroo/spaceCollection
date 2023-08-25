@@ -38,24 +38,25 @@
       -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
+    
+    #timer{
+    	color: #e4271a;
+    }
   </style>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 	$(function(){
 		
 		$("#checkEmail").click(function(){
-			alert("test");
-			
-			if("#userEmail").val().length<1){
+			if($("#userEmail").val().length<1){
 				alert("이메일을 입력해주세요!");
 				return false;
 			}
 			
 			$("form[name=frmEmail]").submit();
 		});	
-	});
 		
-/* 		$("#checkCode").click(function(){
+ 		$("#checkCode").click(function(){
 			
 			if($("#acNumber").val().length<1){
 				alert("인증번호 6자리를 입력해주세요.");
@@ -63,15 +64,43 @@
 			}
 			
 			if($("#acNumber").val()===$("#authCode").val()){
-				var userEmail= $("#acEmail").val();
-				location.href = "<c:url value='/guest/completeFindId?userEmail=pcdno33@gmail.com'/>";
+				/* var userEmail= $("#acEmail").val(); */
+				location.href = "<c:url value='/guest/completeFindId?userEmail=${acEamil }'/>";
 			}else{
 				alert("인증번호가 일치하지 않습니다.");
 				return false;
 			}
 			
-		}); */
-	
+		});
+ 		
+ 		// 시작 시간 설정 (5분)
+        var startTime = 5 * 60;
+
+        // 타이머 업데이트 함수
+        function updateTimer() {
+            var minutes = Math.floor(startTime / 60);
+            var seconds = startTime % 60;
+
+            // 앞에 0을 추가하여 두 자리 숫자로 표시
+            var formattedTime = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+            $('#timer').text(formattedTime);
+
+            // 1초씩 감소
+            startTime--;
+
+            // 타이머 종료
+            if (startTime < 0) {
+                clearInterval(timerInterval);
+                $('#authCode').val(""); //인증코드 소멸
+                alert("인증 기간이 만료되었습니다.");
+            }
+        }
+
+        // 1초마다 타이머 업데이트
+        var timerInterval = setInterval(updateTimer, 1000);
+	});
+		
 </script>
 </head>
 <body id="mailCheckBody">
@@ -99,6 +128,9 @@
 	            	<label for="acNumber">인증번호</label>
 	            	<input type="text" class="form-control" name="acNumber" id="acNumber" placeholder="인증번호 6자리를 입력해주세요" required>
 	            	<input type="text" id="authCode" value="${authCode }">
+	            	<c:if test="${!empty authCode }">
+	            		<label>인증 만료 : </label><span id="timer">05:00</span>
+	            	</c:if>
 	            	<input type="hidden" id="acEmail" value="${acEamil }"> 
 		            <div class="invalid-feedback">
 		            	인증번호를 입력해주세요.

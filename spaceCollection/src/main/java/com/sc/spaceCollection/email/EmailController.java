@@ -33,7 +33,8 @@ public class EmailController {
 		
 		logger.info("이메일 인증 처리, 파라미터 userEmail={}",userEmail);
 		int cnt = guestService.selectCountEmail(userEmail);
-		if(cnt<0) {
+		logger.info("이메일로 아이디 조회결과, cnt={}",cnt);
+		if(cnt==0) {
 			String msg="등록된 이메일이 없습니다.", url="/email/emailCheck";
 			model.addAttribute("msg",msg);
 			model.addAttribute("url",url);

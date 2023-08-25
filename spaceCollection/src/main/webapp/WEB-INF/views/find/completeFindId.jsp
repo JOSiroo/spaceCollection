@@ -61,8 +61,12 @@
 	$(function(){
 		
 		$("#ucSelectAuthMethod_btnConfirmOwnEmail").click(function(){
-			window.open("${pageContext.request.contextPath}/email/emailCheck?type=findId"
+			window.open("<c:url value='/email/emailCheck' />"
 					,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
+		});
+		
+		$("#login").click(function(){
+			location.href="<c:url value='/login/login' />";
 		});
 		
 		
