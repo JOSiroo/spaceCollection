@@ -7,11 +7,11 @@
 <meta charset="UTF-8">
 <title>이메일 인증</title>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <style>
-    #mailCheckBody {
+    #mailCheckBody { 
       min-height: 100vh;
 
       background: -webkit-gradient(linear, left bottom, right top, from(#F6F6F6), to(#F6F6F6));
@@ -42,10 +42,36 @@
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 	$(function(){
+		
 		$("#checkEmail").click(function(){
+			alert("test");
+			
+			if("#userEmail").val().length<1){
+				alert("이메일을 입력해주세요!");
+				return false;
+			}
+			
 			$("form[name=frmEmail]").submit();
-		});
+		});	
 	});
+		
+/* 		$("#checkCode").click(function(){
+			
+			if($("#acNumber").val().length<1){
+				alert("인증번호 6자리를 입력해주세요.");
+				return false;
+			}
+			
+			if($("#acNumber").val()===$("#authCode").val()){
+				var userEmail= $("#acEmail").val();
+				location.href = "<c:url value='/guest/completeFindId?userEmail=pcdno33@gmail.com'/>";
+			}else{
+				alert("인증번호가 일치하지 않습니다.");
+				return false;
+			}
+			
+		}); */
+	
 </script>
 </head>
 <body id="mailCheckBody">
@@ -54,7 +80,6 @@
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">이메일 인증</h4>
         <form name="frmEmail" class="validation-form" method="post" action="<c:url value='/email/sendEmail'/>" novalidate>
-        <input type="text" name="type" value="${param.type }">
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="checkEmail">이메일</label>
@@ -72,14 +97,16 @@
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="acNumber">인증번호</label>
-	            	<input type="email" class="form-control" name="acNumber" id="acNumber" placeholder="인증번호 6자리를 입력해주세요" required>
+	            	<input type="text" class="form-control" name="acNumber" id="acNumber" placeholder="인증번호 6자리를 입력해주세요" required>
+	            	<input type="text" id="authCode" value="${authCode }">
+	            	<input type="hidden" id="acEmail" value="${acEamil }"> 
 		            <div class="invalid-feedback">
 		            	인증번호를 입력해주세요.
 		            </div>
 	            </div>
 	          	<div class="col-md-3 mb-3">
 					<label>&nbsp;</label>
-					  <input type="button" class="btn btn-secondary" onclick="#" value="확인"
+					  <input type="button" class="btn btn-secondary" id="checkCode" value="확인"
 					  	style="width: 125px;text-align: center;">
 	            </div>
 		    </div>	

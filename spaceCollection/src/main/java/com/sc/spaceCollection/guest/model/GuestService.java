@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.guest.model;
 
+import java.util.List;
+
 public interface GuestService {
 	// 아이디 중복확인 관련 상수
 	int EXIST_ID = 1; // 이미 해당 아이디가 존재함
@@ -15,4 +17,6 @@ public interface GuestService {
 	GuestVO selectUserInfo(String userId);
 	int insertGuest(GuestVO guestVo);
 	String selectUserSalt(String userId);
+	int selectCountEmail(String userEmail);
+	List<GuestVO> selectUserIdByEmail(String userEmail);
 }

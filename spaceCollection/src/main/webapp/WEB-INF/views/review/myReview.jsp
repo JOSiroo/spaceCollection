@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@include file="../../form/userTop.jsp" %>
+<%@include file="../form/userTop.jsp" %>
 <%-- <%@include file="myPageMenu.jsp" %> --%>
 
 <style type="text/css">
@@ -13,8 +13,13 @@
       background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
-      
-      margin-top: 10%;
+      width:100%;
+      margin-top: 135px;
+	}
+	
+	.align_center{
+		width: 1500px;
+		margin: 0 auto;
 	}
 	
 	.myProfile{
@@ -76,6 +81,7 @@
 </style>
 
 <div class="wrapProfile">
+	<div class="align_center">
 	<h1>리뷰 관리</h1>
 	<div class="myProfile">
 		<img src="<c:url value='/user_images/test1.jpg'/>" id="userImage"><br><br>
@@ -87,49 +93,63 @@
 	</div>
 	<div class="reViewInfo">
 		<div class="tbReview">
+		<c:if test="${empty reviewMap }">
 			<hr>
 			<div>
-				<a href="#" style="font-size: 20px; color: #484848;">푸토어 프로덕션 케이스 〉</a>
+				<a href="#" style="font-size: 20px; color: #484848;">등록된 리뷰가 없습니다!</a>
 			</div>
-			<div>
-				<label>전화번호</label> <span class="spaceInfo">02-798-7155</span>
-			</div>
-			<div>
-				<label>위치</label> <span class="spaceInfo">서울특별시 서초구 동산로 19길</span>
-			</div>
-			<div>
-				<label>태그</label><br>
-				<span class="spaceInfo">#보컬연습실 #레슨실대여 #악기연습실 #강남연습실 #셀프녹음실</span>
-			</div>
-			<div class="review_content">
+		</c:if>
+		<c:if test="${!empty reviewMap }">
+			<c:forEach var="reviewMap" items="${reviewMap }">
+				<hr>
 				<div>
-					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-					<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-					<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
+					<a href="<c:url value='/detail?spaceNum=${reviewMap["SPACE_NUM"]}'/>" style="font-size: 20px; color: #484848;">
+						${reviewMap['SPACE_NAME'] } 〉</a>
+					<br>유형 : <span class="spaceInfo">${reviewMap['SD_TYPE'] }</span>
 				</div>
 				<div>
-					<label>이름</label> 
-					<span class="spaceInfo"> | 2021.09.07</span>
+					<label>전화번호</label> <span class="spaceInfo">${reviewMap['SPACE_PHONE_NUM'] }</span>
 				</div>
 				<div>
-					<div id="content">
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
-						아 여기 대충 이런이런 곳이였고 좋았다는 내용
+					<label>위치</label> <span class="spaceInfo">${reviewMap['SPACE_ADDRESS'] } ${reviewMap['SPACE_ADDRESS_DETAIL'] }</span>
+				</div>
+				<div>
+					<label>태그</label><br>
+					<span class="spaceInfo"># ${reviewMap['SPACE_TAG'] }</span>
+				</div>
+				<div class="review_content">
+					<div>
+						<c:set var="count" value="0"/>
+						<c:forEach var="i" begin="1" end="${reviewMap['REVIEW_RATE'] }">
+							<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
+							<c:set var="count" value="${count+1 }" />
+						</c:forEach>
+						<c:if test="${reviewMap['REVIEW_RATE']%1 >0 }">
+							<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
+							<c:set var="count" value="${count+1 }" />
+						</c:if>
+						<c:forEach var="j" begin="${count}" end="4">
+							<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
+						</c:forEach>
+					</div>
+					<div>
+						<label>${sessionScope.userId }</label> 
+						<span class="spaceInfo"> | ${reviewMap['REVIEW_REG_DATE'] }</span>
+					</div>
+					<div>
+						<div id="content">
+							${reviewMap['REVIEW_CONTENT'] }
+						</div>
 					</div>
 				</div>
-			</div>
+			</c:forEach>
+		</c:if>
 			<div class="footProfile">
 				<hr>
 				<a href="#" class="editInfo" style="margin-left: 210px;">1 2 3 4 5 6 7 8 9 10</a> 
 			</div> 
 		</div>
 	</div>
+	</div>
 </div>
-<%@include file="../../form/userBottom.jsp" %>
+<%@include file="../form/userBottom.jsp" %>
