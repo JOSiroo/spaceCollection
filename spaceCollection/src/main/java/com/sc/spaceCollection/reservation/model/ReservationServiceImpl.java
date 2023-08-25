@@ -137,7 +137,17 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<Map<String, Object>> selectReservationAll(SearchVO vo) {
-		return reservationDao.selectReservationAll(vo);
+		List<Map<String, Object>> reservationList = reservationDao.selectReservationAll(vo);
+		for(Map<String, Object> map : reservationList) {
+			map.put("RESERVER_PAY_DAY", (map.get("RESERVER_PAY_DAY")+"").substring(0, 10));
+		}
+		
+		return reservationList;
+	}
+
+	@Override
+	public int getTotalRecord(SearchVO vo) {
+		return reservationDao.getTotalRecord(vo);
 	}
 	
 	

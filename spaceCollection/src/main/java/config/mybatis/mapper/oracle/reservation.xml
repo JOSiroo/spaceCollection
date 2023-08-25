@@ -72,4 +72,10 @@
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
 	
+	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
+		select count(*) from RESERVATION_SD_VIEW
+		where RESERVATION_DEL_FLAG is null and user_id = #{userId}
+		<include refid="searchWhere"/>
+	</select>
+	
 </mapper>

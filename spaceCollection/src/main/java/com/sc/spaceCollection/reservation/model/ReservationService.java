@@ -15,4 +15,5 @@ public interface ReservationService {
 	Map<String,Object> reservationReview(int reservationNum);
 	boolean isReviewd(int reservationNum, String userId);
 	List<Map<String, Object>> selectReservationAll(SearchVO vo);
+	int getTotalRecord(SearchVO vo);
 }

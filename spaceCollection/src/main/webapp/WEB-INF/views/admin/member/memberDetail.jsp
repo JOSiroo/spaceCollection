@@ -15,7 +15,7 @@
     	min-height: 420px;
 	}
 	
-	th{
+	th, td{
 		text-align: center;
 	}
 	
@@ -24,7 +24,7 @@
 	}
 	
 	div#select {
-    	width: 114px;
+    	width: 150px;
 	}
 	
 	#searchDiv>div{
@@ -63,7 +63,146 @@
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
+		
+		$('#reservationSearchBt').click(function() {
+			$.send(1);
+		});
+		
+		$('button[name=reservationTab]').click(function() {
+			$.reservationListSearch();
+		});
+		
 	});
+	
+	function mouseIn(evt) {
+		$(evt).find('td').css("background-color", "#d1cece");
+	}
+	function mouseOut(evt) {
+		$(evt).find('td').css("background-color", "white");
+	}
+	
+	$.reservationListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/member/memberDetail/ajax_reservationList'/>",
+			type: 'post',
+			data: $('form[name=reservationSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.reservationList!=null && res.reservationList.length>0){
+					
+					$('tbody').html("");
+					
+					str = "<form name='trFrm' method='post' action=''>"
+						$.each(res.reservationList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
+								str += "<td>"
+								str += "<input type='checkbox' name='boardItemList["+i+"].boardNum' value='${map.BOARD_NUM }'>"
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SD_TYPE
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_PEOPLE
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY
+								str += "</td>"
+						});
+						str += "</form>";
+						i++;
+						$('tbody').html(str);
+						pageMake(res.pagingInfo);
+				}else{
+					str = "<tr>"
+						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "</tr>"
+					$('tbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
+	function pageMake(pagingInfo) {
+		//페이징 처리
+		var blockSize = pagingInfo.blockSize;
+		var countPerPage = pagingInfo.countPerPage
+		
+		var str = "";
+		str += "<nav aria-label='...'>";
+		str	+= "<ul class='pagination justify-content-center'>";
+		
+		//이전 블럭으로	
+		if(pagingInfo.firstPage>1){
+			str += "<li class='page-item"
+			if(pagingInfo.firstPage <= 1){
+				str += " disabled";
+			}
+			str += ">";
+			str += "<a class='page-link' href='#' aria-label='Previous' onclick='pageFunc("+pagingInfo.firstPage-1+")'>이전</a>";
+			str += "</li>";
+		}
+		//페이지 번호 출력
+		for(var i=pagingInfo.firstPage; i<=pagingInfo.lastPage; i++){
+			if(i==pagingInfo.currentPage){
+				str += "<li class='page-item active' aria-current='page'>";
+				str += "<a class='page-link' href='#'>" + i + "</a></li>";
+			}else{
+				str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.send("+ i +")'>"+i+"</a>"
+				str += "</li>";
+			}
+		}
+		//다음 블럭으로
+		if(pagingInfo.lastPage < pagingInfo.totalPage){
+			str += "<li class='page-item";
+			if(pagingInfo.lastPage >= pagingInfo.totalPage){
+				str += " disabled";
+			}
+			str += ">";
+			str += "<a class='page-link' href='#' onclick='pageFunc("+pagingInfo.lastPage+1 + ">다음</a>";
+			str += "</li>";
+			str += "</ul>";
+			str += "</nav>";
+		}
+		
+		$('.divPage').html(str);
+	}
+	
+	$.send = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+		
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_reservationList'/>",
+			type:"post",
+			data:$('form[name=reservationSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.reservationListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
+				
 </script>
 <main id="main" class="main">
 
@@ -104,7 +243,7 @@
 							</li>
 							<li class="nav-item">
 								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#reservationList">예약 내역</button>
+									data-bs-target="#reservationList" name="reservationTab">예약 내역</button>
 							</li>
 							<li class="nav-item">
 								<button class="nav-link" data-bs-toggle="tab"
@@ -149,7 +288,8 @@
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">가입일자</div>
 									<div class="col-lg-9 col-md-8">
-										<fmt:formatDate value="${memberMap.USER_REG_DATE }" pattern="yyyy-MM-dd" />
+										<fmt:parseDate var="userRegDate" value="${memberMap.USER_REG_DATE }" pattern="yyyy-MM-dd" />
+										<fmt:formatDate value="${userRegDate }" pattern="yyyy-MM-dd" />
 									</div>
 								</div>
 								<div class="row">
@@ -166,148 +306,65 @@
 							</div>
 							<!-- 회원정보 끝 -->
 							<!-- 예약 내역 시작 -->
-							<div class="tab-pane fade pt-3" id="reservationList">
-								<div class="row mb-3">
-									<table class="table">
-										<colgroup>
-											<col style="width: 5%"; />
-											<col style="width: 12%"; />
-											<col style="width: 12%;" />
-											<col style="width: 26%;" />
-											<col style="width: 15%;" />
-											<col style="width: 15%;" />
-											<col style="width: 15%;" />
-										</colgroup>
-										<thead>
-											<tr>
-												<th scope="col"><input type="checkbox" name="chkAll"></th>
-												<th scope="col">예약 번호</th>
-												<th scope="col">장소 구분</th>
-												<th scope="col">예약 장소</th>
-												<th scope="col">예약 인원</th>
-												<th scope="col">예약일</th>
-												<th scope="col">결제일</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${empty list }">
+							<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm">
+								<div class="tab-pane fade pt-3" id="reservationList">
+			 							<input type="hidden" name="currentPage" value="1">
+			 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+			 												
+									<div class="row mb-3">
+										<table class="table">
+											<colgroup>
+												<col style="width: 5%;" />
+												<col style="width: 12%;" />
+												<col style="width: 12%;" />
+												<col style="width: 41%;" />
+												<col style="width: 15%;" />
+												<col style="width: 15%;" />
+											</colgroup>
+											<thead>
 												<tr>
-													<td colspan="7" style="text-align: center;">예약 내역이 없습니다.</td>
+													<th scope="col"><input type="checkbox" name="chkAll"></th>
+													<th scope="col">예약 번호</th>
+													<th scope="col">장소 구분</th>
+													<th scope="col">예약 장소</th>
+													<th scope="col">예약 인원</th>
+													<th scope="col">예약일</th>
 												</tr>
-											</c:if>
-											<c:if test="${!empty list }">
-												<form name="trFrm" method="post" action="<c:url value='/admin/board/boardDelete'/>">
-													<c:set var="i" value="0" />
-													<c:forEach var="map" items="${list }">
-														<fmt:parseDate value="${map.BOARD_REG_DATE }" var="boardRegDate" pattern="yyyy-MM-dd" />
-														<tr>
-															<td>
-																<input type="checkbox" name="boardItemList[${i }].boardNum" value="${map.BOARD_NUM }"></td>
-															<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';"
-																style="cursor: pointer;">
-																${map.BOARD_NUM }
-															</td>
-															<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';"
-																style="cursor: pointer;">
-																${map.BOARD_TYPE_NAME }
-															</td>
-															<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';"
-																style="cursor: pointer;">
-																<c:if test="${fn:length(map.BOARD_TITLE)>23 }">
-																	${fn:substring(map.BOARD_TITLE, 0, 23) } ...
-																</c:if> 
-																<c:if test="${fn:length(map.BOARD_TITLE)<=23 }">
-																	${map.BOARD_TITLE }
-																</c:if> 
-																<c:if test="${map.FILECOUNT>0 }">
-																	<i class="bi bi-link-45deg"></i>
-																</c:if> 
-																<c:if test="${map.BOARD_TYPE_COMMENT_OK == 'Y' }">
-																	<span>(${map.COMMENTCOUNT })</span>
-																</c:if>
-															</td>
-															<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';"
-																style="cursor: pointer;">
-																${map.USER_ID }
-															</td>
-															<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';"
-																style="cursor: pointer;">
-																<fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd" />
-															</td>
-															<td onclick="location.href='<c:url value='/admin/board/boardDetail?boardNum=${map.BOARD_NUM }&boardTypeName=${map.BOARD_TYPE_NAME}'/>';"
-																style="cursor: pointer;">
-																<fmt:formatDate value="${boardRegDate }" pattern="yyyy-MM-dd" />
-															</td>
-														</tr>
-														<c:set var="i" value="${i+1 }" />
-													</c:forEach>
-												</form>
-											</c:if>
-										</tbody>
-									</table>
-									<div class="divPage">
-
-										<nav aria-label="...">
-											<ul class="pagination justify-content-center">
-												<c:if test="${pagingInfo.firstPage>1 }">
-													<li
-														class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
-														<a class="page-link" href="#" aria-label="Previous"
-														onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
-													</li>
-												</c:if>
-												<c:forEach var="i" begin="${pagingInfo.firstPage }"
-													end="${pagingInfo.lastPage }">
-													<c:if test="${i == pagingInfo.currentPage }">
-														<li class="page-item active" aria-current="page"><a
-															class="page-link" href="#">${i}</a></li>
-													</c:if>
-													<c:if test="${i != pagingInfo.currentPage }">
-														<li class="page-item"><a class="page-link"
-															aria-label="Previous" href="#" onclick="pageFunc(${i})">${i }</a>
-														</li>
-													</c:if>
-												</c:forEach>
-												<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
-													<li
-														class="page-item <c:if test='${pagingInfo.lastPage >= pagingInfo.totalPage }'>disabled</c:if>">
-														<a class="page-link" href="#"
-														onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
-													</li>
-												</c:if>
-											</ul>
-										</nav>
-
-									</div>
-									<form class="row gx-3 gy-2 align-items-center" id="boardFrm"
-										method="post" action="<c:url value='/admin/board/boardList'/>">
-										<div id="searchDiv">
-											<div class="col-auto">
-												<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
-											</div>
-											<div class="col-sm-3" id="keyword">
-												<label class="visually-hidden" for="searchKeyword">searchCondition</label>
-												<input type="text" class="form-control" id="searchKeyword"
-													name="searchKeyword" value="${searchVo.searchKeyword }">
-											</div>
-											<div class="col-sm-3" id="select">
-												<select class="form-select" name="searchCondition"
-													id="searchCondition">
-													<option value="reservation_num"
-														<c:if test="${param.searchCondition=='reservation_num'}">
-						            						selected="selected"
-						            					</c:if>>예약번호</option>
-													<option value="space_name"
-														<c:if test="${param.searchCondition=='space_name'}">
-						            						selected="selected"
-						            					</c:if>>장소명</option>
-												</select>
-											</div>
+											</thead>
+											<tbody>
+												<!-- ajax로 예약 내역 출력 -->
+											</tbody>
+										</table>
+										<div class="divPage">
+											<!-- ajax로 페이징 -->
 										</div>
-									</form>
+											<div id="searchDiv">
+												<div class="col-auto">
+													<button type="button" id="reservationSearchBt" class="btn btn-primary">검색</button>
+												</div>
+												<div class="col-sm-3" id="keyword">
+													<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+													<input type="text" class="form-control" id="searchKeyword"
+														name="searchKeyword" value="${searchVo.searchKeyword }">
+												</div>
+												<div class="col-sm-3" id="select">
+													<select class="form-select" name="searchCondition"
+														id="searchCondition">
+														<option value="reservation_num"
+															<c:if test="${param.searchCondition=='reservation_num'}">
+							            						selected="selected"
+							            					</c:if>>예약번호</option>
+														<option value="space_name"
+															<c:if test="${param.searchCondition=='space_name'}">
+							            						selected="selected"
+							            					</c:if>>예약 장소명</option>
+													</select>
+												</div>
+											</div>
+									</div>
+	
 								</div>
-
-							</div>
+							</form>
 							<!-- 예약 내역 끝 -->
 							<!-- 후기 내역 시작 -->
 							<div class="tab-pane fade pt-3" id="reviewList">
