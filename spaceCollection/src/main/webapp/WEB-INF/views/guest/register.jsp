@@ -210,10 +210,10 @@
               필수 항목을 체크해주세요.
             </div>
           </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="agreement3" required>
-            <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label>
-          </div>
+            <input type="checkbox" class="custom-input" id="agreement3" name="userMarketingSmsOk"  required>
+            <label class="custom-control-label" for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label><br>
+            <input type="checkbox" class="custom-input" id="agreement4" name="userMarketingEmailOk" required>
+            <label class="custom-control-label" for="agreement4">이벤트 등 프로모션 알림 Email (선택)</label>
           <div class="mb-4"></div>
           <button class="btn btn-primary btn-lg btn-block" id="register" name="register" type="submit">가입 완료</button>
         </form>
@@ -228,7 +228,6 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	$(function(){
-		
 	    $("#agreementAll").click(function(){
 	      
 	      var isChecked = $(this).prop("checked");
@@ -237,6 +236,12 @@
     	});
 	    
 	    $("button[name=register]").click(function(){
+	    	if($("#userId").val().length<1){
+	    		alert("아이디를 입력해주세요.");
+	    		$('#userId').focus();
+				return false;
+	    	}
+	    	
 	    	if (!validate_userId($('#userId').val())) {
 				alert("아이디는 영문, 숫자, _(밑줄문자)만 가능합니다");
 				$('#userId').focus();
@@ -321,7 +326,7 @@
 	    
 	    $('#mail-Check-Btn').click(function() {
 	    	
-			window.open("${pageContext.request.contextPath}/email/emailCheck?userEmail="+$("#userEmail").val()+"&type=register"
+			window.open("<c:url value='/email/emailCheck?userEmail="+$("#userEmail").val()+"&type=register'/>"
 						,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
 	    	
 		}); // end send eamil

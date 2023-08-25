@@ -27,7 +27,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (userId == null || userId.isEmpty()) {
 			response.setContentType("text/html;charset=utf-8");	//text/html;charset=utf-8 타입의 문서로 보낸다고 설정
 			PrintWriter out = response.getWriter();	//문자 형태로 응답한다고 설정
+			
 			out.print("<script>");
+			out.print("alert('로그인 후 이용이 가능합니다.');");
 			out.print("location.href='" + request.getContextPath() + "/login/login';");
 			out.print("</script>");
 			
