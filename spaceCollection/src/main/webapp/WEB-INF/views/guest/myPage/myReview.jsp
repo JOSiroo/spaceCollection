@@ -13,8 +13,8 @@
       background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
-      
-      margin-top: 10%;
+      width:1500px;
+      margin-top: 350px;
 	}
 	
 	.myProfile{

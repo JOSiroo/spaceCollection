@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ include file="../../form/userTop.jsp" %>
-<%@ include file="myPageMenu.jsp" %>
 <script type="text/javascript">
 	$(function(){
 		$('input[type=submit]').click(function(){
@@ -17,12 +16,12 @@
 <style type="text/css">
 
 	.userModify{
-		margin: 0 auto;
-		max-width: 730px;
-	    margin-top: 190px;
-	    margin-bottom: 300px;
-	    padding: 32px;
-	    margin-left: 200px;
+		width: 1500px;
+		margin-top: 250px;
+		margin-bottom: 250px;
+		display: flex;
+		justify-content: center;
+		
 	}
 	
 	.userModify td {
@@ -78,7 +77,7 @@
 	
 	
 </style>
-<section class="userModify">
+<div class="userModify">
 	<form name="frmCheckPwd" method="post" action="<c:url value='/guest/myPage/checkPwd'/>">
 		<h1>회원정보확인</h1>
 		<b>${sessionScope.userId }님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</b>
@@ -101,5 +100,5 @@
 			<input type="button" value="취소" class="button">
 		</div>
 	</form>
-</section>
+</div>
 <%@ include file="../../form/userBottom.jsp" %>
