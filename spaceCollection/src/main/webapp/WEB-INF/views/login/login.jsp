@@ -291,11 +291,11 @@
 	}
 	
 	$('#findPwd').click(function() {
-		window.open("${pageContext.request.contextPath}/guest/findPwd"
+		window.open("<c:url value='/guest/findPwd' />"
 					,"비밀번호 찾기 팝업","width=770px,height=530px,scrollbars=no, resizable=no");
 	});
 	$('#findId').click(function() {
-		window.open("${pageContext.request.contextPath}/guest/findId"
+		window.open("<c:url value='/guest/findId' />"
 					,"아이디 찾기 팝업","width=770px,height=530px,scrollbars=no, resizable=no");
 	});
 </script>
