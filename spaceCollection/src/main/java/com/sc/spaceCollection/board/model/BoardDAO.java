@@ -15,7 +15,7 @@ public interface BoardDAO {
 	int insertBoard(BoardVO vo);
 	Map<String, Object> selectByBoardNum(int boardNum);
 	int updateBoardDelFlag(BoardVO vo);
-	List<Map<String, Object>> selectByeventBoard();
+	List<UserBoardVO> selectByeventBoard();
 	Map<String, Object> selectByeventBoardNum(int boardNum);
 	int updateBoard(BoardVO vo);
 }
