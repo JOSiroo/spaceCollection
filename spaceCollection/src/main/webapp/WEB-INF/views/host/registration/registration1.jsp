@@ -23,7 +23,7 @@
 		background: #80808014;
 		display: inline-block;
 		padding: 17px 5px 15px 0;
-		font-size: 17px;
+		font-size: 16px;
 	}
 	
 	.notiBox {
@@ -48,7 +48,7 @@
 	.accordion-header span {
 		padding: 15px 0 0 20px;
 		font-weight: bold;
-		font-size: 23px;
+		font-size: 20px;
 	}
 	
 	.accordion-body span {
@@ -56,28 +56,29 @@
 		color: #333;
 		font-stretch: normal;
     	font-style: normal;
-    	font-size: 16px;
+    	font-size: 13px;
 	}
 
-	#flush-collapseOne {
-		width: 200px;
+	.accordion {
+		margin-bottom: 60px;
+	}
+	
+	.collap {
 		float: left;
+		margin-top: 
 	}
 	
 	.dropdown .btn {
 		background: white;
 		border: 1px solid #704de4 !important;
 		color: #704de4;
+		margin: 10px 0 5px 10px;
 	}
 	
 	.dropdown-menu {
 		background: white;
 		border: 1px solid #704de4 !important;
 		color: #704de4;
-	}
-	
-	.accordion {
-		margin-bottom: 60px;
 	}
 	
 	.btBar {
@@ -91,7 +92,7 @@
 		height: 80px;
 		margin: 0 10px 60px 10px;
 		color: white;
-		font-size: 23px;
+		font-size: 20px;
 		font-weight: bold;
 	}
 	
@@ -104,10 +105,19 @@
 		$('#back').click(function() {
 			history.back();
 		});
-
+		
 		$('#next').click(function() {
-			location.href="<c:url value='/host/registration/registration2' />";
+			var count = $('div input[type=checkbox]:checked').length;
+			if (count > 0) {
+				$('form[name=frmRegi1]').prop('action', "<c:url value='/host/registration/registration2' />");
+				$('form[name=frmRegi1]').submit();
+				
+			} else {
+				alert('공간 유형을 선택하세요.');
+			}
+			
 		});
+		
 	});
 </script>
 
@@ -129,26 +139,34 @@
 		<form name="frmRegi1" method="post" action="<c:url value='/host/registration/registration2' />" >
 		
 			<div class="accordion accordion-flush" id="accordionFlushExample">
-				<c:forEach var="AllVo" items="${type }">
+				<c:forEach var="AllVo" items="${type }" varStatus="loopStatus">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
-								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${loopStatus.index}"
 								aria-expanded="false" aria-controls="flush-collapseOne">
 								<span>${AllVo.spaceCategoryVo.categoryName }</span>
 							</button>
 						</h2>
-						<c:forEach var="list" items="${AllVo.spaceTypeList}">
-							<div id="flush-collapseOne" class="accordion-collapse collapse"
-								data-bs-parent="#accordionFlushExample">
-								<div class="accordion-body">
-									<div class="dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button"
-											data-bs-toggle="dropdown" aria-expanded="false">
-											${list.spaceTypeName }</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="#">${list.explanation }</a></li>
-										</ul>
+						<c:forEach var="list" items="${AllVo.spaceTypeList}" >
+							<div class="collap">
+								<div id="flush-collapseOne${loopStatus.index}" class="accordion-collapse collapse"
+									data-bs-parent="#accordionFlushExample">
+									<div class="accordion-body">
+											<div class="form-check">
+											  	<input class="form-check-input" type="checkbox" value="${list.spaceTypeName }" id="flexCheckDefault">
+											  	<label class="form-check-label" for="flexCheckDefault">
+											  		<div class="dropdown">
+													  	<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+													    	${list.spaceTypeName }
+													  	</button>
+													  	<ul class="dropdown-menu">
+													    	<li><a class="dropdown-item" href="#">${list.explanation }</a></li>
+													  	</ul>
+													</div>
+											  	</label>
+											</div>
+											
 									</div>
 								</div>
 							</div>
