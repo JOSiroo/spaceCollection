@@ -61,7 +61,7 @@ public class UserBoardController {
 		for(int i = 0; i < mapList.size(); i++) {
 			Map<String, Object> map = mapList.get(i);
 			String str = ((String) map.get("BOARD_CONTENT")).split("</p>")[0];
-			/* String str1 = str.substring(str.indexOf("src=\""), str.indexOf("\"")); */
+			 String str1 = str.substring(str.indexOf("src=\""), str.indexOf("\""));
 			
 			map.put("boardContent", str);
 			/* logger.info("str1:{}", str1); */

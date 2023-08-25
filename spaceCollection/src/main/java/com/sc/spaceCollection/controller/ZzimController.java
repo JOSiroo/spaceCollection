@@ -78,12 +78,6 @@ public class ZzimController {
 	}
 	@RequestMapping("/zzimList")
 	public String zzimList_show(@RequestParam(required = false) HttpSession session,Model model) {
-		if(session == null) {
-				model.addAttribute("msg", "찜목록은 로그인후에 이용 가능합니다");
-				model.addAttribute("url", "/");
-				
-				return "common/message";
-			}
 		
 		return "zzim/zzimList";
 	}

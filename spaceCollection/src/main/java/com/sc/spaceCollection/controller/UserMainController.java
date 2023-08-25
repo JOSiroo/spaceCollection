@@ -142,7 +142,6 @@ public class UserMainController {
          
          model.addAttribute("list", list);
       }
-      
       return list;
    }
    

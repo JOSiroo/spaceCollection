@@ -753,6 +753,7 @@ $(function(){
 	
 	//무한스크롤 ajax 함수 영역
 	var noDataNum = 0;
+	
 function loadMoreData() {
     if (isLoading) {
         return;
