@@ -49,10 +49,13 @@
 </div> -->
 <script type="text/javascript">
 	$(function(){
+		
 		$("#ucSelectAuthMethod_btnConfirmOwnEmail").click(function(){
-			window.open("${pageContext.request.contextPath}/email/emailCheck?type=findId"
+			window.open("${pageContext.request.contextPath}/email/emailCheck"
 					,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
 		});
+		
+		
 	});
 //<![CDATA[
 var theForm = document.forms['m_form'];
@@ -67,7 +70,6 @@ function __doPostBack(eventTarget, eventArgument) {
     }
 }
 //]]>
-
 	
 </script>
 
@@ -129,7 +131,7 @@ return true;
 	<div class="contents">
 		<p class="stit">스페이스 컬렉션ID 찾기를 위한 본인확인 방법을 선택해주세요.</p>
 		<ul class="authNType">
-			<li><a href="<c:url value='/email/emailCheck?type=findId'/>" id="ucSelectAuthMethod_btnConfirmOwnEmail" name="ucSelectAuthMethod$btnConfirmOwnEmail" memberbutton="true" class="auth4" finda2sopt="UEmail">
+			<li><a href="<c:url value='/email/emailCheck'/>" id="ucSelectAuthMethod_btnConfirmOwnEmail" name="ucSelectAuthMethod$btnConfirmOwnEmail" memberbutton="true" class="auth4" finda2sopt="UEmail">
 					<span class="txt1">이메일 인증</span>
 					<span class="txt2">등록된 이메일로 인증</span>
 					<span class="txt3">인증하기</span>

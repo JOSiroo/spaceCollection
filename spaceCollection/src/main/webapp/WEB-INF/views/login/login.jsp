@@ -181,11 +181,26 @@
         container: '#kakao-login-btn',
         success: function (authObj) {
             alert(JSON.stringify(authObj));
+            Kakao.Auth.setAccessToken(authObj.access_token);
         },
         fail: function (err) {
             alert(JSON.stringify(err));
         }
     });
+    Kakao.API.request({
+    	  url: '/v2/user/me',
+    	  data: {
+    	    property_keys: [
+    	    	'kakao_account.email', 
+    	    	'kakao_account.gender'],
+    	  },
+    	})
+    	  .then(function(response) {
+    	    console.log(response);
+    	  })
+    	  .catch(function(error) {
+    	    console.log(error);
+    	  });
   //]]> 
 	  <!-- 카카오 스크립트 -->
 /* 	Kakao.init('0865f25b9e2e1e9ea1619b5c2d9d8fdf'); //발급받은 키 중 javascript키를 사용해준다.

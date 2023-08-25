@@ -13,8 +13,8 @@
       background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
-      
-      margin-top: 10%;
+      margin-top: 135px;
+      width:100%;
 	}
 	
 	.myProfile{
@@ -25,6 +25,10 @@
 		margin-left: 120px;
 	}
 	
+	.align_center{
+		width: 1500px;
+		margin: 0 auto;
+	}
 	
 	#userImage{
 		width: 150px;
@@ -109,97 +113,99 @@
 </style>
 
 <div class="wrapProfile">
-	<h1>프로필 관리</h1>
-	<div class="myProfile">
-		<img src="<c:url value='/user_images/test1.jpg'/>" id="userImage"><br><br>
-		<strong style="color: black; margin: 101px;">박희수</strong><br>
-		<label for="file-input">
-        <img alt="프로필 사진 변경.png" src="<c:url value='/images/editProfileImg.png'/>" style="width: 104.48px; height: 30.48px; margin-left: 72.76px;">
-	    </label>
-	    <input id="file-input" type="file" style="display: none;"/>
-	</div>
-	<div class="profileInfo">
-		<table class="tbProfile">
-			<tr>
-				<th colspan="2" style="color: white;">내 프로필</th>
-			</tr>
-			<tr>
-				<th>
-					<label>이름</label>
-				</th>
-				<td>
-					박희수<br>
-					<a href="#" class="editInfo">변경하기</a>
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label>이메일</label>
-				</th>
-				<td>
-					pcdno3@naver.com
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label>연락처</label>
-				</th>
-				<td>
-					01029221300<br>
-					<a href="#" class="editInfo">변경하기</a>
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<label>SNS연동</label>
-				</th>
-				<td>
-					<div class="form-check form-switch" style="margin-left: -36px;">
-						<img alt="네이버로고.png" src="<c:url value='/images/naverLogo.png'/>" class="SNSLogo">
-						<label class="form-check-label">네이버 연동</label>
-						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>&nbsp;</th>
-				<td>
-					<div class="form-check form-switch" style="margin-left: -36px;">
-						<img alt="카카오로고.png" src="<c:url value='/images/kakaoLogo.jpg'/>" class="SNSLogo">
-						<label class="form-check-label">카카오 연동</label>
-						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-					</div>
-					<a style="color: gray; font-size: 7px">한개의 SNS만 연동이 가능하며, 연동된 소셜계정은 해제가 불가합니다.</a>
-				</td>
-			</tr>
-			<tr>
-				<th><label>비밀번호</label></th>
-				<td>
-					<a href="#" class="editInfo	">변경하기</a>
-				</td>
-			</tr>
-			<tr>
-				<th><label>마케팅 수신 동의</label></th>
-				<td>
-					<div class="form-check form-switch" style="margin-left: -38px;">
-						<label class="form-check-label" for="flexSwitchCheckChecked">이메일</label>
-						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>&nbsp;</th>
-				<td>
-					<div class="form-check form-switch" style="margin-left: -36px;">
-						<label class="form-check-label" for="flexSwitchCheckChecked">SMS</label>
-						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-					</div>
-				</td>
-			</tr>
-		</table>
-		<div class="footProfile">
-			<hr>
-			<a href="#" class="editInfo" style="margin-left: 210px;">서비스 탈퇴하기</a>
+	<div class="align_center">
+		<h1>프로필 관리</h1>
+		<div class="myProfile">
+			<img src="<c:url value='/user_images/test1.jpg'/>" id="userImage"><br><br>
+			<strong style="color: black; margin: 101px;">박희수</strong><br>
+			<label for="file-input">
+	        <img alt="프로필 사진 변경.png" src="<c:url value='/images/editProfileImg.png'/>" style="width: 104.48px; height: 30.48px; margin-left: 72.76px;">
+		    </label>
+		    <input id="file-input" type="file" style="display: none;"/>
+		</div>
+		<div class="profileInfo">
+			<table class="tbProfile">
+				<tr>
+					<th colspan="2" style="color: white;">내 프로필</th>
+				</tr>
+				<tr>
+					<th>
+						<label>이름</label>
+					</th>
+					<td>
+						박희수<br>
+						<a href="#" class="editInfo">변경하기</a>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label>이메일</label>
+					</th>
+					<td>
+						pcdno3@naver.com
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label>연락처</label>
+					</th>
+					<td>
+						01029221300<br>
+						<a href="#" class="editInfo">변경하기</a>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label>SNS연동</label>
+					</th>
+					<td>
+						<div class="form-check form-switch" style="margin-left: -36px;">
+							<img alt="네이버로고.png" src="<c:url value='/images/naverLogo.png'/>" class="SNSLogo">
+							<label class="form-check-label">네이버 연동</label>
+							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<td>
+						<div class="form-check form-switch" style="margin-left: -36px;">
+							<img alt="카카오로고.png" src="<c:url value='/images/kakaoLogo.jpg'/>" class="SNSLogo">
+							<label class="form-check-label">카카오 연동</label>
+							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+						</div>
+						<a style="color: gray; font-size: 7px">한개의 SNS만 연동이 가능하며, 연동된 소셜계정은 해제가 불가합니다.</a>
+					</td>
+				</tr>
+				<tr>
+					<th><label>비밀번호</label></th>
+					<td>
+						<a href="#" class="editInfo	">변경하기</a>
+					</td>
+				</tr>
+				<tr>
+					<th><label>마케팅 수신 동의</label></th>
+					<td>
+						<div class="form-check form-switch" style="margin-left: -38px;">
+							<label class="form-check-label" for="flexSwitchCheckChecked">이메일</label>
+							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<td>
+						<div class="form-check form-switch" style="margin-left: -36px;">
+							<label class="form-check-label" for="flexSwitchCheckChecked">SMS</label>
+							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div class="footProfile">
+				<hr>
+				<a href="#" class="editInfo" style="margin-left: 210px;">서비스 탈퇴하기</a>
+			</div>
 		</div>
 	</div>
 </div>
