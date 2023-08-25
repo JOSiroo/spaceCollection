@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.reservation.model.ReservationAjaxVO;
+import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.userInfo.model.UserInfoService;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
@@ -27,6 +30,7 @@ public class AdminMemberController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminMemberController.class);
 	
 	private final UserInfoService userInfoService;
+	private final ReservationService reservationService;
 	
 	@RequestMapping("/memberList")
 	public void memberList(@ModelAttribute SearchVO searchVo, Model model) {
@@ -62,6 +66,34 @@ public class AdminMemberController {
 		model.addAttribute("memberMap", memberMap);
 		
 		return "admin/member/memberDetail";
+	}
+	
+	@RequestMapping("/memberDetail/ajax_reservationList")
+	@ResponseBody
+	public ReservationAjaxVO ajax_reservationList(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("ajax - 예약 내역 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(5);
+		
+		searchVo.setRecordCountPerPage(5);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> reservationList = reservationService.selectReservationAll(searchVo);
+		logger.info("ajax - 예약 내역 조회 결과, reservationList.size = {}", reservationList.size());
+		
+		int totalRecord = reservationService.getTotalRecord(searchVo);
+		logger.info("ajax -전체 예약 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		ReservationAjaxVO reservationAjax = new ReservationAjaxVO();
+		reservationAjax.setPagingInfo(pagingInfo);
+		reservationAjax.setReservationList(reservationList);
+		reservationAjax.setSearchVo(searchVo);
+		
+		return reservationAjax;
 	}
 
 }
