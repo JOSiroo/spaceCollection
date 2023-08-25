@@ -24,6 +24,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailDAO;
 
 import lombok.RequiredArgsConstructor;
@@ -132,6 +133,11 @@ public class ReservationServiceImpl implements ReservationService{
 		}else {
 			return false;
 		}
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReservationAll(SearchVO vo) {
+		return reservationDao.selectReservationAll(vo);
 	}
 	
 	
