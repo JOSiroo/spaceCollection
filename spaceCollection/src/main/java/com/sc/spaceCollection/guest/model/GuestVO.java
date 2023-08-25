@@ -20,4 +20,7 @@ public class GuestVO {
 	private String address;
 	private String addressDetail;
 	private String salt;
+	private String userMarketingSmsOk;
+	private String userMarketingEmailOk;
+	private String userProfileImage;
 }

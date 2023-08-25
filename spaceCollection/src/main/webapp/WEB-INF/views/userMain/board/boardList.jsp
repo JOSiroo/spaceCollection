@@ -16,8 +16,8 @@
 </head>
 <script type="text/javascript">	
 
-	$(function(){
-	 });
+	/* $(function(){
+	 }); */
 
 </script>
 <style type="text/css">
@@ -30,28 +30,11 @@
 	    font-size: 20px;
 	 }
 	 
-	/*  .col.align-center {
-	    margin: 50px;
-	 } */
+	 .col.align-center {
+	    margin: 45px;
+	 }
 	 
-	.box_1 {
-	    background-color: #e4edf7;
-	}
-		
-	img {
-	    margin: -8px;
-	    scale: 0.8;
-	}
-	
-	a.button {
-	    margin-bottom: 20px;
-	}
-	
-	.flex.flex-2 {
-	    display: flex;
-	    position: absolute;
-	}
-	
+	 
 </style>
 <body>
 <form name="frmSearch" method="post" action="<c:url value='userMain/boardList'/>">
@@ -63,30 +46,17 @@
 			<h2>진행 중인 이벤트</h2>
 			<p>지금 진행 중인 이벤트를 만나보세요!</p>
 		</header>
-		<div class="box_1">
-			<c:if test="${empty mapList }">  
+		<div class="">
+			<c:if test="${empty list }">  
 		  		<tr><td colspan="5" class="align_center">글이 존재하지 않습니다.</td></tr>
 		  	</c:if>
-		  	
- 				<%-- 	<!-- 첫 이미지만 -->
-					<a href="<c:url value='/user/boardDetail?num=${map.게시판번호}'/>">
-						  <c:if test="${fn:length(vo.title)}">   
-		                     ${fn:substring(vo.title,0,20)}...
-		                  </c:if>
-		                  <c:if test="${fn:length(vo.title)<=20}">   
-		                     ${vo.title}
-		                  </c:if>
-					</a> --%>
-		  	
-		  	<c:if test="${!empty mapList }">	
-			<c:forEach var="map" items="${mapList }"> 
-					<div class="col align-center" style="background-color: light gray;">
-						<div class="align-center" style="background: ${map.boardContent };">
-							<img src="<c:url value='/images/푸바옷.png'/>">
-						  <p>${map.boardContent } </p> 
-						</div>
-						<%-- <c>${map.BOARD_TITLE }</c><br><br> --%>
-						<a href="#" class="button">${map.BOARD_TITLE }</a>
+		  	<c:if test="${!empty list }">	
+			<c:forEach var="vo" items="${list}"> 
+					<div class="col align-center">
+						<div class="image round fit">
+							<img src="..." alt="" />
+							<a href="#" class="titleButton">
+						<c> ${vo.boardTitle }</c><br><br></a>
 					</div>
 			</c:forEach>
 			</c:if>

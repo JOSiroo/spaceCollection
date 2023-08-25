@@ -232,7 +232,7 @@
 		 	</div>
 		 
 		   <div class="col-sm-6 " style="text-align: center;">
-			       <a href="<c:url value='/member_review' />">  
+			       <a href="<c:url value='/myReview' />">  
 					<i class="bi bi-person-hearts" ></i>
 		 	 	  <p>이용 후기</p></a>
 		 	</div>

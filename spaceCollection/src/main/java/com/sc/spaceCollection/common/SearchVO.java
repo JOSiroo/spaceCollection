@@ -16,6 +16,9 @@ public class SearchVO{
 	
 	/** 게시판 분류 */
 	private String boardTypeName = "";
+	
+	/** 유저 아이디를 통한 검색 */
+	private String userId;
 
 	/** 검색 사용여부 */
 	private String searchUseYn = "";
@@ -52,21 +55,21 @@ public class SearchVO{
 	}
 	
 	
-	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	
 	public String getBoardTypeName() {
 		return boardTypeName;
 	}
 
-
-
-
 	public void setBoardTypeName(String boardTypeName) {
 		this.boardTypeName = boardTypeName;
 	}
-
-
-
 
 	public String getSearchCondition() {
 		return searchCondition;
@@ -136,9 +139,9 @@ public class SearchVO{
 	@Override
 	public String toString() {
 		return "SearchVO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", boardTypeName="
-				+ boardTypeName + ", searchUseYn=" + searchUseYn + ", currentPage=" + currentPage + ", blockSize="
-				+ blockSize + ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
-				+ ", recordCountPerPage=" + recordCountPerPage + "]";
+				+ boardTypeName + ", userId=" + userId + ", searchUseYn=" + searchUseYn + ", currentPage=" + currentPage
+				+ ", blockSize=" + blockSize + ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex="
+				+ lastRecordIndex + ", recordCountPerPage=" + recordCountPerPage + "]";
 	}
 
 }

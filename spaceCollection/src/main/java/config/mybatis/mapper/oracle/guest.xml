@@ -8,9 +8,9 @@
 			select USER_INFO_SEQ.nextval from dual
 		</selectKey>
 		insert into USER_INFO(USER_NUM, USER_NAME, USER_HP, USER_ID, USER_PWD, USER_EMAIL, ZIPCODE
-    		, ADDRESS, ADDRESS_DETAIL, SALT)
+    		, ADDRESS, ADDRESS_DETAIL, SALT, USER_MARKETING_SMS_OK, USER_MARKETING_EMAIL_OK)
 		values(#{userNum},#{userName}, #{userHp}, #{userId}, #{userPwd}, #{userEmail}, #{zipcode}
-			, #{address}, #{addressDetail}, #{salt})
+			, #{address}, #{addressDetail}, #{salt}, #{userMarketingSmsOk},#{userMarketingEmailOk})
 	</insert>
 
 	<select id="guestCheckId" parameterType="string"
@@ -44,10 +44,16 @@
 		where USER_EMAIL=#{userEmail}
 	</select>
 	
+	<select id="selectUserIdByEmail" parameterType="string" resultType="guestVo">
+		select * from USER_INFO
+		WHERE USER_EMAIL=#{userEmail}
+	</select>
+	
 	<select id="selectuserId" parameterType="int" resultType="string">
 		select user_Id from USER_INFO
 		where USER_Num=#{userNum}
 	</select>
+	
 	
 	
 </mapper>
