@@ -20,4 +20,6 @@ public class UserInfoVO {
 	private String address;
 	private String addressDetail;
 	private String salt;
+	private String userMarketingEmailOk;
+	private String userMarketingSmsOk;
 }

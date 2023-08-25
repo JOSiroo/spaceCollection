@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
@@ -48,6 +50,18 @@ public class AdminMemberController {
 		model.addAttribute("list", list );
 		model.addAttribute("searchVo", searchVo );
 		model.addAttribute("pagingInfo", pagingInfo );
+	}
+	
+	@RequestMapping("/memberDetail")
+	public String memberDetail(@RequestParam(defaultValue = "0")int userNum, Model model) {
+		logger.info("회원정보 조회, 파라미터 userNum = {}", userNum);
+		
+		Map<String, Object> memberMap = userInfoService.selectByUserNum(userNum);
+		logger.info("회원정보 조회 결과, memberMap = {}", memberMap);
+		
+		model.addAttribute("memberMap", memberMap);
+		
+		return "admin/member/memberDetail";
 	}
 
 }

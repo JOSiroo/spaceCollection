@@ -30,13 +30,11 @@ public class UserMainController {
    private final SpaceService spaceService;
    private final SpaceDetailService sdService;
    
-   //서비스약관
    @RequestMapping("/board")
    public String test() {
       return "userMain/board/boardList";
    }
    
-   //서비스약관
    @RequestMapping("/list")
    public String listtest() {
       return "userMain/board/list2";

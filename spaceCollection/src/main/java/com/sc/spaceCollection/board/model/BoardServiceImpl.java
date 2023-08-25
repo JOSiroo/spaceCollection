@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService{
 		return cnt;
 	}
 
-	public List<UserBoardVO> selectByeventBoard() {
+	public List<Map<String, Object>> selectByeventBoard() {
 		return boardDao.selectByeventBoard();
 	}
 

@@ -32,6 +32,7 @@ public class CommentServiceImpl implements CommentsService{
 		return commentsDao.selecteventByBoardNum(boardNum);
 	}
 	
+	@Override
 	public int updateComments(CommentsVO vo) {
 		return commentsDao.updateComments(vo);
 	}

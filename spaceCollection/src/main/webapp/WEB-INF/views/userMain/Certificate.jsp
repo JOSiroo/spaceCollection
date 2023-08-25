@@ -72,7 +72,7 @@ $(document).ready(function() {
 </script>
 
 <div id="contents" style="padding:18px 0 0 29px;">
-    <form name="searchForm" action="./bizCommPopView.do" method="post">
+    <form action="v2_ok.java" action="/captcha.do?" name="searchForm" method="post">
       <input type="hidden" name="captchaVal" id="captchaVal"/>
       <input type="hidden" name="wrkr_no" value="7428600224" />
     </form>

@@ -62,7 +62,7 @@
 	</update>
 	
 	<!-- 이벤트 게시판 내용 출력 -->
-	<select id="selectByeventBoard" parameterType="UserBoardVO" resultType="map">
+	<select id="selectByeventBoard" parameterType="UserBoardVO" resultType="map" >
 		SELECT distinct a.*, b.board_title, b.BOARD_CONTENT
 			from ( select board_num
 			    FROM user_Comments_View
