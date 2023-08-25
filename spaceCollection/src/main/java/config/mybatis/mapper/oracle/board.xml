@@ -62,15 +62,15 @@
 	</update>
 	
 	<!-- 이벤트 게시판 내용 출력 -->
-	<select id="selectByeventBoard" parameterType="UserBoardVO" resultType="map" >
-		SELECT distinct a.*, b.board_title, b.BOARD_CONTENT
+	<select id="selectByeventBoard" parameterType="UserBoardVO" resultType="UserBoardVO" >
+		SELECT distinct a.*, b.board_title, b.BOARD_CONTENT 
 			from ( select board_num
 			    FROM user_Comments_View
 			    WHERE board_type_id = 'b00017'
 			    group by board_num) a
 			    join user_Comments_View b
 			    on a.board_num = b.board_num
-		ORDER BY board_title
+		ORDER BY board_title desc
 	</select>
 	
 	<select id="selectByeventBoardNum" parameterType="int" resultType="map">
