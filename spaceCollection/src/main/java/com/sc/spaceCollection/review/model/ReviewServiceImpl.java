@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.common.SearchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,6 +22,11 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public List<Map<String, Object>> selectMyReview(String userId) {
 		return reviewDao.selectMyReview(userId);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectReviewEachUser(SearchVO vo) {
+		return reviewDao.selectReviewEachUser(vo);
 	}
 	
 }
