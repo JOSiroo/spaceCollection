@@ -31,7 +31,7 @@
 			select rownum as RNUM, A.* from
 			(
 				select * from review_userid 
-				where REVIEW_REG_DATE is null and USER_ID = #{userId}
+				where REVIEW_DEL_FLAG is null and USER_ID = #{userId}
 				<include refid="searchWhere"/>
 				order by REVIEW_NUM desc
 			)A
@@ -39,5 +39,11 @@
 		<![CDATA[
 		where RNUM>#{firstRecordIndex} 
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
+		select count(*) from review_userid
+		where REVIEW_REG_DATE is null and USER_ID = #{userId}
+		<include refid="searchWhere"/>
 	</select>
 </mapper>

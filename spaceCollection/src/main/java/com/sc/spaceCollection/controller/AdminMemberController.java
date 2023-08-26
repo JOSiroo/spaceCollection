@@ -80,10 +80,14 @@ public class AdminMemberController {
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(5);
 		
+		//게시물 구분
+		pagingInfo.setKindFlag("reservation");
+		
 		searchVo.setRecordCountPerPage(5);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		List<Map<String, Object>> reservationList = reservationService.selectReservationAll(searchVo);
+			
 		logger.info("ajax - 예약 내역 조회 결과, reservationList.size = {}", reservationList.size());
 		
 		int totalRecord = reservationService.getTotalRecord(searchVo);
@@ -101,21 +105,23 @@ public class AdminMemberController {
 	@RequestMapping("/memberDetail/ajax_reviewList")
 	@ResponseBody
 	public AjaxVO ajax_reviewList(@ModelAttribute SearchVO searchVo, Model model) {
-		logger.info("ajax - 예약 내역 조회, 파라미터 searchVo = {}", searchVo);
+		logger.info("ajax - 리뷰 내역 조회, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(5);
 		
+		pagingInfo.setKindFlag("review");
+		
 		searchVo.setRecordCountPerPage(5);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		List<Map<String, Object>> reviewList = reviewService.selectReviewEachUser(searchVo);
-		logger.info("ajax - 예약 내역 조회 결과, reviewList.size = {}", reviewList.size());
+		logger.info("ajax - 리뷰 내역 조회 결과, reviewList.size = {}", reviewList.size());
 		
-		int totalRecord = reservationService.getTotalRecord(searchVo);
-		logger.info("ajax -전체 예약 수, totalRecord = {}", totalRecord);
+		int totalRecord = reviewService.getTotalRecord(searchVo);
+		logger.info("ajax -전체 리뷰 수, totalRecord = {}", totalRecord);
 		pagingInfo.setTotalRecord(totalRecord);
 		
 		AjaxVO ajaxVo = new AjaxVO();
