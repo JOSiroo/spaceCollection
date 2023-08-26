@@ -16,8 +16,19 @@
 </head>
 <script type="text/javascript">	
 
-	/* $(function(){
-	 }); */
+	$(function(){
+		
+		$('#boardTypeName').change(function() {
+			location.href = "/spaceCollection/admin/board/boardList?boardTypeName="+$('#boardTypeName>option:selected').val();
+		});
+		
+		$('tbody tr').hover(function() {
+			$(this).find('td').css("background-color", "#d1cece");
+		}, function() {
+			$(this).find('td').css("background-color", "white");
+		});
+		
+	 }); 
 
 </script>
 <style type="text/css">
@@ -37,7 +48,7 @@
 	 
 </style>
 <body>
-<form name="frmSearch" method="post" action="<c:url value='userMain/boardList'/>">
+<form name="frmSearch" method="post" action="<c:url value='userMain/boardList'/>"> <!-- boardDetail -->
 	  
 <div id="main">
 <section class="wrapper style1">
@@ -46,21 +57,25 @@
 			<h2>진행 중인 이벤트</h2>
 			<p>지금 진행 중인 이벤트를 만나보세요!</p>
 		</header>
-		<div class="">
+		
+		<div class="">  
 			<c:if test="${empty list }">  
 		  		<tr><td colspan="5" class="align_center">글이 존재하지 않습니다.</td></tr>
 		  	</c:if>
 		  	<c:if test="${!empty list }">	
 			<c:forEach var="vo" items="${list}"> 
 					<div class="col align-center">
-						<div class="image round fit">
+						<div class="">
 							<img src="..." alt="" />
-							<a href="#" class="titleButton">
-						<c> ${vo.boardTitle }</c><br><br></a>
+							<a href="#" class="titleButton"
+							 onclick="location.href='<c:url value='/userMain/board/boardDetail?boardNum=${vo.boardNum }'/>';"
+							 style="cursor:pointer;">${vo.boardNum }</a><br><br>
+						</div>
 					</div>
 			</c:forEach>
 			</c:if>
 		</div>
+		
 	</div>
 </section>
 </div>
