@@ -12,6 +12,8 @@ public class PaginationInfo {
 	private int recordCountPerPage;  //pageSize 페이지당 보여질 레코드수
 	private int blockSize; //블럭당 보여질 페이지 수
 	private int totalRecord; //총 레코드 수
+	private String kindFlag; //페이징 시 종류 구분 값
+	
 	
 	public int getRecordCountPerPage() {
 		return recordCountPerPage;
@@ -45,6 +47,17 @@ public class PaginationInfo {
 		return totalRecord;
 	}
 	
+	
+	public String getKindFlag() {
+		return kindFlag;
+	}
+
+	public void setKindFlag(String kindFlag) {
+		this.kindFlag = kindFlag;
+	}
+
+
+
 	/**
 	 * Not Required Fields
 	 * 

@@ -26,7 +26,18 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public List<Map<String, Object>> selectReviewEachUser(SearchVO vo) {
-		return reviewDao.selectReviewEachUser(vo);
+		List<Map<String, Object>> reviewList = reviewDao.selectReviewEachUser(vo);
+		for(Map<String, Object> map : reviewList) {
+			map.put("REVIEW_REG_DATE", (map.get("REVIEW_REG_DATE")+"").substring(0, 10));
+			map.put("RESERVER_PAY_DAY", (map.get("RESERVER_PAY_DAY")+"").substring(0, 10));
+		}
+		
+		return reviewList;
+	}
+
+	@Override
+	public int getTotalRecord(SearchVO vo) {
+		return reviewDao.getTotalRecord(vo);
 	}
 	
 }

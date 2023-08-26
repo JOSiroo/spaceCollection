@@ -63,6 +63,8 @@
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
+
+		$('form input[name=userId]').val($('main input[name=userId]').val());
 		
 		$('#reservationSearchBt').click(function() {
 			$.reservationSend(1);
@@ -78,6 +80,7 @@
 		
 		$('button[name=reviewTab]').click(function() {
 			$.reviewListSearch();
+			$.reviewSend(1);
 		});
 		
 		$('#commentsSearchBt').click(function() {
@@ -160,11 +163,11 @@
 		});
 	}
 	
-	$.reservationListSearch = function() {
+	$.commentsListSearch = function() {
 		$.ajax({
-			url : "<c:url value='/admin/member/memberDetail/ajax_reservationList'/>",
+			url : "<c:url value='/admin/member/memberDetail/ajax_commentsList'/>",
 			type: 'post',
-			data: $('form[name=reservationSearchFrm]').serializeArray(),
+			data: $('form[name=commentsSearchFrm]').serializeArray(),
 			dataType: 'json',
 			success:function(res){
 				$('#blockSize').val(res.pagingInfo.blockSize);
@@ -197,13 +200,13 @@
 						});
 						str += "</form>";
 						i++;
-						$('#reservationTbody').html(str);
+						$('#commentsTbody').html(str);
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
 						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
 						+ "</tr>"
-					$('#reservationTbody').html(str);
+					$('#commentsTbody').html(str);
 				}
 				
 			},
@@ -244,7 +247,7 @@
 								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
 								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_DATE
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY
 								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.REVIEW_REG_DATE
 								str += "</td>"
@@ -253,11 +256,11 @@
 						i++;
 						$('#reviewTbody').html(str);
 						pageMake(res.pagingInfo);
-				}else{
+				}else if(res.ajaxList.length==0){
 					str = "<tr>"
 						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
 						+ "</tr>"
-					$('#reservationTbody').html(str);
+					$('#reviewTbody').html(str);
 				}
 				
 			},
@@ -271,7 +274,10 @@
 	function pageMake(pagingInfo) {
 		//페이징 처리
 		var blockSize = pagingInfo.blockSize;
-		var countPerPage = pagingInfo.countPerPage
+		var countPerPage = pagingInfo.countPerPage;
+		//게시물 구분
+		var kindFlag = pagingInfo.kindFlag;
+		
 		
 		var str = "";
 		str += "<nav aria-label='...'>";
@@ -293,7 +299,14 @@
 				str += "<li class='page-item active' aria-current='page'>";
 				str += "<a class='page-link' href='#'>" + i + "</a></li>";
 			}else{
-				str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reservationSend("+ i +")'>"+i+"</a>"
+				if(kindFlag =='reservation'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reservationSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'review'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reviewSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'comments'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.commentsSend("+ i +")'>"+i+"</a>";
+				}
+				
 				str += "</li>";
 			}
 		}
@@ -309,8 +322,14 @@
 			str += "</ul>";
 			str += "</nav>";
 		}
+		if(kindFlag == 'reservation'){
+			$('.reservationDivPage').html(str);	
+		}else if(kindFlag == 'review'){
+			$('.reviewdivPage').html(str);
+		}else if(kindFlag == 'comments'){
+			$('.commentsDivPage').html(str);
+		}
 		
-		$('.reservationDivPage').html(str);
 	}
 	
 	$.reservationSend = function(curPage) {
@@ -334,55 +353,57 @@
 				alert("에러 발생: " + error);
 			}
 		});
+	}
 		
-		$.reviewSend = function(curPage) {
-			$('input[name=currentPage]').val(curPage);
-			
-			$.ajax({
-				url:"<c:url value='/admin/member/memberDetail/ajax_reviewList'/>",
-				type:"post",
-				data:$('form[name=reviewSearchFrm]').serializeArray(),
-				dataType:"json",
-				success:function(res){
-					totalCount = res.pagingInfo.totalRecord;
-					
-					if(res!=null){
-						$.reviewListSearch(res);
-						pageMake();
-					}
-					
-				},
-				error:function(xhr, status, error){
-					alert("에러 발생: " + error);
-				}
-			});
-			
-			$.commentsSend = function(curPage) {
-				$('input[name=currentPage]').val(curPage);
+	$.reviewSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+		
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_reviewList'/>",
+			type:"post",
+			data:$('form[name=reviewSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
 				
-				$.ajax({
-					url:"<c:url value='/admin/member/memberDetail/ajax_commentsList'/>",
-					type:"post",
-					data:$('form[name=commentsSearchFrm]').serializeArray(),
-					dataType:"json",
-					success:function(res){
-						totalCount = res.pagingInfo.totalRecord;
-						
-						if(res!=null){
-							$.commentsListSearch(res);
-							pageMake();
-						}
-						
-					},
-					error:function(xhr, status, error){
-						alert("에러 발생: " + error);
-					}
-				});
+				if(res!=null){
+					$.reviewListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
+		
+	$.commentsSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+			
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_commentsList'/>",
+			type:"post",
+			data:$('form[name=commentsSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.commentsListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
 	}
 				
 </script>
 <main id="main" class="main">
-
+	<input type="text" name="userId" value="${memberMap.USER_ID }">
 	<div class="pagetitle">
 		<h1>회원 상세보기</h1>
 		<nav>
@@ -545,7 +566,7 @@
 							<!-- 예약 내역 끝 -->
 							<!-- 후기 내역 시작 -->
 							<div class="tab-pane fade pt-3" id="reviewList">
-								<form class="row gx-3 gy-2 align-items-center" name="reivewSearchFrm">
+								<form class="row gx-3 gy-2 align-items-center" name="reviewSearchFrm">
 									
 				 							<input type="hidden" name="currentPage" value="1">
 				 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
