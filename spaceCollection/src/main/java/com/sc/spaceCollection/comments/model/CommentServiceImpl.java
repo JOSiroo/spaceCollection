@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.common.SearchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -39,6 +41,21 @@ public class CommentServiceImpl implements CommentsService{
 	@Override
 	public int updateCommentsDelFlag(int commentNum) {
 		return commentsDao.updateCommentsDelFlag(commentNum);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectCommentsEachUser(SearchVO vo) {
+		List<Map<String, Object>> list = commentsDao.selectCommentsEachUser(vo);
+		for(Map<String, Object> map : list) {
+			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 10));
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int getTotalRecordEachUser(SearchVO vo) {
+		return commentsDao.getTotalRecordEachUser(vo);
 	}
 
 }

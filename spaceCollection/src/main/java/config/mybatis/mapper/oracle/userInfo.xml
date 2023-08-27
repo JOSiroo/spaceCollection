@@ -33,5 +33,9 @@
 	<select id="selectByUserNum" parameterType="int" resultType="map">
 		select * from user_info where user_num = #{userNum}
 	</select>
+	
+	<update id="memberWithdrawal" parameterType="string">
+		update user_info set USER_OUT_TYPE = 'Y', USER_OUT_DATE = sysdate where user_id = #{userId}
+	</update>
 </mapper>
 

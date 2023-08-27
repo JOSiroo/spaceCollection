@@ -3,7 +3,7 @@
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
 	
-	#memberDeleteBt{
+	#memberWithdrawalBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
@@ -67,7 +67,7 @@
 			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('#memberDeleteBt').click(function() {
+		$('#memberWithdrawalBt').click(function() {
 			if($('td>input[type=checkbox]:checked').length<1){
 				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
 				$('#confirm1').modal("show");
@@ -115,7 +115,7 @@
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
-                		<button type="button" class="btn btn-secondary" id="memberDeleteBt">회원 탈퇴</button>
+                		<button type="button" class="btn btn-outline-danger" id="memberWithdrawalBt">회원 탈퇴</button>
 						<table class="table">
 							<colgroup>
 								<col style="width: 5%";  />
@@ -142,7 +142,7 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberDelete'/>">
+									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
 										<c:set var="i" value="0"/>
 										<c:forEach var="userInfoVo" items="${list }">
 											<tr>

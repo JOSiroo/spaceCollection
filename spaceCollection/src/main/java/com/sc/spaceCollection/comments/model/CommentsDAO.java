@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.sc.spaceCollection.common.SearchVO;
+
 @Mapper
 public interface CommentsDAO {
    int insertComments(CommentsVO vo);
@@ -13,4 +15,6 @@ public interface CommentsDAO {
    List<Map<String, Object>> selectByBoardNum(CommentsVO commentsVo);
    int updateComments(CommentsVO vo);
    int updateCommentsDelFlag(int commentNum);
+   List<Map<String, Object>> selectCommentsEachUser(SearchVO vo);
+   int getTotalRecordEachUser(SearchVO vo);
 }

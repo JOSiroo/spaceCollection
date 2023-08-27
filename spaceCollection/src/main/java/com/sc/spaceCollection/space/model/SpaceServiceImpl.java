@@ -62,6 +62,14 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<SpaceVO> selectBySpaceNameMap(String spaceName) {
 		return spaceDao.selectBySpaceNameMap(spaceName);
 	}
+
+
+	@Override
+	public Map<String, Object> usercount() {
+		return spaceDao.usercount();
+	}
+
+
 	
 
 }
