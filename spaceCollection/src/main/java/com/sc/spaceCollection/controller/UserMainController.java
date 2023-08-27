@@ -21,6 +21,7 @@ import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.usermain.model.ApiExamCaptchaNkeyResult;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,8 @@ public class UserMainController {
    private final SpaceService spaceService;
    private final SpaceDetailService sdService;
    private final ReviewService reviewService;
+   
+   
    
    @RequestMapping("/board")
    public String test() {
@@ -75,6 +78,12 @@ public class UserMainController {
 	   return "userMain/event";
    }
    
+   //쿠폰
+   @RequestMapping("/coupon")
+   public String coupon() {
+	   return "userMain/board/coupon";
+   }
+   
    //회사소개
    @RequestMapping("/about")
    public String about() {
@@ -84,6 +93,7 @@ public class UserMainController {
    //사업자
    @RequestMapping("/Certificate")
    public String Certificate() {
+		/* private final ApiExamCaptchaNkeyResult captcha; */
 	   return "userMain/Certificate";
    }
    

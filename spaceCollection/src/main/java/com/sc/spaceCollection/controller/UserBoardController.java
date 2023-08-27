@@ -1,6 +1,5 @@
 package com.sc.spaceCollection.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.board.model.BoardService;
-import com.sc.spaceCollection.board.model.UserBoardVO;
-import com.sc.spaceCollection.boardType.model.BoardTypeService;
-import com.sc.spaceCollection.boardType.model.BoardTypeVO;
 import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
-import com.sc.spaceCollection.common.ConstUtil;
-import com.sc.spaceCollection.common.PaginationInfo;
-import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +32,7 @@ public class UserBoardController {
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
 		logger.info("이벤트 게시물 조회결과");
-		List<UserBoardVO> list = boardService.selectByeventBoard();
+		List<Map<String, Object>> list = boardService.selectByeventBoard();
 		logger.info("이벤트 게시물 조회결과, list.size = {}", list.size());
 		logger.info("이벤트 게시물 조회결과, UserBoardVO = {}", list);
 		
@@ -48,29 +41,24 @@ public class UserBoardController {
 	}
 
 	@GetMapping("/boardDetail")
-	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, String boardTypeId, HttpSession session,
-			Model model) {
-		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardTypeId);
+	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, Model model) {
+		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 
-		if (boardTypeId == null) {
+		if (boardNum == 0) {
 			model.addAttribute("msg", "잘못된 URL 입니다.");
 			model.addAttribute("url", "/user/boardList");
 			return "common/message";
 		} else {
 			Map<String, Object> map = boardService.selectByeventBoardNum(boardNum);
-			logger.info("게시물 상세조회 결과, map = {}", map);
-			if (map == null || map.isEmpty()) {
+			logger.info("게시물 boardNum, boardNum = {}", boardNum);
+			if (map == null ) {
 				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
 				model.addAttribute("url", "/userMain/board/boardList");
 				return "common/message";
 			} else {
-				String userid = (String) session.getAttribute("userid");
-				List<Map<String, Object>> list = commentsService.selecteventByBoardNum(boardNum);
-				logger.info("댓글 조회결과, list.size = {}", list.size());
+				logger.info("게시물 내용 조회결과, map = {}", map);
 
-				model.addAttribute("userid", userid);
 				model.addAttribute("map", map);
-				model.addAttribute("list", list);
 
 				return "userMain/board/boardDetail";
 			}
