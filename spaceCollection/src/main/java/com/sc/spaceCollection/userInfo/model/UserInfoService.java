@@ -9,4 +9,5 @@ public interface UserInfoService {
 	List<UserInfoVO> selectMember(SearchVO vo);
 	int getTotalRecord(SearchVO vo);
 	Map<String, Object> selectByUserNum(int userNum);
+	int memberWithdrawal(String userId);
 }
