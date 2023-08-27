@@ -39,5 +39,10 @@ public class ReviewServiceImpl implements ReviewService{
 	public int getTotalRecord(SearchVO vo) {
 		return reviewDao.getTotalRecord(vo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectNewReview() {
+		return reviewDao.selectNewReview();
+	}
 	
 }
