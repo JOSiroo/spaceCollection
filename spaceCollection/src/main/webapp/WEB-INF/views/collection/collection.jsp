@@ -384,6 +384,7 @@
 <section class = "search-section">
 	<div class="container" >
 	<hr>
+	<h2>${collectionName}</h2>
 		<div class="row" id = "data-container">
 		</div>
   	</div>
@@ -410,7 +411,11 @@ function loadMoreData() {
     isLoading = true;
 
     $.ajax({
+<<<<<<< HEAD
+        url: '<c:url value="/getCollection?page='+page+'&size='+size+'&scNum='+${param.scNum}+'"/>',
+=======
         url: '<c:url value=""/>',
+>>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection
         type:'get',
         dataType: 'json',
         success: function(data) {
