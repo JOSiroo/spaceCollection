@@ -39,3 +39,12 @@ join user_info u on r.user_num = u.user_num
 join reservation re on r.reservation_num = re.reservation_num
 left join space_detail sd on re.sd_num = sd.sd_num
 left join space s on sd.space_num = s.space_num;
+
+
+
+create or replace view COMMENTS_BOARD_VIEW
+as
+select c."COMMENT_NUM",c."COMMENT_CONTENT",c."COMMENT_REG_DATE",c."COMMENT_DEL_FLAG",c."COMMENT_OUT_DATE",c."BOARD_NUM",c."USER_NUM", u.user_id , b.board_title
+from comments c 
+join user_info u on c.user_num=u.user_num
+join board b on c.board_num = b.board_num;

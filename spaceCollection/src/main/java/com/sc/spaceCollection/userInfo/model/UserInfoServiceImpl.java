@@ -28,4 +28,9 @@ public class UserInfoServiceImpl implements UserInfoService{
 	public Map<String, Object> selectByUserNum(int userNum) {
 		return userInfoDao.selectByUserNum(userNum);
 	}
+
+	@Override
+	public int memberWithdrawal(String userId) {
+		return userInfoDao.memberWithdrawal(userId);
+	}
 }

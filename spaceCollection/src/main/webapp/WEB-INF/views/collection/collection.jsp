@@ -347,8 +347,7 @@
         margin-top: 5%;
 	}
 </style>
-<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
-
+<div class="hero page-inner overlay" style="background-image: url('images/collection_bg.png');">
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
@@ -411,7 +410,7 @@ function loadMoreData() {
     isLoading = true;
 
     $.ajax({
-        url: '<c:url value="/getZzimList?page='+page+'&size='+size+'"/>',
+        url: '<c:url value=""/>',
         type:'get',
         dataType: 'json',
         success: function(data) {
