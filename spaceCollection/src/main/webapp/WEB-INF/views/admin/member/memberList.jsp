@@ -147,21 +147,21 @@
 										<c:forEach var="userInfoVo" items="${list }">
 											<tr>
 												<td>
-													<input type="checkbox" name="userInfoItemList[${i }].userNum" value="${userInfoVo.userNum }">
+													<input type="checkbox" name="userInfoItemList[${i }].userId" value="${userInfoVo.userId }">
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userNum }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userName }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userId }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userEmail }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
 												</td>
 											</tr>

@@ -65,10 +65,10 @@ public class AdminMemberController {
 	}
 	
 	@RequestMapping("/memberDetail")
-	public String memberDetail(@RequestParam(defaultValue = "0")int userNum, Model model) {
-		logger.info("회원정보 조회, 파라미터 userNum = {}", userNum);
+	public String memberDetail(@RequestParam(defaultValue = "0")String userId, Model model) {
+		logger.info("회원정보 조회, 파라미터 userNum = {}", userId);
 		
-		Map<String, Object> memberMap = userInfoService.selectByUserNum(userNum);
+		Map<String, Object> memberMap = userInfoService.selectByUserId(userId);
 		logger.info("회원정보 조회 결과, memberMap = {}", memberMap);
 		
 		model.addAttribute("memberMap", memberMap);
@@ -192,16 +192,19 @@ public class AdminMemberController {
 		logger.info("회원탈퇴, 파라미터 listVo = {}", listVo);
 		
 		int sum = 0;
+		int total = 0;
 		int cnt = 0;
 		for(UserInfoVO vo : listVo.getUserInfoItemList()) {
-			cnt = userInfoService.memberWithdrawal(vo.getUserId());
-			logger.info("회원탈퇴 결과, cnt = {}", cnt);
-			
-			sum += cnt;
+			if(vo.getUserId() != null && !vo.getUserId().isEmpty()) {
+				cnt = userInfoService.memberWithdrawal(vo.getUserId());
+				sum += cnt;
+				logger.info("회원탈퇴 결과, cnt = {}", cnt);
+				total ++;
+			}
 		}
 		
 		String msg = "탈퇴처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberList";
-		if(sum == listVo.getUserInfoItemList().size()) {
+		if(sum == total) {
 			msg = "회원 탈퇴가 완료되었습니다.";
 		}
 		
