@@ -27,3 +27,15 @@ create or replace view comments_view
 as
 select c.*, u.user_id from comments c 
 join user_info u on c.user_num=u.user_num;
+
+
+
+create or replace view REVIEW_USERID
+as
+select r."REVIEW_NUM",r."REVIEW_RATE",r."REVIEW_CONTENT",r."REVIEW_DEL_FLAG",r."REVIEW_REG_DATE",r."REVIEW_OUT_DATE",r."USER_NUM",r."RESERVATION_NUM", u.user_id, s.space_name,
+re. RESERVER_PAY_DAY
+from review r 
+join user_info u on r.user_num = u.user_num
+join reservation re on r.reservation_num = re.reservation_num
+left join space_detail sd on re.sd_num = sd.sd_num
+left join space s on sd.space_num = s.space_num;

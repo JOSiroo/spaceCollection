@@ -3,6 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sc.spaceCollection.review.model.ReviewDAO">
+	<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
+	
 	<insert id="insertReview" parameterType="reviewVo">
 		<selectKey keyProperty="reviewNum" order="BEFORE" resultType="int">
 			select review_seq.nextval from dual
@@ -17,5 +23,27 @@
 		on r.RESERVATION_NUM=v.RESERVATION_NUM
 		where USER_ID=#{userId}
 		order by review_num desc
+	</select>
+	
+	<select id="selectReviewEachUser">
+		select *from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from review_userid 
+				where REVIEW_DEL_FLAG is null and USER_ID = #{userId}
+				<include refid="searchWhere"/>
+				order by REVIEW_NUM desc
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
+		select count(*) from review_userid
+		where REVIEW_REG_DATE is null and USER_ID = #{userId}
+		<include refid="searchWhere"/>
 	</select>
 </mapper>
