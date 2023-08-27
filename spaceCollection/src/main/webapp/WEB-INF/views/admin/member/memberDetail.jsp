@@ -59,10 +59,18 @@
 	td>span {
 		color: red;
 	}
+	
+	#withdrawal{
+		margin-top: 50px;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
+		
+		$('li button').click(function() {
+			$('input[name=searchKeyword]').val('');
+		});
 
 		$('form input[name=userId]').val($('main input[name=userId]').val());
 		
@@ -72,6 +80,7 @@
 		
 		$('button[name=reservationTab]').click(function() {
 			$.reservationListSearch();
+			$.reservationSend(1);
 		});
 
 		$('#reviewSearchBt').click(function() {
@@ -79,8 +88,8 @@
 		});
 		
 		$('button[name=reviewTab]').click(function() {
-			$.reviewListSearch();
 			$.reviewSend(1);
+			$.reviewListSearch();
 		});
 		
 		$('#commentsSearchBt').click(function() {
@@ -88,6 +97,7 @@
 		});
 		
 		$('button[name=commentsTab]').click(function() {
+			$.commentsSend(1);
 			$.commentsListSearch();
 		});
 		
@@ -98,6 +108,20 @@
 		
 		$('li.nav-item>button').click(function() {
 			$('input[name=chkAll]').prop('checked', false);
+		});
+		
+		$('#withdrawal').click(function() {
+			$('#okBt').addClass('withdrawal');
+			$('.bi-exclamation-circle').css('color', 'red');
+			$('.modal-body').html('해당 회원을 탈퇴시키겠습니까?');
+			$('#okBt').html('탈퇴');
+			$('#cancelBt').html('취소');
+			$('#okBt').show();
+			$('#confirm1').modal('show');
+			$('.withdrawal').click(function() {
+				$(this).removeClass('withdrawal')
+				location.href="/spaceCollection/admin/member/memberWithdrawal?userId=" + $('main>input[name=userId]').val();
+			});
 		});
 		
 	});
@@ -179,23 +203,23 @@
 				var str = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
-					$('#reservationTbody').html("");
+					$('#commentsTbody').html("");
 					
 					str = "<form name='trFrm' method='post' action=''>"
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 								str += "<td>"
-								str += "<input type='checkbox' name='reservationItemList["+i+"].boardNum' value='"+this.RESERVATION_NUM+"'>"
+								str += "<input type='checkbox' name='commentsItemList["+i+"].boardNum' value='"+this.COMMENT_NUM+"'>"
 								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.COMMENT_NUM
 								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SD_TYPE
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.BOARD_NUM
 								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.BOARD_TITLE
 								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_PEOPLE
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.COMMENT_CONTENT
 								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.COMMENT_REG_DATE
 								str += "</td>"
 						});
 						str += "</form>";
@@ -239,7 +263,7 @@
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 								str += "<td>"
-								str += "<input type='checkbox' name='reservationItemList["+i+"].boardNum' value='"+this.REVIEW_NUM+"'>"
+								str += "<input type='checkbox' name='reviewItemList["+i+"].boardNum' value='"+this.REVIEW_NUM+"'>"
 								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.REVIEW_NUM
 								str += "</td>"
@@ -327,7 +351,7 @@
 		}else if(kindFlag == 'review'){
 			$('.reviewdivPage').html(str);
 		}else if(kindFlag == 'comments'){
-			$('.commentsDivPage').html(str);
+			$('.commentsdivPage').html(str);
 		}
 		
 	}
@@ -403,7 +427,7 @@
 				
 </script>
 <main id="main" class="main">
-	<input type="text" name="userId" value="${memberMap.USER_ID }">
+	<input type="hidden" name="userId" value="${memberMap.USER_ID }">
 	<div class="pagetitle">
 		<h1>회원 상세보기</h1>
 		<nav>
@@ -494,11 +518,14 @@
 									<div class="col-lg-3 col-md-4 label">탈퇴여부</div>
 									<div class="col-lg-9 col-md-8">
 										<c:if test="${memberMap.USER_OUT_TYPE == 'Y' }">
-											탈퇴(탈퇴일 : <fmt:formatDate value="${memberMap.USER_OUT_DATE }" pattern="yyyy-MM-dd" /> )
+											<span style="color: red;">탈퇴(탈퇴일 : <fmt:formatDate value="${memberMap.USER_OUT_DATE }" pattern="yyyy-MM-dd" />)</span>
 										</c:if>
 										<c:if test="${empty memberMap.USER_OUT_TYPE }">
-											가입
+											<span style="color: green;">가입</span>
 										</c:if>
+									</div>
+									<div class="col text-center">
+										<button type="button" id="withdrawal" class="btn btn-outline-danger">회원 탈퇴</button>
 									</div>
 								</div>
 							</div>
@@ -682,16 +709,15 @@
 														<option value="comment_num"
 															<c:if test="${param.searchCondition=='comment_num'}">
 								            						selected="selected"
-								            					</c:if>>댓글번호</option>
+								            					</c:if>>댓글 번호</option>
 														<option value="board_num"
 															<c:if test="${param.searchCondition=='board_num'}">
 								            						selected="selected"
-								            					</c:if>>게시물번호</option>
-														<option value="space_name"
-															<c:if test="${param.searchCondition=='space_name'}">
+								            					</c:if>>게시물 번호</option>
+														<option value="board_title"
+															<c:if test="${param.searchCondition=='board_title'}">
 								            						selected="selected"
-								            					</c:if>>예약
-															장소명</option>
+								            					</c:if>>게시물 제목</option>
 													</select>
 												</div>
 											</div>

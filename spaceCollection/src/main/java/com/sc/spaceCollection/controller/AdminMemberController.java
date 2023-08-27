@@ -6,18 +6,23 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.common.AjaxVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.review.model.ReviewService;
+import com.sc.spaceCollection.userInfo.model.UserInfoListVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoService;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
@@ -33,6 +38,7 @@ public class AdminMemberController {
 	private final UserInfoService userInfoService;
 	private final ReservationService reservationService;
 	private final ReviewService reviewService;
+	private final CommentsService commentsService;
 	
 	@RequestMapping("/memberList")
 	public void memberList(@ModelAttribute SearchVO searchVo, Model model) {
@@ -130,6 +136,79 @@ public class AdminMemberController {
 		ajaxVo.setSearchVo(searchVo);
 		
 		return ajaxVo;
+	}
+	
+	@RequestMapping("/memberDetail/ajax_commentsList")
+	@ResponseBody
+	public AjaxVO ajax_commentsList(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("ajax - 리뷰 내역 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(5);
+		
+		pagingInfo.setKindFlag("comments");
+		
+		searchVo.setRecordCountPerPage(5);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> commentsList = commentsService.selectCommentsEachUser(searchVo);
+		logger.info("ajax - 리뷰 내역 조회 결과, commentsList.size = {}", commentsList.size());
+		
+		int totalRecord = commentsService.getTotalRecordEachUser(searchVo);
+		logger.info("ajax -전체 리뷰 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		AjaxVO ajaxVo = new AjaxVO();
+		ajaxVo.setPagingInfo(pagingInfo);
+		ajaxVo.setAjaxList(commentsList);
+		ajaxVo.setSearchVo(searchVo);
+		
+		return ajaxVo;
+	}
+	
+	@GetMapping("/memberWithdrawal")
+	public String memberWithdrawal_get(@RequestParam String userId, Model model) {
+		logger.info("회원탈퇴, 파라미터 userId = {}", userId);
+		
+		int cnt = userInfoService.memberWithdrawal(userId);
+		logger.info("회원탈퇴 결과, cnt = {}", cnt);
+		
+		String msg = "탈퇴처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberList";
+		if(cnt>0) {
+			msg = "회원 탈퇴가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@PostMapping("/memberWithdrawal")
+	@Transactional
+	public String memberWithdrawal_post(@ModelAttribute UserInfoListVO listVo, Model model) {
+		logger.info("회원탈퇴, 파라미터 listVo = {}", listVo);
+		
+		int sum = 0;
+		int cnt = 0;
+		for(UserInfoVO vo : listVo.getUserInfoItemList()) {
+			cnt = userInfoService.memberWithdrawal(vo.getUserId());
+			logger.info("회원탈퇴 결과, cnt = {}", cnt);
+			
+			sum += cnt;
+		}
+		
+		String msg = "탈퇴처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberList";
+		if(sum == listVo.getUserInfoItemList().size()) {
+			msg = "회원 탈퇴가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
 	}
 
 }
