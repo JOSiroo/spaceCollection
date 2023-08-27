@@ -385,6 +385,7 @@
 <section class = "search-section">
 	<div class="container" >
 	<hr>
+	<h2>${collectionName}</h2>
 		<div class="row" id = "data-container">
 		</div>
   	</div>
@@ -411,7 +412,7 @@ function loadMoreData() {
     isLoading = true;
 
     $.ajax({
-        url: '<c:url value="/getZzimList?page='+page+'&size='+size+'"/>',
+        url: '<c:url value="/getCollection?page='+page+'&size='+size+'&scNum='+${param.scNum}+'"/>',
         type:'get',
         dataType: 'json',
         success: function(data) {
