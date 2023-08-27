@@ -347,8 +347,7 @@
         margin-top: 5%;
 	}
 </style>
-<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
-
+<div class="hero page-inner overlay" style="background-image: url('images/collection_bg.png');">
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
@@ -412,7 +411,11 @@ function loadMoreData() {
     isLoading = true;
 
     $.ajax({
+<<<<<<< HEAD
         url: '<c:url value="/getCollection?page='+page+'&size='+size+'&scNum='+${param.scNum}+'"/>',
+=======
+        url: '<c:url value=""/>',
+>>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection
         type:'get',
         dataType: 'json',
         success: function(data) {
