@@ -13,5 +13,5 @@ public interface ReviewDAO {
 	List<Map<String,Object>> selectMyReview(String userId);
 	List<Map<String, Object>> selectReviewEachUser(SearchVO vo);
 	int getTotalRecord(SearchVO vo);
-	
+	List<Map<String, Object>> selectNewReview();
 }

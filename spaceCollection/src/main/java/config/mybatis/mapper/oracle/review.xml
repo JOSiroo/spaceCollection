@@ -46,4 +46,10 @@
 		where REVIEW_DEL_FLAG is null and USER_ID = #{userId}
 		<include refid="searchWhere"/>
 	</select>
+	
+	<select id="selectNewReview"  resultType="map">
+		select * from main_review_view
+		WHERE REVIEW_DEL_FLAG IS NULL
+	</select>
+	
 </mapper>
