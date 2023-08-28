@@ -112,6 +112,10 @@
 		height: 30px;
 		
 	}
+	.pageBox{
+		width:20%;
+		padding: 3% 47% 0% 47%;	
+	}
 </style>
 <section>
 	<div class="reservation-header">
@@ -124,8 +128,11 @@
 			<div class = "col-6"></div>
 			<div class="col-2">
 				<select class = "orderSelector">
-					<option>예약 번호순 정렬</option>
-					<option>이용 일자순 정렬</option>
+					<option value="default">정렬기준</option>
+					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
+						value="reservationNum">예약 번호순 정렬</option>
+					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
+						value="reservationDay">이용 일자순 정렬</option>
 				</select>
 			</div>		
 			<div class="col-2">
@@ -183,16 +190,62 @@
 			</c:forEach>
 		</c:if>
 		<c:if test="${empty list}">
-			<div class="row data">
+			<div class="row" style = "text-align:center">
 				<h2>예약 내역이 없습니다</h2>
 			</div>
 		</c:if>
+		<div class="pageBox">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			    <li class="page-item">
+			      <a class="page-link" id="previous" href="<c:url value='/host/reservation?page=${param.page-1}'/>" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <li class="page-item">
+			      <a class="page-link" id="next" href="<c:url value='/host/reservation?page=${param.page+1}'/>" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		
+		
 	</div>
 </section>
 <script type="text/javascript">
+	$(function(){
+		$('input[name=reservationInfo]').focus();
+		
+		$('#previous').click(function(){
+			var page = ${param.page};
+			if(page == 1){
+				alert('첫 페이지 입니다');
+				event.preventDefault();
+			}
+		});
+		$('#next').click(function(){
+			if(${empty list}){
+				alert('더이상 기록이 없습니다');
+				event.preventDefault();
+			}
+		});
+	});
+	
 	function goReservation(reservationNum){
 		location.href="<c:url value='/host/reservationDetail?reservationNum="+reservationNum+"'/>";
 	}
+	
+	var orderSelector = document.getElementsByClassName('orderSelector');
+	
+	
+	
+	orderSelector[0].addEventListener('change',function(){
+		if(this.value !== 'default'){
+			location.href="<c:url value='/host/reservation?page="+${param.page}+"&order="+this.value+"'/>";
+		}
+	});
+	
 </script>
-
 <%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>

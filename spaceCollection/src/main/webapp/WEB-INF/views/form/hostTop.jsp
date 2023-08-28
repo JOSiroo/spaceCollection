@@ -184,7 +184,7 @@
 	      </div>
 	      <div class="offcanvas-body">
 	      	<div class="management">
-	      		<a class="mng-item" href="<c:url value='/host/reservation'/>">
+	      		<a class="mng-item" href="<c:url value='/host/reservation?page=1'/>">
 	      			예약 리스트 /<br>캘린더 관리
 	      		</a>
 	      		<a class="mng-item" href="#">

@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface HostService {
 	List<SpaceTypeVO> selectSpaceType(int categoryNo);
 	List<SpaceCategoryAllVO> selectSpaceCategory();
-	List<Map<String, Object>> selectHostReservation(int userNum);
+	List<Map<String, Object>> selectHostReservation(int page, int size, int userNum);
 }
