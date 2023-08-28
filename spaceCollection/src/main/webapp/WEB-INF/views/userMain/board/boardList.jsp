@@ -16,20 +16,6 @@
 </head>
 <script type="text/javascript">	
 
-	$(function(){
-		
-		$('#boardTypeName').change(function() {
-			location.href = "/spaceCollection/admin/board/boardList?boardTypeName="+$('#boardTypeName>option:selected').val();
-		});
-		
-		$('tbody tr').hover(function() {
-			$(this).find('td').css("background-color", "#d1cece");
-		}, function() {
-			$(this).find('td').css("background-color", "white");
-		});
-		
-	 }); 
-
 </script>
 <style type="text/css">
 	*{
@@ -45,10 +31,16 @@
 	    margin: 45px;
 	 }
 	 
-	 
+	img.titleButtonImg {
+    width: 65%;
+    margin: 30px;
+	}
+	.eventListBox{
+	background-color: #f4f6f8;
+	}
 </style>
 <body>
-<form name="frmSearch" method="post" action="<c:url value='userMain/boardList'/>"> <!-- boardDetail -->
+<form name="frmSearch" method="post" action="<c:url value='userMain/boardDetail'/>"> <!-- boardDetail -->
 	  
 <div id="main">
 <section class="wrapper style1">
@@ -58,18 +50,20 @@
 			<p>지금 진행 중인 이벤트를 만나보세요!</p>
 		</header>
 		
-		<div class="">  
+		<div class="eventListBox" >  
 			<c:if test="${empty list }">  
 		  		<tr><td colspan="5" class="align_center">글이 존재하지 않습니다.</td></tr>
 		  	</c:if>
 		  	<c:if test="${!empty list }">	
-			<c:forEach var="vo" items="${list}"> 
+			<c:forEach var="map" items="${list}"> 
 					<div class="col align-center">
-						<div class="">
-							<img src="..." alt="" />
+						<div class="titleImg">
 							<a href="#" class="titleButton"
-							 onclick="location.href='<c:url value='/userMain/board/boardDetail?boardNum=${vo.boardNum }'/>';"
-							 style="cursor:pointer;">${vo.boardNum }</a><br><br>
+							 onclick="location.href='<c:url value='/user/boardDetail?boardNum=${map.BOARD_NUM }'/>';" style="cursor:pointer;">
+							 <img class="titleButtonImg"  alt="${map.BOARD_TITLE } "
+							 src="https://kr.object.ncloudstorage.com/scloud-service/service/${map.BOARD_TITLE }"
+							 /> 
+							 </a><br><br>
 						</div>
 					</div>
 			</c:forEach>

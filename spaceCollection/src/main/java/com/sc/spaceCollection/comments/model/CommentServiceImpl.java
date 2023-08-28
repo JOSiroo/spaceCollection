@@ -30,11 +30,6 @@ public class CommentServiceImpl implements CommentsService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selecteventByBoardNum(int boardNum) {
-		return commentsDao.selecteventByBoardNum(boardNum);
-	}
-	
-	@Override
 	public int updateComments(CommentsVO vo) {
 		return commentsDao.updateComments(vo);
 	}
@@ -56,6 +51,11 @@ public class CommentServiceImpl implements CommentsService{
 	@Override
 	public int getTotalRecordEachUser(SearchVO vo) {
 		return commentsDao.getTotalRecordEachUser(vo);
+	}
+
+	@Override
+	public List<CommentsVO> selectUserComments(int boardNum) {
+		return commentsDao.selectUserComments(boardNum);
 	}
 
 }

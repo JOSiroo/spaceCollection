@@ -61,22 +61,25 @@
 		update board set board_del_flag = 'Y' where board_num = #{boardNum}
 	</update>
 	
-	<!-- 이벤트 게시판 내용 출력 -->
-	<select id="selectByeventBoard" parameterType="UserBoardVO" resultType="UserBoardVO" >
-		SELECT distinct a.*, b.board_title, b.BOARD_CONTENT 
-			from ( select board_num
-			    FROM user_Comments_View
-			    WHERE board_type_id = 'b00017'
-			    group by board_num) a
-			    join user_Comments_View b
-			    on a.board_num = b.board_num
-		ORDER BY board_title desc
+	<select id="selectByeventBoard" resultType="map" >
+		select *
+			from board 
+			where board_type_id = 'b00017' and
+			board_del_flag is null
+			ORDER BY BOARD_REG_DATE desc
 	</select>
 	
 	<select id="selectByeventBoardNum" parameterType="int" resultType="map">
-		select * from user_Comments_View where board_num = #{boardNum}
+		select *from board 
+			where board_type_id = 'b00017' 
+			and board_num = #{boardNum} 
+			and board_del_flag is null
+			ORDER BY BOARD_REG_DATE desc
 	</select>
+	
 	<update id="updateBoard" parameterType="boardVo">
 		update board set BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent} where BOARD_NUM = #{boardNum}
 	</update>
+	
+	
 </mapper>

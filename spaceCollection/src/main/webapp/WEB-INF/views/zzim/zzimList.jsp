@@ -334,7 +334,6 @@
 <h1 style="font-weight:bold;text-align: center;padding-top:1%;margin-bottom:4%;">찜 목록</h1>
 <section class = "search-section">
 	<div class="container" >
-	<hr>
 		<div class="row" id = "data-container">
 		</div>
   	</div>

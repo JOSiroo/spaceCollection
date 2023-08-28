@@ -86,7 +86,7 @@
 	}
 	
 	.service_menu {
-    padding: 18px 0 20px;
+    padding: 0 0 20px;
     text-align: center;
     color: #949494;
     background: #f6f6f6;
@@ -119,6 +119,14 @@
 	}
 	#offcanvasDarkNavbar{
 	z-index:1051;
+	}
+	.goHostCenter{
+		border:#ffd014 solid 2px;
+		padding: 4% 4% 4% 4%; 
+		background:rgba(25, 61, 118, 0.8);
+		font-size:20px;
+		font-weight: bold; 
+		margin-bottom:5%;
 	}
 </style>
 </head>
@@ -276,7 +284,9 @@
 	</div><!-- sideform -->	      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
-	      <a href="${pageContext.request.contextPath }/host/index">Host센터로 이동하기</a>
+			<div class="goHostCenter">
+	      		<a style="color:#ffd014" href="${pageContext.request.contextPath }/host/index">Host센터로 이동하기</a>
+			</div>
 	      <p class="copyright">Powered by © nada Crew.</p>
 	      </div>
        
