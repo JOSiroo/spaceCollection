@@ -2,6 +2,8 @@ package com.sc.spaceCollection.controller;
 
 import java.util.ArrayList;
 
+
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,8 @@ public class UserMainController {
    private final SpaceService spaceService;
    private final SpaceDetailService sdService;
    private final ReviewService reviewService;
+   
+   
    
    @RequestMapping("/board")
    public String test() {
@@ -63,6 +67,12 @@ public class UserMainController {
        return "index";
    }
    
+   //쿠폰
+   @RequestMapping("/coupon")
+   public String coupon(Model model) {
+	   return "userMain/board/coupon";
+   }
+   
    //서비스약관
    @RequestMapping("/service")
    public String userChek() {
@@ -75,6 +85,7 @@ public class UserMainController {
 	   return "userMain/event";
    }
    
+   
    //회사소개
    @RequestMapping("/about")
    public String about() {
@@ -84,6 +95,7 @@ public class UserMainController {
    //사업자
    @RequestMapping("/Certificate")
    public String Certificate() {
+		/* private final ApiExamCaptchaNkeyResult captcha; */
 	   return "userMain/Certificate";
    }
    
