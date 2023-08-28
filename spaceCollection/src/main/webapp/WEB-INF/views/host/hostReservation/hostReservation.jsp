@@ -238,14 +238,19 @@
 	}
 	
 	var orderSelector = document.getElementsByClassName('orderSelector');
-	
-	
-	
 	orderSelector[0].addEventListener('change',function(){
 		if(this.value !== 'default'){
-			location.href="<c:url value='/host/reservation?page="+${param.page}+"&order="+this.value+"'/>";
+			location.href = "<c:url value='/host/reservation?page="+${param.page}+"&order="+this.value+"'/>";
 		}
 	});
 	
+	var statusSelector = document.getElementsByClassName('statusSelector');
+	statusSelector[0].addEventListener('change',function(){
+		var currentUrl = window.location.href;
+		var currentparam = 
+		if(this.value !== 'default'){
+			location.href = currentUrl+"&status="+this.value;
+		}
+	});
 </script>
 <%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
