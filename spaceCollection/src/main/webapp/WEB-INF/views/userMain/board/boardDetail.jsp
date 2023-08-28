@@ -53,6 +53,7 @@
 		<div class="profile_inner user_level_mo">
 			<article>
 				<div class="event_card">
+				${vo.BOARD_CONTENT }
 				<img src="images/event.png" alt="Image" class="img-fluid">
 				</div>
 				
@@ -63,6 +64,7 @@
 				
 				<!--댓글 목록-->
 				<div class="eventText" id="eventText">
+				
 				</div>
 				
 			</article>
