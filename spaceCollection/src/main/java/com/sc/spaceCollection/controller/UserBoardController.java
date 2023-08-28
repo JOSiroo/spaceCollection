@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.comments.model.CommentsService;
@@ -50,7 +51,9 @@ public class UserBoardController {
 			return "common/message";
 		} else {
 			Map<String, Object> map = boardService.selectByeventBoardNum(boardNum);
+			List<CommentsVO> list = commentsService.selectUserComments(boardNum);
 			logger.info("게시물 boardNum, boardNum = {}", boardNum);
+			logger.info("댓글 comments, list = {}", list);
 			if (map == null ) {
 				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
 				model.addAttribute("url", "/userMain/board/boardList");
@@ -59,6 +62,7 @@ public class UserBoardController {
 				logger.info("게시물 내용 조회결과, map = {}", map);
 
 				model.addAttribute("map", map);
+				model.addAttribute("list", list);
 
 				return "userMain/board/boardDetail";
 			}
@@ -82,6 +86,50 @@ public class UserBoardController {
 		model.addAttribute("url", url);
 
 		return "userMain/common/message";
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentLoad")
+	@ResponseBody
+	public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, 
+									@RequestParam(defaultValue = "0")int addNum) {
+		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
+		
+		CommentsVO commentsVo = new CommentsVO();
+		commentsVo.setBoardNum(boardNum);
+		commentsVo.setAddNum(addNum);
+		
+		List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVo);
+		for(Map<String, Object> map : list) {
+			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 10));
+			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
+		}
+
+		logger.info("ajax - 댓글 조회결과, list.size = {}", list.size());
+		
+		return list;
+	}
+	
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsDelete")
+	@ResponseBody
+	public int ajax_commentsDelete(@RequestParam(defaultValue = "0")int commentNum) {
+		logger.info("ajax - 댓글 삭제, 파라미터 commentNum = {}", commentNum);
+		
+		int cnt = commentsService.updateCommentsDelFlag(commentNum);
+		logger.info("ajax - 댓글 삭제 결과, cnt = {}", cnt);
+		
+		return cnt;
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
+	@ResponseBody
+	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
+		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
+		
+		int cnt = commentsService.updateComments(commentsVo);
+		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
+		
+		return cnt;
 	}
 
 }

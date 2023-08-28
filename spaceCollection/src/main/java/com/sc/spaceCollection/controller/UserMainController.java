@@ -2,6 +2,8 @@ package com.sc.spaceCollection.controller;
 
 import java.util.ArrayList;
 
+
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +23,6 @@ import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
-import com.sc.spaceCollection.usermain.model.ApiExamCaptchaNkeyResult;
 
 import lombok.RequiredArgsConstructor;
 
@@ -66,6 +67,12 @@ public class UserMainController {
        return "index";
    }
    
+   //쿠폰
+   @RequestMapping("/coupon")
+   public String coupon(Model model) {
+	   return "userMain/board/coupon";
+   }
+   
    //서비스약관
    @RequestMapping("/service")
    public String userChek() {
@@ -78,11 +85,6 @@ public class UserMainController {
 	   return "userMain/event";
    }
    
-   //쿠폰
-   @RequestMapping("/coupon")
-   public String coupon() {
-	   return "userMain/board/coupon";
-   }
    
    //회사소개
    @RequestMapping("/about")

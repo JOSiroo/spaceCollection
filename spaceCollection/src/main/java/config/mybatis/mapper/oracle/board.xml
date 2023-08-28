@@ -81,4 +81,5 @@
 		update board set BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent} where BOARD_NUM = #{boardNum}
 	</update>
 	
+	
 </mapper>
