@@ -1,7 +1,10 @@
 package com.sc.spaceCollection.usermain.model;
 import java.util.UUID;
-import java.util.HashSet;
 
+import java.util.HashSet;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Coupon {
 	
     public static String generateCoupon() {
