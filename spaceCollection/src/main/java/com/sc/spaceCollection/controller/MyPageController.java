@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
+import com.sc.spaceCollection.guest.model.GuestVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +26,38 @@ public class MyPageController {
 	
 	private final Encryption encryption;
 	
-	@RequestMapping("/myProfile")
-	public String myPage(HttpSession session) {
+	@GetMapping("/myProfile")
+	public String myPage_get(HttpSession session,Model model) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("마이페이지 처리, 파라미터 userId={}",userId);
 		
+		GuestVO guestVo = guestService.selectUserInfo(userId);
+		logger.info("마이페이지 유저 정보 불러오기 결과, guestVo={}",guestVo);
+		
+		model.addAttribute("guestVo",guestVo);
 		return "guest/myPage/myProfile";
 	}
 	
+	@PostMapping("/myProfile")
+	public String myPage_post() {
+		return "";
+	}
+	
 	@GetMapping("/checkPwd")
-	public String checkPwd_get() {
+	public String checkPwd_get(HttpSession session) {
+		String url="guest/myPage/checkPwd";
+		
+		String userId=(String)session.getAttribute("userId");
+	    int cnt = guestService.checkedUserIdBySnsCode(userId);
+	    
+	    logger.info("SNS사용자 조회결과, cnt={}",cnt);
+	    if(cnt>0) {//SNS유저 일 경우 확인없이 마이프로필
+	         url="redirect:/guest/myPage/myProfile";
+	    }
+
+		
 		logger.info("비밀번호 확인 페이지, [회원정보수정 단계]");
-		return "guest/myPage/checkPwd";
+		return url;
 	}
 	
 	@PostMapping("/checkPwd")

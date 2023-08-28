@@ -72,7 +72,7 @@
 				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키키겠습니까?");
+				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.");
 				$('#confirm2').modal("show");
 				$('#okBt').click(function() {
 					$('form[name=trFrm]').submit();
@@ -96,7 +96,7 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">회원 관리</li>
 				<li class="breadcrumb-item active">
-					회원관리 
+					회원 관리 
 				</li>
 			</ol>
 		</nav>
@@ -109,7 +109,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>회원관리</a></h5>
+ 						<h5 class="card-title" style="font-weight: bold;"><a>회원 관리</a></h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">

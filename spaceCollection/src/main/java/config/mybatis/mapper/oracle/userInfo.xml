@@ -31,11 +31,36 @@
 	</select>
 	
 	<select id="selectByUserId" parameterType="string" resultType="map">
-		select * from user_info where user_num = #{userNum}
+		select * from user_info where user_id = #{userId}
 	</select>
 	
 	<update id="memberWithdrawal" parameterType="string">
 		update user_info set USER_OUT_TYPE = 'Y', USER_OUT_DATE = sysdate where user_id = #{userId}
+	</update>
+	
+	<select id="selectWithdrawalMember" parameterType="searchVo" resultType="userInfoVo">
+		select *from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from user_info 
+				where USER_OUT_TYPE ='Y' and <![CDATA[user_num<9999999]]>
+				<include refid="searchWhere"/>
+				order by user_num desc
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getWithdrawalTotalRecord" parameterType="searchVo" resultType="int">
+		select count(*) from user_info where USER_OUT_TYPE = 'Y' and <![CDATA[user_num<9999999]]>
+		<include refid="searchWhere"/>
+	</select>
+	
+	<update id="memberReturn" parameterType="string">
+		update user_info set user_out_date = '', user_out_type = '' where user_id = #{userId}
 	</update>
 </mapper>
 
