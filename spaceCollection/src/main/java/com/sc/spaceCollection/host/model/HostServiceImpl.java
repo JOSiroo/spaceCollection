@@ -24,8 +24,12 @@ public class HostServiceImpl implements HostService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectHostReservation(int userNum) {
-		return hostDao.selectHostReservation(userNum);
+	public List<Map<String, Object>> selectHostReservation(int page,int size, int userNum) {
+		//(0) 1 2 3 (4) / (5) 6 7 8 (9)
+		int startRow = (page - 1) * size;
+		int endRow = (page * size) - 1;
+		
+		return hostDao.selectHostReservation(startRow, endRow, userNum);
 	}
 
 

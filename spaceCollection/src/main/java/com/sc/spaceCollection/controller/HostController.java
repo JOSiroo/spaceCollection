@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
+import com.sc.spaceCollection.reservation.model.ReservationService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class HostController {
 	private static final Logger logger = LoggerFactory.getLogger(HostController.class);
 	private final GuestService guestService;
 	private final HostService hostService;
+	private final ReservationService reservationService;
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -96,20 +98,26 @@ public class HostController {
 	}
 	
 	@RequestMapping("/reservation")
-	public String hostReservation(HttpSession session, Model model) {
+	public String hostReservation(@RequestParam(defaultValue = "1") int page,HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		int userNum = guestService.selectUserInfo(userId).getUserNum();
-		logger.info("호스트 예약 조회, 파라미터 userNum = {}", userNum);
+		logger.info("호스트 예약 조회, 파라미터 userNum = {}, page = {}", userNum, page);
 		
-		List<Map<String, Object>> list = hostService.selectHostReservation(userNum);
+		int size = 5;
+		List<Map<String, Object>> list = hostService.selectHostReservation(page,size,userNum);
 		logger.info("호스트 예약 조회 결과 list = {}", list);
 		
 		model.addAttribute("list", list);
 		
 		return "host/hostReservation/hostReservation";
 	}
+	
 	@RequestMapping("/reservationDetail")
-	public String hostReservationDetail(@RequestParam int reservationNum) {
+	public String hostReservationDetail(@RequestParam int reservationNum, Model model) {
+		logger.info("예약내역 확인, 파라미터 reservationNum = {}", reservationNum);
+		Map<String, Object> map = reservationService.reservationReview(reservationNum);
+		
+		model.addAttribute("map", map);
 		
 		return "host/hostReservation/hostReservationDetail";
 	}
