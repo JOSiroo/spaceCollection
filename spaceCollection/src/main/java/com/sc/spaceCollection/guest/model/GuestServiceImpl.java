@@ -13,7 +13,14 @@ public class GuestServiceImpl implements GuestService {
 
 	@Override
 	public int guestCheckId(String userId) {
-		return guestDao.guestCheckId(userId);
+		int cnt=guestDao.guestCheckId(userId);
+		int result=0;
+		if(cnt>0) {
+			result=GuestService.EXIST_ID;
+		}else {
+			result=GuestService.NONE_EXIST_ID;
+		}
+		return result;
 	}
 
 	@Override
@@ -57,6 +64,21 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public List<GuestVO> selectUserIdByEmail(String userEmail) {
 		return guestDao.selectUserIdByEmail(userEmail);
+	}
+
+	@Override
+	public int selectKakaoUser(GuestVO guestVo) {
+		return guestDao.selectKakaoUser(guestVo);
+	}
+
+	@Override
+	public int insertKakaoUser(GuestVO guestVo) {
+		return guestDao.insertKakaoUser(guestVo);
+	}
+
+	@Override
+	public int checkedUserIdBySnsCode(String userId) {
+		return guestDao.checkedUserIdBySnsCode(userId);
 	}
 
 }
