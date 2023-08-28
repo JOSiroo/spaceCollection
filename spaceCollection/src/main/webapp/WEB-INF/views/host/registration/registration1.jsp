@@ -118,6 +118,17 @@
 			
 		});
 		
+		$('.accordion-button').click(function() {
+			// 클릭한 아코디언 내부의 체크박스들
+		    var checkboxes = $(this).closest('.accordion-item').find('.form-check-input');
+		        
+		    // 다른 아코디언 내부의 체크박스들
+		    var otherCheckboxes = $('.accordion-item .form-check-input').not(checkboxes);
+		        
+		    // 다른 아코디언의 체크박스들을 해제
+		    otherCheckboxes.prop('checked', false);
+		});
+		
 	});
 </script>
 

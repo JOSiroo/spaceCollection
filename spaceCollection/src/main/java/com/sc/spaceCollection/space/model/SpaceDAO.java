@@ -32,4 +32,5 @@ public interface SpaceDAO {
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
+	Map<String, Object> usercount();
 }

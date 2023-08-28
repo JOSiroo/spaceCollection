@@ -38,7 +38,19 @@ pageEncoding="UTF-8"%>
   	color:black;
   	margin-bottom:10px;
   }
-  
+  .reviewHead{
+  	font-size:20px;
+  	font-weight: bold;
+  	margin-right:54.7%;
+  	margin-bottom:15px;
+    display: -webkit-inline-box;
+  }
+  #star{
+		width: 29px;
+		height: 35px;
+		padding:0% 0% 4% 0%;
+		margin:0% -5% 0% 0%;
+	}
   
 @keyframes shake {
   0%, 100% {
@@ -161,7 +173,7 @@ pageEncoding="UTF-8"%>
 					</div>
 					
 					<div  class = "detail-navTab">
-						<h5>시설 안내</h5>
+						<h5 style="font-weight: bold;">시설 안내</h5>
 						<div class = "nav-bar"></div>
 						<ol>
 							<c:if test="${!empty vo.spaceFacility }">
@@ -175,7 +187,7 @@ pageEncoding="UTF-8"%>
 					</div>
 					
 					<div  class = "detail-navTab">
-						<h5>유의사항</h5>
+						<h5 style="font-weight: bold;">유의사항</h5>
 						<div class = "nav-bar"></div>
 						<c:if test="${!empty vo.spaceFacility }">
 							<ol>
@@ -188,7 +200,7 @@ pageEncoding="UTF-8"%>
 					</div>
 					
 					<div class = "detail-navTab">
-						<h5>환불정책</h5>
+						<h5 style="font-weight: bold;">환불정책</h5>
 						<div class = "nav-bar"></div>
 						<c:if test="${!empty refundVo }">
 						<c:set var="refund" value="${refundVo}" />
@@ -218,7 +230,7 @@ pageEncoding="UTF-8"%>
 					<!-- 지도 -->
 					
 					<div class = "detail-navTab">
-						<h5 style="display: inline-block;color:#193D76">Q&A&nbsp;${fn:length(qnaList)} </h5>
+						<h5 style="display: inline-block;color:#193D76; font-weight: bold;">Q&A&nbsp;${fn:length(qnaList)} </h5>
 						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
 						<div class = "nav-bar"></div>
 						<div class = 'row'>
@@ -278,10 +290,43 @@ pageEncoding="UTF-8"%>
 					</div>
 					
 					<div class = "detail-navTab">
-						<h5>이용 후기</h5>
+						<h5 style="font-weight: bold;">이용 후기</h5>
 						<div class = "nav-bar"></div>
 						<div class = "review-box">
-							<h4>등록된 후기가 없습니다</h4>								
+						<c:if test="${empty reviewList}">
+							<h4>등록된 후기가 없습니다</h4>
+						</c:if>						
+						<c:if test="${!empty reviewList}">
+							<c:forEach var="review" items="${reviewList }">
+								<div>
+									<div class="reviewHead">
+									<span>${review.USER_ID}</span>
+									<div style= "margin-left: 20%;padding-bottom:1%">
+									<c:set var="count" value="0"/>
+									<c:forEach var="i" begin="1" end="${review.REVIEW_RATE}">
+										<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
+										<c:set var="count" value="${count+1 }" />
+									</c:forEach>
+									<c:if test="${review.REVIEW_RATE%1 >0 }">
+										<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
+										<c:set var="count" value="${count+1 }" />
+									</c:if>
+									<c:forEach var="j" begin="${count}" end="4">
+										<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
+									</c:forEach>
+									</div>
+									</div>
+									<div class="qnaBody"><span>${review.REVIEW_CONTENT}</span></div>
+									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
+										<span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
+										<c:if test="${sessionScope.userId == review.USER_ID}">
+											<a href="#"style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
+										</c:if>
+									</div>
+								</div>
+								<hr>
+							</c:forEach>
+						</c:if>		
 						</div>
 					</div>
 				</div>

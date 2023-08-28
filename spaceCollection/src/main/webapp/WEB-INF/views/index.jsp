@@ -34,6 +34,9 @@ a.btn.btn-primary.py-2.px-3 {
     /* Add any specific styles for each property item */
 }
 
+.icon-star-half-reverse {
+        transform: scaleX(-1);
+ }
 </style>
    <div class="hero">
       <div class="hero-slide">
@@ -63,7 +66,7 @@ a.btn.btn-primary.py-2.px-3 {
 	               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">신규 스페이스 컬렉션</h2>
 	            </div>
 	            <div class="col-lg-6 text-lg-end">
-	               <p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
+	               <p><a href="spaceCollection/search" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
 	            </div>
 	         </div>
 	         <div class="row">
@@ -135,8 +138,10 @@ a.btn.btn-primary.py-2.px-3 {
    </section>
 
 
+<!-- 리뷰 시작 -->
    <div class="section sec-testimonials">
       <div class="container">
+      
          <div class="row mb-5 align-items-center">
             <div class="col-md-6">
                <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">생생한 이용자 리뷰</h2>
@@ -156,31 +161,40 @@ a.btn.btn-primary.py-2.px-3 {
             </div>
          </div>
          
-   
-   
-         <div class="testimonial-slider-wrap">
-            <div class="testimonial-slider">
-               <div class="item">
-                  <div class="testimonial">
-                     <img src="images/person_1-min.jpg" alt="Image" class="img-fluid  w-140 mb-4 rounded">
-                     <div class="rate">
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                     </div>
-                     
-                     <!-- 리뷰 -->
-                     <h3 class="h5 text-primary mb-4" >공간이름</h3>
-                     <blockquote>
-                        <p>&ldquo;리뷰내용&rdquo;</p>
-                     </blockquote>
-                     <p class="text-black-50">가격정보(시간)</p>
-                  </div>
-               </div>
+		<div class="testimonial-slider-wrap">
+		<div class="testimonial-slider">
+			 <c:forEach var="map" items="${map}">
+				 <div class="item">
+			        <div class="testimonial">
+			            <a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="img">
+			                <img src="images/person_1-min.jpg" alt="Image" class="img-fluid w-140 mb-4 rounded">
+			                <%-- ${map.IMG_ORIGINAL_NAME} --%>
+			            </a>
+			            <div class="rate">
+			                <c:forEach begin="1" end="${map.REVIEW_RATE}">
+			                    <span class="icon-star text-warning"></span>
+			                </c:forEach>
+			                <c:choose>
+			                    <c:when test="${map.REVIEW_RATE < 1}">
+			                        <span class="icon-star-half icon-star-half-reverse text-warning"></span>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <span class="icon-star-empty text-warning"></span>
+			                    </c:otherwise>
+			                </c:choose>
+			            </div>
+			            <!-- 리뷰 -->
+			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"> ${map.SPACE_NAME}(${map.SD_TYPE})</h3>
+			            <blockquote>
+			                <p>&ldquo;리뷰내용 ${map.REVIEW_CONTENT }&rdquo;</p>
+			            </blockquote>
+			            <p class="text-black-50">가격정보(1박 기준) ${map.SD_PRICE }</p>
+			        </div>
+			    </div>
+			</c:forEach>
 
-               <div class="item">
+
+               <!-- <div class="item">
                   <div class="testimonial">
                      <img src="images/person_2-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4" id="revimg">
                      <div class="rate">
@@ -196,9 +210,11 @@ a.btn.btn-primary.py-2.px-3 {
                      </blockquote>
                      <p class="text-black-50">Designer, Co-founder</p>
                   </div>
-               </div>
+               </div> -->
+         
+         
 
-               <div class="item">
+             <!--   <div class="item">
                   <div class="testimonial">
                      <img src="images/person_3-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4">
                      <div class="rate">
@@ -214,9 +230,9 @@ a.btn.btn-primary.py-2.px-3 {
                      </blockquote>
                      <p class="text-black-50">Designer, Co-founder</p>
                   </div>
-               </div>
+               </div> -->
 
-               <div class="item">
+               <!-- <div class="item">
                   <div class="testimonial">
                      <img src="images/person_4-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4">
                      <div class="rate">
@@ -232,46 +248,41 @@ a.btn.btn-primary.py-2.px-3 {
                      </blockquote>
                      <p class="text-black-50">Designer, Co-founder</p>
                   </div>
-               </div>
+               </div> -->
 
             </div>
          </div>
       </div>
    </div>
-
+<!-- 리뷰 끝 -->
 
 
    <div class="section section-15 bg-light">
       <div class="container">
          
-      <div id="cccc" style="padding-left: 113px;">
-         <div class="row section-counter ">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-               <div class="counter-wrap mb-5 mb-lg-0">
-                  <span class="number"><span class="countup text-primary">3298</span></span>
-                  <span class="caption text-black-50"># 누적 공간 구매 사용자</span>
-               </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-               <div class="counter-wrap mb-5 mb-lg-0">
-                  <span class="number"><span class="countup text-primary">2181</span></span>
-                  <span class="caption text-black-50"># 누적 공간 판매 사용자</span>
-               </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-               <div class="counter-wrap mb-5 mb-lg-0">
-                  <span class="number"><span class="countup text-primary">9316</span></span>
-                  <span class="caption text-black-50"># 누적 공간 사용자</span>
-               </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
-               <div class="counter-wrap mb-5 mb-lg-0">
-                  <span class="number"><span class="countup text-primary">7191</span></span>
-                  <span class="caption text-black-50"># 판매되는 공간 수</span>
-               </div>
-            </div>
-            </div>
-            </div>
+	        <div  class="content-center text-center" style= "margin-top: 20px;">
+            <div class="row section-counter" var="map" items="${usercount}">
+		        <div class="col-4 col-sm-4 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
+		            <div class="counter-wrap mb-5 mb-lg-0">
+		                <span class="number"><span class="countup text-primary">${usercount.SPACE_COUNT}</span></span>
+		                <span class="caption text-black-50"># 공간 예약 수</span>
+		            </div>
+		        </div>
+		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+		            <div class="counter-wrap mb-5 mb-lg-0">
+		                <span class="number"><span class="countup text-primary">${usercount.RESERVATION_COUNT}</span></span>
+		                <span class="caption text-black-50"># 공간 예약 사용자</span>
+		            </div>
+		        </div>
+		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="">
+		            <div class="counter-wrap mb-5 mb-lg-0">
+		                <span class="number"><span class="countup text-primary">${usercount.USER_COUNT}</span></span>
+		                <span class="caption text-black-50"># 판매되는 공간</span>
+		            </div>
+		        </div>
+			</div>
+			</div>
+      
             <div class="row justify-content-center  text-center mb-15" style= "margin-top: 40px;">
             <div class="col-lg-15">
                <h2 class="font-weight-bold heading text-primary mb-4" style= "font-weight: bold;"> SpaceCollection을 선택해주신 많은 고객님들께 감사드립니다. </h2>

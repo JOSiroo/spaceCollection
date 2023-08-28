@@ -26,4 +26,9 @@
 		order by category_no
 	</select>
 	
+	<select id="selectHostReservation" resultType="map">
+		select * from host_reservation_view
+		where user_num = #{userNum}
+	</select>
+	
 </mapper>

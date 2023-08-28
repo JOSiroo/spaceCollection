@@ -1,6 +1,5 @@
 package com.sc.spaceCollection.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,16 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.board.model.BoardService;
-import com.sc.spaceCollection.board.model.UserBoardVO;
-import com.sc.spaceCollection.boardType.model.BoardTypeService;
-import com.sc.spaceCollection.boardType.model.BoardTypeVO;
 import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
-import com.sc.spaceCollection.common.ConstUtil;
-import com.sc.spaceCollection.common.PaginationInfo;
-import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -39,60 +33,34 @@ public class UserBoardController {
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
 		logger.info("이벤트 게시물 조회결과");
-		List<UserBoardVO> list = boardService.selectByeventBoard();
+		List<Map<String, Object>> list = boardService.selectByeventBoard();
 		logger.info("이벤트 게시물 조회결과, list.size = {}", list.size());
 		logger.info("이벤트 게시물 조회결과, UserBoardVO = {}", list);
 		
-<<<<<<< HEAD
 		model.addAttribute("list", list);
 		return "userMain/board/boardList"; 
-=======
-		List<Map<String, Object>> mapList = boardService.selectByeventBoard();
-		logger.info("게시물 상세조회 결과, mapList = {}", mapList);
-		
-		/*
-		 * List<UserBoardVO> list = boardService.selectByeventBoard();
-		 * logger.info("이벤트 게시물 조회결과, list.size = {}", list.size());
-		 * logger.info("이벤트 게시물 조회결과, UserBoardVO = {}", list);
-		 */
-		
-		List<String> strList = new ArrayList<>();
-		
-		for(int i = 0; i < mapList.size(); i++) {
-			Map<String, Object> map = mapList.get(i);
-			String str = ((String) map.get("BOARD_CONTENT")).split("</p>")[0];
-			 String str1 = str.substring(str.indexOf("src=\""), str.indexOf("\""));
-			
-			map.put("boardContent", str);
-			/* logger.info("str1:{}", str1); */
-			logger.info("strList: {}", map.get("boardContent"));
-		}
-		return "userMain/board/boardList";
->>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection.git
 	}
 
 	@GetMapping("/boardDetail")
-	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, String boardTypeId, HttpSession session,
-			Model model) {
-		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardTypeId);
+	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, Model model) {
+		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 
-		if (boardTypeId == null) {
+		if (boardNum == 0) {
 			model.addAttribute("msg", "잘못된 URL 입니다.");
 			model.addAttribute("url", "/user/boardList");
 			return "common/message";
 		} else {
 			Map<String, Object> map = boardService.selectByeventBoardNum(boardNum);
-			logger.info("게시물 상세조회 결과, map = {}", map);
-			if (map == null || map.isEmpty()) {
+			List<CommentsVO> list = commentsService.selectUserComments(boardNum);
+			logger.info("게시물 boardNum, boardNum = {}", boardNum);
+			logger.info("댓글 comments, list = {}", list);
+			if (map == null ) {
 				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
 				model.addAttribute("url", "/userMain/board/boardList");
 				return "common/message";
 			} else {
-				String userid = (String) session.getAttribute("userid");
-				List<Map<String, Object>> list = commentsService.selecteventByBoardNum(boardNum);
-				logger.info("댓글 조회결과, list.size = {}", list.size());
+				logger.info("게시물 내용 조회결과, map = {}", map);
 
-				model.addAttribute("userid", userid);
 				model.addAttribute("map", map);
 				model.addAttribute("list", list);
 
@@ -118,6 +86,50 @@ public class UserBoardController {
 		model.addAttribute("url", url);
 
 		return "userMain/common/message";
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentLoad")
+	@ResponseBody
+	public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, 
+									@RequestParam(defaultValue = "0")int addNum) {
+		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
+		
+		CommentsVO commentsVo = new CommentsVO();
+		commentsVo.setBoardNum(boardNum);
+		commentsVo.setAddNum(addNum);
+		
+		List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVo);
+		for(Map<String, Object> map : list) {
+			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 10));
+			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
+		}
+
+		logger.info("ajax - 댓글 조회결과, list.size = {}", list.size());
+		
+		return list;
+	}
+	
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsDelete")
+	@ResponseBody
+	public int ajax_commentsDelete(@RequestParam(defaultValue = "0")int commentNum) {
+		logger.info("ajax - 댓글 삭제, 파라미터 commentNum = {}", commentNum);
+		
+		int cnt = commentsService.updateCommentsDelFlag(commentNum);
+		logger.info("ajax - 댓글 삭제 결과, cnt = {}", cnt);
+		
+		return cnt;
+	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
+	@ResponseBody
+	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
+		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
+		
+		int cnt = commentsService.updateComments(commentsVo);
+		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
+		
+		return cnt;
 	}
 
 }

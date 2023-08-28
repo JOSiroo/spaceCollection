@@ -2,6 +2,8 @@ package com.sc.spaceCollection.controller;
 
 import java.util.ArrayList;
 
+
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.review.model.ReviewService;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
@@ -29,6 +32,9 @@ public class UserMainController {
    private static final Logger logger = LoggerFactory.getLogger(UserMainController.class);
    private final SpaceService spaceService;
    private final SpaceDetailService sdService;
+   private final ReviewService reviewService;
+   
+   
    
    @RequestMapping("/board")
    public String test() {
@@ -47,9 +53,24 @@ public class UserMainController {
        List<Integer> priceList = new ArrayList<>();
        logger.info("새로운 공간 보여주기, list.size={}", list.size());
        
+       List<Map<String, Object>> map = reviewService.selectNewReview();
+       logger.info("리뷰, reviewlist={}", map.size());
+       
+       Map<String, Object> usercount = spaceService.usercount();
+       logger.info("카운팅, userCounts={}", usercount);
+
        model.addAttribute("list", list);
+       model.addAttribute("map", map);
+       model.addAttribute("usercount", usercount);
+       
        
        return "index";
+   }
+   
+   //쿠폰
+   @RequestMapping("/coupon")
+   public String coupon(Model model) {
+	   return "userMain/board/coupon";
    }
    
    //서비스약관
@@ -64,6 +85,7 @@ public class UserMainController {
 	   return "userMain/event";
    }
    
+   
    //회사소개
    @RequestMapping("/about")
    public String about() {
@@ -73,6 +95,7 @@ public class UserMainController {
    //사업자
    @RequestMapping("/Certificate")
    public String Certificate() {
+		/* private final ApiExamCaptchaNkeyResult captcha; */
 	   return "userMain/Certificate";
    }
    
