@@ -182,6 +182,9 @@
         success: function (authObj) {
             alert(JSON.stringify(authObj));
             Kakao.Auth.setAccessToken(authObj.access_token);
+            location.href=
+            	"https://kauth.kakao.com/oauth/authorize?client_id=ea07e405c3b0c040cbfc223938101433&prompt=login"
+               +"&redirect_uri=http://localhost:9091/spaceCollection/oauth/kakao&response_type=code";
         },
         fail: function (err) {
             alert(JSON.stringify(err));

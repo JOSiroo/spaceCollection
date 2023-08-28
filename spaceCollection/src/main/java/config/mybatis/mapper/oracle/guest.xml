@@ -54,6 +54,24 @@
 		where USER_Num=#{userNum}
 	</select>
 	
+	<insert id="insertKakaoUser" parameterType="guestVo">
+		<selectKey keyProperty="userNum" order="BEFORE" resultType="int">
+			select USER_INFO_SEQ.nextval from dual
+		</selectKey>
+		insert into USER_INFO(USER_NUM, USER_NAME, USER_ID, USER_EMAIL, USER_SNS_CODE, UUSER_PROFILE_IMAGE)
+		values(#{userNum},#{userName},#{userId},#{userEmail},#{userSnsCode},#{userProfileImage})
+	</insert>
 	
+	<select id="selectKakaoUser" parameterType="guestVo" resultType="int">
+		select count(*) from USER_INFO
+		where USER_ID=#{userId}
+		and USER_SNS_CODE=#{userSnsCode}
+	</select>
+	
+	<select id="checkedUserIdBySnsCode" parameterType="String" resultType="int">
+		select count(*) from USER_INFO
+		where USER_ID=#{userId}
+		and USER_SNS_CODE is not null
+	</select>
 	
 </mapper>
