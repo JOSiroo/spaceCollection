@@ -584,7 +584,7 @@
 							<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
 								<!-- 예약 내역 시작 -->
 								<div class="tab-pane fade pt-3" id="reservationList">
-									<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm">
+									<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm" onsubmit="return false">
 					 							<input type="hidden" name="currentPage" value="1">
 					 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
 					 												
@@ -645,7 +645,7 @@
 								<!-- 예약 내역 끝 -->
 								<!-- 후기 내역 시작 -->
 								<div class="tab-pane fade pt-3" id="reviewList">
-									<form class="row gx-3 gy-2 align-items-center" name="reviewSearchFrm">
+									<form class="row gx-3 gy-2 align-items-center" name="reviewSearchFrm" onsubmit="return false">
 										
 					 							<input type="hidden" name="currentPage" value="1">
 					 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
@@ -711,8 +711,7 @@
 								<!-- 후기 내역 끝 -->
 								<!-- 댓글 내역 시작 -->
 								<div class="tab-pane fade pt-3" id="commentList">
-									<form class="row gx-3 gy-2 align-items-center"
-										name="commentsSearchFrm">
+									<form class="row gx-3 gy-2 align-items-center" name="commentsSearchFrm" onsubmit="return false">
 
 										<input type="hidden" name="currentPage" value="1"> 
 										<input type="hidden" name="userId" value="${memberMap.USER_ID }">

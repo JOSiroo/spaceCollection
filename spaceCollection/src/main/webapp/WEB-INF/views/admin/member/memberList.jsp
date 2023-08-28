@@ -45,6 +45,12 @@
 		color: red;
 	}
 	
+	#MChkDiv{
+		margin-top: 5px;
+	}
+	
+	
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -78,6 +84,10 @@
 					$('form[name=trFrm]').submit();
 				});
 			}
+		});
+		
+		$('#excelDownloadBt').click(function() {
+			$('#excelModal').modal('show');
 		});
 			
 	});
@@ -200,9 +210,15 @@
 							  	</ul>
 							</nav>
 						
-						</div>	
+						</div>
+						
 						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
 							<div id="searchDiv">
+							<div style="float: left;">
+								<button class="btn btn-light" type="button" id="excelDownloadBt">
+									<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
+								</button>
+							</div>
 								<div class="col-auto">
 									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
 								</div>
@@ -265,6 +281,45 @@
 		</div>
 	</div>
 	<!-- EndModal2 -->
+	<!-- Moda3 -->
+	<div class="modal fade" id="excelModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">엑셀 다운로드 항목 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<span>엑셀에 포함시킬 데이터를 선택하세요.</span>
+					<div class="container text-center " id="MChkDiv">
+						<div class="row align-items-start">
+							<div class="col">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="${userInfo.userNum }"
+										id="userNum" name="userNum">
+									<label class="form-check-label" for="userNum">회원번호</label>
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="${userInfo.userName }"
+										id="userName" name="userName">
+									<label class="form-check-label" for="userName">이름</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-success" id="okBt">다운로드</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal3 -->
 	
 </main>
 <!-- End #main -->
