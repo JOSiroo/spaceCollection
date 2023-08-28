@@ -52,4 +52,8 @@
 		WHERE REVIEW_DEL_FLAG IS NULL
 	</select>
 	
+	<select id="spaceDetailReview"  resultType="map">
+		select * from review_detail_view
+		where space_num = #{spaceNum}
+	</select>
 </mapper>

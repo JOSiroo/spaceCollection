@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sc.spaceCollection.qna.model.QnaService;
 import com.sc.spaceCollection.qna.model.QnaVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
+import com.sc.spaceCollection.review.model.ReviewService;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class SpaceDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(SpaceDetailController.class);
 	private final SpaceDetailService spaceDetailService;
+	private final ReviewService reviewService;
 	private final QnaService qnaService;
 	
 	@GetMapping("/detail")
@@ -43,12 +45,16 @@ public class SpaceDetailController {
 		}
 		
 		RefundVO refundVo = spaceDetailService.selectRefund(vo.getRefundNum());
+		List<Map<String, Object>> reviewList = reviewService.spaceDetailReview(spaceNum);
 		
-		logger.info("공간 상세 페이지 resultMap = {}", resultMap);
-		logger.info("공간 상세 페이지 qnaList = {}", qnaList);
+		
+		logger.info("공간 상세 페이지 reviewList = {}", reviewList);
+		logger.info("공간 상세 페이지 resultMap = {}", resultMap.size());
+		logger.info("공간 상세 페이지 qnaList = {}", qnaList.size());
 		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
 		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
+		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("vo", vo);
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("map", resultMap.get(vo));

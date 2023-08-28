@@ -63,6 +63,27 @@
 	border: none;
 	background : #ffd014;
 }
+.goHistory{
+	color:white;
+	border-radius: 1rem;
+	width : 69%;
+	height: 46px;
+	font-size:16px;
+	font-weight:700;
+	border: none;
+	background : #193D76;
+}
+.goHistory:hover{
+	color:black;
+	border-radius: 1rem;
+	width : 69%;
+	height: 46px;
+	font-size:16px;
+	font-weight:700;
+	border: none;
+	background : white;
+	border:#193D76 solid 4px;
+}
 .goReservation:hover{
 	background : white;
 	border:#ffd014 4px solid;
@@ -98,9 +119,17 @@
 							<div class="col-8 innerRight"><fmt:formatNumber value="${map.RESERVE_PRICE}" pattern="#,###" />원</div>
 						</div>
 					</div>
+					<jsp:useBean id="now" class="java.util.Date" />
+					<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
+					<fmt:parseDate value="${map.RESERVE_START_DAY}" var="parsedDate" pattern="yyyy-MM-dd" />
 					<div class = "col-2 reserveBtn">
 					<c:if test="${map.RESERVATION_DEL_FLAG != 'Y'}">
-						<button class = "goReservation" onclick = "goReservation(${map.RESERVATION_NUM})">예약 보러가기</button>
+						<c:if test="${now.before(parsedDate)}">
+							<button class = "goReservation" onclick = "goReservation(${map.RESERVATION_NUM})">예약 내역</button>
+						</c:if>
+						<c:if test="${now.after(parsedDate)}">
+							<button class = "goHistory" onclick = "goReservation(${map.RESERVATION_NUM})">이용 내역</button>	
+						</c:if>
 					</c:if>
 					<c:if test="${map.RESERVATION_DEL_FLAG == 'Y' }">
 						<button class = "goReservation canceled" onclick = "goReservation(${map.RESERVATION_NUM})" style = "background: lightgrey;">환불됨</button>
