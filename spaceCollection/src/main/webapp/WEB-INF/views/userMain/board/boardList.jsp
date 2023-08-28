@@ -59,7 +59,8 @@
 					<div class="col align-center">
 						<div class="titleImg">
 							<a href="#" class="titleButton"
-							 onclick="location.href='<c:url value='/user/boardDetail?boardNum=${map.BOARD_NUM }'/>';" style="cursor:pointer;">
+							 onclick="location.href='<c:url value='/user/boardDetail?boardNum=${map.BOARD_NUM }'/>';" 
+							 style="cursor:pointer;">
 							 <img class="titleButtonImg"  alt="${map.BOARD_TITLE } "
 							 src="https://kr.object.ncloudstorage.com/scloud-service/service/${map.BOARD_TITLE }"
 							 /> 
