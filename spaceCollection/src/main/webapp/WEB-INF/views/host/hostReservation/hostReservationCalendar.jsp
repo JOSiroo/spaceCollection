@@ -16,6 +16,7 @@
     	    locale: 'ko',
     	    aspectRatio: 1.35,
     	    height: 1000,
+    	    weekends: true, 
     	    events: [
     	      {
     	        title: '이벤트 1',
@@ -96,12 +97,41 @@
     <script type="text/javascript">
     </script>
 <style type="text/css">
+	body{
+		background: #efefef;
+	}
+	#calendar{
+		border : #193D76 solid 4px;
+	}
 	.calendarHeader{
 		margin-top:75px;
 	}
 	.calendar-wrapper{
 		width:80%;
 		margin: 5% 0% 0% 15%;
+		background: white;
+	}
+	.fc .fc-button{
+		background: #193D76 !important;
+		font-weight: bold;
+	}
+	.fc .fc-button:disabled{
+		opacity:1 !important;
+		background: #193D76 !important;
+		color:grey;
+	}
+	.fc-icon .fc-icon-chevron-right{
+		background: #193D76 !important;
+	} 
+	.fc-icon .fc-icon-chevron-left{
+		background: #193D76 !important;
+	} 
+	.fc-header-toolbar.fc-toolbar {
+		background: #ffd014;
+		margin-bottom:0 !important;
+		padding: 0.5% 2% 0.5% 2% !important;
+	}
+	.fc-toolbar-chunk{
 	}
 	.fc-event, .fc-event-dot {
 		cursor: pointer;
@@ -110,6 +140,37 @@
 		height: 100px;
 		background: red;
 		z-index:1000;
+	}
+	.fc-col-header-cell{
+		background: inherit !important;
+	}
+
+	.fc-day-sat.fc-day-other{
+		background: inherit;
+	}
+	
+	.fc-day-sun.fc-day-other{
+		background: inherit;
+	}
+	.fc-col-header-cell.fc-day.fc-day-sun .fc-col-header-cell-cushion {
+	  color: red;
+	}
+	.fc-col-header-cell.fc-day.fc-day-sat .fc-col-header-cell-cushion {
+	  color: blue;
+	}
+	.fc-day-sat {
+		background-color: rgb(135, 206, 250,0.3); /* 토요일 배경색 */
+	}
+	
+	.fc-day-sun {
+		background-color: rgb(255, 182, 193, 0.3); /* 일요일 배경색 */
+	}
+	.fc-daygrid-day-number{
+		font-size:16px;
+		font-weight: bold;
+	}
+	.fc-toolbar-title{
+		font-weight: bold;
 	}
 </style>
 <body>
