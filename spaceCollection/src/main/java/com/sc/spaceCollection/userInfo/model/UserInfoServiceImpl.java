@@ -24,13 +24,14 @@ public class UserInfoServiceImpl implements UserInfoService{
 		return userInfoDao.getTotalRecord(vo);
 	}
 
-	@Override
-	public Map<String, Object> selectByUserNum(int userNum) {
-		return userInfoDao.selectByUserNum(userNum);
-	}
 
 	@Override
 	public int memberWithdrawal(String userId) {
 		return userInfoDao.memberWithdrawal(userId);
+	}
+
+	@Override
+	public Map<String, Object> selectByUserId(String userId) {
+		return userInfoDao.selectByUserId(userId);
 	}
 }
