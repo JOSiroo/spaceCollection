@@ -12,10 +12,16 @@
 	border-top:2px solid lightgrey;
 	border-left:2px solid lightgrey;
 	border-right:2px solid lightgrey;
+	border-bottom:2px solid lightgrey;
+	background:white;
+	margin-bottom:1%;
+	
 }
 .list-Wrapper {
 	padding: 4% 20% 4% 20%;
 	text-align: center;
+	background: rgb(246, 246, 246);
+}
 }
 .row.wrapper{
 	border-bottom: 2px solid lightgrey;
@@ -97,7 +103,7 @@
 	<div class="asd"></div>
 	<h1 style = "text-align: center; margin-top : 1%;padding-top:4%; font-weight: 700;"> 예약 내역 </h1>
 	<br>
-	<hr>
+	<br>
 	<div class="list-Wrapper">
 		<c:forEach var="map" items="${list}">
 			<div class="container text-center">

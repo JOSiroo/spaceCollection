@@ -91,5 +91,9 @@ public class HostController {
 		return "host/report/draft";
 	}
 	
-	
+	@RequestMapping("/reservation")
+	public String hostReservation() {
+		
+		return "host/hostReservation/hostReservation";
+	}
 }
