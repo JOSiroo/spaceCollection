@@ -45,6 +45,18 @@
 		color: red;
 	}
 	
+	#MChkDiv{
+		margin-top: 5px;
+		text-align: left;
+	}
+	
+	div#MChkDiv label {
+    	margin-left: -107px;
+	}
+	
+	
+	
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -72,12 +84,16 @@
 				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키키겠습니까?");
+				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.");
 				$('#confirm2').modal("show");
 				$('#okBt').click(function() {
 					$('form[name=trFrm]').submit();
 				});
 			}
+		});
+		
+		$('#excelDownloadBt').click(function() {
+			$('#excelModal').modal('show');
 		});
 			
 	});
@@ -96,7 +112,7 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">회원 관리</li>
 				<li class="breadcrumb-item active">
-					회원관리 
+					회원 관리 
 				</li>
 			</ol>
 		</nav>
@@ -109,7 +125,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>회원관리</a></h5>
+ 						<h5 class="card-title" style="font-weight: bold;"><a>회원 관리</a></h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
@@ -200,9 +216,15 @@
 							  	</ul>
 							</nav>
 						
-						</div>	
+						</div>
+						
 						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
 							<div id="searchDiv">
+							<div style="float: left;">
+								<button class="btn btn-light" type="button" id="excelDownloadBt">
+									<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
+								</button>
+							</div>
 								<div class="col-auto">
 									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
 								</div>
@@ -265,6 +287,44 @@
 		</div>
 	</div>
 	<!-- EndModal2 -->
+	<!-- Moda3 -->
+	<div class="modal fade" id="excelModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">엑셀 다운로드 항목 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<span>엑셀에 포함시킬 데이터를 선택하세요.</span>
+					<div class="container text-center " id="MChkDiv">
+					<c:set var="columnListEng" value="${fn:split('userNum,userName,userHp,userId,userEmail,userRegDate,userOutType,userOutDate,zipcode,address,addressDetail,userMarketingEmailOk,userMarketingSmsOk', ',') }"/>
+					<c:set var="columnListKor" value="${fn:split('회원번호,이름,연락처,아이디,이메일,가입일,가입상태,탈퇴일,우편번호,주소,상세주소,마케팅 동의(이메일),마케팅 동의(SMS)', ',') }"/>
+						<div class="row align-items-start">
+							<div class="col">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value=""
+										id="userNum" name="userNum">
+									<label class="form-check-label" for="userNum">회원번호</label>
+								</div>
+								
+							</div>
+							<div class="col">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-success" id="okBt">다운로드</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal3 -->
 	
 </main>
 <!-- End #main -->

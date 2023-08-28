@@ -53,7 +53,7 @@ public class GuestController {
 		String msg="회원가입의 실패하셨습니다.", url="guest/register";
 		if(cnt>0) {
 			msg=guestVo.getUserId()+"님 가입을 추카드려요.";
-			url="login/login";
+			url="/login/login";
 		}
 		
 		model.addAttribute("msg",msg);

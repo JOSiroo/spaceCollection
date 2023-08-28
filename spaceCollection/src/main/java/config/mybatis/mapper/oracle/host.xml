@@ -26,4 +26,19 @@
 		order by category_no
 	</select>
 	
+	<select id="selectHostReservation" resultType="map">
+		select *
+		from
+		(
+		    select rownum as rn, f.* 
+		    from 
+		    (
+		        select * from host_reservation_view
+		        where user_num = #{userNum}
+		    )f
+		)A
+		<![CDATA[ 
+		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
+	
 </mapper>
