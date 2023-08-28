@@ -1,16 +1,20 @@
 package com.sc.spaceCollection.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -18,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/host")
 public class HostController {
 	private static final Logger logger = LoggerFactory.getLogger(HostController.class);
-	
+	private final GuestService guestService;
 	private final HostService hostService;
 	
 	@RequestMapping("/index")
@@ -92,8 +96,21 @@ public class HostController {
 	}
 	
 	@RequestMapping("/reservation")
-	public String hostReservation() {
+	public String hostReservation(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		logger.info("호스트 예약 조회, 파라미터 userNum = {}", userNum);
+		
+		List<Map<String, Object>> list = hostService.selectHostReservation(userNum);
+		logger.info("호스트 예약 조회 결과 list = {}", list);
+		
+		model.addAttribute("list", list);
 		
 		return "host/hostReservation/hostReservation";
+	}
+	@RequestMapping("/reservationDetail")
+	public String hostReservationDetail(@RequestParam int reservationNum) {
+		
+		return "host/hostReservation/hostReservationDetail";
 	}
 }
