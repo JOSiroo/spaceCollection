@@ -121,8 +121,8 @@
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 예약 정보 검색</label>
-			<input type="text" name = "reservationInfo" placeholder="예약번호 또는 예약자명">
-			<button class="searchBt">검색</button>
+			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약번호 또는 예약자명">
+			<button class="searchBt" onclick="search()">검색</button>
 		</div>
 		<div class="row">
 			<div class = "col-6"></div>
@@ -137,9 +137,13 @@
 			</div>		
 			<div class="col-2">
 				<select class = "statusSelector">
-					<option>전체상태</option>
-					<option>이용완료</option>
-					<option>취소환불</option>
+					<option value = "default">전체상태</option>
+					<option <c:if test="${param.status == 'finished'}">selected</c:if> 
+						value = "finished">이용완료</option>
+					<option <c:if test="${param.status == 'before'}">selected</c:if> 
+						value = "before">이용전</option>
+					<option <c:if test="${param.status == 'canceled'}">selected</c:if>
+						value = "canceled">취소환불</option>
 				</select>
 			</div>		
 			<div class="col-2">
@@ -233,24 +237,47 @@
 		});
 	});
 	
+	const queryString = window.location.search;
+	const params = new URLSearchParams(queryString);
+	var currentTotalUrl = window.location.href;
+	var currentUrl = currentTotalUrl.split("?");
+	
 	function goReservation(reservationNum){
 		location.href="<c:url value='/host/reservationDetail?reservationNum="+reservationNum+"'/>";
+	}
+	
+	function search(){
+		var searchKeyword = document.getElementById('searchKeyword');
+		if(searchKeyword.value.length == 0){
+			alert('검색어를 입력하세요');
+			searchKeyword.focus();
+		}else{
+			params.set("keyword",searchKeyword.value);
+			location.href = currentUrl[0]+"?"+params;
+		}
 	}
 	
 	var orderSelector = document.getElementsByClassName('orderSelector');
 	orderSelector[0].addEventListener('change',function(){
 		if(this.value !== 'default'){
-			location.href = "<c:url value='/host/reservation?page="+${param.page}+"&order="+this.value+"'/>";
+			params.set("order",this.value);
+			location.href = currentUrl[0]+"?"+params;
+		}else{
+			params.delete("order");
+			location.href = currentUrl[0]+"?"+params;
 		}
 	});
 	
 	var statusSelector = document.getElementsByClassName('statusSelector');
 	statusSelector[0].addEventListener('change',function(){
-		var currentUrl = window.location.href;
-		var currentparam = 
 		if(this.value !== 'default'){
-			location.href = currentUrl+"&status="+this.value;
+			params.set("status",this.value);
+			location.href = currentUrl[0]+"?"+params;
+		}else{
+			params.delete("status");
+			location.href = currentUrl[0]+"?"+params;
 		}
 	});
+	
 </script>
 <%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
