@@ -47,7 +47,13 @@
 	
 	#MChkDiv{
 		margin-top: 5px;
+		text-align: left;
 	}
+	
+	div#MChkDiv label {
+    	margin-left: -107px;
+	}
+	
 	
 	
 	
@@ -293,20 +299,19 @@
 				<div class="modal-body">
 					<span>엑셀에 포함시킬 데이터를 선택하세요.</span>
 					<div class="container text-center " id="MChkDiv">
+					<c:set var="columnListEng" value="${fn:split('userNum,userName,userHp,userId,userEmail,userRegDate,userOutType,userOutDate,zipcode,address,addressDetail,userMarketingEmailOk,userMarketingSmsOk', ',') }"/>
+					<c:set var="columnListKor" value="${fn:split('회원번호,이름,연락처,아이디,이메일,가입일,가입상태,탈퇴일,우편번호,주소,상세주소,마케팅 동의(이메일),마케팅 동의(SMS)', ',') }"/>
 						<div class="row align-items-start">
 							<div class="col">
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="${userInfo.userNum }"
+									<input class="form-check-input" type="checkbox" value=""
 										id="userNum" name="userNum">
 									<label class="form-check-label" for="userNum">회원번호</label>
 								</div>
+								
 							</div>
 							<div class="col">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="${userInfo.userName }"
-										id="userName" name="userName">
-									<label class="form-check-label" for="userName">이름</label>
-								</div>
+								
 							</div>
 						</div>
 					</div>
