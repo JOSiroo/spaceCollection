@@ -67,14 +67,17 @@
 			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('#memberWithdrawalBt').click(function() {
+		$('#memberReturnBt').click(function() {
 			if($('td>input[type=checkbox]:checked').length<1){
-				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
+				$('#confirm1 .modal-body').html("복구시킬 회원을 선택해주세요.");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키키겠습니까?");
+				$('#okBt').addClass('btn-success');
+				$('#okBt').html('복구');
+				$('#confirm2 .modal-body').html("선택된 회원을 복구시키겠습니까?");
 				$('#confirm2').modal("show");
 				$('#okBt').click(function() {
+					$(this).removeClass('btn-success');
 					$('form[name=trFrm]').submit();
 				});
 			}
@@ -90,13 +93,13 @@
 <main id="main" class="main">
 
 	<div class="pagetitle">
-		<h1>회원 관리</h1>
+		<h1>탈퇴 회원 관리</h1>
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">회원 관리</li>
 				<li class="breadcrumb-item active">
-					회원관리 
+					탈퇴 회원 관리 
 				</li>
 			</ol>
 		</nav>
@@ -109,19 +112,20 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>회원관리</a></h5>
+ 						<h5 class="card-title" style="font-weight: bold;"><a>탈퇴 회원 관리</a></h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
-                		<button type="button" class="btn btn-outline-green" id="memberReturnBt">회원 복구</button>
+                		<button type="button" class="btn btn-outline-success" id="memberReturnBt">회원 복구</button>
 						<table class="table">
 							<colgroup>
 								<col style="width: 5%";  />
 								<col style="width:12%";  />
 								<col style="width:12%;" />
-								<col style="width:40%;" />
+								<col style="width:20%;" />
+								<col style="width:20%;" />		
 								<col style="width:15%;" />		
 								<col style="width:15%;" />		
 							</colgroup>
@@ -132,17 +136,18 @@
 									<th scope="col">이름</th>
 									<th scope="col">아이디</th>
 									<th scope="col">이메일</th>
+									<th scope="col">탈퇴일</th>
 									<th scope="col">가입일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:if test="${empty list }">
 									<tr>
-										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
+										<td colspan="7" style="text-align: center;">동록된 회원이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
+									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberReturn'/>">
 										<c:set var="i" value="0"/>
 										<c:forEach var="userInfoVo" items="${list }">
 											<tr>
@@ -160,6 +165,9 @@
 												</td>
 												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userEmail }
+												</td>
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
+													<fmt:formatDate value="${userInfoVo.userOutDate }" pattern="yyyy-MM-dd"/>
 												</td>
 												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
@@ -259,7 +267,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-danger" id="okBt">삭제</button>
+					<button type="button" class="btn" id="okBt"></button>
 				</div>
 			</div>
 		</div>

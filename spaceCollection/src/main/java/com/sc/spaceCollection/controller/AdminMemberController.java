@@ -175,9 +175,10 @@ public class AdminMemberController {
 		int cnt = userInfoService.memberWithdrawal(userId);
 		logger.info("회원탈퇴 결과, cnt = {}", cnt);
 		
-		String msg = "탈퇴처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberList";
+		String msg = "탈퇴처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberDetail?memberId=" + userId;
 		if(cnt>0) {
 			msg = "회원 탈퇴가 완료되었습니다.";
+			url = "/admin/member/memberList";
 		}
 		
 		model.addAttribute("msg", msg);
@@ -206,6 +207,78 @@ public class AdminMemberController {
 		String msg = "탈퇴처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberList";
 		if(sum == total) {
 			msg = "회원 탈퇴가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@RequestMapping("/withdrawalMemberList")
+	public void withdrawalMemberList(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("탈퇴 회원목록 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<UserInfoVO> list = userInfoService.selectWithdrawalMember(searchVo);
+		logger.info("탈퇴 회원목록 조회 결과, list.size = {}", list.size());
+		
+		int totalRecord = userInfoService.getWithdrawalTotalRecord(searchVo);
+		logger.info("전체 탈퇴 회원 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		model.addAttribute("list", list );
+		model.addAttribute("searchVo", searchVo );
+		model.addAttribute("pagingInfo", pagingInfo );
+	}
+	
+	@GetMapping("/memberReturn")
+	public String memberReturn_get(@RequestParam String userId, Model model) {
+		logger.info("회원 복구, 파라미터 userId = {}", userId);
+		
+		int cnt = userInfoService.memberReturn(userId);
+		logger.info("회원 복구 결과, cnt = {}", cnt);
+		
+		String msg = "회원 복구에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/memberDetail?userId="+userId;
+		if(cnt>0) {
+			msg = "회원 복구가 완료되었습니다.";
+			url = "/admin/member/withdrawalMemberList";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+	}
+	
+	@PostMapping("/memberReturn")
+	@Transactional
+	public String memberReturn_post(@ModelAttribute UserInfoListVO listVo, Model model) {
+		logger.info("회원복구, 파라미터 listVo = {}", listVo);
+		
+		int sum = 0;
+		int total = 0;
+		int cnt = 0;
+		for(UserInfoVO vo : listVo.getUserInfoItemList()) {
+			if(vo.getUserId() != null && !vo.getUserId().isEmpty()) {
+				cnt = userInfoService.memberReturn(vo.getUserId());
+				sum += cnt;
+				logger.info("회원복구 결과, cnt = {}", cnt);
+				total ++;
+			}
+		}
+		
+		String msg = "복구처리에 실패하였습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/member/withdrawalMemberList";
+		if(sum == total) {
+			msg = "회원 복구가 완료되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);

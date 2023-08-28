@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
+	main>div>nav{
+		float: left;
+	}
+	
+	section{
+		clear: both;
+	}
+	
 	div.row{
 		margin-top: 10px;
 	}
@@ -60,8 +68,12 @@
 		color: red;
 	}
 	
-	#withdrawal{
+	#return, #withdrawal{
 		margin-top: 50px;
+	}
+	
+	.goList{
+		margin-top: -10px;
 	}
 </style>
 <script type="text/javascript">
@@ -113,15 +125,41 @@
 		$('#withdrawal').click(function() {
 			$('#okBt').addClass('withdrawal');
 			$('.bi-exclamation-circle').css('color', 'red');
-			$('.modal-body').html('해당 회원을 탈퇴시키겠습니까?');
+			$('.modal-body').html('해당 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.');
+			$("#okBt").addClass('btn-danger');
 			$('#okBt').html('탈퇴');
 			$('#cancelBt').html('취소');
 			$('#okBt').show();
 			$('#confirm1').modal('show');
 			$('.withdrawal').click(function() {
 				$(this).removeClass('withdrawal')
+				$("#okBt").removeClass('btn-danger');
 				location.href="/spaceCollection/admin/member/memberWithdrawal?userId=" + $('main>input[name=userId]').val();
 			});
+		});
+		
+		$('#return').click(function() {
+			$('#okBt').addClass('return');
+			$('.bi-exclamation-circle').css('color', '#ffd600');
+			$('.modal-body').html('해당 회원을 복구시키겠습니까?');
+			$('#okBt').addClass('btn-success');
+			$('#okBt').html('복구');
+			$('#cancelBt').html('취소');
+			$('#okBt').show();
+			$('#confirm1').modal('show');
+			$('.return').click(function() {
+				$(this).removeClass('return');
+				$("#okBt").removeClass('btn-success');
+				location.href="/spaceCollection/admin/member/memberReturn?userId=" + $('main>input[name=userId]').val();
+			});
+		});
+		
+		$('#goMList').click(function() {
+			location.href="<c:url value = '/admin/member/memberList'/>";
+		});
+		
+		$('#goWMList').click(function() {
+			location.href="<c:url value = '/admin/member/withdrawalMemberList'/>";
 		});
 		
 	});
@@ -438,6 +476,14 @@
 				<li class="breadcrumb-item active">회원 상세보기</li>
 			</ol>
 		</nav>
+		<div style="float: right;">
+			<c:if test="${memberMap.USER_OUT_TYPE != 'Y'}">
+				<button class="btn btn-primary goList" id="goMList">회원 목록</button>
+			</c:if>
+			<c:if test="${memberMap.USER_OUT_TYPE == 'Y'}">
+				<button class="btn btn-primary goList" id="goWMList">회원 목록</button>
+			</c:if>
+		</div>
 	</div>
 	<!-- End Page Title -->
 
@@ -463,19 +509,20 @@
 								<button class="nav-link active" data-bs-toggle="tab"
 									data-bs-target="#profileOverview">회원 정보</button>
 							</li>
-							<li class="nav-item">
-								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#reservationList" name="reservationTab">예약 내역</button>
-							</li>
-							<li class="nav-item">
-								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#reviewList" name="reviewTab">리뷰 내역</button>
-							</li>
-							<li class="nav-item">
-								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#commentList" name="commentsTab">댓글 내역</button>
-							</li>
-
+							<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#reservationList" name="reservationTab">예약 내역</button>
+								</li>
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#reviewList" name="reviewTab">리뷰 내역</button>
+								</li>
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#commentList" name="commentsTab">댓글 내역</button>
+								</li>
+							</c:if>
 						</ul>
 						<div class="tab-content pt-2">
 							<!-- 회원정보 시작 -->
@@ -510,161 +557,165 @@
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">가입일자</div>
 									<div class="col-lg-9 col-md-8">
-										<fmt:parseDate var="userRegDate" value="${memberMap.USER_REG_DATE }" pattern="yyyy-MM-dd" />
-										<fmt:formatDate value="${userRegDate }" pattern="yyyy-MM-dd" />
+										${memberMap.USER_REG_DATE }
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">탈퇴여부</div>
 									<div class="col-lg-9 col-md-8">
 										<c:if test="${memberMap.USER_OUT_TYPE == 'Y' }">
-											<span style="color: red;">탈퇴(탈퇴일 : <fmt:formatDate value="${memberMap.USER_OUT_DATE }" pattern="yyyy-MM-dd" />)</span>
+											<span style="color: red;">탈퇴(탈퇴일 : ${memberMap.USER_OUT_DATE })</span>
 										</c:if>
 										<c:if test="${empty memberMap.USER_OUT_TYPE }">
 											<span style="color: green;">가입</span>
 										</c:if>
 									</div>
 									<div class="col text-center">
-										<button type="button" id="withdrawal" class="btn btn-outline-danger">회원 탈퇴</button>
+										<c:if test="${memberMap.USER_OUT_TYPE == 'Y' }">
+											<button type="button" id="return" class="btn btn-outline-success">회원 복구</button>
+										</c:if>
+										<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
+											<button type="button" id="withdrawal" class="btn btn-outline-danger">회원 탈퇴</button>
+										</c:if>
 									</div>
 								</div>
 							</div>
 							<!-- 회원정보 끝 -->
-							<!-- 예약 내역 시작 -->
-							<div class="tab-pane fade pt-3" id="reservationList">
-								<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm">
-				 							<input type="hidden" name="currentPage" value="1">
-				 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
-				 												
-										<div class="row mb-3">
-											<table class="table">
-												<colgroup>
-													<col style="width: 5%;" />
-													<col style="width: 12%;" />
-													<col style="width: 12%;" />
-													<col style="width: 41%;" />
-													<col style="width: 15%;" />
-													<col style="width: 15%;" />
-												</colgroup>
-												<thead>
-													<tr>
-														<th scope="col"><input type="checkbox" name="chkAll"></th>
-														<th scope="col">예약 번호</th>
-														<th scope="col">장소 구분</th>
-														<th scope="col">예약 장소</th>
-														<th scope="col">예약 인원</th>
-														<th scope="col">예약일</th>
-													</tr>
-												</thead>
-												<tbody id="reservationTbody">
-													<!-- ajax로 예약 내역 출력 -->
-												</tbody>
-											</table>
-											<div class="reservationDivPage">
-												<!-- ajax로 페이징 -->
-											</div>
-												<div id="searchDiv">
-													<div class="col-auto">
-														<button type="button" id="reservationSearchBt" class="btn btn-primary">검색</button>
-													</div>
-													<div class="col-sm-3" id="keyword">
-														<label class="visually-hidden" for="searchKeyword">searchCondition</label>
-														<input type="text" class="form-control" id="searchKeyword"
-															name="searchKeyword" value="${searchVo.searchKeyword }">
-													</div>
-													<div class="col-sm-3" id="select">
-														<select class="form-select" name="searchCondition"
-															id="searchCondition">
-															<option value="reservation_num"
-																<c:if test="${param.searchCondition=='reservation_num'}">
-								            						selected="selected"
-								            					</c:if>>예약번호</option>
-															<option value="space_name"
-																<c:if test="${param.searchCondition=='space_name'}">
-								            						selected="selected"
-								            					</c:if>>예약 장소명</option>
-														</select>
-													</div>
+							<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
+								<!-- 예약 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="reservationList">
+									<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm">
+					 							<input type="hidden" name="currentPage" value="1">
+					 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+					 												
+											<div class="row mb-3">
+												<table class="table">
+													<colgroup>
+														<col style="width: 5%;" />
+														<col style="width: 12%;" />
+														<col style="width: 12%;" />
+														<col style="width: 41%;" />
+														<col style="width: 15%;" />
+														<col style="width: 15%;" />
+													</colgroup>
+													<thead>
+														<tr>
+															<th scope="col"><input type="checkbox" name="chkAll"></th>
+															<th scope="col">예약 번호</th>
+															<th scope="col">장소 구분</th>
+															<th scope="col">예약 장소</th>
+															<th scope="col">예약 인원</th>
+															<th scope="col">예약일</th>
+														</tr>
+													</thead>
+													<tbody id="reservationTbody">
+														<!-- ajax로 예약 내역 출력 -->
+													</tbody>
+												</table>
+												<div class="reservationDivPage">
+													<!-- ajax로 페이징 -->
 												</div>
-										</div>
-		
-								</form>
-							</div>
-							<!-- 예약 내역 끝 -->
-							<!-- 후기 내역 시작 -->
-							<div class="tab-pane fade pt-3" id="reviewList">
-								<form class="row gx-3 gy-2 align-items-center" name="reviewSearchFrm">
-									
-				 							<input type="hidden" name="currentPage" value="1">
-				 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
-				 												
-										<div class="row mb-3">
-											<table class="table">
-												<colgroup>
-													<col style="width: 5%;" />
-													<col style="width: 12%;" />
-													<col style="width: 12%;" />
-													<col style="width: 41%;" />
-													<col style="width: 15%;" />
-													<col style="width: 15%;" />
-												</colgroup>
-												<thead>
-													<tr>
-														<th scope="col"><input type="checkbox" name="chkAll"></th>
-														<th scope="col">리뷰 번호</th>
-														<th scope="col">예약 번호</th>
-														<th scope="col">예약 장소</th>
-														<th scope="col">예약일</th>
-														<th scope="col">작성일</th>
-													</tr>
-												</thead>
-												<tbody id="reviewTbody">
-													<!-- ajax로 예약 내역 출력 -->
-												</tbody>
-											</table>
-											<div class="reviewdivPage">
-												<!-- ajax로 페이징 -->
+													<div id="searchDiv">
+														<div class="col-auto">
+															<button type="button" id="reservationSearchBt" class="btn btn-primary">검색</button>
+														</div>
+														<div class="col-sm-3" id="keyword">
+															<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+															<input type="text" class="form-control" id="searchKeyword"
+																name="searchKeyword" value="${searchVo.searchKeyword }">
+														</div>
+														<div class="col-sm-3" id="select">
+															<select class="form-select" name="searchCondition"
+																id="searchCondition">
+																<option value="reservation_num"
+																	<c:if test="${param.searchCondition=='reservation_num'}">
+									            						selected="selected"
+									            					</c:if>>예약번호</option>
+																<option value="space_name"
+																	<c:if test="${param.searchCondition=='space_name'}">
+									            						selected="selected"
+									            					</c:if>>예약 장소명</option>
+															</select>
+														</div>
+													</div>
 											</div>
-												<div id="searchDiv">
-													<div class="col-auto">
-														<button type="button" id="reviewSearchBt" class="btn btn-primary">검색</button>
-													</div>
-													<div class="col-sm-3" id="keyword">
-														<label class="visually-hidden" for="searchKeyword">searchCondition</label>
-														<input type="text" class="form-control" id="searchKeyword"
-															name="searchKeyword" value="${searchVo.searchKeyword }">
-													</div>
-													<div class="col-sm-3" id="select">
-														<select class="form-select" name="searchCondition"
-															id="searchCondition">
-															<option value="review_num"
-																<c:if test="${param.searchCondition=='review_num'}">
-								            						selected="selected"
-								            					</c:if>>리뷰번호</option>
-															<option value="reservation_num"
-																<c:if test="${param.searchCondition=='reservation_num'}">
-								            						selected="selected"
-								            					</c:if>>예약번호</option>
-															<option value="space_name"
-																<c:if test="${param.searchCondition=='space_name'}">
-								            						selected="selected"
-								            					</c:if>>예약 장소명</option>
-														</select>
-													</div>
+			
+									</form>
+								</div>
+								<!-- 예약 내역 끝 -->
+								<!-- 후기 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="reviewList">
+									<form class="row gx-3 gy-2 align-items-center" name="reviewSearchFrm">
+										
+					 							<input type="hidden" name="currentPage" value="1">
+					 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+					 												
+											<div class="row mb-3">
+												<table class="table">
+													<colgroup>
+														<col style="width: 5%;" />
+														<col style="width: 12%;" />
+														<col style="width: 12%;" />
+														<col style="width: 41%;" />
+														<col style="width: 15%;" />
+														<col style="width: 15%;" />
+													</colgroup>
+													<thead>
+														<tr>
+															<th scope="col"><input type="checkbox" name="chkAll"></th>
+															<th scope="col">리뷰 번호</th>
+															<th scope="col">예약 번호</th>
+															<th scope="col">예약 장소</th>
+															<th scope="col">예약일</th>
+															<th scope="col">작성일</th>
+														</tr>
+													</thead>
+													<tbody id="reviewTbody">
+														<!-- ajax로 예약 내역 출력 -->
+													</tbody>
+												</table>
+												<div class="reviewdivPage">
+													<!-- ajax로 페이징 -->
 												</div>
-										</div>
-		
-								</form>
-							</div>
-							<!-- 후기 내역 끝 -->
-							<!-- 댓글 내역 시작 -->
-							<div class="tab-pane fade pt-3" id="commentList">
-								<div class="row mb-3">
+													<div id="searchDiv">
+														<div class="col-auto">
+															<button type="button" id="reviewSearchBt" class="btn btn-primary">검색</button>
+														</div>
+														<div class="col-sm-3" id="keyword">
+															<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+															<input type="text" class="form-control" id="searchKeyword"
+																name="searchKeyword" value="${searchVo.searchKeyword }">
+														</div>
+														<div class="col-sm-3" id="select">
+															<select class="form-select" name="searchCondition"
+																id="searchCondition">
+																<option value="review_num"
+																	<c:if test="${param.searchCondition=='review_num'}">
+									            						selected="selected"
+									            					</c:if>>리뷰번호</option>
+																<option value="reservation_num"
+																	<c:if test="${param.searchCondition=='reservation_num'}">
+									            						selected="selected"
+									            					</c:if>>예약번호</option>
+																<option value="space_name"
+																	<c:if test="${param.searchCondition=='space_name'}">
+									            						selected="selected"
+									            					</c:if>>예약 장소명</option>
+															</select>
+														</div>
+													</div>
+											</div>
+			
+									</form>
+								</div>
+								<!-- 후기 내역 끝 -->
+								<!-- 댓글 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="commentList">
 									<form class="row gx-3 gy-2 align-items-center"
 										name="commentsSearchFrm">
 
-										<input type="hidden" name="currentPage" value="1"> <input
-											type="hidden" name="userId" value="${memberMap.USER_ID }">
+										<input type="hidden" name="currentPage" value="1"> 
+										<input type="hidden" name="userId" value="${memberMap.USER_ID }">
 
 										<div class="row mb-3">
 											<table class="table">
@@ -708,16 +759,19 @@
 														id="searchCondition">
 														<option value="comment_num"
 															<c:if test="${param.searchCondition=='comment_num'}">
-								            						selected="selected"
-								            					</c:if>>댓글 번호</option>
+									            						selected="selected"
+									            					</c:if>>댓글
+															번호</option>
 														<option value="board_num"
 															<c:if test="${param.searchCondition=='board_num'}">
-								            						selected="selected"
-								            					</c:if>>게시물 번호</option>
+									            						selected="selected"
+									            					</c:if>>게시물
+															번호</option>
 														<option value="board_title"
 															<c:if test="${param.searchCondition=='board_title'}">
-								            						selected="selected"
-								            					</c:if>>게시물 제목</option>
+									            						selected="selected"
+									            					</c:if>>게시물
+															제목</option>
 													</select>
 												</div>
 											</div>
@@ -725,8 +779,8 @@
 
 									</form>
 								</div>
-							</div>
-							<!-- 댓글 내역 끝 -->
+								<!-- 댓글 내역 끝 -->
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -746,7 +800,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal" id="cancelBt"></button>
-					<button type="button" class="btn btn-danger" id="okBt"></button>
+					<button type="button" class="btn" id="okBt"></button>
 				</div>
 			</div>
 		</div>
