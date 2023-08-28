@@ -123,7 +123,7 @@
 	.goHostCenter{
 		border:#ffd014 solid 2px;
 		padding: 4% 4% 4% 4%; 
-		background:rgba(25, 61, 118, 0.8);
+		background:#193D76;
 		font-size:20px;
 		font-weight: bold; 
 		margin-bottom:5%;

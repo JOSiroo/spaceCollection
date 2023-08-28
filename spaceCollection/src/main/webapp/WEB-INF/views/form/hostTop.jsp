@@ -110,7 +110,6 @@
 		background: #f6f6f6;
 		text-align: center;
 		font-weight: normal;
-		padding-top: 50px;
 		color: #949494;
 		font-size: 15px;
 	}
@@ -141,7 +140,15 @@
 		font-size: 16px;
 		text-align: center;
 	}
-	
+	.goHome{
+	    border: #193D76 solid 2px;
+	    padding: 4% 4% 4% 4%;
+	    background: #ffd014;
+	    font-size: 20px;
+	    font-weight: bold;
+	    margin-bottom: 5%;
+	    
+	}
 </style>
 
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
@@ -224,7 +231,9 @@
 	          </li>
 	        </ul>
 	        <div class="login">
-	        	<a href="<c:url value='/' />">스페이스컬렉션(사용자)으로 이동</a>
+	        	<div class="goHome">
+	        		<a href="<c:url value='/'/>" style="color:#193D76;">스페이스컬렉션(사용자)으로 이동</a>
+	        	</div>
 	        	<br>
 	        	<c:if test="${empty sessionScope.userId }">
 		    	<a href="<c:url value='/login/login' />">로그인</a>
