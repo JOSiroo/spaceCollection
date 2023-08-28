@@ -61,16 +61,19 @@ public class BoardServiceImpl implements BoardService{
 		return cnt;
 	}
 
-	public List<UserBoardVO> selectByeventBoard() {
+	@Override
+	public List<Map<String, Object>> selectByeventBoard() {
 		return boardDao.selectByeventBoard();
 	}
 
 	@Override
-	public Map<String, Object> selectByeventBoardNum(int boardNum) {
-		return boardDao.selectByeventBoardNum(boardNum);
-	}
 	public int updateBoard(BoardVO vo) {
 		return boardDao.updateBoard(vo);
+	}
+
+	@Override
+	public Map<String, Object> selectByeventBoardNum(int boardNum) {
+		return  boardDao.selectByeventBoardNum(boardNum) ;
 	}
 
 }

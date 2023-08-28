@@ -38,9 +38,12 @@
 		insert into comments(COMMENT_NUM, COMMENT_CONTENT, BOARD_NUM, USER_NUM) 
 		values(#{commentNum}, #{commentContent}, #{boardNum}, #{userNum})
 	</insert>
-	<select id="selecteventByBoardNum" parameterType="int" resultType="map">
-		select * from user_Comments_View where board_num = #{boardNum} order by comment_num
+	
+	<select id="selectUserComments" parameterType="int" resultType="CommentsVO">
+		select * from COMMENTS where BOARD_NUM = ${boardNum} 
+			and COMMENT_DEL_FLAG is null ORDER BY COMMENT_REG_DATE desc
 	</select>
+	
 	<update id="updateComments" parameterType="commentsVo">
 		update comments set COMMENT_CONTENT = #{commentContent} where comment_num = #{commentNum}
 	</update>
