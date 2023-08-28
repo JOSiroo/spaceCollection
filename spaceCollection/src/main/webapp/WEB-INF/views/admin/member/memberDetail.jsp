@@ -550,8 +550,8 @@
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">마케팅 수신 동의</div>
 									<div class="col-lg-9 col-md-8">
-										이메일 ${memberMap.USER_MARKETING_EMAIL_OK }<br> 
-										SMS ${memberMap.USER_MARKETING_SMS_OK }
+										이메일 : <c:if test="${memberMap.USER_MARKETING_EMAIL_OK }"></c:if> <br> 
+										SMS : ${memberMap.USER_MARKETING_SMS_OK }
 									</div>
 								</div>
 								<div class="row">
