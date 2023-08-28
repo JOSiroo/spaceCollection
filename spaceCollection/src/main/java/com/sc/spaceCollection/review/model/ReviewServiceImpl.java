@@ -43,4 +43,9 @@ public class ReviewServiceImpl implements ReviewService{
 	public List<Map<String, Object>> selectNewReview() {
 		return reviewDao.selectNewReview();
 	}
+
+	@Override
+	public List<Map<String, Object>> spaceDetailReview(int spaceNum) {
+		return reviewDao.spaceDetailReview(spaceNum);
+	}
 }
