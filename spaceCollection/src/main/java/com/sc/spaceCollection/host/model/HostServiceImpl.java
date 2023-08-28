@@ -23,5 +23,10 @@ public class HostServiceImpl implements HostService {
 		return hostDao.selectSpaceCategory();
 	}
 
+	@Override
+	public List<Map<String, Object>> selectHostReservation(int userNum) {
+		return hostDao.selectHostReservation(userNum);
+	}
+
 
 }
