@@ -34,7 +34,7 @@
 
 
 <style type="text/css">
-	* {margin: 0; padding: 0;}
+	* {margin: 0; padding: 0; letter-spacing: -0.1px; }
 	
 	.navbar {
 		background: #193D76 !important;
@@ -148,7 +148,10 @@
 	    font-size: 20px;
 	    font-weight: bold;
 	    margin-bottom: 5%;
-	    
+	}
+	
+	.goHome {
+		border: 0;
 	}
 </style>
 

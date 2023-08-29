@@ -16,6 +16,7 @@ import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
+import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,6 @@ public class HostController {
 		return "host/registration/registration1";
 	}
 	
-	
 	@RequestMapping("/registration/registration2")
 	public String registration2(Model model) {
 		//1
@@ -67,6 +67,22 @@ public class HostController {
 
 		//4
 		return "host/registration/registration2";
+	}
+	
+	@RequestMapping("/registration/registration3")
+	public String registration3(@RequestParam(defaultValue = "") String UserId, Model model) {
+		//1
+		logger.info("공간등록 페이지3 보여주기");
+		
+		// 2
+		UserInfoVO userInfoVo = hostService.selectUserById(UserId);
+		logger.info("유저 정보 조회결과, userInfovo = {}", userInfoVo);
+		
+		// 3
+		model.addAttribute("userInfoVo", userInfoVo);
+		
+		//4
+		return "host/registration/registration3";
 	}
 	
 	@RequestMapping("/report/account")
@@ -138,6 +154,7 @@ public class HostController {
 	}
 	
 	@GetMapping("/reservationCalendar")
+<<<<<<< HEAD
 	public String reservationCalendar(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		if(userId == null || userId.isEmpty()) {
@@ -152,6 +169,9 @@ public class HostController {
 		List<Map<String, Object>> list = hostService.HostReservationCalendar(userNum);
 		
 		model.addAttribute("list", list);
+=======
+	public String reservationCalendar() {
+>>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection
 		
 		return "host/hostReservation/hostReservationCalendar";
 	}
