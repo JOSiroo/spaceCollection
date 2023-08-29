@@ -235,6 +235,10 @@
 				event.preventDefault();
 			}
 		});
+		
+		$('.calendarBtn').click(function(){
+			location.href="<c:url value='/host/reservationCalendar'/>";
+		});
 	});
 	
 	const queryString = window.location.search;
