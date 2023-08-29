@@ -358,22 +358,30 @@
 					
 					str = "<form name='trFrm' method='post' action=''>"
 						$.each(res.ajaxList, function() {
-								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-								str += "<td>"
-								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>"
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPCAE_REQUEST_STATUS
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE
-								str += "</td>"
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>";
+								str += "<td>";
+								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;";
+								if(this.SPACE_REQUEST_STATUS == '승인'){
+									str += "color: green";
+								}else if(this.SPACE_REQUEST_STATUS == '거절'){
+									str += "color: red";
+								}else if(this.SPACE_REQUEST_STATUS == '요청'){
+									str += "color: yellow";
+								}
+								str += ";'>" + this.SPACE_REQUEST_STATUS;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
+								str += "</td>";
 						});
 						str += "</form>";
 						i++;
@@ -453,7 +461,10 @@
 			$('.reviewdivPage').html(str);
 		}else if(kindFlag == 'comments'){
 			$('.commentsdivPage').html(str);
+		}else if(kindFlag == 'space'){
+			$('.spacedivPage').html(str);
 		}
+			
 		
 	}
 	

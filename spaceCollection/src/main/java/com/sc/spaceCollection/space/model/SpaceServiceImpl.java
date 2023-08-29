@@ -92,11 +92,11 @@ public class SpaceServiceImpl implements SpaceService{
 				map.put("SPACE_OUT_DATE", "");
 			}
 			
-			if(map.get("SPACE_REQUEST_STATUS") == "Y") {
+			if(map.get("SPACE_REQUEST_STATUS").equals("Y")) {
 				map.put("SPACE_REQUEST_STATUS", "승인");
-			}else if(map.get("SPACE_REQUEST_STATUS") == "N"){
+			}else if(map.get("SPACE_REQUEST_STATUS").equals("N")){
 				map.put("SPACE_REQUEST_STATUS", "거절");
-			}else if(map.get("SPACE_REQUEST_STATUS") == "R") {
+			}else if(map.get("SPACE_REQUEST_STATUS").equals("R")) {
 				map.put("SPACE_REQUEST_STATUS", "요청");
 			}
 		}
@@ -108,6 +108,12 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public int getTotalRecordSpaceListViewByUserId(SearchVO vo) {
 		return spaceDao.getTotalRecordSpaceListViewByUserId(vo);
+	}
+
+
+	@Override
+	public int isAcceptSpace(SpaceVO vo) {
+		return spaceDao.isAcceptSpace(vo);
 	}
 
 
