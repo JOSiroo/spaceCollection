@@ -121,7 +121,8 @@
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 예약 정보 검색</label>
-			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약자 아이디로 조회">
+			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약자 아이디로 조회"
+				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>
 			<button class="searchBt" onclick="search()">검색</button>
 		</div>
 		<div class="row">
@@ -240,6 +241,7 @@
 			location.href="<c:url value='/host/reservationCalendar'/>";
 		});
 	});
+	
 	
 	const queryString = window.location.search;
 	const params = new URLSearchParams(queryString);

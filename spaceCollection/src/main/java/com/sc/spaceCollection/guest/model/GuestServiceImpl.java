@@ -81,4 +81,14 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.checkedUserIdBySnsCode(userId);
 	}
 
+	@Override
+	public int updateUserName(GuestVO guestVo) {
+		return guestDao.updateUserName(guestVo);
+	}
+
+	@Override
+	public int updateUserHp(GuestVO guestVo) {
+		return guestDao.updateUserHp(guestVo);
+	}
+
 }

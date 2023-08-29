@@ -179,9 +179,6 @@
 		font-weight: bold;
 	}
 	
-	.spaceZip {
-	}
-	
 	.spZip1 {
 		width: 850px;
 		height: 150px;
@@ -221,26 +218,6 @@
 	}
 </style>
 
-<script type="text/javascript">
-	$(function() {
-		
-		$('.spText').on('input', function() {
-			var txtLen = $(this).val().length;
-			
-			$('.subTitle').text(txtLen + '자/' + '18자');
-		});
-		
-		$('#back').click(function() {
-			history.back();
-		});
-		
-		$('#next').click(function() {
-				$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
-				$('form[name=frmRegi2]').submit();
-		});
-	});
-	
-</script>
 
 <article>
 	<div class="main">
@@ -262,13 +239,13 @@
 					</div>
 				</div>
 				<div class="boxContents">
-					<div class="spaceText">
+					<div class="spaceName">
 						<input type="text" class="spText" value=""
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
-						<p>사용 가능한 특수문자 : (,), [,], -, .(마침표), ,(쉼표)</p>
+						<p>사용 가능한 특수문자 : ( ), [ ], -, .(마침표), ,(쉼표)</p>
 					</div>
 				</div>
 			</div>
@@ -500,6 +477,48 @@
 	</div>
 </article>
 
+<script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
+<script type="text/javascript">
+	$(function() {
+		
+		//사용자가 입력한 글자수 표시
+		$('.spText').on('input', function() {
+			var txtLen = $(this).val().length;
+			var maxLen = parseInt($(this).attr('maxlength'));
+			var subTxt = $(this).closest('.boxForm').find('.subTitle');
+			
+			subTxt.text(txtLen + '자/' + maxLen + '자');
+		});
+		
+		$('#back').click(function() {
+			history.back();
+		});
+		
+		$('#next').click(function() {
+			if ($('.spaceName').find($('.spText')).val() < 1) {
+				alert('공간명을 입력하세요.');
+				$('.spaceName').find($('.spText')).focus();
+				
+				var 
+				
+				return false;
+			}
+			
+			//공간명 정규화
+			if (!validate_spaceName($('.spText').val())) {
+				alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
+				$('.spText').focus();
+				
+				return false;
+			}
+			
+			$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
+			$('form[name=frmRegi2]').submit();
+		});
+	});
+	
+	
+</script>
 
 </body>
 </html>
