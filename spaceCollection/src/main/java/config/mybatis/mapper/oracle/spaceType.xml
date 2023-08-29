@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sc.spaceCollection.spaceType.model.SpaceTypeDAO">
+	<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			where ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
+	
+	<select id="selectSpaceType" parameterType="searchVo" resultType="map">
+		select *from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from spaceType_category_view 
+				<include refid="searchWhere"/>
+				order by space_type_no desc
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
+		select count(*) from spaceType_category_view <include refid="searchWhere"/>
+		<include refid="searchWhere"/>
+	</select>
+	
+	<select id="selectBySpaceTypeNo" parameterType="int" resultType="map">
+		select * from spaceType_category_view where space_type_no = #{spaceTypeNo}
+	</select>
+	
+</mapper>
+

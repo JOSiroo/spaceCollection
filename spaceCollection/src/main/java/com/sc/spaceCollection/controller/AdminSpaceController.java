@@ -4,9 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.space.model.SpaceService;
+import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
+import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,10 +20,12 @@ import lombok.RequiredArgsConstructor;
 public class AdminSpaceController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminSpaceController.class);
 	
+	private final SpaceTypeCategoryService spaceTypeCategoryService;
+	private final SpaceTypeService spaceTypeService;
 	private final SpaceService spaceService;
 	
 	@RequestMapping("/spaceTypeCategoryList")
-	public void spaceTypeCategoryList(Model model) {
+	public void spaceTypeCategoryList(@ModelAttribute SearchVO vo, Model model) {
 		logger.info("공간타입 카테고리 조회");
 	}
 	

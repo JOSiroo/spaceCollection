@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryDAO">
+		
+	<select id="selectSpaceTypeCategory" parameterType="searchVo" resultType="spaceTypeCategoryVo">
+		select *from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from space_type_category 
+				order by category_no
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
+		select count(*) from space_type_category
+	</select>
+	
+	<insert id="insertSpaceTypeCategory">
+		<selectKey keyProperty="int" order="BEFORE" resultType="int">
+			select space_type_category_seq.nexval from dual
+		</selectKey>
+		insert into space_type_category values(#{categoryNo}, #{categoryName});
+	</insert>
+	
+</mapper>
+
