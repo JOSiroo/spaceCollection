@@ -223,6 +223,13 @@
 
 <script type="text/javascript">
 	$(function() {
+		
+		$('.spText').on('input', function() {
+			var txtLen = $(this).val().length;
+			
+			$('.subTitle').text(txtLen + '자/' + '18자');
+		});
+		
 		$('#back').click(function() {
 			history.back();
 		});
@@ -231,7 +238,8 @@
 				$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
 				$('form[name=frmRegi2]').submit();
 		});
-	}); 
+	});
+	
 </script>
 
 <article>
@@ -255,7 +263,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceText">
-						<input type="text" class="spText" 
+						<input type="text" class="spText" value=""
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
 					</div>
 					<div class="boxnoti">
