@@ -107,7 +107,13 @@
 	}
 	
 	.typeTitle {
-	
+		width: 100px;
+		height: 40px;
+		background: #656565;
+		color: white;
+		border-radius: 1rem;
+		font-size: 12px;
+		border: 1px solid #656565;
 	}
 	
 </style>
@@ -166,6 +172,9 @@
 				<div class="spaceType">
 					<c:forEach var="allVo" items="${type }">
 						<input type="button" class="typeTitle" value="${allVo.spaceCategoryVo.categoryName }">
+						<c:forEach var="list" items="${allVo.spaceTypeList }" >
+							<input type="button" class="typeSub" value="${list.spaceTypeName }" >
+						</c:forEach>
 					</c:forEach>
 				</div>
 			</div>
