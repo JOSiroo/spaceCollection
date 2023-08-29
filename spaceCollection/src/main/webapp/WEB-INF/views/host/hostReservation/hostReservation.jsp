@@ -121,7 +121,7 @@
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 예약 정보 검색</label>
-			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약번호 또는 예약자명">
+			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약자 아이디로 조회">
 			<button class="searchBt" onclick="search()">검색</button>
 		</div>
 		<div class="row">
@@ -130,9 +130,9 @@
 				<select class = "orderSelector">
 					<option value="default">정렬기준</option>
 					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
-						value="reservationNum">예약 번호순 정렬</option>
+						value="RESERVATION_NUM">예약 번호순 정렬</option>
 					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
-						value="reservationDay">이용 일자순 정렬</option>
+						value="RESERVE_START_DAY">이용 일자순 정렬</option>
 				</select>
 			</div>		
 			<div class="col-2">
@@ -234,6 +234,10 @@
 				alert('더이상 기록이 없습니다');
 				event.preventDefault();
 			}
+		});
+		
+		$('.calendarBtn').click(function(){
+			location.href="<c:url value='/host/reservationCalendar'/>";
 		});
 	});
 	

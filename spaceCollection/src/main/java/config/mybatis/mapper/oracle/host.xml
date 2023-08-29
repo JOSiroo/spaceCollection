@@ -26,6 +26,11 @@
 		order by category_no
 	</select>
 	
+	<select id="selectUserById" resultType="userInfoVo" parameterType="String">
+		select * from user_info
+		where user_id = #{userId}
+	</select>
+	
 	<select id="selectHostReservation" resultType="map">
 		select *
 		from
@@ -35,10 +40,26 @@
 		    (
 		        select * from host_reservation_view
 		        where user_num = #{userNum}
+		        <if test='status != null and status != ""'>
+		        		and
+		        	<if test="status == 'before'"><![CDATA[RESERVE_START_DAY >= sysdate ]]></if>
+		        	<if test="status == 'finished'"><![CDATA[RESERVE_START_DAY <= sysdate ]]></if>
+		        	<if test="status == 'canceled'">RESERVATION_DEL_FLAG = 'Y'</if>
+		        </if>
+		        <if test='keyword != "" and keyword != null'>
+					and USER_ID like '%' || #{keyword} || '%'
+		        </if>
+		        <if test='order != null and order != ""'>
+					order by ${order} asc       
+		        </if>
 		    )f
 		)A
 		<![CDATA[ 
 		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
+	<select id="HostReservationCalendar" resultType="map">
+        select * from host_reservation_view
+        where user_num = #{userNum}
 	</select>
 	
 </mapper>

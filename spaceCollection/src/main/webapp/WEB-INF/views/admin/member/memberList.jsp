@@ -50,11 +50,27 @@
 		text-align: left;
 	}
 	
-	div#MChkDiv label {
-    	margin-left: -107px;
+	#excelDownloadBt{
+		--bs-btn-bg: #dadddf;
 	}
 	
+	#excelModal>div>div>div>p{
+		margin-bottom: 20px;
+	}
 	
+	.marginTop{
+		margin-top: 5px;
+	}
+	
+	.marginTop>div{
+		text-align: left;
+	}
+	
+	#warning{
+		color: red;
+		text-align: left;
+		margin-top: -15px;
+	}
 	
 	
 </style>
@@ -65,6 +81,8 @@
 		}, function() {
 			$(this).find('td').css("background-color", "white");
 		});
+		
+		$('#warning').hide();
 		
 		$('#searchBt').click(function() {
 			if($('#searchKeyword').val().length<1){
@@ -94,6 +112,22 @@
 		
 		$('#excelDownloadBt').click(function() {
 			$('#excelModal').modal('show');
+		});
+		
+		$('#columnChkAll').click(function() {
+			var checkState = $(this).is(":checked");
+			$('.modal-body input[type=checkbox]').prop('checked', checkState);
+		});
+		
+		$('#downloadBt').click(function() {
+			if($('.modal-body input[type=checkbox]:checked').length<1){
+				event.preventDefault();
+				$('#warning').show();
+			}
+		});
+		
+		$('.modal-body input[type=checkbox]').click(function name() {
+			$('#warning').hide();
 		});
 			
 	});
@@ -297,21 +331,35 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<span>엑셀에 포함시킬 데이터를 선택하세요.</span>
+					<p >
+						엑셀에 포함시킬 데이터를 선택하세요.&nbsp;&nbsp;
+						<input class="form-check-input" type="checkbox" value="" id="columnChkAll" name="columnChkAll">
+						<label class="form-check-label" for="columnChkAll">전체 선택</label>
+					</p>
 					<div class="container text-center " id="MChkDiv">
-					<c:set var="columnListEng" value="${fn:split('userNum,userName,userHp,userId,userEmail,userRegDate,userOutType,userOutDate,zipcode,address,addressDetail,userMarketingEmailOk,userMarketingSmsOk', ',') }"/>
-					<c:set var="columnListKor" value="${fn:split('회원번호,이름,연락처,아이디,이메일,가입일,가입상태,탈퇴일,우편번호,주소,상세주소,마케팅 동의(이메일),마케팅 동의(SMS)', ',') }"/>
+						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
+					<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
+					<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
+					<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
+					<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
 						<div class="row align-items-start">
-							<div class="col">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value=""
-										id="userNum" name="userNum">
-									<label class="form-check-label" for="userNum">회원번호</label>
-								</div>
-								
+							<div class="col marginTop">
+								<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="${columnListEng1[i] }" name="${columnListEng1[i] }">
+										<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
+									</div>
+								</c:forEach>
 							</div>
-							<div class="col">
-								
+							<div class="col marginTop">
+								<c:forEach var="i" begin="1" end="${fn:length(columnListEng2)-1 }">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="${columnListEng2[i] }" name="${columnListEng2[i] }">
+										<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
+									</div>
+								</c:forEach>
 							</div>
 						</div>
 					</div>
@@ -319,7 +367,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-success" id="okBt">다운로드</button>
+					<button type="button" class="btn btn-success" id="downloadBt">다운로드</button>
 				</div>
 			</div>
 		</div>
