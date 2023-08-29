@@ -7,12 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
+import com.sc.spaceCollection.reservation.model.ReservationService;
+import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ public class HostController {
 	private static final Logger logger = LoggerFactory.getLogger(HostController.class);
 	private final GuestService guestService;
 	private final HostService hostService;
+	private final ReservationService reservationService;
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -48,7 +53,6 @@ public class HostController {
 		return "host/registration/registration1";
 	}
 	
-	
 	@RequestMapping("/registration/registration2")
 	public String registration2(Model model) {
 		//1
@@ -63,6 +67,22 @@ public class HostController {
 
 		//4
 		return "host/registration/registration2";
+	}
+	
+	@RequestMapping("/registration/registration3")
+	public String registration3(@RequestParam(defaultValue = "") String UserId, Model model) {
+		//1
+		logger.info("공간등록 페이지3 보여주기");
+		
+		// 2
+		UserInfoVO userInfoVo = hostService.selectUserById(UserId);
+		logger.info("유저 정보 조회결과, userInfovo = {}", userInfoVo);
+		
+		// 3
+		model.addAttribute("userInfoVo", userInfoVo);
+		
+		//4
+		return "host/registration/registration3";
 	}
 	
 	@RequestMapping("/report/account")
@@ -94,23 +114,61 @@ public class HostController {
 		//4
 		return "host/report/draft";
 	}
-	
+	//page=1&order=reservationNum&status=before&keyword=fd
 	@RequestMapping("/reservation")
-	public String hostReservation(HttpSession session, Model model) {
+	public String hostReservation(HttpSession session, Model model,
+									@RequestParam(defaultValue = "1") int page,
+									@RequestParam(required = false) String status,
+									@RequestParam(required = false) String order,
+									@RequestParam(required = false) String keyword) {
 		String userId = (String)session.getAttribute("userId");
-		int userNum = guestService.selectUserInfo(userId).getUserNum();
-		logger.info("호스트 예약 조회, 파라미터 userNum = {}", userNum);
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
 		
-		List<Map<String, Object>> list = hostService.selectHostReservation(userNum);
+		
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		logger.info("호스트 예약 조회, 파라미터 userNum = {}, page = {}", userNum, page);
+		logger.info("호스트 예약 조회, 파라미터 status = {}, order = {}, keyword", status, order, keyword);
+		
+		int size = 5;
+		List<Map<String, Object>> list = hostService.selectHostReservation(page,size,userNum,status,order,keyword);
 		logger.info("호스트 예약 조회 결과 list = {}", list);
 		
 		model.addAttribute("list", list);
 		
 		return "host/hostReservation/hostReservation";
 	}
+	
 	@RequestMapping("/reservationDetail")
-	public String hostReservationDetail(@RequestParam int reservationNum) {
+	public String hostReservationDetail(@RequestParam int reservationNum, Model model) {
+		logger.info("예약내역 확인, 파라미터 reservationNum = {}", reservationNum);
+		Map<String, Object> map = reservationService.reservationReview(reservationNum);
+		
+		model.addAttribute("map", map);
 		
 		return "host/hostReservation/hostReservationDetail";
 	}
+	
+	@GetMapping("/reservationCalendar")
+	public String reservationCalendar(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		logger.info("호스트 캘린더, 파라미터 userNum = {}", userNum);
+		
+		List<Map<String, Object>> list = hostService.HostReservationCalendar(userNum);
+		
+		model.addAttribute("list", list);
+		
+		return "host/hostReservation/hostReservationCalendar";
+	}	
 }

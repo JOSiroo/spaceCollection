@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.PrintWriter;
+
 import java.util.ArrayList;
 
 
@@ -23,6 +25,7 @@ import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.usermain.model.Coupon;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +36,7 @@ public class UserMainController {
    private final SpaceService spaceService;
    private final SpaceDetailService sdService;
    private final ReviewService reviewService;
+   private final Coupon coupon;
    
    
    
@@ -67,11 +71,14 @@ public class UserMainController {
        return "index";
    }
    
-   //쿠폰
    @RequestMapping("/coupon")
    public String coupon(Model model) {
-	   return "userMain/board/coupon";
-   }
+	    String num = Coupon.generateCoupon();
+	    logger.info("num={}",num);
+	    model.addAttribute("num", num);
+	    return "userMain/board/coupon";
+	}
+   
    
    //서비스약관
    @RequestMapping("/service")

@@ -171,7 +171,7 @@ a.btn.btn-primary.py-2.px-3 {
 			                <%-- ${map.IMG_ORIGINAL_NAME} --%>
 			            </a>
 			            <div class="rate">
-			                <c:forEach begin="1" end="${map.REVIEW_RATE}">
+			                 <c:forEach begin="1" end="${map.REVIEW_RATE}">
 			                    <span class="icon-star text-warning"></span>
 			                </c:forEach>
 			                <c:choose>
@@ -181,7 +181,19 @@ a.btn.btn-primary.py-2.px-3 {
 			                    <c:otherwise>
 			                        <span class="icon-star-empty text-warning"></span>
 			                    </c:otherwise>
-			                </c:choose>
+			                </c:choose> 
+								<%-- <c:set var="count" value="0"/>
+								<c:forEach var="i" begin="1" end="${reviewMap['REVIEW_RATE'] }">
+									<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
+									<c:set var="count" value="${count+1 }" />
+								</c:forEach>
+								<c:if test="${reviewMap['REVIEW_RATE']%1 >0 }">
+									<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
+									<c:set var="count" value="${count+1 }" />
+								</c:if>
+								<c:forEach var="j" begin="${count}" end="4">
+									<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
+								</c:forEach> --%>
 			            </div>
 			            <!-- 리뷰 -->
 			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"> ${map.SPACE_NAME}(${map.SD_TYPE})</h3>

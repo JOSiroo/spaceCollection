@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         couponList.innerHTML = ''; // 기존 리스트 초기화
 
         for (let i = 0; i < numberOfCoupons; i++) {
-            fetch('/generateCoupon') // 서버의 API 엔드포인트 호출
+            fetch('/generateCoupon') // 서버의 호출
                 .then(response => response.json())
                 .then(data => {
                     const coupon = data.coupon;

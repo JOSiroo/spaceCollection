@@ -112,27 +112,39 @@
 		height: 30px;
 		
 	}
+	.pageBox{
+		width:20%;
+		padding: 3% 47% 0% 47%;	
+	}
 </style>
 <section>
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 예약 정보 검색</label>
-			<input type="text" name = "reservationInfo" placeholder="예약번호 또는 예약자명">
-			<button class="searchBt">검색</button>
+			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약자 아이디로 조회"
+				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>
+			<button class="searchBt" onclick="search()">검색</button>
 		</div>
 		<div class="row">
 			<div class = "col-6"></div>
 			<div class="col-2">
 				<select class = "orderSelector">
-					<option>예약 번호순 정렬</option>
-					<option>이용 일자순 정렬</option>
+					<option value="default">정렬기준</option>
+					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
+						value="RESERVATION_NUM">예약 번호순 정렬</option>
+					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
+						value="RESERVE_START_DAY">이용 일자순 정렬</option>
 				</select>
 			</div>		
 			<div class="col-2">
 				<select class = "statusSelector">
-					<option>전체상태</option>
-					<option>이용완료</option>
-					<option>취소환불</option>
+					<option value = "default">전체상태</option>
+					<option <c:if test="${param.status == 'finished'}">selected</c:if> 
+						value = "finished">이용완료</option>
+					<option <c:if test="${param.status == 'before'}">selected</c:if> 
+						value = "before">이용전</option>
+					<option <c:if test="${param.status == 'canceled'}">selected</c:if>
+						value = "canceled">취소환불</option>
 				</select>
 			</div>		
 			<div class="col-2">
@@ -183,16 +195,95 @@
 			</c:forEach>
 		</c:if>
 		<c:if test="${empty list}">
-			<div class="row data">
+			<div class="row" style = "text-align:center">
 				<h2>예약 내역이 없습니다</h2>
 			</div>
 		</c:if>
+		<div class="pageBox">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			    <li class="page-item">
+			      <a class="page-link" id="previous" href="<c:url value='/host/reservation?page=${param.page-1}'/>" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <li class="page-item">
+			      <a class="page-link" id="next" href="<c:url value='/host/reservation?page=${param.page+1}'/>" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		
+		
 	</div>
 </section>
 <script type="text/javascript">
+	$(function(){
+		$('input[name=reservationInfo]').focus();
+		
+		$('#previous').click(function(){
+			var page = ${param.page};
+			if(page == 1){
+				alert('첫 페이지 입니다');
+				event.preventDefault();
+			}
+		});
+		$('#next').click(function(){
+			if(${empty list}){
+				alert('더이상 기록이 없습니다');
+				event.preventDefault();
+			}
+		});
+		
+		$('.calendarBtn').click(function(){
+			location.href="<c:url value='/host/reservationCalendar'/>";
+		});
+	});
+	
+	
+	const queryString = window.location.search;
+	const params = new URLSearchParams(queryString);
+	var currentTotalUrl = window.location.href;
+	var currentUrl = currentTotalUrl.split("?");
+	
 	function goReservation(reservationNum){
 		location.href="<c:url value='/host/reservationDetail?reservationNum="+reservationNum+"'/>";
 	}
+	
+	function search(){
+		var searchKeyword = document.getElementById('searchKeyword');
+		if(searchKeyword.value.length == 0){
+			alert('검색어를 입력하세요');
+			searchKeyword.focus();
+		}else{
+			params.set("keyword",searchKeyword.value);
+			location.href = currentUrl[0]+"?"+params;
+		}
+	}
+	
+	var orderSelector = document.getElementsByClassName('orderSelector');
+	orderSelector[0].addEventListener('change',function(){
+		if(this.value !== 'default'){
+			params.set("order",this.value);
+			location.href = currentUrl[0]+"?"+params;
+		}else{
+			params.delete("order");
+			location.href = currentUrl[0]+"?"+params;
+		}
+	});
+	
+	var statusSelector = document.getElementsByClassName('statusSelector');
+	statusSelector[0].addEventListener('change',function(){
+		if(this.value !== 'default'){
+			params.set("status",this.value);
+			location.href = currentUrl[0]+"?"+params;
+		}else{
+			params.delete("status");
+			location.href = currentUrl[0]+"?"+params;
+		}
+	});
+	
 </script>
-
 <%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
