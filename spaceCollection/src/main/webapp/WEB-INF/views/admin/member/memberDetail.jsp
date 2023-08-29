@@ -113,6 +113,15 @@
 			$.commentsListSearch();
 		});
 		
+		$('#spaceSearchBt').click(function() {
+			$.spaceSend(1);
+		});
+		
+		$('button[name=spaceTab]').click(function() {
+			$.spaceSend(1);
+			$.spaceListSearch();
+		});
+		
 		$('input[name=chkAll]').click(function() {
 			var checkState = $(this).is(':checked')
 			$('td>input[type=checkbox]').prop('checked', checkState);
@@ -329,6 +338,70 @@
 		});
 	}
 	
+	$.spaceListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/member/memberDetail/ajax_spaceList'/>",
+			type: 'post',
+			data: $('form[name=spaceSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.ajaxList!=null && res.ajaxList.length>0){
+					
+					$('#spaceTbody').html("");
+					
+					str = "<form name='trFrm' method='post' action=''>"
+						$.each(res.ajaxList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>";
+								str += "<td>";
+								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;";
+								if(this.SPACE_REQUEST_STATUS == '승인'){
+									str += "color: green";
+								}else if(this.SPACE_REQUEST_STATUS == '거절'){
+									str += "color: red";
+								}else if(this.SPACE_REQUEST_STATUS == '요청'){
+									str += "color: yellow";
+								}
+								str += ";'>" + this.SPACE_REQUEST_STATUS;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
+								str += "</td>";
+						});
+						str += "</form>";
+						i++;
+						$('#spaceTbody').html(str);
+						pageMake(res.pagingInfo);
+				}else if(res.ajaxList.length==0){
+					str = "<tr>"
+						+ "<td colspan='7' style='text-align: center;''>공간 등록 내역이 없습니다.</td>"
+						+ "</tr>"
+					$('#spaceTbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
 	function pageMake(pagingInfo) {
 		//페이징 처리
 		var blockSize = pagingInfo.blockSize;
@@ -363,6 +436,8 @@
 					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reviewSend("+ i +")'>"+i+"</a>";
 				}else if(kindFlag == 'comments'){
 					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.commentsSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'space'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.spaceSend("+ i +")'>"+i+"</a>";
 				}
 				
 				str += "</li>";
@@ -386,7 +461,10 @@
 			$('.reviewdivPage').html(str);
 		}else if(kindFlag == 'comments'){
 			$('.commentsdivPage').html(str);
+		}else if(kindFlag == 'space'){
+			$('.spacedivPage').html(str);
 		}
+			
 		
 	}
 	
@@ -449,6 +527,29 @@
 				
 				if(res!=null){
 					$.commentsListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
+	
+	$.spaceSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+			
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_spaceList'/>",
+			type:"post",
+			data:$('form[name=spaceSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.spaceListSearch(res);
 					pageMake();
 				}
 				
