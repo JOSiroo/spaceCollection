@@ -337,7 +337,7 @@
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
 						<input type="button" class="btAdd" value="추가 ▽">
 						<div class="spTag">
-							
+							<span>#기억<span>✕</span></span>
 						</div>
 					</div>
 				</div>
@@ -353,9 +353,7 @@
 						<input type="text" class="spText" value="" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
 						<input type="button" class="btAdd" value="추가 ▽">
-						<div class="spTag">
-							
-						</div>
+						<div class="spTag"></div>
 					</div>
 				</div>
 			</div>
@@ -370,9 +368,7 @@
 						<input type="text" class="spText" value="" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
 						<input type="button" class="btAdd" value="추가 ▽">
-						<div class="spTag">
-							
-						</div>
+						<div class="spTag"></div>
 					</div>
 				</div>
 			</div>
@@ -508,7 +504,46 @@
 		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
 		});
 		
-		$('.spTag').
+		$('.btAdd').click(function() {
+	        var inputValue = $('.spText').val(); // 입력한 값을 가져옵니다
+	        
+	        if (inputValue.trim() !== '') { // 값이 공백이 아닌 경우에만 추가
+	            if ($('.spTag').children().length < 5) { // 최대 5개까지 추가
+	                var newTag = $('<span class="tag">' + inputValue + '<span class="tagClose">✕</span></span>');
+	                $('.spTag').append(newTag);
+	                $('.spText').val(''); // 입력 필드 초기화
+	            } else {
+	                alert('최대 5개까지만 입력 가능합니다.');
+	            }
+	        }
+	    });
+
+	    // 태그 삭제
+	    $('.spTag').on('click', '.tagClose', function() {
+	        $(this).parent().remove();
+	    });
+		
+		
+		//태그 확인 숨기기
+		$('.spTag').hide();
+		
+		$('.btAdd').click(function() {
+	    	var tagVal = $(this).prev().val();
+	    	
+	    	if (tagVal.trim() !== '') {
+	    		$('.spTag').show();
+	    		var tagAdd = $('<span class="tag">' + inputValue + '<span class="tagClose">✕</span></span>');
+	    		$('.spTag').append(newTag);
+                $('.spText').val(''); // 입력 필드 초기화
+	    	} else {
+	    		alert('태그를 입력해주세요.');
+	    	}
+	    });
+
+	    // 태그 삭제
+	    $('.spTag').on('click', '.tagClose', function() {
+	        $(this).parent().remove();
+	    });
 		
 		$('#back').click(function() {
 			history.back();
@@ -533,8 +568,8 @@
 				alert('공간명을 입력하세요.');
 				$('.spaceName').find($('.spText')).focus();
 				
-				var offset = $('.spaceName').offset();	//해당 위치 반환
-				$("html, body").animate({scrollTop: offset.top},400); // 선택한 위치로 이동. 두번째 인자는 0.4초를 의미한다.
+				var offset = $('.spaceName').offset();
+				$("html, body").animate({scrollTop: offset.top},400);
 				
 				return false;
 			}
