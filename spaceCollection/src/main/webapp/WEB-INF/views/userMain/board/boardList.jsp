@@ -12,11 +12,13 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/mainstyle.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/font-awesome.min.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/main.css'/>" />
-<title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <script type="text/javascript">	
 
 </script>
+
 <style type="text/css">
 	*{
 		font-family: "Malgun Gothic", sans-serif !important;
