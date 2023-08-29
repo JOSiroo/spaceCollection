@@ -14,7 +14,7 @@
     	    initialView: 'dayGridMonth',
     	    locale: 'ko',
     	    aspectRatio: 1.35,
-    	    height: 1000,
+    	    height: 800,
     	    dayMaxEventRows: true,
     	    
     	    views: {
@@ -50,7 +50,7 @@
     </script>
 <style type="text/css">
 	body{
-		background: #efefef;
+		background: rgba(128, 157, 255, 0.1);
 	}
 	#calendar{
 		border : #193D76 solid 4px;
@@ -59,8 +59,8 @@
 		margin-top:75px;
 	}
 	.calendar-wrapper{
-		width:80%;
-		margin: 5% 0% 0% 15%;
+		width:70%;
+		margin: 5% 0% 2% 29%;
 		background: white;
 	}
 	.fc .fc-button{
@@ -133,11 +133,9 @@
 		z-index:100000 !important;
 	}
 </style>
-<body>
 	<div class="calendarHeader">
  	</div>
  		<div class = "calendar-wrapper">
  			<div id='calendar'></div>
  		</div>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
