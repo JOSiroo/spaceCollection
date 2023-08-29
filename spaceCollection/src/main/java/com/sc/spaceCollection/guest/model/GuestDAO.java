@@ -13,4 +13,9 @@ public interface GuestDAO {
 	int selectCountEmail(String userEmail);
 	String selectUserSalt(String userId);
 	List<GuestVO> selectUserIdByEmail(String userEmail);
+	
+	//소셜 서비스 관련
+	int selectKakaoUser(GuestVO guestVo);
+	int insertKakaoUser(GuestVO guestVo);
+	int checkedUserIdBySnsCode(String userId);
 }

@@ -11,5 +11,9 @@ import com.sc.spaceCollection.common.SearchVO;
 public interface UserInfoDAO {
 	List<UserInfoVO> selectMember(SearchVO vo);
 	int getTotalRecord(SearchVO vo);
-	Map<String, Object> selectByUserNum(int userNum);
+	Map<String, Object> selectByUserId(String userId);
+	int memberWithdrawal(String userId);
+	List<UserInfoVO> selectWithdrawalMember(SearchVO vo);
+	int getWithdrawalTotalRecord(SearchVO vo);
+	int memberReturn(String userId);
 }

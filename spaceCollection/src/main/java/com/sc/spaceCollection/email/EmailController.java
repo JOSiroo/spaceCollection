@@ -29,16 +29,26 @@ public class EmailController {
 	}
 	
 	@RequestMapping("/sendEmail")
-	public String sendeMail(@RequestParam(required = false) String userEmail, Model model) {
+	public String sendeMail(@RequestParam(required = false) String userEmail
+			,@RequestParam(required = false)String type, Model model) {
 		
-		logger.info("이메일 인증 처리, 파라미터 userEmail={}",userEmail);
+		logger.info("이메일 인증 처리, 파라미터 userEmail={},type={}",userEmail,type);
 		int cnt = guestService.selectCountEmail(userEmail);
 		logger.info("이메일로 아이디 조회결과, cnt={}",cnt);
-		if(cnt==0) {
-			String msg="등록된 이메일이 없습니다.", url="/email/emailCheck";
-			model.addAttribute("msg",msg);
-			model.addAttribute("url",url);
-			return "common/message";
+		String msg="등록된 이메일이 없습니다.", url="/email/emailCheck?type="+type;
+		if(!type.equals("register")) { //회원가입이 아닌 경우
+			if(cnt<1) {
+				model.addAttribute("msg",msg);
+				model.addAttribute("url",url);
+				return "common/message";
+			}
+		}else if(type.equals("register")){ //회원가입 인 경우
+			if(cnt>0) {
+				msg="이미 가입된 이메일입니다.";
+				model.addAttribute("msg",msg);
+				model.addAttribute("url",url);
+				return "common/message";
+			}
 		}
 		
 		int authCode=(int)(Math.random() * 899999) + 100000;//100000~999999 난수 생성

@@ -82,9 +82,14 @@
 		where space_Name like '%' || #{spaceName} || '%'	
 	</select>
 	
-	<select id="selectBySpaceNum" parameterType="int" resultType="spaceVo">
+	<select id="selectBySpaceNum"  resultType="spaceVo">
 		select * from space
 		order by space_num desc 
 		FETCH FIRST 9 row only
 	</select>
+	
+	<select id="usercount" resultType="map" >
+		SELECT * FROM user_counts_view
+	</select>
+	
 </mapper>

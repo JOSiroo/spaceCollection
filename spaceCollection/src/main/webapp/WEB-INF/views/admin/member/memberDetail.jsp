@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
+	main>div>nav{
+		float: left;
+	}
+	
+	section{
+		clear: both;
+	}
+	
 	div.row{
 		margin-top: 10px;
 	}
@@ -59,17 +67,99 @@
 	td>span {
 		color: red;
 	}
+	
+	#return, #withdrawal{
+		margin-top: 50px;
+	}
+	
+	.goList{
+		margin-top: -10px;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
 		
+		$('li button').click(function() {
+			$('input[name=searchKeyword]').val('');
+		});
+
+		$('form input[name=userId]').val($('main input[name=userId]').val());
+		
 		$('#reservationSearchBt').click(function() {
-			$.send(1);
+			$.reservationSend(1);
 		});
 		
 		$('button[name=reservationTab]').click(function() {
 			$.reservationListSearch();
+			$.reservationSend(1);
+		});
+
+		$('#reviewSearchBt').click(function() {
+			$.reviewSend(1);
+		});
+		
+		$('button[name=reviewTab]').click(function() {
+			$.reviewSend(1);
+			$.reviewListSearch();
+		});
+		
+		$('#commentsSearchBt').click(function() {
+			$.commentsSend(1);
+		});
+		
+		$('button[name=commentsTab]').click(function() {
+			$.commentsSend(1);
+			$.commentsListSearch();
+		});
+		
+		$('input[name=chkAll]').click(function() {
+			var checkState = $(this).is(':checked')
+			$('td>input[type=checkbox]').prop('checked', checkState);
+		});
+		
+		$('li.nav-item>button').click(function() {
+			$('input[name=chkAll]').prop('checked', false);
+		});
+		
+		$('#withdrawal').click(function() {
+			$('#okBt').addClass('withdrawal');
+			$('.bi-exclamation-circle').css('color', 'red');
+			$('.modal-body').html('해당 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.');
+			$("#okBt").addClass('btn-danger');
+			$('#okBt').html('탈퇴');
+			$('#cancelBt').html('취소');
+			$('#okBt').show();
+			$('#confirm1').modal('show');
+			$('.withdrawal').click(function() {
+				$(this).removeClass('withdrawal')
+				$("#okBt").removeClass('btn-danger');
+				location.href="/spaceCollection/admin/member/memberWithdrawal?userId=" + $('main>input[name=userId]').val();
+			});
+		});
+		
+		$('#return').click(function() {
+			$('#okBt').addClass('return');
+			$('.bi-exclamation-circle').css('color', '#ffd600');
+			$('.modal-body').html('해당 회원을 복구시키겠습니까?');
+			$('#okBt').addClass('btn-success');
+			$('#okBt').html('복구');
+			$('#cancelBt').html('취소');
+			$('#okBt').show();
+			$('#confirm1').modal('show');
+			$('.return').click(function() {
+				$(this).removeClass('return');
+				$("#okBt").removeClass('btn-success');
+				location.href="/spaceCollection/admin/member/memberReturn?userId=" + $('main>input[name=userId]').val();
+			});
+		});
+		
+		$('#goMList').click(function() {
+			location.href="<c:url value = '/admin/member/memberList'/>";
+		});
+		
+		$('#goWMList').click(function() {
+			location.href="<c:url value = '/admin/member/withdrawalMemberList'/>";
 		});
 		
 	});
@@ -95,15 +185,15 @@
 				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
 				var i = 0;
 				var str = "";
-				if(res.reservationList!=null && res.reservationList.length>0){
+				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
-					$('tbody').html("");
+					$('#reservationTbody').html("");
 					
 					str = "<form name='trFrm' method='post' action=''>"
-						$.each(res.reservationList, function() {
+						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 								str += "<td>"
-								str += "<input type='checkbox' name='boardItemList["+i+"].boardNum' value='${map.BOARD_NUM }'>"
+								str += "<input type='checkbox' name='reservationItemList["+i+"].boardNum' value='"+this.RESERVATION_NUM+"'>"
 								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM
 								str += "</td>"
@@ -118,13 +208,121 @@
 						});
 						str += "</form>";
 						i++;
-						$('tbody').html(str);
+						$('#reservationTbody').html(str);
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
 						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
 						+ "</tr>"
-					$('tbody').html(str);
+					$('#reservationTbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
+	$.commentsListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/member/memberDetail/ajax_commentsList'/>",
+			type: 'post',
+			data: $('form[name=commentsSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.ajaxList!=null && res.ajaxList.length>0){
+					
+					$('#commentsTbody').html("");
+					
+					str = "<form name='trFrm' method='post' action=''>"
+						$.each(res.ajaxList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
+								str += "<td>"
+								str += "<input type='checkbox' name='commentsItemList["+i+"].boardNum' value='"+this.COMMENT_NUM+"'>"
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.COMMENT_NUM
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.BOARD_NUM
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.BOARD_TITLE
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.COMMENT_CONTENT
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.COMMENT_REG_DATE
+								str += "</td>"
+						});
+						str += "</form>";
+						i++;
+						$('#commentsTbody').html(str);
+						pageMake(res.pagingInfo);
+				}else{
+					str = "<tr>"
+						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "</tr>"
+					$('#commentsTbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
+	$.reviewListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/member/memberDetail/ajax_reviewList'/>",
+			type: 'post',
+			data: $('form[name=reviewSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.ajaxList!=null && res.ajaxList.length>0){
+					
+					$('#reviewTbody').html("");
+					
+					str = "<form name='trFrm' method='post' action=''>"
+						$.each(res.ajaxList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
+								str += "<td>"
+								str += "<input type='checkbox' name='reviewItemList["+i+"].boardNum' value='"+this.REVIEW_NUM+"'>"
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.REVIEW_NUM
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVATION_NUM
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY
+								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.REVIEW_REG_DATE
+								str += "</td>"
+						});
+						str += "</form>";
+						i++;
+						$('#reviewTbody').html(str);
+						pageMake(res.pagingInfo);
+				}else if(res.ajaxList.length==0){
+					str = "<tr>"
+						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "</tr>"
+					$('#reviewTbody').html(str);
 				}
 				
 			},
@@ -138,7 +336,10 @@
 	function pageMake(pagingInfo) {
 		//페이징 처리
 		var blockSize = pagingInfo.blockSize;
-		var countPerPage = pagingInfo.countPerPage
+		var countPerPage = pagingInfo.countPerPage;
+		//게시물 구분
+		var kindFlag = pagingInfo.kindFlag;
+		
 		
 		var str = "";
 		str += "<nav aria-label='...'>";
@@ -160,7 +361,14 @@
 				str += "<li class='page-item active' aria-current='page'>";
 				str += "<a class='page-link' href='#'>" + i + "</a></li>";
 			}else{
-				str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.send("+ i +")'>"+i+"</a>"
+				if(kindFlag =='reservation'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reservationSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'review'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reviewSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'comments'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.commentsSend("+ i +")'>"+i+"</a>";
+				}
+				
 				str += "</li>";
 			}
 		}
@@ -176,11 +384,17 @@
 			str += "</ul>";
 			str += "</nav>";
 		}
+		if(kindFlag == 'reservation'){
+			$('.reservationDivPage').html(str);	
+		}else if(kindFlag == 'review'){
+			$('.reviewdivPage').html(str);
+		}else if(kindFlag == 'comments'){
+			$('.commentsdivPage').html(str);
+		}
 		
-		$('.divPage').html(str);
 	}
 	
-	$.send = function(curPage) {
+	$.reservationSend = function(curPage) {
 		$('input[name=currentPage]').val(curPage);
 		
 		$.ajax({
@@ -202,10 +416,56 @@
 			}
 		});
 	}
+		
+	$.reviewSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+		
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_reviewList'/>",
+			type:"post",
+			data:$('form[name=reviewSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.reviewListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
+		
+	$.commentsSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+			
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_commentsList'/>",
+			type:"post",
+			data:$('form[name=commentsSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.commentsListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
 				
 </script>
 <main id="main" class="main">
-
+	<input type="hidden" name="userId" value="${memberMap.USER_ID }">
 	<div class="pagetitle">
 		<h1>회원 상세보기</h1>
 		<nav>
@@ -216,6 +476,14 @@
 				<li class="breadcrumb-item active">회원 상세보기</li>
 			</ol>
 		</nav>
+		<div style="float: right;">
+			<c:if test="${memberMap.USER_OUT_TYPE != 'Y'}">
+				<button class="btn btn-primary goList" id="goMList">회원 목록</button>
+			</c:if>
+			<c:if test="${memberMap.USER_OUT_TYPE == 'Y'}">
+				<button class="btn btn-primary goList" id="goWMList">회원 목록</button>
+			</c:if>
+		</div>
 	</div>
 	<!-- End Page Title -->
 
@@ -241,19 +509,20 @@
 								<button class="nav-link active" data-bs-toggle="tab"
 									data-bs-target="#profileOverview">회원 정보</button>
 							</li>
-							<li class="nav-item">
-								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#reservationList" name="reservationTab">예약 내역</button>
-							</li>
-							<li class="nav-item">
-								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#reviewList">리뷰 내역</button>
-							</li>
-							<li class="nav-item">
-								<button class="nav-link" data-bs-toggle="tab"
-									data-bs-target="#commentList">댓글 내역</button>
-							</li>
-
+							<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#reservationList" name="reservationTab">예약 내역</button>
+								</li>
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#reviewList" name="reviewTab">리뷰 내역</button>
+								</li>
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#commentList" name="commentsTab">댓글 내역</button>
+								</li>
+							</c:if>
 						</ul>
 						<div class="tab-content pt-2">
 							<!-- 회원정보 시작 -->
@@ -281,66 +550,203 @@
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">마케팅 수신 동의</div>
 									<div class="col-lg-9 col-md-8">
-										이메일 ${memberMap.USER_MARKETING_EMAIL_OK }<br> 
-										SMS ${memberMap.USER_MARKETING_SMS_OK }
+										이메일 : <c:if test="${memberMap.USER_MARKETING_EMAIL_OK }"></c:if> <br> 
+										SMS : ${memberMap.USER_MARKETING_SMS_OK }
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">가입일자</div>
 									<div class="col-lg-9 col-md-8">
-										<fmt:parseDate var="userRegDate" value="${memberMap.USER_REG_DATE }" pattern="yyyy-MM-dd" />
-										<fmt:formatDate value="${userRegDate }" pattern="yyyy-MM-dd" />
+										${memberMap.USER_REG_DATE }
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">탈퇴여부</div>
 									<div class="col-lg-9 col-md-8">
 										<c:if test="${memberMap.USER_OUT_TYPE == 'Y' }">
-											탈퇴(탈퇴일 : <fmt:formatDate value="${memberMap.USER_OUT_DATE }" pattern="yyyy-MM-dd" /> )
+											<span style="color: red;">탈퇴(탈퇴일 : ${memberMap.USER_OUT_DATE })</span>
 										</c:if>
 										<c:if test="${empty memberMap.USER_OUT_TYPE }">
-											가입
+											<span style="color: green;">가입</span>
+										</c:if>
+									</div>
+									<div class="col text-center">
+										<c:if test="${memberMap.USER_OUT_TYPE == 'Y' }">
+											<button type="button" id="return" class="btn btn-outline-success">회원 복구</button>
+										</c:if>
+										<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
+											<button type="button" id="withdrawal" class="btn btn-outline-danger">회원 탈퇴</button>
 										</c:if>
 									</div>
 								</div>
 							</div>
 							<!-- 회원정보 끝 -->
-							<!-- 예약 내역 시작 -->
-							<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm">
+							<c:if test="${memberMap.USER_OUT_TYPE != 'Y' }">
+								<!-- 예약 내역 시작 -->
 								<div class="tab-pane fade pt-3" id="reservationList">
-			 							<input type="hidden" name="currentPage" value="1">
-			 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
-			 												
-									<div class="row mb-3">
-										<table class="table">
-											<colgroup>
-												<col style="width: 5%;" />
-												<col style="width: 12%;" />
-												<col style="width: 12%;" />
-												<col style="width: 41%;" />
-												<col style="width: 15%;" />
-												<col style="width: 15%;" />
-											</colgroup>
-											<thead>
-												<tr>
-													<th scope="col"><input type="checkbox" name="chkAll"></th>
-													<th scope="col">예약 번호</th>
-													<th scope="col">장소 구분</th>
-													<th scope="col">예약 장소</th>
-													<th scope="col">예약 인원</th>
-													<th scope="col">예약일</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- ajax로 예약 내역 출력 -->
-											</tbody>
-										</table>
-										<div class="divPage">
-											<!-- ajax로 페이징 -->
-										</div>
+									<form class="row gx-3 gy-2 align-items-center" name="reservationSearchFrm" onsubmit="return false">
+					 							<input type="hidden" name="currentPage" value="1">
+					 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+					 												
+											<div class="row mb-3">
+												<table class="table">
+													<colgroup>
+														<col style="width: 5%;" />
+														<col style="width: 12%;" />
+														<col style="width: 12%;" />
+														<col style="width: 41%;" />
+														<col style="width: 15%;" />
+														<col style="width: 15%;" />
+													</colgroup>
+													<thead>
+														<tr>
+															<th scope="col"><input type="checkbox" name="chkAll"></th>
+															<th scope="col">예약 번호</th>
+															<th scope="col">장소 구분</th>
+															<th scope="col">예약 장소</th>
+															<th scope="col">예약 인원</th>
+															<th scope="col">예약일</th>
+														</tr>
+													</thead>
+													<tbody id="reservationTbody">
+														<!-- ajax로 예약 내역 출력 -->
+													</tbody>
+												</table>
+												<div class="reservationDivPage">
+													<!-- ajax로 페이징 -->
+												</div>
+													<div id="searchDiv">
+														<div class="col-auto">
+															<button type="button" id="reservationSearchBt" class="btn btn-primary">검색</button>
+														</div>
+														<div class="col-sm-3" id="keyword">
+															<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+															<input type="text" class="form-control" id="searchKeyword"
+																name="searchKeyword" value="${searchVo.searchKeyword }">
+														</div>
+														<div class="col-sm-3" id="select">
+															<select class="form-select" name="searchCondition"
+																id="searchCondition">
+																<option value="reservation_num"
+																	<c:if test="${param.searchCondition=='reservation_num'}">
+									            						selected="selected"
+									            					</c:if>>예약번호</option>
+																<option value="space_name"
+																	<c:if test="${param.searchCondition=='space_name'}">
+									            						selected="selected"
+									            					</c:if>>예약 장소명</option>
+															</select>
+														</div>
+													</div>
+											</div>
+			
+									</form>
+								</div>
+								<!-- 예약 내역 끝 -->
+								<!-- 후기 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="reviewList">
+									<form class="row gx-3 gy-2 align-items-center" name="reviewSearchFrm" onsubmit="return false">
+										
+					 							<input type="hidden" name="currentPage" value="1">
+					 							<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+					 												
+											<div class="row mb-3">
+												<table class="table">
+													<colgroup>
+														<col style="width: 5%;" />
+														<col style="width: 12%;" />
+														<col style="width: 12%;" />
+														<col style="width: 41%;" />
+														<col style="width: 15%;" />
+														<col style="width: 15%;" />
+													</colgroup>
+													<thead>
+														<tr>
+															<th scope="col"><input type="checkbox" name="chkAll"></th>
+															<th scope="col">리뷰 번호</th>
+															<th scope="col">예약 번호</th>
+															<th scope="col">예약 장소</th>
+															<th scope="col">예약일</th>
+															<th scope="col">작성일</th>
+														</tr>
+													</thead>
+													<tbody id="reviewTbody">
+														<!-- ajax로 예약 내역 출력 -->
+													</tbody>
+												</table>
+												<div class="reviewdivPage">
+													<!-- ajax로 페이징 -->
+												</div>
+													<div id="searchDiv">
+														<div class="col-auto">
+															<button type="button" id="reviewSearchBt" class="btn btn-primary">검색</button>
+														</div>
+														<div class="col-sm-3" id="keyword">
+															<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+															<input type="text" class="form-control" id="searchKeyword"
+																name="searchKeyword" value="${searchVo.searchKeyword }">
+														</div>
+														<div class="col-sm-3" id="select">
+															<select class="form-select" name="searchCondition"
+																id="searchCondition">
+																<option value="review_num"
+																	<c:if test="${param.searchCondition=='review_num'}">
+									            						selected="selected"
+									            					</c:if>>리뷰번호</option>
+																<option value="reservation_num"
+																	<c:if test="${param.searchCondition=='reservation_num'}">
+									            						selected="selected"
+									            					</c:if>>예약번호</option>
+																<option value="space_name"
+																	<c:if test="${param.searchCondition=='space_name'}">
+									            						selected="selected"
+									            					</c:if>>예약 장소명</option>
+															</select>
+														</div>
+													</div>
+											</div>
+			
+									</form>
+								</div>
+								<!-- 후기 내역 끝 -->
+								<!-- 댓글 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="commentList">
+									<form class="row gx-3 gy-2 align-items-center" name="commentsSearchFrm" onsubmit="return false">
+
+										<input type="hidden" name="currentPage" value="1"> 
+										<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+
+										<div class="row mb-3">
+											<table class="table">
+												<colgroup>
+													<col style="width: 5%;" />
+													<col style="width: 12%;" />
+													<col style="width: 12%;" />
+													<col style="width: 41%;" />
+													<col style="width: 15%;" />
+													<col style="width: 15%;" />
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col"><input type="checkbox" name="chkAll"></th>
+														<th scope="col">댓글 번호</th>
+														<th scope="col">게시물 번호</th>
+														<th scope="col">게시물 제목</th>
+														<th scope="col">작성 내용</th>
+														<th scope="col">작성일</th>
+													</tr>
+												</thead>
+												<tbody id="commentsTbody">
+													<!-- ajax로 예약 내역 출력 -->
+												</tbody>
+											</table>
+											<div class="commentsdivPage">
+												<!-- ajax로 페이징 -->
+											</div>
 											<div id="searchDiv">
 												<div class="col-auto">
-													<button type="button" id="reservationSearchBt" class="btn btn-primary">검색</button>
+													<button type="button" id="commentsSearchBt"
+														class="btn btn-primary">검색</button>
 												</div>
 												<div class="col-sm-3" id="keyword">
 													<label class="visually-hidden" for="searchKeyword">searchCondition</label>
@@ -350,32 +756,30 @@
 												<div class="col-sm-3" id="select">
 													<select class="form-select" name="searchCondition"
 														id="searchCondition">
-														<option value="reservation_num"
-															<c:if test="${param.searchCondition=='reservation_num'}">
-							            						selected="selected"
-							            					</c:if>>예약번호</option>
-														<option value="space_name"
-															<c:if test="${param.searchCondition=='space_name'}">
-							            						selected="selected"
-							            					</c:if>>예약 장소명</option>
+														<option value="comment_num"
+															<c:if test="${param.searchCondition=='comment_num'}">
+									            						selected="selected"
+									            					</c:if>>댓글
+															번호</option>
+														<option value="board_num"
+															<c:if test="${param.searchCondition=='board_num'}">
+									            						selected="selected"
+									            					</c:if>>게시물
+															번호</option>
+														<option value="board_title"
+															<c:if test="${param.searchCondition=='board_title'}">
+									            						selected="selected"
+									            					</c:if>>게시물
+															제목</option>
 													</select>
 												</div>
 											</div>
-									</div>
-	
+										</div>
+
+									</form>
 								</div>
-							</form>
-							<!-- 예약 내역 끝 -->
-							<!-- 후기 내역 시작 -->
-							<div class="tab-pane fade pt-3" id="reviewList">
-								<div class="row mb-3">후기 갈길 곳</div>
-							</div>
-							<!-- 후기 내역 끝 -->
-							<!-- 댓글 내역 시작 -->
-							<div class="tab-pane fade pt-3" id="commentList">
-								<div class="row mb-3">댓글 갈길 곳</div>
-							</div>
-							<!-- 댓글 내역 끝 -->
+								<!-- 댓글 내역 끝 -->
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -395,7 +799,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal" id="cancelBt"></button>
-					<button type="button" class="btn btn-danger" id="okBt"></button>
+					<button type="button" class="btn" id="okBt"></button>
 				</div>
 			</div>
 		</div>

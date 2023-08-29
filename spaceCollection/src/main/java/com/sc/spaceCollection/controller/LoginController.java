@@ -92,9 +92,21 @@ public class LoginController {
 		logger.info("로그아웃");
 		
 		session.removeAttribute("userId");
+		session.removeAttribute("code");
 		
 		return "redirect:/";
 	}
+	
+	
+	/**
+     * 카카오 callback
+     * [GET] /oauth/kakao/callback
+     */
+    @ResponseBody
+    @GetMapping("/kakao")
+    public void kakaoCallback(@RequestParam String code) {
+        System.out.println(code);
+    }
 	
 
 }

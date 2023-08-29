@@ -3,7 +3,7 @@
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
 	
-	#memberDeleteBt{
+	#memberWithdrawalBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
@@ -45,6 +45,34 @@
 		color: red;
 	}
 	
+	#MChkDiv{
+		margin-top: 5px;
+		text-align: left;
+	}
+	
+	#excelDownloadBt{
+		--bs-btn-bg: #dadddf;
+	}
+	
+	#excelModal>div>div>div>p{
+		margin-bottom: 20px;
+	}
+	
+	.marginTop{
+		margin-top: 5px;
+	}
+	
+	.marginTop>div{
+		text-align: left;
+	}
+	
+	#warning{
+		color: red;
+		text-align: left;
+		margin-top: -15px;
+	}
+	
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -53,6 +81,8 @@
 		}, function() {
 			$(this).find('td').css("background-color", "white");
 		});
+		
+		$('#warning').hide();
 		
 		$('#searchBt').click(function() {
 			if($('#searchKeyword').val().length<1){
@@ -67,17 +97,37 @@
 			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('#memberDeleteBt').click(function() {
+		$('#memberWithdrawalBt').click(function() {
 			if($('td>input[type=checkbox]:checked').length<1){
 				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키키겠습니까?");
+				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.");
 				$('#confirm2').modal("show");
 				$('#okBt').click(function() {
 					$('form[name=trFrm]').submit();
 				});
 			}
+		});
+		
+		$('#excelDownloadBt').click(function() {
+			$('#excelModal').modal('show');
+		});
+		
+		$('#columnChkAll').click(function() {
+			var checkState = $(this).is(":checked");
+			$('.modal-body input[type=checkbox]').prop('checked', checkState);
+		});
+		
+		$('#downloadBt').click(function() {
+			if($('.modal-body input[type=checkbox]:checked').length<1){
+				event.preventDefault();
+				$('#warning').show();
+			}
+		});
+		
+		$('.modal-body input[type=checkbox]').click(function name() {
+			$('#warning').hide();
 		});
 			
 	});
@@ -96,7 +146,7 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">회원 관리</li>
 				<li class="breadcrumb-item active">
-					회원관리 
+					회원 관리 
 				</li>
 			</ol>
 		</nav>
@@ -109,13 +159,13 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>회원관리</a></h5>
+ 						<h5 class="card-title" style="font-weight: bold;"><a>회원 관리</a></h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
-                		<button type="button" class="btn btn-secondary" id="memberDeleteBt">회원 탈퇴</button>
+                		<button type="button" class="btn btn-outline-danger" id="memberWithdrawalBt">회원 탈퇴</button>
 						<table class="table">
 							<colgroup>
 								<col style="width: 5%";  />
@@ -142,26 +192,26 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberDelete'/>">
+									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
 										<c:set var="i" value="0"/>
 										<c:forEach var="userInfoVo" items="${list }">
 											<tr>
 												<td>
-													<input type="checkbox" name="userInfoItemList[${i }].userNum" value="${userInfoVo.userNum }">
+													<input type="checkbox" name="userInfoItemList[${i }].userId" value="${userInfoVo.userId }">
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userNum }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userName }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userId }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													${userInfoVo.userEmail }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userNum=${userInfoVo.userNum }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
 													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
 												</td>
 											</tr>
@@ -200,9 +250,15 @@
 							  	</ul>
 							</nav>
 						
-						</div>	
+						</div>
+						
 						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
 							<div id="searchDiv">
+							<div style="float: left;">
+								<button class="btn btn-light" type="button" id="excelDownloadBt">
+									<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
+								</button>
+							</div>
 								<div class="col-auto">
 									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
 								</div>
@@ -265,6 +321,58 @@
 		</div>
 	</div>
 	<!-- EndModal2 -->
+	<!-- Moda3 -->
+	<div class="modal fade" id="excelModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">엑셀 다운로드 항목 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p >
+						엑셀에 포함시킬 데이터를 선택하세요.&nbsp;&nbsp;
+						<input class="form-check-input" type="checkbox" value="" id="columnChkAll" name="columnChkAll">
+						<label class="form-check-label" for="columnChkAll">전체 선택</label>
+					</p>
+					<div class="container text-center " id="MChkDiv">
+						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
+					<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
+					<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
+					<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
+					<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
+						<div class="row align-items-start">
+							<div class="col marginTop">
+								<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="${columnListEng1[i] }" name="${columnListEng1[i] }">
+										<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
+									</div>
+								</c:forEach>
+							</div>
+							<div class="col marginTop">
+								<c:forEach var="i" begin="1" end="${fn:length(columnListEng2)-1 }">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="${columnListEng2[i] }" name="${columnListEng2[i] }">
+										<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-success" id="downloadBt">다운로드</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal3 -->
 	
 </main>
 <!-- End #main -->

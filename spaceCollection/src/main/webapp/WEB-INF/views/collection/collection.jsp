@@ -347,8 +347,7 @@
         margin-top: 5%;
 	}
 </style>
-<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
-
+<div class="hero page-inner overlay" style="background-image: url('images/collection_bg.png');">
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
@@ -385,6 +384,7 @@
 <section class = "search-section">
 	<div class="container" >
 	<hr>
+	<h2>${collectionName}</h2>
 		<div class="row" id = "data-container">
 		</div>
   	</div>
@@ -411,7 +411,7 @@ function loadMoreData() {
     isLoading = true;
 
     $.ajax({
-        url: '<c:url value="/getZzimList?page='+page+'&size='+size+'"/>',
+        url: '<c:url value="/getCollection?page='+page+'&size='+size+'&scNum='+${param.scNum}+'"/>',
         type:'get',
         dataType: 'json',
         success: function(data) {

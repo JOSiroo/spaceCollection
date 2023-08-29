@@ -76,9 +76,17 @@ public class ZzimController {
 		
 		return result;
 	}
-	@RequestMapping("/zzimList")
-	public String zzimList_show(@RequestParam(required = false) HttpSession session,Model model) {
-		
+	@GetMapping("/zzimList")
+	public String zzimList_show(HttpSession session,Model model) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("예약 내역 조회 파라미터 userId = {}", userId);
+		if(userId == null || userId.isEmpty()) {
+			
+			model.addAttribute("msg","찜 목록 조회는 로그인 후 이용 가능합니다");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
 		return "zzim/zzimList";
 	}
 	
