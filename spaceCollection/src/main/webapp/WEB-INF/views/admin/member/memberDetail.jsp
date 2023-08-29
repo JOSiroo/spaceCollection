@@ -183,36 +183,32 @@
 				$('input[name=userId]').val(res.searchVo.userId);
 				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
 				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
-				var i = 0;
+				
 				var str = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
 					$('#reservationTbody').html("");
 					
-					str = "<form name='trFrm' method='post' action=''>"
+					str = "";
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-								str += "<td>"
-								str += "<input type='checkbox' name='reservationItemList["+i+"].boardNum' value='"+this.RESERVATION_NUM+"'>"
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SD_TYPE
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_PEOPLE
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY
-								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SD_TYPE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_PEOPLE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY;
+								str += "</td>";
 						});
-						str += "</form>";
-						i++;
+						
 						$('#reservationTbody').html(str);
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
-						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "<td colspan='5' style='text-align: center;''>예약 내역이 없습니다.</td>"
 						+ "</tr>"
 					$('#reservationTbody').html(str);
 				}
@@ -522,6 +518,10 @@
 									<button class="nav-link" data-bs-toggle="tab"
 										data-bs-target="#commentList" name="commentsTab">댓글 내역</button>
 								</li>
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#spaceList" name="spaceTab">공간 등록 내역</button>
+								</li>
 							</c:if>
 						</ul>
 						<div class="tab-content pt-2">
@@ -606,16 +606,14 @@
 											<div class="row mb-3">
 												<table class="table">
 													<colgroup>
-														<col style="width: 5%;" />
-														<col style="width: 12%;" />
-														<col style="width: 12%;" />
-														<col style="width: 41%;" />
-														<col style="width: 15%;" />
-														<col style="width: 15%;" />
+														<col style="width: 13%;" />
+														<col style="width: 13%;" />
+														<col style="width: 42%;" />
+														<col style="width: 16%;" />
+														<col style="width: 16%;" />
 													</colgroup>
 													<thead>
 														<tr>
-															<th scope="col"><input type="checkbox" name="chkAll"></th>
 															<th scope="col">예약 번호</th>
 															<th scope="col">장소 구분</th>
 															<th scope="col">예약 장소</th>
@@ -794,6 +792,73 @@
 									</form>
 								</div>
 								<!-- 댓글 내역 끝 -->
+								<!-- 공간 등록 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="spaceList">
+									<form class="row gx-3 gy-2 align-items-center" name="spaceSearchFrm" onsubmit="return false">
+
+										<input type="hidden" name="currentPage" value="1"> 
+										<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+
+										<div class="row mb-3">
+											<table class="table">
+												<colgroup>
+													<col style="width: 4%;" />
+													<col style="width: 13%;" />
+													<col style="width: 22%;" />
+													<col style="width: 22%;" />
+													<col style="width: 11%;" />
+													<col style="width: 14%;" />
+													<col style="width: 14%;" />
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col"><input type="checkbox" name="chkAll"></th>
+														<th scope="col">공간 번호</th>
+														<th scope="col">공간명</th>
+														<th scope="col">공간 종류</th>
+														<th scope="col">상태</th>
+														<th scope="col">요청일</th>
+														<th scope="col">승인일</th>
+													</tr>
+												</thead>
+												<tbody id="spaceTbody">
+													<!-- ajax로 예약 내역 출력 -->
+												</tbody>
+											</table>
+											<div class="spacedivPage">
+												<!-- ajax로 페이징 -->
+											</div>
+											<div id="searchDiv">
+												<div class="col-auto">
+													<button type="button" id="spaceSearchBt"
+														class="btn btn-primary">검색</button>
+												</div>
+												<div class="col-sm-3" id="keyword">
+													<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+													<input type="text" class="form-control" id="searchKeyword"
+														name="searchKeyword" value="${searchVo.searchKeyword }">
+												</div>
+												<div class="col-sm-3" id="select">
+													<select class="form-select" name="searchCondition"
+														id="searchCondition">
+														<option value="space_num"
+															<c:if test="${param.searchCondition=='space_num'}">
+									            						selected="selected"
+									            					</c:if>>공간 번호
+														</option>
+														<option value="space_name"
+															<c:if test="${param.searchCondition=='space_name'}">
+									            						selected="selected"
+									            		</c:if>>공간명
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+									</form>
+								</div>
+								<!-- 공간 등록 내역 끝 -->
 							</c:if>
 						</div>
 					</div>
