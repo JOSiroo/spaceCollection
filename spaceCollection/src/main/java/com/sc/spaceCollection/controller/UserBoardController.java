@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
@@ -22,15 +23,20 @@ import com.sc.spaceCollection.comments.model.CommentsVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@Controller
+//@RestController = @Controller + @ResponseBody
+@Controller 
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(UserBoardController.class);
 	private final BoardService boardService;
 	private final CommentsService commentsService;
-	private final BoardTypeService boardTypeService;
 
+	@RequestMapping("/notice")
+	public String notice(Model model) {
+		return "userMain/board/notice"; 
+	}
+	
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
 		logger.info("이벤트 게시물 조회결과");
@@ -73,36 +79,37 @@ public class UserBoardController {
 		}
 	}
 	
-	
-	@ResponseBody
+	@ResponseBody //=> vo가 json 으로 변환되서 리턴
 	@PostMapping("/board/boardDetail/commentsWrite")
-	public String commentsWrite(@ModelAttribute CommentsVO vo, Model model) {
-		/*logger.info("댓글 등록, 파라미터 vo = {}", vo);
-		
-		int cnt = commentsService.insertComments(vo);
-		logger.info("댓글 등록 결과, cnt = {}", cnt);
-		logger.info("vo={}",vo);
-
-		return cnt;*/
+	public CommentsVO commentsWrite(@ModelAttribute CommentsVO vo, Model model) {
 		
 		logger.info("댓글 등록, 파라미터 vo = {}", vo);
 		int cnt = commentsService.insertComments(vo);
 		logger.info("댓글 등록 결과, cnt = {}", cnt);
 		logger.info("vo={}",vo);
-		String msg = "댓글 등록에 실패하였습니다. 다시 시도해주시기 바랍니다.",
-				url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
-		if(cnt>0) {
-			msg = "댓글이 등록되었습니다.";
-		}
+			String msg = "댓글 등록에 실패하였습니다. 다시 시도해주시기 바랍니다.",
+					url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
+				if(cnt>0) {
+					msg = "댓글이 등록되었습니다.";
+					url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
+				}
+				
+				
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		
-		return "board/message";
+		return vo;
 	}
 	
-	@RequestMapping("/board/boardDetail/ajax_commentLoad")
+	@GetMapping("/board/boardDetail/commentsLoad")
 	@ResponseBody
-	public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum,
+	public List<CommentsVO> commentsLoad(@RequestParam String boardNum) {
+		logger.info("댓글조회 = {}", boardNum );
+	    List<CommentsVO> list = commentsService.selectUserComments(Integer.parseInt(boardNum));
+	    return list;
+	}
+
+	/*public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum,
 												@RequestParam(defaultValue = "0")int addNum) {
 		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
 		
@@ -111,15 +118,28 @@ public class UserBoardController {
 		commentsVo.setAddNum(addNum);
 		
 		List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVo);
-		/*for(Map<String, Object> map : list) {
+		for(Map<String, Object> map : list) {
 			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 10));
 			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
-		}*/
+		}
 		logger.info("ajax - 댓글 조회결과, list = {}", list);
 		
 		return list;
-	}
+	}*/
 	
+	
+		
+	
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
+	@ResponseBody
+	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
+		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
+		int cnt = commentsService.updateComments(commentsVo);
+		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
+		return cnt;
+	}
+
 	
 	@RequestMapping("/board/boardDetail/ajax_commentsDelete")
 	@ResponseBody
@@ -130,13 +150,5 @@ public class UserBoardController {
 		return cnt;
 	}
 	
-	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
-	@ResponseBody
-	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
-		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
-		int cnt = commentsService.updateComments(commentsVo);
-		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
-		return cnt;
-	}
 
 }

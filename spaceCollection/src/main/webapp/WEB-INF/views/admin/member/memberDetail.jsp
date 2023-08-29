@@ -113,6 +113,15 @@
 			$.commentsListSearch();
 		});
 		
+		$('#spaceSearchBt').click(function() {
+			$.spaceSend(1);
+		});
+		
+		$('button[name=spaceTab]').click(function() {
+			$.spaceSend(1);
+			$.spaceListSearch();
+		});
+		
 		$('input[name=chkAll]').click(function() {
 			var checkState = $(this).is(':checked')
 			$('td>input[type=checkbox]').prop('checked', checkState);
@@ -183,36 +192,32 @@
 				$('input[name=userId]').val(res.searchVo.userId);
 				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
 				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
-				var i = 0;
+				
 				var str = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
 					$('#reservationTbody').html("");
 					
-					str = "<form name='trFrm' method='post' action=''>"
+					str = "";
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-								str += "<td>"
-								str += "<input type='checkbox' name='reservationItemList["+i+"].boardNum' value='"+this.RESERVATION_NUM+"'>"
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SD_TYPE
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_PEOPLE
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY
-								str += "</td>"
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.RESERVATION_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SD_TYPE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVE_PEOPLE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVER_PAY_DAY;
+								str += "</td>";
 						});
-						str += "</form>";
-						i++;
+						
 						$('#reservationTbody').html(str);
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
-						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "<td colspan='5' style='text-align: center;''>예약 내역이 없습니다.</td>"
 						+ "</tr>"
 					$('#reservationTbody').html(str);
 				}
@@ -333,6 +338,70 @@
 		});
 	}
 	
+	$.spaceListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/member/memberDetail/ajax_spaceList'/>",
+			type: 'post',
+			data: $('form[name=spaceSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.ajaxList!=null && res.ajaxList.length>0){
+					
+					$('#spaceTbody').html("");
+					
+					str = "<form name='trFrm' method='post' action=''>"
+						$.each(res.ajaxList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>";
+								str += "<td>";
+								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;";
+								if(this.SPACE_REQUEST_STATUS == '승인'){
+									str += "color: green";
+								}else if(this.SPACE_REQUEST_STATUS == '거절'){
+									str += "color: red";
+								}else if(this.SPACE_REQUEST_STATUS == '요청'){
+									str += "color: yellow";
+								}
+								str += ";'>" + this.SPACE_REQUEST_STATUS;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
+								str += "</td>";
+						});
+						str += "</form>";
+						i++;
+						$('#spaceTbody').html(str);
+						pageMake(res.pagingInfo);
+				}else if(res.ajaxList.length==0){
+					str = "<tr>"
+						+ "<td colspan='7' style='text-align: center;''>공간 등록 내역이 없습니다.</td>"
+						+ "</tr>"
+					$('#spaceTbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
 	function pageMake(pagingInfo) {
 		//페이징 처리
 		var blockSize = pagingInfo.blockSize;
@@ -367,6 +436,8 @@
 					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.reviewSend("+ i +")'>"+i+"</a>";
 				}else if(kindFlag == 'comments'){
 					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.commentsSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'space'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.spaceSend("+ i +")'>"+i+"</a>";
 				}
 				
 				str += "</li>";
@@ -390,7 +461,10 @@
 			$('.reviewdivPage').html(str);
 		}else if(kindFlag == 'comments'){
 			$('.commentsdivPage').html(str);
+		}else if(kindFlag == 'space'){
+			$('.spacedivPage').html(str);
 		}
+			
 		
 	}
 	
@@ -462,6 +536,29 @@
 			}
 		});
 	}
+	
+	$.spaceSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+			
+		$.ajax({
+			url:"<c:url value='/admin/member/memberDetail/ajax_spaceList'/>",
+			type:"post",
+			data:$('form[name=spaceSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.spaceListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
 				
 </script>
 <main id="main" class="main">
@@ -522,6 +619,10 @@
 									<button class="nav-link" data-bs-toggle="tab"
 										data-bs-target="#commentList" name="commentsTab">댓글 내역</button>
 								</li>
+								<li class="nav-item">
+									<button class="nav-link" data-bs-toggle="tab"
+										data-bs-target="#spaceList" name="spaceTab">공간 등록 내역</button>
+								</li>
 							</c:if>
 						</ul>
 						<div class="tab-content pt-2">
@@ -545,13 +646,28 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">이메일</div>
-									<div class="col-lg-9 col-md-8">${memberMap.USER_EMAIL }</div>
+									<div class="col-lg-9 col-md-8">${memberMap.USER_EMAIL }
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">마케팅 수신 동의</div>
 									<div class="col-lg-9 col-md-8">
-										이메일 : <c:if test="${memberMap.USER_MARKETING_EMAIL_OK }"></c:if> <br> 
-										SMS : ${memberMap.USER_MARKETING_SMS_OK }
+										이메일 : 
+										<c:if test="${memberMap.USER_MARKETING_EMAIL_OK == 'Y' }">
+											<span style="color: green;">동의</span>
+										</c:if> 
+										<c:if test="${memberMap.USER_MARKETING_EMAIL_OK != 'Y' }">
+											<span style="color: red;">미동의</span>
+										</c:if> 
+										<br> 
+										SMS : 
+										<c:if test="${memberMap.USER_MARKETING_SMS_OK == 'Y' }">
+											<span style="color: green;">동의</span>
+										</c:if> 
+										<c:if test="${memberMap.USER_MARKETING_SMS_OK != 'Y' }">
+											<span style="color: red;">미동의</span>
+										</c:if> 
+										<br> 
 									</div>
 								</div>
 								<div class="row">
@@ -591,16 +707,14 @@
 											<div class="row mb-3">
 												<table class="table">
 													<colgroup>
-														<col style="width: 5%;" />
-														<col style="width: 12%;" />
-														<col style="width: 12%;" />
-														<col style="width: 41%;" />
-														<col style="width: 15%;" />
-														<col style="width: 15%;" />
+														<col style="width: 13%;" />
+														<col style="width: 13%;" />
+														<col style="width: 42%;" />
+														<col style="width: 16%;" />
+														<col style="width: 16%;" />
 													</colgroup>
 													<thead>
 														<tr>
-															<th scope="col"><input type="checkbox" name="chkAll"></th>
 															<th scope="col">예약 번호</th>
 															<th scope="col">장소 구분</th>
 															<th scope="col">예약 장소</th>
@@ -779,6 +893,73 @@
 									</form>
 								</div>
 								<!-- 댓글 내역 끝 -->
+								<!-- 공간 등록 내역 시작 -->
+								<div class="tab-pane fade pt-3" id="spaceList">
+									<form class="row gx-3 gy-2 align-items-center" name="spaceSearchFrm" onsubmit="return false">
+
+										<input type="hidden" name="currentPage" value="1"> 
+										<input type="hidden" name="userId" value="${memberMap.USER_ID }">
+
+										<div class="row mb-3">
+											<table class="table">
+												<colgroup>
+													<col style="width: 4%;" />
+													<col style="width: 13%;" />
+													<col style="width: 22%;" />
+													<col style="width: 22%;" />
+													<col style="width: 11%;" />
+													<col style="width: 14%;" />
+													<col style="width: 14%;" />
+												</colgroup>
+												<thead>
+													<tr>
+														<th scope="col"><input type="checkbox" name="chkAll"></th>
+														<th scope="col">공간 번호</th>
+														<th scope="col">공간명</th>
+														<th scope="col">공간 종류</th>
+														<th scope="col">상태</th>
+														<th scope="col">요청일</th>
+														<th scope="col">승인일</th>
+													</tr>
+												</thead>
+												<tbody id="spaceTbody">
+													<!-- ajax로 예약 내역 출력 -->
+												</tbody>
+											</table>
+											<div class="spacedivPage">
+												<!-- ajax로 페이징 -->
+											</div>
+											<div id="searchDiv">
+												<div class="col-auto">
+													<button type="button" id="spaceSearchBt"
+														class="btn btn-primary">검색</button>
+												</div>
+												<div class="col-sm-3" id="keyword">
+													<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+													<input type="text" class="form-control" id="searchKeyword"
+														name="searchKeyword" value="${searchVo.searchKeyword }">
+												</div>
+												<div class="col-sm-3" id="select">
+													<select class="form-select" name="searchCondition"
+														id="searchCondition">
+														<option value="space_num"
+															<c:if test="${param.searchCondition=='space_num'}">
+									            						selected="selected"
+									            					</c:if>>공간 번호
+														</option>
+														<option value="space_name"
+															<c:if test="${param.searchCondition=='space_name'}">
+									            						selected="selected"
+									            		</c:if>>공간명
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+									</form>
+								</div>
+								<!-- 공간 등록 내역 끝 -->
 							</c:if>
 						</div>
 					</div>

@@ -70,17 +70,17 @@
 		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 	  <div class="carousel-inner" >
 	    <div class="carousel-item active" >
-	    	<a href="https://www.spacecloud.kr/focus/23">
+	    	<a href="<c:url value='/collection?scNum=1' />" >
 	      	<img src="<c:url value='/images/couponView1.jpg' />" class="d-block w-100" alt="...">
 	      	</a>
 	    </div>
 	    <div class="carousel-item">
-	    	<a href="https://www.spacecloud.kr/search?q=%EC%97%B0%EC%8A%B5%EC%8B%A4&page=1&check_coupon=true">
+	    	<a href="<c:url value='/collection?scNum=1' />" >
 	      	<img src="<c:url value='/images/couponView2.jpg' />" class="d-block w-100" alt="...">
 	      	</a>
 	    </div>
 	    <div class="carousel-item">
-	    	<a href="">
+	    	<a href="<c:url value='/collection?scNum=1' />" >
 	      	<img src="<c:url value='/images/couponView3.jpg' />" class="d-block w-100" alt="...">
 	      	</a>
 	    </div>

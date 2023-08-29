@@ -56,4 +56,10 @@
 		select * from review_detail_view
 		where space_num = #{spaceNum}
 	</select>
+	
+	<delete id="deleteReview" parameterType="int">
+		delete review
+		where review_num = #{reviewNum}
+	</delete>
+	
 </mapper>

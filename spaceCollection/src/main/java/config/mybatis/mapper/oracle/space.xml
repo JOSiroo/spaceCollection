@@ -4,6 +4,13 @@
 
 <!-- namespace 부분은 말그대로 별칭을 정하는 부분이라 아무렇게나 지정해도 된다  -->
 <mapper namespace="com.sc.spaceCollection.space.model.SpaceDAO">
+	<sql id="searchWhere">
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
+	
+	
 	<select id="selectBySpaceType" resultType="map">
 		select * 
 		from(
@@ -92,4 +99,28 @@
 		SELECT * FROM user_counts_view
 	</select>
 	
+	<select id="selectSpaceListViewByUserId" parameterType="searchVo" resultType="map">
+		select * from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from SPACE_LIST_VIEW where user_id = #{userId}
+				<include refid="searchWhere"/>
+				order by space_request_date
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecordSpaceListViewByUserId" parameterType="searchVo" resultType="int">
+		select count(*) from SPACE_LIST_VIEW where user_id = #{userId}
+		<include refid="searchWhere"/>
+	</select>
+	
+	<update id="isAcceptSpace" parameterType="spaceVo">
+		update space set space_reg_date = sysdate, space_request_status = #{spaceRequestStatus} 
+		where space_num = #{spaceNum}
+	</update>
 </mapper>

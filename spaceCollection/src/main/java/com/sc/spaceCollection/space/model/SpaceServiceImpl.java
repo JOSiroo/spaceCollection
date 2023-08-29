@@ -70,6 +70,53 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 
+	@Override
+	public List<Map<String, Object>> selectSpaceListViewByUserId(SearchVO vo) {
+		List<Map<String, Object>> list = spaceDao.selectSpaceListViewByUserId(vo);
+		for(Map<String, Object> map : list) {
+			if(map.get("SPACE_REQUEST_DATE")!=null) {
+				map.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0,10));
+			}else {
+				map.put("SPACE_REQUEST_DATE", "");
+			}
+			
+			if(map.get("SPACE_REG_DATE")!=null) {
+				map.put("SPACE_REG_DATE", (map.get("SPACE_REG_DATE")+"").substring(0,10));
+			}else {
+				map.put("SPACE_REG_DATE", "");
+			}
+			
+			if(map.get("SPACE_OUT_DATE")!=null) {
+				map.put("SPACE_OUT_DATE", (map.get("SPACE_OUT_DATE")+"").substring(0,10));
+			}else {
+				map.put("SPACE_OUT_DATE", "");
+			}
+			
+			if(map.get("SPACE_REQUEST_STATUS").equals("Y")) {
+				map.put("SPACE_REQUEST_STATUS", "승인");
+			}else if(map.get("SPACE_REQUEST_STATUS").equals("N")){
+				map.put("SPACE_REQUEST_STATUS", "거절");
+			}else if(map.get("SPACE_REQUEST_STATUS").equals("R")) {
+				map.put("SPACE_REQUEST_STATUS", "요청");
+			}
+		}
+		
+		return list;
+	}
+
+
+	@Override
+	public int getTotalRecordSpaceListViewByUserId(SearchVO vo) {
+		return spaceDao.getTotalRecordSpaceListViewByUserId(vo);
+	}
+
+
+	@Override
+	public int isAcceptSpace(SpaceVO vo) {
+		return spaceDao.isAcceptSpace(vo);
+	}
+
+
 	
 
 }

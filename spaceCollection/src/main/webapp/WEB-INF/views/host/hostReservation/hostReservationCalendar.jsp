@@ -4,6 +4,12 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js"></script>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.css' rel='stylesheet' />
     <script>
+    <c:set var = "totalPrice" value="0"/>
+	<c:forEach var="price" items="${list}">
+		${totalPrice = totalPrice + price.RESERVE_PRICE}
+	</c:forEach>
+    
+    
     document.addEventListener('DOMContentLoaded', function() {
     	  var calendarEl = document.getElementById('calendar');
     	  var popup = null; // 팝업 요소
@@ -28,8 +34,8 @@
 		    	        title: '${i.SPACE_NAME }',
 		    	        start: '${i.RESERVE_START_DAY}',
 		    	        extendedProps: {
-		    	            content: '${i.SD_TYPE} / ${i.RESERVE_START_HOUR}시 ~ ${i.RESERVE_FINISH_HOUR}시 ${i.RESERVE_PEOPLE}명'
-		    	          }
+		    	            content: '${i.SD_TYPE} / ${i.RESERVE_START_HOUR}시 ~ ${i.RESERVE_FINISH_HOUR}시 ${i.RESERVE_PEOPLE}명',
+		    	        }
 		    	      },
     	      	</c:forEach>
 	    	    ],
@@ -52,6 +58,18 @@
 	body{
 		background: rgba(128, 157, 255, 0.1);
 	}
+	.row{
+		margin-top: 6%;
+   		margin-bottom: 3%;
+	}
+	.col-3{
+		margin: 0% 0% 0% 2.5%;
+		padding:0% 0% 0% 0%;
+		background: white;
+		border-left : #193D76 solid 4px;
+		border-top : #193D76 solid 4px;
+		border-bottom : #193D76 solid 4px;
+	}
 	#calendar{
 		border : #193D76 solid 4px;
 	}
@@ -60,8 +78,8 @@
 	}
 	.calendar-wrapper{
 		width:70%;
-		margin: 5% 0% 2% 29%;
 		background: white;
+		padding:0;
 	}
 	.fc .fc-button{
 		background: #193D76 !important;
@@ -113,7 +131,6 @@
 	.fc-day-sat {
 		background-color: rgba(25, 61, 118, 0.23); /* 토요일 배경색 */
 	}
-	
 	.fc-day-sun {
 		background-color: rgba(255, 208, 20, 0.23); /* 일요일 배경색 */
 	}
@@ -132,10 +149,42 @@
 	.popover{
 		z-index:100000 !important;
 	}
+	#wonIcon{
+	    background: rgba(255, 208, 20, 0.8);
+	    display: inline-block;
+	    font-weight: bold;
+	    font-size: 20px;
+	    border-radius: 2rem;
+	    margin-left: 1%;
+	    padding: 2% 2% 2% 2%;
+	    width: 11%;
+	    text-align: center;
+	    color:white;
+	}
+	.statisticHeader{
+		width: 100%;
+		padding:4% 0% 3% 4%;
+		border: 1px solid #ffd014;	
+		background:#193D76;
+		
+	}
+	.statisticBody{
+		padding:5% 4% 5% 4%;
+	}
 </style>
 	<div class="calendarHeader">
  	</div>
- 		<div class = "calendar-wrapper">
+ 	<div class="row">
+ 		<div class = "col-3">
+ 			<div class="statisticHeader">
+ 				<h4 style="color:white; font-weight: bold">${sessionScope.userId}님 환영합니다.</h4>
+ 			</div>
+ 			<div class="statisticBody">
+ 				<div id="wonIcon">₩</div><h4 style="display:inline-block; margin-left:4%; font-weight: bold;">금일 매출 : ${totalPrice}</h4>
+ 			</div>
+ 		</div>
+ 		<div class = "col-8 calendar-wrapper">
  			<div id='calendar'></div>
  		</div>
+	</div>
 <%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>

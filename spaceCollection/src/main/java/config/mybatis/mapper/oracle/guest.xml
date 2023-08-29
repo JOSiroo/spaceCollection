@@ -74,4 +74,18 @@
 		and USER_SNS_CODE is not null
 	</select>
 	
+	<update id="updateUserName" parameterType="guestVo">
+		update USER_INFO
+		set USER_NAME=#{userName}
+		where USER_ID=#{userId}
+		and USER_OUT_DATE is null
+	</update>
+	
+	<update id="updateUserHp" parameterType="guestVo">
+		update USER_INFO
+		set USER_HP=#{userHp}
+		where USER_ID=#{userId}
+		and USER_OUT_DATE is null
+	</update>
+	
 </mapper>

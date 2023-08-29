@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/hostTop.jsp" %>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 <style type="text/css">
 	.reservation-header{
-		border : 5px solid #193D76;
 		margin-top :75px;
 		padding:5% 16% 5% 16%;
 	}
@@ -286,4 +285,4 @@
 	});
 	
 </script>
-<%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
+<%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
