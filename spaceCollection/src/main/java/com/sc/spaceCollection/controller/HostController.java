@@ -154,7 +154,6 @@ public class HostController {
 	}
 	
 	@GetMapping("/reservationCalendar")
-<<<<<<< HEAD
 	public String reservationCalendar(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		if(userId == null || userId.isEmpty()) {
@@ -169,11 +168,7 @@ public class HostController {
 		List<Map<String, Object>> list = hostService.HostReservationCalendar(userNum);
 		
 		model.addAttribute("list", list);
-=======
-	public String reservationCalendar() {
->>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection
 		
 		return "host/hostReservation/hostReservationCalendar";
-	}
-	
+	}	
 }
