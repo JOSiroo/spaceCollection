@@ -32,6 +32,11 @@ public class UserBoardController {
 	private final BoardService boardService;
 	private final CommentsService commentsService;
 
+	@RequestMapping("/notice")
+	public String notice(Model model) {
+		return "userMain/board/notice"; 
+	}
+	
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
 		logger.info("이벤트 게시물 조회결과");
