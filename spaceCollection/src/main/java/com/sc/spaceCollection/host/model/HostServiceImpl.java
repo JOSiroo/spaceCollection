@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,11 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HostServiceImpl implements HostService {
 	private final HostDAO hostDao;
-
-	@Override
-	public List<SpaceTypeVO> selectSpaceType(int categoryNo) {
-		return hostDao.selectSpaceType(categoryNo);
-	}
 
 	@Override
 	public List<SpaceCategoryAllVO> selectSpaceCategory() {
@@ -35,6 +31,11 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public List<Map<String, Object>> HostReservationCalendar(int userNum) {
 		return hostDao.HostReservationCalendar(userNum);
+	}
+
+	@Override
+	public UserInfoVO selectUserById(String userId) {
+		return hostDao.selectUserById(userId);
 	}
 
 

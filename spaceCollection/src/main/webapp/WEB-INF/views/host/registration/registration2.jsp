@@ -3,8 +3,10 @@
 <%@ include file="/WEB-INF/views/form/hostTop.jsp"%>
 
 <style type="text/css">
+	body {background: #f6f6f6;}
+
 	article {
-		margin-top: 140px; 
+		margin: 140px 0 150px 0; 
 		font-size: 16px;
     	line-height: 20px;
 		display: flex;
@@ -29,7 +31,7 @@
 	}
 	
 	.boxForm {
-		margin-top: 50px;
+		margin-top: 80px;
 	}
 	
 	.boxTitle {
@@ -82,7 +84,6 @@
 	.boxnoti p {
 		font-size: 14px;
 		color: #7b7b7b;
-		
 	}
 	
 	.boxnoti img {
@@ -155,13 +156,81 @@
 		margin-top: 15px;
 		padding: 8px 8px 8px 8px;
 		resize: none;
+		background: white;
 	}
 	
+	.spaceFacility {
+		display: flex;
+	}
+	
+	.spFacility {
+		width: 850px;
+		height: 150px;
+		border: 1px solid #b7b7b7;
+		font-size: 15px;
+		margin-top: 15px;
+		padding: 8px 8px 8px 8px;
+		resize: none;
+		background: white;
+	}
+	
+	.spFa {
+		color: #b7b7b7;
+		font-weight: bold;
+	}
+	
+	.spaceZip {
+	}
+	
+	.spZip1 {
+		width: 850px;
+		height: 150px;
+		border: 1px solid #b7b7b7;
+		font-size: 15px;
+		margin-top: 15px;
+		padding: 8px 8px 8px 8px;
+		resize: none;
+		background: white;
+	}
+	
+	.spZip2 {
+		width: 850px;
+		height: 150px;
+		border: 1px solid #b7b7b7;
+		font-size: 15px;
+		margin-top: 15px;
+		padding: 8px 8px 8px 8px;
+		resize: none;
+		background: white;
+	}
+	
+	.btBar {
+		display: flex;
+		justify-content: center;
+		margin: 100px 0 0 0;
+	}
+	
+	.btBar button {
+		border-radius: 0.5rem;
+		width: 100%;
+		height: 80px;
+		margin: 0 10px 60px 10px;
+		color: white;
+		font-size: 20px;
+		font-weight: bold;
+	}
 </style>
 
 <script type="text/javascript">
 	$(function() {
+		$('#back').click(function() {
+			history.back();
+		});
 		
+		$('#next').click(function() {
+				$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
+				$('form[name=frmRegi2]').submit();
+		});
 	}); 
 </script>
 
@@ -183,6 +252,8 @@
 						※ 검수 반려 사유 : 업체명이 확인 되지 않는 공간명 <br><br>
 						(예시) 인디워커스 하이브(o), 홍대 뷰가 예쁜 파티룸(x), 강남 회의실(x)
 					</div>
+				</div>
+				<div class="boxContents">
 					<div class="spaceText">
 						<input type="text" class="spText" 
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
@@ -213,14 +284,15 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="spaceType">
-					<c:forEach var="allVo" items="${type }">
-						<input type="button" class="typeTitle" value="${allVo.spaceCategoryVo.categoryName }">
-						<c:forEach var="list" items="${allVo.spaceTypeList }" >
-							<input type="button" class="typeSub" value="${list.spaceTypeName }" >
-						</c:forEach><br>
-					</c:forEach>
+				<div class="boxContents">
+					<div class="spaceType">
+						<c:forEach var="allVo" items="${type }">
+							<input type="button" class="typeTitle" value="${allVo.spaceCategoryVo.categoryName }">
+							<c:forEach var="list" items="${allVo.spaceTypeList }" >
+								<input type="button" class="typeSub" value="${list.spaceTypeName }" >
+							</c:forEach><br>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 			<!-- 공간 한 줄 소개 -->
@@ -234,6 +306,8 @@
 						• 유니크한 인테리어 컨셉<br>• 이용가능한 특별 장비<br>• 합리적인 이용 단가 등<br><br>
 						(예시)<br>층고 4.5m 살수차 진입 가능 대형 촬영스튜디오<br>
 					</div>
+				</div>
+				<div class="boxContents">
 					<div class="spaceIntro">
 						<input type="text" class="spText" value=""
 							placeholder=" 공간의 특장점을 한 문장으로 작성해주세요." maxlength="27">
@@ -255,7 +329,10 @@
 						• 공간의 차별점 (해당 사항만)<br> - 지리적 장점, 이용 가능한 서비스, 특별한 콘텐츠 등<br>
 						• 현재 진행중인 이벤트 내용 등<br><br>※ 검수 반려 사유<br>
 						• 직거래 유도, 타 예약 서비스에 대한 안내, 개인 정보가 표기된 경우<br>
-						• 공간 이용 외 다른 재화/서비스 필수 구매인 경우<br></div>
+						• 공간 이용 외 다른 재화/서비스 필수 구매인 경우<br>
+					</div>
+				</div>
+				<div class="boxContents">
 					<div class="spaceInfo">
 						<textarea class="spText" name=""
 							placeholder=" 게스트들에게 필요한 공간 정보를 상세하게 소개해주세요. 툴팁을 클릭해 작성 가이드를 확인할 수 있습니다." 
@@ -268,6 +345,8 @@
 				<div class="boxTitle">
 					<span>공간 태그 <span style="color: red;">*</span></span>
 					<span class="subTitle">최대 5개</span>
+				</div>
+				<div class="boxContents">
 					<div class="spaceTag">
 						<input type="text" class="spText" value="" style="width: 850px;"
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
@@ -283,6 +362,8 @@
 				<div class="boxTitle">
 					<span>시설 안내 <span style="color: red;">*</span></span>
 					<span class="subTitle">0자/100자</span>
+				</div>
+				<div class="boxContents">
 					<div class="spaceTag">
 						<input type="text" class="spText" value="" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
@@ -298,6 +379,8 @@
 				<div class="boxTitle">
 					<span>예약 시 주의사항 <span style="color: red;">*</span></span>
 					<span class="subTitle">0자/100자</span>
+				</div>
+				<div class="boxContents">
 					<div class="spaceTag">
 						<input type="text" class="spText" value="" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
@@ -320,15 +403,89 @@
 						• 지도, 평면도, 약도 등의 이미지<br>• 홍보물/포스터, 이미지/도형 등이 합성된 편집 이미지<br>
 						• 내용이 식별되지 않는 이미지<br>
 					</div>
-					<div class="spaceTag">
-						<input type="text" class="spText" value="" style="width: 850px;"
-							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
-						<input type="button" class="btAdd" value="추가 ▽">
-						<div class="spTag">
-							
+				</div>
+				<div class="boxContents">
+					<div class="spaceFacility">
+						<div class="spFacility">
+							<span class="spFa">이미지 파일을 추가해 주세요.</span>
+						</div>
+						<input type="button" class="btAdd" value="파일첨부" style="margin-left: 20px;">
+					</div>
+				</div>
+			</div>
+			<!-- 이미지 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>이미지 <span style="color: red;">*</span></span>
+					<span class="subTitle">한 장당 최대 3MB<span style="color: #704de4;">(최대 10장)</span></span>
+					<img class="boxIcon" src="https://partner.spacecloud.kr/static/media/info-circle-solid.d9a24d05.svg">
+					<div class="tooltip-text">
+						대표 이미지는 예약/이용이 가능한 공간의 전체 이미지가 잘 보이는 사진으로 등록해주세요!<br><br>
+						※ 검수 반려 이미지<br>• 인물, 텍스트가 포함된 이미지<br>• 노출 등으로 제 3자에게 수치심을 주는 이미지<br>
+						• 지도, 평면도, 약도 등의 이미지<br>• 홍보물/포스터, 이미지/도형 등이 합성된 편집 이미지<br>
+						• 내용이 식별되지 않는 이미지<br>
+					</div>
+				</div>
+				<div class="boxContents">
+					<div class="spaceFacility">
+						<div class="spFacility" style="height: 50px; padding-top: 15px;">
+							<span class="spFa">이미지 파일을 추가해 주세요.</span>
+						</div>
+						<input type="button" class="btAdd" value="파일첨부" style="margin-left: 20px;">
+					</div>
+				</div>
+			</div>
+			<!-- 주소(위치) -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>주소(위치) <span style="color: red;">*</span></span>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>공간 주소는 최초 등록 이후 직접 변경할 수 없습니다. 고객센터를 통해 주소 변경을 요청해주세요.</p>
+					</div>
+				</div>
+				<div class="boxContents">
+					<div class="spaceZip">
+						<input type="button" class="btAdd" value="주소등록" style="margin: 0 0 10px 20px;">
+						<div class="spZip1" style="height: 50px; padding-top: 15px;">
+							<span class="spFa">실제 서비스되는 공간의 주소를 입력해주세요.</span>
+						</div>
+						<div class="spZip2" style="height: 50px; padding-top: 15px; width: 100%;">
+							<span class="spFa">상세 주소</span>
 						</div>
 					</div>
 				</div>
+			</div>
+			<!-- 위치정보 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>위치정보 <span style="color: red;">*</span></span>
+					<span class="subTitle">0자/20자</span>
+					<img class="boxIcon" src="https://partner.spacecloud.kr/static/media/info-circle-solid.d9a24d05.svg">
+					<div class="tooltip-text">
+						• 공간을 찾아오기 쉽도록 랜드마크, 역 등에서<br>
+						얼마나 걸리는 지를 안내해 주세요.<br><br>(예시) 홍대입구역/OO마트/OO학교 도보 1분거리
+					</div>
+				</div>
+				<div class="boxContents">
+					<div class="spaceInfo">
+						<input type="text" class="spText" value=""
+							placeholder=" ex. 동대문역사공원역 도본 1분 거리" maxlength="27">
+					</div>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>작성하신 위치정보는 검색에 영향을 미치지 않습니다.</p>
+					</div>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>공간 주소를 입력하시면 반려 처리됩니다. (ex. 강남구 대치동, 삼성로 141 등)</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="btBar">
+				<button type="button" class="btn btn-secondary" id="back" >이전</button>
+				<button type="button" class="btn btn-warning" id="next" >다음</button>
 			</div>
 			
 		</form>
@@ -336,4 +493,5 @@
 </article>
 
 
-<%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
+</body>
+</html>
