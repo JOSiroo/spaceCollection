@@ -146,6 +146,8 @@ public class AdminMemberController {
 		logger.info("ajax - 리뷰 내역 조회, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
+		
+		logger.info("pagingInfo = {}", pagingInfo);
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(5);
@@ -162,6 +164,8 @@ public class AdminMemberController {
 		logger.info("ajax -전체 리뷰 수, totalRecord = {}", totalRecord);
 		pagingInfo.setTotalRecord(totalRecord);
 		
+		
+		
 		AjaxVO ajaxVo = new AjaxVO();
 		ajaxVo.setPagingInfo(pagingInfo);
 		ajaxVo.setAjaxList(commentsList);
@@ -173,7 +177,7 @@ public class AdminMemberController {
 	@RequestMapping("/memberDetail/ajax_spaceList")
 	@ResponseBody
 	public AjaxVO ajax_spaceList(@ModelAttribute SearchVO searchVo, Model model) {
-		logger.info("ajax - 리뷰 내역 조회, 파라미터 searchVo = {}", searchVo);
+		logger.info("ajax - 공간 등록 내역 조회, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
@@ -186,10 +190,10 @@ public class AdminMemberController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
 		List<Map<String, Object>> spaceList = spaceService.selectSpaceListViewByUserId(searchVo);
-		logger.info("ajax - 리뷰 내역 조회 결과, spaceList.size = {}", spaceList.size());
+		logger.info("ajax - 공간 등록 내역 조회 결과, spaceList.size = {}", spaceList.size());
 		
 		int totalRecord = spaceService.getTotalRecordSpaceListViewByUserId(searchVo);
-		logger.info("ajax -전체 리뷰 수, totalRecord = {}", totalRecord);
+		logger.info("ajax -전체 공간 등록 수, totalRecord = {}", totalRecord);
 		pagingInfo.setTotalRecord(totalRecord);
 		
 		AjaxVO ajaxVo = new AjaxVO();
