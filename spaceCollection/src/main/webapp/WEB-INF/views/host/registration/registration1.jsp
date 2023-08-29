@@ -9,7 +9,7 @@
 	}
 
 	.contents {
-		padding-top: 120px;
+		margin: 140px 0 150px 0; 
 		width: 1000px;
 	}
 	
@@ -197,4 +197,5 @@
 </section>
 </div>
 
-<%@ include file="/WEB-INF/views/form/hostBottom.jsp" %>
+</body>
+</html>
