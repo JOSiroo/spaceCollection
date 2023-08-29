@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
@@ -97,15 +98,28 @@ public class HostController {
 		//4
 		return "host/report/draft";
 	}
-	
+	//page=1&order=reservationNum&status=before&keyword=fd
 	@RequestMapping("/reservation")
-	public String hostReservation(@RequestParam(defaultValue = "1") int page,HttpSession session, Model model) {
+	public String hostReservation(HttpSession session, Model model,
+									@RequestParam(defaultValue = "1") int page,
+									@RequestParam(required = false) String status,
+									@RequestParam(required = false) String order,
+									@RequestParam(required = false) String keyword) {
 		String userId = (String)session.getAttribute("userId");
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
+		
+		
 		int userNum = guestService.selectUserInfo(userId).getUserNum();
 		logger.info("호스트 예약 조회, 파라미터 userNum = {}, page = {}", userNum, page);
+		logger.info("호스트 예약 조회, 파라미터 status = {}, order = {}, keyword", status, order, keyword);
 		
 		int size = 5;
-		List<Map<String, Object>> list = hostService.selectHostReservation(page,size,userNum);
+		List<Map<String, Object>> list = hostService.selectHostReservation(page,size,userNum,status,order,keyword);
 		logger.info("호스트 예약 조회 결과 list = {}", list);
 		
 		model.addAttribute("list", list);
@@ -126,6 +140,12 @@ public class HostController {
 	@GetMapping("/reservationCalendar")
 	public String reservationCalendar(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
 		int userNum = guestService.selectUserInfo(userId).getUserNum();
 		logger.info("호스트 캘린더, 파라미터 userNum = {}", userNum);
 		
