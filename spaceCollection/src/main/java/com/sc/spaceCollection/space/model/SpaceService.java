@@ -24,4 +24,6 @@ public interface SpaceService {
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
 	Map<String, Object> usercount();
+	List<Map<String, Object>> selectSpaceListViewByUserId(SearchVO vo);
+	int getTotalRecordSpaceListViewByUserId(SearchVO vo);
 }

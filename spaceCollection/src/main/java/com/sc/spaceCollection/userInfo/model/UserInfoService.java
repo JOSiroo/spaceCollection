@@ -13,4 +13,5 @@ public interface UserInfoService {
 	List<UserInfoVO> selectWithdrawalMember(SearchVO vo);
 	int getWithdrawalTotalRecord(SearchVO vo);
 	int memberReturn(String userId);
+	List<UserInfoVO> selectUserInfoForExcel();
 }

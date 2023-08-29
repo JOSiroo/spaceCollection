@@ -62,5 +62,9 @@
 	<update id="memberReturn" parameterType="string">
 		update user_info set user_out_date = '', user_out_type = '' where user_id = #{userId}
 	</update>
+	
+	<select id="selectUserInfoForExcel" resultType="userInfoVo">
+		select * from user_info <![CDATA[where user_num<9999999]]> order by user_num desc
+	</select>
 </mapper>
 
