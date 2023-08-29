@@ -825,11 +825,17 @@ pageEncoding="UTF-8"%>
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         function deleteQna(qnaNum){
-			if(confirm('qna를 삭제하시겠습니까?')){
+			if(confirm('QnA를 삭제하시겠습니까?')){
 				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${vo.spaceNum}+"'/>"
 						
 			}
         }
+        
+		function deleteReview(reviewNum){
+			if(confirm('리뷰를 삭제하시겠습니까?')){
+				location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${vo.spaceNum}+"'/>"
+			}
+	       }
         
         function requestPay() {
             console.log(paymentType);

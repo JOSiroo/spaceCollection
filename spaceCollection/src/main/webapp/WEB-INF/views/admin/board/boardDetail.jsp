@@ -180,7 +180,6 @@
 	
 	$.commentsLoad = function(){
 		$.ajax({
-	
 			url : "<c:url value='/admin/board/boardDetail/ajax_commentLoad'/>",
 			type: 'get',
 			data: "boardNum=" + $('input[name=boardNum]').val() + "&addNum=" + $('input[name=addNum]').val(),
@@ -292,7 +291,6 @@
 								<input type="hidden" name="boardNum" value="${map.BOARD_NUM }">							
 								<input type="hidden" name="userNum" value="9999999">							
 							</form>
-							
 							<hr>
 							<input type="hidden" name="addNum" value="5">
 							<div id="ajaxComments">

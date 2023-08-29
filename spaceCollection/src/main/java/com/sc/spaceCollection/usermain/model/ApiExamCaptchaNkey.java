@@ -13,8 +13,8 @@ import java.util.Map;
 public class ApiExamCaptchaNkey {
 
     public static void main(String[] args) {
-        String clientId = "_w2MbHAObKkDYPDgmbHR"; //애플리케이션 클라이언트 아이디값";
-        String clientSecret = "spVJnrMWRL"; //애플리케이션 클라이언트 시크릿값";
+        String clientId = "WSIhjr8lXgENMXexYTZL"; //애플리케이션 클라이언트 아이디값";
+        String clientSecret = "uLBPMMnVfJ"; //애플리케이션 클라이언트 시크릿값";
 
         String code = "0"; // 키 발급시 0,  캡차 이미지 비교시 1로 세팅
         String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code;

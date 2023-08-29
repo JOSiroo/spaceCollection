@@ -46,18 +46,6 @@
     }
   </style>
   <script>
-  $(function(){
-	  
-	  var $agreementAllAll = $('#agreementAll');
-	  $agreementAll.change(function () {
-	    var $this = $(this);
-	    var checked = $this.prop('checked');
-	    $('.custom-control-input').prop('checked', checked);
-
-	  });
-  	
-  });
-  	
     window.addEventListener('load', () => {
       const forms = document.getElementsByClassName('validation-form');
 
@@ -211,10 +199,10 @@
             </div>
           </div>
             <input type="checkbox" class="select-agreement" id="agreement3">
-            <input type="hidden" name="userMarketingSmsOk" value="N">
+            <input type="hidden" name="userMarketingSmsOk" value="Y">
             <label for="agreement3">이벤트 등 프로모션 알림 SMS (선택)</label><br>
             <input type="checkbox" class="select-agreement" id="agreement4">
-            <input type="hidden" name="userMarketingEmailOk" value="N">
+            <input type="hidden" name="userMarketingEmailOk" value="Y">
             <label for="agreement4">이벤트 등 프로모션 알림 Email (선택)</label>
           <div class="mb-4"></div>
           <button class="btn btn-primary btn-lg btn-block" id="register" name="register" type="submit">가입 완료</button>
@@ -230,20 +218,12 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	$(function(){
-		
-	    // 체크박스 상태 변경 이벤트 리스너 추가
-	    $(".select-agreement").on("change", function() {
-	        if ($(this).prop("checked")) {
-	            $(this).next().val("Y"); //체크박스가 풀리면 값이 null로 넘어가기 떄문에
-	        } else {					//hidden의 값 변경해서 넘겨주기
-	            $(this).next().val("N"); 
-	        }
-    	});
-		
 	    $("#agreementAll").click(function(){
 	      
 	      var isChecked = $(this).prop("checked");
 	      $(".custom-control-input").prop("checked", isChecked);
+	      $(".select-agreement").prop("checked", isChecked);
+	      
 	      
     	});
 	    
@@ -296,12 +276,6 @@
 				return false;
 			}
 	    	
-	    	if ($(".select-agreement").prop("checked") === true) {
-	    		$(this).val("1");
-	    	}else if($(".select-agreement").prop("checked") === false){
-	    		$(this).val("0");
-	    	}
-	    	
 	    });
 	    
 	    $('#userId').keyup(function(){
@@ -322,7 +296,7 @@
 						}
 						
 					},
-					error:function(xhr,status, error){
+					error:function(status, error){
 						alert(status+" : " + error);
 					}
 				});
