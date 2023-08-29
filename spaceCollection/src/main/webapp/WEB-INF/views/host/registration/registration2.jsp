@@ -480,7 +480,6 @@
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
-		
 		//사용자가 입력한 글자수 표시
 		$('.spText').on('input', function() {
 			var txtLen = $(this).val().length;
@@ -490,16 +489,52 @@
 			subTxt.text(txtLen + '자/' + maxLen + '자');
 		});
 		
+		$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
+		
+		//버튼 누르면 색 변환
+		$('.typeSub').click(function() {
+			var spaceType = $(this).closest('.spaceType');
+		    
+		    // 모든 typeSub 버튼을 초기화
+		    spaceType.find('.typeSub').css('background', 'white');
+		    
+		    // 모든 typeTitle 버튼을 초기화
+		    spaceType.find('.typeTitle').css('background', '#656565');
+		    
+		    // 클릭한 버튼의 배경색 변경
+		    $(this).css('background', '#ffd014');
+		    
+		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
+		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
+		});
+		
+		$('.spTag').
+		
 		$('#back').click(function() {
 			history.back();
 		});
 		
 		$('#next').click(function() {
+			
+			//필수 입력
+			//공간명
 			if ($('.spaceName').find($('.spText')).val() < 1) {
 				alert('공간명을 입력하세요.');
 				$('.spaceName').find($('.spText')).focus();
 				
-				var 
+				var offset = $('.spaceName').offset();	//해당 위치 반환
+				$("html, body").animate({scrollTop: offset.top},400); // 선택한 위치로 이동. 두번째 인자는 0.4초를 의미한다.
+				
+				return false;
+			}
+			
+			//공간 타입
+			if ($('.typeTip').find($('.spText')).val() < 1) {
+				alert('공간명을 입력하세요.');
+				$('.spaceName').find($('.spText')).focus();
+				
+				var offset = $('.spaceName').offset();	//해당 위치 반환
+				$("html, body").animate({scrollTop: offset.top},400); // 선택한 위치로 이동. 두번째 인자는 0.4초를 의미한다.
 				
 				return false;
 			}
@@ -508,6 +543,9 @@
 			if (!validate_spaceName($('.spText').val())) {
 				alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
 				$('.spText').focus();
+				
+				var offset = $('.spaceName').offset();
+				$("html, body").animate({scrollTop: offset.top},400); 
 				
 				return false;
 			}
