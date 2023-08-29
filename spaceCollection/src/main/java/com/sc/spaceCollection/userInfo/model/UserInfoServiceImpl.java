@@ -61,4 +61,9 @@ public class UserInfoServiceImpl implements UserInfoService{
 	public int memberReturn(String userId) {
 		return userInfoDao.memberReturn(userId);
 	}
+
+	@Override
+	public List<UserInfoVO> selectUserInfoForExcel() {
+		return userInfoDao.selectUserInfoForExcel();
+	}
 }

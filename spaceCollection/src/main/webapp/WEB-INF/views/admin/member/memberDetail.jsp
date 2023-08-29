@@ -545,13 +545,28 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">이메일</div>
-									<div class="col-lg-9 col-md-8">${memberMap.USER_EMAIL }</div>
+									<div class="col-lg-9 col-md-8">${memberMap.USER_EMAIL }
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-3 col-md-4 label">마케팅 수신 동의</div>
 									<div class="col-lg-9 col-md-8">
-										이메일 : <c:if test="${memberMap.USER_MARKETING_EMAIL_OK }"></c:if> <br> 
-										SMS : ${memberMap.USER_MARKETING_SMS_OK }
+										이메일 : 
+										<c:if test="${memberMap.USER_MARKETING_EMAIL_OK == 'Y' }">
+											<span style="color: green;">동의</span>
+										</c:if> 
+										<c:if test="${memberMap.USER_MARKETING_EMAIL_OK != 'Y' }">
+											<span style="color: red;">미동의</span>
+										</c:if> 
+										<br> 
+										SMS : 
+										<c:if test="${memberMap.USER_MARKETING_SMS_OK == 'Y' }">
+											<span style="color: green;">동의</span>
+										</c:if> 
+										<c:if test="${memberMap.USER_MARKETING_SMS_OK != 'Y' }">
+											<span style="color: red;">미동의</span>
+										</c:if> 
+										<br> 
 									</div>
 								</div>
 								<div class="row">
