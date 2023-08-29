@@ -104,7 +104,8 @@
         <h1 class="mb-3" align="center">게스트 로그인</h1>
         <form class="validation-form" method="post" action="<c:url value='/login/login'/>">
         <div style="margin-left: 17px;">
-			<a id="kakao-login-btn"></a>
+			<!-- <a id="kakao-login-btn"></a> -->
+			<button id="kakaoLogin">카카오로그인</button>
 			<a id="naverIdLogin_loginButton" href="javascript:void(0)">
           		<img src="<c:url value='/images/naverLogin.png'/>" alt="네이버로그인" style="width: 200px; height: 43px;">
      		</a>
@@ -173,14 +174,20 @@
         }, false);
       });
     }, false);
-   //<![CDATA[
     // 사용할 앱의 JavaScript 키를 설정해 주세요.
     Kakao.init('0865f25b9e2e1e9ea1619b5c2d9d8fdf');
-    // 카카오 로그인 버튼을 생성합니다.
+    
+    $("#kakaoLogin").click(function(){
+    	location.href=
+        	"https://kauth.kakao.com/oauth/authorize?client_id=ea07e405c3b0c040cbfc223938101433&prompt=login"
+           +"&redirect_uri=http://localhost:9091/spaceCollection/oauth/kakao&response_type=code";
+    });
+/*     // 카카오 로그인 버튼을 생성합니다.
     Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
         success: function (authObj) {
             alert(JSON.stringify(authObj));
+        	// 액세스 토큰을 설정
             Kakao.Auth.setAccessToken(authObj.access_token);
             location.href=
             	"https://kauth.kakao.com/oauth/authorize?client_id=ea07e405c3b0c040cbfc223938101433&prompt=login"
@@ -197,7 +204,7 @@
     	    	'kakao_account.email', 
     	    	'kakao_account.gender'],
     	  },
-    	})
+    })
     	  .then(function(response) {
     	    console.log(response);
     	  })
@@ -206,7 +213,7 @@
     	  });
   //]]> 
 	  <!-- 카카오 스크립트 -->
-/* 	Kakao.init('0865f25b9e2e1e9ea1619b5c2d9d8fdf'); //발급받은 키 중 javascript키를 사용해준다.
+ 	Kakao.init('0865f25b9e2e1e9ea1619b5c2d9d8fdf'); //발급받은 키 중 javascript키를 사용해준다.
 	console.log(Kakao.isInitialized()); // sdk초기화여부판단
 	//카카오로그인
 	function kakaoLogin() {
@@ -241,7 +248,7 @@
 	      })
 	      Kakao.Auth.setAccessToken(undefined)
 	    }
-	  }  */ 
+	  }   */
 </script>
 <!-- 네이버 스크립트 -->
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>

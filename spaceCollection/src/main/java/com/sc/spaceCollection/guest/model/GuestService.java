@@ -19,6 +19,8 @@ public interface GuestService {
 	String selectUserSalt(String userId);
 	int selectCountEmail(String userEmail);
 	List<GuestVO> selectUserIdByEmail(String userEmail);
+	int updateUserName(GuestVO guestVo);
+	int updateUserHp(GuestVO guestVo);
 	
 	//소셜 로그인 관련
 	int selectKakaoUser(GuestVO guestVo);

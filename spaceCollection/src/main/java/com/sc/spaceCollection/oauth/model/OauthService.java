@@ -21,7 +21,7 @@ import com.google.gson.JsonParser;
 public class OauthService {
 	private static final Logger logger = LoggerFactory.getLogger(OauthService.class);
 	
-    public String getKakaoAccessToken (String authorize_code) {
+    public String getKakaoAccessToken (String authorizeCode) {
         String access_Token = "";
         String refresh_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -30,17 +30,16 @@ public class OauthService {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             
-            //    POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            
-            //    POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=ea07e405c3b0c040cbfc223938101433");
             sb.append("&redirect_uri=http://localhost:9091/spaceCollection/oauth/kakao");
-            sb.append("&code=" + authorize_code);
+            sb.append("&code=" + authorizeCode);
             bw.write(sb.toString());
             bw.flush();
             
