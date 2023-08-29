@@ -123,10 +123,16 @@
 			if($('.modal-body input[type=checkbox]:checked').length<1){
 				event.preventDefault();
 				$('#warning').show();
+			}else{
+				$('form[name=excelFrm]').submit();
 			}
 		});
 		
 		$('.modal-body input[type=checkbox]').click(function name() {
+			$('#warning').hide();
+		});
+		
+		$('#excelModal button[name=cancelBt]').click(function() {
 			$('#warning').hide();
 		});
 			
@@ -338,35 +344,38 @@
 					</p>
 					<div class="container text-center " id="MChkDiv">
 						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
-					<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
-					<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
-					<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
-					<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
-						<div class="row align-items-start">
-							<div class="col marginTop">
-								<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value=""
-											id="${columnListEng1[i] }" name="${columnListEng1[i] }">
-										<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
-									</div>
-								</c:forEach>
+						<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
+						<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
+						<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
+						<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
+						<form name="excelFrm" action="<c:url value='/admin/member/memberExcelDownload'/>" method="post">
+							<div class="row align-items-start">
+								<div class="col marginTop">
+									<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="${2*i }"
+												id="${columnListEng1[i] }" name="headerListIndex[${2*i }]">
+											<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
+										</div>
+									</c:forEach>
+								</div>
+									
+								<div class="col marginTop">
+									<c:forEach var="i" begin="0" end="${fn:length(columnListEng2)-1 }">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="${2*i+1 }"
+												id="${columnListEng2[i] }" name="headerListIndex[${2*i+1 }]">
+											<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
-							<div class="col marginTop">
-								<c:forEach var="i" begin="1" end="${fn:length(columnListEng2)-1 }">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value=""
-											id="${columnListEng2[i] }" name="${columnListEng2[i] }">
-										<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
-									</div>
-								</c:forEach>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
+						data-bs-dismiss="modal" name="cancelBt">취소</button>
 					<button type="button" class="btn btn-success" id="downloadBt">다운로드</button>
 				</div>
 			</div>

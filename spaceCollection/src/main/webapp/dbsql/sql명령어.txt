@@ -48,3 +48,12 @@ select c."COMMENT_NUM",c."COMMENT_CONTENT",c."COMMENT_REG_DATE",c."COMMENT_DEL_F
 from comments c 
 join user_info u on c.user_num=u.user_num
 join board b on c.board_num = b.board_num;
+
+
+create or replace view SPACE_LIST_VIEW
+as
+select s.*, st.space_type_name, u.user_name
+from space s join space_type st
+on s.space_type_no = st.space_type_no
+join user_info u
+on u.user_num = s.user_num;
