@@ -38,8 +38,8 @@ public class MyPageController {
 		return "guest/myPage/myProfile";
 	}
 	
-	@PostMapping("/myProfile")
-	public String myPage_post() {
+	@PostMapping("/editProfile")
+	public String editProfile() {
 		return "";
 	}
 	

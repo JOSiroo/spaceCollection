@@ -80,7 +80,6 @@ public class GuestController {
 		}
 		
 		return bool;
-		
 		//http://localhost:9091/herb/member/ajaxCheckId?userid=hong7
 	}
 	
@@ -142,6 +141,41 @@ public class GuestController {
 		
 		model.addAttribute("guestVo",guestVo);
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("/editName")
+	public boolean editName(@RequestParam String userName,HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		logger.info("ajax이용 - editName, 파라미터 userName={}, userId={}"
+				, userName, userId);
+		GuestVO guestVo = new GuestVO();
+		guestVo.setUserName(userName);
+		guestVo.setUserId(userId);
+		int cnt = guestService.updateUserName(guestVo);
+		logger.info("사용자 닉네임 변경 결과, cnt={}",cnt);
+		boolean bool=false;
+		if(cnt>0) {
+			bool=true;
+		}
+		return bool;
+	}
+	
+	@ResponseBody
+	@PostMapping("/editHp")
+	public boolean editHp(@RequestParam String userHp, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		logger.info("ajax이용 - editHp, 파라미터 userHp={}, userId={}",userHp,userId);
+		GuestVO guestVo = new GuestVO();
+		guestVo.setUserHp(userHp);
+		guestVo.setUserId(userId);
+		int cnt = guestService.updateUserHp(guestVo);
+		logger.info("사용자 번호 변경 결과, cnt={}",cnt);
+		boolean bool=false;
+		if(cnt>0) {
+			bool=true;
+		}
+		return bool;
 	}
 
 	
