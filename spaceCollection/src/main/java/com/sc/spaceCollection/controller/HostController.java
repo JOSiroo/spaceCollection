@@ -124,7 +124,14 @@ public class HostController {
 	}
 	
 	@GetMapping("/reservationCalendar")
-	public String reservationCalendar() {
+	public String reservationCalendar(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		logger.info("호스트 캘린더, 파라미터 userNum = {}", userNum);
+		
+		List<Map<String, Object>> list = hostService.HostReservationCalendar(userNum);
+		
+		model.addAttribute("list", list);
 		
 		return "host/hostReservation/hostReservationCalendar";
 	}

@@ -11,4 +11,6 @@ public interface HostDAO {
 	List<SpaceTypeVO> selectSpaceType(int categoryNo);
 	List<SpaceCategoryAllVO> selectSpaceCategory();
 	List<Map<String, Object>> selectHostReservation(@Param("startRow") int startRow, @Param("endRow") int endRow, @Param("userNum")int userNum);
+	List<Map<String, Object>> HostReservationCalendar(@Param("userNum")int userNum);
+	
 }

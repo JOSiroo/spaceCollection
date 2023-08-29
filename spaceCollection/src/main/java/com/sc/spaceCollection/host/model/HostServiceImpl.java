@@ -32,5 +32,10 @@ public class HostServiceImpl implements HostService {
 		return hostDao.selectHostReservation(startRow, endRow, userNum);
 	}
 
+	@Override
+	public List<Map<String, Object>> HostReservationCalendar(int userNum) {
+		return hostDao.HostReservationCalendar(userNum);
+	}
+
 
 }
