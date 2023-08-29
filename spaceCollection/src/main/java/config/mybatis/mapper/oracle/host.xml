@@ -40,5 +40,9 @@
 		<![CDATA[ 
 		where rn >= #{startRow} and rn <= #{endRow} ]]>
 	</select>
+	<select id="HostReservationCalendar" resultType="map">
+        select * from host_reservation_view
+        where user_num = #{userNum}
+	</select>
 	
 </mapper>
