@@ -10,8 +10,6 @@
 <title>시즌 이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript"
-	src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 </head>
 <style>
 	
@@ -32,7 +30,7 @@
         position: absolute;
         max-width: 1200px;
         margin: 0 auto;  
-        margin-left: 650px;
+        margin-left: 450px;
         margin-bottom: 500px;
 	}
 	
@@ -78,24 +76,24 @@ function addComma(value){
  
  
 $(function() {
-		var boardNum = ${param.boardNum};
-		$.ajax({
-			url : "<c:url value='/user/board/boardDetail/commentsLoad?boardNum="+boardNum+"'/>",
-			type: 'get',
-			success:function(data){
-				var str = "";
-				if(data!=null && data.length>0){
-					console.log(data);
-					makeList(data);
-				}else{
-					str = "<span>등록된 댓글이 없습니다.</span>";
-					$('#ajaxComments').append(str);
+			var boardNum = ${param.boardNum};
+			$.ajax({
+				url : "<c:url value='/user/board/boardDetail/commentsLoad?boardNum="+boardNum+"'/>",
+				type: 'get',
+				success:function(data){
+					var str = "";
+					if(data!=null && data.length>0){
+						console.log(data);
+						makeList(data);
+					}else{
+						str = "<span>등록된 댓글이 없습니다.</span>";
+						$('#ajaxComments').append(str);
+					}
+				},
+				error:function(xhr, status, error){
+					alert(status + " : " + error);
 				}
-			},
-			error:function(xhr, status, error){
-				alert(status + " : " + error);
-			}
-		});//ajax
+			});//ajax
 
 		$('#sendBt').click(function() {
 			event.preventDefault();
@@ -119,6 +117,7 @@ $(function() {
 								});
 			        	console.log(add);
 									$('#ajaxComments').append(add);
+		     						$('form[name=commentsFrm]').val('')
 		     						alert("댓글 등록 성공"); 
 							 /* if($('input[name=addNum]').val() == data.length){
 								$('#commentsMoreDiv').html("<span onClick='moreComment()'>댓글 더 보기</span>");

@@ -122,50 +122,16 @@
     margin-top: 50px;
 	}
 </style>
+
 <section>
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 공지 사항 검색</label>
+			<!-- https://www.spacecloud.kr/board/notice?page=1&q=tlwms -->
 			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="검색어를 입력하세요."
-				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>
+				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>  
 			<button class="searchBt" onclick="search()">검색</button>
 		</div>
-		<%-- <div class="row">
-			<div class = "col-6"></div>
-			<div class="col-2">
-				<select class = "orderSelector">
-					<option value="default">정렬기준</option>
-					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
-						value="RESERVATION_NUM">예약 번호순 정렬</option>
-					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
-						value="RESERVE_START_DAY">이용 일자순 정렬</option>
-				</select>
-			</div>		
-			<div class="col-2">
-				<select class = "statusSelector">
-					<option value = "default">전체상태</option>
-					<option <c:if test="${param.status == 'finished'}">selected</c:if> 
-						value = "finished">이용완료</option>
-					<option <c:if test="${param.status == 'before'}">selected</c:if> 
-						value = "before">이용전</option>
-					<option <c:if test="${param.status == 'canceled'}">selected</c:if>
-						value = "canceled">취소환불</option>
-				</select>
-			</div>		
-			<div class="col-2">
-				<button class="calendarBtn">
-					캘린더보기
-				</button>
-			</div>		
-		</div> --%>
-		<!-- <div class="row dataTitle">
-			<div class = "col-1">예약번호</div>
-			<div class = "col-2" style="padding-left:2.7%">예약자</div>
-			<div class = "col-4" style="padding-left:2%;">공간정보</div>
-			<div class = "col-2" style="padding-left:1.7%;width: 8%;">날짜</div>
-			<div class = "col-2" style="padding-left:7%;">이용구분</div>
-			<div class = "col-2" style="padding-left:9.5%;">확인</div>
-		</div> -->
 		<jsp:useBean id="now" class="java.util.Date"/>
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
 		<c:if test="${!empty list}">
@@ -200,11 +166,6 @@
 			</c:forEach>
 		</c:if>
 		
-		<%-- <c:if test="${empty list}">
-			<div class="row" style = "text-align:center">
-				<h2>예약 내역이 없습니다</h2>
-			</div>
-		</c:if> --%>
 		
 <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">

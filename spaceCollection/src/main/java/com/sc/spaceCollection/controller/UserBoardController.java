@@ -31,11 +31,12 @@ public class UserBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(UserBoardController.class);
 	private final BoardService boardService;
 	private final CommentsService commentsService;
-
+	
 	@RequestMapping("/notice")
 	public String notice(Model model) {
 		return "userMain/board/notice"; 
 	}
+	
 	
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
@@ -125,10 +126,6 @@ public class UserBoardController {
 		
 		return list;
 	}*/
-	
-	
-		
-	
 	
 	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
 	@ResponseBody

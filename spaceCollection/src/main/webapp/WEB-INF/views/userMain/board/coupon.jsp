@@ -11,6 +11,7 @@
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   </head>
+ 
     <script>
     
  	 //모달
@@ -52,18 +53,28 @@
     };
     
     </script>
-  <body>
-    <div var="num">
-    <button id="generateButton" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
-    <p id="couponDisplay" ></p>
-	</div>
-	
+    
+<style>
+#generateButton{
+	 justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto; 
+      margin-left: 700px; 
+      position: center;
+	 width: 200px;
+}
+</style>
 
+<body>
+  <div var="num" class="couponBox">
+	   <button id="generateButton" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
+	   <p id="couponDisplay" ></p>
+		<!-- Button trigger modal -->
+		<button id="generateButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		  Launch demo modal
+		</button>
+  </div>
 	
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
 
 <!-- Modal 디자인 -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
