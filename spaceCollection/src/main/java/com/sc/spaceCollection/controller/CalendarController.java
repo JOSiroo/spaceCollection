@@ -36,12 +36,14 @@ public class CalendarController {
 		String memoTitle = (String)map.get("title");
 		String memoStartDay = (String)map.get("start");
 		String memoEndDay = (String)map.get("end");
+		String memoColor = (String)map.get("color");
 		
 		
 		vo.setMemoContent(memoContent);
 		vo.setMemoTitle(memoTitle);
 		vo.setMemoStartDay(memoStartDay);
 		vo.setMemoEndDay(memoEndDay);
+		vo.setMemoColor(memoColor);
 		vo.setUserNum(userNum);
 		
 		int cnt = calendarService.insertCalendarMemo(vo);
