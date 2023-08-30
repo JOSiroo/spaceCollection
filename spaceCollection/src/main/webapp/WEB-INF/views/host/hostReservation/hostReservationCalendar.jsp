@@ -23,12 +23,52 @@
     	    aspectRatio: 1.35,
     	    height: 800,
     	    dayMaxEventRows: true,
-    	    
     	    views: {
     	      timeGrid: {
     	        dayMaxEventRows: 4 
     	      }
     	    },
+    	    headerToolbar: {
+    	        center: 'addEventButton'
+    	      },
+    	      customButtons: {
+    	          addEventButton: {
+    	            text: '일정 추가',
+    	            click: function() {
+    	              var startStr = prompt('날짜를 입력하세요');
+    	              var start = new Date(startStr + 'T00:00:00'); // will be in local time
+    	              var endStr = prompt('날짜를 입력하세요');
+    	              var end = new Date(endStr + 'T00:00:00'); // will be in local time
+    	              
+    	              var title = prompt('일정 이름을 입력하세요');
+    	              var contentStr = prompt('일정 내용을 입력하세요');
+    	              
+    	              
+    	              if (!isNaN(start.valueOf()) && !isNaN(end.valueOf())) { // valid?
+    	            		$.ajax({
+    	            			url:"<c:url value='/insertMemo'/>",
+							    data:{
+							    	title:title,
+									content:contentStr,
+									start:startStr+"",
+									end:endStr+""
+							    },
+							    success:function(response){
+							    	console.log(response);
+							    },
+							    error:function(error, xhr, status){
+							    	console.log(error);
+							    	console.log(xhr);
+							    	console.log(status);
+							    }
+    	            		});
+    	                alert('asdsad');
+    	              } else {
+    	                alert('Invalid date.');
+    	              }
+    	            }
+    	          }
+    	        },
     	    events: [
     	    	<c:forEach var ="i" items="${list}">
 		    	      {
@@ -40,6 +80,17 @@
 		    	        }
 		    	      },
     	      	</c:forEach>
+				<c:forEach var ="i" items="${calList}">
+				{
+	    	        title: '${i.memoTitle}',
+	    	        start: '${i.memoStartDay}',
+	    	        end: '${i.memoEndDay}',
+	    	        extendedProps: {
+	    	            content: '${i.memoContent}'
+	    	        },
+	    	        color:'purple'
+	    	      },
+				</c:forEach>
 	    	    ],
 	    	    eventDidMount: function (info) {
 	                $(info.el).popover({
@@ -125,18 +176,18 @@
 										'</div>';
 		            			
 	            			$('#modalBody').html(htmlStr);
+	            			$('#exampleModalLabel').text(data.event.title);
+	    	            	event.setAttribute('data-bs-target', '#modal');
+	    	            	event.setAttribute('data-bs-toggle', 'modal');
+	    	            	$("#modal").modal("show");
 	            		},
 	            		error:function(xhr, status, error){
-	            			console.log(error);
-	            			console.log(xhr);
-	            			console.log(status);
-	            			alert('실패' + error, xhr, status);
+	            			$('.modal-title').text(data.event.title);
+	            			$('.modal-body').text(data.event.extendedProps.content);
+	            			$("#exampleModal").modal("show");
 	            		}
 	            	});//ajax
-	            	$('#exampleModalLabel').text(data.event.title);
-	            	event.setAttribute('data-bs-target', '#modal');
-	            	event.setAttribute('data-bs-toggle', 'modal');
-	            	event.click();
+	            	
 	            }//eventClick
 	            
     	    });
@@ -155,7 +206,7 @@
 	}
 
 	body{
-		background: rgba(0, 23, 61, 1);
+		background: lightgrey;
 	}
 	.row{
 		margin-top: 6%;
@@ -399,6 +450,23 @@
 	    </div>
 	  </div>
 	</div>
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel"  style="font-weight: bold;"></h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body" style="font-weight: bold; color:black; font-size:24px;padding:5% 5% 5% 5%;">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">일정 삭제</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
  	<div class="row">
  		<div class = "col-3">

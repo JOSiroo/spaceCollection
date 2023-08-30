@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.calendar.model.CalendarService;
+import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
@@ -29,6 +31,7 @@ public class HostController {
 	private final GuestService guestService;
 	private final HostService hostService;
 	private final ReservationService reservationService;
+	private final CalendarService calendarService;
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -173,12 +176,18 @@ public class HostController {
 			
 			return "common/message";
 		}
+		
+		
 		int userNum = guestService.selectUserInfo(userId).getUserNum();
 		logger.info("호스트 캘린더, 파라미터 userNum = {}", userNum);
 		
+		
+		
+		List<CalendarVO> calList = calendarService.selectMemoByUserNum(userNum);
 		List<Map<String, Object>> list = hostService.HostReservationCalendar(userNum);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("calList", calList);
 		
 		return "host/hostReservation/hostReservationCalendar";
 	}
