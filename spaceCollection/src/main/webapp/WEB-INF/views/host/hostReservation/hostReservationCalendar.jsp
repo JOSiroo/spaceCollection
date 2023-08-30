@@ -47,7 +47,12 @@
 	                    content: info.event.extendedProps.content,
 	                    container: 'body'
 	                });
-	            }
+	            },
+	            dateClick: function(info) {
+	            	console.log(info);
+	            	$('.fc-day').attr('style','none');
+	                info.dayEl.style.backgroundColor = '#ffd014';
+              	}
     	    });
     	  calendar.render();
     	});
@@ -135,7 +140,7 @@
 		background-color: rgba(255, 208, 20, 0.23); /* 일요일 배경색 */
 	}
 	.fc-day-today{
-		background-color:rgba(255, 173, 20, 0.5) !important;
+		background-color:rgba(255, 173, 20, 0.5);
 	}
 	
 	
@@ -180,7 +185,13 @@
  				<h4 style="color:white; font-weight: bold">${sessionScope.userId}님 환영합니다.</h4>
  			</div>
  			<div class="statisticBody">
- 				<div id="wonIcon">₩</div><h4 style="display:inline-block; margin-left:4%; font-weight: bold;">금일 매출 : ${totalPrice}</h4>
+ 				<div id="wonIcon">₩</div>
+				<h4 style="display:inline-block; margin-left:4%; font-weight: bold;">
+					금일 매출 : <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원
+				</h4>
+				<div>
+				
+				</div>
  			</div>
  		</div>
  		<div class = "col-8 calendar-wrapper">

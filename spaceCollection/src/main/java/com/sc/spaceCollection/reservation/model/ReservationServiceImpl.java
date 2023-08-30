@@ -47,10 +47,10 @@ public class ReservationServiceImpl implements ReservationService{
 		ReservationVO vo = new ReservationVO();
 		vo.setSdNum(sdNum);
 		vo.setReserveStartDay(reserveStartDay);
-		vo = reservationDao.selectReservationByDayAndNum(vo);
+		List<ReservationVO> list = reservationDao.selectReservationByDayAndNum(vo);
 		
-		if(vo != null) {
-			return vo;
+		if(list != null) {
+			return list;
 		}else {
 			return "noData";
 		}
