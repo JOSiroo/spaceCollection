@@ -507,7 +507,6 @@ pageEncoding="UTF-8"%>
 			</div>
 	<!-- 여기까지 섹션-->				
 </section>
-
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
@@ -548,81 +547,79 @@ pageEncoding="UTF-8"%>
 		});
 		
 			
-			  $(".datepicker").each(function(index, element) {
-			  var datepickerId = $(element).data("id");
-			  var sdNum = $(this).siblings('.calSdNum'); 
-			  var sdPrice = $(this).siblings('.calSdPrice');
-			  
-			  $(element).datepicker({
-			    language: 'ko',
-			    inline: true,
-			    minDate: new Date(),
-			    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-			    onSelect: function(selectedDates, instance) {
-			      console.log("선택한 날짜:", selectedDates);
-			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
-			      $('.selectedDate').val(selectedDates);
-			      $('.mySwiper').css('visibility', 'visible');
-			      $('.swiper-inBox').removeClass('on');
-			      var requestData = {
-			                sdNum: sdNum.val(),
-			                selectedDates: selectedDates+""
-			            };
-			      
-			      $.ajax({
-			    	  url: 'reservation/ajaxSelectRes', // 서버의 엔드포인트 URL
-                      method: 'get', // 
-                      dataType:'json',
-                      data: requestData,
-                      success: function(data) {
-                          // AJAX 요청이 성공한 경우
-                          console.log('data:', data);
-                          var begin = parseInt(data.startHour);
-                          var end = parseInt(data.endHour);
-                          var result = data.result;
-                          if(result === 2){
-                        	  console.log('예약내역 없음');
-                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
-                          } else if (result === 1){
-							  console.log('예약내역 있음');
-                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
-                          }
-                      },
-                      error: function(xhr, status, error) {
-                          // AJAX 요청이 실패한 경우
-                          console.error('Error:', error);
-                      }
-			      });
-			      
-			    }
-			  });
-			});
-			  
-		function makeTimeTable(result, begin, end, sdNum, sdPrice){
-			console.log("makeTimeTable");
-			console.log('sdPrice = '+ sdPrice.val());
-			console.log('result = '+ result);
-			console.log('begin = '+ begin);
-			console.log('end = ' + end);
-			console.log('sdNum = ' + sdNum.val());
-			var parent = sdNum.closest('.inAccordionLi');
+	  $(".datepicker").each(function(index, element) {
+	  var datepickerId = $(element).data("id");
+	  var sdNum = $(this).siblings('.calSdNum'); 
+	  var sdPrice = $(this).siblings('.calSdPrice');
+	  
+	  $(element).datepicker({
+	    language: 'ko',
+	    inline: true,
+	    minDate: new Date(),
+	    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+	    onSelect: function(selectedDates, instance) {
+	      console.log("선택한 날짜:", selectedDates);
+	      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
+	      $('.selectedDate').val(selectedDates);
+	      $('.mySwiper').css('visibility', 'visible');
+	      $('.swiper-inBox').removeClass('on');
+	      var requestData = {
+	                sdNum: sdNum.val(),
+	                selectedDates: selectedDates+""
+	            };
+	      
+		$.ajax({
+			url: 'reservation/ajaxSelectRes', // 서버의 엔드포인트 URL
+			method: 'get', // 
+			dataType:'json',
+			data: requestData,
+			success: function(data) {
+				// AJAX 요청이 성공한 경우
+				var begin = parseInt(data.startHour);
+				var end = parseInt(data.endHour);
+				var result = data.map.result;
+				if(data.length == 0){
+					console.log('예약내역 없음');
+					noReservationRecord(result, begin, end, sdNum,sdPrice);                              
+				} else{
+					console.log('예약내역 있음');
+					makeTimeTable(data,sdNum);
+				}
+			},
+			error: function(xhr, status, error) {
+				// AJAX 요청이 실패한 경우
+				console.error('Error:', error);
+			}
+	      });
+	    }
+	  });
+	});
+ 		function noReservationRecord(result, begin, end, sdNum,sdPrice){
+ 			var parent = sdNum.closest('.inAccordionLi');
 			var times = parent.children('.swiper-inBox');
-			
-			
-			if(result == 1){	//예약내역 있음!
+ 			parent.find('.swiper-inBox').removeClass('reserved');
+			parent.find('.swiper-inBox').prop('disabled', false);
+			parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+			parent.find('.swiper-inBox').val(sdPrice.val()); 			
+ 		}
+	  
+	  
+		function makeTimeTable(data,sdNum){
+			$.each(data,function(){
+				console.log("makeTimeTable");
+				console.log("data = ", this);
+				var parent = sdNum.closest('.inAccordionLi');
+				var times = parent.children('.swiper-inBox');
+				var begin = this.startHour;
+				var end = this.endHour;
+
 				for(var i = begin; i <= end; i++){
 					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
 					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
 					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
 				}	
-			}else{
-				parent.find('.swiper-inBox').removeClass('reserved');
-				parent.find('.swiper-inBox').prop('disabled', false);
-				parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
-				parent.find('.swiper-inBox').val(sdPrice.val());
-			}
+			});
 		}
-		
 
 	});
 		$('#QNAWrite').click(function(){
@@ -712,7 +709,7 @@ pageEncoding="UTF-8"%>
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
-	    mapOption = { 
+	    mapOption = { 				
 	        center: new kakao.maps.LatLng(${vo.latitude}, ${vo.longitude}), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    }; 

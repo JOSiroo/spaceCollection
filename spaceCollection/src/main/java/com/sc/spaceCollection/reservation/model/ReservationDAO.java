@@ -11,7 +11,7 @@ import com.sc.spaceCollection.common.SearchVO;
 @Mapper
 public interface ReservationDAO {
 	int insertReservation(ReservationVO vo);
-	ReservationVO selectReservationByDayAndNum(ReservationVO vo);
+	List<ReservationVO> selectReservationByDayAndNum(ReservationVO vo);
 	Map<String, Object> showReservation(ReservationVO vo);
 	List<Map<String,Object>> reservationList(String userId);
 	int canceledReservation(String reservationUid);

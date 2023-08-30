@@ -2,6 +2,7 @@ package com.sc.spaceCollection.controller;
 
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class ReservationController {
 		int reservePeople = Integer.parseInt((String) paymentData.get("custom_data[RESERVE_PEOPLE]"));
 		String paymentType = (String) paymentData.get("pg_provider");
 		String reservationUid = (String) paymentData.get("pg_tid");
+		
 		logger.info("userId = {}, sdNum = {}, startDay = {}, endHour = {}", userId, sdNum, startDay, endHour);
 		logger.info("startHour = {}, endDay = {}, reservePrice = {}, paymentType = {}", startHour, endDay, reservePrice, paymentType);
 		logger.info("merchant_uid = {}", reservationUid);
@@ -93,8 +95,8 @@ public class ReservationController {
 	public Object selectReservationByDayAndNum(@RequestParam String sdNum,
 											@RequestParam String selectedDates) {
 		logger.info("ajax 예약조회 파라미터 sdNum = {}, selectedDates = {}", sdNum, selectedDates);
-		Map<String, Integer> resultMap = new HashMap<>();
-
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		Map<String,Object> resultMap = new HashMap<>();
 		
 		if(reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates).equals("noData")) {
 			logger.info("해당 날짜에 예약내역 없음");
@@ -104,15 +106,22 @@ public class ReservationController {
 			resultMap.put("result", 2);
 			resultMap.put("startHour", vo.getSdOpenTime());
 			resultMap.put("endHour",vo.getSdCloseTime());
+			
+			resultList.add(resultMap);
 		}else {
-			ReservationVO vo = (ReservationVO)reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates);
-			logger.info("ajax 예약조회 결과 vo = {}",vo);
-
-			resultMap.put("result", 1);
-			resultMap.put("startHour", Integer.parseInt(vo.getReserveStartHour()));
-			resultMap.put("endHour", Integer.parseInt(vo.getReserveFinishHour()));
+			List<ReservationVO> list = (List<ReservationVO>)reservationService.selectReservationByDayAndNum(Integer.parseInt(sdNum), selectedDates);
+			
+			for(int i = 0; i < list.size(); i++) {
+				ReservationVO vo = list.get(i);
+				resultMap = new HashMap<>();
+				resultMap.put("startHour", Integer.parseInt(vo.getReserveStartHour()));
+				resultMap.put("endHour", Integer.parseInt(vo.getReserveFinishHour()));
+				logger.info("예약번호 = {}",vo.getReservationNum());
+				resultList.add(resultMap);
+			}
+			logger.info("ajax 예약조회 결과 resultList = {}",resultList);
 		}
-		return resultMap;
+		return resultList;
 	}
 	@GetMapping("/showReservation")
 	public String showReservation(@RequestParam int reservationNum, HttpSession session,Model model) {
