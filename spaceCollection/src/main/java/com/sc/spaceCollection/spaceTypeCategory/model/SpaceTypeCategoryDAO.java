@@ -14,4 +14,5 @@ public interface SpaceTypeCategoryDAO {
 	int spaceTypeCategoryNameDupCheck(SpaceTypeCategoryVO vo);
 	int spaceTypeCategoryActivation(SpaceTypeCategoryVO vo);
 	int spaceTypeCategoryDeactivation(SpaceTypeCategoryVO vo);
+	List<SpaceTypeCategoryVO> selectSpaceTypeCategoryAll();
 }

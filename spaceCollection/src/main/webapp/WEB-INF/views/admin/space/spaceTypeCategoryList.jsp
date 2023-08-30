@@ -270,8 +270,6 @@
 														<span class="active">활성화</span>
 													</c:if>
 												</td>
-												<td>
-												</td>
 											</tr>
 											<c:set var="i" value="${i+1 }"/>
 										</c:forEach>

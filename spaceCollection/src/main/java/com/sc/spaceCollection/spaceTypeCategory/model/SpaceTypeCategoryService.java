@@ -14,4 +14,5 @@ public interface SpaceTypeCategoryService {
 	int insertSpaceTypeCategory(SpaceTypeCategoryVO vo);
 	int spaceTypeCategoryActivation(SpaceTypeCategoryListVO listVo);
 	int spaceTypeCategoryDeactivation(SpaceTypeCategoryListVO listVo);
+	List<SpaceTypeCategoryVO> selectSpaceTypeCategoryAll();
 }
