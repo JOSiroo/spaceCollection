@@ -144,8 +144,6 @@ public class AdminExcelController {
 			voList.add(vo.getUserMarketingEmailOk());
 			voList.add(vo.getUserMarketingSmsOk());
 			
-			
-			
 			cellCount = 0;
 			for(int j=0; j<excelVo.getHeaderListIndex().size(); j++) {
 				
