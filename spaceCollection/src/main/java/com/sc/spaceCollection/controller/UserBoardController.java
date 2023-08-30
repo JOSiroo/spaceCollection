@@ -83,20 +83,19 @@ public class UserBoardController {
 	@PostMapping("/board/boardDetail/commentsWrite")
 	public CommentsVO commentsWrite(@ModelAttribute CommentsVO vo, Model model) {
 		
-		logger.info("댓글 등록, 파라미터 vo = {}", vo);
+		logger.info("vo={}",vo);
 		int cnt = commentsService.insertComments(vo);
 		logger.info("댓글 등록 결과, cnt = {}", cnt);
-		logger.info("vo={}",vo);
+		logger.info("댓글 등록, 파라미터 vo = {}", vo);
 			String msg = "댓글 등록에 실패하였습니다. 다시 시도해주시기 바랍니다.",
 					url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
 				if(cnt>0) {
 					msg = "댓글이 등록되었습니다.";
 					url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
 				}
-				
-				
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		model.addAttribute("vo", vo);
 		
 		return vo;
 	}
