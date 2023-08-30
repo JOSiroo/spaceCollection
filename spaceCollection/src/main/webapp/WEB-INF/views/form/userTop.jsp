@@ -270,7 +270,7 @@
 		  </div>
 		  
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="<c:url value='/FAQ'/>">
+		    <a href="<c:url value='/user/faq'/>">
 		     <i class="bi bi-book"></i>
 		 	   <p>FAQ</p></a>
 		  </div>

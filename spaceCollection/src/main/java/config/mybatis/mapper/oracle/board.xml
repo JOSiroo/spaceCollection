@@ -69,6 +69,14 @@
 			ORDER BY BOARD_REG_DATE desc
 	</select>
 	
+	<select id="selectNoticeBoard"  resultType="boardVo">
+        SELECT *
+        FROM board
+        WHERE board_type_id = 'b00012' AND
+              board_del_flag IS NULL
+        ORDER BY BOARD_REG_DATE DESC
+    </select>
+	
 	<select id="selectByeventBoardNum" parameterType="int" resultType="map">
 		select *from board 
 			where board_type_id = 'b00017' 

@@ -25,10 +25,10 @@
 						<ul class="list-unstyled float-start links">
 							<li><a href="<c:url value='/about'/>">About us</a></li>
 							<li><a href="<c:url value='/service'/>">Services</a></li> 
-							<li><a href="<c:url value='/event'/>">Contact us</a></li>
+							<%-- <li><a href="<c:url value='/user/boardList'/>">Contact us</a></li> --%>
 						</ul>
 						<ul class="list-unstyled float-start links">
-							<li><a href="#">FAQ</a></li>
+							<li><a href="<c:url value='/user/faq'/>">FAQ</a></li>
 							<li><a href="<c:url value='/service'/>">서비스 이용 약관</a></li>
 							<li><a href="<c:url value='/Certificate'/>">사업자등록 정보</a></li>
 						</ul>
