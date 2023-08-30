@@ -58,8 +58,8 @@ on s.space_type_no = st.space_type_no
 join user_info u
 on u.user_num = s.user_num;
 
-create or replace view spaceType_category_view
+create or replace view SPACETYPE_CATEGORY_VIEW
 as
 select s.*, st.category_name
 from space_type s join space_type_category st
-on s.CATEGORY_NO = st.CATEGORY_NO;
+on s.CATEGORY_NO = st.CATEGORY_NO

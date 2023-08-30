@@ -87,4 +87,9 @@ public class SpaceTypeCategoryServiceImpl implements SpaceTypeCategoryService{
 		return cnt;
 	}
 
+	@Override
+	public List<SpaceTypeCategoryVO> selectSpaceTypeCategoryAll() {
+		return spaceTypeCategoryDao.selectSpaceTypeCategoryAll();
+	}
+
 }

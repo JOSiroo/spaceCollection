@@ -41,5 +41,9 @@
 		update space_type_category set category_del_flag = 'Y' where category_no = #{categoryNo}
 	</update>
 	
+	<select id="selectSpaceTypeCategoryAll" resultType="spaceTypeCategoryVo">
+		select * from space_type_category where CATEGORY_DEL_FLAG is null order by category_no
+	</select>
+	
 </mapper>
 

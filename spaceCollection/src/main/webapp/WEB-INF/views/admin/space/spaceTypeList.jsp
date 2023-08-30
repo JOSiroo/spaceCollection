@@ -3,7 +3,7 @@
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
 	
-	#spaceTypeDelBt, #spaceTypeCategoryActiveBt{
+	#spaceTypeWriteBt, #spaceTypeDelBt, #spaceTypeActiveBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
@@ -27,7 +27,7 @@
 	}
 	
 	div#select {
-    	width: 114px;
+    	width: 190px;
 	}
 	
 	#searchDiv>div{
@@ -41,21 +41,9 @@
    		margin-block: -13px;
 	}
 	
-	td>span {
-		color: red;
-	}
-	
 	#MChkDiv{
 		margin-top: 5px;
 		text-align: left;
-	}
-	
-	#excelDownloadBt{
-		--bs-btn-bg: #dadddf;
-	}
-	
-	#excelModal>div>div>div>p{
-		margin-bottom: 20px;
 	}
 	
 	.marginTop{
@@ -72,6 +60,14 @@
 		margin-top: -15px;
 	}
 	
+	.active{
+		color: green;
+	}
+	
+	.deActive{
+		color: red;
+	}
+	
 	
 </style>
 <script type="text/javascript">
@@ -82,64 +78,64 @@
 			$(this).find('td').css("background-color", "white");
 		});
 		
-		$('#warning').hide();
+		$('#okBt').hide();
 		
-		$('#searchBt').click(function() {
-			if($('#searchKeyword').val().length<1){
-				event.preventDefault();
-				$('#confirm1 .modal-body').html("검색어를 입력해주세요.");
-				$('#confirm1').modal("show");
-			}
+		$('#spaceTypeWriteBt').click(function() {
+			location.href = "<c:url value='/admin/space/spaceType/spaceTypeWrite'/>";
 		});
+		
 		
 		$('input[name=chkAll]').click(function() {
 			var checkState = $(this).is(':checked')
 			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('#memberWithdrawalBt').click(function() {
+		$('#spaceTypeActiveBt').click(function() {
 			if($('td>input[type=checkbox]:checked').length<1){
-				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
+				$('#confirm1 .modal-body').html("최소 하나 이상의 공간 타입을 선택하세요.");
+				$('#cancelBt').html("확인");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.");
-				$('#confirm2').modal("show");
+				$('#confirm1 .modal-body').html("선택된 공간 타입을 활성화 시키겠습니까?");
+				$('#okBt').show();
+				$('#okBt').addClass("btn-success");
+				$('#cancelBt').html("취소");
+				$('#okBt').html("활성화");
+				$('#confirm1').modal("show");
 				$('#okBt').click(function() {
+					$(this).removeClass("btn-success");
+					$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceTypeActive");
 					$('form[name=trFrm]').submit();
 				});
 			}
 		});
 		
-		$('#excelDownloadBt').click(function() {
-			$('#excelModal').modal('show');
-		});
-		
-		$('#columnChkAll').click(function() {
-			var checkState = $(this).is(":checked");
-			$('.modal-body input[type=checkbox]').prop('checked', checkState);
-		});
-		
-		$('#downloadBt').click(function() {
-			if($('.modal-body input[type=checkbox]:checked').length<1){
-				event.preventDefault();
-				$('#warning').show();
+		$('#spaceTypeDelBt').click(function() {
+			if($('td>input[type=checkbox]:checked').length<1){
+				$('#confirm1 .modal-body').html("최소 하나 이상의 공간 타입을 선택하세요.");
+				$('#cancelBt').html("확인");
+				$('#confirm1').modal("show");
 			}else{
-				$('form[name=excelFrm]').submit();
-			}
+				$('#confirm1 .modal-body').html("선택된 공간 타입을 비활성화 시키겠습니까? 비활성 시 해당 공간 타입을 선택할 수 없습니다.");
+				$('#okBt').show();
+				$('#okBt').addClass("btn-danger");
+				$('#cancelBt').html("취소");
+				$('#okBt').html("비활성화");
+				$('#confirm1').modal("show");
+				$('#okBt').click(function() {
+					$(this).removeClass("btn-danger");
+					$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceTypeDeActive");
+					$('form[name=trFrm]').submit();
+				});
+			}	
 		});
 		
-		$('.modal button').click(function() {
-			$('.modal-body input[type=checkbox]').prop('checked', false);
+		
+		$('input[name=chkAll]').click(function() {
+			var checkState = $(this).is(':checked')
+			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('.modal-body input[type=checkbox]').click(function name() {
-			$('#warning').hide();
-		});
-		
-		$('#excelModal button[name=cancelBt]').click(function() {
-			$('#warning').hide();
-		});
-			
 	});
 	
 	function pageFunc(curPage){
@@ -197,29 +193,32 @@
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
-										<button type="button" class="btn btn-outline-success subBt" id="spaceTypeActiveBt">활성화</button>
-										<button type="button" class="btn btn-outline-danger subBt" id="spaceTypeDelBt">비활성화</button>
+									<form name="trFrm" method="post">
+										<button type="button" class="btn btn-primary" id="spaceTypeWriteBt">공간 타입 등록</button>
+										<button type="button" class="btn btn-outline-success" id="spaceTypeActiveBt">활성화</button>
+										<button type="button" class="btn btn-outline-danger" id="spaceTypeDelBt">비활성화</button>
 										<c:set var="i" value="0"/>
-										<c:forEach var="userInfoVo" items="${list }">
+										<c:forEach var="map" items="${list }">
 											<tr>
 												<td>
-													<input type="checkbox" name="userInfoItemList[${i }].userId" value="${userInfoVo.userId }">
+													<input type="checkbox" name="spaceTypeItemList[${i }].spaceTypeNo" value="${map.SPACE_TYPE_NO }">
 												</td>
 												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userNum }
+													${map.SPACE_TYPE_NO }
 												</td>
 												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userName }
+													${map.SPACE_TYPE_NAME }
 												</td>
 												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userId }
+													${map.CATEGORY_NAME }
 												</td>
 												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userEmail }
-												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
+													<c:if test="${map.SPACE_TYPE_DEL_FLAG == 'Y' }">
+														<span class="deActive">비활성화</span>
+													</c:if>
+													<c:if test="${map.SPACE_TYPE_DEL_FLAG == null }">
+														<span class="active">활성화</span>
+													</c:if>
 												</td>
 											</tr>
 											<c:set var="i" value="${i+1 }"/>
@@ -259,13 +258,8 @@
 						
 						</div>
 						
-						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
+						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/space/spaceTypeList'/>">
 							<div id="searchDiv">
-							<div style="float: left;">
-								<button class="btn btn-light" type="button" id="excelDownloadBt">
-									<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
-								</button>
-							</div>
 								<div class="col-auto">
 									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
 								</div>
@@ -275,12 +269,15 @@
 								</div>
 								<div class="col-sm-3" id="select">
 									<select class="form-select" name="searchCondition" id="searchCondition">
-										<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
+										<option value="space_type_no" <c:if test="${param.searchCondition=='space_type_no'}">
 						            		selected="selected"
-						            	</c:if> >아이디</option>
-										<option value="user_name" <c:if test="${param.searchCondition=='user_name'}">
+						            	</c:if> >공간 타입 번호</option>
+										<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
 						            		selected="selected"
-						            	</c:if> >이름</option>
+						            	</c:if> >공간 타입명</option>
+										<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
+						            		selected="selected"
+						            	</c:if> >공간 타입 카테고리</option>
 									</select>
 								</div>
 							</div>
@@ -291,7 +288,7 @@
 		</div>
 		
 	</section>
-	<!-- Modal1 -->
+	<!-- Moda1 -->
 	<div class="modal fade" id="confirm1" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -302,8 +299,9 @@
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						data-bs-dismiss="modal" id="confirm">확인</button>
+					<button type="button" class="btn btn-secondary" id="cancelBt"
+						data-bs-dismiss="modal"></button>
+					<button type="button" class="btn" id="okBt"></button>
 				</div>
 			</div>
 		</div>
