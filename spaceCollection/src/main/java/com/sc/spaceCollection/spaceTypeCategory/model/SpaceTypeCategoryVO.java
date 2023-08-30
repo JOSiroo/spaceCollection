@@ -6,4 +6,5 @@ import lombok.Data;
 public class SpaceTypeCategoryVO {
 	private int categoryNo;
 	private String categoryName;
+	private String categoryDelFlag;
 }

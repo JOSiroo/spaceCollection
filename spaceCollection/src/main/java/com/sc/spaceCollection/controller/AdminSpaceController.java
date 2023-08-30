@@ -1,17 +1,25 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
+import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryListVO;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryService;
+import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryVO;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -25,8 +33,89 @@ public class AdminSpaceController {
 	private final SpaceService spaceService;
 	
 	@RequestMapping("/spaceTypeCategoryList")
-	public void spaceTypeCategoryList(@ModelAttribute SearchVO vo, Model model) {
+	public void spaceTypeCategoryList(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("공간타입 카테고리 조회");
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<SpaceTypeCategoryVO> list = spaceTypeCategoryService.selectSpaceTypeCategory(searchVo);
+		logger.info("공간타입 카테고리 조회 결과, list.size = {}", list.size());
+		
+		int totalRecord = spaceTypeCategoryService.getTotalRecord(searchVo);
+		logger.info("전체 공간타입 카테고리 수,  totalRecord = {}", totalRecord);
+		
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("searchVo", searchVo);
+		model.addAttribute("pagingInfo", pagingInfo);
+		
+	}
+	
+	@PostMapping("/spaceTypeCategoryWrite")
+	public String spaceTypeCategoryWrite(@ModelAttribute SpaceTypeCategoryVO vo, Model model) {
+		logger.info("공간 타입 카테고리 등록, 파라미터 vo = {}", vo);
+		
+		int cnt = spaceTypeCategoryService.insertSpaceTypeCategory(vo);
+		logger.info("공간 타입 카테고리 등록 결과, cnt = {}", cnt);
+		
+		String msg = "카테고리 등록 중 오류가 발생했습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceTypeCategoryList";
+		if(cnt==spaceTypeCategoryService.PASS) {
+			return "redirect:/admin/space/spaceTypeCategoryList";
+		}else if(cnt==spaceTypeCategoryService.DUB) {
+			msg = "이미 사용중인 카테고리명 입니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+	}
+	
+	@RequestMapping("/spaceTypeCategoryActive")
+	public String spaceTypeCategoryActive(@ModelAttribute SpaceTypeCategoryListVO listVo, Model model) {
+		logger.info("카테고리 활성화, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceTypeCategoryService.spaceTypeCategoryActivation(listVo);
+		
+		String msg = "카테고리 활성화에 실패했습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/space/spaceTypeCategoryList";
+		if(cnt>0) {
+			msg = "카테고리가 활성화 되었습니다.";
+		}else if(cnt == -1) {
+			msg = "카테고리 활성화 중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+	}
+	
+	@RequestMapping("/spaceTypeCategoryDeActive")
+	public String spaceTypeCategoryDeActive(@ModelAttribute SpaceTypeCategoryListVO listVo, Model model) {
+		logger.info("카테고리 비활성화, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceTypeCategoryService.spaceTypeCategoryDeactivation(listVo);
+		
+		String msg = "카테고리 비활성화에 실패했습니다. 관리자에게 문의해주시기 바랍니다.", url = "/admin/space/spaceTypeCategoryList";
+		if(cnt>0) {
+			msg = "카테고리가 비활성화 되었습니다.";
+		}else if(cnt == -1) {
+			msg = "카테고리 비활성화 중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
 	}
 	
 	@RequestMapping("/spaceTypeList")

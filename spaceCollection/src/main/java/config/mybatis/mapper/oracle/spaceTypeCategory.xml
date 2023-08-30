@@ -23,11 +23,23 @@
 	</select>
 	
 	<insert id="insertSpaceTypeCategory">
-		<selectKey keyProperty="int" order="BEFORE" resultType="int">
-			select space_type_category_seq.nexval from dual
+		<selectKey keyProperty="categoryNo" order="BEFORE" resultType="int">
+			select space_type_category_seq.nextval from dual
 		</selectKey>
-		insert into space_type_category values(#{categoryNo}, #{categoryName});
+		insert into space_type_category(category_no, category_name) values(#{categoryNo}, #{categoryName})
 	</insert>
+	
+	<select id="spaceTypeCategoryNameDupCheck" parameterType="spaceTypeCategoryVo" resultType="int">
+		select count(*) from space_type_category where category_name = #{categoryName}
+	</select>
+	
+	<update id="spaceTypeCategoryActivation" parameterType="spaceTypeCategoryVo">
+		update space_type_category set category_del_flag = '' where category_no = #{categoryNo}
+	</update>
+	
+	<update id="spaceTypeCategoryDeactivation" parameterType="spaceTypeCategoryVo">
+		update space_type_category set category_del_flag = 'Y' where category_no = #{categoryNo}
+	</update>
 	
 </mapper>
 
