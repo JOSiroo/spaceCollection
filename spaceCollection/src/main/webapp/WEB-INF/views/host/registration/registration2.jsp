@@ -131,6 +131,10 @@
 		margin-left: 10px;
 	}
 	
+	.typeSub.checked {
+		background: #ffd014;
+	}
+	
 	.subTitle {
 		float: right;
 		font-size: 14px;
@@ -150,7 +154,6 @@
 	
 	.spTag {
 		width: 100%;
-		height: 50px;
 		border: 1px solid #b7b7b7;
 		font-size: 16px;
 		margin-top: 15px;
@@ -159,24 +162,27 @@
 		background: white;
 		color: black;
 		font-weight: bold;
+		display: inline-block;
+		min-height: 50px;
 	}
 	
-	.spaceFacility {
+	.spaceImg {
 		display: flex;
 	}
 	
-	.spFacility {
+	.spImg {
 		width: 850px;
-		height: 150px;
+		min-height: 50px;
 		border: 1px solid #b7b7b7;
 		font-size: 15px;
 		margin-top: 15px;
 		padding: 8px 8px 8px 8px;
 		resize: none;
+		display: inline-block;
 		background: white;
 	}
 	
-	.spFa {
+	.inner {
 		color: #b7b7b7;
 		font-weight: bold;
 	}
@@ -223,6 +229,23 @@
 		width: 25px;
 		height: 25px;
 	}
+	
+	.tagRe {
+		display: inline-block;
+		margin-left: 8px;
+	}
+	
+	.file {
+		margin-left: 20px;
+		text-align: center;
+		padding-top: 16px;
+	}
+	
+	.btBox {
+		width: 130px;
+		height: 50px;
+	}
+	
 </style>
 
 
@@ -336,13 +359,13 @@
 			<div class="boxForm">
 				<div class="boxTitle">
 					<span>공간 태그 <span style="color: red;">*</span></span>
-					<span class="subTitle">최대 5개</span>
+					<span class="subTitle tag">최대 5개</span>
 				</div>
 				<div class="boxContents">
-					<div class="spaceTag">
-						<input type="text" class="spText" value="" style="width: 850px;"
+					<div class="spaceTag tag">
+						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
-						<input type="button" class="btAdd" value="추가 ▽">
+						<input type="button" class="btAdd tag" value="추가 ▽">
 						<div class="spTag"></div>
 					</div>
 				</div>
@@ -354,10 +377,10 @@
 					<span class="subTitle">0자/100자</span>
 				</div>
 				<div class="boxContents">
-					<div class="spaceTag">
-						<input type="text" class="spText" value="" style="width: 850px;"
+					<div class="spaceTag fa">
+						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
-						<input type="button" class="btAdd" value="추가 ▽">
+						<input type="button" class="btAdd fa" value="추가 ▽">
 						<div class="spTag"></div>
 					</div>
 				</div>
@@ -369,10 +392,10 @@
 					<span class="subTitle">0자/100자</span>
 				</div>
 				<div class="boxContents">
-					<div class="spaceTag">
-						<input type="text" class="spText" value="" style="width: 850px;"
+					<div class="spaceTag pre">
+						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
-						<input type="button" class="btAdd" value="추가 ▽">
+						<input type="button" class="btAdd pre" value="추가 ▽">
 						<div class="spTag"></div>
 					</div>
 				</div>
@@ -391,11 +414,16 @@
 					</div>
 				</div>
 				<div class="boxContents">
-					<div class="spaceFacility">
-						<div class="spFacility">
-							<span class="spFa">이미지 파일을 추가해 주세요.</span>
+					<div class="spaceImg main">
+						<div class="spImg" style="min-height: 150px;">
+							<span class="inner">이미지 파일을 추가해 주세요.</span>
 						</div>
-						<input type="button" class="btAdd" value="파일첨부" style="margin-left: 20px;">
+						<div class="btBox">
+							<label>
+								<div class="btAdd file" >파일첨부</div>
+								<input type="file" style="display: none;">
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -404,20 +432,18 @@
 				<div class="boxTitle">
 					<span>이미지 <span style="color: red;">*</span></span>
 					<span class="subTitle">한 장당 최대 3MB<span style="color: #704de4;">(최대 10장)</span></span>
-					<img class="boxIcon" src="https://partner.spacecloud.kr/static/media/info-circle-solid.d9a24d05.svg">
-					<div class="tooltip-text">
-						대표 이미지는 예약/이용이 가능한 공간의 전체 이미지가 잘 보이는 사진으로 등록해주세요!<br><br>
-						※ 검수 반려 이미지<br>• 인물, 텍스트가 포함된 이미지<br>• 노출 등으로 제 3자에게 수치심을 주는 이미지<br>
-						• 지도, 평면도, 약도 등의 이미지<br>• 홍보물/포스터, 이미지/도형 등이 합성된 편집 이미지<br>
-						• 내용이 식별되지 않는 이미지<br>
-					</div>
 				</div>
 				<div class="boxContents">
-					<div class="spaceFacility">
-						<div class="spFacility" style="height: 50px; padding-top: 15px;">
-							<span class="spFa">이미지 파일을 추가해 주세요.</span>
+					<div class="spaceImg sub">
+						<div class="spImg" style="height: 50px; padding-top: 15px;">
+							<span class="inner">이미지 파일을 추가해 주세요.</span>
 						</div>
-						<input type="button" class="btAdd" value="파일첨부" style="margin-left: 20px;">
+						<div class="btBox">
+							<label>
+								<div class="btAdd file" >파일첨부</div>
+								<input type="file" style="display: none;">
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -434,10 +460,10 @@
 					<div class="spaceZip">
 						<input type="button" class="btAdd" value="주소등록" style="margin: 0 0 10px 20px;">
 						<div class="spZip1" style="height: 50px; padding-top: 15px;">
-							<span class="spFa">실제 서비스되는 공간의 주소를 입력해주세요.</span>
+							<span class="inner">실제 서비스되는 공간의 주소를 입력해주세요.</span>
 						</div>
 						<div class="spZip2" style="height: 50px; padding-top: 15px; width: 100%;">
-							<span class="spFa">상세 주소</span>
+							<span class="inner">상세 주소</span>
 						</div>
 					</div>
 				</div>
@@ -456,7 +482,7 @@
 				<div class="boxContents">
 					<div class="spaceInfo">
 						<input type="text" class="spText" value=""
-							placeholder=" ex. 동대문역사공원역 도본 1분 거리" maxlength="27">
+							placeholder=" ex. 동대문역사공원역 도보 1분 거리" maxlength="27">
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -495,39 +521,63 @@
 		//버튼 누르면 색 변환
 		$('.typeSub').click(function() {
 			var spaceType = $(this).closest('.spaceType');
-		    
-		    // 모든 typeSub 버튼을 초기화
-		    spaceType.find('.typeSub').css('background', 'white');
-		    
+
+		    // 모든 버튼에서 클래스 제거
+		    spaceType.find('.typeSub').removeClass('checked');
+
+		    // 클릭한 버튼에 클래스 추가
+		    $(this).addClass('checked');
+
 		    // 모든 typeTitle 버튼을 초기화
 		    spaceType.find('.typeTitle').css('background', '#656565');
 		    
-		    // 클릭한 버튼의 배경색 변경
-		    $(this).css('background', '#ffd014');
-		    
 		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
 		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
+		    
 		});
 		
 		//태그 확인 숨기기
 		$('.spTag').hide();
 		
-		$('.btAdd').click(function() {
+		$('.btAdd.tag').click(function() {
 		    var inputValue = $(this).siblings('.spText').val();
-		    if (inputValue) {
-		    	$(this).siblings('.spTag').show();	//숨긴 div 보여줌
+		    var tagContainer = $(this).siblings('.spTag');
+		    
+		    if (inputValue && tagContainer.find('.tagRe').length < 5) {
+		    	tagContainer.show();	//숨긴 div 보여줌
 		    	 
-		        var tagHTML = '<span class="tagRe"># ' + inputValue + 
+		        var tagHTML = '<span class="tagRe"> # ' + inputValue + 
 		        	' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
-		        $(this).siblings('.spTag').append(tagHTML);
+		        tagContainer.append(tagHTML);
 		        $(this).siblings('.spText').val('');
+		    } else {
+		    	alert('태그는 최대 5개까지 입력할 수 있습니다.');
 		    }
 		});
+		
+		$('.btAdd.fa, .btAdd.pre').click(function() {
+			var inputValue = $(this).siblings('.spText').val();
+		    var tagContainer = $(this).siblings('.spTag');
+		    
+		    var currentTagCount = tagContainer.find('.tagRe').length;
+		    
+		    if (inputValue && currentTagCount < 10) {
+		    	tagContainer.show();
+		    	         
+		    	var tagHTML = '<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue + 
+		    		' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
+		    	tagContainer.append(tagHTML);
+		    	$(this).siblings('.spText').val('');
+		 	} else {
+		    	alert('태그는 최대 10개까지 입력할 수 있습니다.');
+		    }
+		 });
 		
 		// 이미지를 누르면 해당 태그 제거
 		$('.spTag').on('click', '.tagClose', function() {
 			$(this).closest('.tagRe').remove();
 		});
+		
 	    
 	    //하단 버튼
 		$('#back').click(function() {
@@ -546,8 +596,18 @@
 				return false;
 			}
 			
+			//공간명 정규화
+			if (!validate_spaceName($('.spText').val())) {
+				alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
+				$('.spText').focus();
+				
+				scrollMove('.spaceName');
+				
+				return false;
+			}
+			
 			//공간 타입
-            if ($('.typeSub:checked').length === 0) {
+            if ($('.typeSub.checked').length === 0) {
                 alert("적어도 하나 이상의 유형을 선택해주세요.");
                 
                 scrollMove('.spaceType');
@@ -574,35 +634,48 @@
 				
 				return false;
 			}
-			
+
 			//공간 태그
-			if ($('.spaceTag').find($('.spTag')).length < 1) {
+			if ($('.spaceTag.tag').find('.tagRe').length < 1) {
 				alert('공간 태그를 하나라도 입력하세요.');
-				$('.spaceTag').find($('.spText')).focus();
+				$('.spaceTag.tag').find($('.spText')).focus();
 				
-				scrollMove('.spaceInfo');
+				scrollMove('.spaceTag.tag');
+				
+				return false;
+			}
+
+			//시설 안내
+			if ($('.spaceTag.fa').find($('.tagRe')).length < 1) {
+				alert('시설 안내를 하나라도 입력하세요.');
+				$('.spaceTag.fa').find($('.spText')).focus();
+				
+				scrollMove('.spaceTag.fa');
+				
+				return false;
+			}
+
+			//예약 시 주의사항
+			if ($('.spaceTag.pre').find($('.tagRe')).length < 1) {
+				alert('예약 시 주의사항을 하나라도 입력하세요.');
+				$('.spaceTag.pre').find($('.spText')).focus();
+				
+				scrollMove('.spaceTag.pre');
 				
 				return false;
 			}
 			
-			//공간명 정규화
-			if (!validate_spaceName($('.spText').val())) {
-				alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
-				$('.spText').focus();
-				
-				scrollMove('.spaceName');
-				
-				return false;
-			}
 			
 			$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
 			$('form[name=frmRegi2]').submit();
 		});
+		
+		
 	});
 	
 	function scrollMove(val) {
 		var offset = $(val).offset();	//해당 위치 반환
-		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간(0.2초)
+		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
 	}
 	
 </script>
