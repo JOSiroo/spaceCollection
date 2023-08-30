@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
   	text-align: left;
   	color:black;
   	margin-bottom:10px;
+  	word-wrap: break-word;
   }
   .reviewHead{
   	font-size:20px;
@@ -275,7 +276,7 @@ pageEncoding="UTF-8"%>
 							<c:forEach var="qna" items="${qnaList }">
 								<div>
 									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
-									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
+									<div class="qnaBody">${qna.QNA_CONTENT}</div>
 									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
 										<span style="padding-right: 0%;">${qna.QNA_REG_DATE}</span>
 										<c:if test="${sessionScope.userId == qna.USER_ID}">
@@ -316,7 +317,7 @@ pageEncoding="UTF-8"%>
 									</c:forEach>
 									</div>
 									</div>
-									<div class="qnaBody"><span>${review.REVIEW_CONTENT}</span></div>
+									<div class="qnaBody">${review.REVIEW_CONTENT}</div>
 									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
 										<span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
 										<c:if test="${sessionScope.userId == review.USER_ID}">

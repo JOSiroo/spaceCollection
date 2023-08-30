@@ -7,8 +7,8 @@
 		<selectKey keyProperty="memoNum" resultType="int" order="BEFORE">
 			select calendar_memo_seq.nextval from dual
 		</selectKey>
-		insert into calendar_memo(memo_num,memo_title,memo_content,memo_start_day,memo_end_day,user_num)
-		values(#{memoNum},#{memoTitle}, #{memoContent}, #{memoStartDay}, #{memoEndDay}, #{userNum})
+		insert into calendar_memo(memo_num,memo_title,memo_content,memo_start_day,memo_end_day,memo_color,user_num)
+		values(#{memoNum},#{memoTitle}, #{memoContent}, #{memoStartDay}, #{memoEndDay}, #{memoColor},#{userNum})
 	</insert> 
 	<select id="selectMemoByUserNum" parameterType="int" resultType="calendarVo">
 		select * from calendar_memo
