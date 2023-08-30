@@ -152,11 +152,13 @@
 		width: 100%;
 		height: 50px;
 		border: 1px solid #b7b7b7;
-		font-size: 15px;
+		font-size: 16px;
 		margin-top: 15px;
-		padding: 8px 8px 8px 8px;
+		padding: 13px 8px 8px 8px;
 		resize: none;
 		background: white;
+		color: black;
+		font-weight: bold;
 	}
 	
 	.spaceFacility {
@@ -215,6 +217,11 @@
 		color: white;
 		font-size: 20px;
 		font-weight: bold;
+	}
+	
+	.imgClose {
+		width: 25px;
+		height: 25px;
 	}
 </style>
 
@@ -336,9 +343,7 @@
 						<input type="text" class="spText" value="" style="width: 850px;"
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
 						<input type="button" class="btAdd" value="추가 ▽">
-						<div class="spTag">
-							<span>#기억<span>✕</span></span>
-						</div>
+						<div class="spTag"></div>
 					</div>
 				</div>
 			</div>
@@ -504,72 +509,78 @@
 		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
 		});
 		
-		$('.btAdd').click(function() {
-	        var inputValue = $('.spText').val(); // 입력한 값을 가져옵니다
-	        
-	        if (inputValue.trim() !== '') { // 값이 공백이 아닌 경우에만 추가
-	            if ($('.spTag').children().length < 5) { // 최대 5개까지 추가
-	                var newTag = $('<span class="tag">' + inputValue + '<span class="tagClose">✕</span></span>');
-	                $('.spTag').append(newTag);
-	                $('.spText').val(''); // 입력 필드 초기화
-	            } else {
-	                alert('최대 5개까지만 입력 가능합니다.');
-	            }
-	        }
-	    });
-
-	    // 태그 삭제
-	    $('.spTag').on('click', '.tagClose', function() {
-	        $(this).parent().remove();
-	    });
-		
-		
 		//태그 확인 숨기기
 		$('.spTag').hide();
 		
 		$('.btAdd').click(function() {
-	    	var tagVal = $(this).prev().val();
-	    	
-	    	if (tagVal.trim() !== '') {
-	    		$('.spTag').show();
-	    		var tagAdd = $('<span class="tag">' + inputValue + '<span class="tagClose">✕</span></span>');
-	    		$('.spTag').append(newTag);
-                $('.spText').val(''); // 입력 필드 초기화
-	    	} else {
-	    		alert('태그를 입력해주세요.');
-	    	}
-	    });
-
-	    // 태그 삭제
-	    $('.spTag').on('click', '.tagClose', function() {
-	        $(this).parent().remove();
-	    });
+		    var inputValue = $(this).siblings('.spText').val();
+		    if (inputValue) {
+		    	$(this).siblings('.spTag').show();	//숨긴 div 보여줌
+		    	 
+		        var tagHTML = '<span class="tagRe"># ' + inputValue + 
+		        	' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
+		        $(this).siblings('.spTag').append(tagHTML);
+		        $(this).siblings('.spText').val('');
+		    }
+		});
 		
+		// 이미지를 누르면 해당 태그 제거
+		$('.spTag').on('click', '.tagClose', function() {
+			$(this).closest('.tagRe').remove();
+		});
+	    
+	    //하단 버튼
 		$('#back').click(function() {
 			history.back();
 		});
 		
 		$('#next').click(function() {
-			
 			//필수 입력
 			//공간명
 			if ($('.spaceName').find($('.spText')).val() < 1) {
 				alert('공간명을 입력하세요.');
 				$('.spaceName').find($('.spText')).focus();
 				
-				var offset = $('.spaceName').offset();	//해당 위치 반환
-				$("html, body").animate({scrollTop: offset.top},400); // 선택한 위치로 이동. 두번째 인자는 0.4초를 의미한다.
+				scrollMove('.spaceName');
 				
 				return false;
 			}
 			
 			//공간 타입
-			if ($('.typeTip').find($('.spText')).val() < 1) {
-				alert('공간명을 입력하세요.');
-				$('.spaceName').find($('.spText')).focus();
+            if ($('.typeSub:checked').length === 0) {
+                alert("적어도 하나 이상의 유형을 선택해주세요.");
+                
+                scrollMove('.spaceType');
+                
+                return false;
+            }
+			
+			//공간 한 줄 소개
+			if ($('.spaceIntro').find($('.spText')).val() < 1) {
+				alert('한 줄 소개를 입력하세요.');
+				$('.spaceIntro').find($('.spText')).focus();
 				
-				var offset = $('.spaceName').offset();
-				$("html, body").animate({scrollTop: offset.top},400);
+				scrollMove('.spaceIntro');
+				
+				return false;
+			}
+			
+			//공간 소개
+			if ($('.spaceInfo').find($('.spText')).val() < 1) {
+				alert('공간 소개를 입력하세요.');
+				$('.spaceInfo').find($('.spText')).focus();
+				
+				scrollMove('.spaceInfo');
+				
+				return false;
+			}
+			
+			//공간 태그
+			if ($('.spaceTag').find($('.spTag')).length < 1) {
+				alert('공간 태그를 하나라도 입력하세요.');
+				$('.spaceTag').find($('.spText')).focus();
+				
+				scrollMove('.spaceInfo');
 				
 				return false;
 			}
@@ -579,8 +590,7 @@
 				alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
 				$('.spText').focus();
 				
-				var offset = $('.spaceName').offset();
-				$("html, body").animate({scrollTop: offset.top},400); 
+				scrollMove('.spaceName');
 				
 				return false;
 			}
@@ -590,6 +600,10 @@
 		});
 	});
 	
+	function scrollMove(val) {
+		var offset = $(val).offset();	//해당 위치 반환
+		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간(0.2초)
+	}
 	
 </script>
 
