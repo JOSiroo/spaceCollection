@@ -246,6 +246,17 @@
 		height: 50px;
 	}
 	
+	.imgBox {
+		width: 122px;
+		height: 122px;
+		margin-right: 8px;
+	}
+	
+	.imgBox img {
+		width: 122px;
+		height: 122px;
+	}
+	
 </style>
 
 
@@ -415,13 +426,13 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceImg main">
-						<div class="spImg" style="min-height: 150px;">
+						<div class="spImg main" style="min-height: 150px;">
 							<span class="inner">이미지 파일을 추가해 주세요.</span>
 						</div>
 						<div class="btBox">
 							<label>
 								<div class="btAdd file" >파일첨부</div>
-								<input type="file" style="display: none;">
+								<input type="file" accept="image/jpg, image/png, image/jpeg" style="display: none;">
 							</label>
 						</div>
 					</div>
@@ -435,13 +446,13 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceImg sub">
-						<div class="spImg" style="height: 50px; padding-top: 15px;">
+						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
 							<span class="inner">이미지 파일을 추가해 주세요.</span>
 						</div>
 						<div class="btBox">
 							<label>
-								<div class="btAdd file" >파일첨부</div>
-								<input type="file" style="display: none;">
+								<div class="btAdd file sub" >파일첨부</div>
+								<input type="file" accept="image/jpg, image/png, image/jpeg" style="display: none;">
 							</label>
 						</div>
 					</div>
@@ -471,7 +482,7 @@
 			<!-- 위치정보 -->
 			<div class="boxForm">
 				<div class="boxTitle">
-					<span>위치정보 <span style="color: red;">*</span></span>
+					<span>위치정보</span>
 					<span class="subTitle">0자/20자</span>
 					<img class="boxIcon" src="https://partner.spacecloud.kr/static/media/info-circle-solid.d9a24d05.svg">
 					<div class="tooltip-text">
@@ -578,6 +589,25 @@
 			$(this).closest('.tagRe').remove();
 		});
 		
+		//메인 이미지 첨부
+		$('.btAdd.file').click(function() {
+		    //기존에 있던 이미지 지우기
+		    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
+		    $('input[type="file"]').val('');
+		});
+
+		$('input[type="file"]').change(function() {
+		  	var file = this.files[0];
+			if (file) {
+		      	var reader = new FileReader();
+		      	reader.onload = function(e) {
+		        	$('.spImg.main').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
+		      	};
+		      	reader.readAsDataURL(file);
+		    }
+		});
+		
+		
 	    
 	    //하단 버튼
 		$('#back').click(function() {
@@ -673,6 +703,7 @@
 		
 	});
 	
+	//스크롤이동
 	function scrollMove(val) {
 		var offset = $(val).offset();	//해당 위치 반환
 		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
