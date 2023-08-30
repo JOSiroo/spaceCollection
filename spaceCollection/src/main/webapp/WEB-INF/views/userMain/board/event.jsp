@@ -10,17 +10,7 @@
 </head>
 <style>
 	
-	.registering_comment textarea{
-		width:100%;
-		border:1px solid #e0e0e0;
-	} 
-	
-	 .registering_comment{
-		display:flex;
-		justify-content:space-between
-	} 
-	
-  	 section {
+ 	section {
     	padding: 0px 300px 200px;
 	}
 
@@ -42,6 +32,15 @@
     margin-top: 1500px;
 	} 
 	
+	.registering_comment textarea{
+		width:100%;
+		border:1px solid #e0e0e0;
+	} 
+	
+	 .registering_comment{
+		display:flex;
+		justify-content:space-between
+	} 
 	
 </style>
 <script>

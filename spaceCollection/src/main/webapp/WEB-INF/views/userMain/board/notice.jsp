@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 <style type="text/css">
 	.reservation-header{
-		margin-top :75px;
+		margin-top :120px;
 		padding:5% 16% 5% 16%;
 	}
 	.search-box{
@@ -16,7 +16,7 @@
 	}
 	input[name=reservationInfo]{
 		font-size:25px;
-		width: 71%;
+		width: 65%;
 		height: 60px;
 		margin-left: 3%;
 		padding-left:1%;
@@ -115,50 +115,22 @@
 		width:20%;
 		padding: 3% 47% 0% 47%;	
 	}
+	/* h2.accordion-header {
+	    border-top: 0.5px solid #193D76;
+	} */
+	div#accordionFlushExample {
+    margin-top: 50px;
+	}
 </style>
+
 <section>
 	<div class="reservation-header">
 		<div class="search-box">
-			<label style="font-size: 18px; font-weight: bold"> 예약 정보 검색</label>
-			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약자 아이디로 조회"
-				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>
+			<label style="font-size: 18px; font-weight: bold"> 공지 사항 검색</label>
+			<!-- https://www.spacecloud.kr/board/notice?page=1&q=tlwms -->
+			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="검색어를 입력하세요."
+				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>  
 			<button class="searchBt" onclick="search()">검색</button>
-		</div>
-		<div class="row">
-			<div class = "col-6"></div>
-			<div class="col-2">
-				<select class = "orderSelector">
-					<option value="default">정렬기준</option>
-					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
-						value="RESERVATION_NUM">예약 번호순 정렬</option>
-					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
-						value="RESERVE_START_DAY">이용 일자순 정렬</option>
-				</select>
-			</div>		
-			<div class="col-2">
-				<select class = "statusSelector">
-					<option value = "default">전체상태</option>
-					<option <c:if test="${param.status == 'finished'}">selected</c:if> 
-						value = "finished">이용완료</option>
-					<option <c:if test="${param.status == 'before'}">selected</c:if> 
-						value = "before">이용전</option>
-					<option <c:if test="${param.status == 'canceled'}">selected</c:if>
-						value = "canceled">취소환불</option>
-				</select>
-			</div>		
-			<div class="col-2">
-				<button class="calendarBtn">
-					캘린더보기
-				</button>
-			</div>		
-		</div>
-		<div class="row dataTitle">
-			<div class = "col-1">예약번호</div>
-			<div class = "col-2" style="padding-left:2.7%">예약자</div>
-			<div class = "col-4" style="padding-left:2%;">공간정보</div>
-			<div class = "col-2" style="padding-left:1.7%;width: 8%;">날짜</div>
-			<div class = "col-2" style="padding-left:7%;">이용구분</div>
-			<div class = "col-2" style="padding-left:9.5%;">확인</div>
 		</div>
 		<jsp:useBean id="now" class="java.util.Date"/>
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
@@ -193,11 +165,40 @@
 				</div>
 			</c:forEach>
 		</c:if>
-		<c:if test="${empty list}">
-			<div class="row" style = "text-align:center">
-				<h2>예약 내역이 없습니다</h2>
-			</div>
-		</c:if>
+		
+		
+<div class="accordion accordion-flush" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        <span>[복구 완료] </span><p>&nbsp  스페이스클라우드 접속 장애에 대해 안내드립니다.
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">
+      </td></tr> <tr class="tr_view"><td colspan="2"><div class="view_box"><!----> <div class="p_answer"><p>안녕하세요, 스페이스클라우드 팀 입니다.</p><p>2023년 8월 21일 오후 7시 22분부터 8시 30분까지 약 1시간 가량 <b>네이버클라우드발 접속 장애</b>가 발생하였습니다.</p><p>서비스 이용에 불편을 드려 송구합니다. 현재는 복구 완료되어 정상적으로 서비스를 이용하실 수 있습니다.</p><p><strong><br></strong></p><p>&lt; 상세 내용 &gt;</p><p>■ 장애 내용 :&nbsp;스페이스클라우드(호스트센터 포함) 장애로 접속 불가</p><p>■ 장애 일시 :&nbsp;2023년 8월 21일 오후 7시 22분부터 8시 30분까지(약 1시간)</p><p>■ 장애 원인 :&nbsp;네이버클라우드 서비스 서버 장애</p><p>■ 조치 :&nbsp;서버 정상화 및 장애 복구 조치를 완료하였습니다.</p><p><br></p><p>서비스 이용에 불편을 드린 점에 대해 다시 한번 송구하다는 말씀드립니다.</p><p>향후 추가적인 장애가 발생하지 않도록 서버 안정화에 심혈을 기울이겠습니다.</p><p>관련해서 문의사항은 1:1 고객센터로 문의 바랍니다.</p><p>더 나은 서비스를 제공하기 위해 최선을 다하겠습니다. 감사합니다.</p><p><br></p><p>
+      </div></div></td></tr></div>
+  </div>
+  
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+       <span>[취소]</span><p>&nbsp 천재지변/감염병으로 인한 예약취소는 어떻게 하나요?
+      </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">
+       <ul>
+       <li>천재지변(기상악화), 법정 감염병 등 불가항력적인 사유로 제휴점 이용이 불가할 경우 고객행복센터로 예약내역 및 증빙서류(결항확인서, e-티켓, 진단확인서 등)를 보내주시면 확인 후 예약취소 가능 여부를 확인해 드립니다.</li>
+        <br><li>다만, 당사는 판매 중개 플랫폼의 입장으로 제휴점에 대하여 취소/환불을 강제할 수 없어 각 제휴점의 규정에 근거하여 상황에 따라 수수료가 발생하거나 취소가 어려울 수 있는 점 양해 부탁드립니다.</li>
+        </ul>
+       </div>
+    </div>
+  </div>
+ </div>
+</div>
+
+
 		<div class="pageBox">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
@@ -214,10 +215,13 @@
 			  </ul>
 			</nav>
 		</div>
-		
-		
 	</div>
 </section>
+
+
+
+
+
 <script type="text/javascript">
 	$(function(){
 		$('input[name=reservationInfo]').focus();

@@ -76,22 +76,14 @@ public class UserMainController {
 	    String num = Coupon.generateCoupon();
 	    logger.info("num={}",num);
 	    model.addAttribute("num", num);
-	    return "userMain/board/coupon";
+	    return "userMain/board/roulette";
 	}
-   
    
    //서비스약관
    @RequestMapping("/service")
    public String userChek() {
       return "userMain/service";
    }
-   
-   //이벤트
-   @RequestMapping("/event")
-   public String event() {
-	   return "userMain/event";
-   }
-   
    
    //회사소개
    @RequestMapping("/about")
