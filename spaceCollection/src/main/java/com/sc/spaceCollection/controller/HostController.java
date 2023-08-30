@@ -88,6 +88,21 @@ public class HostController {
 		return "host/registration/registration3";
 	}
 	
+	@RequestMapping("/registration/registration4")
+	public String registration4() {
+		//1
+		logger.info("공간등록 페이지3 보여주기");
+		
+		//2
+		
+		
+		//3
+		
+		
+		//4
+		return "host/registration/registration4";
+	}
+	
 	@RequestMapping("/report/account")
 	public String account() {
 		//1
