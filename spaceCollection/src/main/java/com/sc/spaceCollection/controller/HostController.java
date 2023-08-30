@@ -152,6 +152,17 @@ public class HostController {
 		
 		return "host/hostReservation/hostReservationDetail";
 	}
+	@GetMapping("/calendarDetail")
+	@ResponseBody
+	public Map<String, Object> calendarDetail(@RequestParam int reservationNum) {
+		logger.info("ajax예약내역 확인, 파라미터 reservationNum = {}", reservationNum);
+		Map<String, Object> map = reservationService.reservationReview(reservationNum);
+		map.put("RESERVER_PAY_DAY", map.get("RESERVER_PAY_DAY") + "");
+		logger.info("payday = {}", map.get("RESERVER_PAY_DAY"));
+		logger.info("ajax예약내역 확인, 결과 map = {}", map);
+		
+		return map;
+	}
 	
 	@GetMapping("/reservationCalendar")
 	public String reservationCalendar(HttpSession session, Model model) {
@@ -170,5 +181,19 @@ public class HostController {
 		model.addAttribute("list", list);
 		
 		return "host/hostReservation/hostReservationCalendar";
-	}	
+	}
+	
+	@GetMapping("/calendarDate")
+	@ResponseBody
+	public List<Integer> getDataByDate(@RequestParam String date,HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		logger.info("날짜별 매출액 조회, 파라미터 date = {}, userId = {}",date, userId);
+		
+		List<Integer> result = hostService.getDataByDate(date,userNum);
+		logger.info("매출액 조회 결과, result.size = {}", result);
+		
+		return result;
+	}
+	
 }
