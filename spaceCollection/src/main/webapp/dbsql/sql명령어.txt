@@ -58,7 +58,6 @@ on s.space_type_no = st.space_type_no
 join user_info u
 on u.user_num = s.user_num;
 
-<<<<<<< HEAD
 create table calendar_memo
 (
     memo_num        number primary key,
@@ -73,10 +72,9 @@ create sequence calendar_memo_seq
 increment by 1
 start with 1
 nocache
-=======
+
 create or replace view spaceType_category_view
 as
 select s.*, st.category_name
 from space_type s join space_type_category st
 on s.CATEGORY_NO = st.CATEGORY_NO;
->>>>>>> branch 'main' of https://github.com/JOSiroo/spaceCollection
