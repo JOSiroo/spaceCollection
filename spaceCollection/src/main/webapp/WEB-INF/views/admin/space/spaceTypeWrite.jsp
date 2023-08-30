@@ -30,9 +30,6 @@
 		color: gray;
 	}
 	
-	#strCount{
-		float: left;
-	}
 	
 	i.bi.bi-exclamation-circle {
  		color: #ffd600;
@@ -54,13 +51,22 @@
 		width: 100px;
 	}
 	
+	
+	p{
+		text-align: left;
+		float: right;
+		color: gray;
+		font-size: 15px;
+		width: 29%;
+	}
+	
 </style>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
 		
-		$('#strCount').html('&nbsp;&nbsp('+0);
+		$('#strCount1').html('&nbsp;&nbsp('+0);
 		$('#strCount2').html('&nbsp;&nbsp('+0);
 		
 		$('#submit').click(function() {
@@ -126,9 +132,9 @@
 		    
 		    // 글자수 세기
 		    if (titleStr.length == 0 || titleStr == '') {
-		    	$('#strCount').html('&nbsp;&nbsp('+0);
+		    	$('#strCount1').html('&nbsp;&nbsp('+0);
 		    } else {
-		    	$('#strCount').html('&nbsp;&nbsp(' + titleStr.length);
+		    	$('#strCount1').html('&nbsp;&nbsp(' + titleStr.length);
 		    }
 		    
 		    // 글자수 제한
@@ -143,24 +149,24 @@
 		    };
 		});
 		    	
-		$('#spaceTypeName').keyup(function (e) {
+		$('#explanation').keyup(function (e) {
 			let titleStr = $(this).val();
 		    
 		    // 글자수 세기
 		    if (titleStr.length == 0 || titleStr == '') {
-		    	$('#strCount').html('&nbsp;&nbsp('+0);
+		    	$('#strCount2').html('&nbsp;&nbsp('+0);
 		    } else {
-		    	$('#strCount').html('&nbsp;&nbsp(' + titleStr.length);
+		    	$('#strCount2').html('&nbsp;&nbsp(' + titleStr.length);
 		    }
 		    
 		    // 글자수 제한
-		    if (titleStr.length > 15) {
-		        $(this).val($(this).val().substring(0, 15));
-		        $('.modal-body').html("타입명은 15자를 초과할 수 없습니다.");
+		    if (titleStr.length > 100) {
+		        $(this).val($(this).val().substring(0, 100));
+		        $('.modal-body').html("설명은 100자를 초과할 수 없습니다.");
 		        $('#cancelBt').html("확인");
 		        $('#confirm1').modal('show');
 				$('#confirm1').on('hidden.bs.modal', function (e) {
-					$('#spaceTypeName').focus();
+					$('#explanation').focus();
 				});
 		    };
 		});	
@@ -194,7 +200,7 @@
 					<div class="card-body">
  						<h5 class="card-title" style="font-weight: bold;">공간 타입 등록</h5>
  						<form class="row gx-3 gy-2 align-items-center" name="spaceTypeFrm" id="spaceTypeFrm" method="post" 
- 						action="<c:url value='/admin/space/spaceType/spaceTypeWrite'/>">
+ 						action="<c:url value='/admin/space/spaceType/spaceTypeWrite'/>" onkeydown="return event.key != 'Enter';">
 							<div id="searchDiv">
 								<div class="col-sm-3" id="select">
 									<label class="col-sm-2 col-form-label" for="categoryNo">카테고리명</label>
@@ -209,16 +215,21 @@
 								<div class="col-sm-3" id="keyword">
 									<label class="col-sm-2 col-form-label" for="spaceTypeName">공간 타입명</label>
 									<input type="text" class="form-control labelNext" id="spaceTypeName" name="spaceTypeName">
-									<span class="titleLimit" id="strCount"></span>
-									<span class="titleLimit" id="titleLimit">&nbsp;/15자 이내)</span>
+								</div>
+								<div class="col-sm-3">
+									<p>
+										<span id="strCount1"></span>&nbsp;/15자 이내)
+									</p>
 								</div>
 								<div class="row sm-3">
 									<label for="explanation" class="col-sm-2 col-form-label m-left">설명</label>
 									<textarea class="form-control labelNext" name="explanation" style="height: 100px" id="explanation"></textarea>
-									<span class="titleLimit" id="strCount"></span>
-									<span class="titleLimit" id="titleLimit">&nbsp;/15자 이내)</span>
 								</div>
-								
+								<div class="col-sm-3">
+									<p>
+										<span id="strCount2"></span>&nbsp;/100자 이내)
+									</p>
+								</div>
 							</div>
 						</form>
 						

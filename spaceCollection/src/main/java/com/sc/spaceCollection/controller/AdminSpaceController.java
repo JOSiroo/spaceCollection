@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
@@ -214,6 +215,18 @@ public class AdminSpaceController {
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
+	}
+	
+	@RequestMapping("/spaceType/spaceTypeDetail")
+	public String spaceTypeDetail(@RequestParam String spaceTypeName, Model model) {
+		logger.info("공간 타입 상세보기, 파라미터 spaceTypeName = {}", spaceTypeName);
+		
+		Map<String, Object> map = spaceTypeService.selectBySpaceTypeName(spaceTypeName);
+		logger.info("공간 타입 상세보기 결과, map = {}", map);
+		
+		model.addAttribute("map", map);
+		
+		return "admin/space/spaceTypeDetail";
 	}
 	
 	@RequestMapping("/spaceList")
