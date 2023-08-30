@@ -58,6 +58,21 @@ on s.space_type_no = st.space_type_no
 join user_info u
 on u.user_num = s.user_num;
 
+create table calendar_memo
+(
+    memo_num        number primary key,
+    memo_title      varchar2(50) not null,
+    memo_content    varchar2(200) not null,
+    memo_start_day  timestamp not null,
+    memo_end_day    timestamp,
+    user_num        number,
+    foreign key (user_num) references user_info(user_num)
+)
+create sequence calendar_memo_seq
+increment by 1
+start with 1
+nocache
+
 create or replace view SPACETYPE_CATEGORY_VIEW
 as
 select s.*, st.category_name

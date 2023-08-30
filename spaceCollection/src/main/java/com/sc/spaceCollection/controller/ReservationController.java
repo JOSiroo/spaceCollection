@@ -57,6 +57,7 @@ public class ReservationController {
 		int reservePeople = Integer.parseInt((String) paymentData.get("custom_data[RESERVE_PEOPLE]"));
 		String paymentType = (String) paymentData.get("pg_provider");
 		String reservationUid = (String) paymentData.get("pg_tid");
+		
 		logger.info("userId = {}, sdNum = {}, startDay = {}, endHour = {}", userId, sdNum, startDay, endHour);
 		logger.info("startHour = {}, endDay = {}, reservePrice = {}, paymentType = {}", startHour, endDay, reservePrice, paymentType);
 		logger.info("merchant_uid = {}", reservationUid);
