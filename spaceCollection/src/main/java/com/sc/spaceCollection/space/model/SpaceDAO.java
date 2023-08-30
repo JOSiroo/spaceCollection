@@ -35,4 +35,5 @@ public interface SpaceDAO {
 	Map<String, Object> usercount();
 	List<Map<String, Object>> selectSpaceListViewByUserId(SearchVO vo);
 	int getTotalRecordSpaceListViewByUserId(SearchVO vo);
+	int isAcceptSpace(SpaceVO vo);
 }

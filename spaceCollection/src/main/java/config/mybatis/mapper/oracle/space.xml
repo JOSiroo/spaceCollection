@@ -118,4 +118,9 @@
 		select count(*) from SPACE_LIST_VIEW where user_id = #{userId}
 		<include refid="searchWhere"/>
 	</select>
+	
+	<update id="isAcceptSpace" parameterType="spaceVo">
+		update space set space_reg_date = sysdate, space_request_status = #{spaceRequestStatus} 
+		where space_num = #{spaceNum}
+	</update>
 </mapper>

@@ -45,31 +45,12 @@
 		color: red;
 	}
 	
-	#MChkDiv{
-		margin-top: 5px;
-		text-align: left;
-	}
-	
-	#excelDownloadBt{
-		--bs-btn-bg: #dadddf;
-	}
-	
-	#excelModal>div>div>div>p{
-		margin-bottom: 20px;
-	}
-	
 	.marginTop{
 		margin-top: 5px;
 	}
 	
 	.marginTop>div{
 		text-align: left;
-	}
-	
-	#warning{
-		color: red;
-		text-align: left;
-		margin-top: -15px;
 	}
 	
 	
@@ -108,36 +89,6 @@
 					$('form[name=trFrm]').submit();
 				});
 			}
-		});
-		
-		$('#excelDownloadBt').click(function() {
-			$('#excelModal').modal('show');
-		});
-		
-		$('#columnChkAll').click(function() {
-			var checkState = $(this).is(":checked");
-			$('.modal-body input[type=checkbox]').prop('checked', checkState);
-		});
-		
-		$('#downloadBt').click(function() {
-			if($('.modal-body input[type=checkbox]:checked').length<1){
-				event.preventDefault();
-				$('#warning').show();
-			}else{
-				$('form[name=excelFrm]').submit();
-			}
-		});
-		
-		$('.modal button').click(function() {
-			$('.modal-body input[type=checkbox]').prop('checked', false);
-		});
-		
-		$('.modal-body input[type=checkbox]').click(function name() {
-			$('#warning').hide();
-		});
-		
-		$('#excelModal button[name=cancelBt]').click(function() {
-			$('#warning').hide();
 		});
 			
 	});
@@ -198,7 +149,7 @@
 							<tbody>
 								<c:if test="${empty list }">
 									<tr>
-										<td colspan="6" style="text-align: center;">등록된 회원이 없습니다.</td>
+										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
@@ -294,26 +245,9 @@
 		</div>
 		
 	</section>
-	<!-- Modal1 -->
+
+	<!-- Moda1 -->
 	<div class="modal fade" id="confirm1" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						data-bs-dismiss="modal" id="confirm">확인</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal1 -->
-	<!-- Moda2 -->
-	<div class="modal fade" id="confirm2" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -325,67 +259,12 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-danger" id="okBt">삭제</button>
+					<button type="button" class="btn btn-danger" id="okBt"></button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- EndModal2 -->
-	<!-- Moda3 -->
-	<div class="modal fade" id="excelModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">엑셀 다운로드 항목 선택</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p >
-						엑셀에 포함시킬 데이터를 선택하세요.&nbsp;&nbsp;
-						<input class="form-check-input" type="checkbox" value="" id="columnChkAll" name="columnChkAll">
-						<label class="form-check-label" for="columnChkAll">전체 선택</label>
-					</p>
-					<div class="container text-center " id="MChkDiv">
-						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
-						<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
-						<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
-						<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
-						<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
-						<form name="excelFrm" action="<c:url value='/admin/member/memberExcelDownload'/>" method="post">
-							<div class="row align-items-start">
-								<div class="col marginTop">
-									<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="${2*i }"
-												id="${columnListEng1[i] }" name="headerListIndex[${2*i }]">
-											<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
-										</div>
-									</c:forEach>
-								</div>
-									
-								<div class="col marginTop">
-									<c:forEach var="i" begin="0" end="${fn:length(columnListEng2)-1 }">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="${2*i+1 }"
-												id="${columnListEng2[i] }" name="headerListIndex[${2*i+1 }]">
-											<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
-										</div>
-									</c:forEach>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" name="cancelBt">취소</button>
-					<button type="button" class="btn btn-success" id="downloadBt">다운로드</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal3 -->
+	<!-- EndModal1 -->
 	
 </main>
 <!-- End #main -->
