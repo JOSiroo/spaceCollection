@@ -61,5 +61,8 @@
         select * from host_reservation_view
         where user_num = #{userNum}
 	</select>
-	
+	<select id="getDataByDate" resultType="int">
+		select RESERVE_PRICE from host_reservation_view
+		where user_num = #{userNum} and RESERVE_START_DAY = #{date}
+	</select>
 </mapper>

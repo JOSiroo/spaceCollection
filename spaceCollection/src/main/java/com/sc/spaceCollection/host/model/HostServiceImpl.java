@@ -38,5 +38,10 @@ public class HostServiceImpl implements HostService {
 		return hostDao.selectUserById(userId);
 	}
 
+	@Override
+	public List<Integer> getDataByDate(String date, int userNum) {
+		return hostDao.getDataByDate(date, userNum);
+	}
+
 
 }
