@@ -39,17 +39,6 @@ public class UserMainController {
    private final Coupon coupon;
    
    
-   
-   @RequestMapping("/board")
-   public String test() {
-      return "userMain/board/boardList";
-   }
-   
-   @RequestMapping("/list")
-   public String listtest() {
-      return "userMain/board/list2";
-   }
-   
    //사용자메인화면
    @RequestMapping("/")
    public String home(Model model) {
@@ -102,12 +91,6 @@ public class UserMainController {
    @RequestMapping("/Certificate2")
    public String Certificate2() {
 	   return "userMain/Certificate2";
-   }
-   
-   //자주묻는질문
-   @RequestMapping("/FAQ")
-   public String FAQ() {
-	   return "userMain/FAQ";
    }
    
    @RequestMapping("/search")
@@ -166,8 +149,6 @@ public class UserMainController {
       }
       return list;
    }
-   
-   
    
    @GetMapping("/search/map")
    public String map(@RequestParam(required = false) String spaceName,

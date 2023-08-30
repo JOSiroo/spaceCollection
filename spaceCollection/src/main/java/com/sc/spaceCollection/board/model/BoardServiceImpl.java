@@ -76,4 +76,10 @@ public class BoardServiceImpl implements BoardService{
 		return  boardDao.selectByeventBoardNum(boardNum) ;
 	}
 
+	@Override
+	public List<BoardVO> selectNoticeBoard() {
+        return boardDao.selectNoticeBoard();
+	}
+	
+
 }

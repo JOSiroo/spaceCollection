@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sc.spaceCollection.board.model.BoardService;
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
 import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
@@ -32,11 +33,21 @@ public class UserBoardController {
 	private final BoardService boardService;
 	private final CommentsService commentsService;
 	
-	@RequestMapping("/notice")
-	public String notice(Model model) {
-		return "userMain/board/notice"; 
+	 //자주묻는질문
+	@RequestMapping("/faq")
+	public String FAQ() {
+		return "userMain/board/FAQ";
 	}
 	
+	@RequestMapping("/notice")
+    public String notice(@ModelAttribute BoardVO vo, Model model) {
+		
+        List<BoardVO> list = boardService.selectNoticeBoard();
+        logger.info(" 결과 확인 list={}", list);
+
+        model.addAttribute("list", list);
+        return "userMain/board/notice";
+    }
 	
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
