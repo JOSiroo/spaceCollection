@@ -507,7 +507,6 @@ pageEncoding="UTF-8"%>
 			</div>
 	<!-- 여기까지 섹션-->				
 </section>
-
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
@@ -710,7 +709,7 @@ pageEncoding="UTF-8"%>
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
-	    mapOption = { 
+	    mapOption = { 				
 	        center: new kakao.maps.LatLng(${vo.latitude}, ${vo.longitude}), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    }; 

@@ -44,7 +44,7 @@
 		set reservation_del_flag = 'Y'
 		where reservation_uid = #{reservationUid}
 	</update>
-	<select id="reservationReview" parameterType="int">
+	<select id="reservationReview" parameterType="int" resultType="map">
 		select * from reservation_sd_view
 		where reservation_num = #{reservationNum}
 	</select>

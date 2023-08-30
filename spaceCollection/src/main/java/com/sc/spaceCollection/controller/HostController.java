@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.calendar.model.CalendarService;
+import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
@@ -29,6 +31,7 @@ public class HostController {
 	private final GuestService guestService;
 	private final HostService hostService;
 	private final ReservationService reservationService;
+	private final CalendarService calendarService;
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -167,6 +170,17 @@ public class HostController {
 		
 		return "host/hostReservation/hostReservationDetail";
 	}
+	@GetMapping("/calendarDetail")
+	@ResponseBody
+	public Map<String, Object> calendarDetail(@RequestParam int reservationNum) {
+		logger.info("ajax예약내역 확인, 파라미터 reservationNum = {}", reservationNum);
+		Map<String, Object> map = reservationService.reservationReview(reservationNum);
+		map.put("RESERVER_PAY_DAY", map.get("RESERVER_PAY_DAY") + "");
+		logger.info("payday = {}", map.get("RESERVER_PAY_DAY"));
+		logger.info("ajax예약내역 확인, 결과 map = {}", map);
+		
+		return map;
+	}
 	
 	@GetMapping("/reservationCalendar")
 	public String reservationCalendar(HttpSession session, Model model) {
@@ -177,13 +191,33 @@ public class HostController {
 			
 			return "common/message";
 		}
+		
+		
 		int userNum = guestService.selectUserInfo(userId).getUserNum();
 		logger.info("호스트 캘린더, 파라미터 userNum = {}", userNum);
 		
+		
+		
+		List<CalendarVO> calList = calendarService.selectMemoByUserNum(userNum);
 		List<Map<String, Object>> list = hostService.HostReservationCalendar(userNum);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("calList", calList);
 		
 		return "host/hostReservation/hostReservationCalendar";
-	}	
+	}
+	
+	@GetMapping("/calendarDate")
+	@ResponseBody
+	public List<Integer> getDataByDate(@RequestParam String date,HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		int userNum = guestService.selectUserInfo(userId).getUserNum();
+		logger.info("날짜별 매출액 조회, 파라미터 date = {}, userId = {}",date, userId);
+		
+		List<Integer> result = hostService.getDataByDate(date,userNum);
+		logger.info("매출액 조회 결과, result.size = {}", result);
+		
+		return result;
+	}
+	
 }

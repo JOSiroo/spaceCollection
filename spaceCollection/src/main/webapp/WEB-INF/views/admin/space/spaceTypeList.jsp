@@ -3,7 +3,7 @@
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
 	
-	#memberWithdrawalBt{
+	#spaceTypeDelBt, #spaceTypeCategoryActiveBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
@@ -150,14 +150,12 @@
 <main id="main" class="main">
 
 	<div class="pagetitle">
-		<h1>회원 관리</h1>
+		<h1>공간 관리</h1>
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
-				<li class="breadcrumb-item">회원 관리</li>
-				<li class="breadcrumb-item active">
-					회원 관리 
-				</li>
+				<li class="breadcrumb-item">공간 관리</li>
+				<li class="breadcrumb-item active">공간 타입 관리</li>
 			</ol>
 		</nav>
 	</div>
@@ -169,40 +167,39 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>회원 관리</a></h5>
- 						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
+ 						<h5 class="card-title" style="font-weight: bold;"><a>공간 관리</a></h5>
+ 						<form name="frmPage" method="post" action="<c:url value='/admin/space/spaceTypeList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
-                		<button type="button" class="btn btn-outline-danger" id="memberWithdrawalBt">회원 탈퇴</button>
 						<table class="table">
 							<colgroup>
-								<col style="width: 5%";  />
-								<col style="width:12%";  />
-								<col style="width:12%;" />
-								<col style="width:40%;" />
-								<col style="width:15%;" />		
+								<col style="width:15%;"  />
+								<col style="width:15%;"  />
+								<col style="width:22.5%;" />
+								<col style="width:22.5%;" />
 								<col style="width:15%;" />		
 							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col"><input type="checkbox" name="chkAll"></th>
-									<th scope="col">회원 번호</th>
-									<th scope="col">이름</th>
-									<th scope="col">아이디</th>
-									<th scope="col">이메일</th>
-									<th scope="col">가입일</th>
+									<th scope="col">공간 타입 번호</th>
+									<th scope="col">공간 타입명</th>
+									<th scope="col">공간 타입 카테고리</th>
+									<th scope="col">사용여부</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:if test="${empty list }">
 									<tr>
-										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
+										<td colspan="5" style="text-align: center;">동록된 공간 타입이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
 									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
+										<button type="button" class="btn btn-outline-success subBt" id="spaceTypeActiveBt">활성화</button>
+										<button type="button" class="btn btn-outline-danger subBt" id="spaceTypeDelBt">비활성화</button>
 										<c:set var="i" value="0"/>
 										<c:forEach var="userInfoVo" items="${list }">
 											<tr>
@@ -312,81 +309,6 @@
 		</div>
 	</div>
 	<!-- EndModal1 -->
-	<!-- Moda2 -->
-	<div class="modal fade" id="confirm2" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title"><i class="bi bi-exclamation-circle" style="color: red;"></i></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-danger" id="okBt">삭제</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal2 -->
-	<!-- Moda3 -->
-	<div class="modal fade" id="excelModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">엑셀 다운로드 항목 선택</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p >
-						엑셀에 포함시킬 데이터를 선택하세요.&nbsp;&nbsp;
-						<input class="form-check-input" type="checkbox" value="" id="columnChkAll" name="columnChkAll">
-						<label class="form-check-label" for="columnChkAll">전체 선택</label>
-					</p>
-					<div class="container text-center " id="MChkDiv">
-						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
-						<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
-						<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
-						<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
-						<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
-						<form name="excelFrm" action="<c:url value='/admin/member/memberExcelDownload'/>" method="post">
-							<div class="row align-items-start">
-								<div class="col marginTop">
-									<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="${2*i }"
-												id="${columnListEng1[i] }" name="headerListIndex[${2*i }]">
-											<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
-										</div>
-									</c:forEach>
-								</div>
-									
-								<div class="col marginTop">
-									<c:forEach var="i" begin="0" end="${fn:length(columnListEng2)-1 }">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="${2*i+1 }"
-												id="${columnListEng2[i] }" name="headerListIndex[${2*i+1 }]">
-											<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
-										</div>
-									</c:forEach>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" name="cancelBt">취소</button>
-					<button type="button" class="btn btn-success" id="downloadBt">다운로드</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal3 -->
-	
 </main>
 <!-- End #main -->
 <%@ include file="../../form/adminBottom.jsp"%>
