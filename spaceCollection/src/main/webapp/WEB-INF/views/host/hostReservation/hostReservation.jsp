@@ -130,9 +130,9 @@
 			<div class="col-2">
 				<select class = "orderSelector">
 					<option value="default">정렬기준</option>
-					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
+					<option <c:if test="${param.order == 'RESERVATION_NUM'}">selected</c:if> 
 						value="RESERVATION_NUM">예약 번호순 정렬</option>
-					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
+					<option <c:if test="${param.order == 'RESERVE_START_DAY'}">selected</c:if>
 						value="RESERVE_START_DAY">이용 일자순 정렬</option>
 				</select>
 			</div>		
@@ -202,13 +202,13 @@
 		<div class="pageBox">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
-			    <li class="page-item">
-			      <a class="page-link" id="previous" href="<c:url value='/host/reservation?page=${param.page-1}'/>" aria-label="Previous">
+			    <li class="page-item">	<!-- <c:url value='/host/reservation?page=${param.page-1}'/>	<c:url value='/host/reservation?page=${param.page+1}'/> -->
+			      <a class="page-link" id="previous" onclick="movePage('${param.page-1}')" href="javascript:void(0)" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
 			    <li class="page-item">
-			      <a class="page-link" id="next" href="<c:url value='/host/reservation?page=${param.page+1}'/>" aria-label="Next">
+			      <a class="page-link" id="next" onclick="movePage('${param.page+1}')" href="javascript:void(0)" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
@@ -250,6 +250,11 @@
 	
 	function goReservation(reservationNum){
 		location.href="<c:url value='/host/reservationDetail?reservationNum="+reservationNum+"'/>";
+	}
+	
+	function movePage(page){
+		params.set('page', page);
+		location.href = currentUrl[0]+"?"+params;
 	}
 	
 	function search(){

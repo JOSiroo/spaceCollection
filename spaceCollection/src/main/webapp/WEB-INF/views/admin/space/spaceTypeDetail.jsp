@@ -68,6 +68,10 @@
 		$('#listBt').click(function() {
 			location.href = "<c:url value='/admin/space/spaceTypeList'/>";
 		});
+		
+		$('#editBt').click(function() {
+			location.href = "/spaceCollection/admin/space/spaceType/spaceTypeEdit?spaceTypeName="+$('#spaceTypeName').val();
+		});
 	});
 </script>
 <main id="main" class="main">
@@ -79,7 +83,7 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">공간 관리</li>
 				<li class="breadcrumb-item">공간 타입 관리</li>
-				<li class="breadcrumb-item active">공간 타입 등록</li>
+				<li class="breadcrumb-item active">공간 타입 상세보기</li>
 			</ol>
 		</nav>
 	</div>
@@ -91,7 +95,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">공간 타입 등록</h5>
+ 						<h5 class="card-title" style="font-weight: bold;">공간 타입 상세보기</h5>
 							<div class="row-sm">
 							<div>
 								<div class="col fr">
@@ -115,6 +119,7 @@
 								</div>
 								<div class="col back">
 									<span>${map.SPACE_TYPE_NAME }</span>
+									<input type="hidden" name="spaceTypeName" id="spaceTypeName" value="${map.SPACE_TYPE_NAME }">
 								</div>
 							</div>
 							<div>
@@ -123,10 +128,10 @@
 								</div>
 								<div class="col back">
 									<c:if test="${map.SPACE_TYPE_DEL_FLAG != 'Y'}">
-										<span class="deActive">활성화</span>
+										<span class="active">활성화</span>
 									</c:if>
 									<c:if test="${map.SPACE_TYPE_DEL_FLAG == 'Y'}">
-										<span class="active">비활성화</span>
+										<span class="deActive">비활성화</span>
 									</c:if>
 								</div>
 							</div>

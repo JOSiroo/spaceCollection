@@ -89,15 +89,22 @@ public class SpaceTypeServiceImpl implements SpaceTypeService{
 		
 		Map<String, Object> map = spaceTypeDao.selectBySpaceTypeName(vo.getSpaceTypeName());
 		
-		if(map == null || map.isEmpty()) {
-			cnt = spaceTypeDao.insertSpaceType(vo);
-			if(cnt>0) {
+		cnt = spaceTypeDao.spaceTypeNameDubCheck(vo.getSpaceTypeName());
+		
+		if(cnt>1) {
+			if((vo.getSpaceTypeNo()+"").equals(map.get("SPACE_TYPE_NO"))) {
 				result = SpaceTypeService.PASS;
-			}else {
+			}else
+				result = SpaceTypeService.DUB;
+		}else {
+			result = SpaceTypeService.PASS;
+		}
+			
+		if(result == SpaceTypeService.PASS) {
+			cnt = spaceTypeDao.updateSpaceType(vo);
+			if(cnt<1) {
 				result = SpaceTypeService.ERR;
 			}
-		}else {
-			result = SpaceTypeService.DUB;
 		}
 		
 		return result;
@@ -112,6 +119,12 @@ public class SpaceTypeServiceImpl implements SpaceTypeService{
 	@Override
 	public List<Map<String, Object>> selectSpaceType(SearchVO vo) {
 		return spaceTypeDao.selectSpaceType(vo);
+	}
+
+
+	@Override
+	public SpaceTypeVO selectSpaceTypeBySpaceTypeNo(int spaceTypeNo) {
+		return spaceTypeDao.selectSpaceTypeBySpaceTypeNo(spaceTypeNo);
 	}
 
 	

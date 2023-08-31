@@ -18,4 +18,5 @@ public interface SpaceTypeDAO {
 	int spaceTypeDeactivation(SpaceTypeVO vo);
 	int updateSpaceType(SpaceTypeVO vo);
 	int spaceTypeNameDubCheck(String spaceTypeName);
+	SpaceTypeVO selectSpaceTypeBySpaceTypeNo(int spaceTypeNo);
 }

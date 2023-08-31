@@ -11,5 +11,6 @@ public class CalendarVO {
 	    private String memoContent;
 	    private String memoStartDay;
 	    private String memoEndDay;
+	    private String memoColor;
 	    private int userNum;
 }
