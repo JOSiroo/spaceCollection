@@ -28,15 +28,18 @@ public class OauthController {
 	private final GuestService guestService;
 	
 	@RequestMapping("/kakao")
-	@GetMapping
 	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request) {
+		/*
+		 * if(!error.isEmpty() || error!=null) {
+		 * logger.info("kakao 로그인 실패 error={}",error); }
+		 */
 		
 		logger.info("카카오 로그인 처리, 파라미터 code={}",code);
 		
 		String access_Token=oauthService.getKakaoAccessToken(code);
 		logger.info("토큰 불러오기 결과 access_Token={}",access_Token);
 		
-		HashMap<String, Object> userInfo = oauthService.getUserInfo(access_Token);
+		HashMap<String, Object> userInfo = oauthService.getKakaoUserInfo(access_Token);
 		logger.info("카카오 회원정보 불러오기 결과 userInfo={}",userInfo);
 		
 		GuestVO guestVo = new GuestVO();
@@ -54,8 +57,9 @@ public class OauthController {
 		    guestVo.setUserEmail(email);
 		    guestVo.setUserProfileImage(image);
 		    guestVo.setUserSnsCode("kakao");
-		    logger.info("카카오 정보 처리, KakaoVO=[UserId={}, UserEmail={}, UserProfileImage={}, UserSnsCode={}]",guestVo.getUserName(),guestVo.getUserId()
-		    		,guestVo.getUserEmail(),guestVo.getUserProfileImage(),guestVo.getUserSnsCode());
+		    logger.info("카카오 정보 처리, KakaoVO=[UserName={},UserId={}, UserEmail={}, UserProfileImage={}, UserSnsCode={}]"
+		    		,guestVo.getUserName(),guestVo.getUserId(),guestVo.getUserEmail()
+		    		,guestVo.getUserProfileImage(),guestVo.getUserSnsCode());
 		    
 		    int cnt = guestService.selectKakaoUser(guestVo); //이미 카카오로 등록된 계정이 있는지 확인
 		    logger.info("카카오 회원 조회 결과, cnt={}",cnt);
@@ -70,8 +74,67 @@ public class OauthController {
 		 // session
 		 HttpSession session = request.getSession();
 		 session.setAttribute("userId", email);
-		 session.setAttribute("code", code);
+		 session.setAttribute("code", "kakao");
 		}
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/naver")
+	public String naverLogin(@RequestParam("code") String code,	HttpServletRequest request) {
+		
+		/*
+		 * if(!error.isEmpty() || error!=null) {
+		 * logger.info("네이버 로그인 실패 error={}",error); }
+		 */
+		
+		logger.info("네이버 로그인 처리, 파라미터 code={}",code);
+		
+		String access_Token=oauthService.getNaverAccessToken(code);
+		logger.info("네이버 access_Token 불러오기 결과={}",access_Token);
+		
+		HashMap<String, Object> userInfo = oauthService.getNaverUserInfo(access_Token);
+		logger.info("네이버 회원정보 불러오기 결과 userInfo={}",userInfo);
+		
+		GuestVO guestVo = new GuestVO();
+		
+		//keySet().iterator()
+		Iterator<String> keys = userInfo.keySet().iterator();
+		while(keys.hasNext()){
+		    String key = keys.next();
+		    System.out.println("[Key]:" + key + " [Value]:" +  userInfo.get(key));
+		    String nickname=(String) userInfo.get("nickname");
+		    String email=(String) userInfo.get("email");
+		    String image=(String) userInfo.get("profile_image");
+		    String mobile=(String) userInfo.get("mobile");
+		    guestVo.setUserName(nickname); //VO에 받아온 네이버정보 넣기
+		    guestVo.setUserId(email);
+		    guestVo.setUserEmail(email);
+		    guestVo.setUserProfileImage(image);
+		    guestVo.setUserHp(mobile);
+		    guestVo.setUserSnsCode("naver");
+		    logger.info("네이버 정보 처리, naverVO=[UserName={},UserId={}, UserEmail={}, UserProfileImage={}, UserSnsCode={}, UserHp={},]"
+		    		,guestVo.getUserName(),guestVo.getUserId(),guestVo.getUserEmail()
+		    		,guestVo.getUserProfileImage(),guestVo.getUserSnsCode(),guestVo.getUserHp());
+		    
+		    int cnt = guestService.selectNaverUser(guestVo); //이미 네이버로 등록된 계정이 있는지 확인
+		    logger.info("네이버 회원 조회 결과, cnt={}",cnt);
+		    int result=0;
+		    if(cnt<1) { //네이버로 저장된 정보가 DB에 없을 경우 회원가입처리
+		    	result=guestService.insertNaverUser(guestVo);
+		    	logger.info("네이버 회원 등록 결과, result={}",result);
+		    }else if(cnt>0) { //만약 회원정보 있을경우 업데이트
+		    	result=guestService.updateNaverUser(guestVo);
+		    }
+		    
+		    logger.info("네이버 DB저장 결과, result={}",result);
+		    
+		 // session
+		 HttpSession session = request.getSession();
+		 session.setAttribute("userId", email);
+		 session.setAttribute("code", "naver");
+		}
+		
+		return "redirect:/";
+		
 	}
 }

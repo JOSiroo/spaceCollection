@@ -17,8 +17,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/guest/myPage")
 @RequiredArgsConstructor
+@RequestMapping("/guest/myPage")
 public class MyPageController {
 	private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
 	
@@ -26,17 +26,37 @@ public class MyPageController {
 	
 	private final Encryption encryption;
 	
+	
 	@GetMapping("/myProfile")
 	public String myPage_get(HttpSession session,Model model) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("마이페이지 처리, 파라미터 userId={}",userId);
 		
-		GuestVO guestVo = guestService.selectUserInfo(userId);
-		logger.info("마이페이지 유저 정보 불러오기 결과, guestVo={}",guestVo);
+		GuestVO userInfo = new GuestVO();
+		userInfo = guestService.selectUserInfo(userId);
 		
-		model.addAttribute("guestVo",guestVo);
+		logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
+		
+		model.addAttribute("guestVo",userInfo);
 		return "guest/myPage/myProfile";
-	}
+	} 
+	
+	@GetMapping("/myProfileSNS")
+	public String myPageSNS_get(HttpSession session,Model model) {
+		String userId = (String)session.getAttribute("userId");
+		String SNSCode= (String)session.getAttribute("code");
+		logger.info("SNS마이페이지 처리, 파라미터 userId={},SNSCode={}",userId,SNSCode);
+		GuestVO searchInfo = new GuestVO();
+		searchInfo.setUserId(userId);
+		searchInfo.setUserSnsCode(SNSCode);
+		GuestVO userInfo = new GuestVO();
+		userInfo = guestService.selectSnsUserInfo(searchInfo);
+		
+		logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
+		
+		model.addAttribute("guestVo",userInfo);
+		return "guest/myPage/myProfile";
+	} 
 	
 	@PostMapping("/editProfile")
 	public String editProfile() {
@@ -52,7 +72,7 @@ public class MyPageController {
 	    
 	    logger.info("SNS사용자 조회결과, cnt={}",cnt);
 	    if(cnt>0) {//SNS유저 일 경우 확인없이 마이프로필
-	         url="redirect:/guest/myPage/myProfile";
+	         url="redirect:/guest/myPage/myProfileSNS";
 	    }
 
 		
