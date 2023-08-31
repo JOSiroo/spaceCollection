@@ -20,6 +20,14 @@
 		 }else{
 			 $("input[name=userMarketingEmailOk]").prop("checked",false);
 		 }
+		 
+		 var snsCode=$("input[name=snsCode]").val();
+		 if(snsCode=="kakao"){
+			 $("input[name=kakaoLink]").prop("checked",true);
+		 }else if(snsCode=="naver"){
+			 $("input[name=naverLink]").prop("checked",true);
+		 }
+		 
 /* 		 
 		 $("input[name=userMarketingSmsOk]").change(function(){
 			 
@@ -283,6 +291,7 @@
 <div class="wrapProfile">
 	<form name="editProfile" method="post" enctype="multipart/form-data"
 		action="<c:url value='/guest/myPage/editProfile'/>">
+		<input type="hidden" name="snsCode" value="${guestVo.userSnsCode }">
 		<div class="align_center">
 			<h1>프로필 관리</h1>
 			<div class="myProfile">
@@ -379,7 +388,7 @@
 							<div class="form-check form-switch" style="margin-left: -36px;">
 								<img alt="네이버로고.png" src="<c:url value='/images/naverLogo.png'/>" class="SNSLogo">
 								<label class="form-check-label">네이버 연동</label>
-								<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" onclick="return false">
+								<input class="form-check-input" type="checkbox" name="naverLink" role="switch" id="flexSwitchCheckChecked" onclick="return false">
 							</div>
 						</td>
 					</tr>
@@ -389,7 +398,7 @@
 							<div class="form-check form-switch" style="margin-left: -36px;">
 								<img alt="카카오로고.png" src="<c:url value='/images/kakaoLogo.jpg'/>" class="SNSLogo">
 								<label class="form-check-label">카카오 연동</label>
-								<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" onclick="return false">
+								<input class="form-check-input" type="checkbox" name="kakaoLink" role="switch" id="flexSwitchCheckChecked" onclick="return false">
 							</div>
 							<a style="color: gray; font-size: 7px">소셜계정만 연동이 가능하며, 연동된 소셜계정은 해제가 불가합니다.</a>
 						</td>

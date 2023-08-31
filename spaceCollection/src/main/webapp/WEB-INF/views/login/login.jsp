@@ -104,6 +104,7 @@
       	margin: 10px 0px 10px 5px;
       	width: 395px;
       	padding: 13px;
+      	cursor : pointer;
       	
       }
       
@@ -112,6 +113,7 @@
       	font-weight: bolder;
       	text-align: center;
       	margin-left: 95px;
+      	cursor : pointer;
       }
       
   </style>
@@ -159,15 +161,15 @@
           </div>
 	      <div class="hr-sect">소셜 로그인</div>
 	      <div style="margin-left: 17px;">
-	      	<div class="snsLogin">
-		     	<a id="kakaoLogin" href="#" >
+	      	<div class="snsLogin" id="kakaoLogin" >
+		     	<a href="#" >
 					<img src="<c:url value='/images/kakaoLogin.png'/>" alt="카카오로그인" class="snsBt" />
 				</a>
 				<label>카카오로 시작하기</label>
 	      	</div>
-	      	<div class="snsLogin">
+	      	<div class="snsLogin" id="naverLogin">
 				<a id="naverIdLogin_loginButton" href="#">
-	          		<img src="<c:url value='/images/naverLogin.png'/>" id="naverLogin" alt="네이버로그인" class="snsBt" />
+	          		<img src="<c:url value='/images/naverLogin.png'/>" alt="네이버로그인" class="snsBt" />
 	     		</a>
 	     		<label>네이버로 시작하기</label>
 	      	</div>
