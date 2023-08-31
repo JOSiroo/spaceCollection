@@ -144,6 +144,9 @@
 	}
 }
 
+		.w-100{
+		height: 286px;
+	}
 	.card {
 	    position: relative;
 	    display: -webkit-box;
@@ -157,18 +160,40 @@
 	    word-wrap: break-word;
 	    background-color: #fff;
 	    background-clip: border-box;
-	    border: 1px solid rgba(0, 0, 0, 0.125);
-	    border-radius: 0.25rem;
+	    border: 1px solid rgba(25, 61, 118, 0.4);
+	    border-radius: 2.5rem;
 	    width:95% !important;
 	    margin: 0% 0% 0% 0%;
 	    margin-bottom:8%;
+	    box-shadow: 5px 5px 15px 10px rgba(0, 0, 0, 0.2);
 	}
 	.card-body{
-		padding: 6% 8% 4% 8%;
+		padding: 4% 8% 4% 8%;
 	}
 	.h5{
 	    	font-weight: bold	
     }
+    
+    .carousel-inner{
+		border-radius: 2.3rem 2.28rem 0 0;
+	}
+	.w-100{
+	  transition: all 0.3s linear;
+	}
+	.w-100:hover{
+	  transform: scale(1.2);
+	}
+	
+	.carousel-control-next:hover{
+		border-radius:0 2.2rem 0 0 !important;
+		background:linear-gradient(to left, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0));
+	}
+	.carousel-control-prev:hover{
+		border-radius: 2.2rem 0 0 0 !important;
+		background:linear-gradient(to right, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0));
+	}
+    
+    
 	
 	.dropdounUl.filter{
 		padding-top:5%;
