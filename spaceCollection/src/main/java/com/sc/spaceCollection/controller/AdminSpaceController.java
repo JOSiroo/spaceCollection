@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -227,6 +229,42 @@ public class AdminSpaceController {
 		model.addAttribute("map", map);
 		
 		return "admin/space/spaceTypeDetail";
+	}
+	
+	@GetMapping("/spaceType/spaceTypeEdit")
+	public String spaceTypeEdit_get(@RequestParam String spaceTypeName, Model model) {
+		logger.info("공간 타입 조회, 파라미터 spaceTypeName = {}", spaceTypeName);
+		
+		List<SpaceTypeCategoryVO> list = spaceTypeCategoryService.selectSpaceTypeCategoryAll();
+		
+		Map<String, Object> map = spaceTypeService.selectBySpaceTypeName(spaceTypeName);
+		logger.info("공간 타입 조회 결과, map = {}", map);
+		
+		model.addAttribute("map", map);
+		model.addAttribute("list", list);
+		
+		return "admin/space/spaceTypeWrite";
+	}
+	
+	@PostMapping("/spaceType/spaceTypeEdit")
+	public String spaceTypeEdit_post(@ModelAttribute SpaceTypeVO spaceTypeVo, Model model) throws UnsupportedEncodingException {
+		logger.info("공간 타입 수정, 파라미터 spaceTypeVo = {}", spaceTypeVo);
+		SpaceTypeVO spaceTypeVo2 = spaceTypeService.selectSpaceTypeBySpaceTypeNo(spaceTypeVo.getSpaceTypeNo());
+		int cnt = spaceTypeService.updateSpaceType(spaceTypeVo);
+		logger.info("공간 타입 수정 결과, cnt = {}", cnt);
+		
+		String msg = "공간 타입 수정 처리 중 문제가 발생했습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceType/spaceTypeEdit?spaceTypeName="+spaceTypeVo2.getSpaceTypeName();
+		if(cnt == SpaceTypeService.PASS ) {
+			String trans = URLEncoder.encode(spaceTypeVo.getSpaceTypeName(), "UTF-8");
+			return "redirect:/admin/space/spaceType/spaceTypeDetail?spaceTypeName="+trans;
+		}else if(cnt == SpaceTypeService.DUB) {
+			msg = "이미 사용중인 공간 타입명 입니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
 	}
 	
 	@RequestMapping("/spaceList")

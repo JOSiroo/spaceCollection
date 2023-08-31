@@ -52,6 +52,10 @@
 		update space_type set space_type_del_flag = 'Y' where space_type_no = #{spaceTypeNo}
 	</update>
 	
+	<select id="selectSpaceTypeBySpaceTypeNo" parameterType="int" resultType="spaceTypeVo">
+		select * from space_type where space_type_no = #{spaceTypeNo}
+	</select>
+	
 	<update id="updateSpaceType" parameterType="spaceTypeVo">
 		update space_type set SPACE_TYPE_NAME = #{spaceTypeName}, CATEGORY_NO = #{categoryNo}, EXPLANATION = #{explanation} 
 		where space_type_no = #{spaceTypeNo}

@@ -69,7 +69,15 @@
 		$('#strCount1').html('&nbsp;&nbsp('+0);
 		$('#strCount2').html('&nbsp;&nbsp('+0);
 		
+		countStr();
+		
 		$('#submit').click(function() {
+			$('form[name=spaceTypeFrm]').attr("action", "<c:url value='/admin/space/spaceType/spaceTypeWrite'/>");
+			$('form[name=spaceTypeFrm]').submit();
+		});
+		
+		$('#edit').click(function() {
+			$('form[name=spaceTypeFrm]').attr("action", "<c:url value='/admin/space/spaceType/spaceTypeEdit'/>");
 			$('form[name=spaceTypeFrm]').submit();
 		});
 		
@@ -174,8 +182,16 @@
 		$('input[type=submit]').click(function() {
 			$('#spaceTypeFrm').submit();
 		});
-		
 	});
+		    	
+	function countStr() {
+		var titleCnt = $('input[name=spaceTypeName]').val();
+		var contentCnt = $('textarea[name=explanation]').val();
+		
+		
+		$('#strCount1').html('&nbsp;&nbsp(' + titleCnt.length);
+		$('#strCount2').html('&nbsp;&nbsp(' + contentCnt.length);
+	}
 </script>
 <main id="main" class="main">
 
@@ -186,7 +202,12 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">공간 관리</li>
 				<li class="breadcrumb-item">공간 타입 관리</li>
-				<li class="breadcrumb-item active">공간 타입 등록</li>
+				<c:if test="${param.spaceName == null }">
+					<li class="breadcrumb-item active">공간 타입 등록</li>
+				</c:if>
+				<c:if test="${param.spaceName != null }">
+					<li class="breadcrumb-item active">공간 타입 수정</li>
+				</c:if>
 			</ol>
 		</nav>
 	</div>
@@ -198,15 +219,24 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;">공간 타입 등록</h5>
+						<c:if test="${param.spaceName == null }">
+	 						<h5 class="card-title" style="font-weight: bold;">공간 타입 등록</h5>
+						</c:if>
+						<c:if test="${param.spaceName != null }">
+	 						<h5 class="card-title" style="font-weight: bold;">공간 타입 수정</h5>
+						</c:if>
  						<form class="row gx-3 gy-2 align-items-center" name="spaceTypeFrm" id="spaceTypeFrm" method="post" 
- 						action="<c:url value='/admin/space/spaceType/spaceTypeWrite'/>" onkeydown="return event.key != 'Enter';">
+ 						onkeydown="return event.key != 'Enter';">
+ 							<input type="hidden" name="spaceTypeNo" value="${map.SPACE_TYPE_NO }">
 							<div id="searchDiv">
 								<div class="col-sm-3" id="select">
 									<label class="col-sm-2 col-form-label" for="categoryNo">카테고리명</label>
 									<select class="form-select labelNext " name="categoryNo" id="categoryNo">
 										<c:forEach var="spaceTypeCategoryVo" items="${list }">
-											<option value="${spaceTypeCategoryVo.categoryNo }">
+											<option value="${spaceTypeCategoryVo.categoryNo }" 
+												<c:if test="${map.CATEGORY_NAME == spaceTypeCategoryVo.categoryName }">
+													selected = 'selected'
+												</c:if> >
 												${spaceTypeCategoryVo.categoryName }
 											</option>
 										</c:forEach>
@@ -214,7 +244,7 @@
 								</div>
 								<div class="col-sm-3" id="keyword">
 									<label class="col-sm-2 col-form-label" for="spaceTypeName">공간 타입명</label>
-									<input type="text" class="form-control labelNext" id="spaceTypeName" name="spaceTypeName">
+									<input type="text" class="form-control labelNext" id="spaceTypeName" name="spaceTypeName" value="${map.SPACE_TYPE_NAME }">
 								</div>
 								<div class="col-sm-3">
 									<p>
@@ -223,7 +253,7 @@
 								</div>
 								<div class="row sm-3">
 									<label for="explanation" class="col-sm-2 col-form-label m-left">설명</label>
-									<textarea class="form-control labelNext" name="explanation" style="height: 100px" id="explanation"></textarea>
+									<textarea class="form-control labelNext" name="explanation" style="height: 100px" id="explanation">${map.EXPLANATION }</textarea>
 								</div>
 								<div class="col-sm-3">
 									<p>
@@ -234,7 +264,12 @@
 						</form>
 						
 						<div class="col-auto" id="btDiv">
-							<button type="button" class="btn btn-primary" id="submit">등록</button>
+							<c:if test="${param.spaceTypeName == null }">
+								<button type="button" class="btn btn-primary" id="submit">등록</button>
+							</c:if>
+							<c:if test="${param.spaceTypeName != null }">
+								<button type="button" class="btn btn-primary" id="edit">수정</button>
+							</c:if>
 							<button type="button" class="btn btn-secondary" id="cancel">취소</button>
 						</div>
 				 	</div>

@@ -18,5 +18,6 @@ public interface SpaceTypeService {
 	int spaceTypeActivation(SpaceTypeListVO listVo);
 	int spaceTypeDeactivation(SpaceTypeListVO listVo);
 	int updateSpaceType(SpaceTypeVO vo);
+	SpaceTypeVO selectSpaceTypeBySpaceTypeNo(int spaceTypeNo);
 	
 }
