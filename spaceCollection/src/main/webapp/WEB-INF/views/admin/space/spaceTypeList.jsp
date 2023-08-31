@@ -163,7 +163,7 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>공간 관리</a></h5>
+ 						<h5 class="card-title" style="font-weight: bold;"><a>공간 타입 관리</a></h5>
  						<form name="frmPage" method="post" action="<c:url value='/admin/space/spaceTypeList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">

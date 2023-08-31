@@ -202,10 +202,10 @@
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">공간 관리</li>
 				<li class="breadcrumb-item">공간 타입 관리</li>
-				<c:if test="${param.spaceName == null }">
+				<c:if test="${map.CATEGORY_NO == null }">
 					<li class="breadcrumb-item active">공간 타입 등록</li>
 				</c:if>
-				<c:if test="${param.spaceName != null }">
+				<c:if test="${map.CATEGORY_NO != null }">
 					<li class="breadcrumb-item active">공간 타입 수정</li>
 				</c:if>
 			</ol>
@@ -219,10 +219,10 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
-						<c:if test="${param.spaceName == null }">
+						<c:if test="${map.CATEGORY_NO == null }">
 	 						<h5 class="card-title" style="font-weight: bold;">공간 타입 등록</h5>
 						</c:if>
-						<c:if test="${param.spaceName != null }">
+						<c:if test="${map.CATEGORY_NO != null }">
 	 						<h5 class="card-title" style="font-weight: bold;">공간 타입 수정</h5>
 						</c:if>
  						<form class="row gx-3 gy-2 align-items-center" name="spaceTypeFrm" id="spaceTypeFrm" method="post" 
