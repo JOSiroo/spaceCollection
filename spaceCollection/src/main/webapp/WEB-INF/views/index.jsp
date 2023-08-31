@@ -171,11 +171,11 @@ a.btn.btn-primary.py-2.px-3 {
 			                <%-- ${map.IMG_ORIGINAL_NAME} --%>
 			            </a>
 			            <div class="rate">
-			                 <c:forEach begin="1" end="${map.REVIEW_RATE}">
+			                 <c:forEach begin="1" end="${map.REVIEW_RATE/2 - 1}">
 			                    <span class="icon-star text-warning"></span>
 			                </c:forEach>
 			                <c:choose>
-			                    <c:when test="${map.REVIEW_RATE < 1}">
+			                    <c:when test="${map.REVIEW_RATE%1 < 1}">
 			                        <span class="icon-star-half icon-star-half-reverse text-warning"></span>
 			                    </c:when>
 			                    <c:otherwise>
