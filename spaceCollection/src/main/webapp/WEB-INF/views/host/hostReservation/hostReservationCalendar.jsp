@@ -542,7 +542,7 @@
 	.fc-highlight{
 		background: rgba(25, 61, 118, 0.8) !important;
 	} 
-	.fc-day:hover{
+	.fc-daygrid-day:hover{
 		background:rgba(20, 173, 255, 0.2);
 	}
 	.colorBtn{
