@@ -162,4 +162,25 @@
 		update space set space_reg_date = sysdate, space_request_status = #{spaceRequestStatus} 
 		where space_num = #{spaceNum}
 	</update>
+	
+	<select id="selectSpaceConfirmList" parameterType="searchVo" resultType="map">
+		select * from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from ADMIN_SPACECONFIRM_LIST_VIEW where SPACE_REQUEST_STATUS = 'R'
+				<include refid="searchWhere"/>
+				order by space_request_date
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecordSpaceConfrimList" parameterType="searchVo" resultType="int">
+		select count(*) from ADMIN_SPACECONFIRM_LIST_VIEW where SPACE_REQUEST_STATUS = 'R'
+		<include refid="searchWhere"/>
+	</select>
+	
 </mapper>

@@ -588,10 +588,13 @@
 		<div class="row">
 			<div class="col-xl-4">
 				<div class="card">
-					<div
-						class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-						<img src="<c:url value='/user_images/test1.jpg'/>" alt="Profile"
-							class="rounded-circle">
+					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+						<c:if test="${memberMap.USER_SNS_CODE != null }">
+							<img src="${memberMap.USER_PROFILE_IMAGE }" alt="Profile" class="rounded-circle">
+						</c:if>
+						<c:if test="${memberMap.USER_SNS_CODE == null }">
+							<img src="<c:url value='/user_images/test1.jpg'/>" alt="Profile" class="rounded-circle">	
+						</c:if>
 						<h2>${memberMap.USER_NAME }</h2>
 						<h3>${memberMap.USER_ID }</h3>
 					</div>

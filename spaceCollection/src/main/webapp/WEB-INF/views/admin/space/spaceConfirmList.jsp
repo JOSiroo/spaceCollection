@@ -3,12 +3,12 @@
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
 	
-	#memberWithdrawalBt{
+	#spaceConfirmBt, #spaceDenineBt{
 		float: right;
 		margin-top: 16px;
 		margin-right: 5px;
 		margin-bottom: 20px;
-	}	
+	}
 
 	h5{
 		float: left;
@@ -27,7 +27,7 @@
 	}
 	
 	div#select {
-    	width: 114px;
+    	width: 144px;
 	}
 	
 	#searchDiv>div{
@@ -72,6 +72,10 @@
 		margin-top: -15px;
 	}
 	
+	.request{
+		color: #34bb38;;
+	}
+	
 	
 </style>
 <script type="text/javascript">
@@ -83,14 +87,6 @@
 		});
 		
 		$('#warning').hide();
-		
-		$('#searchBt').click(function() {
-			if($('#searchKeyword').val().length<1){
-				event.preventDefault();
-				$('#confirm1 .modal-body').html("검색어를 입력해주세요.");
-				$('#confirm1').modal("show");
-			}
-		});
 		
 		$('input[name=chkAll]').click(function() {
 			var checkState = $(this).is(':checked')
@@ -155,7 +151,7 @@
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">홈</li>
 				<li class="breadcrumb-item">공간 관리</li>
-				<li class="breadcrumb-item active">공간 관리</li>
+				<li class="breadcrumb-item active">공간 승인 관리</li>
 			</ol>
 		</nav>
 	</div>
@@ -167,20 +163,20 @@
 
 				<div class="card" id="pageDiv" >
 					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>공간 관리</a></h5>
- 						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
+ 						<h5 class="card-title" style="font-weight: bold;"><a>공간 승인 관리</a></h5>
+ 						<form name="frmPage" method="post" action="<c:url value='/admin/space/spaceConfirmList'/>">
  							<input type="hidden" name="currentPage">
 							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
  						</form>
-                		<button type="button" class="btn btn-outline-danger" id="memberWithdrawalBt">회원 탈퇴</button>
 						<table class="table">
 							<colgroup>
-								<col style="width: 5%";  />
-								<col style="width:12%";  />
+								<col style="width:5%;"  />
+								<col style="width:7%;"  />
 								<col style="width:12%;" />
-								<col style="width:40%;" />
+								<col style="width:33%;" />
 								<col style="width:15%;" />		
+								<col style="width:13%;" />		
 								<col style="width:15%;" />		
 							</colgroup>
 							<thead>
@@ -188,40 +184,45 @@
 									<th scope="col"><input type="checkbox" name="chkAll"></th>
 									<th scope="col">번호</th>
 									<th scope="col">공간 타입</th>
-									<th scope="col">장소명</th>
+									<th scope="col">공간명</th>
 									<th scope="col">신청인</th>
-									<th scope="col"></th>
-									<th scope="col">가입일</th>
+									<th scope="col">상태</th>
+									<th scope="col">신청일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:if test="${empty list }">
 									<tr>
-										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
+										<td colspan="7" style="text-align: center;">승인 요청중인 공간이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
+									<form name="trFrm" method="post">
+										<button type="button" class="btn btn-outline-primary" id="spaceConfirmBt">승인</button>
+										<button type="button" class="btn btn-outline-danger" id="spaceDenineBt">거절</button>
 										<c:set var="i" value="0"/>
-										<c:forEach var="userInfoVo" items="${list }">
+										<c:forEach var="map" items="${list }">
 											<tr>
 												<td>
-													<input type="checkbox" name="userInfoItemList[${i }].userId" value="${userInfoVo.userId }">
+													<input type="checkbox" name="spaceItemList[${i }].spaceNum" value="${map.SPACE_NUM }">
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userNum }
+												<td onclick="location.href='<c:url value='/admin/space/spaceDetail?spaceNum=${map.SPACE_NUM }'/>';" style="cursor:pointer;">
+													${map.SPACE_NUM }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userName }
+												<td onclick="location.href='<c:url value='/admin/space/spaceDetail?spaceNum=${map.SPACE_NUM }'/>';" style="cursor:pointer;">
+													${map.SPACE_TYPE_NAME }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userId }
+												<td onclick="location.href='<c:url value='/admin/space/spaceDetail?spaceNum=${map.SPACE_NUM }'/>';" style="cursor:pointer;">
+													${map.SPACE_NAME }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userEmail }
+												<td onclick="location.href='<c:url value='/admin/space/spaceDetail?spaceNum=${map.SPACE_NUM }'/>';" style="cursor:pointer;">
+													${map.USER_ID }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
+												<td onclick="location.href='<c:url value='/admin/space/spaceDetail?spaceNum=${map.SPACE_NUM }'/>';" style="cursor:pointer;">
+													<span class="request">승인 요청</span>
+												</td>
+												<td onclick="location.href='<c:url value='/admin/space/spaceDetail?spaceNum=${map.SPACE_NUM }'/>';" style="cursor:pointer;">
+													${map.SPACE_REQUEST_DATE }
 												</td>
 											</tr>
 											<c:set var="i" value="${i+1 }"/>
@@ -230,39 +231,38 @@
 								</c:if>
 							</tbody>
 						</table>
-						
 						<div class="divPage">
-							<c:if test="${!empty list }">
-								<nav aria-label="...">
-									<ul class="pagination justify-content-center">
-										<c:if test="${pagingInfo.firstPage>1 }">
-											<li class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
-												<a class="page-link" href="#" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
-								    		</li>
-										</c:if>	
-								    	<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">		
-											<c:if test="${i == pagingInfo.currentPage }">
-												<li class="page-item active" aria-current="page">
-										      		<a class="page-link" href="#">${i}</a>
-										    	</li>		
-									        </c:if>
-											<c:if test="${i != pagingInfo.currentPage }">		
-										         <li class="page-item">
-										         	<a class="page-link" aria-label="Previous" href="#" onclick="pageFunc(${i})">${i }</a>
-										         </li>
-										    </c:if>   		
-										</c:forEach>
-								      	<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
-								      		<li class="page-item <c:if test='${pagingInfo.lastPage >= pagingInfo.totalPage }'>disabled</c:if>">
-									      		<a class="page-link" href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
-									    	</li>
-										</c:if>
-								  	</ul>
-								</nav>
-							</c:if>
+						
+							<nav aria-label="...">
+								<ul class="pagination justify-content-center">
+									<c:if test="${pagingInfo.firstPage>1 }">
+										<li class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
+											<a class="page-link" href="#" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
+							    		</li>
+									</c:if>	
+							    	<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">		
+										<c:if test="${i == pagingInfo.currentPage }">
+											<li class="page-item active" aria-current="page">
+									      		<a class="page-link" href="#">${i}</a>
+									    	</li>		
+								        </c:if>
+										<c:if test="${i != pagingInfo.currentPage }">		
+									         <li class="page-item">
+									         	<a class="page-link" aria-label="Previous" href="#" onclick="pageFunc(${i})">${i }</a>
+									         </li>
+									    </c:if>   		
+									</c:forEach>
+							      	<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
+							      		<li class="page-item <c:if test='${pagingInfo.lastPage >= pagingInfo.totalPage }'>disabled</c:if>">
+								      		<a class="page-link" href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
+								    	</li>
+									</c:if>
+							  	</ul>
+							</nav>
+						
 						</div>
 						
-						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
+						<form class="row gx-3 gy-2 align-items-center" id="spaceFrm" method="post" action="<c:url value='/admin/space/spaceConfirmList'/>">
 							<div id="searchDiv">
 							<div style="float: left;">
 								<button class="btn btn-light" type="button" id="excelDownloadBt">
@@ -278,12 +278,18 @@
 								</div>
 								<div class="col-sm-3" id="select">
 									<select class="form-select" name="searchCondition" id="searchCondition">
+										<option value="space_num" <c:if test="${param.searchCondition=='space_num'}">
+						            		selected="selected"
+						            	</c:if> >공간 번호</option>
+										<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
+						            		selected="selected"
+						            	</c:if> >공간 타입명</option>
+										<option value="space_name" <c:if test="${param.searchCondition=='space_name'}">
+						            		selected="selected"
+						            	</c:if> >공간명</option>
 										<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
 						            		selected="selected"
-						            	</c:if> >아이디</option>
-										<option value="user_name" <c:if test="${param.searchCondition=='user_name'}">
-						            		selected="selected"
-						            	</c:if> >이름</option>
+						            	</c:if> >신청인</option>
 									</select>
 								</div>
 							</div>
