@@ -92,7 +92,7 @@
 	<select id="selectBySpaceNum"  resultType="spaceVo">
 		select * from space
 		where SPACE_REQUEST_STATUS = 'Y'
-		order by SPACE_REQUEST_DATE desc 
+		order by SPACE_REG_DATE desc 
 		FETCH FIRST 9 row only
 	</select>
 	
