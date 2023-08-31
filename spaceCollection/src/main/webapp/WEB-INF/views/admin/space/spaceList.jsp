@@ -2,47 +2,64 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
-	
-	#memberWithdrawalBt{
-		float: right;
-		margin-top: 16px;
-		margin-right: 5px;
-		margin-bottom: 20px;
-	}	
-
-	h5{
+	main>div>nav {
 		float: left;
 	}
 	
-	th{
-		text-align: center;
+	#spaceConfirmBt, #spaceDenineBt{
+		float: right;
+		margin-top: 16px;
+		margin-right: 5px;
+		width: 89px;
 	}
 	
-	td{
+	section {
+		clear: both;
+	}
+	
+	div.row {
+		margin-top: 10px;
+	}
+	
+	div.label {
+		color: #677fa9;
+		font-weight: bold;
+	}
+	
+	#card {
+		min-height: 420px;
+	}
+	
+	th, td {
 		text-align: center;
 	}
 	
 	#searchDiv>div {
-    	float: right;
+		float: right;
 	}
 	
 	div#select {
-    	width: 114px;
+		width: 150px;
 	}
 	
-	#searchDiv>div{
+	#searchDiv>div {
 		margin-left: 5px;
 	}
 	
+	
 	i.bi.bi-exclamation-circle {
- 		color: #ffd600;
-   		font-size: 40px;
-   		display: block;
-   		margin-block: -13px;
+		color: #ffd600;
+		font-size: 40px;
+		display: block;
+		margin-block: -13px;
 	}
 	
 	td>span {
 		color: red;
+	}
+	
+	#confirm, #denine {
+		margin-top: 50px;
 	}
 	
 	#MChkDiv{
@@ -72,43 +89,102 @@
 		margin-top: -15px;
 	}
 	
+	.request{
+		color: #34bb38;
+	}
 	
+	.denine{
+		color: red;
+	}
+	
+	.confirm{
+		color: #0d6efd;
+	}
+
 </style>
 <script type="text/javascript">
 	$(function() {
-		$('tbody tr').hover(function() {
-			$(this).find('td').css("background-color", "#d1cece");
-		}, function() {
-			$(this).find('td').css("background-color", "white");
+		$('#okBt').hide();
+		
+		//페이지 출력 관련 시작
+		$('li button').click(function() {
+			$('input[name=searchKeyword]').val('');
+		});
+
+		$('#spaceConfirmListSearchBt').click(function() {
+			$.spaceConfirmListSend(1);
 		});
 		
-		$('#warning').hide();
-		
-		$('#searchBt').click(function() {
-			if($('#searchKeyword').val().length<1){
-				event.preventDefault();
-				$('#confirm1 .modal-body').html("검색어를 입력해주세요.");
-				$('#confirm1').modal("show");
-			}
+		$('button[name=spaceConfirmTab]').click(function() {
+			$.spaceConfirmListSearch();
+			$.spaceConfirmListSend(1);
+		});
+
+		$('#spaceConfirmHistoryListSearchBt').click(function() {
+			$.spaceConfirmHistoryListSend(1);
 		});
 		
+		$('button[name=spaceConfirmHistoryListTab]').click(function() {
+			$.spaceConfirmHistoryListSend(1);
+			$.spaceConfirmHistoryListSearch();
+		});
+		//페이지 출력 관련 끝
+		
+		//체크박스 전체 체크 관련 시작
 		$('input[name=chkAll]').click(function() {
 			var checkState = $(this).is(':checked')
 			$('td>input[type=checkbox]').prop('checked', checkState);
 		});
 		
-		$('#memberWithdrawalBt').click(function() {
+		$('li.nav-item>button').click(function() {
+			$('input[name=chkAll]').prop('checked', false);
+		});
+		//체크박스 전체 체크 관련 시작
+		
+		//승인 또는 거절할 체크박스 유효성 검사 시작
+		$('#spaceConfirmBt').click(function() {
 			if($('td>input[type=checkbox]:checked').length<1){
-				$('#confirm1 .modal-body').html("탈퇴시킬 회원을 선택해주세요.");
+				$('#confirm1 .modal-body').html("최소 하나 이상의 요청을 선택하세요.");
+				$('#cancelBt').html("확인");
 				$('#confirm1').modal("show");
 			}else{
-				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.");
-				$('#confirm2').modal("show");
+				$('#confirm1 .modal-body').html("선택된 요청을 승인 처리하시겠습니까?");
+				$('#okBt').show();
+				$('#okBt').addClass("btn-primary");
+				$('#cancelBt').html("취소");
+				$('#okBt').html("승인");
+				$('#confirm1').modal("show");
 				$('#okBt').click(function() {
+					$(this).removeClass("btn-primary");
+					$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/confirm");
 					$('form[name=trFrm]').submit();
 				});
 			}
 		});
+		
+		$('#spaceDenineBt').click(function() {
+			if($('td>input[type=checkbox]:checked').length<1){
+				$('#confirm1 .modal-body').html("최소 하나 이상의 요청을 선택하세요.");
+				$('#cancelBt').html("확인");
+				$('#confirm1').modal("show");
+			}else{
+				$('#confirm1 .modal-body').html("선택된 요청을 거절 처리하시겠습니까?");
+				$('#okBt').show();
+				$('#okBt').addClass("btn-danger");
+				$('#cancelBt').html("취소");
+				$('#okBt').html("비활성화");
+				$('#confirm1').modal("show");
+				$('#okBt').click(function() {
+					$(this).removeClass("btn-danger");
+					$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/denine");
+					$('form[name=trFrm]').submit();
+				});
+			}	
+		});
+		//승인 또는 거절할 체크박스 유효성 검사 끝
+		
+		//엑셀 다운 관련 시작
+		$('#warning').hide();
 		
 		$('#excelDownloadBt').click(function() {
 			$('#excelModal').modal('show');
@@ -139,198 +215,421 @@
 		$('#excelModal button[name=cancelBt]').click(function() {
 			$('#warning').hide();
 		});
-			
+		//엑셀 다운 관련 끝
 	});
 	
-	function pageFunc(curPage){
-		$('input[name="currentPage"]').val(curPage);
-		$('form[name="frmPage"]').submit();
+	function mouseIn(evt) {
+		$(evt).find('td').css("background-color", "#d1cece");
 	}
+	function mouseOut(evt) {
+		$(evt).find('td').css("background-color", "white");
+	}
+	
+	$.spaceConfirmListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/space/spaceConfirmList/ajax_spaceConfirmList'/>",
+			type: 'post',
+			data: $('form[name=spaceConfirmListSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.ajaxList!=null && res.ajaxList.length>0){
+					
+					$('#spaceConfirmListTbody').html("");
+					
+					str = "<form name='trFrm' method='post' action=''>";
+						$.each(res.ajaxList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
+								str += "<td>"
+								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
+								str += "</td>";
+								str += "<td class='request' onclick='location.href=';' style='cursor: pointer;'>승인 요청";
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+								str += "</td>";
+						});
+						str += "</form>";
+						i++;
+						$('#spaceConfirmListTbody').html(str);
+						pageMake(res.pagingInfo);
+				}else{
+					str = "<tr>"
+						+ "<td colspan='7' style='text-align: center;''>승인 요청이 없습니다.</td>"
+						+ "</tr>"
+					$('#spaceConfirmListTbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
+	$.spaceConfirmHistoryListSearch = function() {
+		$.ajax({
+			url : "<c:url value='/admin/space/spaceConfirmList/ajax_spaceConfirmHistoryList'/>",
+			type: 'post',
+			data: $('form[name=spaceConfirmHistoryListSearchFrm]').serializeArray(),
+			dataType: 'json',
+			success:function(res){
+				$('#blockSize').val(res.pagingInfo.blockSize);
+				$('input[name=currentPage]').val(res.searchVo.currentPage);
+				$('input[name=userId]').val(res.searchVo.userId);
+				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
+				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
+				var i = 0;
+				var str = "";
+				if(res.ajaxList!=null && res.ajaxList.length>0){
+					
+					$('#spaceConfirmHistoryListTbody').html("");
+					
+						$.each(res.ajaxList, function() {
+							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+							str += "</td>";
+							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+							str += "</td>";
+							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
+							str += "</td>";
+							if(this.SPACE_REQUEST=="Y"){
+								str += "<td class='active' onclick='location.href=';' style='cursor: pointer;'>승인";
+							}else if(this.SPACE_REQUEST=="R"){
+								str += "<td class='request' onclick='location.href=';' style='cursor: pointer;'>승인 요청";
+							}else if(this.SPACE_REQUEST=="N"){
+								str += "<td class='deActive' onclick='location.href=';' style='cursor: pointer;'>거절";
+							}
+							str += "</td>";
+							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+							str += "</td>";
+							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
+							str += "</td>";
+						});
+						$('#spaceConfirmHistoryListTbody').html(str);
+						pageMake(res.pagingInfo);
+				}else{
+					str = "<tr>"
+						+ "<td colspan='6' style='text-align: center;''>승인 내역이 없습니다.</td>"
+						+ "</tr>"
+					$('#spaceConfirmHistoryListTbody').html(str);
+				}
+				
+			},
+			
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
+	
+	function pageMake(pagingInfo) {
+		//페이징 처리
+		var blockSize = pagingInfo.blockSize;
+		var countPerPage = pagingInfo.countPerPage;
+		//게시물 구분
+		var kindFlag = pagingInfo.kindFlag;
+		
+		
+		var str = "";
+		str += "<nav aria-label='...'>";
+		str	+= "<ul class='pagination justify-content-center'>";
+		
+		//이전 블럭으로	
+		if(pagingInfo.firstPage>1){
+			str += "<li class='page-item"
+			if(pagingInfo.firstPage <= 1){
+				str += " disabled";
+			}
+			str += ">";
+			str += "<a class='page-link' href='#' aria-label='Previous' onclick='pageFunc("+pagingInfo.firstPage-1+")'>이전</a>";
+			str += "</li>";
+		}
+		//페이지 번호 출력
+		for(var i=pagingInfo.firstPage; i<=pagingInfo.lastPage; i++){
+			if(i==pagingInfo.currentPage){
+				str += "<li class='page-item active' aria-current='page'>";
+				str += "<a class='page-link' href='#'>" + i + "</a></li>";
+			}else{
+				if(kindFlag =='spaceConfirmList'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.spaceConfirmListSend("+ i +")'>"+i+"</a>";
+				}else if(kindFlag == 'spaceConfirmHistoryList'){
+					str += "<li class='page-item'><a class='page-link' aria-label='Previous' href='#' onclick='$.spaceConfirmHistoryListSend("+ i +")'>"+i+"</a>";
+				}
+				
+				str += "</li>";
+			}
+		}
+		//다음 블럭으로
+		if(pagingInfo.lastPage < pagingInfo.totalPage){
+			str += "<li class='page-item";
+			if(pagingInfo.lastPage >= pagingInfo.totalPage){
+				str += " disabled";
+			}
+			str += ">";
+			str += "<a class='page-link' href='#' onclick='pageFunc("+pagingInfo.lastPage+1 + ">다음</a>";
+			str += "</li>";
+			str += "</ul>";
+			str += "</nav>";
+		}
+		if(kindFlag == 'spaceConfirmList'){
+			$('.spaceConfirmListDivPage').html(str);	
+		}else if(kindFlag == 'spaceConfirmHistoryList'){
+			$('.spaceConfirmHistoryListdivPage').html(str);
+		}
+	}
+	
+	$.spaceConfirmListSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+		
+		$.ajax({
+			url:"<c:url value='/admin/space/spaceConfirmList/ajax_spaceConfirmList'/>",
+			type:"post",
+			data:$('form[name=spaceConfirmHistoryListSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.spaceConfirmHistoryListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
+		
+	$.spaceConfirmHistoryListSend = function(curPage) {
+		$('input[name=currentPage]').val(curPage);
+		
+		$.ajax({
+			url:"<c:url value='/admin/space/spaceConfirmHistoryList/ajax_spaceConfirmHistoryList'/>",
+			type:"post",
+			data:$('form[name=spaceConfirmHistoryListSearchFrm]').serializeArray(),
+			dataType:"json",
+			success:function(res){
+				totalCount = res.pagingInfo.totalRecord;
+				
+				if(res!=null){
+					$.spaceConfirmHistoryListSearch(res);
+					pageMake();
+				}
+				
+			},
+			error:function(xhr, status, error){
+				alert("에러 발생: " + error);
+			}
+		});
+	}
+		
 </script>
 <main id="main" class="main">
-
-	<div class="pagetitle">
-		<h1>공간 관리</h1>
-		<nav>
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item">홈</li>
-				<li class="breadcrumb-item">공간 관리</li>
-				<li class="breadcrumb-item active">공간 관리</li>
-			</ol>
-		</nav>
-	</div>
-	<!-- End Page Title -->
-
-	<section class="section">
+	<section class="section profile">
 		<div class="row">
-			<div class="col-lg-6" style="width: 100%">
-
-				<div class="card" id="pageDiv" >
-					<div class="card-body">
- 						<h5 class="card-title" style="font-weight: bold;"><a>공간 관리</a></h5>
- 						<form name="frmPage" method="post" action="<c:url value='/admin/member/memberList'/>">
- 							<input type="hidden" name="currentPage">
-							<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
-							<input type="hidden" name="searchCondition" value="${param.searchCondition}">
- 						</form>
-                		<button type="button" class="btn btn-outline-danger" id="memberWithdrawalBt">회원 탈퇴</button>
-						<table class="table">
-							<colgroup>
-								<col style="width: 5%";  />
-								<col style="width:12%";  />
-								<col style="width:12%;" />
-								<col style="width:40%;" />
-								<col style="width:15%;" />		
-								<col style="width:15%;" />		
-							</colgroup>
-							<thead>
-								<tr>
-									<th scope="col"><input type="checkbox" name="chkAll"></th>
-									<th scope="col">번호</th>
-									<th scope="col">공간 타입</th>
-									<th scope="col">장소명</th>
-									<th scope="col">신청인</th>
-									<th scope="col"></th>
-									<th scope="col">가입일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:if test="${empty list }">
-									<tr>
-										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
-									</tr>
-								</c:if>
-								<c:if test="${!empty list }">
-									<form name="trFrm" method="post" action="<c:url value='/admin/member/memberWithdrawal'/>">
-										<c:set var="i" value="0"/>
-										<c:forEach var="userInfoVo" items="${list }">
+			<div class="col-xl-8">
+				<div class="card" id="card">
+					<div class="card-body pt-3">
+						<ul class="nav nav-tabs nav-tabs-bordered">
+							<li class="nav-item">
+								<button class="nav-link active" data-bs-toggle="tab"
+									data-bs-target="#spaceConfrimList" name="spaceConfirmListTab">
+									승인 요청</button>
+							</li>
+							<li class="nav-item">
+								<button class="nav-link" data-bs-toggle="tab"
+									data-bs-target="#spaceConfirmHistoryList"
+									name="spaceConfirmHistoryListTab">승인 내역</button>
+							</li>
+						</ul>
+						
+						<!-- 장소 승인 요청 내역 시작 -->
+						<div class="tab-pane fade show active" id="spaceConfrimList">
+							<form class="row gx-3 gy-2 align-items-center" name="spaceConfirmListSearchFrm" onsubmit="return false">
+								<div>
+									<button type="button" class="btn btn-outline-primary" id="spaceConfirmBt">승인</button>
+									<button type="button" class="btn btn-outline-danger" id="spaceDenineBt">거절</button>
+								</div>
+								<input type="hidden" name="currentPage" value="1">
+								<div class="row mb-3">
+									<table class="table">
+										<colgroup>
+											<col style="width:5%;"  />
+											<col style="width:7%;"  />
+											<col style="width:12%;" />
+											<col style="width:33%;" />
+											<col style="width:15%;" />		
+											<col style="width:13%;" />		
+											<col style="width:15%;" />		
+										</colgroup>
+										<thead>
 											<tr>
-												<td>
-													<input type="checkbox" name="userInfoItemList[${i }].userId" value="${userInfoVo.userId }">
-												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userNum }
-												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userName }
-												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userId }
-												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													${userInfoVo.userEmail }
-												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
-													<fmt:formatDate value="${userInfoVo.userRegDate }" pattern="yyyy-MM-dd"/>
-												</td>
+												<th scope="col"><input type="checkbox" name="chkAll"></th>
+												<th scope="col">번호</th>
+												<th scope="col">공간 타입</th>
+												<th scope="col">공간명</th>
+												<th scope="col">신청인</th>
+												<th scope="col">상태</th>
+												<th scope="col">신청일</th>
 											</tr>
-											<c:set var="i" value="${i+1 }"/>
-										</c:forEach>
-									</form>
-								</c:if>
-							</tbody>
-						</table>
-						
-						<div class="divPage">
-							<c:if test="${!empty list }">
-								<nav aria-label="...">
-									<ul class="pagination justify-content-center">
-										<c:if test="${pagingInfo.firstPage>1 }">
-											<li class="page-item <c:if test='${pagingInfo.firstPage <=1 }'>disabled</c:if>">
-												<a class="page-link" href="#" aria-label="Previous" onclick="pageFunc(${pagingInfo.firstPage-1})">이전</a>
-								    		</li>
-										</c:if>	
-								    	<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">		
-											<c:if test="${i == pagingInfo.currentPage }">
-												<li class="page-item active" aria-current="page">
-										      		<a class="page-link" href="#">${i}</a>
-										    	</li>		
-									        </c:if>
-											<c:if test="${i != pagingInfo.currentPage }">		
-										         <li class="page-item">
-										         	<a class="page-link" aria-label="Previous" href="#" onclick="pageFunc(${i})">${i }</a>
-										         </li>
-										    </c:if>   		
-										</c:forEach>
-								      	<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
-								      		<li class="page-item <c:if test='${pagingInfo.lastPage >= pagingInfo.totalPage }'>disabled</c:if>">
-									      		<a class="page-link" href="#" onclick="pageFunc(${pagingInfo.lastPage+1})">다음</a>
-									    	</li>
-										</c:if>
-								  	</ul>
-								</nav>
-							</c:if>
+										</thead>
+										<tbody id="spaceConfirmListTbody">
+											<!-- ajax로 승인 요청 내역 출력 -->
+										</tbody>
+									</table>
+									<div class="spaceConfirmListDivPage">
+										<!-- ajax로 페이징 -->
+									</div>
+									<div id="searchDiv">
+									<div style="float: left;">
+										<button class="btn btn-light" type="button" id="excelDownloadBt">
+											<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
+										</button>
+									</div>
+										<div class="col-auto">
+											<button type="button" id="spaceConfirmListSearchBt"
+												class="btn btn-primary">검색</button>
+										</div>
+										<div class="col-sm-3" id="keyword">
+											<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+											<input type="text" class="form-control" id="searchKeyword"
+												name="searchKeyword" value="${searchVo.searchKeyword }">
+										</div>
+										<div class="col-sm-3" id="select">
+											<select class="form-select" name="searchCondition"
+												id="searchCondition">
+												<option value="space_num" <c:if test="${param.searchCondition=='space_num'}">
+								            		selected="selected"
+								            	</c:if> >공간 번호</option>
+												<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
+								            		selected="selected"
+								            	</c:if> >공간 타입명</option>
+												<option value="space_name" <c:if test="${param.searchCondition=='space_name'}">
+								            		selected="selected"
+								            	</c:if> >공간명</option>
+												<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
+								            		selected="selected"
+								            	</c:if> >신청인</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+							</form>
 						</div>
+						<!-- 장소 승인 요청 내역 끝 -->
 						
-						<form class="row gx-3 gy-2 align-items-center" id="memberFrm" method="post" action="<c:url value='/admin/member/memberList'/>">
-							<div id="searchDiv">
-							<div style="float: left;">
-								<button class="btn btn-light" type="button" id="excelDownloadBt">
-									<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
-								</button>
-							</div>
-								<div class="col-auto">
-									<button type="submit" id="searchBt" class="btn btn-primary">검색</button>
+						
+						<!-- 장소 승인 내역 시작 -->
+						<div class="tab-pane fade pt-3" id="spaceConfirmHistoryList">
+							<form class="row gx-3 gy-2 align-items-center"
+								name="spaceConfirmHistoryListSearchFrm" onsubmit="return false">
+								<input type="hidden" name="currentPage" value="1">
+								<div class="row mb-3">
+									<table class="table">
+										<colgroup>
+											<col style="width: 13%;" />
+											<col style="width: 13%;" />
+											<col style="width: 42%;" />
+											<col style="width: 16%;" />
+											<col style="width: 16%;" />
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col">예약 번호</th>
+												<th scope="col">장소 구분</th>
+												<th scope="col">예약 장소</th>
+												<th scope="col">예약 인원</th>
+												<th scope="col">예약일</th>
+											</tr>
+										</thead>
+										<tbody id="spaceConfirmHistoryListTbody">
+											<!-- ajax로 승인 내역 출력 -->
+										</tbody>
+									</table>
+									<div class="spaceConfirmHistoryListDivPage">
+										<!-- ajax로 페이징 -->
+									</div>
+									<div id="searchDiv">
+										<div style="float: left;">
+											<button class="btn btn-light" type="button" id="excelDownloadBt">
+												<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
+											</button>
+										</div>
+										<div class="col-auto">
+											<button type="button" id="spaceConfirmHistoryListSearchBt"
+												class="btn btn-primary">검색</button>
+										</div>
+										<div class="col-sm-3" id="keyword">
+											<label class="visually-hidden" for="searchKeyword">searchCondition</label>
+											<input type="text" class="form-control" id="searchKeyword"
+												name="searchKeyword" value="${searchVo.searchKeyword }">
+										</div>
+										<div class="col-sm-3" id="select">
+											<select class="form-select" name="searchCondition"
+												id="searchCondition">
+												<option value="space_num" <c:if test="${param.searchCondition=='space_num'}">
+								            		selected="selected"
+								            	</c:if> >공간 번호</option>
+												<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
+								            		selected="selected"
+								            	</c:if> >공간 타입명</option>
+												<option value="space_name" <c:if test="${param.searchCondition=='space_name'}">
+								            		selected="selected"
+								            	</c:if> >공간명</option>
+												<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
+								            		selected="selected"
+								            	</c:if> >신청인</option>
+											</select>
+										</div>
+									</div>
 								</div>
-								<div class="col-sm-3" id="keyword">
-									<label class="visually-hidden" for="searchKeyword">searchCondition</label>
-									<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="${searchVo.searchKeyword }">
-								</div>
-								<div class="col-sm-3" id="select">
-									<select class="form-select" name="searchCondition" id="searchCondition">
-										<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
-						            		selected="selected"
-						            	</c:if> >아이디</option>
-										<option value="user_name" <c:if test="${param.searchCondition=='user_name'}">
-						            		selected="selected"
-						            	</c:if> >이름</option>
-									</select>
-								</div>
-							</div>
-						</form>				
+
+							</form>
+						</div>
+						<!-- 승인 내역 끝 -->
 					</div>
 				</div>
-			</div> 
+			</div>
 		</div>
-		
 	</section>
-	<!-- Modal1 -->
+	
+	
+	<!-- Modal -->
 	<div class="modal fade" id="confirm1" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						data-bs-dismiss="modal" id="confirm">확인</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal1 -->
-	<!-- Moda2 -->
-	<div class="modal fade" id="confirm2" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title"><i class="bi bi-exclamation-circle" style="color: red;"></i></h5>
+					<h5 class="modal-title">
+						<i class="bi bi-exclamation-circle"></i>
+					</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-danger" id="okBt">삭제</button>
+						data-bs-dismiss="modal" id="cancelBt"></button>
+					<button type="button" class="btn" id="okBt"></button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- EndModal2 -->
+	<!-- EndModal -->
 	<!-- Moda3 -->
 	<div class="modal fade" id="excelModal" tabindex="-1">
 		<div class="modal-dialog">
@@ -386,7 +685,6 @@
 		</div>
 	</div>
 	<!-- EndModal3 -->
-	
 </main>
-<!-- End #main -->
+
 <%@ include file="../../form/adminBottom.jsp"%>
