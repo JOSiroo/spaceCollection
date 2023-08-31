@@ -29,6 +29,9 @@ public interface SpaceDAO {
 												@Param("maxPrice") int maxPrice,
 												@Param("filterList") List<String> filterList,
 												@Param("order") String order);
+	List<Map<String, Object>> selectAll(@Param("startRow")int startRow,
+										@Param("endRow") int endRow);
+	
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
