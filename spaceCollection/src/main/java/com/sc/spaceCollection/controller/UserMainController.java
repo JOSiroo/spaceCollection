@@ -120,7 +120,11 @@ public class UserMainController {
 	  
 	  logger.info("변환 전 oredr = {}", order);
 	  if(order != null && !order.isEmpty()) {
-		  order = order.replace("_", " ");
+		  if(order.equals("spaceRegDate_desc")) {
+			  order = "space_reg_date desc";
+		  }else{
+			  order = order.replace("_", " ");
+		  }
 	  }
 	  logger.info("변환 후 oredr = {}", order);
 	   
@@ -132,7 +136,7 @@ public class UserMainController {
 	  
 	  
 	  if((spaceName == null || spaceName.isEmpty()) && spaceTypeNo == 0) {
-		  list = spaceService.selectAll(page, size);
+		  list = spaceService.selectAll(page, size,region,maxPeople,minPrice,maxPrice,filterItem,order);
 	            
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
 	         

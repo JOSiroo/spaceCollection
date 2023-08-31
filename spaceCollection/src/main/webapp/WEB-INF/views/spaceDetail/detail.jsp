@@ -52,6 +52,19 @@ pageEncoding="UTF-8"%>
 		padding:0% 0% 4% 0%;
 		margin:0% -5% 0% 0%;
 	}
+	
+	
+  .date-deleteCol{
+  	padding-right:18%;
+  }
+  .date-deleteCol.qna{
+  	padding-right:30% !important;
+  }
+  
+  .delete-dateCol{
+  	padding-left:40% !important;
+  }
+  
   
 @keyframes shake {
   0%, 100% {
@@ -63,7 +76,7 @@ pageEncoding="UTF-8"%>
   20%, 40%, 60%, 80% {
     transform: translateX(5px);
   }
-  
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -275,13 +288,19 @@ pageEncoding="UTF-8"%>
 						<c:if test="${!empty qnaList }">
 							<c:forEach var="qna" items="${qnaList }">
 								<div>
-									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
+									<div class="qnaHead" style="color:black; font-weight: bold"><span>${qna.USER_ID}</span></div>
 									<div class="qnaBody">${qna.QNA_CONTENT}</div>
-									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
-										<span style="padding-right: 0%;">${qna.QNA_REG_DATE}</span>
+									<div style="font-size:14px;color:lightgrey;">
+									<div class="row" style="font-size:14px;">
+										<div class="col-6 date-deleteCol qna">
+											<span>${qna.QNA_REG_DATE}</span>
+										</div>
 										<c:if test="${sessionScope.userId == qna.USER_ID}">
-											<a href="#"style="font-size:14px;margin-left:72%;" onclick="deleteQna(${qna.QNA_NUM})">삭제하기</a>
+											<div class="col-6 delete-dateCol">
+												<a href="#"style="font-size:14px;" onclick="deleteQna(${qna.QNA_NUM})">삭제하기</a>
+											</div>
 										</c:if>
+									</div>
 									</div>
 								</div>
 								<hr>
@@ -291,7 +310,9 @@ pageEncoding="UTF-8"%>
 					</div>
 					
 					<div class = "detail-navTab">
-						<h5 style="font-weight: bold;">이용 후기</h5>
+						<h5 style="display: inline-block;color:#193D76; font-weight: bold;">이용 후기&nbsp;${fn:length(reviewList)} </h5>
+						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
+						<h5 style="display: inline-block;color:#193D76; font-weight: bold;margin-left: 2%;">평균 평점 : &nbsp;${avgReview}</h5>
 						<div class = "nav-bar"></div>
 						<div class = "review-box">
 						<c:if test="${empty reviewList}">
@@ -301,11 +322,11 @@ pageEncoding="UTF-8"%>
 						    <c:forEach var="review" items="${reviewList}">
 						        <fmt:formatNumber var="float" value="${review.REVIEW_RATE}" pattern="#,#" />
 						        <div>
-						            <div class="reviewHead">
+						            <div class="reviewHead" style="color:black; font-weight: bold">
 						                <span>${review.USER_ID}</span>
 						                <div style="margin-left: 20%; padding-bottom: 1%">
 						                    <c:set var="count" value="0" />
-						                    <c:forEach var="i" begin="1" end="${(review.REVIEW_RATE / 2) - 1}">
+						                    <c:forEach var="i" begin="1" end="${(review.REVIEW_RATE / 2)-1}">
 						                        <img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
 						                        <c:set var="count" value="${count + 1}" />
 						                    </c:forEach>
@@ -319,10 +340,14 @@ pageEncoding="UTF-8"%>
 						                </div>
 						            </div>
 						            <div class="qnaBody">${review.REVIEW_CONTENT}</div>
-						            <div style="font-size:14px;margin-right:0%;color:lightgrey;">
-						                <span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
+						            <div class="row" style="font-size:14px;">
+						                <div class="col-6 date-deleteCol">
+						                	<span>${review.REVIEW_REG_DATE}</span>
+						                </div>
 						                <c:if test="${sessionScope.userId == review.USER_ID}">
-						                    <a href="#" style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
+						                	<div class="col-6 delete-dateCol">
+						                    	<a href="#" style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
+						                    </div>
 						                </c:if>
 						            </div>
 						        </div>

@@ -20,7 +20,11 @@ public interface SpaceService {
 												int minPrice, int MaxPrice,
 												List<String> filterList,
 												String order);
-	List<Map<String, Object>> selectAll(int page, int size);
+	List<Map<String, Object>> selectAll(int page, int size,
+										String region,int maxPeople,
+										int minPrice, int MaxPrice,
+										List<String> filterList,
+										String order);
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
