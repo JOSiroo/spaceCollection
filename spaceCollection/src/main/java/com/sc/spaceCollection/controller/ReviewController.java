@@ -72,7 +72,7 @@ public class ReviewController {
 		int cnt = reviewService.deleteReview(reviewNum);
 		logger.info("리뷰삭제, 결과 cnt = {}", cnt);
 		
-		return "redirect:/detail?detail="+spaceNum;
+		return "redirect:/detail?spaceNum="+spaceNum;
 	}
 	
 	

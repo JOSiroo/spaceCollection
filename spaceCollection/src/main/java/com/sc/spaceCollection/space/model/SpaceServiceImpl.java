@@ -50,6 +50,14 @@ public class SpaceServiceImpl implements SpaceService{
 		logger.info("name page = {}, size = {}, startRow = {}, endRow = {}, order = {}", page,size,startRow,endRow,order);
 		return spaceDao.selectBySpaceName(startRow, endRow, spaceName, region,maxPeople,minPrice,maxPrice,filterList,order);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectAll(int page, int size) {
+		int startRow = (page - 1) * size + 1;  
+		int endRow = page * size;
+		logger.info("name page = {}, size = {}, startRow = {}, endRow = {}", page,size,startRow,endRow);
+		return spaceDao.selectAll(startRow, endRow);
+	}
 
 
 	@Override
@@ -117,6 +125,5 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 
-	
 
 }

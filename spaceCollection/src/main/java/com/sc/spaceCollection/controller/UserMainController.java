@@ -114,6 +114,7 @@ public class UserMainController {
          Model model) {
 	   
 	   List<String> filterItem = null;
+	  
 	  if(filterList != null && !filterList.isEmpty()) {
 		  filterItem = Arrays.asList(filterList.split(","));
 	  }
@@ -129,7 +130,16 @@ public class UserMainController {
 	  logger.info("minPrice = {}, maxPrice = {}", minPrice,maxPrice); 
 	   
 	  List<Map<String, Object>> list = new ArrayList<>();
-      if(spaceName != null && !spaceName.isEmpty()) {
+	  
+	  
+	  if((spaceName == null || spaceName.isEmpty()) && spaceTypeNo == 0) {
+		  list = spaceService.selectAll(page, size);
+	            
+         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
+	         
+         model.addAttribute("list", list);
+         model.addAttribute("totalRecord", list.size());
+	  }else if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
          list = spaceService.selectBySpaceName(page, size, spaceName,
         		 region,maxPeople,minPrice,maxPrice,filterItem,order);
