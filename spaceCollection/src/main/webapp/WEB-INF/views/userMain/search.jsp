@@ -5,9 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
-
+p{
+	margin-bottom:5px;
+}
 .row{
-	padding: 5% 0% 0% 0%;
+	padding: 4% 0% 0% 0%;
 }
 .row.top{
 	padding : 0% 0% 0% 0%;
@@ -110,15 +112,35 @@
 .search-section{
 	height:100%;
 	padding-bottom:3%;
-	background: rgb(246, 246, 246);
+	background: white;
 	min-height: 648px;
 }
 .dropdown-toggle{
 	display:inline-block;
 }
+.carousel-inner{
+	border-radius: 2.3rem 2.28rem 0 0;
+}
+.w-100{
+  transition: all 0.3s linear;
+}
+.w-100:hover{
+  transform: scale(1.2);
+}
+
+.carousel-control-next:hover{
+	border-radius:0 2.2rem 0 0 !important;
+	background:linear-gradient(to left, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0));
+}
+.carousel-control-prev:hover{
+	border-radius: 2.2rem 0 0 0 !important;
+	background:linear-gradient(to right, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0));
+}
+
+
 .asd{
 	text-align: center;
-    padding: 2% 0% 2% 0%;
+    padding: 2% 0% 1% 0%;
     
     .btn-group{
 		width: 28%;
@@ -135,7 +157,9 @@
 		float: right;
 	}
 }
-
+	.w-100{
+		height: 286px;
+	}
 	.card {
 	    position: relative;
 	    display: -webkit-box;
@@ -149,14 +173,15 @@
 	    word-wrap: break-word;
 	    background-color: #fff;
 	    background-clip: border-box;
-	    border: 1px solid rgba(0, 0, 0, 0.125);
-	    border-radius: 0.25rem;
+	    border: 1px solid rgba(25, 61, 118, 0.4);
+	    border-radius: 2.5rem;
 	    width:95% !important;
 	    margin: 0% 0% 0% 0%;
 	    margin-bottom:8%;
+	    box-shadow: 5px 5px 15px 10px rgba(0, 0, 0, 0.2);
 	}
 	.card-body{
-		padding: 6% 8% 4% 8%;
+		padding: 4% 8% 4% 8%;
 	}
 	.h5{
 	    	font-weight: bold	
@@ -295,7 +320,6 @@
 	.order-select{
 	    width: 8%;
 	    margin-left: 64.2%;
-	    padding-top: 36px;
 	}
 	#order-selectBox{
 		margin-bottom:15px;
@@ -542,10 +566,10 @@
 	<c:if test="${!empty param.spaceName }">
 		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>"style="margin-left:3%; width:24%;">
 	</c:if>
-	<button type="button" class="btn btn-outline-dark menu" >지도</button></a>
+	<button type="button" class="btn btn-outline-dark menu" style="border-radius: 3rem">지도</button></a>
 </div>
 </div>
-
+<hr>
 <section class = "search-section">
 <div class="order-select">
 		<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
@@ -1015,11 +1039,6 @@ dropdownItems.forEach(function(item) {
     event.stopPropagation(); // 클릭 이벤트 전파 중단
   });
 });
-
-
-
-	
-	
 
 </script>
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>

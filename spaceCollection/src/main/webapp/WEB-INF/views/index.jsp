@@ -66,7 +66,7 @@ a.btn.btn-primary.py-2.px-3 {
 	               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">신규 스페이스 컬렉션</h2>
 	            </div>
 	            <div class="col-lg-6 text-lg-end">
-	               <p><a href="spaceCollection/search" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
+	               <p><a href="<c:url value='/search?page=1'/>" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
 	            </div>
 	         </div>
 	         <div class="row">
@@ -171,11 +171,11 @@ a.btn.btn-primary.py-2.px-3 {
 			                <%-- ${map.IMG_ORIGINAL_NAME} --%>
 			            </a>
 			            <div class="rate">
-			                 <c:forEach begin="1" end="${map.REVIEW_RATE}">
+			                 <c:forEach begin="1" end="${map.REVIEW_RATE/2 - 1}">
 			                    <span class="icon-star text-warning"></span>
 			                </c:forEach>
 			                <c:choose>
-			                    <c:when test="${map.REVIEW_RATE < 1}">
+			                    <c:when test="${map.REVIEW_RATE%1 < 1}">
 			                        <span class="icon-star-half icon-star-half-reverse text-warning"></span>
 			                    </c:when>
 			                    <c:otherwise>

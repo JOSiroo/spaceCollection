@@ -23,7 +23,13 @@ public interface GuestService {
 	int updateUserHp(GuestVO guestVo);
 	
 	//소셜 로그인 관련
+	GuestVO selectSnsUserInfo(GuestVO guestVo);
+	//카카오
 	int selectKakaoUser(GuestVO guestVo);
 	int insertKakaoUser(GuestVO guestVo);
 	int checkedUserIdBySnsCode(String userId);
+	//네이버
+	int selectNaverUser(GuestVO guestVo);
+	int insertNaverUser(GuestVO guestVo);
+	int updateNaverUser(GuestVO guestVo);
 }

@@ -91,4 +91,24 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.updateUserHp(guestVo);
 	}
 
+	@Override
+	public int selectNaverUser(GuestVO guestVo) {
+		return guestDao.selectNaverUser(guestVo);
+	}
+
+	@Override
+	public int insertNaverUser(GuestVO guestVo) {
+		return guestDao.insertNaverUser(guestVo);
+	}
+
+	@Override
+	public GuestVO selectSnsUserInfo(GuestVO guestVo) {
+		return guestDao.selectSnsUserInfo(guestVo);
+	}
+
+	@Override
+	public int updateNaverUser(GuestVO guestVo) {
+		return guestDao.updateNaverUser(guestVo);
+	}
+
 }
