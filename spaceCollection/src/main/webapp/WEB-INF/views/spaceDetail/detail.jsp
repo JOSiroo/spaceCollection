@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
   	text-align: left;
   	color:black;
   	margin-bottom:10px;
+  	word-wrap: break-word;
   }
   .reviewHead{
   	font-size:20px;
@@ -275,7 +276,7 @@ pageEncoding="UTF-8"%>
 							<c:forEach var="qna" items="${qnaList }">
 								<div>
 									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
-									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
+									<div class="qnaBody">${qna.QNA_CONTENT}</div>
 									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
 										<span style="padding-right: 0%;">${qna.QNA_REG_DATE}</span>
 										<c:if test="${sessionScope.userId == qna.USER_ID}">
@@ -297,36 +298,38 @@ pageEncoding="UTF-8"%>
 							<h4>등록된 후기가 없습니다</h4>
 						</c:if>						
 						<c:if test="${!empty reviewList}">
-							<c:forEach var="review" items="${reviewList }">
-								<div>
-									<div class="reviewHead">
-									<span>${review.USER_ID}</span>
-									<div style= "margin-left: 20%;padding-bottom:1%">
-									<c:set var="count" value="0"/>
-									<c:forEach var="i" begin="1" end="${review.REVIEW_RATE}">
-										<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-										<c:set var="count" value="${count+1 }" />
-									</c:forEach>
-									<c:if test="${review.REVIEW_RATE%1 >0 }">
-										<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
-										<c:set var="count" value="${count+1 }" />
-									</c:if>
-									<c:forEach var="j" begin="${count}" end="4">
-										<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
-									</c:forEach>
-									</div>
-									</div>
-									<div class="qnaBody"><span>${review.REVIEW_CONTENT}</span></div>
-									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
-										<span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
-										<c:if test="${sessionScope.userId == review.USER_ID}">
-											<a href="#"style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
-										</c:if>
-									</div>
-								</div>
-								<hr>
-							</c:forEach>
-						</c:if>		
+						    <c:forEach var="review" items="${reviewList}">
+						        <fmt:formatNumber var="float" value="${review.REVIEW_RATE}" pattern="#,#" />
+						        <div>
+						            <div class="reviewHead">
+						                <span>${review.USER_ID}</span>
+						                <div style="margin-left: 20%; padding-bottom: 1%">
+						                    <c:set var="count" value="0" />
+						                    <c:forEach var="i" begin="1" end="${(review.REVIEW_RATE / 2) - 1}">
+						                        <img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
+						                        <c:set var="count" value="${count + 1}" />
+						                    </c:forEach>
+						                    <c:if test="${review.REVIEW_RATE % 2 != 0}">
+						                        <img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
+						                        <c:set var="count" value="${count + 1}" />
+						                    </c:if>
+						                    <c:forEach var="j" begin="${count}" end="4">
+						                        <img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
+						                    </c:forEach>
+						                </div>
+						            </div>
+						            <div class="qnaBody">${review.REVIEW_CONTENT}</div>
+						            <div style="font-size:14px;margin-right:0%;color:lightgrey;">
+						                <span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
+						                <c:if test="${sessionScope.userId == review.USER_ID}">
+						                    <a href="#" style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
+						                </c:if>
+						            </div>
+						        </div>
+						        <hr>
+						    </c:forEach>
+						</c:if>
+	
 						</div>
 					</div>
 				</div>
@@ -507,7 +510,6 @@ pageEncoding="UTF-8"%>
 			</div>
 	<!-- 여기까지 섹션-->				
 </section>
-
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
@@ -548,81 +550,79 @@ pageEncoding="UTF-8"%>
 		});
 		
 			
-			  $(".datepicker").each(function(index, element) {
-			  var datepickerId = $(element).data("id");
-			  var sdNum = $(this).siblings('.calSdNum'); 
-			  var sdPrice = $(this).siblings('.calSdPrice');
-			  
-			  $(element).datepicker({
-			    language: 'ko',
-			    inline: true,
-			    minDate: new Date(),
-			    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-			    onSelect: function(selectedDates, instance) {
-			      console.log("선택한 날짜:", selectedDates);
-			      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
-			      $('.selectedDate').val(selectedDates);
-			      $('.mySwiper').css('visibility', 'visible');
-			      $('.swiper-inBox').removeClass('on');
-			      var requestData = {
-			                sdNum: sdNum.val(),
-			                selectedDates: selectedDates+""
-			            };
-			      
-			      $.ajax({
-			    	  url: 'reservation/ajaxSelectRes', // 서버의 엔드포인트 URL
-                      method: 'get', // 
-                      dataType:'json',
-                      data: requestData,
-                      success: function(data) {
-                          // AJAX 요청이 성공한 경우
-                          console.log('data:', data);
-                          var begin = parseInt(data.startHour);
-                          var end = parseInt(data.endHour);
-                          var result = data.result;
-                          if(result === 2){
-                        	  console.log('예약내역 없음');
-                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
-                          } else if (result === 1){
-							  console.log('예약내역 있음');
-                        	  makeTimeTable(result, begin, end, sdNum,sdPrice);                              
-                          }
-                      },
-                      error: function(xhr, status, error) {
-                          // AJAX 요청이 실패한 경우
-                          console.error('Error:', error);
-                      }
-			      });
-			      
-			    }
-			  });
-			});
-			  
-		function makeTimeTable(result, begin, end, sdNum, sdPrice){
-			console.log("makeTimeTable");
-			console.log('sdPrice = '+ sdPrice.val());
-			console.log('result = '+ result);
-			console.log('begin = '+ begin);
-			console.log('end = ' + end);
-			console.log('sdNum = ' + sdNum.val());
-			var parent = sdNum.closest('.inAccordionLi');
+	  $(".datepicker").each(function(index, element) {
+	  var datepickerId = $(element).data("id");
+	  var sdNum = $(this).siblings('.calSdNum'); 
+	  var sdPrice = $(this).siblings('.calSdPrice');
+	  
+	  $(element).datepicker({
+	    language: 'ko',
+	    inline: true,
+	    minDate: new Date(),
+	    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+	    onSelect: function(selectedDates, instance) {
+	      console.log("선택한 날짜:", selectedDates);
+	      console.log("선택한 데이트피커의 sd_Num:", sdNum.val());
+	      $('.selectedDate').val(selectedDates);
+	      $('.mySwiper').css('visibility', 'visible');
+	      $('.swiper-inBox').removeClass('on');
+	      var requestData = {
+	                sdNum: sdNum.val(),
+	                selectedDates: selectedDates+""
+	            };
+	      
+		$.ajax({
+			url: 'reservation/ajaxSelectRes', // 서버의 엔드포인트 URL
+			method: 'get', // 
+			dataType:'json',
+			data: requestData,
+			success: function(data) {
+				// AJAX 요청이 성공한 경우
+				var begin = parseInt(data.startHour);
+				var end = parseInt(data.endHour);
+				var result = data.map.result;
+				if(data.length == 0){
+					console.log('예약내역 없음');
+					noReservationRecord(result, begin, end, sdNum,sdPrice);                              
+				} else{
+					console.log('예약내역 있음');
+					makeTimeTable(data,sdNum);
+				}
+			},
+			error: function(xhr, status, error) {
+				// AJAX 요청이 실패한 경우
+				console.error('Error:', error);
+			}
+	      });
+	    }
+	  });
+	});
+ 		function noReservationRecord(result, begin, end, sdNum,sdPrice){
+ 			var parent = sdNum.closest('.inAccordionLi');
 			var times = parent.children('.swiper-inBox');
-			
-			
-			if(result == 1){	//예약내역 있음!
+ 			parent.find('.swiper-inBox').removeClass('reserved');
+			parent.find('.swiper-inBox').prop('disabled', false);
+			parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+			parent.find('.swiper-inBox').val(sdPrice.val()); 			
+ 		}
+	  
+	  
+		function makeTimeTable(data,sdNum){
+			$.each(data,function(){
+				console.log("makeTimeTable");
+				console.log("data = ", this);
+				var parent = sdNum.closest('.inAccordionLi');
+				var times = parent.children('.swiper-inBox');
+				var begin = this.startHour;
+				var end = this.endHour;
+
 				for(var i = begin; i <= end; i++){
 					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
 					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
 					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
 				}	
-			}else{
-				parent.find('.swiper-inBox').removeClass('reserved');
-				parent.find('.swiper-inBox').prop('disabled', false);
-				parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
-				parent.find('.swiper-inBox').val(sdPrice.val());
-			}
+			});
 		}
-		
 
 	});
 		$('#QNAWrite').click(function(){
@@ -712,7 +712,7 @@ pageEncoding="UTF-8"%>
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
-	    mapOption = { 
+	    mapOption = { 				
 	        center: new kakao.maps.LatLng(${vo.latitude}, ${vo.longitude}), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    }; 
@@ -825,11 +825,17 @@ pageEncoding="UTF-8"%>
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         function deleteQna(qnaNum){
-			if(confirm('qna를 삭제하시겠습니까?')){
-				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${vo.spaceNum}+"'/>"
+			if(confirm('QnA를 삭제하시겠습니까?')){
+				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>"
 						
 			}
         }
+        
+		function deleteReview(reviewNum){
+			if(confirm('리뷰를 삭제하시겠습니까?')){
+				location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
+			}
+	       }
         
         function requestPay() {
             console.log(paymentType);

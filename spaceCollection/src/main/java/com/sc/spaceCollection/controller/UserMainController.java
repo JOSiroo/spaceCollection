@@ -38,18 +38,6 @@ public class UserMainController {
    private final ReviewService reviewService;
    private final Coupon coupon;
    
-   
-   
-   @RequestMapping("/board")
-   public String test() {
-      return "userMain/board/boardList";
-   }
-   
-   @RequestMapping("/list")
-   public String listtest() {
-      return "userMain/board/list2";
-   }
-   
    //사용자메인화면
    @RequestMapping("/")
    public String home(Model model) {
@@ -76,22 +64,14 @@ public class UserMainController {
 	    String num = Coupon.generateCoupon();
 	    logger.info("num={}",num);
 	    model.addAttribute("num", num);
-	    return "userMain/board/coupon";
+	    return "userMain/board/roulette";
 	}
-   
    
    //서비스약관
    @RequestMapping("/service")
    public String userChek() {
       return "userMain/service";
    }
-   
-   //이벤트
-   @RequestMapping("/event")
-   public String event() {
-	   return "userMain/event";
-   }
-   
    
    //회사소개
    @RequestMapping("/about")
@@ -110,12 +90,6 @@ public class UserMainController {
    @RequestMapping("/Certificate2")
    public String Certificate2() {
 	   return "userMain/Certificate2";
-   }
-   
-   //자주묻는질문
-   @RequestMapping("/FAQ")
-   public String FAQ() {
-	   return "userMain/FAQ";
    }
    
    @RequestMapping("/search")
@@ -139,6 +113,7 @@ public class UserMainController {
          Model model) {
 	   
 	   List<String> filterItem = null;
+	  
 	  if(filterList != null && !filterList.isEmpty()) {
 		  filterItem = Arrays.asList(filterList.split(","));
 	  }
@@ -154,7 +129,16 @@ public class UserMainController {
 	  logger.info("minPrice = {}, maxPrice = {}", minPrice,maxPrice); 
 	   
 	  List<Map<String, Object>> list = new ArrayList<>();
-      if(spaceName != null && !spaceName.isEmpty()) {
+	  
+	  
+	  if((spaceName == null || spaceName.isEmpty()) && spaceTypeNo == 0) {
+		  list = spaceService.selectAll(page, size);
+	            
+         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
+	         
+         model.addAttribute("list", list);
+         model.addAttribute("totalRecord", list.size());
+	  }else if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
          list = spaceService.selectBySpaceName(page, size, spaceName,
         		 region,maxPeople,minPrice,maxPrice,filterItem,order);
@@ -174,8 +158,6 @@ public class UserMainController {
       }
       return list;
    }
-   
-   
    
    @GetMapping("/search/map")
    public String map(@RequestParam(required = false) String spaceName,

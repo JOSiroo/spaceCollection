@@ -65,6 +65,17 @@ public class ReviewController {
 		return cnt;
 	}
 	
+	@GetMapping("/deleteReview")
+	public String deleteReview(@RequestParam int reviewNum,@RequestParam int spaceNum) {
+		logger.info("리뷰삭제, 파라미터 reviewNum = {}, spaceNum = {}",reviewNum ,spaceNum);
+		
+		int cnt = reviewService.deleteReview(reviewNum);
+		logger.info("리뷰삭제, 결과 cnt = {}", cnt);
+		
+		return "redirect:/detail?spaceNum="+spaceNum;
+	}
+	
+	
 	@RequestMapping("/myReview")
 	public String myReview(HttpSession session,Model model) {
 		String userId = (String)session.getAttribute("userId");

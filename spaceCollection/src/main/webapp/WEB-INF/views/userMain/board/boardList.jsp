@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,32 +12,65 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/mainstyle.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/font-awesome.min.css'/>" />
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/main.css'/>" />
-<title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <script type="text/javascript">	
 
 </script>
+
 <style type="text/css">
-	*{
-		font-family: "Malgun Gothic", sans-serif !important;
-	 }	
-	 
+	section{
+	 	display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        /* max-width: 1200px; */
+        margin: 0 auto; 
+	 } 
 	 c {
 	    font-weight: bold;
 	    font-size: 20px;
 	 }
-	 
 	 .col.align-center {
 	    margin: 45px;
 	 }
-	 
+	 h2 {
+    font-weight: bold;
+	}
 	img.titleButtonImg {
-    width: 65%;
-    margin: 30px;
+    width: 90%;
+    margin: 20px;
 	}
 	.eventListBox{
 	background-color: #f4f6f8;
+	}
+	.eventListBox {
+    width: 70%;
+	}
+	.eventListBox {
+    margin-left: 10px;
+	}
+	.inner {
+	    margin-top: 230px;
+	    width: 1000px;
+	    /* align-content: center; */
+	    object-position: center;
+	    margin-left: 318px;
+	}
+	header.align-center {
+	    width: 500px;
+	    margin-left: 221px;
+	    font-weight: bolder;
+	}
+	p {
+	    margin-left: 10px;
+	}
+	.eventListBox {
+	    margin-right: 16px;
+	}
+	section.wrapper.style1 {
+	    margin-bottom: 100px;
 	}
 </style>
 <body>
@@ -78,3 +112,4 @@
 </form>
 </body>
 </html>
+<%@ include file="/WEB-INF/views/form/userBottom.jsp" %>

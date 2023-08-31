@@ -84,7 +84,9 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		$.commentsLoad();
+		if($('#commentOk').val() == 'Y'){
+			$.commentsLoad();
+		}
 		
 		$('#okBt').hide();
 		$('#fileList').hide();
@@ -180,7 +182,6 @@
 	
 	$.commentsLoad = function(){
 		$.ajax({
-	
 			url : "<c:url value='/admin/board/boardDetail/ajax_commentLoad'/>",
 			type: 'get',
 			data: "boardNum=" + $('input[name=boardNum]').val() + "&addNum=" + $('input[name=addNum]').val(),
@@ -279,6 +280,7 @@
 						<!-- 좋아요 댓글수 -->
 						<!-- 댓글쓰기란 -->
 						<c:if test="${map.BOARD_TYPE_COMMENT_OK=='Y' }">
+							<input type="hidden" value="${map.BOARD_TYPE_COMMENT_OK }" id="commentOk">
 							<form name="commentsFrm" method="post" action="<c:url value='/admin/board/boardDetail/commentsWrite'/>">
 								<label for="commentsContent">댓글</label>
 								<div class="col-sm-10" id="commentDiv">
@@ -292,7 +294,6 @@
 								<input type="hidden" name="boardNum" value="${map.BOARD_NUM }">							
 								<input type="hidden" name="userNum" value="9999999">							
 							</form>
-							
 							<hr>
 							<input type="hidden" name="addNum" value="5">
 							<div id="ajaxComments">

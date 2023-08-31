@@ -12,4 +12,5 @@ public interface ReviewService {
 	int getTotalRecord(SearchVO vo);
 	List<Map<String, Object>> selectNewReview();
 	List<Map<String, Object>> spaceDetailReview(int spaceNum);
+	int deleteReview(int reviewNum);
 }

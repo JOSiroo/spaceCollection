@@ -20,10 +20,12 @@ public interface SpaceService {
 												int minPrice, int MaxPrice,
 												List<String> filterList,
 												String order);
+	List<Map<String, Object>> selectAll(int page, int size);
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();
 	Map<String, Object> usercount();
 	List<Map<String, Object>> selectSpaceListViewByUserId(SearchVO vo);
 	int getTotalRecordSpaceListViewByUserId(SearchVO vo);
+	int isAcceptSpace(SpaceVO vo);
 }

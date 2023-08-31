@@ -16,4 +16,5 @@ public interface HostDAO {
 													@Param("order")String order,@Param("keyword")String keyword);
 	List<Map<String, Object>> HostReservationCalendar(@Param("userNum")int userNum);
 	UserInfoVO selectUserById (String userId);
+	List<Integer> getDataByDate(@Param("date") String date,@Param("userNum") int userNum);
 }

@@ -9,6 +9,7 @@
 	<select id="selectSpaceType" resultType="SpaceTypeVO" parameterType="int">
 		select * from space_type
 		where category_no = #{categoryNo}
+		and SPACE_TYPE_DEL_FLAG is null
 	</select>
 	
 	<resultMap type="SpaceCategoryAllVO" id="spaceTypeResultMap">
@@ -23,6 +24,7 @@
 
 	<select id="selectSpaceCategory" resultMap="spaceTypeResultMap">
 		select * from space_type_category
+		where CATEGORY_DEL_FLAG is null
 		order by category_no
 	</select>
 	
@@ -61,5 +63,8 @@
         select * from host_reservation_view
         where user_num = #{userNum}
 	</select>
-	
+	<select id="getDataByDate" resultType="int">
+		select RESERVE_PRICE from host_reservation_view
+		where user_num = #{userNum} and RESERVE_START_DAY = #{date}
+	</select>
 </mapper>

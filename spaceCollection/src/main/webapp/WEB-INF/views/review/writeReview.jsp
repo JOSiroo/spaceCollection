@@ -174,6 +174,7 @@ $(function(){
 						if(result == 1){
 							alert('리뷰 등록 성공!');
 							self.close();
+							opener.location.href="<c:url value='/detail?spaceNum=${param.spaceNum}'/>"
 						}else{
 							alert('리뷰 등록 실패!');
 						}

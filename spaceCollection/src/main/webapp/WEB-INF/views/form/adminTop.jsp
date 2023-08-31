@@ -340,14 +340,14 @@
 			<li class="nav-item">
 				<a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
 					<i class="bi bi-person"></i>
-					<span>회원관리</span>
+					<span>회원 관리</span>
 					<i class="bi bi-chevron-down ms-auto"></i>
 				</a>
 				<ul id="forms-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
 					<li>
 						<a href="<c:url value = '/admin/member/memberList'/>"> <i class="bi bi-circle"></i>
-							<span>회원관리</span>
+							<span>회원 관리</span>
 						</a>
 					</li>
 					<li>
@@ -359,20 +359,34 @@
 			</li>
 			<!-- End Forms Nav -->
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a>
+			<li class="nav-item">
+				<a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-layout-text-window-reverse"></i>
+					<span>공간 관리</span>
+					<i class="bi bi-chevron-down ms-auto"></i>
+				</a>
 				<ul id="tables-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="tables-general.html"> <i class="bi bi-circle"></i><span>General
-								Tables</span>
-					</a></li>
-					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>Data
-								Tables</span>
-					</a></li>
-				</ul></li>
+					<li>
+						<a href="<c:url value='/admin/space/spaceTypeCategoryList'/>"> 
+							<i class="bi bi-circle"></i>
+							<span>공간 카테고리 관리</span>
+						</a>
+					</li>
+					<li>
+						<a href="<c:url value='/admin/space/spaceTypeList'/>">
+							<i class="bi bi-circle"></i>
+							<span>공간 타입 관리</span>
+						</a>
+					</li>
+					<li>
+						<a href="<c:url value='/admin/space/spaceList'/>">
+							<i class="bi bi-circle"></i>
+							<span>공간 등록 관리</span>
+						</a>
+					</li>
+				</ul>
+			</li>
 			<!-- End Tables Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"

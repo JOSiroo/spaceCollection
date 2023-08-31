@@ -128,6 +128,10 @@
 			}
 		});
 		
+		$('.modal button').click(function() {
+			$('.modal-body input[type=checkbox]').prop('checked', false);
+		});
+		
 		$('.modal-body input[type=checkbox]').click(function name() {
 			$('#warning').hide();
 		});
@@ -194,7 +198,7 @@
 							<tbody>
 								<c:if test="${empty list }">
 									<tr>
-										<td colspan="6" style="text-align: center;">동록된 회원이 없습니다.</td>
+										<td colspan="6" style="text-align: center;">등록된 회원이 없습니다.</td>
 									</tr>
 								</c:if>
 								<c:if test="${!empty list }">

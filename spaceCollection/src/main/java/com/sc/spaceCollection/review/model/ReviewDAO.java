@@ -16,4 +16,5 @@ public interface ReviewDAO {
 	int getTotalRecord(SearchVO vo);
 	List<Map<String, Object>> selectNewReview();
 	List<Map<String, Object>> spaceDetailReview(@Param("spaceNum") int spaceNum);
+	int deleteReview(int reviewNum);
 }
