@@ -109,7 +109,7 @@ a.btn.btn-primary.py-2.px-3 {
                <div class="box-feature">
                   <span class="flaticon-house"></span>
                   <h3 class="mb-3" id="hboldfont">새로운 공간보기</h3>
-                  <p><a href="search" class="learn-more">Learn More</a></p>
+                  <p><a href="search?order=spaceRegDate_desc" class="learn-more">Learn More</a></p>
                </div>
             </div>
             <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="500">
