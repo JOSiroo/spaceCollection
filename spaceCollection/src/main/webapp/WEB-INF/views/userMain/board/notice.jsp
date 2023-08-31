@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 <style type="text/css">
-	*{
+	/* *{
 	font-family: NanumBarunGothic,"나눔바른고딕",
 	NanumGothic,"돋움",Dotum,Helvetica,"Apple SD Gothic Neo",Sans-serif!important;
-	}
+	} */
 	
 	.reservation-header{
 		margin-top :120px;
@@ -153,6 +153,12 @@
 	span#span2 {
     margin-left: 60px;
 	}
+	.search-box {
+    text-align: center;
+	}
+	.accordion-body {
+    border: 30px solid #ffffff;
+    }
 </style>
 
 
@@ -175,7 +181,7 @@
                         data-bs-target="#flush-collapse${loop.index}" aria-expanded="false"
                         aria-controls="flush-collapse${loop.index}"
                         style="background-color: ${loop.index % 2 == 0 ? '#eef1f3' : 'white'};">
-                    <span id="span1">공지사항</span><span id="span2">${item.boardTitle}</span>
+                    <span id="span1">[ 공지사항 ]</span><span id="span2">${item.boardTitle}</span>
                 </button>
             </h2>
             <div id="flush-collapse${loop.index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">

@@ -123,7 +123,7 @@ a.btn.btn-primary.py-2.px-3 {
                <div class="box-feature">
                   <span class="flaticon-house-3"></span>
                   <h3 class="mb-3" id="hboldfont">시즌 이벤트</h3>
-                  <p><a href="<c:url value='/user/boardList'/> class="learn-more">Learn More</a></p>
+                  <p><a href="<c:url value='/user/boardList'/>" class="learn-more">Learn More</a></p>
                </div>
             </div>
             <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">

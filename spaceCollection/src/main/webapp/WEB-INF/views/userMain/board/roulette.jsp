@@ -6,8 +6,14 @@
  <%@ include file="/WEB-INF/views/form/userTop.jsp" %> 
   
 <style>
+
 section{
-	margin-bottom: 50px;
+	display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .rouletter {
   position: relative;
@@ -66,9 +72,15 @@ section{
 	 justify-content: center;
       max-width: 1200px;
       margin: 0 auto; 
-      margin-left: 700px; 
+      margin-left: 500px; 
       position: center;
 	 width: 200px;
+}
+.rouletter-wacu {
+    background-image: url(<c:url value='/images/roulette.png'/>);
+}
+.couponBox {
+    margin-bottom: 100px;
 }
 </style>
 <section>
@@ -198,7 +210,7 @@ window.onload = function() {
     const rLayerPopup = (num) => {
       switch (num) {
         case 1:
-          alert("당첨!! 햄버거 세트 교환권");
+          alert("꽝!다음번에 다시 도전하세요.");
           break;
       /*case 3:
           alert("당첨!! CU 3,000원 상품권"); 
@@ -207,7 +219,7 @@ window.onload = function() {
           alert("당첨!! 스타벅스 아메리카노");
           break; */
         default:
-          alert("꽝!다음번에 다시 도전하세요");
+        	alert("당첨!! 쿠폰 일련번호를 확인해주세요.");
       }
     };
 
