@@ -542,6 +542,9 @@
 	.fc-highlight{
 		background: rgba(25, 61, 118, 0.8) !important;
 	} 
+	.fc-day:hover{
+		background:rgba(20, 173, 255, 0.2);
+	}
 	.colorBtn{
 		border-radius: 1rem;
 		height: 40px;
@@ -553,6 +556,10 @@
 		text-align: center;
 		font-weight: bold;
 	}
+	.table tbody tr:hover{
+		background:rgba(20, 173, 255, 0.2);
+	}
+	
 	</style>
 	<%
 	  // 현재 날짜를 구합니다.
@@ -696,7 +703,7 @@
 				
 				<div class="reservationList">
 					<table class="table">
-						<thead">
+						<thead>
 							<tr>
 								<th></th>
 								<th><h2 style="font-weight: bold;">예약 리스트</h2></th>
