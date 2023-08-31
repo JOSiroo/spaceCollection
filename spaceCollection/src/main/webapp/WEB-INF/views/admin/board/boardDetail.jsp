@@ -84,8 +84,11 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		$.commentsLoad();
-			
+
+		if($('#commentOk').val() == 'Y'){
+			$.commentsLoad();
+		}
+
 		
 		$('#okBt').hide();
 		$('#fileList').hide();
@@ -279,6 +282,7 @@
 						<!-- 좋아요 댓글수 -->
 						<!-- 댓글쓰기란 -->
 						<c:if test="${map.BOARD_TYPE_COMMENT_OK=='Y' }">
+							<input type="hidden" value="${map.BOARD_TYPE_COMMENT_OK }" id="commentOk">
 							<form name="commentsFrm" method="post" action="<c:url value='/admin/board/boardDetail/commentsWrite'/>">
 								<label for="commentsContent">댓글</label>
 								<div class="col-sm-10" id="commentDiv">

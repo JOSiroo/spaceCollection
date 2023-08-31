@@ -2,8 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
 <style type="text/css">
+	/* *{
+	font-family: NanumBarunGothic,"나눔바른고딕",
+	NanumGothic,"돋움",Dotum,Helvetica,"Apple SD Gothic Neo",Sans-serif!important;
+	} */
+	
 	.reservation-header{
-		margin-top :75px;
+		margin-top :120px;
 		padding:5% 16% 5% 16%;
 	}
 	.search-box{
@@ -16,7 +21,7 @@
 	}
 	input[name=reservationInfo]{
 		font-size:25px;
-		width: 71%;
+		width: 65%;
 		height: 60px;
 		margin-left: 3%;
 		padding-left:1%;
@@ -115,89 +120,98 @@
 		width:20%;
 		padding: 3% 47% 0% 47%;	
 	}
+	/* h2.accordion-header {
+	    border-top: 0.5px solid #193D76;
+	} */
+	div#accordionFlushExample {
+    /* margin-top: 30px; */
+	}
+	h2.accordion-header {
+    background-color: #93c8d8;
+    /* border-top: 1px solid #193D76;
+    border-bottom: 1px solid #193D76; */
+	}
+	button.accordion-button.collapsed {
+	}
+	#accordionFlushExample{
+	
+	}
+	div#accordionFlushExample {
+    align-content: center;
+	}
+	.divBox2 {
+	border-top: 2.5px solid #656565;
+    border-bottom: 2.5px solid #656565;
+    margin-top: 40px;
+    width: 90%;
+    margin-left: 60px;
+    background-color: #656565;
+	}
+	span#span1 {
+    font-weight: bold;
+	}
+	span#span2 {
+    margin-left: 60px;
+	}
+	.search-box {
+    text-align: center;
+	}
+	.accordion-body {
+    border: 30px solid #ffffff;
+    }
 </style>
+
+
 <section>
 	<div class="reservation-header">
 		<div class="search-box">
-			<label style="font-size: 18px; font-weight: bold"> 예약 정보 검색</label>
-			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="예약자 아이디로 조회"
-				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>
+			<label style="font-size: 18px; font-weight: bold"> 공지 사항 검색</label>
+			<!-- https://www.spacecloud.kr/board/notice?page=1&q=tlwms -->
+			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="검색어를 입력하세요."
+				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>  
 			<button class="searchBt" onclick="search()">검색</button>
 		</div>
-		<div class="row">
-			<div class = "col-6"></div>
-			<div class="col-2">
-				<select class = "orderSelector">
-					<option value="default">정렬기준</option>
-					<option <c:if test="${param.order == 'reservationNum'}">selected</c:if> 
-						value="RESERVATION_NUM">예약 번호순 정렬</option>
-					<option <c:if test="${param.order == 'reservationDay'}">selected</c:if>
-						value="RESERVE_START_DAY">이용 일자순 정렬</option>
-				</select>
-			</div>		
-			<div class="col-2">
-				<select class = "statusSelector">
-					<option value = "default">전체상태</option>
-					<option <c:if test="${param.status == 'finished'}">selected</c:if> 
-						value = "finished">이용완료</option>
-					<option <c:if test="${param.status == 'before'}">selected</c:if> 
-						value = "before">이용전</option>
-					<option <c:if test="${param.status == 'canceled'}">selected</c:if>
-						value = "canceled">취소환불</option>
-				</select>
-			</div>		
-			<div class="col-2">
-				<button class="calendarBtn">
-					캘린더보기
-				</button>
-			</div>		
-		</div>
-		<div class="row dataTitle">
-			<div class = "col-1">예약번호</div>
-			<div class = "col-2" style="padding-left:2.7%">예약자</div>
-			<div class = "col-4" style="padding-left:2%;">공간정보</div>
-			<div class = "col-2" style="padding-left:1.7%;width: 8%;">날짜</div>
-			<div class = "col-2" style="padding-left:7%;">이용구분</div>
-			<div class = "col-2" style="padding-left:9.5%;">확인</div>
-		</div>
-		<jsp:useBean id="now" class="java.util.Date"/>
-		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
-		<c:if test="${!empty list}">
-			<c:forEach var="reservation" items="${list}">
-			<fmt:parseDate value="${reservation.RESERVE_START_DAY}" var="parsedDate" pattern="yyyy-MM-dd" />
-			<c:set var="status" value="default" />
-				<div class="row data">
-					<div class = "col-1">${reservation.RESERVATION_NUM }</div>
-					<div class = "col-2" style="padding:1.8% 0% 0% 0% !important;">${reservation.USER_ID }</div>
-					<div class = "col-4">${reservation.SPACE_NAME }</div>
-					<div class = "col-2">${reservation.RESERVE_START_DAY}</div>
-					<c:if test="${reservation.RESERVATION_DEL_FLAG == 'Y'}">
-						<div class = "col-2">환불완료</div>
-						<c:set var="status" value="환불됨" />
-					</c:if>
-					<c:if test="${reservation.RESERVATION_DEL_FLAG == 'N'}">
-						<c:if test="${now.before(parsedDate)}">
-							<div class = "col-2">이용전</div>
-							<c:set var="status" value="이용전" />
-						</c:if>
-						<c:if test="${now.after(parsedDate)}">
-							<div class = "col-2">이용완료</div>
-							<c:set var="status" value="이용완료" />
-						</c:if>
-					</c:if>
-					<div class = "col-1" style="padding-top:1.4% !important;">
-						<button class = "checkReservation" onclick="goReservation('${reservation.RESERVATION_NUM}')">
-							정보
-						</button>
-					</div>
-				</div>
-			</c:forEach>
-		</c:if>
-		<c:if test="${empty list}">
-			<div class="row" style = "text-align:center">
-				<h2>예약 내역이 없습니다</h2>
-			</div>
-		</c:if>
+	
+<div class="divBox2">
+<c:forEach var="item" items="${list}" varStatus="loop">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapse${loop.index}" aria-expanded="false"
+                        aria-controls="flush-collapse${loop.index}"
+                        style="background-color: ${loop.index % 2 == 0 ? '#eef1f3' : 'white'};">
+                    <span id="span1">[ 공지사항 ]</span><span id="span2">${item.boardTitle}</span>
+                </button>
+            </h2>
+            <div id="flush-collapse${loop.index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    ${item.boardContent}
+                </div>
+            </div>
+        </div>
+    </div>
+</c:forEach>
+</div>
+		  
+		  <!-- <div class="accordion-item">
+		    <h2 class="accordion-header">
+		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+		      data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+		       <span>[취소]</span><p>&nbsp 천재지변/감염병으로 인한 예약취소는 어떻게 하나요?
+		      </button>
+		    </h2>
+		    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body">
+		       <ul>
+		       <li>천재지변(기상악화), 법정 감염병 등 불가항력적인 사유로 제휴점 이용이 불가할 경우 고객행복센터로 예약내역 및 증빙서류(결항확인서, e-티켓, 진단확인서 등)를 보내주시면 확인 후 예약취소 가능 여부를 확인해 드립니다.</li>
+		        <br><li>다만, 당사는 판매 중개 플랫폼의 입장으로 제휴점에 대하여 취소/환불을 강제할 수 없어 각 제휴점의 규정에 근거하여 상황에 따라 수수료가 발생하거나 취소가 어려울 수 있는 점 양해 부탁드립니다.</li>
+		        </ul>
+		       </div>
+		    </div>
+		  </div> -->
+		  
+		
 		<div class="pageBox">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
@@ -214,75 +228,12 @@
 			  </ul>
 			</nav>
 		</div>
-		
-		
 	</div>
 </section>
-<script type="text/javascript">
-	$(function(){
-		$('input[name=reservationInfo]').focus();
-		
-		$('#previous').click(function(){
-			var page = ${param.page};
-			if(page == 1){
-				alert('첫 페이지 입니다');
-				event.preventDefault();
-			}
-		});
-		$('#next').click(function(){
-			if(${empty list}){
-				alert('더이상 기록이 없습니다');
-				event.preventDefault();
-			}
-		});
-		
-		$('.calendarBtn').click(function(){
-			location.href="<c:url value='/host/reservationCalendar'/>";
-		});
-	});
-	
-	
-	const queryString = window.location.search;
-	const params = new URLSearchParams(queryString);
-	var currentTotalUrl = window.location.href;
-	var currentUrl = currentTotalUrl.split("?");
-	
-	function goReservation(reservationNum){
-		location.href="<c:url value='/host/reservationDetail?reservationNum="+reservationNum+"'/>";
-	}
-	
-	function search(){
-		var searchKeyword = document.getElementById('searchKeyword');
-		if(searchKeyword.value.length == 0){
-			alert('검색어를 입력하세요');
-			searchKeyword.focus();
-		}else{
-			params.set("keyword",searchKeyword.value);
-			location.href = currentUrl[0]+"?"+params;
-		}
-	}
-	
-	var orderSelector = document.getElementsByClassName('orderSelector');
-	orderSelector[0].addEventListener('change',function(){
-		if(this.value !== 'default'){
-			params.set("order",this.value);
-			location.href = currentUrl[0]+"?"+params;
-		}else{
-			params.delete("order");
-			location.href = currentUrl[0]+"?"+params;
-		}
-	});
-	
-	var statusSelector = document.getElementsByClassName('statusSelector');
-	statusSelector[0].addEventListener('change',function(){
-		if(this.value !== 'default'){
-			params.set("status",this.value);
-			location.href = currentUrl[0]+"?"+params;
-		}else{
-			params.delete("status");
-			location.href = currentUrl[0]+"?"+params;
-		}
-	});
-	
-</script>
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
+
+<script type="text/javascript">
+
+
+
+</script>

@@ -203,16 +203,16 @@
 												<td>
 													<input type="checkbox" name="spaceTypeItemList[${i }].spaceTypeNo" value="${map.SPACE_TYPE_NO }">
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/space/spaceType/spaceTypeDetail?spaceTypeName=${map.SPACE_TYPE_NAME }'/>';" style="cursor:pointer;">
 													${map.SPACE_TYPE_NO }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/space/spaceType/spaceTypeDetail?spaceTypeName=${map.SPACE_TYPE_NAME }'/>';" style="cursor:pointer;">
 													${map.SPACE_TYPE_NAME }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/space/spaceType/spaceTypeDetail?spaceTypeName=${map.SPACE_TYPE_NAME }'/>';" style="cursor:pointer;">
 													${map.CATEGORY_NAME }
 												</td>
-												<td onclick="location.href='<c:url value='/admin/member/memberDetail?userId=${userInfoVo.userId }'/>';" style="cursor:pointer;">
+												<td onclick="location.href='<c:url value='/admin/space/spaceType/spaceTypeDetail?spaceTypeName=${map.SPACE_TYPE_NAME }'/>';" style="cursor:pointer;">
 													<c:if test="${map.SPACE_TYPE_DEL_FLAG == 'Y' }">
 														<span class="deActive">비활성화</span>
 													</c:if>

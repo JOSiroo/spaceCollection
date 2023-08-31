@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
   	text-align: left;
   	color:black;
   	margin-bottom:10px;
+  	word-wrap: break-word;
   }
   .reviewHead{
   	font-size:20px;
@@ -275,7 +276,7 @@ pageEncoding="UTF-8"%>
 							<c:forEach var="qna" items="${qnaList }">
 								<div>
 									<div class="qnaHead"><span>${qna.USER_ID}</span></div>
-									<div class="qnaBody"><span>${qna.QNA_CONTENT}</span></div>
+									<div class="qnaBody">${qna.QNA_CONTENT}</div>
 									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
 										<span style="padding-right: 0%;">${qna.QNA_REG_DATE}</span>
 										<c:if test="${sessionScope.userId == qna.USER_ID}">
@@ -297,36 +298,38 @@ pageEncoding="UTF-8"%>
 							<h4>등록된 후기가 없습니다</h4>
 						</c:if>						
 						<c:if test="${!empty reviewList}">
-							<c:forEach var="review" items="${reviewList }">
-								<div>
-									<div class="reviewHead">
-									<span>${review.USER_ID}</span>
-									<div style= "margin-left: 20%;padding-bottom:1%">
-									<c:set var="count" value="0"/>
-									<c:forEach var="i" begin="1" end="${review.REVIEW_RATE}">
-										<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-										<c:set var="count" value="${count+1 }" />
-									</c:forEach>
-									<c:if test="${review.REVIEW_RATE%1 >0 }">
-										<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
-										<c:set var="count" value="${count+1 }" />
-									</c:if>
-									<c:forEach var="j" begin="${count}" end="4">
-										<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
-									</c:forEach>
-									</div>
-									</div>
-									<div class="qnaBody"><span>${review.REVIEW_CONTENT}</span></div>
-									<div style="font-size:14px;margin-right:0%;color:lightgrey;">
-										<span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
-										<c:if test="${sessionScope.userId == review.USER_ID}">
-											<a href="#"style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
-										</c:if>
-									</div>
-								</div>
-								<hr>
-							</c:forEach>
-						</c:if>		
+						    <c:forEach var="review" items="${reviewList}">
+						        <fmt:formatNumber var="float" value="${review.REVIEW_RATE}" pattern="#,#" />
+						        <div>
+						            <div class="reviewHead">
+						                <span>${review.USER_ID}</span>
+						                <div style="margin-left: 20%; padding-bottom: 1%">
+						                    <c:set var="count" value="0" />
+						                    <c:forEach var="i" begin="1" end="${(review.REVIEW_RATE / 2) - 1}">
+						                        <img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
+						                        <c:set var="count" value="${count + 1}" />
+						                    </c:forEach>
+						                    <c:if test="${review.REVIEW_RATE % 2 != 0}">
+						                        <img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
+						                        <c:set var="count" value="${count + 1}" />
+						                    </c:if>
+						                    <c:forEach var="j" begin="${count}" end="4">
+						                        <img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
+						                    </c:forEach>
+						                </div>
+						            </div>
+						            <div class="qnaBody">${review.REVIEW_CONTENT}</div>
+						            <div style="font-size:14px;margin-right:0%;color:lightgrey;">
+						                <span style="padding-right: 60%;">${review.REVIEW_REG_DATE}</span>
+						                <c:if test="${sessionScope.userId == review.USER_ID}">
+						                    <a href="#" style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
+						                </c:if>
+						            </div>
+						        </div>
+						        <hr>
+						    </c:forEach>
+						</c:if>
+	
 						</div>
 					</div>
 				</div>
@@ -823,14 +826,14 @@ pageEncoding="UTF-8"%>
 
         function deleteQna(qnaNum){
 			if(confirm('QnA를 삭제하시겠습니까?')){
-				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${vo.spaceNum}+"'/>"
+				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>"
 						
 			}
         }
         
 		function deleteReview(reviewNum){
 			if(confirm('리뷰를 삭제하시겠습니까?')){
-				location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${vo.spaceNum}+"'/>"
+				location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
 			}
 	       }
         

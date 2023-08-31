@@ -10,6 +10,19 @@
 		</if>
 	</sql>
 	
+	<select id="selectAll">
+		select * 
+		from(
+			select A.*, rownum as rn
+			from 
+			(
+				select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
+			)A	
+		)
+		<![CDATA[
+		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
+	
 	
 	<select id="selectBySpaceType" resultType="map">
 		select * 
@@ -91,7 +104,8 @@
 	
 	<select id="selectBySpaceNum"  resultType="spaceVo">
 		select * from space
-		order by space_num desc 
+		where SPACE_REQUEST_STATUS = 'Y'
+		order by SPACE_REQUEST_DATE desc 
 		FETCH FIRST 9 row only
 	</select>
 	

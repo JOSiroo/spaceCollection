@@ -252,7 +252,7 @@
 			</div>
 	
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="https://www.spacecloud.kr/board/notice" >   
+		    <a href="<c:url value='/user/notice' />">   
 		     <i class="bi bi-info-circle" ></i>
 		   	<p>공지사항</p></a> 
 		  </div>
@@ -270,7 +270,7 @@
 		  </div>
 		  
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="<c:url value='/FAQ'/>">
+		    <a href="<c:url value='/user/faq'/>">
 		     <i class="bi bi-book"></i>
 		 	   <p>FAQ</p></a>
 		  </div>
