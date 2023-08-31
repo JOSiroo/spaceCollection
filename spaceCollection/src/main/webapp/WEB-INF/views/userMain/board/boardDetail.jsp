@@ -102,22 +102,22 @@ $(function() {
 			        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
 			        method: 'post',
 			        data: sendDate,
-			        success: function(add) {
+			        success: function(data) {
 		                 // data를 사용하여 필요한 작업 수행
 		                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
-			        	var str = "";
-						if(add!=null){
+			        	/* var str = ""; */
+						if(data!=null){
 							$('#ajaxComments').html("");
-								$.each(add, function() {
-									$.makeList(add);
+								$.each(data, function() {
 									/* str = this.commentNum + this.userNum + this.commentRegDate + "<br>"
 										+ this.commentContent + "<br>"
 										+ "<button type='button' class='btn' id='editBt'>수정</button>"
 			     						+ "<button type='button' class='btn' id='delBt'>삭제</button>"; */
 								});
-			        	console.log(add);
-									$('#ajaxComments').append(add);
-		     						$('form[name=commentsFrm]').val('')
+			        				console.log(data);
+									$('#ajaxComments').append(data);
+			        				makeList(data);
+		     						$('form[name=commentsFrm]').val('');
 		     						alert("댓글 등록 성공"); 
 							 /* if($('input[name=addNum]').val() == data.length){
 								$('#commentsMoreDiv').html("<span onClick='moreComment()'>댓글 더 보기</span>");
@@ -125,9 +125,9 @@ $(function() {
 								$('#commentsMoreDiv').html("");
 							}  */
 							
-						}else if(add==null){
+						}else if(data==null){
 							alert("댓글 내용을 입력하세요");
-							$('#ajaxComments').append(add);
+							$('#ajaxComments').append(data);
 						}
 						alert("3333");
 			        },

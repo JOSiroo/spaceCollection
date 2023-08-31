@@ -38,7 +38,6 @@ public class UserMainController {
    private final ReviewService reviewService;
    private final Coupon coupon;
    
-   
    //사용자메인화면
    @RequestMapping("/")
    public String home(Model model) {
