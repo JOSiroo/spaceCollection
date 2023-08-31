@@ -17,6 +17,29 @@
 			from 
 			(
 				select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
+				where 1 = 1
+				and SPACE_REQUEST_STATUS = 'Y'
+				<if test="region!=null and region!=''">
+					and space_address like '%' || #{region} || '%'
+				</if>
+				<if test="maxPeople!=null and maxPeople!=''">
+					<![CDATA[ and MAXPEOPLE >=  #{maxPeople} ]]>
+				</if>
+				<if test="minPrice!=null and minPrice!=''">
+					<![CDATA[ and AVGPRICE >  #{minPrice} ]]> 
+				</if>
+				<if test="maxPrice!=null and maxPrice!=''">
+					<![CDATA[ and AVGPRICE <  #{maxPrice} ]]> 
+				</if>
+				<if test="filterList!=null and filterList!=''">
+				and
+					<foreach item="item" collection="filterList" separator="and">
+					   FAC_${item} = 'Y'
+				    </foreach>
+				</if>
+				<if test="order!=null and order!=''">
+					  <![CDATA[ ORDER BY ${order} ]]>
+				</if>
 			)A	
 		)
 		<![CDATA[
@@ -32,6 +55,7 @@
 			(
 				select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
 				where space_Type_no = #{spaceTypeNo}
+				and SPACE_REQUEST_STATUS = 'Y'
 				<if test="region!=null and region!=''">
 					and space_address like '%' || #{region} || '%'
 				</if>
@@ -67,6 +91,7 @@
 			(
 				select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
 				where space_Name like '%' || #{spaceName} || '%'
+				and SPACE_REQUEST_STATUS = 'Y'
 				<if test="region!=null and region!=''">
 					and space_address like '%' || #{region} || '%'
 				</if>
@@ -105,7 +130,7 @@
 	<select id="selectBySpaceNum"  resultType="spaceVo">
 		select * from space
 		where SPACE_REQUEST_STATUS = 'Y'
-		order by SPACE_REQUEST_DATE desc 
+		order by SPACE_REG_DATE desc 
 		FETCH FIRST 9 row only
 	</select>
 	

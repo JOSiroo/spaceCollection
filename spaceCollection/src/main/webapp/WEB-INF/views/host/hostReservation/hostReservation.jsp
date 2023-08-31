@@ -207,6 +207,8 @@
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
+			    
+			    
 			    <li class="page-item">
 			      <a class="page-link" id="next" onclick="movePage('${param.page+1}')" href="javascript:void(0)" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>

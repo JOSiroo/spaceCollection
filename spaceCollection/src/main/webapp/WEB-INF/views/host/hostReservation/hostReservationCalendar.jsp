@@ -1,4 +1,6 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
 	<%@ include file="/WEB-INF/views/form/hostTop.jsp"%>
 	<script
@@ -30,7 +32,7 @@
 	    	    initialView: 'dayGridMonth',
 	    	    locale: 'ko',
 	    	    aspectRatio: 1.35,
-	    	    height: 1000,
+	    	    height: 900,
 	    	    dayMaxEventRows: true,
 	    	    selectable:false,
 	    	    views: {
@@ -126,7 +128,7 @@
 		                	info.dayEl.classList.remove('selectedCell');
 		                	$('.fc-day').attr('style','none');
 		                	$('#sumPrice').css('padding-top', '5%');
-		                	$('#sumPrice').html('일별 매출액');
+		                	$('#sumPrice').html('일별 매출액, 날짜를 클릭하세요.');
 		                }else{
 		                	$('.fc-day').each(function(item){
 			                	if($(this) !== info){
@@ -144,7 +146,7 @@
 			                		});
 			                		
 			                		$('#sumPrice').css('padding-top', '1%');
-									$('#sumPrice').html(date+ "<br> 매출액 : " + addComma(totalPrice)+"원");         		
+									$('#sumPrice').html(date+ "일<br> 매출액은  " + addComma(totalPrice)+"원");         		
 			                	},
 			                	error:function(xhr, status, error){
 			                		alert("error : ", error);
@@ -229,9 +231,8 @@
 	        return value; 
 	 	}
 	    
-	    
-	    
 	    </script>
+	  
 	<script type="text/javascript">
 	    </script>
 	<style type="text/css">
@@ -384,7 +385,7 @@
 		z-index: 100000 !important;
 	}
 	
-	.col-8.sum {
+	.col-10.sum {
 		opacity: 1;
 		transition: 0.3s;
 	}
@@ -510,7 +511,7 @@
 		color: rgba(0, 0, 0, 0.33);
 	}
 	
-	.col-8 {
+	.col-10 {
 		text-align: left;
 		padding: 0% 0% 0% 0%;
 		color: black;
@@ -541,6 +542,9 @@
 	.fc-highlight{
 		background: rgba(25, 61, 118, 0.8) !important;
 	} 
+	.fc-daygrid-day:hover{
+		background:rgba(20, 173, 255, 0.2);
+	}
 	.colorBtn{
 		border-radius: 1rem;
 		height: 40px;
@@ -548,7 +552,30 @@
 	.modal-header.color{
 		background: white;
 	}
+	.numberCell{
+		text-align: center;
+		font-weight: bold;
+	}
+	.table tbody tr:hover{
+		background:rgba(20, 173, 255, 0.2);
+	}
+	
 	</style>
+	<%
+	  // 현재 날짜를 구합니다.
+	  Calendar calendar = Calendar.getInstance();
+	  
+	  // 내일 날짜를 계산합니다.
+	  calendar.add(Calendar.DATE, 1);
+	  
+	  // SimpleDateFormat을 사용하여 형식을 지정합니다.
+	  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	  String tomorrowDate = dateFormat.format(calendar.getTime());
+	  
+	  // JSTL 변수에 저장합니다.
+	  pageContext.setAttribute("tomorrowDate", tomorrowDate);
+	%>
+	
 	<div class="calendarHeader"></div>
 	<div class="modal fade" id="modal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -625,10 +652,81 @@
 					<div class="col-2" id="wonIcon" style="display: inline-block;">
 						<h4 style="color: white; font-weight: bold; font-size: 24px;">₩</h4>
 					</div>
-					<div class="col-8 sum" style="display: inline-block;">
-						<h4 id="sumPrice">일별 매출액</h4>
+					<div class="col-10 sum" style="display: inline-block;">
+						<h4 id="sumPrice">일별 매출액, 날짜를 클릭하세요.</h4>
 					</div>
 				</div>
+				
+				<br>
+				<hr>
+				
+		    	<jsp:useBean id="now" class="java.util.Date" />
+		    	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />	
+				<div class="todayList">
+					<table class="table">
+						<thead>
+							<tr>
+								<th></th>
+								<th><h2 style="font-weight: bold;">To-do 리스트</h2></th>
+								<th><i class="bi bi-calendar-check" style="font-size: 35px;"></i></th>
+							</tr>
+						</thead>
+					  <tbody>
+						  	<tr class="table-secondary">
+						    	<th class="numberCell">번호</th>
+						    	<th>제목</th>
+						    	<th>내용</th>
+					    	</tr>
+					    	<c:set var="cnt" value="1"/>
+					    	<c:forEach var="toDoList" items="${calList}">
+						    	<fmt:parseDate var="endDate" value="${toDoList.memoEndDay}" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd" var="formattedEndDate" />
+						    	<fmt:parseDate var="startDate" value="${toDoList.memoStartDay}" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${startDate}" pattern="yyyy-MM-dd" var="formattedStartDate" />
+								    <tr>
+										<c:if test="${formattedStartDate <= today}">
+										    <c:if test="${today <= formattedEndDate || formattedEndDate == tomorrowDate}">
+											    	<td class="numberCell">${cnt}</td>
+											    	<td>${toDoList.memoTitle}</td>
+											    	<td>${toDoList.memoContent}</td>
+											    	<c:set var="cnt" value="${cnt+1}"/>
+										    </c:if>
+									    </c:if>										    	
+								    </tr>
+						   </c:forEach>
+					  </tbody>
+					</table>
+				</div>
+								
+				<br>
+				<hr>
+				
+				<div class="reservationList">
+					<table class="table">
+						<thead>
+							<tr>
+								<th></th>
+								<th><h2 style="font-weight: bold;">예약 리스트</h2></th>
+								<th><i class="bi bi-card-checklist" style="font-size: 35px;"></i></th>
+							</tr>
+						</thead>
+					  <tbody>
+					  	<tr class="table-warning">
+					    	<th class="numberCell">예약번호</th><th>공간</th><th>정보</th>
+				    	</tr>
+				    	<c:forEach var="reservationList" items="${list}" varStatus="status">
+						    <c:if test="${today == reservationList.RESERVE_START_DAY}">
+								    <tr>
+								    	<td class="numberCell">${reservationList.RESERVATION_NUM}</td>
+								    	<td>${reservationList.SPACE_NAME }</td>
+								    	<td>${reservationList.SD_TYPE } &nbsp;${reservationList.RESERVE_PEOPLE}명</td>
+								    </tr>
+						    </c:if>
+					   </c:forEach>
+					  </tbody>
+					</table>
+				</div>
+				
 			</div>
 		</div>
 		<div class="col-8 calendar-wrapper">

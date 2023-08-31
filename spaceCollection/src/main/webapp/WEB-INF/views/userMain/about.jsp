@@ -117,7 +117,42 @@ section.sec3 {
     max-width: 1500px;
     margin: 0 auto;
     }
+  /* .se1span {
+    display: block;
+    font-size: 40px;
+    font-weight: bold;
+    float: left;
+    margin: 230px 0px 0px 210px;
+    background: url(../images/bagr.png) top right / contain no-repeat;
+    color: #2a2828;
+}   */
     
+    .rightdiv {
+    position: absolute;
+    margin: 20px;
+    width: 900px;
+    margin-left: 305px;
+    margin-left: 431px
+	}		
+	.se1span {
+    font-size: 40px;
+    font-weight: bold;
+    float: left;
+    margin: 251px 0px 0px 313px;
+    color: #2a2828;
+    margin: 33px;
+    position: inherit;
+    margin-right: 900px;
+    margin-top: 220px;
+	}
+	section.se1 {
+    position: initial;
+	}
+	.w-100 {
+    width: 100%!important;
+    position: relative;
+	}
+
 </style>
 
 <body>
