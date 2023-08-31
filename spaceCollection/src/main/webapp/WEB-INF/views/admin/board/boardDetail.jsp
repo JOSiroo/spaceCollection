@@ -85,6 +85,7 @@
 <script type="text/javascript">
 	$(function() {
 		$.commentsLoad();
+			
 		
 		$('#okBt').hide();
 		$('#fileList').hide();
