@@ -141,15 +141,22 @@
 		color: #767676;
 	}
 	
+	.subTitleTag {
+		float: right;
+		font-size: 14px;
+		color: #767676;
+	}
+	
 	.btAdd {
 		float: right;
 		margin-top: 15px;
 		width: 130px;
 		height: 50px;
-		background: #704de4;
+		background: #704de4 !important;
 		color: white;
 		border: 0;
 		font-weight: bold;
+		border-radius: 0;
 	}
 	
 	.spTag {
@@ -255,6 +262,17 @@
 	.imgBox img {
 		width: 122px;
 		height: 122px;
+	}
+	
+	.modal-content {
+		width: 850px;
+		min-height: 500px;
+		
+	}
+	
+	.modal-header {
+		background: #704de4;
+		font-weight: bold;
 	}
 	
 </style>
@@ -370,7 +388,7 @@
 			<div class="boxForm">
 				<div class="boxTitle">
 					<span>공간 태그 <span style="color: red;">*</span></span>
-					<span class="subTitle tag">최대 5개</span>
+					<span class="subTitleTag">최대 5개</span>
 				</div>
 				<div class="boxContents">
 					<div class="spaceTag tag">
@@ -390,7 +408,7 @@
 				<div class="boxContents">
 					<div class="spaceTag fa">
 						<input type="text" class="spText" style="width: 850px;"
-							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
+							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd fa" value="추가 ▽">
 						<div class="spTag"></div>
 					</div>
@@ -405,7 +423,7 @@
 				<div class="boxContents">
 					<div class="spaceTag pre">
 						<input type="text" class="spText" style="width: 850px;"
-							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="27">
+							placeholder=" 게스트들이 예약 시 확인해야 하는 주의사항을 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd pre" value="추가 ▽">
 						<div class="spTag"></div>
 					</div>
@@ -469,7 +487,30 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceZip">
-						<input type="button" class="btAdd" value="주소등록" style="margin: 0 0 10px 20px;">
+						<!-- Button trigger modal -->
+						<button type="button" class="btAdd btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin: 0;">
+						  주소등록
+						</button>
+						
+						<!-- Modal -->
+						<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: white; font-weight: bold;">주소 등록</h1>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <div class="modal-body">
+						        ...
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-primary">Understood</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						<!-- <input type="button" class="btAdd" value="주소등록" style="margin: 0 0 10px 20px;"> -->
 						<div class="spZip1" style="height: 50px; padding-top: 15px;">
 							<span class="inner">실제 서비스되는 공간의 주소를 입력해주세요.</span>
 						</div>
@@ -604,9 +645,11 @@
 		        	$('.spImg.main').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
 		      	};
 		      	reader.readAsDataURL(file);
+		    } else {
+		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
+		        $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
 		    }
 		});
-		
 		
 	    
 	    //하단 버튼
@@ -694,6 +737,16 @@
 				
 				return false;
 			}
+			
+			//대표 이미지
+			if ($('.spImg.main .imgBox').length === 0) {
+		        event.preventDefault(); // 폼 제출 막기
+		        alert('대표 이미지를 첨부해 주세요.');
+		        
+		        scrollMove('.spaceImg.main');
+		        
+		        return false;
+		    }
 			
 			
 			$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
