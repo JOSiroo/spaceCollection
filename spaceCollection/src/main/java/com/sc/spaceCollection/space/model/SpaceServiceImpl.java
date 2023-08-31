@@ -125,5 +125,21 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 
+	@Override
+	public List<Map<String, Object>> selectSpaceConfirmList(SearchVO vo) {
+		List<Map<String, Object>> list = spaceDao.selectSpaceConfirmList(vo);
+		for(Map<String, Object> map : list) {
+			map.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0, 10));
+		}
+		return list;
+	}
+
+
+	@Override
+	public int getTotalRecordSpaceConfrimList(SearchVO vo) {
+		return spaceDao.getTotalRecordSpaceConfrimList(vo);
+	}
+
+
 
 }

@@ -271,4 +271,29 @@ public class AdminSpaceController {
 	public void spaceList(Model model) {
 		logger.info("공간 조회");
 	}
+	
+	@RequestMapping("/spaceConfirmList")
+	public void spaceConfirmList(@ModelAttribute SearchVO searchVo, Model model) {
+		logger.info("공간 승인 목록 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> list = spaceService.selectSpaceConfirmList(searchVo);
+		logger.info("공간승인 목록 조회 결과, list.size = {}", list.size());
+		
+		int totalRecord = spaceService.getTotalRecordSpaceConfrimList(searchVo);
+		logger.info("전체 공간승인 수,  totalRecord = {}", totalRecord);
+		
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("searchVo", searchVo);
+		model.addAttribute("pagingInfo", pagingInfo);
+	}
 }
