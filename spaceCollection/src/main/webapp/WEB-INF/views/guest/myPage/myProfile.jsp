@@ -9,34 +9,63 @@
 		
 		 $(".hiddenText").hide(); // 처음에 숨기기
 		 
-		 $(".form-check-input").change(function(){
-			var checked= $(this).prop("checked");
-			var agreement=$(this).attr("name");
-		 	if(checked){
-		 		alert(agreement+"체크!");
-		 		
-		 	}else{
-		 		alert(agreement+"체크품!");
-		 	}
-		 	
-		 	/* $.ajax({
-				url:"<c:url value='/guest/agreement' />",
-				type:'post',
-				data:{
-					 : "Y"
-				}
-				
-				
-			}); */
-		 	
-		 	
-		 	
-		 });
-		 
-		 function agreementUpdate(status, name){
-			 if()
-			 
+		 if($("input[name=userMarketingSmsOk]").val() =='Y'){
+			 $("input[name=userMarketingSmsOk]").prop("checked",true);
+		 }else{
+			 $("input[name=userMarketingSmsOk]").prop("checked",false);
 		 }
+		 
+		 if($("input[name=userMarketingEmailOk]").val() == 'Y'){
+			 $("input[name=userMarketingEmailOk]").prop("checked",true);
+		 }else{
+			 $("input[name=userMarketingEmailOk]").prop("checked",false);
+		 }
+/* 		 
+		 $("input[name=userMarketingSmsOk]").change(function(){
+			 
+			 $.ajax({
+					url:"<c:url value='/guest/agreementSms' />",
+					type:'post',
+					data:{
+						userMarketingSmsOk : $(this).val(),
+					},
+					success:function(res){
+						
+						if(res){
+							$(this).prev().text("동의").css("color","gray");
+						}else{
+							$(this).prev().text("비동의").css("color","#ea5454");
+						}
+						
+					},
+					error:function(xhr, status, error){
+						alert(status+" : " + error);
+					}
+				}); 
+		 };
+		 
+		 $("input[name=userMarketingEmailOk]").change(function(){
+			 
+			 $.ajax({
+					url:"<c:url value='/guest/agreementEmail' />",
+					type:'post',
+					data:{
+						userMarketingSmsOk : $(this).val(),
+					},
+					success:function(res){
+						
+						if(res){
+							$(this).prev().text("동의").css("color","gray");
+						}else{
+							$(this).prev().text("비동의").css("color","#ea5454");
+						}
+						
+					},
+					error:function(xhr, status, error){
+						alert(status+" : " + error);
+					}
+				}); 
+		 }; */
 		 
          $(".editInfo").click(function() {
         	 
@@ -58,29 +87,30 @@
 		 
 		 $("#edit-name").click(function(){
 			 var newName=$("#edit-name").prev().val();
-			 if(newName.length<1){
-				 alert("test");
-				 return false;
+			 if(newName.length>2){
+				 $.ajax({ 
+					 url:"<c:url value='/guest/editName'/>",
+					 type:'post',
+					 data:{
+						userName : $("input[name=userName]").val(),
+					 },
+					 success:function(res){
+						 
+					 	alert("정보수정이 완료되었습니다.");
+					 	$("#dbUserName").html(newName);
+					 	$(".userName").find("p").html(newName);
+						$(".userName").find("p").show();
+			        	$(".userName").find(".hiddenText").hide();
+			        	$(".userName").find(".editInfo").text("변경하기"); 
+					 },
+					 error:function(xhr,status,error){
+						 alert(error+"정보 수정의 실패했습니다.");
+					 }
+				 });//ajax
+			 }else{
+				 
 			 }
 			 
-			 $.ajax({ 
-				 url:"<c:url value='/guest/editName'/>",
-				 type:'post',
-				 data:{
-					userName : $("input[name=userName]").val(),
-				 },
-				 success:function(res){
-					 
-				 	alert("정보수정이 완료되었습니다.");
-				 	$("#dbUserName").html(newName);
-					$("#dbUserName").show();
-		        	$("#dbUserName").next().hide();
-		        	$("#dbUserName").next().next().text("변경하기"); 
-				 },
-				 error:function(xhr,status,error){
-					 alert(error+"정보 수정의 실패했습니다.");
-				 }
-			 });//ajax
 		 });
 		 
 		 $("#edit-hp").click(function(){
@@ -298,7 +328,7 @@
 						<c:if test="${empty sessionScope.code }">
 							<div class="userName">
 								<p id="dbUserName" class="userInfo">${guestVo.userName }</p>
-								<div class="hiddenText">
+								<div class="hiddenText" >
 									<input type="text" class="edit-textbox" name="userName">
 									<button type="button" class="edit-button" id="edit-name">확인</button>
 								</div>
@@ -361,7 +391,7 @@
 								<label class="form-check-label">카카오 연동</label>
 								<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" onclick="return false">
 							</div>
-							<a style="color: gray; font-size: 7px">한개의 SNS만 연동이 가능하며, 연동된 소셜계정은 해제가 불가합니다.</a>
+							<a style="color: gray; font-size: 7px">소셜계정만 연동이 가능하며, 연동된 소셜계정은 해제가 불가합니다.</a>
 						</td>
 					</tr>
 					<tr>
@@ -389,7 +419,9 @@
 						<td>
 							<div class="form-check form-switch" style="margin-left: -38px;">
 								<label class="form-check-label" for="flexSwitchCheckChecked">이메일</label>
-								<input class="form-check-input" type="checkbox" name="userMarketingEmailOk" role="switch" id="flexSwitchCheckChecked" value="Y" checked>
+								<span class="msg"></span>
+								<input class="form-check-input" type="checkbox" name="userMarketingEmailOk" role="switch"
+								 id="flexSwitchCheckChecked" value="${guestVo.userMarketingEmailOk}" checked>
 							</div>
 						</td>
 					</tr>
@@ -398,7 +430,9 @@
 						<td>
 							<div class="form-check form-switch" style="margin-left: -36px;">
 								<label class="form-check-label" for="flexSwitchCheckChecked">SMS</label>
-								<input class="form-check-input" type="checkbox" name="userMarketingSmsOk" role="switch" id="flexSwitchCheckChecked" value="Y" checked>
+								<span class="msg"></span>
+								<input class="form-check-input" type="checkbox" name="userMarketingSmsOk" role="switch"
+								 id="flexSwitchCheckChecked" value="${guestVo.userMarketingSmsOk}" checked>
 							</div>
 						</td>
 					</tr>
