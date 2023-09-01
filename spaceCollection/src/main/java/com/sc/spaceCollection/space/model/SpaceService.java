@@ -34,4 +34,6 @@ public interface SpaceService {
 	int isAcceptSpace(SpaceVO vo);
 	List<Map<String, Object>> selectSpaceConfirmList(SearchVO vo);
 	int getTotalRecordSpaceConfrimList(SearchVO vo);
+	int spaceConfirm(SpaceListVO listVo);
+	int spaceDenine(SpaceListVO listVo);
 }

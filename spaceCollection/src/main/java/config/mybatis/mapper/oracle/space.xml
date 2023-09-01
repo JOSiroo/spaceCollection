@@ -158,8 +158,13 @@
 		<include refid="searchWhere"/>
 	</select>
 	
-	<update id="isAcceptSpace" parameterType="spaceVo">
-		update space set space_reg_date = sysdate, space_request_status = #{spaceRequestStatus} 
+	<update id="spaceConfirm" parameterType="spaceVo">
+		update space set space_reg_date = sysdate, space_request_status = 'Y' 
+		where space_num = #{spaceNum}
+	</update>
+	
+	<update id="spaceDenine" parameterType="spaceVo">
+		update space set space_reg_date = sysdate, space_request_status = 'N' 
 		where space_num = #{spaceNum}
 	</update>
 	
