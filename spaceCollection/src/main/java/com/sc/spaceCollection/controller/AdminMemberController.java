@@ -176,7 +176,7 @@ public class AdminMemberController {
 	
 	@RequestMapping("/memberDetail/ajax_spaceList")
 	@ResponseBody
-	public AjaxVO ajax_spaceList(@ModelAttribute SearchVO searchVo, Model model) {
+	public AjaxVO ajax_spaceList(@ModelAttribute SearchVO searchVo) {
 		logger.info("ajax - 공간 등록 내역 조회, 파라미터 searchVo = {}", searchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();

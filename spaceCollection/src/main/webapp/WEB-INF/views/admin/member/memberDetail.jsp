@@ -271,7 +271,7 @@
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
-						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "<td colspan='6' style='text-align: center;''>댓글 내역이 없습니다.</td>"
 						+ "</tr>"
 					$('#commentsTbody').html(str);
 				}
@@ -325,7 +325,7 @@
 						pageMake(res.pagingInfo);
 				}else if(res.ajaxList.length==0){
 					str = "<tr>"
-						+ "<td colspan='6' style='text-align: center;''>예약 내역이 없습니다.</td>"
+						+ "<td colspan='6' style='text-align: center;''>리뷰 내역이 없습니다.</td>"
 						+ "</tr>"
 					$('#reviewTbody').html(str);
 				}
@@ -368,15 +368,14 @@
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
 								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;";
+								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_STATUS;
 								if(this.SPACE_REQUEST_STATUS == '승인'){
-									str += "color: green";
+									
 								}else if(this.SPACE_REQUEST_STATUS == '거절'){
-									str += "color: red";
-								}else if(this.SPACE_REQUEST_STATUS == '요청'){
-									str += "color: yellow";
+									
+								}else if(this.SPACE_REQUEST_STATUS == '승인 요청'){
+									
 								}
-								str += ";'>" + this.SPACE_REQUEST_STATUS;
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
 								str += "</td>";
