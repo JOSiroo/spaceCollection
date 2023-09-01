@@ -3,674 +3,293 @@
 <%@ include file="/WEB-INF/views/form/hostTop.jsp"%>
 
 <style type="text/css">
-.section {
-    padding: 20px 0;
-    position: relative;
-}
+	body {background: #f6f6f6;}
 
-.heading_required {
-	font-size: 20px;
-}
-.star {
-	color: red;
-}
+	article {
+		margin: 140px 0 150px 0; 
+		font-size: 16px;
+    	line-height: 20px;
+		display: flex;
+		justify-content: center;
+	}
 
-.input-file-button{
-  padding: 6px 25px;
-  background-color:#FF6600;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-}
+	.main {width: 1000px; display: inline-block;}
+	
+	.heading {
+		border-bottom: 4px solid #704de4;
+		padding-bottom: 24px;
+	}
+	
+	.hd1 {
+		font-size: 26px;
+		color: black;
+	}
+	
+	.hd2 {
+		float: right;
+		color: red;
+	}
+	
+	.boxForm {
+		margin-top: 80px;
+	}
+	
+	.boxTitle {
+		font-size: 20px;
+		font-weight: bold;
+		color: black;
+		margin-bottom: 15px;
+	}
 
-.select {
-    padding: 15px 10px;
-}
-.select input[type=radio]{
-    display: none;
-}
-.select input[type=radio]+label{
-    display: inline-block;
-    cursor: pointer;
-    height: 24px;
-    width: 90px;
-    border: 1px solid #333;
-    line-height: 24px;
-    text-align: center;
-    font-weight:bold;
-    font-size:13px;
-}
-.select input[type=radio]+label{
-    background-color: #fff;
-    color: #333;
-}
-.select input[type=radio]:checked+label{
-    background-color: #333;
-    color: #fff;
-}
-.space_refund {
-	border-color: #FF6600;
-	outline: none;
-}
-li {
-	display: inline-block;
-	list-style: none;
-}
-#registerBtn {
-	background-color: #35404E;
-	color: #fff;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-.msg{
-	color: red;
-	font-size: 0.8em;
-	display: none;
-}
+	.btBar {
+		display: flex;
+		justify-content: center;
+		margin: 100px 0 0 0;
+	}
+	
+	.btBar button {
+		border-radius: 0.5rem;
+		width: 100%;
+		height: 80px;
+		margin: 0 10px 60px 10px;
+		color: white;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	
+	.boxnoti {
+		margin: 20px 0 0 0;
+		display: inline-block;
+		width: 100%;
+	}
+	
+	.boxnoti p {
+		font-size: 14px;
+		color: #7b7b7b;
+	}
+	
+	.boxnoti img {
+		width: 18px;
+		height: 18px;
+		float: left;
+		margin-right: 5px;
+	}
+	
+	.boxIcon {
+		width: 20px;
+		height: 20px;
+		margin: 0 0 4px 15px;
+	}
+	
+	.tooltip-text {
+	    display: none;
+	    position: absolute;
+	    background-color: #7b7b7b;
+	    color: white;
+	    padding: 5px;
+	    border-radius: 4px;
+	    z-index: 999;
+	    font-size: 13px;
+	}
+	
+	.boxIcon:hover + .tooltip-text {
+	    display: block;
+	}
+	
+	.area {
+		width: 90%;
+		height: 50px;
+		border: 1px solid #b7b7b7;
+		font-size: 20px;
+		margin-top: 15px;
+		padding: 8px 8px 8px 8px;
+		resize: none;
+		text-align: right;
+		font-weight: bold;
+	}
+	
+	input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		margin: 0 10px 5px 0;
+	}
+	
+	.form-check-label {
+		font-size: 20px;
+		color: black;
+	}
+	
+	.form-check.form-check-inline {
+		margin: 0 10px 25px 0;
+	}
+	
+	.criteria {
+		font-weight: bold;
+		font-size: 20px;
+		color: black;
+	}
+	
+	.lbPerson {
+		margin: 0 50px 0 0;
+	}
+	
+	.txtPerson {
+		border: 1px solid #b7b7b7;
+		height: 30px;
+		text-align: right;
+		padding-right: 10px;
+	}
+	
 </style>
-<script type="text/javascript">
 
-</script>
-</head>
-<body>
-	<div class="wrap w-75" style="margin: 0 auto;">
-		<form action="<c:url value="/sRegister/add"/>" name="f" method="post" enctype="multipart/form-data" >
-			<section>
-			<div class="page_title"><h2>기본 정보</h2></div>
+<article>
+	<div class="main">
+		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/registration4' />">
+			<div class="heading">
+				<span class="hd1">공간의 정보를 입력해주세요.</span>
+				<span class="hd2">* 필수입력</span>
+			</div>
+			<!-- 공간 층수 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>공간 면적 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spaceArea">
+						<input type="text" class="area" maxlength="3" value="" >
+						<span style="font-size: 20px; color: black; margin-left: 15px; font-weight: bold;">평</span>
+					</div>
+				</div>
+			</div>
+			<!-- 편의시설 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>편의시설</span>
+					<br><hr>
+				</div><br>
+				<div class="boxContents">
+					<div class="facility">
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  	<label class="form-check-label" for="inlineCheckbox1">와이파이</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  	<label class="form-check-label" for="inlineCheckbox2">복사/인쇄기</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+						  	<label class="form-check-label" for="inlineCheckbox3">의자/테이블</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+						  	<label class="form-check-label" for="inlineCheckbox4">흡연가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+						  	<label class="form-check-label" for="inlineCheckbox5">내부화장실</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+						  	<label class="form-check-label" for="inlineCheckbox6">PC/노트북</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+						  	<label class="form-check-label" for="inlineCheckbox7">TV/프로젝터</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8">
+						  	<label class="form-check-label" for="inlineCheckbox8">화이트보드</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox9" value="option9">
+						  	<label class="form-check-label" for="inlineCheckbox9">음식물섭취가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox10" value="option10">
+						  	<label class="form-check-label" for="inlineCheckbox10">주유반입가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="option11">
+						  	<label class="form-check-label" for="inlineCheckbox11">취사가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="option12">
+						  	<label class="form-check-label" for="inlineCheckbox12">애완동물동반가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="option13">
+						  	<label class="form-check-label" for="inlineCheckbox13">음향장비</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 예약 기준 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>예약 기준 <span style="color: red;">*</span></span>
+					<img class="boxIcon" src="https://partner.spacecloud.kr/static/media/info-circle-solid.d9a24d05.svg">
+					<div class="tooltip-text">• 최소 수용인원 : 설정한 최소 수용인원 정보를 게스트가 확인할 수 있습니다.<br>
+						• 최대 수용인원 : 설정한 최대 수용인원까지 공간 예약을 받을 수 있습니다.
+					</div><br><hr>
+				</div><br>
+				<div class="boxContents">
+					<div class="criteria">
+						<div class="minPerson" style="float: left; margin-right: 8%;">
+							<label class="lbPerson">최소 수용인원</label>
+							<input type="text" class="txtPerson" > 명
+						</div>
+						<div class="maxPerson" style="float: left;">
+							<label class="lbPerson">최대 수용인원</label>
+							<input type="text" class="txtPerson" > 명
+						</div>
+					</div>
+				</div>
+			</div>
 			
-				<div class="heading">
-					<span class="heading_required">공간 정보를 입력해주세요.</span>
-					<span class="heading_icon" style="color: red;">*&nbsp;필수입력</span>
-				</div>
-				
-				
-				
-				<!-- 입력값 검증 -->
-				<!-- 공간명 : sName -->
-				<div class="section">
-					<div class="section1">
-						<span>공간명</span>
-						<span class="star">*</span>
-						<!-- 카운트 -->
-						<span id="characterCount">0</span><span>자/18자</span>
-					</div>
-					<input name="sName" id="sName" class="form-control" type="text" 
-						placeholder="고유 업체명을 입력해주세요.(예시) 인디워커스 하이브 회의실" required maxlength="18" aria-describedby="emailHelp">
-					<small id="emailHelp" class="form-text text-muted" style="color: red;">사용 가능한 특수문자 : (,),[,],-,.(마침표),,(쉼표)</small>
-				</div>
-				<div class="mb-5">
-					<span id="sNameNullMsg" class="msg">공간명을 입력해 주세요.</span>
-					<span id="sNameValidMsg" class="msg">공간명을 형식에 맞게 입력해 주세요.</span>	
-				</div>
-				<script type="text/javascript">
-				var input = document.getElementById("sName");
-				var countElement = document.getElementById("characterCount");
-
-				input.addEventListener("input", function() {
-				  var characterCount = input.value.length;
-
-				  countElement.innerText = characterCount;
-				});
-				</script>
-				
-				
-				
-				<!-- 입력값 검증 -->
-				<!-- 공간 가격 : sPrice -->
-				<div class="section">
-					<div class="section1">
-						<span>가격</span>
-						<span class="star">*</span>
-					</div>
-					<input name="sPrice" id="sPrice" class="form-control" type="text" placeholder="1박당 가격으로 작성해주세요." required>
-				</div>
-				<div class="mb-5">
-					<span id="sPriceNullMsg" class="msg">가격을 입력해 주세요.</span>
-					<span id="sPriceValidMsg" class="msg">가격을 형식에 맞게 입력해 주세요.</span>	
-				</div>
-				
-				
-				
-				<!-- 공간 유형 : sCate -->
-				<div class="section">
-					<div class="section1">
-						<span>공간 유형</span>
-						<span class="star">*</span>
-					</div>
-					<div style="padding-bottom: 20px;">
-						<p class="guide_warn">빠른 검수 통과를 위해 반드시 공간에 적합한 유형을 선택해주세요! 부적합한 유형 선택시 검수 반려 사유가 됩니다.</p>
-					</div>
-					<div class="input-group mb-3">
-					  <div class="input-group-prepend">
-					    <label class="input-group-text" for="inputGroupSelect01">공간 유형</label>
-					  </div>
-					  <select class="custom-select" id="inputGroupSelect01" name="sCate">
-					    <option selected value="cate1">공유주방</option>
-					    <option value="cate2">보컬연습실</option>
-					    <option value="cate3">렌탈스튜디오</option>
-					    <option value="cate4">회의실</option>
-					    <option value="cate5">라이브방송</option>
-					    <option value="cate6">카페</option>
-					    <option value="cate7">컨퍼런스</option>
-					    <option value="cate8">강의실</option>
-					    <option value="cate9">스몰웨딩</option>
-					    <option value="cate10">악기연습실</option>
-					    <option value="cate11">운동시설</option>
-					    <option value="cate12">녹음실</option>
-					  </select>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sCateNullMsg" class="msg">공간 유형을 선택해 주세요.</span>
-				</div>	
-				
-				
-				
-				<!-- 공간 소개 : sInfo -->
-				<div class="section">
-					<div class="section1">
-						<span>공간 소개</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="sInfo"></label>
-					    <textarea name="sInfo" class="form-control" id="sInfo" rows="3" 
-					    	placeholder="게스트들에게 필요한 공간 정보를 상세하게 소개해주세요." required></textarea>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sInfoNullMsg" class="msg">공간 소개를 입력해 주세요.</span>
-				</div>
-				
-				
-				<!-- 공간 태그 : sTag -->
-				<div class="section">
-					<div class="section1">
-						<span>공간 태그</span>
-						<span class="star">*</span>
-					</div>
-					<div class="input-group mb-3">
-						<input type="text" name="sTag" id="sTag" class="form-control" required
-							placeholder="게스트들이 선호할만한 주요 특징을 키워드로 입력해주세요.(짧고 간결하게!)">
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sTagNullMsg" class="msg">공간 태그를 입력해 주세요.</span>
-				</div>
-				
-				
-				
-				
-				<!-- 시설 안내 : sGuide -->
-				<div class="section">
-					<div class="section1">
-						<span>시설 안내</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="sGuide"></label>
-					    <textarea name="sGuide" class="form-control" id="sGuide" rows="3" 
-					    	placeholder="이용 가능한 시설에 대해 최대한 상세하게 입력해주세요." required></textarea>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sGuideNullMsg" class="msg">시설 안내를 입력해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 사용 가능한 인원 수 : sPerson -->
-				<div class="section">
-					<div class="section1">
-						<span>사용 가능한 인원 수</span>
-						<span class="star">*</span>
-					</div>
-					<input type="text" class="form-control" name="sPerson" id="sPerson" placeholder="사용 가능한 인원수를 입력해주세요." required>
-				</div>
-				<div class="mb-5">
-					<span id="sPersonNullMsg" class="msg">사용 가능한 인원수를 입력해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 예약 시 주의사항 : sNotice -->
-				<div class="section">
-					<div class="section1">
-						<span>예약 시 주의사항</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="sNotice"></label>
-					    <textarea name="sNotice" class="form-control" id="sNotice" rows="3"
-					    	placeholder="게스트들이 예약 시 확인해야 하는 주의사항을 상세하게 입력해주세요." required></textarea>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sNoticeNullMsg" class="msg">예약 시 주의사항을 입력해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 대표이미지 : sImg -->
-				<div class="section">
-					<div class="section1">
-						<span>대표 이미지</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="exampleFormControlTextarea1"></label>
-					    <input type="file" name=uploadFile1 id="sImg" required style="padding: 6px 25px; background-color: #704de4; 
-					    	border-radius: 4px; color: white; cursor: pointer; ">
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sImgNullMsg" class="msg">대표 이미지를 선택해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 상세이미지 : sImg2 -->
-				<div class="section">
-					<div class="section1">
-						<span>상세 이미지</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="exampleFormControlTextarea1"></label>
-					    <input type="file" name="uploadFile2" id="sImg2" required style="padding: 6px 25px; background-color: #704de4; 
-					    	border-radius: 4px; color: white; cursor: pointer; ">
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sImg2NullMsg" class="msg">상세 이미지를 선택해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 주소 & 상세주소 :  -->
-				<div class="section">
-					<div class="section1">
-						<span>주소(위치)</span>
-						<span class="star">*</span>
-					</div>
-					<div>
-						<span class="star">공간 주소는 최초 등록 이후 직접 변경할 수 없습니다.</span>
-						<span style="color: #0000EE">고객센터</span><span class="star">를 통해 주소 변경을 요청해주세요.</span><br>
-				  	    <label for="sample6_postcode"></label>
-				 	    <input type="text" class="form-control" id="postcode" placeholder="우편번호">
-						<input type="button" id="postSearch" value="우편번호 찾기" style="padding: 6px 25px; background-color: #704de4; 
-							border-radius: 4px; color: white; cursor: pointer;"><br>
-				 	    <input type="text" name="sMap" class="form-control" id="addr1" placeholder="주소" required><br>
-				 	    <input type="text" name="sDetailMap" class="form-control" id="sample6_detailAddress" placeholder="상세주소" required>
-				    </div>
-				</div>
-				<div class="mb-5">
-					<span id="sMapNullMsg" class="msg">주소를 입력해 주세요.</span>
-					<span id="sDetailMapNullMsg" class="msg">상세 주소를 입력해 주세요.</span>
-				</div>
-				<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-				<script type="text/javascript">
-				$("#postSearch").click(function() {
-			        new daum.Postcode({
-			            oncomplete: function(data) {
-							$("#postcode").val(data.zonecode);
-							$("#addr1").val(data.address);
-			            }
-			        }).open();
-			    });
-			    </script>
-				
-				
-				
-				<!-- 위치정보 -->
-				<div class="section">
-					<div class="section1">
-						<span>위치정보</span>
-						<img src="">
-						<!-- 카운트 -->
-						<span id="characterCount2">0</span><span>자/20자</span>
-					</div>
-					<div class="form-group">
-						<input name="sLocation" id="sLocation" class="form-control" type="text" 
-							placeholder="ex.강남역 도보 5분 거리(최대 20자)" maxlength="20">
-					</div>
-				</div>
-				<!-- 공간명과 겹쳐서 안됨.. -->
-				<script type="text/javascript">
-				var input1 = document.getElementById("sLocation");
-				var countElement1 = document.getElementById("characterCount2");
-
-				input1.addEventListener("input1", function() {
-				  var characterCount2 = input1.value.length;
-
-				  countElement1.innerText = characterCount2;
-				});
-				</script>
-				
-				
-				
-				<div class="page_title"><h2>이용 안내</h2></div>
-				<div class="heading">
-					<span class="heading_required">이용 정보를 입력해주세요.</span>
-					<span class="heading_icon" style="color: red;">*&nbsp;필수입력</span>
-				</div>
-				<div class="alert alert-primary" role="alert">
-				  Space Moon은 정기휴무 없이 연중무휴입니다. 이 점 참고하여 등록해주시기 바랍니다. 
-				</div>
-				
-				
-				
-				<!-- 주차 여부 : sParking -->
-				<div class="section">
-					<div class="section1">
-						<span>주차여부</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="sParking"></label>
-					    <select name="sParking" class="form-control" id="sParking" required>
-							<option selected="selected">주차 여부를 선택해주세요.</option>
-							<option value="0">주차 불가</option>
-							<option value="1">1대</option>
-							<option value="2">2대</option>
-							<option value="3">3대</option>
-							<option value="4">4대 이상</option>
-					    </select>
-					    <div id="input-container"></div>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sParkingNullMsg" class="msg">주차여부를 선택해 주세요.</span>
-				</div>
-				
-				
-				
-				
-				<!-- 엘리베이터 여부 : sElevator -->
-				<div class="section">
-					<div class="section1">
-						<span class="space_tag">엘리베이터 여부</span>
-						<span class="star">*</span>
-					</div>
-					<div class="select">
-					     <input type="radio" id="select" name="sElevator" value="elevator_exist"><label for="select">있음</label>
-					     <input type="radio" id="select2" name="sElevator" value="elevator_noexist"><label for="select2">없음</label>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="sElevatorNullMsg" class="msg">엘리베이터 여부를 선택해 주세요.</span>
-				</div>
-				
-				
-				
-				<div class="page_title"><h2>예약/정산 정보</h2></div>
-				<div class="alert alert-primary" role="alert">
-				  Space Moon은 바로결제 방법으로만 결제 방식을 택합니다. 이 점 참고하여 등록해주시기 바랍니다.<br>
-				</div>
-				<div class="heading">
-					<span class="heading_required">정산 정보를 입력해주세요.</span>
-					<span class="heading_icon" style="color: red;">*&nbsp;필수입력</span>
-				</div>
-
-
-
-
-
-
-				
-				<!-- 상호명 : hSpacename -->
-				<div class="section">
-					<div class="section1">
-						<span>상호명(개인/법인)</span>
-						<span class="star">*</span>
-						<span>0</span><span>자/28자</span>
-					</div>
-					<input name="hSpacename" id="hSpacename" class="form-control" type="text" 
-						placeholder="상호명을 입력해주세요.(최대 28자)" value="${loginHost.HSpacename}" required maxlength="28">
-				</div>
-				<div class="mb-5">
-					<span id="hSpacenameNullMsg" class="msg">상호명(개인/법인)을 입력해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 입력값 검증 -->
-				<!-- 대표자명 : hCeoname -->
-				<div class="section">
-					<div class="section1">
-						<span>대표자명</span>
-						<span class="star">*</span>
-					</div>
-					<input name="hCeoname" id="hCeoname" value="${loginHost.HCeoname}" class="form-control" type="text" placeholder="대표자명을 입력해주세요." required>
-				</div>
-				<div class="mb-5">
-					<span id="hCeonameNullMsg" class="msg">대표자명을 입력해 주세요.</span>
-					<span id="hCeonameValidMsg" class="msg">대표자명을 형식에 맞게 입력해 주세요.</span>	
-				</div>
-				
-				
-				
-				<!-- 입력값 검증 -->
-				<!-- 사업자 등록번호 : hNum -->
-				<div class="section">
-					<div class="section1">
-						<span>사업자 등록번호</span>
-						<span class="star">*</span>
-					</div>
-					<!-- 입력값 검증 - 전화번호 참고 -->
-					<input name="hNum" id="hNum" value="${loginHost.HNum}" class="form-control" type="text" required>
-				</div>
-				<div class="mb-5">
-					<span id="hNumNullMsg" class="msg">사업자 등록번호를 입력해 주세요.</span>
-					<span id="hNumValidMsg" class="msg">3~4 자리의 숫자로만 입력 가능합니다.</span>
-				</div>
-				
-				
-				
-				<div class="heading">
-					<span class="heading_required">계좌 정보를 입력해주세요.</span>
-					<span class="heading_icon" style="color: red;">*&nbsp;필수입력</span>
-				</div>
-				
-				
-				
-				<!-- 은행명 : hBank -->
-				<div class="section">
-					<div class="section1">
-						<span>은행명</span>
-						<span class="star">*</span>
-					</div>
-					<div class="form-group">
-					    <label for="hBank"></label>
-					    <select class="form-control" id="hBank" name="hBank" required>
-					      <option value="bank1">농협은행</option>
-					      <option value="bank2">신한은행</option>
-					      <option value="bank3">카카오뱅크</option>
-					      <option value="bank4">케이뱅크</option>
-					      <option value="bank5">우리은행</option>
-					    </select>
-					</div>
-				</div>
-				<div class="mb-5">
-					<span id="hBankNullMsg" class="msg">은행명을 선택해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 입력값 검증 -->
-				<!-- 계좌번호 : hAccount -->
-				<div class="section">
-					<div class="section1">
-						<span>계좌번호</span>
-						<span class="star">*</span>
-					</div>
-					<input name="hAccount" id="hAccount" class="form-control" value="${loginHost.HAccount}" type="text" required>
-				</div>
-				<div class="mb-5">
-					<span id="hAccountNullMsg" class="msg">계좌번호를 입력해 주세요.</span>
-					<span id="hAccountValidMsg" class="msg">3~4 자리의 숫자로만 입력 가능합니다.</span>
-				</div>
-				
-				
-				
-				<!-- 입력값 검증 -->
-				<!-- 예금주 : hAccountname -->
-				<div class="section">
-					<div class="section1">
-						<span>예금주</span>
-						<span class="star">*</span>
-					</div>
-					<input name="hAccountname" id="hAccountname" class="form-control" value="${loginHost.HAccountname}" type="text" required>
-				</div>
-				<div class="mb-5">
-					<span id="hAccountnameNullMsg" class="msg">예금주를 입력해 주세요.</span>
-					<span id="hAccountnameValidMsg" class="msg">이름을 형식에 맞게 입력해 주세요.</span>
-				</div>
-				
-				
-				
-				<!-- 환불 기준 : sRefund -->
-				<!-- 값 저장 해야함 -->
-				<div class="page_title"><h2>환불 기준</h2></div>
-				<input name="sRefund" id="sRefund" class="form-control" readonly 
-					value="Space Moon은 이용 8일 전 환불 시 총 금액의 100% 환불가능하지만 7일 전~이용 당일 환불 불가능합니다. 이 점 참고하여 등록해주시기 바랍니다.">
-				
-				
-				
-				
-				
-				
-				
-				
-				<div class="btn">
-					<button type="submit" id="registerBtn">등록하기</button>
-				</div>
-			</section>
+			<div class="btBar">
+				<button type="button" class="btn btn-secondary" id="back" >이전</button>
+				<button type="button" class="btn btn-warning" id="next" >다음</button>
+			</div>
+			
 		</form>
 	</div>
-	<script type="text/javascript">
-	$("#sName").focus();
-	var submitResult;
-	
-	$("#registerBtn").submit(function() {
-		submitResult=true;
-		$(".msg").css("display","none");
-		
-		//공간명 
-		var sNameReg=/(!=[!@#$%^&*+=?;:]){2,19}$/g;
-		if($("#sName").val()=="") { //입력값이 없는 경우
-			$("#sNameNullMsg").css("display","block");
-			submitResult=false;
-		} else if(!sNameReg.test($("#sName").val())) { //입력값이 형식에 맞지 않는 경우
-			$("#sNameValidMsg").css("display","block");
-			submitResult=false;
-		} 
-		
-		//공간 가격 
-		
-		
-		//대표자명
-		var hCeonameReg=/^[가-힣]{2,10}$/g;
-		if($("#hCeoname").val()=="") { //입력값이 없는 경우
-			$("#hCeonameNullMsg").css("display","block");
-			submitResult=false;
-		} else if(!hCeoNameNameReg.test($("#hCeoname").val())) { //입력값이 형식에 맞지 않는 경우
-			$("#hCeonameValidMsg").css("display","block");
-			submitResult=false;
-		} 
-		
-		//사업자 등록번호 
-		var hNumReg=/[0-9]{1,2}-[^0][0-9]{2,3}-[0-9]{3,4}/;
-		if($("#hNum").val()=="") { //입력값이 없는 경우
-			$("#hNumNullMsg").css("display","block");
-			submitResult=false;
-		} else if(!hNumReg.test($("#hNum").val())) { //입력값이 형식에 맞지 않는 경우
-			$("#hNumValidMsg").css("display","block");
-			submitResult=false;
+</article>
+
+<script type="text/javascript">
+	$(function() {
+		//공간 면적 정규화
+		if (!validate_sdArea($('.area').val())) {
+			$('.area').focus();
+			
+			scrollMove('.area');
+			
+			return false;
 		}
+        
+      	//하단 버튼
+		$('#back').click(function() {
+			history.back();
+		});
+        
+      	$('#next').click(function() {
+      		
+			
+			
+			$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration5' />");
+			$('form[name=frmRegi2]').submit();
 		
-		//계좌번호 hAccount
-		var hAccountReg=/[0-9]{1,2}-[^0][0-9]{2,3}-[0-9]{3,4}/;
-		if($("#hAccount").val()=="") { //입력값이 없는 경우
-			$("#hAccountNullMsg").css("display","block");
-			submitResult=false;
-		} else if(!hAccountReg.test($("#hAccount").val())) { //입력값이 형식에 맞지 않는 경우
-			$("#hAccountValidMsg").css("display","block");
-			submitResult=false;
-		}
-		
-		//예금주 hAccountName
-		var hAccountNameReg=/^[가-힣]{2,10}$/g;
-		if($("#hAccountname").val()=="") { //입력값이 없는 경우
-			$("#hAccountnameNullMsg").css("display","block");
-			submitResult=false;
-		} else if(!hAccountNameReg.test($("#hAccountname").val())) { //입력값이 형식에 맞지 않는 경우
-			$("#hAccountnameValidMsg").css("display","block");
-			submitResult=false;
-		} 
-		
-		if($("#sCate").val()=="") { //입력값이 없는 경우
-			$("#sCateNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sInfo").val()=="") { //입력값이 없는 경우
-			$("#sInfoNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sTag").val()=="") { //입력값이 없는 경우
-			$("#sTagNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sGuide").val()=="") { //입력값이 없는 경우
-			$("#sGuideNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sPerson").val()=="") { //입력값이 없는 경우
-			$("#sPersonNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sNotice").val()=="") { //입력값이 없는 경우
-			$("#sNoticeNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sImg").val()=="") { //입력값이 없는 경우
-			$("#sImgNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sImg2").val()=="") { //입력값이 없는 경우
-			$("#sImg2NullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#add1").val()=="") { //입력값이 없는 경우
-			$("#sMapNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sample6_detailAddress").val()=="") { //입력값이 없는 경우
-			$("#sDetailMapNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sParking").val()=="") { //입력값이 없는 경우
-			$("#sParkingNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#sElevator").val()=="") { //입력값이 없는 경우
-			$("#sElevatorNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#hSpacename").val()=="") { //입력값이 없는 경우
-			$("#hSpacenameNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		if($("#hBank").val()=="") { //입력값이 없는 경우
-			$("#hBankNullMsg").css("display","block");
-			submitResult=false;
-		}	
-		
-		return submitResult;
+		});
+      	
 	});
 	
-	</script>
+	//스크롤이동
+	function scrollMove(val) {
+		var offset = $(val).offset();	//해당 위치 반환
+		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
+	}
+
+</script>
+
 </body>
 </html>

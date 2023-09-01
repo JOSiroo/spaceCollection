@@ -41,7 +41,7 @@ public class HostController {
 	}
 	
 	@RequestMapping("/registration/registration1")
-	public String registration1_get(Model model) {
+	public String registration1(Model model) {
 		//1
 		logger.info("공간등록 페이지1 보여주기");
 		
@@ -92,7 +92,7 @@ public class HostController {
 	@RequestMapping("/registration/registration4")
 	public String registration4() {
 		//1
-		logger.info("공간등록 페이지3 보여주기");
+		logger.info("공간등록 페이지4 보여주기");
 		
 		//2
 		

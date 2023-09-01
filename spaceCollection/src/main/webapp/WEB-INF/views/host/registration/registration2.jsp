@@ -280,7 +280,7 @@
 
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />">
+		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration3' />">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
