@@ -578,6 +578,7 @@ p{
 		  <option value="avgprice_desc" class = "select-option">가격 높은순</option>
 		  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
 		  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
+		  <option value="spaceRegDate_desc" class = "select-option">공간 등록순</option>
 		</select>
 	<a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >전체 초기화</button></a>
 	</div>

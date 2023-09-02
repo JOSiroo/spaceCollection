@@ -3,6 +3,8 @@ package com.sc.spaceCollection.spaceType.model;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class SpaceTypeServiceImpl implements SpaceTypeService{
+	private static final Logger logger = LoggerFactory.getLogger(SpaceTypeServiceImpl.class);
 	
 	private final SpaceTypeDAO spaceTypeDao;
 
@@ -87,15 +90,19 @@ public class SpaceTypeServiceImpl implements SpaceTypeService{
 		int result = 0;
 		int cnt = 0;
 		
-		Map<String, Object> map = spaceTypeDao.selectBySpaceTypeName(vo.getSpaceTypeName());
+		Map<String, Object> map = selectBySpaceTypeName(vo.getSpaceTypeName());
 		
 		cnt = spaceTypeDao.spaceTypeNameDubCheck(vo.getSpaceTypeName());
+		logger.info("cnt 얼마냐 = {}", cnt);
+		logger.info("voNo = {}, mapNo = {}",vo.getSpaceTypeNo(), map.get("SPACE_TYPE_NO"));
 		
-		if(cnt>1) {
-			if((vo.getSpaceTypeNo()+"").equals(map.get("SPACE_TYPE_NO"))) {
+		if(cnt>0) {
+			if((map.get("SPACE_TYPE_NO")+"").equals(vo.getSpaceTypeNo()+"")) {
 				result = SpaceTypeService.PASS;
-			}else
+			}else {
 				result = SpaceTypeService.DUB;
+				
+			}
 		}else {
 			result = SpaceTypeService.PASS;
 		}

@@ -84,9 +84,11 @@
 </style>
 <script type="text/javascript">
 	$(function() {
+
 		if($('#commentOk').val() == 'Y'){
 			$.commentsLoad();
 		}
+
 		
 		$('#okBt').hide();
 		$('#fileList').hide();

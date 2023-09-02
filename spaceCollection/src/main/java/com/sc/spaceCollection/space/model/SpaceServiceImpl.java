@@ -6,6 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.controller.UserMainController;
@@ -52,11 +54,15 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectAll(int page, int size) {
+	public List<Map<String, Object>> selectAll(int page, int size,
+												String region,int maxPeople,
+												int minPrice, int maxPrice,
+												List<String> filterList,
+												String order) {
 		int startRow = (page - 1) * size + 1;  
 		int endRow = page * size;
 		logger.info("name page = {}, size = {}, startRow = {}, endRow = {}", page,size,startRow,endRow);
-		return spaceDao.selectAll(startRow, endRow);
+		return spaceDao.selectAll(startRow, endRow, region,maxPeople,minPrice,maxPrice,filterList,order);
 	}
 
 
@@ -122,6 +128,60 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public int isAcceptSpace(SpaceVO vo) {
 		return spaceDao.isAcceptSpace(vo);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectSpaceConfirmList(SearchVO vo) {
+		List<Map<String, Object>> list = spaceDao.selectSpaceConfirmList(vo);
+		for(Map<String, Object> map : list) {
+			map.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0, 10));
+		}
+		return list;
+	}
+
+
+	@Override
+	public int getTotalRecordSpaceConfrimList(SearchVO vo) {
+		return spaceDao.getTotalRecordSpaceConfrimList(vo);
+	}
+
+
+	@Override
+	@Transactional
+	public int spaceConfirm(SpaceListVO listVo) {
+		int cnt = 0;
+		
+		try {
+			for(SpaceVO vo : listVo.getSpaceItemList()) {
+				cnt = spaceDao.spaceConfirm(vo);
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			cnt = -1;
+		}
+
+		return cnt;
+	}
+
+
+	@Override
+	@Transactional
+	public int spaceDenine(SpaceListVO listVo) {
+		int cnt = 0;
+		
+		try {
+			for(SpaceVO vo : listVo.getSpaceItemList()) {
+				cnt = spaceDao.spaceDenine(vo);
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			cnt = -1;
+		}
+
+		return cnt;
 	}
 
 

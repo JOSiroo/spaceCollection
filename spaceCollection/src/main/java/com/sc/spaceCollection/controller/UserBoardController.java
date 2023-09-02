@@ -99,14 +99,7 @@ public class UserBoardController {
 		int cnt = commentsService.insertComments(vo);
 		logger.info("댓글 등록 결과, cnt = {}", cnt);
 		logger.info("댓글 등록, 파라미터 vo = {}", vo);
-			String msg = "댓글 등록에 실패하였습니다. 다시 시도해주시기 바랍니다.",
-					url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
-				if(cnt>0) {
-					msg = "댓글이 등록되었습니다.";
-					url = "/user/board/boardDetail?boardNum=" + vo.getBoardNum();
-				}
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
+		
 		model.addAttribute("vo", vo);
 		
 		return vo;
@@ -114,9 +107,23 @@ public class UserBoardController {
 	
 	@GetMapping("/board/boardDetail/commentsLoad")
 	@ResponseBody
-	public List<CommentsVO> commentsLoad(@RequestParam String boardNum) {
-		logger.info("댓글조회 = {}", boardNum );
-	    List<CommentsVO> list = commentsService.selectUserComments(Integer.parseInt(boardNum));
+	public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, CommentsVO commentsVO,
+					@RequestParam(defaultValue = "0")int addNum ) {
+		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
+	    /*List<CommentsVO> list = commentsService.selectUserComments(Integer.parseInt(boardNum));
+		addNum = 5;
+		CommentsVO commentsVo = new CommentsVO();
+		commentsVo.setBoardNum(boardNum);
+		commentsVo.setAddNum(addNum);
+		logger.info("나와라잇");*/
+		
+	    List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVO);
+	    for(Map<String, Object> map : list) {
+			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 16));
+			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
+		}
+	    logger.info("list={}",list);
+	    
 	    return list;
 	}
 

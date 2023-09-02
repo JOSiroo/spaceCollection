@@ -47,13 +47,28 @@ public class SpaceDetailController {
 		RefundVO refundVo = spaceDetailService.selectRefund(vo.getRefundNum());
 		List<Map<String, Object>> reviewList = reviewService.spaceDetailReview(spaceNum);
 		
+		int avg = 0;
+		float floatAvg = 0;
+		if(reviewList.size() != 0) {
+			for(Map<String, Object> map : reviewList) {
+				 String tempAvg = String.valueOf(map.get("REVIEW_RATE"));
+				 avg += Integer.parseInt(tempAvg);
+				 
+				 floatAvg = (float)((avg/reviewList.size())/2.0);
+				 
+				 
+			}
+		}
+		String avgReview = Float.toString(floatAvg) + "점";
 		
 		logger.info("공간 상세 페이지 reviewList = {}", reviewList);
+		logger.info("공간 상세 페이지 avgReview = {}", avgReview);
 		logger.info("공간 상세 페이지 resultMap = {}", resultMap.size());
 		logger.info("공간 상세 페이지 qnaList = {}", qnaList.size());
 		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
 		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
+		model.addAttribute("avgReview", avgReview);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("vo", vo);
 		model.addAttribute("qnaList", qnaList);

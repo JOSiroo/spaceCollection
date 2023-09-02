@@ -100,11 +100,13 @@
 	.confirm{
 		color: #0d6efd;
 	}
+	
 
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
+		$.spaceConfirmListSearch();
 		
 		//페이지 출력 관련 시작
 		$('li button').click(function() {
@@ -139,49 +141,9 @@
 		$('li.nav-item>button').click(function() {
 			$('input[name=chkAll]').prop('checked', false);
 		});
-		//체크박스 전체 체크 관련 시작
+		//체크박스 전체 체크 관련 끝
 		
-		//승인 또는 거절할 체크박스 유효성 검사 시작
-		$('#spaceConfirmBt').click(function() {
-			if($('td>input[type=checkbox]:checked').length<1){
-				$('#confirm1 .modal-body').html("최소 하나 이상의 요청을 선택하세요.");
-				$('#cancelBt').html("확인");
-				$('#confirm1').modal("show");
-			}else{
-				$('#confirm1 .modal-body').html("선택된 요청을 승인 처리하시겠습니까?");
-				$('#okBt').show();
-				$('#okBt').addClass("btn-primary");
-				$('#cancelBt').html("취소");
-				$('#okBt').html("승인");
-				$('#confirm1').modal("show");
-				$('#okBt').click(function() {
-					$(this).removeClass("btn-primary");
-					$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/confirm");
-					$('form[name=trFrm]').submit();
-				});
-			}
-		});
 		
-		$('#spaceDenineBt').click(function() {
-			if($('td>input[type=checkbox]:checked').length<1){
-				$('#confirm1 .modal-body').html("최소 하나 이상의 요청을 선택하세요.");
-				$('#cancelBt').html("확인");
-				$('#confirm1').modal("show");
-			}else{
-				$('#confirm1 .modal-body').html("선택된 요청을 거절 처리하시겠습니까?");
-				$('#okBt').show();
-				$('#okBt').addClass("btn-danger");
-				$('#cancelBt').html("취소");
-				$('#okBt').html("비활성화");
-				$('#confirm1').modal("show");
-				$('#okBt').click(function() {
-					$(this).removeClass("btn-danger");
-					$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/denine");
-					$('form[name=trFrm]').submit();
-				});
-			}	
-		});
-		//승인 또는 거절할 체크박스 유효성 검사 끝
 		
 		//엑셀 다운 관련 시작
 		$('#warning').hide();
@@ -200,6 +162,7 @@
 				event.preventDefault();
 				$('#warning').show();
 			}else{
+				$('#excelModal').modal('hide');
 				$('form[name=excelFrm]').submit();
 			}
 		});
@@ -225,6 +188,20 @@
 		$(evt).find('td').css("background-color", "white");
 	}
 	
+	function transForm() {
+		$('#downloadBt').click(function() {
+			if($('.modal-body input[type=checkbox]:checked').length<1){
+				event.preventDefault();
+				$('#warning').show();
+			}else{
+				$('#excelModal').modal('hide');
+				$('form[name=excelFrm]').submit();
+				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/denine");
+				$('form[name=trFrm]').submit();
+			}
+		});
+	}
+	
 	$.spaceConfirmListSearch = function() {
 		$.ajax({
 			url : "<c:url value='/admin/space/spaceConfirmList/ajax_spaceConfirmList'/>",
@@ -239,23 +216,30 @@
 				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
 				var i = 0;
 				var str = "";
+				var str2 = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
 					$('#spaceConfirmListTbody').html("");
+					str2 += "<button type='button' class='btn btn-outline-primary' id='spaceConfirmBt' onClick='$.spaceConfirm()'>승인</button>";
+					str2 += "<button type='button' class='btn btn-outline-danger' id='spaceDenineBt' onClick='$.spaceDenine()'>거절</button>";
 					
-					str = "<form name='trFrm' method='post' action=''>";
+					$('#buttonDiv').html(str2);
+					
+					str += "<form name='trFrm' method='post' action=''>";
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 								str += "<td>"
 								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
 								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "<td class='red' onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_TYPE_NAME;
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
 								str += "</td>";
-								str += "<td class='request' onclick='location.href=';' style='cursor: pointer;'>승인 요청";
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
 								str += "</td>";
@@ -295,7 +279,7 @@
 				var str = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
-					$('#spaceConfirmHistoryListTbody').html("");
+					$('#spaceConfirmHistoryListTbody>form').html("");
 					
 						$.each(res.ajaxList, function() {
 							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
@@ -305,11 +289,11 @@
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
 							str += "</td>";
 							if(this.SPACE_REQUEST=="Y"){
-								str += "<td class='active' onclick='location.href=';' style='cursor: pointer;'>승인";
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(13,110,253)'>승인";
 							}else if(this.SPACE_REQUEST=="R"){
-								str += "<td class='request' onclick='location.href=';' style='cursor: pointer;'>승인 요청";
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
 							}else if(this.SPACE_REQUEST=="N"){
-								str += "<td class='deActive' onclick='location.href=';' style='cursor: pointer;'>거절";
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: red'>거절";
 							}
 							str += "</td>";
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
@@ -317,7 +301,7 @@
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
 							str += "</td>";
 						});
-						$('#spaceConfirmHistoryListTbody').html(str);
+						$('#spaceConfirmHistoryListTbody>form').html(str);
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
@@ -397,13 +381,13 @@
 		$.ajax({
 			url:"<c:url value='/admin/space/spaceConfirmList/ajax_spaceConfirmList'/>",
 			type:"post",
-			data:$('form[name=spaceConfirmHistoryListSearchFrm]').serializeArray(),
+			data:$('form[name=spaceConfirmListSearchFrm]').serializeArray(),
 			dataType:"json",
 			success:function(res){
 				totalCount = res.pagingInfo.totalRecord;
 				
 				if(res!=null){
-					$.spaceConfirmHistoryListSearch(res);
+					$.spaceConfirmListSearch(res);
 					pageMake();
 				}
 				
@@ -436,7 +420,52 @@
 			}
 		});
 	}
-		
+	
+	//승인 또는 거절할 체크박스 유효성 검사 시작
+	$.spaceConfirm = function () {
+		if($('td>input[type=checkbox]:checked').length<1){
+			$('#confirm1 .modal-body').html("최소 하나 이상의 요청을 선택하세요.");
+			$('#cancelBt').html("확인");
+			$('#confirm1').modal("show");
+		}else{
+			$('#confirm1 .modal-body').html("선택된 요청을 승인 처리하시겠습니까?");
+			$('#okBt').show();
+			$('#okBt').addClass("btn-primary");
+			$('#cancelBt').html("취소");
+			$('#okBt').html("승인");
+			$('#confirm1').modal("show");
+			$('#okBt').click(function() {
+				$('#confirm1').modal("hide");
+				$(this).removeClass("btn-primary");
+				$('#okBt').hide();
+				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/confirm");
+				$('form[name=trFrm]').submit();
+			});
+		}
+	}
+	
+	$.spaceDenine = function() {
+		if($('td>input[type=checkbox]:checked').length<1){
+			$('#confirm1 .modal-body').html("최소 하나 이상의 요청을 선택하세요.");
+			$('#cancelBt').html("확인");
+			$('#confirm1').modal("show");
+		}else{
+			$('#confirm1 .modal-body').html("선택된 요청을 거절 처리하시겠습니까?");
+			$('#okBt').show();
+			$('#okBt').addClass("btn-danger");
+			$('#cancelBt').html("취소");
+			$('#okBt').html("비활성화");
+			$('#confirm1').modal("show");
+			$('#okBt').click(function() {
+				$('#confirm1').modal("hide");
+				$(this).removeClass("btn-danger");
+				$('#okBt').hide();
+				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/Denine");
+				$('form[name=trFrm]').submit();				
+			});
+		}	
+	}
+	//승인 또는 거절할 체크박스 유효성 검사 끝
 </script>
 <main id="main" class="main">
 	<section class="section profile">
@@ -460,9 +489,8 @@
 						<!-- 장소 승인 요청 내역 시작 -->
 						<div class="tab-pane fade show active" id="spaceConfrimList">
 							<form class="row gx-3 gy-2 align-items-center" name="spaceConfirmListSearchFrm" onsubmit="return false">
-								<div>
-									<button type="button" class="btn btn-outline-primary" id="spaceConfirmBt">승인</button>
-									<button type="button" class="btn btn-outline-danger" id="spaceDenineBt">거절</button>
+								<div id="buttonDiv">
+									
 								</div>
 								<input type="hidden" name="currentPage" value="1">
 								<div class="row mb-3">
@@ -488,7 +516,9 @@
 											</tr>
 										</thead>
 										<tbody id="spaceConfirmListTbody">
+											<form name="trFrm" method="post">
 											<!-- ajax로 승인 요청 내역 출력 -->
+											</form>
 										</tbody>
 									</table>
 									<div class="spaceConfirmListDivPage">

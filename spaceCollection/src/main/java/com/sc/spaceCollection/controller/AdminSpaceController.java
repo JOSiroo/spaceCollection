@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.common.AjaxVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.host.model.SpaceTypeVO;
+import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeListVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
@@ -270,5 +273,80 @@ public class AdminSpaceController {
 	@RequestMapping("/spaceList")
 	public void spaceList(Model model) {
 		logger.info("공간 조회");
+	}
+	
+	@RequestMapping("/spaceConfirmList")
+	public void spaceConfirmList() {
+		logger.info("공간 승인 목록 화면");
+		
+	}
+	
+	@RequestMapping("/spaceConfirmList/ajax_spaceConfirmList")
+	@ResponseBody
+	public AjaxVO ajax_spaceConfirmList(@ModelAttribute SearchVO searchVo) {
+		logger.info("ajax - 공간 승인 요청 내역 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		pagingInfo.setKindFlag("spaceConfirmList");
+		logger.info("pagining = {}", pagingInfo.getBlockSize());
+		
+		searchVo.setRecordCountPerPage(20);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> spaceList = spaceService.selectSpaceConfirmList(searchVo);
+		logger.info("ajax - 공간 등록 내역 조회 결과, spaceList.size = {}", spaceList.size());
+		
+		int totalRecord = spaceService.getTotalRecordSpaceConfrimList(searchVo);
+		logger.info("ajax -전체 공간 등록 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		AjaxVO ajaxVo = new AjaxVO();
+		ajaxVo.setPagingInfo(pagingInfo);
+		ajaxVo.setAjaxList(spaceList);
+		ajaxVo.setSearchVo(searchVo);
+		
+		return ajaxVo;
+	}
+	
+	@RequestMapping("spaceConfirmList/Confirm")
+	public String spaceConfirm(@ModelAttribute SpaceListVO listVo, Model model) {
+		logger.info("공간 승인, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceService.spaceConfirm(listVo);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "거절 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+		
+	}
+	
+	@RequestMapping("spaceConfirmList/Denine")
+	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
+		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceService.spaceDenine(listVo);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "승인 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+		
 	}
 }
