@@ -55,7 +55,8 @@
     </script>
     
 <style>
-#generateButton{
+
+#coupon{
 	 justify-content: center;
       max-width: 1200px;
       margin: 0 auto; 
@@ -63,17 +64,18 @@
       position: center;
 	 width: 200px;
 }
+
 </style>
 
 <body>
   <div var="num" class="couponBox">
-	   <button id="generateButton" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
-	   <p id="couponDisplay" ></p>
-		<!-- Button trigger modal -->
-		<button id="generateButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		  Launch demo modal
-		</button>
-  </div>
+   <button id="generateButton" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
+   <p id="couponDisplay" ></p>
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	  Launch demo modal
+	</button>
+</div>
 	
 
 <!-- Modal 디자인 -->
