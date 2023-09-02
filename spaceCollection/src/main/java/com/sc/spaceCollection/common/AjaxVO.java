@@ -9,4 +9,5 @@ public class AjaxVO {
 	private PaginationInfo pagingInfo;
 	private List<Map<String, Object>> ajaxList;
 	private SearchVO searchVo;
+	String order;
 }

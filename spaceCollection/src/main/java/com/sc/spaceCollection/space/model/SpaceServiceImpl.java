@@ -189,5 +189,17 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 
+	@Override
+	public List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order) {
+		return spaceDao.selectSpaceConfirmHistoryList(searchVo, order);
+	}
+
+
+	@Override
+	public int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order) {
+		return spaceDao.getTotalRecordSpaceConfirmHistoryList(searchVo, order);
+	}
+
+
 
 }
