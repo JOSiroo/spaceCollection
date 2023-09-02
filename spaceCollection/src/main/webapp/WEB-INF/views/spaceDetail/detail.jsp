@@ -10,7 +10,20 @@ pageEncoding="UTF-8"%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>스페이스 클라우드</title>
 <style type="text/css">
-
+ @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -5%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    	}
+    	
+  .content{
+  	animation:fadeInDown 1s;
+  }
 #QNAWrite{
     padding: 0% 0% 0% 0%;
     height: 40px;
