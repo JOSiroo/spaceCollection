@@ -144,7 +144,7 @@
 
 <article>
 	<div class="main">
-		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/registration4' />">
+		<form name="frmRegi4" method="post" action="<c:url value='/host/registration/registration5' />">
 			<div class="heading">
 				<span class="hd1">공간의 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -156,7 +156,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceArea">
-						<input type="text" class="area" maxlength="3" value="" >
+						<input type="number" class="area" maxlength="3" value="" >
 						<span style="font-size: 20px; color: black; margin-left: 15px; font-weight: bold;">평</span>
 					</div>
 				</div>
@@ -237,11 +237,11 @@
 					<div class="criteria">
 						<div class="minPerson" style="float: left; margin-right: 8%;">
 							<label class="lbPerson">최소 수용인원</label>
-							<input type="text" class="txtPerson" > 명
+							<input type="number" class="txtPerson" > 명
 						</div>
 						<div class="maxPerson" style="float: left;">
 							<label class="lbPerson">최대 수용인원</label>
-							<input type="text" class="txtPerson" > 명
+							<input type="number" class="txtPerson" > 명
 						</div>
 					</div>
 				</div>
@@ -276,8 +276,8 @@
       		
 			
 			
-			$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration5' />");
-			$('form[name=frmRegi2]').submit();
+			$('form[name=frmRegi4]').prop('action', "<c:url value='/host/registration/registration5' />");
+			$('form[name=frmRegi4]').submit();
 		
 		});
       	
