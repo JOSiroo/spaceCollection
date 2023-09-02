@@ -2,106 +2,103 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../../form/adminTop.jsp"%>
 <style type="text/css">
-	main>div>nav {
-		float: left;
-	}
-	
-	#spaceConfirmBt, #spaceDenineBt{
-		float: right;
-		margin-top: 16px;
-		margin-right: 5px;
-		width: 89px;
-	}
-	
-	section {
-		clear: both;
-	}
-	
-	div.row {
-		margin-top: 10px;
-	}
-	
-	div.label {
-		color: #677fa9;
-		font-weight: bold;
-	}
-	
-	#card {
-		min-height: 420px;
-	}
-	
-	th, td {
-		text-align: center;
-	}
-	
-	#searchDiv>div {
-		float: right;
-	}
-	
-	div#select {
-		width: 150px;
-	}
-	
-	#searchDiv>div {
-		margin-left: 5px;
-	}
-	
-	
-	i.bi.bi-exclamation-circle {
-		color: #ffd600;
-		font-size: 40px;
-		display: block;
-		margin-block: -13px;
-	}
-	
-	td>span {
-		color: red;
-	}
-	
-	#confirm, #denine {
-		margin-top: 50px;
-	}
-	
-	#MChkDiv{
-		margin-top: 5px;
-		text-align: left;
-	}
-	
-	#excelDownloadBt{
-		--bs-btn-bg: #dadddf;
-	}
-	
-	#excelModal>div>div>div>p{
-		margin-bottom: 20px;
-	}
-	
-	.marginTop{
-		margin-top: 5px;
-	}
-	
-	.marginTop>div{
-		text-align: left;
-	}
-	
-	#warning{
-		color: red;
-		text-align: left;
-		margin-top: -15px;
-	}
-	
-	.request{
-		color: #34bb38;
-	}
-	
-	.denine{
-		color: red;
-	}
-	
-	.confirm{
-		color: #0d6efd;
-	}
-	
+main>div>nav {
+	float: left;
+}
 
+#spaceConfirmBt, #spaceDenineBt {
+	float: right;
+	margin-top: 16px;
+	margin-right: 5px;
+	width: 89px;
+}
+
+section {
+	clear: both;
+}
+
+div.row {
+	margin-top: 10px;
+}
+
+div.label {
+	color: #677fa9;
+	font-weight: bold;
+}
+
+#card {
+	min-height: 420px;
+}
+
+th, td {
+	text-align: center;
+}
+
+#searchDiv>div {
+	float: right;
+}
+
+div#select {
+	width: 150px;
+}
+
+#searchDiv>div {
+	margin-left: 5px;
+}
+
+i.bi.bi-exclamation-circle {
+	color: #ffd600;
+	font-size: 40px;
+	display: block;
+	margin-block: -13px;
+}
+
+td>span {
+	color: red;
+}
+
+#confirm, #denine {
+	margin-top: 50px;
+}
+
+#MChkDiv {
+	margin-top: 5px;
+	text-align: left;
+}
+
+#excelDownloadBt {
+	--bs-btn-bg: #dadddf;
+}
+
+#excelModal>div>div>div>p {
+	margin-bottom: 20px;
+}
+
+.marginTop {
+	margin-top: 5px;
+}
+
+.marginTop>div {
+	text-align: left;
+}
+
+#warning {
+	color: red;
+	text-align: left;
+	margin-top: -15px;
+}
+
+.request {
+	color: #34bb38;
+}
+
+.denine {
+	color: red;
+}
+
+.confirm {
+	color: #0d6efd;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -142,7 +139,6 @@
 			$('input[name=chkAll]').prop('checked', false);
 		});
 		//체크박스 전체 체크 관련 끝
-		
 		
 		
 		//엑셀 다운 관련 시작
@@ -220,7 +216,7 @@
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
 					$('#spaceConfirmListTbody').html("");
-					str2 += "<button type='button' class='btn btn-outline-primary' id='spaceConfirmBt' onClick='$.spaceConfirm()'>승인</button>";
+					str2 += "<button type='submit' class='btn btn-outline-primary' id='spaceConfirmBt' onClick='$.spaceConfirm()'>승인</button>";
 					str2 += "<button type='button' class='btn btn-outline-danger' id='spaceDenineBt' onClick='$.spaceDenine()'>거절</button>";
 					
 					$('#buttonDiv').html(str2);
@@ -243,6 +239,8 @@
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
 								str += "</td>";
+								
+								i++;
 						});
 						str += "</form>";
 						i++;
@@ -300,6 +298,8 @@
 							str += "</td>";
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
 							str += "</td>";
+							
+							i++;
 						});
 						$('#spaceConfirmHistoryListTbody>form').html(str);
 						pageMake(res.pagingInfo);
@@ -438,7 +438,7 @@
 				$('#confirm1').modal("hide");
 				$(this).removeClass("btn-primary");
 				$('#okBt').hide();
-				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/confirm");
+				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirmList/confirm");
 				$('form[name=trFrm]').submit();
 			});
 		}
@@ -454,13 +454,13 @@
 			$('#okBt').show();
 			$('#okBt').addClass("btn-danger");
 			$('#cancelBt').html("취소");
-			$('#okBt').html("비활성화");
+			$('#okBt').html("거절");
 			$('#confirm1').modal("show");
 			$('#okBt').click(function() {
 				$('#confirm1').modal("hide");
 				$(this).removeClass("btn-danger");
 				$('#okBt').hide();
-				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirm/Denine");
+				$('form[name=trFrm]').attr("action", "/spaceCollection/admin/space/spaceConfirmList/denine");
 				$('form[name=trFrm]').submit();				
 			});
 		}	
@@ -470,7 +470,7 @@
 <main id="main" class="main">
 	<section class="section profile">
 		<div class="row">
-			<div class="col-xl-8">
+			<div class="col-lg-6" style="width: 100%">
 				<div class="card" id="card">
 					<div class="card-body pt-3">
 						<ul class="nav nav-tabs nav-tabs-bordered">
@@ -485,24 +485,23 @@
 									name="spaceConfirmHistoryListTab">승인 내역</button>
 							</li>
 						</ul>
-						
+
 						<!-- 장소 승인 요청 내역 시작 -->
 						<div class="tab-pane fade show active" id="spaceConfrimList">
-							<form class="row gx-3 gy-2 align-items-center" name="spaceConfirmListSearchFrm" onsubmit="return false">
-								<div id="buttonDiv">
-									
-								</div>
-								<input type="hidden" name="currentPage" value="1">
-								<div class="row mb-3">
+							<div class="row">
+								<div class="col-12" id="buttonDiv"></div>
+							</div>
+							<div class="row mb-3">
+								<form name="trFrm" method="post">
 									<table class="table">
 										<colgroup>
-											<col style="width:5%;"  />
-											<col style="width:7%;"  />
-											<col style="width:12%;" />
-											<col style="width:33%;" />
-											<col style="width:15%;" />		
-											<col style="width:13%;" />		
-											<col style="width:15%;" />		
+											<col style="width: 5%;" />
+											<col style="width: 7%;" />
+											<col style="width: 12%;" />
+											<col style="width: 33%;" />
+											<col style="width: 15%;" />
+											<col style="width: 13%;" />
+											<col style="width: 15%;" />
 										</colgroup>
 										<thead>
 											<tr>
@@ -515,25 +514,30 @@
 												<th scope="col">신청일</th>
 											</tr>
 										</thead>
+
 										<tbody id="spaceConfirmListTbody">
-											<form name="trFrm" method="post">
 											<!-- ajax로 승인 요청 내역 출력 -->
-											</form>
 										</tbody>
 									</table>
-									<div class="spaceConfirmListDivPage">
-										<!-- ajax로 페이징 -->
-									</div>
+								</form>
+								<div class="spaceConfirmListDivPage">
+									<!-- ajax로 페이징 -->
+								</div>
+								<form class="col align-items-center"
+									name="spaceConfirmListSearchFrm" onsubmit="return false">
+									<input type="hidden" name="currentPage" value="1">
 									<div id="searchDiv">
-									<div style="float: left;">
-										<button class="btn btn-light" type="button" id="excelDownloadBt">
-											<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
-										</button>
-									</div>
+										<div style="float: left;">
+											<button class="btn btn-light" type="button"
+												id="excelDownloadBt">
+												<i class="bi bi-filetype-xlsx"></i> 엑셀 다운로드
+											</button>
+										</div>
 										<div class="col-auto">
 											<button type="button" id="spaceConfirmListSearchBt"
 												class="btn btn-primary">검색</button>
 										</div>
+
 										<div class="col-sm-3" id="keyword">
 											<label class="visually-hidden" for="searchKeyword">searchCondition</label>
 											<input type="text" class="form-control" id="searchKeyword"
@@ -542,94 +546,111 @@
 										<div class="col-sm-3" id="select">
 											<select class="form-select" name="searchCondition"
 												id="searchCondition">
-												<option value="space_num" <c:if test="${param.searchCondition=='space_num'}">
+												<option value="space_num"
+													<c:if test="${param.searchCondition=='space_num'}">
 								            		selected="selected"
-								            	</c:if> >공간 번호</option>
-												<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
+								            	</c:if>>공간
+													번호</option>
+												<option value="space_type_name"
+													<c:if test="${param.searchCondition=='space_type_name'}">
 								            		selected="selected"
-								            	</c:if> >공간 타입명</option>
-												<option value="space_name" <c:if test="${param.searchCondition=='space_name'}">
+								            	</c:if>>공간
+													타입명</option>
+												<option value="space_name"
+													<c:if test="${param.searchCondition=='space_name'}">
 								            		selected="selected"
-								            	</c:if> >공간명</option>
-												<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
+								            	</c:if>>공간명</option>
+												<option value="user_id"
+													<c:if test="${param.searchCondition=='user_id'}">
 								            		selected="selected"
-								            	</c:if> >신청인</option>
+								            	</c:if>>신청인</option>
 											</select>
 										</div>
-									</div>
-								</div>
 
-							</form>
+									</div>
+								</form>
+							</div>
+
 						</div>
 						<!-- 장소 승인 요청 내역 끝 -->
-						
-						
+
+
 						<!-- 장소 승인 내역 시작 -->
 						<div class="tab-pane fade pt-3" id="spaceConfirmHistoryList">
-							<form class="row gx-3 gy-2 align-items-center"
-								name="spaceConfirmHistoryListSearchFrm" onsubmit="return false">
-								<input type="hidden" name="currentPage" value="1">
-								<div class="row mb-3">
-									<table class="table">
-										<colgroup>
-											<col style="width: 13%;" />
-											<col style="width: 13%;" />
-											<col style="width: 42%;" />
-											<col style="width: 16%;" />
-											<col style="width: 16%;" />
-										</colgroup>
-										<thead>
-											<tr>
-												<th scope="col">예약 번호</th>
-												<th scope="col">장소 구분</th>
-												<th scope="col">예약 장소</th>
-												<th scope="col">예약 인원</th>
-												<th scope="col">예약일</th>
-											</tr>
-										</thead>
-										<tbody id="spaceConfirmHistoryListTbody">
-											<!-- ajax로 승인 내역 출력 -->
-										</tbody>
-									</table>
-									<div class="spaceConfirmHistoryListDivPage">
-										<!-- ajax로 페이징 -->
+
+							<div class="row mb-3">
+								<table class="table">
+									<colgroup>
+										<col style="width: 13%;" />
+										<col style="width: 13%;" />
+										<col style="width: 42%;" />
+										<col style="width: 16%;" />
+										<col style="width: 16%;" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th scope="col">예약 번호</th>
+											<th scope="col">장소 구분</th>
+											<th scope="col">예약 장소</th>
+											<th scope="col">예약 인원</th>
+											<th scope="col">예약일</th>
+										</tr>
+									</thead>
+									<tbody id="spaceConfirmHistoryListTbody">
+										<!-- ajax로 승인 내역 출력 -->
+									</tbody>
+								</table>
+								<div class="spaceConfirmHistoryListDivPage">
+									<!-- ajax로 페이징 -->
+								</div>
+								<form class="row gx-3 gy-2 align-items-center"
+									name="spaceConfirmHistoryListSearchFrm" onsubmit="return false">
+									<input type="hidden" name="currentPage" value="1">
+									<div style="float: left;">
+										<button class="btn btn-light" type="button"
+											id="excelDownloadBt">
+											<i class="bi bi-filetype-xlsx"></i> 엑셀 다운로드
+										</button>
 									</div>
-									<div id="searchDiv">
-										<div style="float: left;">
-											<button class="btn btn-light" type="button" id="excelDownloadBt">
-												<i class="bi bi-filetype-xlsx"></i>  엑셀 다운로드
-											</button>
-										</div>
+
+									<div class="row justify-content-end" id="searchDiv">
+
 										<div class="col-auto">
 											<button type="button" id="spaceConfirmHistoryListSearchBt"
 												class="btn btn-primary">검색</button>
 										</div>
-										<div class="col-sm-3" id="keyword">
+										<div class="col-4" id="keyword">
 											<label class="visually-hidden" for="searchKeyword">searchCondition</label>
 											<input type="text" class="form-control" id="searchKeyword"
 												name="searchKeyword" value="${searchVo.searchKeyword }">
 										</div>
-										<div class="col-sm-3" id="select">
+										<div class="col-4" id="select">
 											<select class="form-select" name="searchCondition"
 												id="searchCondition">
-												<option value="space_num" <c:if test="${param.searchCondition=='space_num'}">
+												<option value="space_num"
+													<c:if test="${param.searchCondition=='space_num'}">
 								            		selected="selected"
-								            	</c:if> >공간 번호</option>
-												<option value="space_type_name" <c:if test="${param.searchCondition=='space_type_name'}">
+								            	</c:if>>공간
+													번호</option>
+												<option value="space_type_name"
+													<c:if test="${param.searchCondition=='space_type_name'}">
 								            		selected="selected"
-								            	</c:if> >공간 타입명</option>
-												<option value="space_name" <c:if test="${param.searchCondition=='space_name'}">
+								            	</c:if>>공간
+													타입명</option>
+												<option value="space_name"
+													<c:if test="${param.searchCondition=='space_name'}">
 								            		selected="selected"
-								            	</c:if> >공간명</option>
-												<option value="user_id" <c:if test="${param.searchCondition=='user_id'}">
+								            	</c:if>>공간명</option>
+												<option value="user_id"
+													<c:if test="${param.searchCondition=='user_id'}">
 								            		selected="selected"
-								            	</c:if> >신청인</option>
+								            	</c:if>>신청인</option>
 											</select>
 										</div>
 									</div>
-								</div>
+								</form>
+							</div>
 
-							</form>
 						</div>
 						<!-- 승인 내역 끝 -->
 					</div>
@@ -637,8 +658,8 @@
 			</div>
 		</div>
 	</section>
-	
-	
+
+
 	<!-- Modal -->
 	<div class="modal fade" id="confirm1" tabindex="-1">
 		<div class="modal-dialog">
@@ -670,35 +691,45 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<p >
-						엑셀에 포함시킬 데이터를 선택하세요.&nbsp;&nbsp;
-						<input class="form-check-input" type="checkbox" value="" id="columnChkAll" name="columnChkAll">
+					<p>
+						엑셀에 포함시킬 데이터를 선택하세요.&nbsp;&nbsp; <input class="form-check-input"
+							type="checkbox" value="" id="columnChkAll" name="columnChkAll">
 						<label class="form-check-label" for="columnChkAll">전체 선택</label>
 					</p>
 					<div class="container text-center " id="MChkDiv">
 						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
-						<c:set var="columnListEng1" value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }"/>
-						<c:set var="columnListKor1" value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }"/>
-						<c:set var="columnListEng2" value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }"/>
-						<c:set var="columnListKor2" value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }"/>
-						<form name="excelFrm" action="<c:url value='/admin/member/memberExcelDownload'/>" method="post">
+						<c:set var="columnListEng1"
+							value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }" />
+						<c:set var="columnListKor1"
+							value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }" />
+						<c:set var="columnListEng2"
+							value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }" />
+						<c:set var="columnListKor2"
+							value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }" />
+						<form name="excelFrm"
+							action="<c:url value='/admin/member/memberExcelDownload'/>"
+							method="post">
 							<div class="row align-items-start">
 								<div class="col marginTop">
-									<c:forEach var="i" begin="0" end="${fn:length(columnListEng1)-1 }">
+									<c:forEach var="i" begin="0"
+										end="${fn:length(columnListEng1)-1 }">
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="${2*i }"
-												id="${columnListEng1[i] }" name="headerListIndex[${2*i }]">
-											<label class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
+											<input class="form-check-input" type="checkbox"
+												value="${2*i }" id="${columnListEng1[i] }"
+												name="headerListIndex[${2*i }]"> <label
+												class="form-check-label" for="${columnListEng1[i] }">${columnListKor1[i] }</label>
 										</div>
 									</c:forEach>
 								</div>
-									
+
 								<div class="col marginTop">
-									<c:forEach var="i" begin="0" end="${fn:length(columnListEng2)-1 }">
+									<c:forEach var="i" begin="0"
+										end="${fn:length(columnListEng2)-1 }">
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="${2*i+1 }"
-												id="${columnListEng2[i] }" name="headerListIndex[${2*i+1 }]">
-											<label class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
+											<input class="form-check-input" type="checkbox"
+												value="${2*i+1 }" id="${columnListEng2[i] }"
+												name="headerListIndex[${2*i+1 }]"> <label
+												class="form-check-label" for="${columnListEng2[i] }">${columnListKor2[i] }</label>
 										</div>
 									</c:forEach>
 								</div>
