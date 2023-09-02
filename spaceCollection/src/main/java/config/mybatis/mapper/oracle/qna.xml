@@ -16,8 +16,17 @@
 		where space_num = #{spaceNum}
 	</select>
 	
+	<select id="selectQnaByUserId" parameterType="searchVo"  resultType="map">
+	
+		select * from QNA_SN_VIEW
+		WHERE USER_ID=#{userId}
+		and
+		
+	</select>
+	
 	<delete id="deleteQna" parameterType="int">
 		delete qna
 		where qna_num = #{qnaNum}
 	</delete>
+	
 </mapper>

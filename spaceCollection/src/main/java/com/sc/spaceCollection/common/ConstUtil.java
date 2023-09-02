@@ -17,6 +17,9 @@ public interface ConstUtil {
 	String IMAGE_FILE_UPLOAD_PATH="board_images";
 	String IMAGE_FILE_UPLOAD_PATH_TEST="\\board_images";
 	
+	//사용자 프로필 이미지 - 사용자 프로필 변경시 이미지 저장 경로
+	String USER_IMAGE_FILE_UPLOAD_PATH="user_images";
+	String USER_IMAGE_FILE_UPLOAD_PATH_TEST="\\user_images";
 	//자료실 업로드인지, 상품 등록시 업로드인지 구분값
 	int UPLOAD_FILE_FLAG=1;  //자료실 업로드
 	int UPLOAD_IMAGE_FLAG=2; //상품 등록시 이미지 업로드
