@@ -4,6 +4,7 @@
 
 <mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
 	
+	
 	<sql id="searchWhere">
 		<if test="searchKeyword!=null and searchKeyword!=''">
 			and ${searchCondition} like '%' || #{searchKeyword} || '%'
@@ -23,6 +24,28 @@
 		</where>
 	</sql>
 	
+	
+	<select id="selectNotice" resultType="map">
+		select *
+		from
+		(
+		    select rownum as rn, f.* 
+		    from 
+		    (
+		        select * from board_boardType_user_view
+				where BOARD_TYPE_NAME like '공지사항'
+				and BOARD_TYPE_COMMENT_OK like 'Y'
+		        <if test='keyword != "" and keyword != null'>
+					and USER_ID like '%' || #{keyword} || '%'
+		        </if>
+		        <if test='BOARD_DEL_FLAG == null'>
+					order by BOARD_REG_DATE desc       
+		        </if>
+		    )f
+		)A
+		<![CDATA[ 
+		where rn >= #{startRow} and rn <= #{endRow} ]]>
+	</select>
 	
 	
 	<select id="selectBoardAll" parameterType="searchVo" resultType="map">
