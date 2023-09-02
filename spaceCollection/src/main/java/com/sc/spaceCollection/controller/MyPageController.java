@@ -105,6 +105,7 @@ public class MyPageController {
 			url="/guest/myPage/myProfile";
 			msg=userId+"님 환영합니다.";
 		}else if(result==GuestService.PWD_DISAGREE) {
+			url="/guest/myPage/checkPwd";
 			msg="비밀번호가 일치하지 않습니다.";
 		}
 		

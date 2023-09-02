@@ -129,7 +129,8 @@
         <hr class="mb-4">
           <div class="row">
             <div class="col-md-11 mb-3" style="margin: 0px auto;">
-              <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디" value="" required>
+              <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디"
+               value="${cookie.ck_userId.value }" required>
               <div class="invalid-feedback">
                 아이디를 입력해주세요.
               </div>
@@ -144,7 +145,10 @@
             </div>
            </div>
            <div class="col-md-12 mb-3">
-	          	<input type="checkbox" name="chkSave" id="chkSave" style="margin-left: 20px;">
+	          	<input type="checkbox" name="chkSave" id="chkSave"
+	          	<c:if test="${!empty cookie.ck_userId }">
+						checked="checked"
+				</c:if> style="margin-left: 20px;">
 	          	<label for="chkSave" style="font-size: 15px;">아이디 저장</label>
 	          	<a href="#" id="findPwd" style="color: black; font-size: 12px; float: right; margin-left: 5px; margin-right: 25px;">
 	          		비밀번호 찾기

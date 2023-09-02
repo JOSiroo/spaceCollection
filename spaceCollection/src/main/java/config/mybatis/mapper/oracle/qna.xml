@@ -17,10 +17,35 @@
 	</select>
 	
 	<select id="selectQnaByUserId" parameterType="searchVo"  resultType="map">
+		select * from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from QNA_SN_VIEW
+				WHERE USER_ID=#{userId}
+				<if test="searchCondition=='Y'">
+					and QNA_ANSWER IS NOT NULL
+				</if>
+				<if test="searchCondition=='N'">
+					and QNA_ANSWER IS NULL
+				</if>
+			)A
+		)
+		<![CDATA[
+		where RNUM> #{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
+		
+	</select>
 	
-		select * from QNA_SN_VIEW
-		WHERE USER_ID=#{userId}
-		and
+	<select id="totalQnaByUserId" parameterType="searchVo" resultType="int">
+		select count(*) from QNA_SN_VIEW
+		<if test="searchCondition=='Y'">
+			and QNA_ANSWER IS NOT NULL
+		</if>
+		<if test="searchCondition=='N'">
+			and QNA_ANSWER IS NULL
+		</if>
+		order by QNA_NUM desc
 		
 	</select>
 	

@@ -1,14 +1,22 @@
 package com.sc.spaceCollection.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.PaginationInfo;
+import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.qna.model.QnaService;
 import com.sc.spaceCollection.qna.model.QnaVO;
@@ -66,8 +74,32 @@ public class QnaController {
 	}
 	
 	@RequestMapping("myQnA")
-	public String selectMyQnA() {
+	public String selectMyQnA(@ModelAttribute SearchVO searchVo,HttpSession session,Model model) {
+		//1.
+		String userId=(String)session.getAttribute("userId");
+		logger.info("QnA 목록 조회, 파라미터 searchVo={},userId={}",searchVo, userId);
+	
+		//2.
+		//페이징처리
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.QNA_RECORD_COUNT);
+		//pagingInfo.setTotalRecord();
+				
+		//
+		searchVo.setUserId(userId);
+		searchVo.setRecordCountPerPage(ConstUtil.QNA_RECORD_COUNT);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
+		List<Map<String,Object>> qnaList=qnaService.selectQnaByUserId(searchVo);
+		logger.info("QnA 조회 결과 qnaList",qnaList);
+		int totalRecord = qnaService.totalQnaByUserId(searchVo);
+		logger.info("Qna 총 레코드 수 ={}",totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		model.addAttribute("qnaList",qnaList);
+		model.addAttribute("pagingInfo",pagingInfo);
 		
 		return "qna/myQnA";
 	}

@@ -80,10 +80,20 @@
 		color: black;
 		font-size: 20px;
 		font-weight: bold;
-		margin-top: 100px;
+		margin-top: 30px;
 	}
 	.editMenu{
 		padding-left:0px;
+	}
+	select[name=searchCondition] {
+		width: 130px;
+		height: 43px;
+		border-radius: 0px;
+		border: 1px solid #e0e0e0;
+		padding: 5px;
+		outline: none;
+		margin-left: 1170px;
+		margin-top: 50px;
 	}
 	
 	.chkBox{
@@ -112,32 +122,77 @@
 				Q&A
 			</a>
 		</div>
+		<form name="frmQna" action="<c:url value='/myQnA'/>" method="post">
+		<select name="searchCondition">
+			<option selected="selected" value="">전체</option>
+			<option value="Y">답변 있음</option>
+			<option value="N">답변 없음</option>
+		</select>
 		<div class="count">
-			Q&A<span style="color: #2d5aa0;">10개</span>
+			Q&A<span style="color: #2d5aa0;">${pagingInfo.totalRecord }개</span>
 		</div>
-		<div class="qnaList">
-			<div class="qnaDetail">
-				<label class="fontBold">spacecloud</label>
-				<input type="checkbox" class="chkBox" value="">
-				<br>
-				<p>그린룸 사이즈가 정확히 몇인가요그린룸 사이즈가 정확히 몇인가요그린룸 사이즈가 정확히 몇인가요그린룸 사이즈가 정확히 몇인가요몇인가요그린룸 사이즈가 정확히 몇인가요몇인가요그린룸 사이즈가 정확히 몇인가요</p>
-				<div class="editMenu">
-					<a class="answer">스페이스클라우드 파티룸</a>
-					2023.08.13 11:58:04
-					| <a href="#">수정</a>
+		<c:if test="${empty qnaList }">
+				<h1>등록된 QnA가 없습니다.</h1>
+		</c:if>
+		<c:if test="${!empty qnaList }">
+		<!-- 반복시작 -->
+		<c:set var="idx" value="0"/>
+			<c:forEach var="map" items="${qnaList }">
+				<div class="qnaList">
+					<div class="qnaDetail">
+						<label class="fontBold">${map['USER_ID'] }</label>
+						<input type="checkbox" class="chkBox" value="">
+						<br>
+						<span>${map['QNA_CONTENT'] }</span>
+						<div class="editMenu">
+							<a class="answer">${map['SPACE_NAME'] }</a>
+							${map['QNA_REG_DATE'] }
+							| <a href="#">수정</a>
+						</div>
+						<hr>
+						<c:if test="${!empty map['QNA_ANSWER'] }">
+							<label class="fontBold">호스트님의 답글</label><br>
+							<p>${map['QNA_ANSWER'] }</p>
+						</c:if>
+						<c:if test="${empty map['QNA_ANSWER'] }">
+							<div>호스트님의 답변을 기다리는 중 입니다.</div>
+						</c:if>
+					</div>
 				</div>
-				<hr>
-				<label class="fontBold">호스트님의 답글</label><br>
-				<p>대충 호스트님이 답장하는 내용대충 호스트님이 답장하는 내용대충 호스트님이 답장하는 내용대충 호스트님이 답장하는 내용</p>
-			</div>
-		</div>
+				<br>
+				<c:set var="idx" value="${idx+1 }"/>
+			</c:forEach>
+			<!-- 반복끝 -->
+		</c:if>
 		<button type="button" class="deleteQna">삭제</button>
+		</form>
+	</div>
+	<div class="divPage">
+		<!-- 페이지 번호 추가 -->		
+		<c:if test="${pagingInfo.firstPage>1 }">
+			<a href="#" onclick="boardList(${pagingInfo.firstPage-1})">			
+			    <img src='<c:url value="/images/first.JPG" />'  border="0">	</a>
+		</c:if>
+						
+		<!-- [1][2][3][4][5][6][7][8][9][10] -->
+		<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">
+			<c:if test="${i==pagingInfo.currentPage }">
+				<span style="color:blue;font-weight:bold">${i }</span>
+			</c:if>
+			<c:if test="${i!=pagingInfo.currentPage }">						
+				<a href="#" onclick="boardList(${i})">
+					[${i }]
+				</a>
+			</c:if>		
+		</c:forEach>
+		
+		<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
+			<a href="#" onclick="boardList(${pagingInfo.lastPage+1})">			
+				<img src="<c:url value="/images/last.JPG" />" border="0">
+			</a>
+		</c:if>
+		<!--  페이지 번호 끝 -->
 	</div>
 </div>
-
-
-
-
-
 
 <%@include file="../form/userBottom.jsp" %>

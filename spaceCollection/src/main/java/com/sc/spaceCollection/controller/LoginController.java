@@ -94,7 +94,7 @@ public class LoginController {
 		session.removeAttribute("userId");
 		session.removeAttribute("code");
 		
-		return "redirect:/";
+		return "login/login";
 	}
 	
 	

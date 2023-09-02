@@ -5,6 +5,9 @@ public interface ConstUtil {
 	public static final int RECORD_COUNT=20;
 	int BLOCK_SIZE=10;
 	
+	//QNA 페이징 처리 관련 상수
+	int QNA_RECORD_COUNT=5;
+	
 	//파일 업로드 처리 관련 상수
 	String FILE_UPLOAD_TYPE="test";
 	//String FILE_UPLOAD_TYPE="deploy";
