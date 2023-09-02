@@ -41,7 +41,7 @@ public class HostController {
 	}
 	
 	@RequestMapping("/registration/registration1")
-	public String registration1_get(Model model) {
+	public String registration1(Model model) {
 		//1
 		logger.info("공간등록 페이지1 보여주기");
 		
@@ -73,12 +73,13 @@ public class HostController {
 	}
 	
 	@RequestMapping("/registration/registration3")
-	public String registration3(@RequestParam(defaultValue = "") String UserId, Model model) {
+	public String registration3(HttpSession session, Model model) {
 		//1
-		logger.info("공간등록 페이지3 보여주기");
+		String userId = (String) session.getAttribute("userId");
+		logger.info("공간등록 페이지3 보여주기, userId = {}", userId);
 		
 		// 2
-		UserInfoVO userInfoVo = hostService.selectUserById(UserId);
+		UserInfoVO userInfoVo = hostService.selectUserById(userId);
 		logger.info("유저 정보 조회결과, userInfovo = {}", userInfoVo);
 		
 		// 3
@@ -91,7 +92,7 @@ public class HostController {
 	@RequestMapping("/registration/registration4")
 	public String registration4() {
 		//1
-		logger.info("공간등록 페이지3 보여주기");
+		logger.info("공간등록 페이지4 보여주기");
 		
 		//2
 		
@@ -103,35 +104,6 @@ public class HostController {
 		return "host/registration/registration4";
 	}
 	
-	@RequestMapping("/report/account")
-	public String account() {
-		//1
-		logger.info("report/정산완료 페이지");
-		
-		//2
-		
-		
-		//3
-		
-		
-		//4
-		return "host/report/account";
-	}
-	
-	@RequestMapping("/report/draft")
-	public String draft() {
-		//1
-		logger.info("report/정산 예정 페이지");
-		
-		//2
-		
-		
-		//3
-		
-		
-		//4
-		return "host/report/draft";
-	}
 	//page=1&order=reservationNum&status=before&keyword=fd
 	@RequestMapping("/reservation")
 	public String hostReservation(HttpSession session, Model model,
