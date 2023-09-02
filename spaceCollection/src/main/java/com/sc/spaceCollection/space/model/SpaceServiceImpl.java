@@ -154,7 +154,9 @@ public class SpaceServiceImpl implements SpaceService{
 		
 		try {
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
-				cnt = spaceDao.spaceConfirm(vo);
+				if(vo.getSpaceNum() > 0) {
+					cnt = spaceDao.spaceConfirm(vo);
+				}
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -173,7 +175,9 @@ public class SpaceServiceImpl implements SpaceService{
 		
 		try {
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
-				cnt = spaceDao.spaceDenine(vo);
+				if(vo.getSpaceNum() > 0) {
+					cnt = spaceDao.spaceDenine(vo);
+				}
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();

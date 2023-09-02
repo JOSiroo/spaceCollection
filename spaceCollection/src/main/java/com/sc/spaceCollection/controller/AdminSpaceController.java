@@ -312,7 +312,38 @@ public class AdminSpaceController {
 		return ajaxVo;
 	}
 	
-	@RequestMapping("spaceConfirmList/Confirm")
+	@RequestMapping("/spaceConfirmList/ajax_spaceConfirmHistoryList")
+	@ResponseBody
+	public AjaxVO ajax_spaceConfirmHistoryList(@ModelAttribute SearchVO searchVo) {
+		logger.info("ajax - 공간 승인 내역 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		pagingInfo.setKindFlag("spaceConfirmHistoryList");
+		logger.info("pagining = {}", pagingInfo.getBlockSize());
+		
+		searchVo.setRecordCountPerPage(20);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> spaceList = spaceService.selectSpaceConfirmList(searchVo);
+		logger.info("ajax - 공간 등록 내역 조회 결과, spaceList.size = {}", spaceList.size());
+		
+		int totalRecord = spaceService.getTotalRecordSpaceConfrimList(searchVo);
+		logger.info("ajax -전체 공간 등록 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		AjaxVO ajaxVo = new AjaxVO();
+		ajaxVo.setPagingInfo(pagingInfo);
+		ajaxVo.setAjaxList(spaceList);
+		ajaxVo.setSearchVo(searchVo);
+		
+		return ajaxVo;
+	}
+	
+	@RequestMapping("spaceConfirmList/confirm")
 	public String spaceConfirm(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 승인, 파라미터 listVo = {}", listVo);
 		
@@ -320,7 +351,7 @@ public class AdminSpaceController {
 		
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
-			msg = "거절 처리가 완료되었습니다.";
+			msg = "승인 처리가 완료되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);
@@ -331,7 +362,7 @@ public class AdminSpaceController {
 		
 	}
 	
-	@RequestMapping("spaceConfirmList/Denine")
+	@RequestMapping("spaceConfirmList/denine")
 	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
 		
@@ -339,7 +370,7 @@ public class AdminSpaceController {
 		
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
-			msg = "승인 처리가 완료되었습니다.";
+			msg = "거절 처리가 완료되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);
