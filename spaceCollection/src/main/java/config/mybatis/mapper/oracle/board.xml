@@ -23,6 +23,8 @@
 		</where>
 	</sql>
 	
+	
+	
 	<select id="selectBoardAll" parameterType="searchVo" resultType="map">
 		select *from
 		(
@@ -38,6 +40,8 @@
 		where RNUM>#{firstRecordIndex} 
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
+	
+	
 
 	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
 		select count(*) from board_boardType_user_view

@@ -58,4 +58,13 @@ public class CommentServiceImpl implements CommentsService{
 		return commentsDao.selectUserComments(boardNum);
 	}
 
+	@Override
+	public List<CommentsVO> selectPaging(int page, int size, int boardNum) {
+		 int startRow = (page - 1) * size + 1;  
+	     int endRow = page * size;
+		return commentsDao.selectPaging(startRow, endRow, boardNum);
+	}
+
+	
+
 }

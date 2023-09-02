@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class UserBoardController {
 	}
 	
 	@RequestMapping("/notice")
-    public String notice(@ModelAttribute BoardVO vo, Model model) {
+    public String notice(@ModelAttribute BoardVO vo, @RequestParam int boardNum, Model model) {
 		
         List<BoardVO> list = boardService.selectNoticeBoard();
         logger.info(" 결과 확인 list={}", list);
@@ -48,6 +49,8 @@ public class UserBoardController {
         model.addAttribute("list", list);
         return "userMain/board/notice";
     }
+	
+
 	
 	@RequestMapping("/boardList")
 	public String boardList(Model model) {
@@ -75,19 +78,19 @@ public class UserBoardController {
 			logger.info("게시물 boardNum, boardNum = {}", boardNum);
 			logger.info("댓글 comments, list = {}", list);
 			logger.info("댓글 count = {}", count);
-			if (map == null ) {
-				model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
-				model.addAttribute("url", "/userMain/board/boardList");
-				return "common/message";
-			} else {
-				logger.info("게시물 내용 조회결과, map = {}", map);
-
-				model.addAttribute("map", map);
-				model.addAttribute("list", list);
-				model.addAttribute("count", count);
-
-				return "userMain/board/boardDetail";
-			}
+				if (map == null ) {
+					model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+					model.addAttribute("url", "/userMain/board/boardList");
+					return "common/message";
+				} else {
+					logger.info("게시물 내용 조회결과, map = {}", map);
+	
+					model.addAttribute("map", map);
+					model.addAttribute("list", list);
+					model.addAttribute("count", count);
+	
+					return "userMain/board/boardDetail";
+				}
 		}
 	}
 	
@@ -107,44 +110,42 @@ public class UserBoardController {
 	
 	@GetMapping("/board/boardDetail/commentsLoad")
 	@ResponseBody
-	public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, CommentsVO commentsVO,
-					@RequestParam(defaultValue = "0")int addNum ) {
-		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
-	    /*List<CommentsVO> list = commentsService.selectUserComments(Integer.parseInt(boardNum));
-		addNum = 5;
-		CommentsVO commentsVo = new CommentsVO();
-		commentsVo.setBoardNum(boardNum);
-		commentsVo.setAddNum(addNum);
-		logger.info("나와라잇");*/
+	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, 
+			CommentsVO commentsVO, @RequestParam(defaultValue = "0")int page ) {
+		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, page);
 		
+		int size=5;
+		int count = commentsService.countComments(boardNum);
 	    List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVO);
-	    for(Map<String, Object> map : list) {
+	    List<CommentsVO> list1 = commentsService.selectPaging(page, size, boardNum);
+	    
+	    /*for(Map<String, Object> map : list) {
 			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 16));
 			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
-		}
-	    logger.info("list={}",list);
+	    }*/
 	    
-	    return list;
+	    /*
+	    for(CommentsVO vo : list1){
+	    	vo.setCommentRegDate((vo.getCommentRegDate()+"").substring(0,6));
+	    	vo.setCommentContent((vo.getCommentContent()).replace("\n","<br>"))
+    	}
+    	*/
+	    /*
+	    for (CommentsVO vo : list1) {
+	        Timestamp commentRegTimestamp = vo.getCommentRegDate(); // 기존 Timestamp 가져옴
+	        String formattedCommentRegDate = commentRegTimestamp.toString().substring(0, 16); // 원하는 형식으로 변환한 문자열
+
+	        vo.setCommentRegDate(Timestamp.valueOf(formattedCommentRegDate)); // 문자열을 Timestamp로 변환하여 다시 설정
+
+	        vo.setCommentContent(vo.getCommentContent().replace("\n", "<br>")); // 댓글 내용 수정
+	    }
+ 		*/
+	    
+	    logger.info("list1={}",list1);
+	    
+	    return list1;
 	}
 
-	/*public List<Map<String, Object>> commentsLoad(@RequestParam(defaultValue = "0")int boardNum,
-												@RequestParam(defaultValue = "0")int addNum) {
-		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, addNum);
-		
-		CommentsVO commentsVo = new CommentsVO();
-		commentsVo.setBoardNum(boardNum);
-		commentsVo.setAddNum(addNum);
-		
-		List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVo);
-		for(Map<String, Object> map : list) {
-			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 10));
-			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
-		}
-		logger.info("ajax - 댓글 조회결과, list = {}", list);
-		
-		return list;
-	}*/
-	
 	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
 	@ResponseBody
 	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
