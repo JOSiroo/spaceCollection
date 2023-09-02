@@ -66,8 +66,11 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<Map<String, Object>> reservationList(String userId) {
-		return reservationDao.reservationList(userId);
+	public List<Map<String, Object>> reservationList(String userId, int page) {
+		
+		int startRow = (page-1) * 5 + 1; 
+		int endRow = page*5;
+		return reservationDao.reservationList(userId, startRow, endRow);
 	}
 	
 	
@@ -148,6 +151,11 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public int getTotalRecord(SearchVO vo) {
 		return reservationDao.getTotalRecord(vo);
+	}
+
+	@Override
+	public int countReservationList(String userId) {
+		return reservationDao.countReservationList(userId);
 	}
 	
 	

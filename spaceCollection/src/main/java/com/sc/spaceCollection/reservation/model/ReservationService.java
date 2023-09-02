@@ -9,11 +9,12 @@ public interface ReservationService {
 	int insertReservation(ReservationVO vo);
 	Object selectReservationByDayAndNum(int sdNum, String reserveStartDay);
 	Map<String, Object> showReservation(int reservationNum, String userId);
-	List<Map<String,Object>> reservationList(String userId);
+	List<Map<String,Object>> reservationList(String userId, int page);
 	public void refundPayment(String tid, int cancelAmount,int cancelTaxFreeAmount);
 	int canceledReservation(String reservationUid);
 	Map<String,Object> reservationReview(int reservationNum);
 	boolean isReviewd(int reservationNum, String userId);
 	List<Map<String, Object>> selectReservationAll(SearchVO vo);
 	int getTotalRecord(SearchVO vo);
+	int countReservationList(String userId);
 }

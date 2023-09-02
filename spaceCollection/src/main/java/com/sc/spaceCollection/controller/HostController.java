@@ -192,4 +192,15 @@ public class HostController {
 		return result;
 	}
 	
+	@RequestMapping("/calculate")
+	public String calculate(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "정산 페이지는 로그인이 필요합니다");
+			model.addAttribute("url", "/host/index");
+			
+			return "common/message";
+		}
+		return "host/calculate/calculate";
+	}
 }

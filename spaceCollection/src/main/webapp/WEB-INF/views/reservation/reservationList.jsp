@@ -101,7 +101,7 @@
 </style>
 <section>
 	<div class="asd"></div>
-	<h1 style = "text-align: center; margin-top : 1%;padding-top:4%; font-weight: 700;"> 예약 내역 </h1>
+	<h1 style = "text-align: center; margin-top : 1%;padding-top:1%; font-weight: 700;"> 예약 내역 </h1>
 	<br>
 	<br>
 	<div class="list-Wrapper">
@@ -142,8 +142,12 @@
 					</c:if>
 					</div>
 				</div>
-				<div></div>
 			</div>
+		</c:forEach>
+	</div>
+	<div class="pageArea">
+		<c:forEach var="i" begin="1" end="${blockPages}">
+			<span>${i}</span>
 		</c:forEach>
 	</div>
 </section>
