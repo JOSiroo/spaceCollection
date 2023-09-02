@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -62,6 +63,13 @@ public class QnaController {
 		logger.info("qna삭제 결과, cnt = {}", cnt);
 		
 		return "redirect:/detail?spaceNum="+spaceNum;
+	}
+	
+	@RequestMapping("myQnA")
+	public String selectMyQnA() {
+		
+		
+		return "qna/myQnA";
 	}
 }
 
