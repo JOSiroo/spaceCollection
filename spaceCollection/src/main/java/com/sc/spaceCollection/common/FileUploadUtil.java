@@ -111,6 +111,11 @@ public class FileUploadUtil {
 
 		return result;
 	}
+	/*
+	public String getUserIdFileName(String originName,Ses) {
+		int idx = originName.lastIndexOf(".");
+		String ext = originName.substring(idx); //.txt
+	}*/
 }
 
 

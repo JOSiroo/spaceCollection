@@ -142,7 +142,7 @@
 	            <div class="col-md-8 mb-3">
 	            	<label for="acNumber">인증번호</label>
 	            	<input type="text" class="form-control" name="acNumber" id="acNumber" placeholder="인증번호 6자리를 입력해주세요" required>
-	            	<input type="text" id="authCode" value="${authCode }">
+	            	<input type="hidden" id="authCode" value="${authCode }">
 	            	<c:if test="${!empty authCode }">
 	            		<label>인증 만료 : </label><span id="timer">05:00</span>
 	            	</c:if>
