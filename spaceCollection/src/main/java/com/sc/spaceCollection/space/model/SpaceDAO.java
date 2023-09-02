@@ -47,4 +47,6 @@ public interface SpaceDAO {
 	int isAcceptSpace(SpaceVO vo);
 	List<Map<String, Object>> selectSpaceConfirmList(SearchVO vo);
 	int getTotalRecordSpaceConfrimList(SearchVO vo);
+	int spaceConfirm(SpaceVO vo);
+	int spaceDenine(SpaceVO vo);
 }

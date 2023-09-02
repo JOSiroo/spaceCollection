@@ -77,15 +77,18 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/myReview")
-	public String myReview(HttpSession session,Model model) {
+	public String myReview(@RequestParam(defaultValue = "1") int page, HttpSession session,Model model ) {
 		String userId = (String)session.getAttribute("userId");
-		logger.info("나의 리뷰 페이지, 파라미터 userId={}",userId);
+		logger.info("나의 리뷰 페이지, 파라미터 userId={},page={}",userId,page);
 		
-		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId);
+		int size=5;
+		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId, size, page);
+		int total=reviewService.getTotalRecordByUserId(userId);
+		
 		logger.info("나의 리뷰 불러오기 결과, map={}",reviewMap);
 		
 		model.addAttribute("reviewMap",reviewMap);
-		
+		model.addAttribute("total",total);
 		return "review/myReview";
 	}
 }

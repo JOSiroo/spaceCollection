@@ -2,8 +2,21 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="../form/userTop.jsp" %>
-<%-- <%@include file="myPageMenu.jsp" %> --%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript">
+	$(function(){
+		if($("input[name=page]").val()<1){
+			$("input[name=page]").val(1);
+		}
+		
+		$("#moreReview").click(function(){
+			var plus=$("input[name=page]").val();
+			plus++;
+			$("input[name=page]").val(plus);
+			$("form[name=frmPage]").submit();
+		});
+	});
+</script>
 <style type="text/css">
 	.wrap {
 		min-height: 100vh;
@@ -96,6 +109,7 @@
 		padding-left: 10px;
 		padding-right: 10px;
 		margin: 0 auto;
+		border: 2px solid #2d5aa0;
 	}
 	
 	.tbReview {
@@ -136,16 +150,31 @@
 		margin-left: 1170px;
 		margin-bottom: 30px;
 	}
+	
+	#moreReview{
+		background-color: #e5e5e5;
+		border: 2px solid #2d5aa0;
+		color: black;
+		font-weight: bold;
+		font-size: 17px;
+		width: 100%;
+		
+	}
+	.emptyLine{
+		height: 3px; 
+		background: #2d5aa0;
+		margin-top: 10px;
+	}
 </style>
 
 <div class="wrap">
 	<div class="align_center">
 	<h1>이용 후기 관리</h1>
 	<div id="menubar">
-		<a href="#" id="review">
+		<a href="<c:url value='/myReview'/>" id="review">
 			이용후기
 		</a>
-		<a href="#" id="QnA">
+		<a href="<c:url value='/myQnA'/>" id="QnA">
 			Q&A
 		</a>
 	</div>
@@ -155,10 +184,13 @@
 		<button type="button" id="search">검색</button>
 	</div>
 	<select name="condition">
-		<option selected="selected" value="">전체</option>
+		<option selected="selected" value="1">전체</option>
 		<option value="">답변 있음</option>
 		<option value="">답변 없음</option>
 	</select>
+<form action="<c:url value='/myReview'/>" name="frmPage" method="post">
+	<input type="text" name="page" value="${param.page }">
+</form>
 	<div class="reViewInfo">
 		<div class="tbReview">
 		<c:if test="${empty reviewMap }">
@@ -182,17 +214,17 @@
 					<label>위치</label> <span class="spaceInfo">${reviewMap['SPACE_ADDRESS'] } ${reviewMap['SPACE_ADDRESS_DETAIL'] }</span>
 				</div>
 				<div>
-					<label>태그</label><br>
+					<label>태그</label>&nbsp;
 					<span class="spaceInfo"># ${reviewMap['SPACE_TAG'] }</span>
 				</div>
 				<div class="review_content">
 					<div>
 						<c:set var="count" value="0"/>
-						<c:forEach var="i" begin="1" end="${reviewMap['REVIEW_RATE'] }">
+						<c:forEach var="i" begin="1" end="${reviewMap['REVIEW_RATE'] /2 }">
 							<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
 							<c:set var="count" value="${count+1 }" />
 						</c:forEach>
-						<c:if test="${reviewMap['REVIEW_RATE']%1 >0 }">
+						<c:if test="${reviewMap['REVIEW_RATE']%2 != 0 }">
 							<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
 							<c:set var="count" value="${count+1 }" />
 						</c:if>
@@ -210,14 +242,17 @@
 						</div>
 					</div>
 				</div>
-				<span>등록일 : 2023.08.10</span>
-				<a href="#">수정</a> | 
-				<a href="#">삭제</a>
+				<br>
+				<div style="margin-left: 82%;">
+					<span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
+					<a href="<c:url value='/deleteReview?reviewNum=${reviewMap["REVIEW_NUM"] }&spaceNum=${reviewMap["SAPCE_NUM"]}  '/>">삭제</a>
+					<!-- <a href="#">수정</a> -->
+				</div>
+				<div class="emptyLine">&nbsp;</div>
 			</c:forEach>
 		</c:if>
-			<div class="footProfile">
-				<hr>
-				<a href="#" class="editInfo" style="margin-left: 210px;">1 2 3 4 5 6 7 8 9 10</a> 
+			<div class="pagingDiv">
+				<button type="button" id="moreReview">더보기</button>
 			</div> 
 		</div>
 	</div>

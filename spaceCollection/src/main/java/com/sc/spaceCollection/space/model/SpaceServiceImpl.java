@@ -6,6 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.controller.UserMainController;
@@ -142,6 +144,44 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public int getTotalRecordSpaceConfrimList(SearchVO vo) {
 		return spaceDao.getTotalRecordSpaceConfrimList(vo);
+	}
+
+
+	@Override
+	@Transactional
+	public int spaceConfirm(SpaceListVO listVo) {
+		int cnt = 0;
+		
+		try {
+			for(SpaceVO vo : listVo.getSpaceItemList()) {
+				cnt = spaceDao.spaceConfirm(vo);
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			cnt = -1;
+		}
+
+		return cnt;
+	}
+
+
+	@Override
+	@Transactional
+	public int spaceDenine(SpaceListVO listVo) {
+		int cnt = 0;
+		
+		try {
+			for(SpaceVO vo : listVo.getSpaceItemList()) {
+				cnt = spaceDao.spaceDenine(vo);
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			cnt = -1;
+		}
+
+		return cnt;
 	}
 
 
