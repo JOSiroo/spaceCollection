@@ -21,6 +21,7 @@ import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.host.model.SpaceTypeVO;
+import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeListVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
@@ -288,9 +289,10 @@ public class AdminSpaceController {
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-		pagingInfo.setRecordCountPerPage(5);
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
 		
 		pagingInfo.setKindFlag("spaceConfirmList");
+		logger.info("pagining = {}", pagingInfo.getBlockSize());
 		
 		searchVo.setRecordCountPerPage(20);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
@@ -308,5 +310,43 @@ public class AdminSpaceController {
 		ajaxVo.setSearchVo(searchVo);
 		
 		return ajaxVo;
+	}
+	
+	@RequestMapping("spaceConfirmList/Confirm")
+	public String spaceConfirm(@ModelAttribute SpaceListVO listVo, Model model) {
+		logger.info("공간 승인, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceService.spaceConfirm(listVo);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "거절 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+		
+	}
+	
+	@RequestMapping("spaceConfirmList/Denine")
+	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
+		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceService.spaceDenine(listVo);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "승인 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+		
 	}
 }
