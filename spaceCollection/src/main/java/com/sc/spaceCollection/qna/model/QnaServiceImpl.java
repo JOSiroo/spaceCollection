@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.common.SearchVO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +26,16 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public int deleteQna(int qnaNum) {
 		return qnaDao.deleteQna(qnaNum);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectQnaByUserId(SearchVO searchVo) {
+		return qnaDao.selectQnaByUserId(searchVo);
+	}
+
+	@Override
+	public int totalQnaByUserId(SearchVO searchVo) {
+		return qnaDao.totalQnaByUserId(searchVo);
 	}
 
 }
