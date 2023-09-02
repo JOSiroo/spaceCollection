@@ -98,6 +98,9 @@
 	border:black 4px solid;
 	background-color: white !important;
 }
+.pageArea{
+	padding:1% 40% 0% 40%;
+}
 </style>
 <section>
 	<div class="asd"></div>
@@ -144,16 +147,46 @@
 				</div>
 			</div>
 		</c:forEach>
-	</div>
-	<div class="pageArea">
-		<c:forEach var="i" begin="1" end="${blockPages}">
-			<span>${i}</span>
-		</c:forEach>
+		<div class="pageArea">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			    <li class="page-item"><a class="page-link" id="prevBt" href="<c:url value='/reservation/reservationList?page=${param.page-1}'/>"><</a></li>
+				<c:forEach var="i" begin="1" end="${blockPages}">
+					<c:if test="${param.page == i}">
+				    	<li class="page-item active">
+				    		<a class="page-link">${i}</a>
+			    		</li>
+					</c:if>
+					<c:if test="${param.page != i}">
+				    	<li class="page-item"><a class="page-link" href="<c:url value='/reservation/reservationList?page=${i}'/>">${i}</a></li>
+					</c:if>
+				</c:forEach>
+			    <li class="page-item"><a class="page-link" id = "nextBt"href="<c:url value='/reservation/reservationList?page=${param.page+1}'/>">></a></li>
+			  </ul>
+			</nav>
+		</div>
 	</div>
 </section>
 <script type="text/javascript">
 	function goReservation(reservationNum){
 		location.href = "<c:url value = '/reservation/showReservation?reservationNum="+reservationNum+"'/>";		
 	}
+	
+	$(function(){
+		$('#prevBt').click(function(){
+			if(${param.page == 1}){
+				alert('첫페이지 입니다');
+				event.preventDefault();
+			}
+		});	
+		$('#nextBt').click(function(){
+			if(${param.page == blockPages}){
+				alert('마지막페이지 입니다');
+				event.preventDefault();
+			}
+		});	
+		
+		
+	});
 </script>
 <%@ include file="/WEB-INF/views/form/userBottom.jsp"%>

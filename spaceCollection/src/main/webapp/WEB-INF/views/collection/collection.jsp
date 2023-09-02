@@ -5,6 +5,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
+ @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -5%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    	}
 
 .row{
 	padding: 5% 0% 0% 0%;
@@ -166,6 +176,7 @@
 	    margin: 0% 0% 0% 0%;
 	    margin-bottom:8%;
 	    box-shadow: 5px 5px 15px 10px rgba(0, 0, 0, 0.2);
+	    animation: fadeInDown 1s;
 	}
 	.card-body{
 		padding: 4% 8% 4% 8%;

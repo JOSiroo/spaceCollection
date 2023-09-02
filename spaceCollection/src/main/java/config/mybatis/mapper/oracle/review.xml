@@ -68,13 +68,26 @@
 	</select>
 	
 	<select id="spaceDetailReview"  resultType="map">
-		select * from review_detail_view
-		where space_num = #{spaceNum}
+		select * 
+		from 
+		(
+			select ROWNUM as rn, A.* 
+			from 
+				(
+					select * from review_detail_view
+					where space_num = #{spaceNum}
+				)A
+		)
+		<![CDATA[where rn >= #{startRow} and rn <= #{endRow}]]>
 	</select>
 	
 	<delete id="deleteReview" parameterType="int">
 		delete review
 		where review_num = #{reviewNum}
 	</delete>
+	<select id="getTotalRecordBySpaceNum" parameterType="int">
+		select count(*) from review_detail_view
+		where space_num = #{spaceNum}
+	</select>
 	
 </mapper>

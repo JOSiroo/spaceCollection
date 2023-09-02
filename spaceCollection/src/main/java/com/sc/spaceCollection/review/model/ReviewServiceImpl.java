@@ -47,8 +47,11 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<Map<String, Object>> spaceDetailReview(int spaceNum) {
-		return reviewDao.spaceDetailReview(spaceNum);
+	public List<Map<String, Object>> spaceDetailReview(int spaceNum,int page) {
+		
+		int startRow = (page - 1) * 5 + 1; 
+		int endRow = page * 5;
+		return reviewDao.spaceDetailReview(spaceNum,startRow, endRow);
 	}
 
 	@Override
@@ -59,5 +62,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int getTotalRecordByUserId(String userId) {
 		return reviewDao.getTotalRecordByUserId(userId);
+	}
+
+	@Override
+	public int getTotalRecordBySpaceNum(int spaceNum) {
+		return reviewDao.getTotalRecordBySpaceNum(spaceNum);
 	}
 }

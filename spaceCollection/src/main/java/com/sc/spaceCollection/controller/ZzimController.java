@@ -97,10 +97,13 @@ public class ZzimController {
 		int userNum = guestService.selectUserInfo(userId).getUserNum();
 		
 		
-		
 		logger.info("찜 목록 조회, 파라미터 Usernum = {}",userNum);
 		List<Map<String, Object>> list = zzimService.showZzimList(page, size, userNum);
 		logger.info("찜 목록 조회, 파라미터 결과 = {}",list);
+		
+		for(Map<String, Object> map : list) {
+			  map.put("SPACE_REG_DATE", map.get("SPACE_REG_DATE")+"");
+		 }//timestamp 오류나서 String으로 변환
 		
 		model.addAttribute("list", list);
 		return list;

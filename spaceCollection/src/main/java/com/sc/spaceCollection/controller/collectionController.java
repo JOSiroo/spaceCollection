@@ -39,7 +39,9 @@ public class collectionController {
 	public List<Map<String, Object>> collectionList(@RequestParam int page, @RequestParam int size, @RequestParam int scNum) {
 		logger.info("기획전 데이터 가져오기, 파라미터 scNum = {}",scNum);
 		List<Map<String, Object>> list = collectionService.showCollectionList(scNum);
-		
+		for(Map<String, Object> map : list) {
+			  map.put("SPACE_REG_DATE", map.get("SPACE_REG_DATE")+"");
+		}//timestamp 오류나서 String으로 변환
 		return list;
 	}
 }
