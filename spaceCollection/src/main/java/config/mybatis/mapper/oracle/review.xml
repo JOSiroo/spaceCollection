@@ -17,12 +17,22 @@
 		values(#{reviewNum},#{reviewRate},#{reviewContent},sysdate,#{userNum},#{reservationNum})
 	</insert>
 	
-	<select id="selectMyReview" parameterType="String" resultType="map">
-		select * from 
-		review r join RESERVATION_SPACE_SD_VIEW v
-		on r.RESERVATION_NUM=v.RESERVATION_NUM
-		where USER_ID=#{userId}
-		order by review_num desc
+	<select id="selectMyReview" resultType="map">
+	select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from 
+				review r join RESERVATION_SPACE_SD_VIEW v
+				on r.RESERVATION_NUM=v.RESERVATION_NUM
+				where USER_ID=#{userId}
+				order by review_num desc
+				)A
+		)
+		<![CDATA[
+		where RNUM> #{startRow} 
+		and RNUM<=#{startRow} + #{endRow}]]>
 	</select>
 	
 	<select id="selectReviewEachUser">
@@ -45,6 +55,11 @@
 		select count(*) from review_userid
 		where REVIEW_DEL_FLAG is null and USER_ID = #{userId}
 		<include refid="searchWhere"/>
+	</select>
+	
+	<select id="getTotalRecordByUserId" parameterType="String" resultType="int">
+		select count(*) from review_userid
+		where REVIEW_DEL_FLAG is null and USER_ID = #{userId}
 	</select>
 	
 	<select id="selectNewReview"  resultType="map">

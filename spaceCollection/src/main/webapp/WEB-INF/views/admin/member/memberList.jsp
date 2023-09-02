@@ -105,6 +105,7 @@
 				$('#confirm2 .modal-body').html("선택된 회원을 탈퇴시키겠습니까?<br>해당 회원이 작성한 모든 자료가 삭제됩니다.");
 				$('#confirm2').modal("show");
 				$('#okBt').click(function() {
+					$('#confirm2').modal("hide");
 					$('form[name=trFrm]').submit();
 				});
 			}
@@ -124,6 +125,7 @@
 				event.preventDefault();
 				$('#warning').show();
 			}else{
+				$('#excelModal').modal('hide');
 				$('form[name=excelFrm]').submit();
 			}
 		});
