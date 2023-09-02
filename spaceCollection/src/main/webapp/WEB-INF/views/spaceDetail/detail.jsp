@@ -1029,7 +1029,7 @@ pageEncoding="UTF-8"%>
 								+'<a href="#" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
 								+'</div>';
 					}
-								+'</div>'
+						htmlStr +='</div>'
 								+'</div>'
 								+'<hr>';
 					resultStr += htmlStr;
