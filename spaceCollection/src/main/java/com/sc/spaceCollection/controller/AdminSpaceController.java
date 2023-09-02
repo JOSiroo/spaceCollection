@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.common.AjaxVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
@@ -270,5 +272,41 @@ public class AdminSpaceController {
 	@RequestMapping("/spaceList")
 	public void spaceList(Model model) {
 		logger.info("공간 조회");
+	}
+	
+	@RequestMapping("/spaceConfirmList")
+	public void spaceConfirmList() {
+		logger.info("공간 승인 목록 화면");
+		
+	}
+	
+	@RequestMapping("/spaceConfirmList/ajax_spaceConfirmList")
+	@ResponseBody
+	public AjaxVO ajax_spaceConfirmList(@ModelAttribute SearchVO searchVo) {
+		logger.info("ajax - 공간 승인 요청 내역 조회, 파라미터 searchVo = {}", searchVo);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(5);
+		
+		pagingInfo.setKindFlag("spaceConfirmList");
+		
+		searchVo.setRecordCountPerPage(20);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> spaceList = spaceService.selectSpaceConfirmList(searchVo);
+		logger.info("ajax - 공간 등록 내역 조회 결과, spaceList.size = {}", spaceList.size());
+		
+		int totalRecord = spaceService.getTotalRecordSpaceConfrimList(searchVo);
+		logger.info("ajax -전체 공간 등록 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		AjaxVO ajaxVo = new AjaxVO();
+		ajaxVo.setPagingInfo(pagingInfo);
+		ajaxVo.setAjaxList(spaceList);
+		ajaxVo.setSearchVo(searchVo);
+		
+		return ajaxVo;
 	}
 }

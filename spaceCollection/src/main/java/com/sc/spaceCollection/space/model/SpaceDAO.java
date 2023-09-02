@@ -30,7 +30,13 @@ public interface SpaceDAO {
 												@Param("filterList") List<String> filterList,
 												@Param("order") String order);
 	List<Map<String, Object>> selectAll(@Param("startRow")int startRow,
-										@Param("endRow") int endRow);
+										@Param("endRow") int endRow,
+										@Param("region") String region,
+										@Param("maxPeople") int maxPeople,
+										@Param("minPrice") int minPrice,
+										@Param("maxPrice") int maxPrice,
+										@Param("filterList") List<String> filterList,
+										@Param("order") String order);
 	
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
@@ -39,4 +45,6 @@ public interface SpaceDAO {
 	List<Map<String, Object>> selectSpaceListViewByUserId(SearchVO vo);
 	int getTotalRecordSpaceListViewByUserId(SearchVO vo);
 	int isAcceptSpace(SpaceVO vo);
+	List<Map<String, Object>> selectSpaceConfirmList(SearchVO vo);
+	int getTotalRecordSpaceConfrimList(SearchVO vo);
 }

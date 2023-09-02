@@ -105,6 +105,7 @@
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
+		$.spaceConfirmListSearch();
 		
 		//페이지 출력 관련 시작
 		$('li button').click(function() {
@@ -250,6 +251,8 @@
 								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_TYPE_NAME;
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
 								str += "</td>";
