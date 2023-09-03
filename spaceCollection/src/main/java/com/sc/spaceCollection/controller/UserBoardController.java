@@ -45,18 +45,21 @@ public class UserBoardController {
 	}
 	
 	@RequestMapping("/notice")
-    public String notice(@ModelAttribute BoardVO vo, Model model,
+    public String notice(Model model,
 						@RequestParam(defaultValue = "1") int page,
 						@RequestParam(required = false) String boardTitle,
 						@RequestParam(required = false) String boardContent,
-						@RequestParam(required = false) String keyword) {
-			
-		logger.info("검색, 파라미터 page = {}", page);
-		logger.info("공지사항 검색 조회, 파라미터 boardTitle = {}, boardContent = {}, keyword", boardTitle, boardContent, keyword);
+						@RequestParam(defaultValue = "1") int boardNum,
+						@RequestParam(required = false) String searchKeyword) {
+		
+		
+		//logger.info("공지사항 검색 조회, 파라미터 boardTitle = {}, boardContent = {}, page={}", boardTitle, boardContent);
+		logger.info("검색, 파라미터 keyword = {}", searchKeyword);
+		
 		
 		int size = 5;
-		List<Map<String, Object>> list = boardService.selectNotice(page,size,boardTitle,boardContent,keyword);
-		logger.info("공지사항 조회 결과 list = {}", list);
+		List<Map<String, Object>> list = boardService.selectNotice(page,size,boardTitle,boardContent,searchKeyword);
+		logger.info("공지사항 조회 결과 list.size = {}", list);
 		
 		model.addAttribute("list", list);
         return "userMain/board/notice";
@@ -123,7 +126,7 @@ public class UserBoardController {
 	@GetMapping("/board/boardDetail/commentsLoad")
 	@ResponseBody
 	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, 
-			CommentsVO commentsVO, @RequestParam(defaultValue = "0")int page ) {
+			CommentsVO commentsVO, @RequestParam(defaultValue = "0")int page, String userId  ,Model model ) {
 		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, page);
 		
 		int size=5;
@@ -131,51 +134,40 @@ public class UserBoardController {
 	    List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVO);
 	    List<CommentsVO> list1 = commentsService.selectPaging(page, size, boardNum);
 	    
-	    /*for(Map<String, Object> map : list) {
-			map.put("COMMENT_REG_DATE", (map.get("COMMENT_REG_DATE")+"").substring(0, 16));
-			map.put("COMMENT_CONTENT", ((String)map.get("COMMENT_CONTENT")).replace("\n", "<br>"));
-	    }*/
 	    
-	    /*
-	    for(CommentsVO vo : list1){
-	    	vo.setCommentRegDate((vo.getCommentRegDate()+"").substring(0,6));
-	    	vo.setCommentContent((vo.getCommentContent()).replace("\n","<br>"))
-    	}
-    	*/
-	    /*
-	    for (CommentsVO vo : list1) {
-	        Timestamp commentRegTimestamp = vo.getCommentRegDate(); // 기존 Timestamp 가져옴
-	        String formattedCommentRegDate = commentRegTimestamp.toString().substring(0, 16); // 원하는 형식으로 변환한 문자열
-
-	        vo.setCommentRegDate(Timestamp.valueOf(formattedCommentRegDate)); // 문자열을 Timestamp로 변환하여 다시 설정
-
-	        vo.setCommentContent(vo.getCommentContent().replace("\n", "<br>")); // 댓글 내용 수정
-	    }
- 		*/
+	    /*for(CommentVO vo : list1){
+	    	vo.setCommentRegDate((vo.getCommentRegDate+"").substring(0,6));
+	    	vo.setCommentContent((vo.getCommentContent).replace("\n","<br>"))
+	    	}*/
 	    
 	    logger.info("list1={}",list1);
+	    model.addAttribute("list1", list1);
 	    
 	    return list1;
 	}
 
-	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
-	@ResponseBody
-	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
-		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
-		int cnt = commentsService.updateComments(commentsVo);
-		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
-		return cnt;
-	}
-
-	
 	@RequestMapping("/board/boardDetail/ajax_commentsDelete")
 	@ResponseBody
 	public int ajax_commentsDelete(@RequestParam(defaultValue = "0")int commentNum) {
 		logger.info("ajax - 댓글 삭제, 파라미터 commentNum = {}", commentNum);
+		
 		int cnt = commentsService.updateCommentsDelFlag(commentNum);
 		logger.info("ajax - 댓글 삭제 결과, cnt = {}", cnt);
+		
 		return cnt;
 	}
+	
+	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
+	@ResponseBody
+	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
+		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
+		
+		int cnt = commentsService.updateComments(commentsVo);
+		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
+		
+		return cnt;
+	}
+	
 	
 
 }

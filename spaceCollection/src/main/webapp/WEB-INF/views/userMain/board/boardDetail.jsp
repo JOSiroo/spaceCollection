@@ -28,10 +28,6 @@
     margin-bottom: 500px;
 	}
 	
-	div#ajaxComments {
-    margin: 20px;
-	}
-	
 	#commentsMoreDiv{
 	cursor: pointer;
 	margin:40px;
@@ -58,122 +54,144 @@
     margin-top: 40px;
 	}
 	
-	button#sendBt {
+	#sendBt{
     scale: 0.7;
 	}   
 	
-	button.btbt{
+	button.commentsDel{
 	border-radius: 10px;
     background-color: white;
+    float: right;
+	}
+	button.commentsEdit{
+	border-radius: 10px;
+    background-color: white;
+    float: right;
 	}
 	
-	button#EditBt {
-    margin-left: 460px;
-	}
-		
 </style>
 
 <script>
 
- function makeList(data) {
-		 $.each(data, function() {
-		    var str = "<div class='CommentsBox'  style='border: 1px solid #ccc; width: 600px;'>"
-		        + "<form name='CommentsBox' method='post' action='#' var='list' items='" + this.list + "' >"
-		        + "<div class='anonym' style='margin: 10px;'>작성자 :"
-		        + "<input type='text'  id='com_writer' placeholder='id' name='com_writer' value='" + this.userNum + "' readonly style='width: 80px; border:none;'>"
-		        + "<input type='text' value='" + this.commentRegDate + "' style='border: none;' />"
-		        + "</div>"
-		        + "<div class='anonym2' style='margin: 10px;'>"
-		        + "" + this.commentContent +""
-		        + "<button type='button' class='btbt' id='EditBt'>수정</button>"
-		        + "<button type='button' class='btbt' id='delBt' >삭제</button>"
-		        + "</div>"
-		        + "</form>"
-		        + "</div>";
-		    $('#commentsLoad').append(str);
-		}); //each
-
-	}//makeList
-
- 	$.loadComment=function(boardNum) {
-		$.ajax({
-			url : '<c:url value="/user/board/boardDetail/commentsLoad?boardNum='+boardNum+'&page='+page+'"/>',
-			type: 'get',
-			success:function(data){
-				var str = "";
-				if(data!=null && data.length>0){
-					console.log(data);
-					makeList(data);
-					page++
-				}else{
-					str = "<span>등록된 댓글이 없습니다.</span>";
-					$('#commentsLoad').append(str);
-				}
-			},
-			error:function(xhr, status, error){
-				
-				alert(status + " : " + error);
-			}
-		});//ajax
-	}//loadComment
-	
-	$("#commentsMoreDiv").click(function(){
-		 loadComment(boardNum); 
-	});
-
-	function commentEdit(commentNum) {
-		console.log("수정 메서드 만들기 시작");
-		
-		var str = "";
-		 + "<div class='col-sm-10' id='commentNum'"+commentNum+">"
-		 + "<strong>작성자 : </strong>" + userNum
-		 + "<textarea class='form-control' id='commentContent' style='height: 10px' name='commentContent'></textarea>"
-		 + "</div>"
-		 + "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>"
-		 + "<button type='button' class='btn btn-outline-success' id='EditBt' "
-		 + "onclick='updateBtn("+commentNum+ ",\" "+commentContent+" name='commentEditBt'>댓글 수정</button>"
-		 + "<button type='button' class='btn btn-outline-success' onclick='getContent'>취소</button>"
-		 + "</div>"
-		 + "<hr>";
-		 $("#commentList").append(html);
-	}//commentEdit 
-	
+	 function makeList(data) {
+			 $.each(data, function() {
+			    var str = "<div class='CommentsBox'  style='border: 1px solid #ccc; width: 600px;'>"
+			        + "<form name='CommentsBox' method='post' action='#' var='list' items='" + this.list + "' >"
+			        + "<input type='hidden' name="+this.userNum+" value="+this.userNum+"/>"
+			        + "<div class='anonym' style='margin: 10px;'>작성자 :"
+			        + "<input type='text'  id='com_writer' placeholder='id' name='com_writer' value='" + this.userNum + "' readonly style='width: 80px; border:none;'>"
+			        + "<input type='text' value='" + this.commentRegDate + "' style='border: none;' />"
+			        + "</div>"
+			        + "<div class='anonym2' style='margin: 10px;'>"
+			        + "" + this.commentContent +""
+			        + "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete(this)'>삭제</button>"
+					+ "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this)'>수정</button>"
+			        + "</div>"
+			        + "</form>"
+			        + "</div>";
+			    $('#commentsLoad').append(str);
+			}); //each
+	 }//makeList
+	 
+	$.loadComment=function(boardNum) {
 		var page = 1;
-		var boardNum = ${param.boardNum};
-		$.loadComment(boardNum);
+			$.ajax({
+				url : '<c:url value="/user/board/boardDetail/commentsLoad?boardNum='+boardNum+'&page='+page+'"/>',
+				type: 'get',
+				success:function(data){
+					console.log("확인용");
+					if(data!=null && data.length>0){
+						console.log("된건가?");
+						makeList(data);
+						page++
+					}else{
+						str = "<span>등록된 댓글이 없습니다.</span>";
+						$('#commentsLoad').append(str);
+					}
+				},
+				error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+			});//ajax
+	}//loadComment 
 	
-$(function() { 
+	var boardNum = ${param.boardNum}; 
+	$.loadComment(boardNum);
 		
-		function loadMoreData() {
-		    if (isLoading) {
-		        return;
-		    }
-		    isLoading = true;
+	  $("#commentsMoreDiv").click(function(){
+			 loadComment(boardNum); 
+		});
 
-		    $.ajax({
-		        url: '<c:url value="/user/board/boardDetail/commentsLoad?page='+page+'&boardNum='+boardNum+'"/>',
-		        type:'get',
-		        dataType: 'json',
-		        success: function(data) {
-		           if(data != null){
-		            makeList(data);
-		                page++;
-		         }
-		           if(data.length == 0 ){
-		            if(noDataNum == 0){
-		               noData();
-		            }
-		            noDataNum++;
-		            return;
-		           }
-		         
-		        },
-		        complete: function() {
-		            isLoading = false;
-		        }
-		    });
+		
+	 function addList(data) {
+		 console.log("추가 메서드 만들기 시작");
+			 var str="";
+			 var str = "<div class='CommentsBox'  style='border: 1px solid #ccc; width: 600px;'>"
+			        + "<form name='CommentsBox' method='post' action='#' var='list' items='" + data.list + "' >"
+			        + "<div class='anonym' style='margin: 10px;'>작성자 :"
+			        + "<input type='text'  id='com_writer' placeholder='id' name='com_writer' value='" + data.userNum + "' readonly style='width: 80px; border:none;'>"
+			        + "<input type='text' value='" + data.commentRegDate + "' style='border: none;' />"
+			        + "</div>"
+			        + "<div class='anonym2' style='margin: 10px;'>"
+			        + "" + data.commentContent +""
+			        + "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete(this)'>삭제</button>"
+					+ "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this)'>수정</button>"
+			        + "</div>"
+			        + "</form>"
+			        + "</div>";
+			 $('#ajaxComments').append(str);
+	 }
+
+	 
+	function commentEdit(evt) {
+		console.log("수정 메서드 시작");
+		var str = "";
+		str += "<form name='commentsEditFrm' method='post>";
+		str += "<div class='col-sm-10' id='commentDiv'>";
+		str += "<textarea class='form-control' style='height: 100px' name='commentContent'></textarea>";
+		str += "</div>";
+		str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
+		str += "<button type='submit' class='btn btn-primary right commentEditBt' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
+		str += "</div>";
+		str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
+		str += "<input type='hidden' name='commentNum'>";
+		str += "<input type='hidden' name='userNum' value='9999999'>";
+		str += "</form>";
+		str += "<hr>";
+		var commentNum = $(evt).parent().prev().val();
+		
+		$(evt).parent().replaceWith(str);
+		$('input[name=commentNum]').val(commentNum);
+	}	
+		
+	function moreComment() {
+		$('input[name=addNum]').val(parseInt($('input[name=addNum]').val())+5);
+		$.commentsLoad();
+	}
+	
+$(function() {
+
+	if($('#commentOk').val() == 'Y'){
+		$.commentsLoad();
+	}
+
+	$('#okBt').hide();
+	$('#fileList').hide();
+	
+	$('#fileSpan').click(function() {
+		$('#fileList').toggle();
+	});
+	
+	$('form[name=commentsFrm]').submit(function() {
+		if($('textarea').val().trim()==''){
+			$('#okBt').hide();
+			$('#cancelBt').html("확인");
+			$('.modal-body').html("댓글을 입력해주세요.");
+	        $('#confirm1').modal('show');
+			
+			event.preventDefault();
 		}
-
+	});
 		
 		$('#sendBt').click(function() {
 			event.preventDefault();
@@ -186,46 +204,67 @@ $(function() {
 			        success: function(data) {
 		                 // data를 사용하여 필요한 작업 수행
 		                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
-		                  function handleButtonClick() {
-					        if (userId=="" && userId.isEmpty ) {
-					        	alert("댓글 등록 성공");
-					        } else {
-									if(data!=null){
-										$('#ajaxComments').html("");
-											str = "<div class='CommentsBox'  style='border: 1px solid #ccc; width: 600px;'>"
-												 + "<form name='CommentsBox' method='post' action='#' var='vo' items='"+data.vo+"' >"
-												 + "<div class='anonym' style='margin: 10px;'>작성자 :"
-												 + "<input type='text'  id='com_writer' placeholder='id' "
-												 + "name ='com_writer' value='"+data.commentNum+"' readonly style='width: 80px; border:none;'>"
-												 + "<input type='text' value='"+data.commentRegDate+"' style='border: hidden;' />"
-												 + "</div>"
-												 + "<div class='anonym2' style='margin: 10px;'>"
-												 + ""+data.commentContent+""
-												 + "<button type='button' class='comment_edit' id='EditBt'>수정</button>"
-												 + "<button type='button' class='comment_delete' id='delBt'>삭제</button>"
-												 + "</div>"
-												 + "</form>"
-												 + "</div>";
-												 
-					     						alert("댓글 등록 성공");
-					     						$('input[name=commentContent]').val('');
-					     						$.loadComment(boardNum);
-					     						console.log(data);
-						     							 
-									}else if(data==null){
-										alert("댓글 내용을 입력하세요");
-									}
-					        }
-					            console.log("Button clicked!");
-					        }
-			        },
-					error:function(xhr, status, error){
+								if(data!=null){
+									$('#ajaxComments').html("");
+									addList(data);
+		     						alert("댓글 등록 성공");
+		     						
+		     						$('input[name=commentContent]').val('');
+		     						console.log("댓글 추가 성공");
+								}else if(data==null){
+									alert("댓글 내용을 입력하세요");
+								}//if
+			        },//success
+			    	error:function(xhr, status, error){
 						alert(status + " : " + error);
 					}
 			    });//ajax
 		});//#sendBt
-		 
-});		
+		
+
+		$('#commentsDel').click(function(){
+			var commentNum = $(evt).parent().find("input[name=commentNum]").val()
+			$('#okBt').show();
+			$('#cancelBt').html("취소");
+			$('#okBt').html("삭제");
+			$('#okBt').addClass('deleteComments');
+			$('.modal-body').html("댓글을 삭제하시겠습니까?");
+			$('#confirm1').modal('show');
+			$('.deleteComments').click(function() {
+				$(this).removeClass('deleteComments');
+				$.ajax({
+					url : "<c:url value='/user/board/boardDetail/ajax_commentsDelete'/>",
+					type : 'get',
+					data : "commentNum="+commentNum,
+					dataType : 'json',
+					success:function(){
+						$.loadComment();
+					},error:function(xhr, status, error){
+						alert(status + " : " + error);
+					}
+				});
+				$('#confirm1').modal('hide');	
+			});
+		});
+		
+		
+		$('#commentsEdit').click(function() {
+			$.ajax({
+				url : "<c:url value='/user/board/boardDetail/ajax_commentsEdit'/>",
+				type : 'post',
+				data : $('form[name=commentsEditFrm]').serializeArray(),
+				dataType : 'json',
+				success:function(){
+					$.loadComment();
+				},error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+			});
+		});//commentEditBt
+	
+		
+		
+});//#function
 
 </script>
 
@@ -271,7 +310,7 @@ $(function() {
              <br>
 	             
 	         <div id="CommentsBox" >
-	             <form name="CommentsBox" method="post" action="#"  var="list" items="${list}">
+	             <form name="CommentsBox" method="post" action="#"  var="list1" items="${list1}">
 		             	<c:if test="${empty list }">  
 			  				<td colspan="5" class="align_center">글이 존재하지 않습니다.</td>
 					  	</c:if>
@@ -279,9 +318,9 @@ $(function() {
 							<div class="col align-center" >
 								<!-- 댓글 추가 -->
 								<input type="hidden" name="addNum" > 
-								<div id="ajaxComments"> 
+								<div id="ajaxComments" var="list1" items="${list1}"> 
 								</div>
-								<div id="commentsLoad" var="list" items="${list}"> 
+								<div id="commentsLoad" var="list1" items="${list1}"> 
 								</div>
 								<!-- 댓글 더 보기 -->
 								<div id="commentsMoreDiv"> 
@@ -291,8 +330,28 @@ $(function() {
 						</c:if>
 				</form>
 			</div>
+			
 		</div>	
 	</section>
+	
+	<div class="modal fade" id="confirm1" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" id="cancelBt"></button>
+					<button type="button" class="btn btn-danger" id="okBt"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
   </div>	
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
 		
