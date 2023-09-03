@@ -17,12 +17,22 @@
 		values(#{reviewNum},#{reviewRate},#{reviewContent},sysdate,#{userNum},#{reservationNum})
 	</insert>
 	
-	<select id="selectMyReview" parameterType="String" resultType="map">
-		select * from 
-		review r join RESERVATION_SPACE_SD_VIEW v
-		on r.RESERVATION_NUM=v.RESERVATION_NUM
-		where USER_ID=#{userId}
-		order by review_num desc
+	<select id="selectMyReview" resultType="map">
+	select *
+		from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from 
+				review r join RESERVATION_SPACE_SD_VIEW v
+				on r.RESERVATION_NUM=v.RESERVATION_NUM
+				where USER_ID=#{userId}
+				order by review_num desc
+				)A
+		)
+		<![CDATA[
+		where RNUM> #{startRow} 
+		and RNUM<=#{startRow} + #{endRow}]]>
 	</select>
 	
 	<select id="selectReviewEachUser">
@@ -47,19 +57,37 @@
 		<include refid="searchWhere"/>
 	</select>
 	
+	<select id="getTotalRecordByUserId" parameterType="String" resultType="int">
+		select count(*) from review_userid
+		where REVIEW_DEL_FLAG is null and USER_ID = #{userId}
+	</select>
+	
 	<select id="selectNewReview"  resultType="map">
 		select * from main_review_view
 		WHERE REVIEW_DEL_FLAG IS NULL
 	</select>
 	
 	<select id="spaceDetailReview"  resultType="map">
-		select * from review_detail_view
-		where space_num = #{spaceNum}
+		select * 
+		from 
+		(
+			select ROWNUM as rn, A.* 
+			from 
+				(
+					select * from review_detail_view
+					where space_num = #{spaceNum}
+				)A
+		)
+		<![CDATA[where rn >= #{startRow} and rn <= #{endRow}]]>
 	</select>
 	
 	<delete id="deleteReview" parameterType="int">
 		delete review
 		where review_num = #{reviewNum}
 	</delete>
+	<select id="getTotalRecordBySpaceNum" parameterType="int">
+		select count(*) from review_detail_view
+		where space_num = #{spaceNum}
+	</select>
 	
 </mapper>

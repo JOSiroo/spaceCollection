@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -8,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -99,7 +103,9 @@ public class MyPageController {
 		String msg="", url="";
 		if(result==GuestService.LOGIN_OK) {
 			url="/guest/myPage/myProfile";
+			msg=userId+"님 환영합니다.";
 		}else if(result==GuestService.PWD_DISAGREE) {
+			url="/guest/myPage/checkPwd";
 			msg="비밀번호가 일치하지 않습니다.";
 		}
 		
@@ -107,6 +113,16 @@ public class MyPageController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
+	}
+	
+	@PostMapping("/editImage")
+	public String editImage(@RequestParam("file") MultipartFile file, HttpSession session,HttpServletRequest request) {
+		String userProfileImage="";
+		String userId = (String)session.getAttribute("userId");
+		logger.info("프로필이미지 변경 파라미터, file={}, userId={}",file,userId);
+		file.getName();
+		
+		return userProfileImage;
 	}
 
 }

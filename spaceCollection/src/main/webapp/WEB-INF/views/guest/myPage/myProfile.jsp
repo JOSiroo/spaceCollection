@@ -9,6 +9,49 @@
 		
 		 $(".hiddenText").hide(); // 처음에 숨기기
 		 
+		 $("input[name=userProfileImage]")
+		 
+		 $("input[name=userProfileImage]").change(function() {
+		        var selectedFile = this.files[0]; // 선택한 파일 정보 가져오기
+		        fileCheck(selectedFile);
+		 });
+		 
+		 function fileCheck(file) {
+			    var pathPoint = file.name.lastIndexOf(".");
+			    var filePoint = file.name.substring(pathPoint + 1, file.name.length);
+			    var fileType = filePoint.toLowerCase();
+
+			    if (fileType == 'jpg' || fileType == 'gif' || fileType == 'jpeg' || fileType == 'png' || fileType == 'bmp') {
+			        // 정상적인 파일 확장자
+			        var formData = new FormData(); // FormData 객체 생성
+        			formData.append('file', file); // 파일 데이터 추가
+			        $.ajax({
+			        	url:"<c:url value='/guest/myPage/editImage'/>",
+			        	type: 'post',
+			        	data: formData,
+			            contentType: false, // 컨텐츠 타입 설정하지 않음
+			            processData: false, // 데이터 처리 방지
+			        	success:function(res){
+							 alert("성공");
+						},
+						error:function(xhr,status,error){
+							alert("실패");
+						}
+			        });
+			        	
+			    } else {
+			        alert("이미지 파일만 선택할 수 있습니다.");
+			        return false;
+			    }
+
+			    if (fileType == 'bmp') {
+			        var upload = confirm('bmp 파일은 웹에서 사용하기에 적합하지 않을 수 있습니다.\n그래도 계속 하시겠습니까?');
+			        if (!upload) {
+			            return false;
+			        }
+			    }
+		}
+		 
 		 if($("input[name=userMarketingSmsOk]").val() =='Y'){
 			 $("input[name=userMarketingSmsOk]").prop("checked",true);
 		 }else{
@@ -319,7 +362,8 @@
 					<label for="file-input">
 			        	<img alt="프로필 사진 변경.png" src="<c:url value='/images/editProfileImg.png'/>" style="width: 104.48px; height: 30.48px; margin-left: 72.76px;">
 				    </label>
-				    <input type="file" id="file-input" name="userProfileImage" value="1" style="display: none;"/>
+				    <input type="file" id="file-input" name="userProfileImage" value="1" style="display: none; margin-bottom: 50px;"
+				    	accept="image/gif,image.jpeg,image/png"/>
 				</c:if>
 			</div>
 			<div class="profileInfo">

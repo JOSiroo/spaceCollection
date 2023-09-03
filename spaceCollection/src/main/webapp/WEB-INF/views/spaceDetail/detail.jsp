@@ -10,7 +10,20 @@ pageEncoding="UTF-8"%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>스페이스 클라우드</title>
 <style type="text/css">
-
+ @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -5%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    	}
+    	
+  .content{
+  	animation:fadeInDown 1s;
+  }
 #QNAWrite{
     padding: 0% 0% 0% 0%;
     height: 40px;
@@ -64,7 +77,9 @@ pageEncoding="UTF-8"%>
   .delete-dateCol{
   	padding-left:40% !important;
   }
-  
+  .pageArea{
+  	padding:2% 36.5% 0% 36.5%;
+  }
   
 @keyframes shake {
   0%, 100% {
@@ -315,47 +330,18 @@ pageEncoding="UTF-8"%>
 						<h5 style="display: inline-block;color:#193D76; font-weight: bold;margin-left: 2%;">평균 평점 : &nbsp;${avgReview}</h5>
 						<div class = "nav-bar"></div>
 						<div class = "review-box">
-						<c:if test="${empty reviewList}">
-							<h4>등록된 후기가 없습니다</h4>
-						</c:if>						
-						<c:if test="${!empty reviewList}">
-						    <c:forEach var="review" items="${reviewList}">
-						        <fmt:formatNumber var="float" value="${review.REVIEW_RATE}" pattern="#,#" />
-						        <div>
-						            <div class="reviewHead" style="color:black; font-weight: bold">
-						                <span>${review.USER_ID}</span>
-						                <div style="margin-left: 20%; padding-bottom: 1%">
-						                    <c:set var="count" value="0" />
-						                    <c:forEach var="i" begin="1" end="${(review.REVIEW_RATE / 2)-1}">
-						                        <img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-						                        <c:set var="count" value="${count + 1}" />
-						                    </c:forEach>
-						                    <c:if test="${review.REVIEW_RATE % 2 != 0}">
-						                        <img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
-						                        <c:set var="count" value="${count + 1}" />
-						                    </c:if>
-						                    <c:forEach var="j" begin="${count}" end="4">
-						                        <img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
-						                    </c:forEach>
-						                </div>
-						            </div>
-						            <div class="qnaBody">${review.REVIEW_CONTENT}</div>
-						            <div class="row" style="font-size:14px;">
-						                <div class="col-6 date-deleteCol">
-						                	<span>${review.REVIEW_REG_DATE}</span>
-						                </div>
-						                <c:if test="${sessionScope.userId == review.USER_ID}">
-						                	<div class="col-6 delete-dateCol">
-						                    	<a href="#" style="font-size:14px;" onclick="deleteReview(${review.REVIEW_NUM})">삭제하기</a>
-						                    </div>
-						                </c:if>
-						            </div>
-						        </div>
-						        <hr>
-						    </c:forEach>
-						</c:if>
-	
+						
 						</div>
+						<div class="pageArea">
+						<input type="hidden" id="reviewPage">
+							<nav aria-label="Page navigation example">
+							  <ul class="pagination" id = "reviewPagination">
+							   
+							   
+							  </ul>
+							</nav>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -992,6 +978,89 @@ pageEncoding="UTF-8"%>
 			console.error('Error : ', error);
 		}
 	});
+    
+    callReview(1);
+    $('#reviewPage').val(99999);
+    function callReview(reviewPage){
+    	
+    	if(reviewPage >= 5){
+    		alert('마지막 페이지 입니다');
+    		event.PreventDefault();
+    		return false;
+    	}else if(reviewPage == 0){
+    		alert('첫번째 페이지 입니다');
+    		event.PreventDefault();
+    		return false;
+    	}
+    	
+	    $.ajax({
+	    	url:"<c:url value='/callReview?spaceNum=${param.spaceNum}&page="+reviewPage+"'/>",
+	    	success:function(reviewList){
+	    		var htmlStr = "";
+				var resultStr = "";	    
+				var cnt = 1;
+	    		$.each(reviewList, function(item){
+	    			console.log(this);
+	    			var starCount = 1
+					htmlStr = 	'<div>'
+								+'<div class="reviewHead" style="color:black; font-weight: bold">'
+								+'<span>'+this.USER_ID+'</span>'
+								+'<div style="margin-left: 20%; padding-bottom: 1%">';
+	    			for(var i = 0; i <= (this.REVIEW_RATE / 2)-1; i++){
+						htmlStr += '<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">';
+						starCount++;
+					}
+					if(this.REVIEW_RATE % 2 != 0){
+						htmlStr += '<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">';
+						
+					}
+					for(var j = starCount; j <= 4; j++){
+						htmlStr += '<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">';						
+					}
+						htmlStr	+='</div>'
+								+'</div>'
+								+'<div class="qnaBody">'+this.REVIEW_CONTENT+'</div>'
+								+'<div class="row" style="font-size:14px;">'
+								+'<div class="col-6 date-deleteCol">'
+								+'<span>'+(this.REVIEW_REG_DATE).substring(0,10)+'</span>'
+								+'</div>';
+					if('${sessionScope.userId}' === this.USER_ID){
+						htmlStr +='<div class="col-6 delete-dateCol">'
+								+'<a href="#" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
+								+'</div>';
+					}
+						htmlStr +='</div>'
+								+'</div>'
+								+'<hr>';
+					resultStr += htmlStr;
+	    		});
+    			$(".review-box").html(resultStr);
+	    		
+    			$.ajax({
+    				url:"<c:url value='/reviewPage?spaceNum=${param.spaceNum}&page="+reviewPage+"'/>",
+    				success:function(page){
+    					$('#reviewPage').val(page.reviewBlockPages);
+    					var pageStr = '<li class="page-item"><a class="page-link" id="prevBt" href="javascript:void(0)" onclick="callReview('+(page.currentPage-1)+')"><</a></li>';
+    					for (var i = 1; i <= page.reviewBlockPages; i++) {
+    					    if (i === page.currentPage) {
+    					        pageStr += '<li class="page-item active">' +
+    					            '<a class="page-link">' + i + '</a>' +
+    					            '</li>';
+    					    } else {
+    					        pageStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callReview('+i+')">' + i + '</a></li>';
+    					    }
+    					}
+    					pageStr += '<li class="page-item">' 
+    					    +'<a class="page-link" id="nextBt" href="javascript:void(0)" onclick="callReview('+(page.currentPage+1)+')">></a>' 
+    					    +'</li>';
+    					$('#reviewPagination').html(pageStr);
+    				}
+    			});
+	    	}
+	    });
+    }
+	    
+    
     
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>

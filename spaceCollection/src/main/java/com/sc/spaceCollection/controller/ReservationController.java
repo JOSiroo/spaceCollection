@@ -159,7 +159,7 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/reservationList")
-	public String reservationList(HttpSession session, Model model) {
+	public String reservationList(@RequestParam(defaultValue = "1") int page,HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("예약 내역 조회 파라미터 userId = {}", userId);
 		if(userId == null || userId.isEmpty()) {
@@ -169,10 +169,26 @@ public class ReservationController {
 			
 			return "common/message";
 		}
-		List<Map<String,Object>> list = reservationService.reservationList(userId);
-		logger.info("예약 내역 조회 결과 list = {} ", list.size());
 		
+		
+		List<Map<String,Object>> list = reservationService.reservationList(userId,page);
+		int countList = reservationService.countReservationList(userId);
+		logger.info("예약 내역 조회 결과 list = {} ", list.size());
+
+		int totalSize = countList;
+		int blockPages = 0;
+		if(totalSize % 5 != 0) {
+			blockPages = totalSize/5 + 1;
+		}else {
+			blockPages = totalSize/5;
+		}
+		logger.info("페이지 정보, totalSize = {}, blockPages = {}", totalSize, blockPages);
+		
+		model.addAttribute("totalSize", totalSize);
+		model.addAttribute("blockPages", blockPages);
 		model.addAttribute("list", list);
+		
+		
 		
 		return "reservation/reservationList";
 	}

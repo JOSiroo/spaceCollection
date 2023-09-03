@@ -3,6 +3,8 @@ package com.sc.spaceCollection.comments.model;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.sc.spaceCollection.common.SearchVO;
 
 public interface CommentsService {
@@ -15,4 +17,5 @@ public interface CommentsService {
    List<Map<String, Object>> selectCommentsEachUser(SearchVO vo);
    int getTotalRecordEachUser(SearchVO vo);
    List<CommentsVO> selectUserComments(int boardNum);
+   List<CommentsVO> selectPaging(int page, int size, int boardNum);
 }

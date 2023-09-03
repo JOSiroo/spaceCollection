@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+ <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+
 <style type="text/css">
-	/* *{
-	font-family: NanumBarunGothic,"나눔바른고딕",
-	NanumGothic,"돋움",Dotum,Helvetica,"Apple SD Gothic Neo",Sans-serif!important;
-	} */
-	
 	.reservation-header{
 		margin-top :120px;
 		padding:5% 16% 5% 16%;
@@ -19,7 +15,7 @@
  		text-shadow: 0 0 0 black;
 		
 	}
-	input[name=reservationInfo]{
+	input[name=searchKeyword]{
 		font-size:25px;
 		width: 65%;
 		height: 60px;
@@ -30,7 +26,7 @@
 	
 		
 	}
-	input[name=reservationInfo]::placeholder{
+	input[name=searchKeyword]::placeholder{
 		color:lightgrey;
 		font-weight: bold;
 		font-size: 18px;
@@ -161,16 +157,68 @@
     }
 </style>
 
+<script type="text/javascript">
+/* $(function() {
+	$('#searchBt').click(function() {
+		if($('#searchKeyword').val().length<1){
+			event.preventDefault();
+			$('#confirm1 .modal-body').html("검색어를 입력해주세요.");
+			$('#confirm1').modal("show");
+		}
+	});
+	
+});	 */
+
+function search(target){
+	  // elementary, middle, high
+	    var schoolType = $('input[name="schoolType"]:checked').val(); 
+
+	    $.ajax({
+	        type: 'GET',
+	        dataType: 'JSON',
+	        url: `asset/${schoolType}_school.json`, 
+	        error: function(err){
+	            console.log(err);
+	        },
+	        success: function(data){
+	            var checkWord = $("#schoolInput").val();
+	            var schoolList = $("#schoolList");
+	            console.log(checkWord);
+
+	            schoolList.empty();
+	            data.forEach((school)=>{
+	                if(school['name'].includes(checkWord)){
+	                    schoolList.append(`<span style="cursor: pointer;" onclick="select(this);"> ${school['name']} </span> <br/>`);                
+	                }
+	            })
+	        }
+	    })
+	}  
+	
+function select(target){
+    const selected = document.getElementById("selected");
+    selected.innerText = target.innerText;
+}
+</script>
+
+<!-- /** 검색키워드 */ searchVO
+	private String searchKeyword = ""; -->
+	
+
 
 <section>
+
+<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" 
+	action="<c:url value='/user/notice'/>">
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 공지 사항 검색</label>
-			<!-- https://www.spacecloud.kr/board/notice?page=1&q=tlwms -->
-			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="검색어를 입력하세요."
-				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>  
-			<button class="searchBt" onclick="search()">검색</button>
+				<input type="text" id = "searchKeyword" name = "searchKeyword" placeholder="검색어를 입력하세요." 
+				<c:if  test="${!empty param.keyword}"> value="${param.keyword}"</c:if>> 
+			<button class="searchBt" id="searchBt" onclick="searchFunction();">검색</button>
 		</div>
+		
+
 	
 <div class="divBox2">
 <c:forEach var="item" items="${list}" varStatus="loop">
@@ -193,25 +241,9 @@
     </div>
 </c:forEach>
 </div>
+
+</form>
 		  
-		  <!-- <div class="accordion-item">
-		    <h2 class="accordion-header">
-		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-		      data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-		       <span>[취소]</span><p>&nbsp 천재지변/감염병으로 인한 예약취소는 어떻게 하나요?
-		      </button>
-		    </h2>
-		    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-		      <div class="accordion-body">
-		       <ul>
-		       <li>천재지변(기상악화), 법정 감염병 등 불가항력적인 사유로 제휴점 이용이 불가할 경우 고객행복센터로 예약내역 및 증빙서류(결항확인서, e-티켓, 진단확인서 등)를 보내주시면 확인 후 예약취소 가능 여부를 확인해 드립니다.</li>
-		        <br><li>다만, 당사는 판매 중개 플랫폼의 입장으로 제휴점에 대하여 취소/환불을 강제할 수 없어 각 제휴점의 규정에 근거하여 상황에 따라 수수료가 발생하거나 취소가 어려울 수 있는 점 양해 부탁드립니다.</li>
-		        </ul>
-		       </div>
-		    </div>
-		  </div> -->
-		  
-		
 		<div class="pageBox">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
@@ -229,11 +261,7 @@
 			</nav>
 		</div>
 	</div>
-</section>
+</section> 
+
+
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
-
-<script type="text/javascript">
-
-
-
-</script>

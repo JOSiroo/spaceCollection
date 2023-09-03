@@ -140,7 +140,6 @@ public class UserMainController {
 	            
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
 	         
-         model.addAttribute("list", list);
          model.addAttribute("totalRecord", list.size());
 	  }else if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
@@ -149,7 +148,6 @@ public class UserMainController {
             
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
          
-         model.addAttribute("list", list);
          model.addAttribute("totalRecord", list.size());
          
       }else if(spaceTypeNo != 0) {
@@ -158,8 +156,14 @@ public class UserMainController {
 	        		 region,maxPeople,minPrice,maxPrice,filterItem,order);
 		  logger.info("타입별 공간 리스트 조회, 파라미터 list.size = {}", list.size());
          
-         model.addAttribute("list", list);
       }
+	  
+	  for(Map<String, Object> map : list) {
+		  map.put("SPACE_REG_DATE", map.get("SPACE_REG_DATE")+"");
+	  }//timestamp 오류나서 String으로 변환
+	  
+	  model.addAttribute("list", list);
+	  
       return list;
    }
    
