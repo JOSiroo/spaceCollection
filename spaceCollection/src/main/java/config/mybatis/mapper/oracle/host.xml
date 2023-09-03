@@ -33,6 +33,25 @@
 		where user_id = #{userId}
 	</select>
 	
+	<insert id="insertSpace">
+		<selectKey keyProperty="spaceNum" order="BEFORE" resultType="int">
+			select space_seq.nextval from dual
+		</selectKey>
+		insert into space(space_num, space_name, space_business_num, space_zipcode, space_address, 
+		    space_address_detail, space_location, space_intro, space_info, space_tag, space_facility, 
+		    space_phone_num, space_warn, latitude, longitude, user_num, space_type_no)
+		values (#{spaceNum}, #{spaceName}, #{spaceBusinessNum}, #{spaceZipcode}, #{spaceAddress},
+			#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
+			#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, 11, 22, #{userNum}, #{spaceTypeNo})
+	</insert>
+	
+	<select id="selectSpaceTypeBySpaceTypeName" resultType="spaceTypeVo" parameterType="String">
+		select * from space_type
+		where space_type_name = #{spaceTypeName}
+	</select>
+	
+	
+	
 	<select id="selectHostReservation" resultType="map">
 		select *
 		from

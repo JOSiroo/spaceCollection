@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +18,9 @@ import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
+import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
+import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -64,7 +67,7 @@ public class HostController {
 		// 2
 		List<SpaceCategoryAllVO> type = hostService.selectSpaceCategory();
 		logger.info("type = {}", type);
-
+		
 		// 3
 		model.addAttribute("type", type);
 
@@ -73,17 +76,18 @@ public class HostController {
 	}
 	
 	@RequestMapping("/registration/registration3")
-	public String registration3(HttpSession session, Model model) {
+	public String registration3(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
+			Model model) {
 		//1
-		String userId = (String) session.getAttribute("userId");
-		logger.info("공간등록 페이지3 보여주기, userId = {}", userId);
+		logger.info("공간등록 페이지3 보여주기, spaceVo = {}, spaceTypeVO = {}", spaceVo, spaceTypeVO);
 		
 		// 2
-		UserInfoVO userInfoVo = hostService.selectUserById(userId);
-		logger.info("유저 정보 조회결과, userInfovo = {}", userInfoVo);
+		SpaceTypeVO spaceTypeVO2 = hostService.selectSpaceTypeBySpaceTypeName(spaceTypeVO.getSpaceTypeName());
+		logger.info("공간 타입 조회, spaceTypeVO2 = {}", spaceTypeVO2);
 		
 		// 3
-		model.addAttribute("userInfoVo", userInfoVo);
+		model.addAttribute("spaceVo", spaceVo);
+		model.addAttribute("spaceTypeVO", spaceTypeVO2);
 		
 		//4
 		return "host/registration/registration3";
