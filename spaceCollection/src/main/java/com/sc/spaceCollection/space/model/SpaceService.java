@@ -36,7 +36,7 @@ public interface SpaceService {
 	int getTotalRecordSpaceConfrimList(SearchVO vo);
 	int spaceConfirm(SpaceListVO listVo);
 	int spaceDenine(SpaceListVO listVo);
-	List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order);
-	int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order);
+	List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
+	int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
 	
 }

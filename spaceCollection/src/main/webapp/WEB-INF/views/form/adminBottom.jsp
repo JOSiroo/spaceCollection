@@ -23,7 +23,7 @@
 <script src="<c:url value='/NiceAdmin-pro/assets/vendor/php-email-form/validate.js'/>"></script>
 
 <!-- Template Main JS File -->
-<script src="<c:url value='/NiceAdmin-pro/assests/js/main.js'/>"></script>
+<script src="<c:url value='/NiceAdmin-pro/assets/js/main.js'/>"></script>
 
 </body>
 

@@ -50,7 +50,9 @@ public interface SpaceDAO {
 	int spaceConfirm(SpaceVO vo);
 	int spaceDenine(SpaceVO vo);
 	List<Map<String, Object>> selectSpaceConfirmHistoryList(@Param("searchVo")SearchVO searchVo,
-															@Param("order")String order);
+															@Param("order")String order,
+															@Param("status")String status);
 	int getTotalRecordSpaceConfirmHistoryList(@Param("searchVo")SearchVO searchVo,
-															@Param("order")String order);
+															@Param("order")String order,
+															@Param("status")String status);
 }

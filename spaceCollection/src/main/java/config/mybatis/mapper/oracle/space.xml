@@ -145,7 +145,7 @@
 			(
 				select * from SPACE_LIST_VIEW where user_id = #{userId}
 				<include refid="searchWhere"/>
-				order by #{order}
+				order by space_reg_date desc
 			)A
 		)
 		<![CDATA[
@@ -198,6 +198,9 @@
 				<if test="searchVo.searchKeyword!=null and searchVo.searchKeyword!=''">
 					and ${searchVo.searchCondition} like '%' || #{searchVo.searchKeyword} || '%'
 				</if>
+				<if test="status !=null and status !=''">
+					and SPACE_REQUEST_STATUS = #{status}
+				</if>
 				order by #{order}
 			)A
 		)
@@ -206,11 +209,14 @@
 		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
 	</select>
 	
-	<select id="getTotalRecordSpaceConfrimHistoryList" resultType="int">
+	<select id="getTotalRecordSpaceConfirmHistoryList" resultType="int">
 		select count(*) from ADMIN_SPACECONFIRM_LIST_VIEW 
 			where SPACE_REQUEST_STATUS is not null
 			<if test="searchVo.searchKeyword!=null and searchVo.searchKeyword!=''">
 				and ${searchVo.searchCondition} like '%' || #{searchVo.searchKeyword} || '%'
+			</if>
+			<if test="status !=null and status !=''">
+				and SPACE_REQUEST_STATUS = #{status}
 			</if>
 			order by #{order}
 	</select>

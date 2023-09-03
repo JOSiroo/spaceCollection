@@ -10,4 +10,5 @@ public class AjaxVO {
 	private List<Map<String, Object>> ajaxList;
 	private SearchVO searchVo;
 	String order;
+	String status;
 }
