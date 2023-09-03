@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.sc.spaceCollection.common.SearchVO;
 
@@ -19,4 +20,8 @@ public interface BoardDAO {
 	Map<String, Object> selectByeventBoardNum(int boardNum);
 	int updateBoard(BoardVO vo);
 	List<BoardVO> selectNoticeBoard();
+	List<Map<String, Object>> selectNotice(@Param("startRow") int startRow, @Param("endRow") int endRow,
+											@Param("boardTitle") String boardTitle,
+											@Param("boardContent")String boardContent,@Param("keyword")String keyword);
+	
 }

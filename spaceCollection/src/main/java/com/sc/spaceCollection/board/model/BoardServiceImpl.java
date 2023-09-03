@@ -80,6 +80,16 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardVO> selectNoticeBoard() {
         return boardDao.selectNoticeBoard();
 	}
+
+	@Override
+	public List<Map<String, Object>> selectNotice(int page, int size,String boardTitle, String boardContent, String keyword) {
+		
+		int startRow = (page - 1) * size;
+		int endRow = (page * size) - 1;
+		
+		return boardDao.selectNotice(startRow, endRow, boardTitle,boardContent,keyword);
+	}
+
 	
 
 }

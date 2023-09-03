@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.boardType.model.BoardTypeService;
+import com.sc.spaceCollection.boardType.model.BoardTypeVO;
 import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.SearchVO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,7 @@ public class UserBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(UserBoardController.class);
 	private final BoardService boardService;
 	private final CommentsService commentsService;
+	private final BoardTypeService boardTypeService;
 	
 	 //자주묻는질문
 	@RequestMapping("/faq")
@@ -41,12 +45,20 @@ public class UserBoardController {
 	}
 	
 	@RequestMapping("/notice")
-    public String notice(@ModelAttribute BoardVO vo, @RequestParam int boardNum, Model model) {
+    public String notice(@ModelAttribute BoardVO vo, Model model,
+						@RequestParam(defaultValue = "1") int page,
+						@RequestParam(required = false) String boardTitle,
+						@RequestParam(required = false) String boardContent,
+						@RequestParam(required = false) String keyword) {
+			
+		logger.info("검색, 파라미터 page = {}", page);
+		logger.info("공지사항 검색 조회, 파라미터 boardTitle = {}, boardContent = {}, keyword", boardTitle, boardContent, keyword);
 		
-        List<BoardVO> list = boardService.selectNoticeBoard();
-        logger.info(" 결과 확인 list={}", list);
-
-        model.addAttribute("list", list);
+		int size = 5;
+		List<Map<String, Object>> list = boardService.selectNotice(page,size,boardTitle,boardContent,keyword);
+		logger.info("공지사항 조회 결과 list = {}", list);
+		
+		model.addAttribute("list", list);
         return "userMain/board/notice";
     }
 	
