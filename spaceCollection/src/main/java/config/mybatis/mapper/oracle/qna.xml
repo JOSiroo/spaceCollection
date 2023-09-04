@@ -11,9 +11,19 @@
 		values(#{qnaNum},#{qnaContent},sysdate,#{userNum},#{spaceNum})
 	</insert>
 	
-	<select id="selectQnaBySpaceNum" parameterType="int" resultType="map">
-		select * from qna_sd_view
-		where space_num = #{spaceNum}
+	<select id="selectQnaBySpaceNum" resultType="map">
+		select *
+		 from 
+		 (
+		 	select A.*, rownum as rn
+		 	from
+		 	(
+		 		select * from qna_sd_view
+				where space_num = #{spaceNum} and qna_del_flag is null
+		 	)A
+		 )
+		 <![CDATA[
+		where rn >= #{startRow} and rn <= #{endRow}]]>
 	</select>
 	
 	<select id="selectQnaByUserId" parameterType="searchVo"  resultType="map">
@@ -55,9 +65,15 @@
 		</if>
 	</select>
 	
-	<delete id="deleteQna" parameterType="int">
-		delete qna
+	<update id="deleteQna" parameterType="int">
+		update qna
+		set qna_del_flag = 'Y'
 		where qna_num = #{qnaNum}
-	</delete>
+	</update>
+	<select id="getTotalRecordBySpaceNum" parameterType="int">
+		select count(*) from qna_sd_view
+		where space_num = #{spaceNum} and qna_del_flag is null
+	</select>
+	
 	
 </mapper>
