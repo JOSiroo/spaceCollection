@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.guest.model.GuestService;
@@ -35,6 +36,7 @@ public class HostController {
 	private final HostService hostService;
 	private final ReservationService reservationService;
 	private final CalendarService calendarService;
+	private final BoardService boardService;
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -207,4 +209,26 @@ public class HostController {
 		}
 		return "host/calculate/calculate";
 	}
+	
+	@RequestMapping("/notice")
+    public String notice(Model model,
+						@RequestParam(defaultValue = "1") int page,
+						@RequestParam(required = false) String boardTitle,
+						@RequestParam(required = false) String boardContent,
+						@RequestParam(defaultValue = "1") int boardNum,
+						@RequestParam(required = false) String searchKeyword) {
+		
+		
+		//logger.info("공지사항 검색 조회, 파라미터 boardTitle = {}, boardContent = {}, page={}", boardTitle, boardContent);
+		logger.info("검색, 파라미터 keyword = {}", searchKeyword);
+		
+		
+		int size = 5;
+		List<Map<String, Object>> list = boardService.selectNotice(page,size,boardTitle,boardContent,searchKeyword);
+		logger.info("공지사항 조회 결과 list.size = {}", list);
+		
+		model.addAttribute("list", list);
+        return "host/board/notice";
+    }
+	
 }
