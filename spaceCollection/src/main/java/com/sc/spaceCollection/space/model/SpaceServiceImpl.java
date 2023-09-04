@@ -177,6 +177,7 @@ public class SpaceServiceImpl implements SpaceService{
 		int cnt = 0;
 		
 		try {
+			
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
 				if(vo.getSpaceNum() > 0) {
 					cnt = spaceDao.spaceDenine(vo);
