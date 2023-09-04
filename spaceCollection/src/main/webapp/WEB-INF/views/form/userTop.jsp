@@ -234,7 +234,7 @@
 		 	</div>
 				
 		  	<div class="col-sm-6 " style="text-align: center;">
-			  <a href="<c:url value='/reservation/reservationList' />">  
+			  <a href="<c:url value='/reservation/reservationList?page=1' />">  
 			        <i class="bi bi-calendar-check" ></i>
 		 		  <p>예약 리스트</p></a> 
 		 	</div>
@@ -258,7 +258,7 @@
 		  </div>
 		  
 		  <div class="col-sm-6 " style="text-align: center;">
-		    <a href="<c:url value='/'/>">
+		    <a href="<c:url value='/myQnA'/>">
 		     <i class="bi bi-question-diamond" ></i>
 		 	   <p>QnA</p></a>
 		  </div>

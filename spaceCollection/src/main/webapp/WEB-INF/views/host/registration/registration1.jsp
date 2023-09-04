@@ -107,13 +107,13 @@
 		});
 		
 		$('#next').click(function() {
-			var count = $('div input[type=checkbox]:checked').length;
+			var count = $('input[type=checkbox]:checked').length;
 			if (count > 0) {
-				$('form[name=frmRegi1]').prop('action', "<c:url value='/host/registration/registration2' />");
-				$('form[name=frmRegi1]').submit();
 				
 			} else {
 				alert('공간 유형을 선택하세요.');
+				
+				event.preventDefault();
 			}
 			
 		});
@@ -165,10 +165,12 @@
 									data-bs-parent="#accordionFlushExample">
 									<div class="accordion-body">
 											<div class="form-check">
-											  	<input class="form-check-input" type="checkbox" value="${list.spaceTypeName }" id="flexCheckDefault">
+											  	<input class="form-check-input" type="checkbox" value="${list.spaceTypeName }" 
+											  		id="flexCheckDefault" name="spaceTypeName" >
 											  	<label class="form-check-label" for="flexCheckDefault">
 											  		<div class="dropdown">
-													  	<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+													  	<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" 
+													  		aria-expanded="false">
 													    	${list.spaceTypeName }
 													  	</button>
 													  	<ul class="dropdown-menu">
@@ -188,7 +190,7 @@
 			
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="button" class="btn btn-warning" id="next" >다음</button>
+				<button type="submit" class="btn btn-warning" id="next" >다음</button>
 			</div>
 		
 		</form>

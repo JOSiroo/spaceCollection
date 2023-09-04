@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
 	$(function(){
+		
 		if($("input[name=page]").val()<1){
 			$("input[name=page]").val(1);
 		}
@@ -167,6 +168,11 @@
 	}
 </style>
 
+<form action="<c:url value='/myReview'/>" name="frmPage" method="post">
+	<input type="text" name="page" value="${param.page }">
+	<input type="text" name="searchCondition" value="">
+	<input type="text" name="searchKeyword" value="">
+</form>
 <div class="wrap">
 	<div class="align_center">
 	<h1>이용 후기 관리</h1>
@@ -180,17 +186,23 @@
 	</div>
 	<div id=searchbar>
 		<label >예약 정보 검색</label>
-		<input type="text" name="keyword" placeholder="예약번호">
+		<input type="text" name="keyword" placeholder="공간명">
 		<button type="button" id="search">검색</button>
 	</div>
 	<select name="condition">
-		<option selected="selected" value="1">전체</option>
-		<option value="">답변 있음</option>
-		<option value="">답변 없음</option>
+		<option selected="selected" value="">전체</option>
+		<option value="Y"
+			<c:if test="${param.searchCondition=='Y' }">
+			selected="selected"
+			</c:if>
+		>답변 있음</option>
+		<option value="N"
+			<c:if test="${param.searchCondition=='N' }">
+			selected="selected"
+			</c:if>
+		>답변 없음
+		</option>
 	</select>
-<form action="<c:url value='/myReview'/>" name="frmPage" method="post">
-	<input type="text" name="page" value="${param.page }">
-</form>
 	<div class="reViewInfo">
 		<div class="tbReview">
 		<c:if test="${empty reviewMap }">
@@ -243,7 +255,7 @@
 					</div>
 				</div>
 				<br>
-				<div style="margin-left: 82%;">
+				<div style="margin-left: 75%;">
 					<span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
 					<a href="<c:url value='/deleteReview?reviewNum=${reviewMap["REVIEW_NUM"] }&spaceNum=${reviewMap["SAPCE_NUM"]}  '/>">삭제</a>
 					<!-- <a href="#">수정</a> -->

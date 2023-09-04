@@ -62,7 +62,7 @@
 	    display: block;
 	}
 	
-	.spText {
+	.spText, .spBusiness, .spTel {
 		width: 100%;
 		height: 50px;
 		border: 1px solid #b7b7b7;
@@ -277,6 +277,367 @@
 	
 </style>
 
+<script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
+<script type="text/javascript">
+	$(function() {
+		//공간 이름 정규화
+        $(".spText.name").on("input", function() {
+            var isValid = validate_spaceName($(".spText.name").val());
+
+            if (!isValid) {
+                alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
+            }
+        });
+		
+      	//사업자 등록번호 정규화
+        $(".spBusiness").on("input", function() {
+            var isValid = validate_business($(".spBusiness").val());
+
+            if (!isValid) {
+                alert('숫자와 -만 입력 가능합니다.');
+                $(this).val('');
+            }
+        });
+      	
+      	//대표 전화번호 정규화
+        $(".spTel").on("input", function() {
+            var isValid = validate_number($(this).val());
+
+            if (!isValid) {
+                alert('숫자만 입력 가능합니다.');
+                $(this).val('');
+            }
+        });
+		
+		//사용자가 입력한 글자수 표시
+		$('.spText').on('input', function() {
+			var txtLen = $(this).val().length;
+			var maxLen = parseInt($(this).attr('maxlength'));
+			var subTxt = $(this).closest('.boxForm').find('.subTitle');
+			
+			subTxt.text(txtLen + '자/' + maxLen + '자');
+		});
+		
+		$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
+		
+		//버튼 누르면 색 변환
+		$('.typeSub').click(function() {
+			var spaceType = $(this).closest('.spaceType');
+
+		    // 모든 버튼에서 클래스 제거
+		    spaceType.find('.typeSub').removeClass('checked');
+
+		    // 클릭한 버튼에 클래스 추가
+		    $(this).addClass('checked');
+
+		    // 모든 typeTitle 버튼을 초기화
+		    spaceType.find('.typeTitle').css('background', '#656565');
+		    
+		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
+		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
+		    
+		});
+		
+		//태그 확인 숨기기
+		$('.spTag').hide();
+		
+		// 사용자가 입력한 값을 저장할 배열
+        var tag = [];
+		
+        // 버튼을 클릭할 때 이벤트 핸들러를 등록합니다.
+        $('.btAdd.tag').click(function() {
+        	var inputValue = $(this).siblings('.spText').val();
+		    var tagContainer = $(this).siblings('.spTag');
+			
+		    if (inputValue.length < 1) {
+		    	alert('내용을 입력해주세요.');
+		    } else {
+		    	// 입력값이 비어 있지 않고, 최대 5개까지만 저장하도록 합니다.
+	            if (inputValue && tag.length < 5) {
+	                tagContainer.show();
+	                
+	                // 입력값을 배열에 저장
+	                tag.push(inputValue);
+	                
+	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
+	        	    tagContainer.append('<span class="tagRe"> # ' + inputValue + ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
+	             	
+	        		// 입력값을 String으로 변환합니다.
+	        	    var inputValueString = tag.join('/');
+
+	        		// hidden input에 값을 설정합니다.
+	        	    $('#spaceTag').val(inputValueString);
+
+	        		// 입력 필드 초기화
+	                $(this).siblings('.spText').val('');
+	                
+	            } else {
+	                alert('태그는 최대 5개까지 입력할 수 있습니다.');
+	            }
+		    }
+		    
+        });
+	     
+		// 사용자가 입력한 값을 저장할 배열
+        var facility = [];
+
+        // 버튼을 클릭할 때 이벤트 핸들러를 등록합니다.
+        $('.btAdd.fa').click(function() {
+        	var inputValue = $(this).siblings('.spText').val();
+		    var tagContainer = $(this).siblings('.spTag');
+		    var currentTagCount = tagContainer.find('.tagRe').length;
+
+		    if (inputValue.length < 1) {
+		    	alert('내용을 입력해주세요.');
+		    } else {
+		    	// 입력값이 비어 있지 않고, 최대 5개까지만 저장하도록 합니다.
+	            if (inputValue && facility.length < 10) {
+	                tagContainer.show();
+	                
+	                // 입력값을 배열에 저장
+	                facility.push(inputValue);
+	                
+	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
+	        	    tagContainer.append('<span class="tagRe"> ' + (currentTagCount + 1) + '. '  + inputValue 
+	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
+	             	
+	        		// 입력값을 String으로 변환합니다.
+	        	    var inputValueString = facility.join('||');
+
+	        		// hidden input에 값을 설정합니다.
+	        	    $('#spaceFacility').val(inputValueString);
+
+	        		// 입력 필드 초기화
+	                $(this).siblings('.spText').val('');
+	                
+	            } else {
+	                alert('태그는 최대 10개까지 입력할 수 있습니다.');
+	            }
+			}
+		    
+        });
+	     
+		// 사용자가 입력한 값을 저장할 배열
+        var warn = [];
+
+        // 버튼을 클릭할 때 이벤트 핸들러를 등록합니다.
+        $('.btAdd.pre').click(function() {
+        	var inputValue = $(this).siblings('.spText').val();
+		    var tagContainer = $(this).siblings('.spTag');
+		    var currentTagCount = tagContainer.find('.tagRe').length;
+
+		    if (inputValue.length < 1) {
+		    	alert('내용을 입력해주세요.');
+		    } else {
+		    	// 입력값이 비어 있지 않고, 최대 5개까지만 저장하도록 합니다.
+	            if (inputValue && warn.length < 10) {
+	                tagContainer.show();
+	                
+	                // 입력값을 배열에 저장
+	                warn.push(inputValue);
+	                
+	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
+	        	    tagContainer.append('<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue 
+	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
+	             	
+	        		// 입력값을 String으로 변환합니다.
+	        	    var inputValueString = warn.join('||');
+
+	        		// hidden input에 값을 설정합니다.
+	        	    $('#spaceWarn').val(inputValueString);
+
+	        		// 입력 필드 초기화
+	                $(this).siblings('.spText').val('');
+	                
+	            } else {
+	                alert('태그는 최대 10개까지 입력할 수 있습니다.');
+	            }
+		    }
+            
+        });
+		
+		/* $('.btAdd.fa, .btAdd.pre').click(function() {
+			var inputValue = $(this).siblings('.spText').val();
+		    var tagContainer = $(this).siblings('.spTag');
+		    
+		    var currentTagCount = tagContainer.find('.tagRe').length;
+		    
+		    if (inputValue && currentTagCount < 10) {
+		    	tagContainer.show();
+		    	         
+		    	var tagHTML = '<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue + 
+		    		' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
+		    	tagContainer.append(tagHTML);
+		    	$(this).siblings('.spText').val('');
+		 	} else {
+		    	alert('태그는 최대 10개까지 입력할 수 있습니다.');
+		    }
+		 }); */
+		
+		// 이미지를 누르면 해당 태그 제거
+		$('.spTag').on('click', '.tagClose', function() {
+			$(this).closest('.tagRe').remove();
+		});
+		
+		//메인 이미지 첨부
+		$('.btAdd.file.main').click(function() {
+		    //기존에 있던 이미지 지우기
+		    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
+		    $('input[type="file"]').val('');
+		});
+
+		$('#mainImage').change(function() {
+		  	var file = this.files[0];
+			if (file) {
+		      	var reader = new FileReader();
+		      	reader.onload = function(e) {
+		        	$('.spImg.main').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
+		      	};
+		      	reader.readAsDataURL(file);
+		    } else {
+		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
+		        $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
+		    }
+		});
+		
+	    
+	    //하단 버튼
+		$('#back').click(function() {
+			history.back();
+		});
+		
+		$('#next').click(function() {
+			//필수 입력
+			//공간명
+			if ($('.spaceName').find($('.spText')).val() < 1) {
+				alert('공간명을 입력하세요.');
+				$('.spaceName').find($('.spText')).focus();
+				
+				scrollMove('.spaceName');
+				
+				return false;
+			}
+			
+			//공간 타입
+            if ($('.typeSub.checked').length === 0) {
+                alert("적어도 하나 이상의 유형을 선택해주세요.");
+                
+                scrollMove('.spaceType');
+                
+                return false;
+            }
+			
+          	//공간 유형 hidden에 넣기
+			var type = $('.typeSub.checked').val();
+			
+			// hidden input에 값을 설정합니다.
+		    $('#spaceTypeName').val(type);
+			
+		  	//사업자 등록번호
+    		if ($('.spBusiness').val().length < 1) {
+    			alert('사업자 등록번호를 입력하세요.');
+    			$('.spBusiness').focus();
+    			
+    			scrollMove($('.spBusiness'));
+    			
+    			return false;
+    		}
+		  	
+    		//공간 대표번호
+    		if ($('.spTel').val().length < 1) {
+    			alert('대표전화를 입력하세요.');
+    			$('.spTel').focus();
+    			
+    			scrollMove($('.spTel'));
+    			
+    			return false;
+    		}
+			
+			//공간 한 줄 소개
+			if ($('.spaceIntro').find($('.spText')).val() < 1) {
+				alert('한 줄 소개를 입력하세요.');
+				$('.spaceIntro').find($('.spText')).focus();
+				
+				scrollMove('.spaceIntro');
+				
+				return false;
+			}
+			
+			//공간 소개
+			if ($('.spaceInfo').find($('.spText')).val() < 1) {
+				alert('공간 소개를 입력하세요.');
+				$('.spaceInfo').find($('.spText')).focus();
+				
+				scrollMove('.spaceInfo');
+				
+				return false;
+			}
+			
+			//공간 소개
+			if ($('.spaceInfo').find($('.spText')).val().length > 1
+					&& $('.spaceInfo').find($('.spText')).val().length < 21) {
+				alert('공간 소개는 20자 이상 입력하셔야 합니다.');
+				$('.spaceInfo').find($('.spText')).focus();
+				
+				scrollMove('.spaceInfo');
+				
+				return false;
+			}
+
+			//공간 태그
+			if ($('.spaceTag.tag').find('.tagRe').length < 1) {
+				alert('공간 태그를 하나라도 입력하세요.');
+				$('.spaceTag.tag').find($('.spText')).focus();
+				
+				scrollMove('.spaceTag.tag');
+				
+				return false;
+			}
+
+			//시설 안내
+			if ($('.spaceTag.fa').find($('.tagRe')).length < 1) {
+				alert('시설 안내를 하나라도 입력하세요.');
+				$('.spaceTag.fa').find($('.spText')).focus();
+				
+				scrollMove('.spaceTag.fa');
+				
+				return false;
+			}
+
+			//예약 시 주의사항
+			if ($('.spaceTag.pre').find($('.tagRe')).length < 1) {
+				alert('예약 시 주의사항을 하나라도 입력하세요.');
+				$('.spaceTag.pre').find($('.spText')).focus();
+				
+				scrollMove('.spaceTag.pre');
+				
+				return false;
+			}
+			
+			//대표 이미지
+			if ($('.spImg.main .imgBox').length === 0) {
+		        event.preventDefault(); // 폼 제출 막기
+		        alert('대표 이미지를 첨부해 주세요.');
+		        
+		        scrollMove('.spaceImg.main');
+		        
+		        return false;
+		    }
+			
+			$('form[name=frmRegi2]').submit();
+		});
+		
+		
+	});
+	
+	
+	//스크롤이동
+	function scrollMove(val) {
+		var offset = $(val).offset();	//해당 위치 반환
+		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
+	}
+	
+</script>
 
 <article>
 	<div class="main">
@@ -299,7 +660,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceName">
-						<input type="text" class="spText" value=""
+						<input type="text" class="spText name" value="" name="spaceName"
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
 					</div>
 					<div class="boxnoti">
@@ -336,6 +697,37 @@
 								<input type="button" class="typeSub" value="${list.spaceTypeName }" >
 							</c:forEach><br>
 						</c:forEach>
+						<input type="hidden" name="spaceTypeName" id="spaceTypeName">
+					</div>
+				</div>
+			</div>
+			<!-- 사업자 등록번호 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>사업자 등록번호 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spacepBusiness">
+						<input type="text" class="spBusiness" name="spaceBusinessNum" value="" required >
+					</div>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>-를 포함해서 입력해주세요. ex) 111-11-11111</p>
+					</div>
+				</div>
+			</div>
+			<!-- 공간 대표전화 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>대표전화 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spacepTel">
+						<input type="text" class="spTel" name="spacePhoneNum" value="" required >
+					</div>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>숫자만 입력해주세요.</p>
 					</div>
 				</div>
 			</div>
@@ -353,7 +745,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceIntro">
-						<input type="text" class="spText" value=""
+						<input type="text" class="spText" value="" name="spaceIntro"
 							placeholder=" 공간의 특장점을 한 문장으로 작성해주세요." maxlength="27">
 					</div>
 				</div>
@@ -378,7 +770,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceInfo">
-						<textarea class="spText" name=""
+						<textarea class="spText" name="spaceInfo"
 							placeholder=" 게스트들에게 필요한 공간 정보를 상세하게 소개해주세요. 툴팁을 클릭해 작성 가이드를 확인할 수 있습니다." 
 							maxlength="500" rows="6" ></textarea>
 					</div>
@@ -395,7 +787,8 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
 						<input type="button" class="btAdd tag" value="추가 ▽">
-						<div class="spTag"></div>
+						<div class="spTag tag" id="tag"></div>
+						<input type="hidden" name="spaceTag" id="spaceTag">
 					</div>
 				</div>
 			</div>
@@ -410,7 +803,8 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd fa" value="추가 ▽">
-						<div class="spTag"></div>
+						<div class="spTag fa"></div>
+						<input type="hidden" name="spaceFacility" id="spaceFacility">
 					</div>
 				</div>
 			</div>
@@ -425,7 +819,8 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 예약 시 확인해야 하는 주의사항을 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd pre" value="추가 ▽">
-						<div class="spTag"></div>
+						<div class="spTag pre"></div>
+						<input type="hidden" name="spaceWarn" id="spaceWarn">
 					</div>
 				</div>
 			</div>
@@ -449,8 +844,9 @@
 						</div>
 						<div class="btBox">
 							<label>
-								<div class="btAdd file" >파일첨부</div>
-								<input type="file" accept="image/jpg, image/png, image/jpeg" style="display: none;">
+								<div class="btAdd file main" >파일첨부</div>
+								<input type="file" id="mainImage" name="imgOriginalName" 
+									accept="image/jpg, image/png, image/jpeg" style="display: none;">
 							</label>
 						</div>
 					</div>
@@ -470,7 +866,8 @@
 						<div class="btBox">
 							<label>
 								<div class="btAdd file sub" >파일첨부</div>
-								<input type="file" accept="image/jpg, image/png, image/jpeg" style="display: none;">
+								<input type="file" id="subImage" accept="image/jpg, image/png, image/jpeg" 
+									style="display: none;">
 							</label>
 						</div>
 					</div>
@@ -520,32 +917,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- 위치정보 -->
-			<div class="boxForm">
-				<div class="boxTitle">
-					<span>위치정보</span>
-					<span class="subTitle">0자/20자</span>
-					<img class="boxIcon" src="https://partner.spacecloud.kr/static/media/info-circle-solid.d9a24d05.svg">
-					<div class="tooltip-text">
-						• 공간을 찾아오기 쉽도록 랜드마크, 역 등에서<br>
-						얼마나 걸리는 지를 안내해 주세요.<br><br>(예시) 홍대입구역/OO마트/OO학교 도보 1분거리
-					</div>
-				</div>
-				<div class="boxContents">
-					<div class="spaceInfo">
-						<input type="text" class="spText" value=""
-							placeholder=" ex. 동대문역사공원역 도보 1분 거리" maxlength="27">
-					</div>
-					<div class="boxnoti">
-						<img src="<c:url value='/images/pngwing.com.png' />" >
-						<p>작성하신 위치정보는 검색에 영향을 미치지 않습니다.</p>
-					</div>
-					<div class="boxnoti">
-						<img src="<c:url value='/images/pngwing.com.png' />" >
-						<p>공간 주소를 입력하시면 반려 처리됩니다. (ex. 강남구 대치동, 삼성로 141 등)</p>
-					</div>
-				</div>
-			</div>
 			
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
@@ -556,213 +927,7 @@
 	</div>
 </article>
 
-<script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
-<script type="text/javascript">
-	$(function() {
-		//사용자가 입력한 글자수 표시
-		$('.spText').on('input', function() {
-			var txtLen = $(this).val().length;
-			var maxLen = parseInt($(this).attr('maxlength'));
-			var subTxt = $(this).closest('.boxForm').find('.subTitle');
-			
-			subTxt.text(txtLen + '자/' + maxLen + '자');
-		});
-		
-		$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
-		
-		//버튼 누르면 색 변환
-		$('.typeSub').click(function() {
-			var spaceType = $(this).closest('.spaceType');
 
-		    // 모든 버튼에서 클래스 제거
-		    spaceType.find('.typeSub').removeClass('checked');
-
-		    // 클릭한 버튼에 클래스 추가
-		    $(this).addClass('checked');
-
-		    // 모든 typeTitle 버튼을 초기화
-		    spaceType.find('.typeTitle').css('background', '#656565');
-		    
-		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
-		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
-		    
-		});
-		
-		//태그 확인 숨기기
-		$('.spTag').hide();
-		
-		$('.btAdd.tag').click(function() {
-		    var inputValue = $(this).siblings('.spText').val();
-		    var tagContainer = $(this).siblings('.spTag');
-		    
-		    if (inputValue && tagContainer.find('.tagRe').length < 5) {
-		    	tagContainer.show();	//숨긴 div 보여줌
-		    	 
-		        var tagHTML = '<span class="tagRe"> # ' + inputValue + 
-		        	' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
-		        tagContainer.append(tagHTML);
-		        $(this).siblings('.spText').val('');
-		    } else {
-		    	alert('태그는 최대 5개까지 입력할 수 있습니다.');
-		    }
-		});
-		
-		$('.btAdd.fa, .btAdd.pre').click(function() {
-			var inputValue = $(this).siblings('.spText').val();
-		    var tagContainer = $(this).siblings('.spTag');
-		    
-		    var currentTagCount = tagContainer.find('.tagRe').length;
-		    
-		    if (inputValue && currentTagCount < 10) {
-		    	tagContainer.show();
-		    	         
-		    	var tagHTML = '<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue + 
-		    		' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
-		    	tagContainer.append(tagHTML);
-		    	$(this).siblings('.spText').val('');
-		 	} else {
-		    	alert('태그는 최대 10개까지 입력할 수 있습니다.');
-		    }
-		 });
-		
-		// 이미지를 누르면 해당 태그 제거
-		$('.spTag').on('click', '.tagClose', function() {
-			$(this).closest('.tagRe').remove();
-		});
-		
-		//메인 이미지 첨부
-		$('.btAdd.file').click(function() {
-		    //기존에 있던 이미지 지우기
-		    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
-		    $('input[type="file"]').val('');
-		});
-
-		$('input[type="file"]').change(function() {
-		  	var file = this.files[0];
-			if (file) {
-		      	var reader = new FileReader();
-		      	reader.onload = function(e) {
-		        	$('.spImg.main').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
-		      	};
-		      	reader.readAsDataURL(file);
-		    } else {
-		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
-		        $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
-		    }
-		});
-		
-	    
-	    //하단 버튼
-		$('#back').click(function() {
-			history.back();
-		});
-		
-		$('#next').click(function() {
-			//필수 입력
-			//공간명
-			if ($('.spaceName').find($('.spText')).val() < 1) {
-				alert('공간명을 입력하세요.');
-				$('.spaceName').find($('.spText')).focus();
-				
-				scrollMove('.spaceName');
-				
-				return false;
-			}
-			
-			//공간명 정규화
-			if (!validate_spaceName($('.spText').val())) {
-				alert('사용 가능한 특수문자는 ( ), [ ], -, .(마침표), ,(쉼표) 입니다.');
-				$('.spText').focus();
-				
-				scrollMove('.spaceName');
-				
-				return false;
-			}
-			
-			//공간 타입
-            if ($('.typeSub.checked').length === 0) {
-                alert("적어도 하나 이상의 유형을 선택해주세요.");
-                
-                scrollMove('.spaceType');
-                
-                return false;
-            }
-			
-			//공간 한 줄 소개
-			if ($('.spaceIntro').find($('.spText')).val() < 1) {
-				alert('한 줄 소개를 입력하세요.');
-				$('.spaceIntro').find($('.spText')).focus();
-				
-				scrollMove('.spaceIntro');
-				
-				return false;
-			}
-			
-			//공간 소개
-			if ($('.spaceInfo').find($('.spText')).val() < 1) {
-				alert('공간 소개를 입력하세요.');
-				$('.spaceInfo').find($('.spText')).focus();
-				
-				scrollMove('.spaceInfo');
-				
-				return false;
-			}
-
-			//공간 태그
-			if ($('.spaceTag.tag').find('.tagRe').length < 1) {
-				alert('공간 태그를 하나라도 입력하세요.');
-				$('.spaceTag.tag').find($('.spText')).focus();
-				
-				scrollMove('.spaceTag.tag');
-				
-				return false;
-			}
-
-			//시설 안내
-			if ($('.spaceTag.fa').find($('.tagRe')).length < 1) {
-				alert('시설 안내를 하나라도 입력하세요.');
-				$('.spaceTag.fa').find($('.spText')).focus();
-				
-				scrollMove('.spaceTag.fa');
-				
-				return false;
-			}
-
-			//예약 시 주의사항
-			if ($('.spaceTag.pre').find($('.tagRe')).length < 1) {
-				alert('예약 시 주의사항을 하나라도 입력하세요.');
-				$('.spaceTag.pre').find($('.spText')).focus();
-				
-				scrollMove('.spaceTag.pre');
-				
-				return false;
-			}
-			
-			//대표 이미지
-			if ($('.spImg.main .imgBox').length === 0) {
-		        event.preventDefault(); // 폼 제출 막기
-		        alert('대표 이미지를 첨부해 주세요.');
-		        
-		        scrollMove('.spaceImg.main');
-		        
-		        return false;
-		    }
-			
-			
-			$('form[name=frmRegi2]').prop('action', "<c:url value='/host/registration/registration3' />");
-			$('form[name=frmRegi2]').submit();
-		});
-		
-		
-	});
-	
-	//스크롤이동
-	function scrollMove(val) {
-		var offset = $(val).offset();	//해당 위치 반환
-		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
-	}
-	
-</script>
 
 </body>
 </html>

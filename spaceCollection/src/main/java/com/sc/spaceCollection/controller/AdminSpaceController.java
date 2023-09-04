@@ -2,6 +2,7 @@ package com.sc.spaceCollection.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -314,8 +315,8 @@ public class AdminSpaceController {
 	
 	@RequestMapping("/spaceConfirmList/ajax_spaceConfirmHistoryList")
 	@ResponseBody
-	public AjaxVO ajax_spaceConfirmHistoryList(@ModelAttribute SearchVO searchVo) {
-		logger.info("ajax - 공간 승인 내역 조회, 파라미터 searchVo = {}", searchVo);
+	public AjaxVO ajax_spaceConfirmHistoryList(@ModelAttribute SearchVO searchVo, @RequestParam(defaultValue = "space_reg_date")String order, @RequestParam String status) {
+		logger.info("ajax - 공간 승인 내역 조회, 파라미터 searchVo = {}, order = {}, status = {}", searchVo, order, status);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
@@ -328,17 +329,20 @@ public class AdminSpaceController {
 		searchVo.setRecordCountPerPage(20);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		
-		List<Map<String, Object>> spaceList = spaceService.selectSpaceConfirmList(searchVo);
-		logger.info("ajax - 공간 등록 내역 조회 결과, spaceList.size = {}", spaceList.size());
+		List<Map<String, Object>> spaceList = spaceService.selectSpaceConfirmHistoryList(searchVo, order, status);
+		logger.info("ajax - 공간 승인 내역 조회 결과, spaceList.size = {}", spaceList.size());
 		
-		int totalRecord = spaceService.getTotalRecordSpaceConfrimList(searchVo);
-		logger.info("ajax -전체 공간 등록 수, totalRecord = {}", totalRecord);
+		int totalRecord = spaceService.getTotalRecordSpaceConfirmHistoryList(searchVo, order, status);
+		logger.info("ajax -전체 공간 승인 내역 수, totalRecord = {}", totalRecord);
 		pagingInfo.setTotalRecord(totalRecord);
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		AjaxVO ajaxVo = new AjaxVO();
 		ajaxVo.setPagingInfo(pagingInfo);
 		ajaxVo.setAjaxList(spaceList);
 		ajaxVo.setSearchVo(searchVo);
+		ajaxVo.setOrder(order);
+		ajaxVo.setStatus(status);
 		
 		return ajaxVo;
 	}
