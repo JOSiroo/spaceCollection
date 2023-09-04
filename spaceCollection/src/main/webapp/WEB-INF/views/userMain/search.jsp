@@ -578,6 +578,9 @@ p{
 	<c:if test="${!empty param.spaceName }">
 		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>"style="margin-left:3%; width:24%;">
 	</c:if>
+	<c:if test="${empty param.spaceName && empty param.spaceTypeNo }">
+		<a href="<c:url value = '/search/map'/>"style="margin-left:3%; width:24%;">
+	</c:if>
 	<button type="button" class="btn btn-outline-dark menu" style="border-radius: 3rem">지도</button></a>
 </div>
 </div>
@@ -711,6 +714,31 @@ $(function(){
 		snapSlider.noUiSlider.set([null, this.value]);
 	});
 	
+	
+	
+	//선택된(selected) 필터요소들을 filterList에 추가한 뒤 addFilterParam를 호출하는 함수 
+	var selectedFilter = [];
+	var filters = document.querySelectorAll('.filterBtn');
+	var filterList = [];
+	function addFilter(){
+		filterList.length = 0;
+		filters.forEach(function(item){
+			if(hasClass(item, 'selected')){
+				filterList.push(item.value);
+			}			
+		});
+		if(filterList.length == 0){
+			const urlSearchParams = new URLSearchParams(window.location.search);
+			var currentTotalUrl = window.location.href;
+			var currentUrl = currentTotalUrl.split("?");
+			urlSearchParams.delete("filterList");
+			location.href = currentUrl[0] + "?" + urlSearchParams;  
+		}else if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
+			alert('필터 조건을 선택해 주세요!');
+		}else{
+			addFilterParam(filterList, lowerPrice, upperPrice);		
+		}
+	}
 	var filterItems = document.querySelectorAll('.filterBtn');
 	function resetFilter(){
 		filterItems.forEach(function(item){
@@ -720,23 +748,6 @@ $(function(){
 		var lower = 5000;
 		snapSlider.noUiSlider.set([lower, null]);
 		snapSlider.noUiSlider.set([null, upper]);
-	}
-	
-	//선택된(selected) 필터요소들을 filterList에 추가한 뒤 addFilterParam를 호출하는 함수 
-	var selectedFilter = [];
-	var filters = document.querySelectorAll('.filterBtn');
-	var filterList = [];
-	function addFilter(){
-		filters.forEach(function(item){
-			if(hasClass(item, 'selected')){
-				filterList.push(item.value);
-			}			
-		});
-		if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
-			alert('필터 조건을 선택해 주세요!');
-		}else{
-			addFilterParam(filterList, lowerPrice, upperPrice);		
-		}
 	}
 	
 	//가격순,베스트순 select박스 선택시 파라미터 적용하는 함수
@@ -974,7 +985,7 @@ function loadMoreData() {
 				paramValue = lowerPrice;
 			}else if(filterArray[i] === "maxPrice"){
 				paramValue = upperPrice;
-			}else{
+			}else if(filterArray[i] == "filterList"){
 				paramValue = filterList;
 			}
 			

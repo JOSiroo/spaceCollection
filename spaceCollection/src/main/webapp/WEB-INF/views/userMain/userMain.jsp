@@ -8,6 +8,22 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" />
   
     <style>
+     @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -5%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    	}
+
+    .sectionCoupon{  
+    	padding: 0% 7% 0% 7%;
+   	}
+
+    
       .icon-container {
         display: flex;
         flex-wrap: wrap;
@@ -25,6 +41,7 @@
         height: 180px;
 
         cursor: pointer;
+        
       }
 
    
@@ -52,10 +69,10 @@
     </style>
   
   	<section class="sectionIcon" >
-  	<h1 >어떤 공간을 찾고 있나요?</h1>
+  	<h1 style="animation:fadeInDown 2s">어떤 공간을 찾고 있나요?</h1>
     <div class="icon-container">
 	  <c:forEach var="i" begin="5" end="16">
-  		<div class="icon" id="iconimage${i}">
+  		<div class="icon" id="iconimage${i}" style="animation: fadeInDown ${(i / 10)*5}s">
 		    <a href="<c:url value='/search?spaceTypeNo=${i}' />">
 		      <img src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>
@@ -65,7 +82,7 @@
 	</div>
 	</section>
 	
-	<section class="sectionCoupon" >
+	<section class="sectionCoupon">
 	<div class="slider-1" style="scale:0.8;">
 		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 	  <div class="carousel-inner" >

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 *{
 font: 'nanum gothic', 맑은 고딕, 한컴돋움, 돋움;
@@ -28,14 +28,34 @@ a.btn.btn-primary.py-2.px-3 {
     flex-direction: row; /* Display items in a row */
     justify-content: flex-end; /* Align items to the right */
     gap: 20px; /* Add some spacing between items */
+   
 }
 
+.img-fluid{
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    
+}
+.property-content{
+ box-shadow: 5px 5px 15px 10px rgba(0, 0, 0, 0.2) !important;
+ padding:3% 6% 0% 6%!important;
+ border-bottom-left-radius: 1rem;
+ border-bottom-right-radius: 1rem;
+ }
 .property-item {
     /* Add any specific styles for each property item */
+     
 }
 
 .icon-star-half-reverse {
         transform: scaleX(-1);
+ }
+ .nav-bar{
+    width: 400px;
+    height: 4px;
+    background: #ffd014;
+    margin-top:15px;
+     box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
  }
 </style>
    <div class="hero">
@@ -64,6 +84,7 @@ a.btn.btn-primary.py-2.px-3 {
 	         <div class="row mb-5 align-items-center">
 	            <div class="col-lg-6">
 	               <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">신규 스페이스 컬렉션</h2>
+	            <div class="nav-bar"></div>
 	            </div>
 	            <div class="col-lg-6 text-lg-end">
 	               <p><a href="<c:url value='/search?page=1'/>" target="_blank" class="btn btn-primary text-white py-3 px-4">등록된 공간 전체 보기</a></p>
@@ -73,17 +94,19 @@ a.btn.btn-primary.py-2.px-3 {
 				<div class="col-12">
 					<div class="property-slider-wrap">
 						<div class="property-slider">
-							<c:forEach var="vo" items="${list}">
+							<c:forEach var="map" items="${list}">
 							  	  <div class="property-item">
-							  	  <a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="img">
+							  	  <a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="img">
 										<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 									</a>
 									<div class="property-content">
-										<div class="price mb-2"><span>$1,291,000</span></div>
+										<div class="price mb-2"><span>
+										<fmt:formatNumber value="${map.AVGPRICE }" pattern="#,###원" />
+										</span></div>
 										<div>
-											<span class="d-block mb-2 text-black-50">${vo.spaceTag}</span>
-											<span class="city d-block mb-3">${vo.spaceAddress}</span>
-											<a href="<c:url value='/detail'/>?spaceNum=${vo.spaceNum}" class="btn btn-primary py-2 px-3">상세보기</a>
+											<span class="d-block mb-2 text-black-50">${map.SPACE_TAG}</span>
+											<span class="city d-block mb-3">${map.SPACE_ADDRESS}</span>
+											<a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="btn btn-primary py-2 px-3">상세보기</a>
 										</div>
 									</div>
 							  	</div>
