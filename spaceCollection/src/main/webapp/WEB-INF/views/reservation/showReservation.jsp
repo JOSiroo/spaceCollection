@@ -169,15 +169,17 @@ font-weight : bold;
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
 		<fmt:parseDate value="${map.RESERVE_START_DAY}" var="parsedDate" pattern="yyyy-MM-dd" />
-		<c:if test="${now.before(parsedDate)}">
-			<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
-		</c:if>
-		<c:if test="${now.after(parsedDate)}">
-			<c:if test="${!isReviewed}">
-				<button class = 'btn-success reviewBt' id = "review" onclick="goReview()">리뷰작성</button>
+		<c:if test="${map.RESERVATION_DEL_FLAG != 'Y' }">
+			<c:if test="${now.before(parsedDate)}">
+				<button class = 'btn-danger reserveBt' id = "cancle" onclick="cancelPay()">환불하기</button>
 			</c:if>
-			<c:if test="${isReviewed}">
-				<button class = 'btn-success reviewBt' id = "review" onclick="goSpace()">리뷰보기</button>
+			<c:if test="${now.after(parsedDate)}">
+				<c:if test="${!isReviewed}">
+					<button class = 'btn-success reviewBt' id = "review" onclick="goReview()">리뷰작성</button>
+				</c:if>
+				<c:if test="${isReviewed}">
+					<button class = 'btn-success reviewBt' id = "review" onclick="goSpace()">리뷰보기</button>
+				</c:if>
 			</c:if>
 		</c:if>
 		<button class = 'reserveBt' id = "reservationList" onclick="reservationList()">예약 내역</button>

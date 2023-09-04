@@ -19,8 +19,11 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectQnaBySpaceNum(int spaceNum) {
-		return qnaDao.selectQnaBySpaceNum(spaceNum);
+	public List<Map<String, Object>> selectQnaBySpaceNum(int spaceNum,int page) {
+		
+		int startRow = (page - 1) * 5 + 1; 
+		int endRow = page*5;
+		return qnaDao.selectQnaBySpaceNum(spaceNum,startRow, endRow);
 	}
 
 	@Override
@@ -36,6 +39,11 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public int totalQnaByUserId(SearchVO searchVo) {
 		return qnaDao.totalQnaByUserId(searchVo);
+	}
+
+	@Override
+	public int getTotalRecordBySpaceNum(int spaceNum) {
+		return qnaDao.getTotalRecordBySpaceNum(spaceNum);
 	}
 
 }
