@@ -7,8 +7,9 @@ import com.sc.spaceCollection.common.SearchVO;
 
 public interface QnaService {
 	int insertQna(QnaVO vo);
-	List<Map<String, Object>> selectQnaBySpaceNum(int spaceNum);
+	List<Map<String, Object>> selectQnaBySpaceNum(int spaceNum,int page);
 	int deleteQna(int qnaNum);
 	List<Map<String,Object>> selectQnaByUserId(SearchVO searchVo);
 	int totalQnaByUserId(SearchVO searchVo);
+	int getTotalRecordBySpaceNum(int spaceNum);
 }
