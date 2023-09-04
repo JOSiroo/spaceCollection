@@ -36,7 +36,7 @@ public class SpaceDetailController {
 	private final QnaService qnaService;
 	
 	@GetMapping("/detail")
-	public String test2(@RequestParam int spaceNum, HttpSession session,Model model) {
+	public String test2(@RequestParam int spaceNum,Model model) {
 		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNum);
 		
 		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
@@ -50,8 +50,14 @@ public class SpaceDetailController {
 		Map<String, Object> reviewCnt = reviewService.getTotalRecordBySpaceNum(spaceNum);
 		int QnACnt = qnaService.getTotalRecordBySpaceNum(spaceNum);
 		
-		float avg = Float.parseFloat(String.valueOf(reviewCnt.get("AVG")))/2.0F;
-		String avgReview = Float.toString(avg) + "점";
+		logger.info("reviewCnt.size = {}", reviewCnt.size());
+		String avgReview = "후기 없음";
+		if(reviewCnt.get("AVG") != null) {
+			float avg = Float.parseFloat(String.valueOf(reviewCnt.get("AVG")))/2.0F;
+			avgReview = Float.toString(avg) + "점";
+			logger.info("공간 상세 페이지, 4 = {}", avgReview);
+
+		}
 		
 		logger.info("공간 상세 페이지 reviewCnt = {}", reviewCnt);
 		logger.info("공간 상세 페이지 resultMap = {}", resultMap.size());

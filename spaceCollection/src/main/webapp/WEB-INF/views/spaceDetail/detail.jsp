@@ -269,7 +269,9 @@ pageEncoding="UTF-8"%>
 							<button type="button" class="btn btn-primary" id = "QNAWrite" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 								질문 등록하기
 							</button>
-						<span id="totalQnA" style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">:  ${totalQnA}개</span>
+						<span id="totalQnA" style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">
+							:  ${totalQnA}개
+						</span>
 						<div class = "nav-bar"></div>
 						<div class = 'row'>
 							<c:if test="${!empty sessionScope.userId}">
@@ -1073,8 +1075,7 @@ pageEncoding="UTF-8"%>
 	    });
     }
     
-    
-    callQnA(1);
+   	callQnA(1);
     function callQnA(QnAPage){
     	
     	if(QnAPage >= parseInt($('#QnAPage').val())+1){
@@ -1143,6 +1144,7 @@ pageEncoding="UTF-8"%>
 	    	}
 	    });
     }
+    
     
     
     
