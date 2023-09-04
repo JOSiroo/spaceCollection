@@ -20,5 +20,5 @@ public interface ReviewDAO {
 												@Param("startRow") int startRow, @Param("endRow") int endRow);
 	int deleteReview(int reviewNum);
 	int getTotalRecordByUserId(String userId);
-	int getTotalRecordBySpaceNum(int spaceNum);
+	Map<String, Object> getTotalRecordBySpaceNum(int spaceNum);
 }

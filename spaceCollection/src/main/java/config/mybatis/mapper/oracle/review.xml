@@ -75,7 +75,7 @@
 			from 
 				(
 					select * from review_detail_view
-					where space_num = #{spaceNum}
+					where space_num = #{spaceNum} and review_del_flag is null
 				)A
 		)
 		<![CDATA[where rn >= #{startRow} and rn <= #{endRow}]]>
@@ -86,8 +86,8 @@
 		where review_num = #{reviewNum}
 	</delete>
 	<select id="getTotalRecordBySpaceNum" parameterType="int">
-		select count(*) from review_detail_view
-		where space_num = #{spaceNum}
+		select count(*) as count,avg(REVIEW_RATE) as avg from review_detail_view
+		where space_num = #{spaceNum} and review_del_flag is null
 	</select>
 	
 </mapper>
