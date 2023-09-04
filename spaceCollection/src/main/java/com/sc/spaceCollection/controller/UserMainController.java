@@ -43,8 +43,9 @@ public class UserMainController {
    //사용자메인화면
    @RequestMapping("/")
    public String home(Model model) {
-       List<SpaceVO> list = spaceService.selectBySpaceNum();
-       List<Integer> priceList = new ArrayList<>();
+	   List<String> nullList = null; 
+	   
+       List<Map<String,Object>> list = spaceService.selectAll(1, 9,"",0,0,0,nullList,"SPACE_REG_DATE");
        logger.info("새로운 공간 보여주기, list.size={}", list.size());
        
        List<Map<String, Object>> map = reviewService.selectNewReview();
@@ -206,11 +207,33 @@ public class UserMainController {
             
             resultMap.put(list.get(i), priceList.get(i));
             
-            
          }
          logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap.size());
          
          model.addAttribute("spaceMap", resultMap);
+      }else if((spaceName == null || spaceName.isEmpty()) && spaceTypeNo == 0){
+    	  logger.info("타입별 공간 리스트 조회, 파라미터 spaceType = {}", spaceTypeNo);
+          List<SpaceVO> list = spaceService.selectAllMap();
+          List<Integer> priceList = new ArrayList();
+          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
+          
+          for(int i = 0; i < list.size(); i++) {
+             List<SpaceDetailVO> sdList = new ArrayList<>();
+             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+             int averagePrice = 0;
+             logger.info("sdList.size = {}" ,sdList.size());
+             
+             for(int j = 0; j < sdList.size(); j++) {
+             	averagePrice += sdList.get(j).getSdPrice(); 
+             }
+             priceList.add(averagePrice/sdList.size());
+             
+             resultMap.put(list.get(i), priceList.get(i));
+             
+          }
+          logger.info("타입별 공간 리스트 조회, 결과 resultMap = {}", resultMap.size());
+          
+          model.addAttribute("spaceMap", resultMap);
       }
       
       return "userMain/map";

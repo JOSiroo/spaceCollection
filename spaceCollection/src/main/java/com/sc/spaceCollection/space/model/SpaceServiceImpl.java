@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.space.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.sc.spaceCollection.common.ExcelVO;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.controller.UserMainController;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
@@ -174,6 +177,7 @@ public class SpaceServiceImpl implements SpaceService{
 		int cnt = 0;
 		
 		try {
+			
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
 				if(vo.getSpaceNum() > 0) {
 					cnt = spaceDao.spaceDenine(vo);
@@ -192,7 +196,7 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order, String status) {
 		List<Map<String, Object>> list = spaceDao.selectSpaceConfirmHistoryList(searchVo, order, status);
-		
+		logger.info("serviceImpl 파라미터 searchVO = {}, order = {}, status = {}", searchVo, order, status);
 		for(Map<String, Object> map : list) {
 			if(map.get("SPACE_REG_DATE") !=null && map.get("SPACE_REG_DATE") != "") {
 				map.put("SPACE_REG_DATE", (map.get("SPACE_REG_DATE")+"").substring(0,10));
@@ -211,6 +215,161 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order, String status) {
 		return spaceDao.getTotalRecordSpaceConfirmHistoryList(searchVo, order, status);
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo) {
+		List<Map<String, Object>> list = spaceDao.selectSpaceForExcel(vo);
+		List<Map<String, Object>> listtrans = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			String address = "";
+			
+			Map<String, Object> map = list.get(i);
+			Map<String, Object> map2 = listtrans.get(i);
+			map2.put("SPACE_NUM", map.get("SPACE_NUM"));
+			map2.put("SPACE_NAME", map.get("SPACE_NAME"));
+			map2.put("SPACE_BUSINESS_NUM", map.get("SPACE_BUSINESS_NUM"));
+			address = map.get("SPACE_ZIPCODE") + " " + map.get("SPACE_ADDRESS") + " " + map.get("SPACE_ADDRESS_DETAIL");
+			if(map.get("SPACE_LOCATION")!=null) {
+				address += " " + map.get("SPACE_LOCATION");
+			}
+			map2.put("SPACE_ADDRESS", address);
+			map2.put("SPACE_TAG", map.get("SPACE_TAG"));
+			map2.put("SPACE_PHONE_NUM", map.get("SPACE_PHONE_NUM"));
+			if(map.get("SPACE_PHONE_NUM").equals("Y")) {
+				map2.put("DEL_FLAG", "삭제");
+			}else {
+				map2.put("DEL_FLAG", "정상");
+			}
+			if(map.get("SPACE_REQUEST_STATUS").equals("Y")) {
+				map2.put("SPACE_REQUEST_STATUS", "승인");
+			}else if(map.get("SPACE_REQUEST_STATUS").equals("N")) {
+				map2.put("SPACE_REQUEST_STATUS", "거절");
+			}else {
+				map2.put("SPACE_REQUEST_STATUS", "요청");
+			}
+			map2.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0, 10));
+			map2.put("SPACE_REG_DATE", (map.get("SPACE_REG_DATE")+"").substring(0, 10));
+			map2.put("SPACE_OUT_DATE", (map.get("SPACE_OUT_DATE")+"").substring(0, 10));
+			map2.put("SPACE_TYPE_NAME", map.get("SPACE_TYPE_NAME"));
+			map2.put("USER_ID", map.get("USER_ID"));
+			map2.put("USER_EMAIL", map.get("USER_EMAIL"));
+			map2.put("SD_TYPE", map.get("SD_TYPE"));
+			map2.put("SD_PRICE", map.get("SD_PRICE"));
+			map2.put("SD_PEOPLE", map.get("SD_MIN_PEOPLE") + " ~ " + map.get("SD_MAX_PEOPLE"));
+			map2.put("SD_MIN_TIME", map.get("SD_MIN_TIME"));
+			map2.put("SD_TIME", map.get("SD_OPEN_TIME") + " ~ " + map.get("SD_CLOSE_TIME"));
+			String fac = "";
+			if(map.get("FAC_WIFI") != null) {
+				fac += "WIFI : O/";
+			}else{
+				fac += "WIFI : X/";
+			}
+			if(map.get("FAC_PRINTER") != null) {
+				fac += "프린터 : O/";
+			}else{
+				fac += "프린터 : X/";
+			}
+			if(map.get("FAC_CHAIR_TABLE") != null) {
+				fac += "의자,테이블 : O/";
+			}else{
+				fac += "의자,테이블 : X/";
+			}
+			if(map.get("FAC_SMOKE") != null) {
+				fac += "흡연 : O/";
+			}else{
+				fac += "흡연 : X/";
+			}
+			if(map.get("FAC_REST_ROOM") != null) {
+				fac += "화장실 : O/";
+			}else{
+				fac += "화장실 : X/";
+			}
+			if(map.get("FAC_PC") != null) {
+				fac += "PC : O/";
+			}else{
+				fac += "PC : X/";
+			}
+			if(map.get("FAC_TV") != null) {
+				fac += "TV : O/";
+			}else{
+				fac += "TV : X/";
+			}
+			if(map.get("FAC_WHITE_BOARD") != null) {
+				fac += "화이트보드 : O/";
+			}else{
+				fac += "화이트보드 : X/";
+			}
+			if(map.get("FAC_ELEVATOR") != null) {
+				fac += "엘리베이터 : O/";
+			}else{
+				fac += "엘리베이터 : X/";
+			}
+			if(map.get("FAC_PARKING") != null) {
+				fac += "주차 : O/";
+			}else{
+				fac += "주차 : X/";
+			}
+			if(map.get("FAC_FOOD") != null) {
+				fac += "취식 : O/";
+			}else{
+				fac += "취식 : X/";
+			}
+			if(map.get("FAC_DRINK") != null) {
+				fac += "주류반입 : O/";
+			}else{
+				fac += "주류반입 : X/";
+			}
+			if(map.get("FAC_COOK") != null) {
+				fac += "취사 : O/";
+			}else{
+				fac += "취사 : X/";
+			}
+			if(map.get("FAC_PET") != null) {
+				fac += "반려동물반입 : O/";
+			}else{
+				fac += "반려동물반입 : X/";
+			}
+			if(map.get("FAC_AUDIO") != null) {
+				fac += "오디오시설 : O/";
+			}else{
+				fac += "오디오시설 : X/";
+			}
+			if(map.get("") != null) {
+				fac += "WIFI : O/";
+			}else{
+				fac += "WIFI : X/";
+			}
+			if(map.get("FAC_WIFI") != null) {
+				fac += "WIFI : O/";
+			}else{
+				fac += "WIFI : X/";
+			}
+			if(map.get("") != null) {
+				fac += "WIFI : O/";
+			}else{
+				fac += "WIFI : X/";
+			}
+			if(map.get("FAC_WIFI") != null) {
+				fac += "WIFI : O/";
+			}else{
+				fac += "WIFI : X/";
+			}
+			if(map.get("") != null) {
+				fac += "WIFI : O/";
+			}else{
+				fac += "WIFI : X/";
+			}
+			
+			map2.put("FACILITY", fac);
+		}
+		
+		return list;
+	}
+	public List<SpaceVO> selectAllMap() {
+		return spaceDao.selectAllMap();
+
 	}
 
 

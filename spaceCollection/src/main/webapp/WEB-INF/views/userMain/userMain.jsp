@@ -18,7 +18,11 @@
             transform: translateZ(0);
         }
     	}
-    
+
+    .sectionCoupon{  
+    	padding: 0% 7% 0% 7%;
+   	}
+
     
       .icon-container {
         display: flex;
@@ -78,7 +82,7 @@
 	</div>
 	</section>
 	
-	<section class="sectionCoupon" >
+	<section class="sectionCoupon">
 	<div class="slider-1" style="scale:0.8;">
 		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 	  <div class="carousel-inner" >

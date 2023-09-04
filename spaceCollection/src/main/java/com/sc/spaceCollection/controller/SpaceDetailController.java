@@ -41,8 +41,10 @@ public class SpaceDetailController {
 		
 		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
 		SpaceVO vo = new SpaceVO();
+		String spaceOwnerId="";
 		for (Entry<SpaceVO, List<Map<String, Object>>> entry : resultMap.entrySet()) {
 			vo = entry.getKey();
+			spaceOwnerId = (String)entry.getValue().get(0).get("USER_ID");
 		}
 		
 		RefundVO refundVo = spaceDetailService.selectRefund(vo.getRefundNum());
@@ -64,7 +66,7 @@ public class SpaceDetailController {
 		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
 		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
-		
+		model.addAttribute("user_id", spaceOwnerId);
 		model.addAttribute("totalQnA", QnACnt);
 		model.addAttribute("totalReview", reviewCnt);
 		model.addAttribute("avgReview", avgReview);
