@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.sc.spaceCollection.common.ExcelVO;
 import com.sc.spaceCollection.common.SearchVO;
 
 @Mapper
@@ -55,4 +56,5 @@ public interface SpaceDAO {
 	int getTotalRecordSpaceConfirmHistoryList(@Param("searchVo")SearchVO searchVo,
 															@Param("order")String order,
 															@Param("status")String status);
+	List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo);
 }
