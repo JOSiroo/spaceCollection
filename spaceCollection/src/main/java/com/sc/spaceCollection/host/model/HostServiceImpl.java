@@ -18,6 +18,11 @@ public class HostServiceImpl implements HostService {
 	public List<SpaceCategoryAllVO> selectSpaceCategory() {
 		return hostDao.selectSpaceCategory();
 	}
+	
+	@Override
+	public SpaceTypeVO selectSpaceTypeBySpaceTypeName(String spaceTypeName) {
+		return hostDao.selectSpaceTypeBySpaceTypeName(spaceTypeName);
+	}
 
 	@Override
 	public List<Map<String, Object>> selectHostReservation(int page,int size, int userNum,String status,String order,String keyword) {
