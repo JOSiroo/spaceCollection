@@ -203,7 +203,7 @@
 				<if test="status !=null and status !=''">
 					and SPACE_REQUEST_STATUS = #{status}
 				</if>
-				order by #{order}
+				 <![CDATA[ ORDER BY ${order} ]]>
 			)A
 		)
 		<![CDATA[
@@ -221,6 +221,10 @@
 				and SPACE_REQUEST_STATUS = #{status}
 			</if>
 			order by #{order}
+	</select>
+	
+	<select id="selectSpaceForExcel" resultType="map">
+		select * from ADMIN_SPACE_EXCEL_VIEW order by space_num
 	</select>
 	
 </mapper>

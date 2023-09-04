@@ -87,3 +87,17 @@ from space s
 join space_type st on s.space_type_no = st.space_type_no
 join user_info u on s.user_num = u.user_num;
 ;
+
+
+create or replace view admin_space_excel_view
+as
+select s."SPACE_NUM",s."SPACE_NAME",s."SPACE_BUSINESS_NUM",s."SPACE_ZIPCODE",s."SPACE_ADDRESS",s."SPACE_ADDRESS_DETAIL",s."SPACE_LOCATION",s."SPACE_INTRO",s."SPACE_INFO",s."SPACE_TAG",s."SPACE_FACILITY",s."SPACE_PHONE_NUM",s."SPACE_WARN",s."LATITUDE",s."LONGITUDE",s."DEL_FLAG",s."REFUND_NUM",s."USER_NUM",s."SPACE_TYPE_NO",s."SPACE_REQUEST_STATUS",s."SPACE_REQUEST_DATE",s."SPACE_REG_DATE",s."SPACE_OUT_DATE", st.space_type_name, u.user_id,
+u.user_email, sd.SD_TYPE, sd.SD_PRICE, sd.SD_MIN_PEOPLE, sd.SD_MAX_PEOPLE, sd.SD_AREA, sd.SD_MIN_TIME, sd.SD_CLOSE_TIME, sd.SD_OPEN_TIME,
+FAC_WIFI,FAC_PRINTER,FAC_CHAIR_TABLE,FAC_SMOKE,FAC_REST_ROOM,FAC_PC,FAC_TV,FAC_WHITE_BOARD,FAC_ELEVATOR,FAC_PARKING,FAC_FOOD,FAC_DRINK,FAC_COOK,FAC_PET,FAC_AUDIO
+from space s 
+join space_type st on s.space_type_no = st.space_type_no
+join user_info u on s.user_num = u.user_num
+join space_detail sd on s.space_num = sd.space_num
+join facility f on sd.FACILITY_NUM = f.FACILITY_NUM
+order by space_num;
+

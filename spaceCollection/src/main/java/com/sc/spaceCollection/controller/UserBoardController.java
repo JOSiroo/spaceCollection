@@ -1,6 +1,10 @@
 package com.sc.spaceCollection.controller;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -127,7 +131,7 @@ public class UserBoardController {
 	@ResponseBody
 	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, 
 			CommentsVO commentsVO, @RequestParam(defaultValue = "0")int page, String userId  ,Model model ) {
-		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, addNum = {}", boardNum, page);
+		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, page = {}", boardNum, page);
 		
 		int size=5;
 		int count = commentsService.countComments(boardNum);
@@ -159,10 +163,14 @@ public class UserBoardController {
 	
 	@RequestMapping("/board/boardDetail/ajax_commentsEdit")
 	@ResponseBody
-	public int ajax_commentsEdit(@ModelAttribute CommentsVO commentsVo) {
-		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentsVo);
+	public int ajax_commentsEdit(@RequestParam String commentContent, @RequestParam String commentNum) {
+		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentContent, commentNum);
 		
-		int cnt = commentsService.updateComments(commentsVo);
+		CommentsVO vo = new CommentsVO();
+		vo.setCommentContent(commentContent);
+		vo.setCommentNum(Integer.parseInt(commentNum));
+		
+		int cnt = commentsService.updateComments(vo);
 		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
 		
 		return cnt;
