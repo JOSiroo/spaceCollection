@@ -165,7 +165,7 @@ public class ReservationController {
 		if(userId == null || userId.isEmpty()) {
 			
 			model.addAttribute("msg","예약 내역은 로그인 후 이용 가능합니다");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/login/login");
 			
 			return "common/message";
 		}

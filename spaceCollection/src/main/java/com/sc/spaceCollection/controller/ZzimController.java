@@ -83,7 +83,7 @@ public class ZzimController {
 		if(userId == null || userId.isEmpty()) {
 			
 			model.addAttribute("msg","찜 목록 조회는 로그인 후 이용 가능합니다");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/login/login");
 			
 			return "common/message";
 		}
