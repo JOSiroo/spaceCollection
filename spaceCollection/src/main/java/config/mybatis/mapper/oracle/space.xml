@@ -138,14 +138,14 @@
 		SELECT * FROM user_counts_view
 	</select>
 	
-	<select id="selectSpaceListViewByUserId" parameterType="searchVo" resultType="map">
+	<select id="selectSpaceListViewByUserId" resultType="map">
 		select * from
 		(
 			select rownum as RNUM, A.* from
 			(
 				select * from SPACE_LIST_VIEW where user_id = #{userId}
 				<include refid="searchWhere"/>
-				order by space_request_date
+				order by space_reg_date desc
 			)A
 		)
 		<![CDATA[
@@ -186,6 +186,39 @@
 	<select id="getTotalRecordSpaceConfrimList" parameterType="searchVo" resultType="int">
 		select count(*) from ADMIN_SPACECONFIRM_LIST_VIEW where SPACE_REQUEST_STATUS = 'R'
 		<include refid="searchWhere"/>
+	</select>
+	
+	<select id="selectSpaceConfirmHistoryList" resultType="map">
+		select * from
+		(
+			select rownum as RNUM, A.* from
+			(
+				select * from ADMIN_SPACECONFIRM_LIST_VIEW 
+				where SPACE_REQUEST_STATUS is not null
+				<if test="searchVo.searchKeyword!=null and searchVo.searchKeyword!=''">
+					and ${searchVo.searchCondition} like '%' || #{searchVo.searchKeyword} || '%'
+				</if>
+				<if test="status !=null and status !=''">
+					and SPACE_REQUEST_STATUS = #{status}
+				</if>
+				order by #{order}
+			)A
+		)
+		<![CDATA[
+		where RNUM>#{searchVo.firstRecordIndex} 
+		and RNUM<=#{searchVo.firstRecordIndex} + #{searchVo.recordCountPerPage}]]>
+	</select>
+	
+	<select id="getTotalRecordSpaceConfirmHistoryList" resultType="int">
+		select count(*) from ADMIN_SPACECONFIRM_LIST_VIEW 
+			where SPACE_REQUEST_STATUS is not null
+			<if test="searchVo.searchKeyword!=null and searchVo.searchKeyword!=''">
+				and ${searchVo.searchCondition} like '%' || #{searchVo.searchKeyword} || '%'
+			</if>
+			<if test="status !=null and status !=''">
+				and SPACE_REQUEST_STATUS = #{status}
+			</if>
+			order by #{order}
 	</select>
 	
 </mapper>

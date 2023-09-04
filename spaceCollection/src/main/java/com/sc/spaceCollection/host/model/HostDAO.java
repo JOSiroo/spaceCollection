@@ -11,6 +11,8 @@ import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 @Mapper
 public interface HostDAO {
 	List<SpaceCategoryAllVO> selectSpaceCategory();
+	SpaceTypeVO selectSpaceTypeBySpaceTypeName(String spaceTypeName);
+	
 	List<Map<String, Object>> selectHostReservation(@Param("startRow") int startRow, @Param("endRow") int endRow,
 													@Param("userNum")int userNum,@Param("status") String status,
 													@Param("order")String order,@Param("keyword")String keyword);

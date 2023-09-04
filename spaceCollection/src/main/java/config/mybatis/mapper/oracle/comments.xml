@@ -9,6 +9,23 @@
 		</if>
 	</sql>
 	
+	
+	<select id="selectPaging" resultType ="commentsVo" >
+		select * 
+		   from(
+		      select A.*, rownum as rn
+		      from 
+		      (
+		         select * from COMMENTS
+		         where BOARD_NUM = #{boardNum}
+		         and COMMENT_DEL_FLAG is null 
+				order by COMMENT_REG_DATE desc
+		      )A   
+		   )
+			<![CDATA[
+			where rn >= #{startRow} and rn <= #{endRow} ]]>	
+	</select>
+	
 	<insert id="insertComments" parameterType="commentsVo">
 		<selectKey keyProperty="commentNum" order="BEFORE" resultType="int">
 			select comments_seq.nextval from dual

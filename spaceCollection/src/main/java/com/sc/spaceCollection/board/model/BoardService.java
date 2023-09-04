@@ -17,4 +17,5 @@ public interface BoardService {
 	Map<String, Object> selectByeventBoardNum(int boardNum);
 	int updateBoard(BoardVO vo);
 	List<BoardVO> selectNoticeBoard();
+	List<Map<String, Object>> selectNotice(int page, int size, String boardTitle, String boardContent,String searchKeyword);
 }

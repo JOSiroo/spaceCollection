@@ -1,18 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%-- <script src="<c:url value='/userMain/board/couponscript.js'/>"></script> --%>
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  </head>
+ <%@ include file="/WEB-INF/views/form/userTop.jsp" %> 
  
-    <script>
+<style>
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 300px;
+    margin-bottom: 200px;
+}
+.couponBox {
+    text-align: center;
+}
+</style>
+
+<script>
     
  	 //모달
     const myModal = document.getElementById('myModal')
@@ -52,60 +56,16 @@
         }
     };
     
-    </script>
-    
-<style>
-#generateButton{
-	 justify-content: center;
-      max-width: 1200px;
-      margin: 0 auto; 
-      margin-left: 700px; 
-      position: center;
-	 width: 200px;
-}
-</style>
-
-<body>
-  <div var="num" class="couponBox">
-	   <button id="generateButton" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
+</script>
+<section>
+ <div var="num" class="couponBox">
+	   <button id="generateButton" class="btn btn-primary"  id="display" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
 	   <p id="couponDisplay" ></p>
-		<!-- Button trigger modal -->
-		<button id="generateButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		  Launch demo modal
-		</button>
-  </div>
-	
+		버튼을 클릭하여 쿠폰 일련번호를 받으세요 <br>
+		저장된 쿠폰은 쿠폰함에서 확인 하실 수 있습니다.<br>
+		* 쿠폰은 1일 1회까지만 지급됩니다. *
+  </div> 
+</section>
 
-<!-- Modal 디자인 -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-	       <div class="modal-body2">
-			  <h2 class="fs-5">Popover in a modal</h2>
-			  <p>This <button class="btn btn-secondary" data-bs-toggle="popover" title="Popover title" data-bs-content="Popover body content is set in this attribute.">button</button> triggers a popover on click.</p>
-			  <hr>
-			  <h2 class="fs-5">Tooltips in a modal</h2>
-			  <p><a href="#" data-bs-toggle="tooltip" title="Tooltip">This link</a> and <a href="#" data-bs-toggle="tooltip" title="Tooltip">that link</a> have tooltips on hover.</p>
-			</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>	
-<!-- Modal 디자인 끝 -->
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-  </body>
-</html>
-
-	
-
+<%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
 

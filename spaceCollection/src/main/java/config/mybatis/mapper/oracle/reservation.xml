@@ -27,7 +27,7 @@
 		select * from reservationShow_view
 		where reservation_Num = #{reservationNum} and user_id = #{userId}
 	</select>
-	<select id="reservationList" parameterType="string" resultType="map">
+	<select id="reservationList" resultType="map">
 		select * 
 		from(
 			select rownum as RNUM, A.*
@@ -35,9 +35,15 @@
 			(
 				select * from RESERVATION_SPACE_SD_VIEW
 				where user_id = #{userId}
-				order by reserve_start_day
+				order by reservation_num desc
 			)A
 		)
+		<![CDATA[
+		where RNUM >= ${startRow} and RNUM <= ${endRow}]]>
+	</select>
+	<select id="countReservationList" resultType="int">
+		select count(reservation_Num) from RESERVATION_SPACE_SD_VIEW
+		where user_id = #{userId}
 	</select>
 	<update id="canceledReservation" parameterType="string">
 		update reservation

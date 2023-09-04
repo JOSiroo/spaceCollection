@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+ <%@ include file="/WEB-INF/views/form/userTop.jsp" %>
+
 <style type="text/css">
-	/* *{
-	font-family: NanumBarunGothic,"나눔바른고딕",
-	NanumGothic,"돋움",Dotum,Helvetica,"Apple SD Gothic Neo",Sans-serif!important;
-	} */
-	
 	.reservation-header{
 		margin-top :120px;
 		padding:5% 16% 5% 16%;
@@ -19,7 +15,7 @@
  		text-shadow: 0 0 0 black;
 		
 	}
-	input[name=reservationInfo]{
+	input[name=searchKeyword]{
 		font-size:25px;
 		width: 65%;
 		height: 60px;
@@ -30,7 +26,7 @@
 	
 		
 	}
-	input[name=reservationInfo]::placeholder{
+	input[name=searchKeyword]::placeholder{
 		color:lightgrey;
 		font-weight: bold;
 		font-size: 18px;
@@ -142,10 +138,11 @@
 	.divBox2 {
 	border-top: 2.5px solid #656565;
     border-bottom: 2.5px solid #656565;
-    margin-top: 40px;
-    width: 90%;
-    margin-left: 60px;
     background-color: #656565;
+	}
+    .divBox2 {
+    width: 1000px;
+    margin-left: 256px;
 	}
 	span#span1 {
     font-weight: bold;
@@ -161,16 +158,74 @@
     }
 </style>
 
+<script type="text/javascript">
 
+function search() {
+    	var searchKeyword = document.getElementById('searchKeyword').value;
+        var currentUrl = window.location.href.split('?')[0];
+        var params = new URLSearchParams(window.location.search);
+        params.set("searchKeyword", searchKeyword);
+        window.location.href = currentUrl + '?' + params.toString();
+}
+
+/* function makeList(data) {
+	$.each(data, function(index) {
+		var str = "<div class='accordion accordion-flush' id='accordionFlushExample' var='list' items='list'>"
+			+ "<div class='accordion-item'>"
+			+ "<h2 class='accordion-header'>"
+			+ "<input type='text' name='boardNum' value="+this.BOARD_NUM+"/>"
+			+ "<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' "
+			+ "data-bs-target='#flush-collapse" + index + "' aria-expanded='false' "
+			+ "aria-controls='flush-collapse" + index + "'"
+			+ "style='background-color: " + (index % 2 == 0 ? '#eef1f3' : 'white') + ";'>"
+			+ "<span id='span1'>[ 공지사항 ]</span><span id='span2'>" + this.BOARD_TITLE + "</span></button></h2>"
+			+ "<div id='flush-collapse" + index + "' class='accordion-collapse collapse' data-bs-parent='#accordionFlushExample'>"
+			+ "<button type='button' class='btbt' id='delBt' >삭제</button>"
+			+ "<div class='accordion-body'>" + this.BOARD_CONTENT + "</div>"
+			+ "</div>"
+			+ "</div>"
+			+ "</div>";
+		$('.noticeLoad').append(str);
+	}); // each
+}// makeList
+
+var boardNum = ${param.boardNum};
+$.loadComment(boardNum);
+
+$.loadComment=function(boardNum) {
+$.ajax({
+	url : '<c:url value="/user/board/notice/noticeLoad?boardNum='+boardNum+'&page='+page+'"/>',
+	type: 'get',
+	success:function(data){
+		var str = "";
+		if(data!=null && data.length>0){
+			console.log(data);
+			makeList(data);
+			page++
+		}else{
+			str = "<span>등록된 공지사항이 없습니다.</span>";
+			$('.noticeLoad').append(str);
+		}
+	},
+	error:function(xhr, status, error){
+		alert(status + " : " + error);
+	}
+});//ajax
+}//loadComment */
+
+</script>
+
+	
 <section>
+
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 공지 사항 검색</label>
-			<!-- https://www.spacecloud.kr/board/notice?page=1&q=tlwms -->
-			<input type="text" id = "searchKeyword" name = "reservationInfo" placeholder="검색어를 입력하세요."
-				<c:if test="${!empty param.keyword}"> value="${param.keyword}"</c:if>>  
-			<button class="searchBt" onclick="search()">검색</button>
+				<input type="text" id = "searchKeyword" name = "searchKeyword" placeholder="검색어를 입력하세요." 
+				<c:if  test="${!empty param.keyword}"> value="${param.keyword}"</c:if>> 
+			<button class="searchBt" id="searchBt" onclick="search()">검색</button>
 		</div>
+	</div>
 	
 <div class="divBox2">
 <c:forEach var="item" items="${list}" varStatus="loop">
@@ -181,59 +236,36 @@
                         data-bs-target="#flush-collapse${loop.index}" aria-expanded="false"
                         aria-controls="flush-collapse${loop.index}"
                         style="background-color: ${loop.index % 2 == 0 ? '#eef1f3' : 'white'};">
-                    <span id="span1">[ 공지사항 ]</span><span id="span2">${item.boardTitle}</span>
+                    <span id="span1">[ 공지사항 ]</span><span id="span2">${item.BOARD_TITLE}</span>
                 </button>
             </h2>
             <div id="flush-collapse${loop.index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    ${item.boardContent}
+                    ${item.BOARD_CONTENT}
                 </div>
             </div>
         </div>
     </div>
 </c:forEach>
 </div>
-		  
-		  <!-- <div class="accordion-item">
-		    <h2 class="accordion-header">
-		      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-		      data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-		       <span>[취소]</span><p>&nbsp 천재지변/감염병으로 인한 예약취소는 어떻게 하나요?
-		      </button>
-		    </h2>
-		    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-		      <div class="accordion-body">
-		       <ul>
-		       <li>천재지변(기상악화), 법정 감염병 등 불가항력적인 사유로 제휴점 이용이 불가할 경우 고객행복센터로 예약내역 및 증빙서류(결항확인서, e-티켓, 진단확인서 등)를 보내주시면 확인 후 예약취소 가능 여부를 확인해 드립니다.</li>
-		        <br><li>다만, 당사는 판매 중개 플랫폼의 입장으로 제휴점에 대하여 취소/환불을 강제할 수 없어 각 제휴점의 규정에 근거하여 상황에 따라 수수료가 발생하거나 취소가 어려울 수 있는 점 양해 부탁드립니다.</li>
-		        </ul>
-		       </div>
-		    </div>
-		  </div> -->
-		  
-		
+
 		<div class="pageBox">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
 			    <li class="page-item">
-			      <a class="page-link" id="previous" href="<c:url value='/host/reservation?page=${param.page-1}'/>" aria-label="Previous">
+			      <a class="page-link" id="previous" href="<c:url value='/userMain/board/notice?page=${param.page-1}'/>" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
 			    <li class="page-item">
-			      <a class="page-link" id="next" href="<c:url value='/host/reservation?page=${param.page+1}'/>" aria-label="Next">
+			      <a class="page-link" id="next" href="<c:url value='/userMain/board/notice?page=${param.page+1}'/>" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
 			  </ul>
 			</nav>
 		</div>
-	</div>
-</section>
+</section> 
+
+
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
-
-<script type="text/javascript">
-
-
-
-</script>

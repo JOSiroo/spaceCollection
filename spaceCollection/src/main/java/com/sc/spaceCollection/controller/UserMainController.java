@@ -25,8 +25,10 @@ import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.usermain.model.ApiExamCaptchaNkeyResult;
 import com.sc.spaceCollection.usermain.model.Coupon;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -60,12 +62,33 @@ public class UserMainController {
    }
    
    @RequestMapping("/coupon")
-   public String coupon(Model model) {
-	    String num = Coupon.generateCoupon();
-	    logger.info("num={}",num);
-	    model.addAttribute("num", num);
+   public String coupon(HttpSession session, Model model) {
+	   String userId = (String)session.getAttribute("userId");
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("url", "/login/login");
+			
+			return "common/message";
+		}
 	    return "userMain/board/roulette";
 	}
+   
+   @RequestMapping("/coupon2")
+   public String coupon2(HttpSession session, Model model) {
+	   String userId = (String)session.getAttribute("userId");
+		if(userId == null || userId.isEmpty()) {
+			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("url", "/");
+			
+			return "common/message";
+		}
+	   
+	   String num = Coupon.generateCoupon();
+	   logger.info("num={}",num);
+	   model.addAttribute("num", num);
+	   
+	   return "userMain/board/coupon";
+   }
    
    //서비스약관
    @RequestMapping("/service")
@@ -81,8 +104,7 @@ public class UserMainController {
    
    //사업자
    @RequestMapping("/Certificate")
-   public String Certificate() {
-		/* private final ApiExamCaptchaNkeyResult captcha; */
+   public String Certificate(Model model) {
 	   return "userMain/Certificate";
    }
    
@@ -140,7 +162,6 @@ public class UserMainController {
 	            
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
 	         
-         model.addAttribute("list", list);
          model.addAttribute("totalRecord", list.size());
 	  }else if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
@@ -149,7 +170,6 @@ public class UserMainController {
             
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
          
-         model.addAttribute("list", list);
          model.addAttribute("totalRecord", list.size());
          
       }else if(spaceTypeNo != 0) {
@@ -158,8 +178,14 @@ public class UserMainController {
 	        		 region,maxPeople,minPrice,maxPrice,filterItem,order);
 		  logger.info("타입별 공간 리스트 조회, 파라미터 list.size = {}", list.size());
          
-         model.addAttribute("list", list);
       }
+	  
+	  for(Map<String, Object> map : list) {
+		  map.put("SPACE_REG_DATE", map.get("SPACE_REG_DATE")+"");
+	  }//timestamp 오류나서 String으로 변환
+	  
+	  model.addAttribute("list", list);
+	  
       return list;
    }
    

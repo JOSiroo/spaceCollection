@@ -154,7 +154,9 @@ public class SpaceServiceImpl implements SpaceService{
 		
 		try {
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
-				cnt = spaceDao.spaceConfirm(vo);
+				if(vo.getSpaceNum() > 0) {
+					cnt = spaceDao.spaceConfirm(vo);
+				}
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -173,7 +175,9 @@ public class SpaceServiceImpl implements SpaceService{
 		
 		try {
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
-				cnt = spaceDao.spaceDenine(vo);
+				if(vo.getSpaceNum() > 0) {
+					cnt = spaceDao.spaceDenine(vo);
+				}
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -182,6 +186,31 @@ public class SpaceServiceImpl implements SpaceService{
 		}
 
 		return cnt;
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order, String status) {
+		List<Map<String, Object>> list = spaceDao.selectSpaceConfirmHistoryList(searchVo, order, status);
+		
+		for(Map<String, Object> map : list) {
+			if(map.get("SPACE_REG_DATE") !=null && map.get("SPACE_REG_DATE") != "") {
+				map.put("SPACE_REG_DATE", (map.get("SPACE_REG_DATE")+"").substring(0,10));
+			}else {
+				map.put("SPACE_REG_DATE", "");
+			}
+			map.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0,10));
+			
+		}
+		
+		
+		return list;
+	}
+
+
+	@Override
+	public int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order, String status) {
+		return spaceDao.getTotalRecordSpaceConfirmHistoryList(searchVo, order, status);
 	}
 
 

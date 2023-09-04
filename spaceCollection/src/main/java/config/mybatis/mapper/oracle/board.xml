@@ -4,6 +4,7 @@
 
 <mapper namespace="com.sc.spaceCollection.board.model.BoardDAO">
 	
+	
 	<sql id="searchWhere">
 		<if test="searchKeyword!=null and searchKeyword!=''">
 			and ${searchCondition} like '%' || #{searchKeyword} || '%'
@@ -23,6 +24,18 @@
 		</where>
 	</sql>
 	
+	
+	<select id="selectNotice" resultType="map">
+		        select * from board
+				where BOARD_TYPE_ID like 'b00012'
+				and BOARD_DEL_FLAG is null
+		        <if test='searchKeyword != "" and searchKeyword != null'>
+					and BOARD_TITLE like '%' || #{searchKeyword} || '%'
+		        </if>
+					order by BOARD_REG_DATE desc       
+	</select>
+	
+	
 	<select id="selectBoardAll" parameterType="searchVo" resultType="map">
 		select *from
 		(
@@ -38,6 +51,8 @@
 		where RNUM>#{firstRecordIndex} 
 		and RNUM<=#{firstRecordIndex} + #{recordCountPerPage}]]>
 	</select>
+	
+	
 
 	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
 		select count(*) from board_boardType_user_view
