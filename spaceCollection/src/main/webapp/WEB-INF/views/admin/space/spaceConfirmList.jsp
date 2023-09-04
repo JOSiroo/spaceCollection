@@ -99,11 +99,20 @@ td>span {
 .confirm {
 	color: #0d6efd;
 }
+
+#spaceConfirmHistoryList{
+	clear: both;
+}
+
+th>i{
+	cursor: pointer;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
 		$.spaceConfirmListSearch();
+		
 		
 		//페이지 출력 관련 시작
 		$('li button').click(function() {
@@ -124,8 +133,8 @@ td>span {
 		});
 		
 		$('button[name=spaceConfirmHistoryListTab]').click(function() {
+			/* $.spaceConfirmHistoryListSearch(); */
 			$.spaceConfirmHistoryListSend(1);
-			$.spaceConfirmHistoryListSearch();
 		});
 		//페이지 출력 관련 끝
 		
@@ -175,6 +184,11 @@ td>span {
 			$('#warning').hide();
 		});
 		//엑셀 다운 관련 끝
+		
+		$('#spaceNumTh').click(function() {
+			$('input[name=order]').val('space_name desc');
+			$.spaceConfirmHistoryListSearch();
+		});
 	});
 	
 	function mouseIn(evt) {
@@ -239,6 +253,7 @@ td>span {
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
 								str += "</td>";
+								str += "</tr>";
 								
 								i++;
 						});
@@ -273,35 +288,37 @@ td>span {
 				$('input[name=userId]').val(res.searchVo.userId);
 				$('input[name=searchKeyword]').val(res.searchVo.searchKeyword);
 				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
-				var i = 0;
 				var str = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
 					
 					$('#spaceConfirmHistoryListTbody>form').html("");
 					
 						$.each(res.ajaxList, function() {
+							str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+							str += "</td>";
+							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_TYPE_NAME;
 							str += "</td>";
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
 							str += "</td>";
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
 							str += "</td>";
-							if(this.SPACE_REQUEST=="Y"){
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(13,110,253)'>승인";
-							}else if(this.SPACE_REQUEST=="R"){
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
-							}else if(this.SPACE_REQUEST=="N"){
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: red'>거절";
-							}
-							str += "</td>";
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
 							str += "</td>";
 							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
 							str += "</td>";
+							if(this.SPACE_REQUEST_STATUS=="Y"){
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(13,110,253)'>승인";
+							}else if(this.SPACE_REQUEST_STATUS=="R"){
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
+							}else if(this.SPACE_REQUEST_STATUS=="N"){
+								str += "<td onclick='location.href=';' style='cursor: pointer;color: red'>거절";
+							}
+							str += "</td>";
+							str += "</tr>";
 							
-							i++;
 						});
-						$('#spaceConfirmHistoryListTbody>form').html(str);
+						$('#spaceConfirmHistoryListTbody').html(str);
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
@@ -321,10 +338,10 @@ td>span {
 	
 	function pageMake(pagingInfo) {
 		//페이징 처리
-		var blockSize = pagingInfo.blockSize;
-		var countPerPage = pagingInfo.countPerPage;
 		//게시물 구분
 		var kindFlag = pagingInfo.kindFlag;
+		var blockSize = pagingInfo.blockSize;
+		var countPerPage = pagingInfo.countPerPage;
 		
 		
 		var str = "";
@@ -371,7 +388,7 @@ td>span {
 		if(kindFlag == 'spaceConfirmList'){
 			$('.spaceConfirmListDivPage').html(str);	
 		}else if(kindFlag == 'spaceConfirmHistoryList'){
-			$('.spaceConfirmHistoryListdivPage').html(str);
+			$('.spaceConfirmHistoryListDivPage').html(str);
 		}
 	}
 	
@@ -388,7 +405,7 @@ td>span {
 				
 				if(res!=null){
 					$.spaceConfirmListSearch(res);
-					pageMake();
+					pageMake(res.pagingInfo);
 				}
 				
 			},
@@ -402,7 +419,7 @@ td>span {
 		$('input[name=currentPage]').val(curPage);
 		
 		$.ajax({
-			url:"<c:url value='/admin/space/spaceConfirmHistoryList/ajax_spaceConfirmHistoryList'/>",
+			url:"<c:url value='/admin/space/spaceConfirmList/ajax_spaceConfirmHistoryList'/>",
 			type:"post",
 			data:$('form[name=spaceConfirmHistoryListSearchFrm]').serializeArray(),
 			dataType:"json",
@@ -411,7 +428,7 @@ td>span {
 				
 				if(res!=null){
 					$.spaceConfirmHistoryListSearch(res);
-					pageMake();
+					pageMake(res.pagingInfo);
 				}
 				
 			},
@@ -476,7 +493,7 @@ td>span {
 						<ul class="nav nav-tabs nav-tabs-bordered">
 							<li class="nav-item">
 								<button class="nav-link active" data-bs-toggle="tab"
-									data-bs-target="#spaceConfrimList" name="spaceConfirmListTab">
+									data-bs-target="#spaceConfirmList" name="spaceConfirmListTab">
 									승인 요청</button>
 							</li>
 							<li class="nav-item">
@@ -487,45 +504,44 @@ td>span {
 						</ul>
 
 						<!-- 장소 승인 요청 내역 시작 -->
-						<div class="tab-pane fade show active" id="spaceConfrimList">
+						<div class="tab-pane fade show active" id="spaceConfirmList">
 							<div class="row">
 								<div class="col-12" id="buttonDiv"></div>
 							</div>
 							<div class="row mb-3">
-								<form name="trFrm" method="post">
-									<table class="table">
-										<colgroup>
-											<col style="width: 5%;" />
-											<col style="width: 7%;" />
-											<col style="width: 12%;" />
-											<col style="width: 33%;" />
-											<col style="width: 15%;" />
-											<col style="width: 13%;" />
-											<col style="width: 15%;" />
-										</colgroup>
-										<thead>
-											<tr>
-												<th scope="col"><input type="checkbox" name="chkAll"></th>
-												<th scope="col">번호</th>
-												<th scope="col">공간 타입</th>
-												<th scope="col">공간명</th>
-												<th scope="col">신청인</th>
-												<th scope="col">상태</th>
-												<th scope="col">신청일</th>
-											</tr>
-										</thead>
+								<table class="table">
+									<colgroup>
+										<col style="width: 5%;" />
+										<col style="width: 7%;" />
+										<col style="width: 12%;" />
+										<col style="width: 33%;" />
+										<col style="width: 15%;" />
+										<col style="width: 13%;" />
+										<col style="width: 15%;" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th scope="col"><input type="checkbox" name="chkAll"></th>
+											<th scope="col">번호</th>
+											<th scope="col">공간 타입</th>
+											<th scope="col">공간명</th>
+											<th scope="col">신청인</th>
+											<th scope="col">상태</th>
+											<th scope="col">신청일</th>
+										</tr>
+									</thead>
 
-										<tbody id="spaceConfirmListTbody">
-											<!-- ajax로 승인 요청 내역 출력 -->
-										</tbody>
-									</table>
-								</form>
+									<tbody id="spaceConfirmListTbody">
+										<!-- ajax로 승인 요청 내역 출력 -->
+									</tbody>
+								</table>
 								<div class="spaceConfirmListDivPage">
 									<!-- ajax로 페이징 -->
 								</div>
 								<form class="col align-items-center"
 									name="spaceConfirmListSearchFrm" onsubmit="return false">
 									<input type="hidden" name="currentPage" value="1">
+									<input type="hidden" name="order">
 									<div id="searchDiv">
 										<div style="float: left;">
 											<button class="btn btn-light" type="button"
@@ -581,19 +597,37 @@ td>span {
 							<div class="row mb-3">
 								<table class="table">
 									<colgroup>
-										<col style="width: 13%;" />
-										<col style="width: 13%;" />
-										<col style="width: 42%;" />
-										<col style="width: 16%;" />
-										<col style="width: 16%;" />
+										<col style="width: 6%;" />
+										<col style="width: 12%;" />
+										<col style="width: 31%;" />
+										<col style="width: 15%;" />
+										<col style="width: 14%;" />
+										<col style="width: 14%;" />
+										<col style="width: 8%;" />
 									</colgroup>
 									<thead>
 										<tr>
-											<th scope="col">예약 번호</th>
-											<th scope="col">장소 구분</th>
-											<th scope="col">예약 장소</th>
-											<th scope="col">예약 인원</th>
-											<th scope="col">예약일</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="spaceNumTh"> </i>번호
+											</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="spaceNameTh"> </i>공간 타입
+											</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="spaceNameTh"> </i>공간명
+											</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="userIdTh"> </i>신청인
+											</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="spaceRequestDateTh"> </i>요청일
+											</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="spaceRegDateTh"> </i>결정일
+											</th>
+											<th scope="col">
+												<i class="bi bi-chevron-bar-expand" id="spaceRequestStatusTh"> </i>상태
+											</th>
 										</tr>
 									</thead>
 									<tbody id="spaceConfirmHistoryListTbody">
@@ -603,28 +637,29 @@ td>span {
 								<div class="spaceConfirmHistoryListDivPage">
 									<!-- ajax로 페이징 -->
 								</div>
-								<form class="row gx-3 gy-2 align-items-center"
+								<form class="col align-items-center"
 									name="spaceConfirmHistoryListSearchFrm" onsubmit="return false">
 									<input type="hidden" name="currentPage" value="1">
-									<div style="float: left;">
-										<button class="btn btn-light" type="button"
-											id="excelDownloadBt">
-											<i class="bi bi-filetype-xlsx"></i> 엑셀 다운로드
-										</button>
-									</div>
-
-									<div class="row justify-content-end" id="searchDiv">
-
+									<input type="hidden" name="order" value="${param.order }">
+									<input type="hidden" name="status" value="Y">
+									<div id="searchDiv">
+										<div style="float: left;">
+											<button class="btn btn-light" type="button"
+												id="excelDownloadBt">
+												<i class="bi bi-filetype-xlsx"></i> 엑셀 다운로드
+											</button>
+										</div>
 										<div class="col-auto">
 											<button type="button" id="spaceConfirmHistoryListSearchBt"
 												class="btn btn-primary">검색</button>
 										</div>
-										<div class="col-4" id="keyword">
+
+										<div class="col-sm-3" id="keyword">
 											<label class="visually-hidden" for="searchKeyword">searchCondition</label>
 											<input type="text" class="form-control" id="searchKeyword"
 												name="searchKeyword" value="${searchVo.searchKeyword }">
 										</div>
-										<div class="col-4" id="select">
+										<div class="col-sm-3" id="select">
 											<select class="form-select" name="searchCondition"
 												id="searchCondition">
 												<option value="space_num"
@@ -647,6 +682,7 @@ td>span {
 								            	</c:if>>신청인</option>
 											</select>
 										</div>
+
 									</div>
 								</form>
 							</div>
