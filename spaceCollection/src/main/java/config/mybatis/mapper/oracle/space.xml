@@ -127,17 +127,19 @@
 		where space_Name like '%' || #{spaceName} || '%'	
 	</select>
 	
+	<select id="selectAllMap" resultType="spaceVo">
+		select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
+	</select>
+	
 	<select id="selectBySpaceNum"  resultType="spaceVo">
 		select * from space
 		where SPACE_REQUEST_STATUS = 'Y'
 		order by SPACE_REG_DATE desc 
 		FETCH FIRST 9 row only
 	</select>
-	
-	<select id="usercount" resultType="map" >
+	<select id="usercount" resultType="map">
 		SELECT * FROM user_counts_view
 	</select>
-	
 	<select id="selectSpaceListViewByUserId" resultType="map">
 		select * from
 		(

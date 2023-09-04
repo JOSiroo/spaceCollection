@@ -275,12 +275,13 @@ pageEncoding="UTF-8"%>
 						<div class = "nav-bar"></div>
 						<div class = 'row'>
 							<c:if test="${!empty sessionScope.userId}">
+							<c:if test="${sessionScope.userId != user_id}">
 							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
 							      <div class="modal-header" style=" background: #ffd014;">
 							        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">질문 작성하기</h1>
-							        <button type="button" class="btn-close" onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
+							        <button type="button" class="btn-close" id="closeBTN"onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
 							        <form>
@@ -302,6 +303,7 @@ pageEncoding="UTF-8"%>
 							    </div>
 							  </div>
 							</div>
+							</c:if>
 							</c:if>
 						</div>
 						<div class = "question-box">
@@ -364,6 +366,7 @@ pageEncoding="UTF-8"%>
 						<ul class = "accordionUl">
 						<c:if test="${!empty map }">
 							<c:forEach var="detail" items="${map }">
+							<c:set var="user_id" value="${detail.USER_ID}" />
 							  <li class = "accordionLi">
 							    <button class="button">
 							    <input type="hidden" value="${detail.SD_NUM }">
@@ -632,10 +635,16 @@ pageEncoding="UTF-8"%>
 
 	});
 		$('#QNAWrite').click(function(){
-			var userid = $('#userId').val();
-			if(userid.length === 0){
-				alert('질문 등록은 로그인 이후 가능합니다');
-				$('#modalQuit').trigger('click');
+			var userid = "";
+			var targetId = ""; 
+			targetId = '${user_id}';
+			userid = '${sessionScope.userId}';
+			if(userid.length === 0 || userid === targetId){
+				if(userid.length === 0){
+					alert('질문 등록은 로그인 이후 가능합니다');
+				}else{
+					alert('호스트는 질문을 작성 할 수 없습니다');
+				}
 			}
 		});	
 	

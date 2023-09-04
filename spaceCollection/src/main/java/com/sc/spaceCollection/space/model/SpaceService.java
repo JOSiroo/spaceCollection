@@ -26,6 +26,7 @@ public interface SpaceService {
 										int minPrice, int MaxPrice,
 										List<String> filterList,
 										String order);
+	List<SpaceVO> selectAllMap();
 	List<SpaceVO> selectBySpaceTypeMap(int spaceTypeNo);
 	List<SpaceVO> selectBySpaceNameMap(String spaceName);
 	List<SpaceVO> selectBySpaceNum();

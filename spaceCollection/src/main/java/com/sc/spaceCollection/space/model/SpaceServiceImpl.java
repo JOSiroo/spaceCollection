@@ -365,6 +365,10 @@ public class SpaceServiceImpl implements SpaceService{
 		}
 		
 		return list;
+
+	public List<SpaceVO> selectAllMap() {
+		return spaceDao.selectAllMap();
+
 	}
 
 

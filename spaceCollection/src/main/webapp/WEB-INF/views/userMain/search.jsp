@@ -578,6 +578,9 @@ p{
 	<c:if test="${!empty param.spaceName }">
 		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>"style="margin-left:3%; width:24%;">
 	</c:if>
+	<c:if test="${empty param.spaceName && empty param.spaceTypeNo }">
+		<a href="<c:url value = '/search/map'/>"style="margin-left:3%; width:24%;">
+	</c:if>
 	<button type="button" class="btn btn-outline-dark menu" style="border-radius: 3rem">지도</button></a>
 </div>
 </div>
