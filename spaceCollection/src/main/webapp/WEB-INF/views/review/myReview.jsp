@@ -243,7 +243,7 @@
 					</div>
 				</div>
 				<br>
-				<div style="margin-left: 82%;">
+				<div style="margin-left: 75%;">
 					<span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
 					<a href="<c:url value='/deleteReview?reviewNum=${reviewMap["REVIEW_NUM"] }&spaceNum=${reviewMap["SAPCE_NUM"]}  '/>">삭제</a>
 					<!-- <a href="#">수정</a> -->

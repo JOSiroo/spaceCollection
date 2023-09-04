@@ -33,12 +33,16 @@
 			(
 				select * from QNA_SN_VIEW
 				WHERE USER_ID=#{userId}
-				<if test="searchCondition=='Y'">
-					and QNA_ANSWER IS NOT NULL
+				AND QNA_OUT_DATE IS NULL
+				<if test="searchCondition!=null and searchCondition!=''">
+					<if test='searchCondition.equals("Y")'>
+						and QNA_ANSWER IS NOT NULL
+					</if>
+					<if test='searchCondition.equals("N")'>
+						and QNA_ANSWER IS NULL
+					</if>
 				</if>
-				<if test="searchCondition=='N'">
-					and QNA_ANSWER IS NULL
-				</if>
+				order by QNA_NUM desc
 			)A
 		)
 		<![CDATA[
@@ -49,14 +53,16 @@
 	
 	<select id="totalQnaByUserId" parameterType="searchVo" resultType="int">
 		select count(*) from QNA_SN_VIEW
-		<if test="searchCondition=='Y'">
-			and QNA_ANSWER IS NOT NULL
+		where USER_ID=#{userId}
+		AND QNA_OUT_DATE IS NULL
+		<if test="searchCondition!=null and searchCondition!=''">
+			<if test='searchCondition.equals("Y")'>
+				and QNA_ANSWER IS NOT NULL
+			</if>
+			<if test='searchCondition.equals("N")'>
+				and QNA_ANSWER IS NULL
+			</if>
 		</if>
-		<if test="searchCondition=='N'">
-			and QNA_ANSWER IS NULL
-		</if>
-		order by QNA_NUM desc
-		
 	</select>
 	
 	<update id="deleteQna" parameterType="int">
