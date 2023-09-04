@@ -165,7 +165,6 @@
 		
 		$("#condition").change(function(){
 			var condition = $('#condition').val();
-			alert(condition);
 			$('input[name=searchCondition]').val(condition);
 			$('form[name=frmPage]').submit();
 		});
@@ -189,8 +188,6 @@
 	});//window.document
 	function qnaList(curPage){
 		var condition = $('#condition').val();
-		alert(curPage);
-		alert(condition);
 		$('input[name=currentPage]').val(curPage);
 		$('input[name=searchCondition]').val(condition);
 		$('form[name=frmPage]').submit();
@@ -198,8 +195,8 @@
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" action="<c:url value='/myQnA'/>">
-	<input type="text" name="searchCondition" value="">
-	<input type="text" name="currentPage" value="1">	
+	<input type="hidden" name="searchCondition" value="">
+	<input type="hidden" name="currentPage" value="1">	
 </form>
 <!-- 페이징 처리 form 끝 -->
 <div class="wrap">
