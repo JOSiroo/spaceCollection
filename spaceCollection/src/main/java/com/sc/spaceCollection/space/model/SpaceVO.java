@@ -23,4 +23,7 @@ public class SpaceVO {
 	private String delFlag;
 	private int refundNum;
 	private int userNum;
+	
+	//확인용
+	private String userId;
 }
