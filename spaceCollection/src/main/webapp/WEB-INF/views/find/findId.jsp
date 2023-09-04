@@ -26,102 +26,14 @@
 </head>
 <body>
 	<script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodystart.js" charset="euc-kr"></script>
-<!-- 	<script type="text/javascript">	
-		$(function () {
-
-						// 팝업 사이즈 재조정
-			if (window.innerWidth < 600) {
-				window.resizeTo(630, 701);
-			}
-		
-
-			$("html").css("overflow", "hidden");			// 스크롤바 hidden 처리
-			$("[finda2sopt]").click(function (event) {		// a2s log
-				MemberA2S.Click("MEMBERS_FIND_ID", $(this).attr("finda2sopt"));
-			});
-		});
-	</script>
-    <form method="post" action="./findid.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="m_form">
-<div class="aspNetHidden">
-<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
-<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
-<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="ItEwsBUJoCYs9H6JTwHuyTs6cSwqPYt8hMQrErpWZCWlFiZxTl3qfoCZk0F2kwasD9wofDqAl8GT8L5apa4W6Ey/NRRCbR9g8SsNY/DI/Ov+heQn4/1Nhsw0+zanHW4dIB2pJj+TBsu7ry7U7KquHTVaWMBZFIaNjDjxUpJKzUASzGXs5nSfqAoz3Y3WLJL8iSnkNxJdyZKRDI0a6KyBfMB2ZvwaznEi5ocitPR6FK/cUuQ2XOoCllA+WCbyS6NpV4MR1w==" />
-</div> -->
 <script type="text/javascript">
 	$(function(){
-		
 		$("#ucSelectAuthMethod_btnConfirmOwnEmail").click(function(){
-			window.open("${pageContext.request.contextPath}/email/emailCheck"
+			window.open("${pageContext.request.contextPath}/email/emailCheck?type=findId"
 					,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
 		});
-		
-		
 	});
-//<![CDATA[
-var theForm = document.forms['m_form'];
-if (!theForm) {
-    theForm = document.m_form;
-}
-function __doPostBack(eventTarget, eventArgument) {
-    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-        theForm.__EVENTTARGET.value = eventTarget;
-        theForm.__EVENTARGUMENT.value = eventArgument;
-        theForm.submit();
-    }
-}
-//]]>
-	
 </script>
-
-
-<!-- <script type="text/javascript">
-//<![CDATA[
-function WebForm_OnSubmit() {
-
-                $(':hidden.pwdplain').each(function(){ $(this).val( $( $('#' + $(this).attr('id').replace( '_pass', '' ))[ 0 ] ).val() ); });
-                $(':hidden.pwdhash').each(function(){ $(this).val( NgbSecurity.HashString( $( $('#' + $(this).attr('id').replace( '_pass', '' ))[ 0 ] ).val() ) ); });
-				$(':password').each( function() { $(this).val( '' ); } );
-			
-return true;
-}
-//]]>
-</script> -->
-
-<div class="aspNetHidden">
-
-	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="5006EFBC" />
-</div>
-		<!-- width:610px;height:620px; -->
-		<!-- 실제 컨텐츠 영역 -->
-		
-
-<!-- <script type="text/javascript">
-	$(function () {
-		$("#ucSelectAuthMethod_btnConfirmMobilePhone").addPostbackHandler({
-			handler: function () {
-				PopupWindow({ height: 550, width: 425, centerBrowser: 1, windowName: 'pop_mobilephone', windowURL: '/auth/owner_start.aspx?method=1&certifyReq=RvlIbnWIeYZyMnzaFFX2sfY_GYoUdfhtQhzxqWEMA6G2zyOa57LjdnQaP3ckxsK_z36DgXuE_XgwJiL9lxmJKXU~1DJz7_BcfDBFrrZaqKA~~T6TmnlYvPS23kTOV37wiop_KuPQM1MLcflwCigUffpw_JdssbEZNdoamVpkAjh2mmFbRC6KlT_8FYPktVJGUfy' });
-			}
-		});
-
-		$("#ucSelectAuthMethod_btnConfirmCard").addPostbackHandler({
-			handler: function () {
-				PopupWindow({ height: 500, width: 500, centerBrowser: 1, windowName: 'pop_mobilephone', windowURL: '/auth/card_start.aspx?certifyReq=sf1re4pbXip6DQsDbWp5fd70L8KTVMCJTxIVBOGMy7IG1DaxWVexzIJGLPyJfr2TbYVRfJtkD7vEaKW3Ju8Q1Jb_EwRdeRAtEqhWYhUJIficjLxEtqrdPsGpDIZKYzx207mQp1nrWqDfnZyADnPhtbEDMjw~3PcPVAEFbj1gXTiH7uEA' });
-			}
-		});
-	});
-
-	var Confirm_MobilePhone = function (response, data) {
-		$('#Certification_hResponse_data').val(data);
-		$('#Certification_hResponse').val(response);
-		__doPostBack("ucSelectAuthMethod$btnConfirmMobilePhone", "");
-	};
-
-	var Confirm_Card = function (response, data) {
-		$('#Certification_hResponse_data').val(data);
-		$('#Certification_hResponse').val(response);
-		__doPostBack("ucSelectAuthMethod$btnConfirmCard", "");
-	};
-</script> -->
 <div class="popupFind2">
 	<ul class="find2Tab">
 		<li class="id"><a class="on">스페이스 컬렉션ID찾기</a></li>
@@ -131,7 +43,7 @@ return true;
 	<div class="contents">
 		<p class="stit">스페이스 컬렉션ID 찾기를 위한 본인확인 방법을 선택해주세요.</p>
 		<ul class="authNType">
-			<li><a href="<c:url value='/email/emailCheck'/>" id="ucSelectAuthMethod_btnConfirmOwnEmail" name="ucSelectAuthMethod$btnConfirmOwnEmail" memberbutton="true" class="auth4" finda2sopt="UEmail">
+			<li><a href="#" id="ucSelectAuthMethod_btnConfirmOwnEmail" name="ucSelectAuthMethod$btnConfirmOwnEmail" memberbutton="true" class="auth4" finda2sopt="UEmail">
 					<span class="txt1">이메일 인증</span>
 					<span class="txt2">등록된 이메일로 인증</span>
 					<span class="txt3">인증하기</span>
@@ -150,41 +62,6 @@ return true;
 <input type="hidden" id="Certification_hResponse" name="Certification_hResponse" value="" />
 <input type="hidden" id="Certification_hResponse_data" name="Certification_hResponse_data" value="" />
 
-<script type="text/javascript">MemberA2S.Contents("MEMBERS_FIND_ID", "TryFindId");	//A001 </script>
-				<script type='text/javascript'>
-					$('[memberbutton=true]').click(
-						function(event)
-						{
-							if( $(this).data('validatorCol') != null )
-							{
-								for( var i = 0; i < $(this).data('validatorCol').length; i++ )
-								{
-									var retMsg = $(this).data('validatorCol')[ i ].validator();
-									if( retMsg != null )
-									{
-										alert( retMsg );
-										if( $(this).data('validatorCol')[ i ].id != null )
-											$('#' + $(this).data('validatorCol')[ i ].id).focus();
-										return false;
-									}
-								}
-							}
-							
-							if( $(this).data('postbackHandler') != null )
-								$(this).data('postbackHandler').handler();
-							else
-							{
-								if( $(this).attr('iscrosspostback') == 'true' )
-									location.href = $('#' + $(this).attr('id') + '_crosspostback').attr('href');
-								else
-									__doPostBack( $(this).attr('name'), '' );
-							}
-						
-							return false;
-						}
-					);
-				</script>
-			</form>
-	<script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodyend.js" charset="euc-kr"></script>
+<script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodyend.js" charset="euc-kr"></script>
 </body>
 </html>

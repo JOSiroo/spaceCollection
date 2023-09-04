@@ -11,48 +11,82 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <style>
+  	body{
+  		margin: 20px;
+  	}
+  
     #mailCheckBody { 
       min-height: 100vh;
-
-      background: -webkit-gradient(linear, left bottom, right top, from(#F6F6F6), to(#F6F6F6));
-      background: -webkit-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
-      background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
-      background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
-      background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
+      background:white;
       width: 500px;
-      margin: 0 auto;
       
     }
 
     .input-form {
-      max-width: 680px;
+    	background: #f6f6f7;
 
-      margin-top: 80px;
-      padding: 32px;
-
-      background: #fff;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+    
+    #checkEmail, #checkCode{
+    	background: #6e81df;
+    	border-radius: 0px;
     }
     
     #timer{
     	color: #e4271a;
     }
+    
+    .find2Tab{
+    	height: 50px;
+    	border-bottom: 1px solid #bfbfbf;
+    	list-style-type: none;
+    	margin: 0;
+   		padding: 0;
+    }
+    
+    .tab{
+    	width: 230px;
+    	height:50px;
+    	border: 1px solid #bfbfbf;
+    	border-bottom: 2px solid white;
+    	padding-top: 10px;
+    	padding-bottom: 10px;
+    	color: #6e81e5;
+    	font-size: 15px;
+    	text-align: center;
+    }
+    
+    .title{
+    	font-size: 15px;
+    	margin-left: 5px;
+    	margin-top: 25px;
+    }
+    
+    .validation-form{
+    	padding: 10px;
+    }
+    .noticeSec ul li {
+    	list-style-type: none;
+	    padding: 0 0 6px 7px;
+	    font-size: 11px;
+	    color: #afafaf;
+	    background: url(https://ssl.nexon.com/S2/membership/2011/icon/bul_arr_gr.gif) no-repeat left 3px;
+	    line-height: 1.4;
+	    margin-left: -30px;
+	}
   </style>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 	$(function(){
 		
+		$("#checkEmail").focus();
+		
 		$("#checkEmail").click(function(){
 			if($("#userEmail").val().length<1){
 				alert("이메일을 입력해주세요!");
+				$("#checkEmail").focus();
 				return false;
 			}
-			
 			$("form[name=frmEmail]").submit();
 		});	
 		
@@ -70,7 +104,8 @@
 				if(type==="findId"){
 					link = "<c:url value='/guest/completeFindId?userEmail=${acEamil }'/>";
 				}else if(type==="findPwd"){
-					
+					alert("이메일 인증 성공!<br> 해당 이메일로 임시 비밀번호가 발송 되었습니다.");
+					self.close();
 				}else if(type==="register"){
 					alert("이메일 인증이 완료되었습니다!");
 					opener.$("#userEmail").val(userEmail);
@@ -78,7 +113,6 @@
 					opener.$("#chkEmail").val("Y");
 					self.close();
 				}
-				
 				location.href = link;
 			}else{
 				alert("인증번호가 일치하지 않습니다.");
@@ -118,10 +152,13 @@
 </script>
 </head>
 <body id="mailCheckBody">
+<ul class="find2Tab">
+		<li class="tab"><a class="on">스페이스 컬렉션 이메일인증</a></li>
+</ul>
+<p class="title">이메일 인증을 위한 이메일을 입력해주세요.</p>
   <div class="container">
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
-        <h4 class="mb-3">이메일 인증</h4>
         <form name="frmEmail" class="validation-form" method="post" action="<c:url value='/email/sendEmail'/>" novalidate>
         <input type="hidden" name="type" value="${param.type }">
         <div class="row">
@@ -161,6 +198,13 @@
       </div>
     </div>
   </div>
+ <footer>
+  <div class="noticeSec">
+  	<ul>
+		<li>본인확인된 계정만 스페이스 컬렉션ID찾기가 가능합니다.</li>
+	</ul>
+  </div>
+ </footer>
   <script>
     window.addEventListener('load', () => {
       const forms = document.getElementsByClassName('validation-form');

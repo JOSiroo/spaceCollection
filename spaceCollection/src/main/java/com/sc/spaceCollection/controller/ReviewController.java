@@ -41,7 +41,7 @@ public class ReviewController {
 									@RequestParam String userId,@RequestParam(defaultValue = "0") int result,
 									Model model) {
 		logger.info("리뷰작성페이지, 파라미터 spaceNum = {}, userId = {}, reservationNum = {}, result = {}",
-										spaceNum,		userId,		reservationNum,			result);
+				spaceNum,userId,reservationNum,result);
 		Map<String,Object> reservationMap = reservationService.reservationReview(reservationNum);
 		logger.info("리뷰, 에약정보 조회, reservationMap = {}", reservationMap);
 		
@@ -82,25 +82,16 @@ public class ReviewController {
 	@RequestMapping("/myReview")
 	@Transactional
 	public String myReview(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(name="searchKeyword")String searchKeyword, @RequestParam(name="searchCondition") String searchCondition
-			,HttpSession session,Model model ) {
+			@RequestParam(name="searchKeyword", defaultValue ="")String searchKeyword,HttpSession session,Model model ) {
 		String userId = (String)session.getAttribute("userId");
-		logger.info("나의 리뷰 페이지, 파라미터 userId={},page={}",userId,page);
+		logger.info("나의 리뷰 페이지, 파라미터 userId={},page={},searchKeyword={}",userId,page,searchKeyword);
 		
-		int size=5;
-		SearchVO searchVo = new SearchVO();
-		searchVo.setBlockSize(ConstUtil.REVIEW_RECORD_COUNT);
-		searchVo.setUserId(userId);
-		searchVo.setCurrentPage(page);
-		searchVo.setSearchCondition(searchCondition); //답변상태
-		searchVo.setSearchKeyword(searchKeyword); // 검색기능
-		
-		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId, size, page);
+		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId, ConstUtil.REVIEW_RECORD_COUNT, page, searchKeyword);
 		int total=reviewService.getTotalRecordByUserId(userId);
 		
 		logger.info("나의 리뷰 불러오기 결과, map.size={}",reviewMap.size());
-		
-		model.addAttribute("reviewMap",reviewMap);
+		logger.info("총 리뷰 레코드 갯수={}",total);
+		model.addAttribute("reviewMap",reviewMap);	
 		model.addAttribute("total",total);
 		return "review/myReview";
 	}

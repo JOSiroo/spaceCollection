@@ -111,4 +111,9 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.updateNaverUser(guestVo);
 	}
 
+	@Override
+	public int countByUserIdUserEmail(String userId, String userEmail) {
+		return guestDao.countByUserIdUserEmail(userId, userEmail);
+	}
+
 }
