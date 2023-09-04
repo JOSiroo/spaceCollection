@@ -138,10 +138,11 @@
 	.divBox2 {
 	border-top: 2.5px solid #656565;
     border-bottom: 2.5px solid #656565;
-    margin-top: 40px;
-    width: 90%;
-    margin-left: 60px;
     background-color: #656565;
+	}
+    .divBox2 {
+    width: 1000px;
+    margin-left: 256px;
 	}
 	span#span1 {
     font-weight: bold;
@@ -158,67 +159,73 @@
 </style>
 
 <script type="text/javascript">
-/* $(function() {
-	$('#searchBt').click(function() {
-		if($('#searchKeyword').val().length<1){
-			event.preventDefault();
-			$('#confirm1 .modal-body').html("검색어를 입력해주세요.");
-			$('#confirm1').modal("show");
-		}
-	});
-	
-});	 */
 
-function search(target){
-	  // elementary, middle, high
-	    var schoolType = $('input[name="schoolType"]:checked').val(); 
-
-	    $.ajax({
-	        type: 'GET',
-	        dataType: 'JSON',
-	        url: `asset/${schoolType}_school.json`, 
-	        error: function(err){
-	            console.log(err);
-	        },
-	        success: function(data){
-	            var checkWord = $("#schoolInput").val();
-	            var schoolList = $("#schoolList");
-	            console.log(checkWord);
-
-	            schoolList.empty();
-	            data.forEach((school)=>{
-	                if(school['name'].includes(checkWord)){
-	                    schoolList.append(`<span style="cursor: pointer;" onclick="select(this);"> ${school['name']} </span> <br/>`);                
-	                }
-	            })
-	        }
-	    })
-	}  
-	
-function select(target){
-    const selected = document.getElementById("selected");
-    selected.innerText = target.innerText;
+function search() {
+    	var searchKeyword = document.getElementById('searchKeyword').value;
+        var currentUrl = window.location.href.split('?')[0];
+        var params = new URLSearchParams(window.location.search);
+        params.set("searchKeyword", searchKeyword);
+        window.location.href = currentUrl + '?' + params.toString();
 }
+
+/* function makeList(data) {
+	$.each(data, function(index) {
+		var str = "<div class='accordion accordion-flush' id='accordionFlushExample' var='list' items='list'>"
+			+ "<div class='accordion-item'>"
+			+ "<h2 class='accordion-header'>"
+			+ "<input type='text' name='boardNum' value="+this.BOARD_NUM+"/>"
+			+ "<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' "
+			+ "data-bs-target='#flush-collapse" + index + "' aria-expanded='false' "
+			+ "aria-controls='flush-collapse" + index + "'"
+			+ "style='background-color: " + (index % 2 == 0 ? '#eef1f3' : 'white') + ";'>"
+			+ "<span id='span1'>[ 공지사항 ]</span><span id='span2'>" + this.BOARD_TITLE + "</span></button></h2>"
+			+ "<div id='flush-collapse" + index + "' class='accordion-collapse collapse' data-bs-parent='#accordionFlushExample'>"
+			+ "<button type='button' class='btbt' id='delBt' >삭제</button>"
+			+ "<div class='accordion-body'>" + this.BOARD_CONTENT + "</div>"
+			+ "</div>"
+			+ "</div>"
+			+ "</div>";
+		$('.noticeLoad').append(str);
+	}); // each
+}// makeList
+
+var boardNum = ${param.boardNum};
+$.loadComment(boardNum);
+
+$.loadComment=function(boardNum) {
+$.ajax({
+	url : '<c:url value="/user/board/notice/noticeLoad?boardNum='+boardNum+'&page='+page+'"/>',
+	type: 'get',
+	success:function(data){
+		var str = "";
+		if(data!=null && data.length>0){
+			console.log(data);
+			makeList(data);
+			page++
+		}else{
+			str = "<span>등록된 공지사항이 없습니다.</span>";
+			$('.noticeLoad').append(str);
+		}
+	},
+	error:function(xhr, status, error){
+		alert(status + " : " + error);
+	}
+});//ajax
+}//loadComment */
+
 </script>
 
-<!-- /** 검색키워드 */ searchVO
-	private String searchKeyword = ""; -->
 	
-
-
 <section>
 
-<form class="row gx-3 gy-2 align-items-center" id="boardFrm" method="post" 
-	action="<c:url value='/user/notice'/>">
 	<div class="reservation-header">
 		<div class="search-box">
 			<label style="font-size: 18px; font-weight: bold"> 공지 사항 검색</label>
 				<input type="text" id = "searchKeyword" name = "searchKeyword" placeholder="검색어를 입력하세요." 
 				<c:if  test="${!empty param.keyword}"> value="${param.keyword}"</c:if>> 
-			<button class="searchBt" id="searchBt" onclick="searchFunction();">검색</button>
+			<button class="searchBt" id="searchBt" onclick="search()">검색</button>
 		</div>
-		
-
+	</div>
 	
 <div class="divBox2">
 <c:forEach var="item" items="${list}" varStatus="loop">
@@ -229,12 +236,12 @@ function select(target){
                         data-bs-target="#flush-collapse${loop.index}" aria-expanded="false"
                         aria-controls="flush-collapse${loop.index}"
                         style="background-color: ${loop.index % 2 == 0 ? '#eef1f3' : 'white'};">
-                    <span id="span1">[ 공지사항 ]</span><span id="span2">${item.boardTitle}</span>
+                    <span id="span1">[ 공지사항 ]</span><span id="span2">${item.BOARD_TITLE}</span>
                 </button>
             </h2>
             <div id="flush-collapse${loop.index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
-                    ${item.boardContent}
+                    ${item.BOARD_CONTENT}
                 </div>
             </div>
         </div>
@@ -242,25 +249,22 @@ function select(target){
 </c:forEach>
 </div>
 
-</form>
-		  
 		<div class="pageBox">
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination">
 			    <li class="page-item">
-			      <a class="page-link" id="previous" href="<c:url value='/host/reservation?page=${param.page-1}'/>" aria-label="Previous">
+			      <a class="page-link" id="previous" href="<c:url value='/userMain/board/notice?page=${param.page-1}'/>" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
 			    <li class="page-item">
-			      <a class="page-link" id="next" href="<c:url value='/host/reservation?page=${param.page+1}'/>" aria-label="Next">
+			      <a class="page-link" id="next" href="<c:url value='/userMain/board/notice?page=${param.page+1}'/>" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
 			  </ul>
 			</nav>
 		</div>
-	</div>
 </section> 
 
 

@@ -30,7 +30,7 @@
 						<ul class="list-unstyled float-start links">
 							<li><a href="<c:url value='/user/faq'/>">FAQ</a></li>
 							<li><a href="<c:url value='/service'/>">서비스 이용 약관</a></li>
-							<li><a href="<c:url value='/Certificate'/>">사업자등록 정보</a></li>
+							<li><a href="<c:url value='/Certificate2'/>">사업자등록 정보</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-4 -->

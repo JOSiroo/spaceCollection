@@ -22,6 +22,6 @@ public interface BoardDAO {
 	List<BoardVO> selectNoticeBoard();
 	List<Map<String, Object>> selectNotice(@Param("startRow") int startRow, @Param("endRow") int endRow,
 											@Param("boardTitle") String boardTitle,
-											@Param("boardContent")String boardContent,@Param("keyword")String keyword);
+											@Param("boardContent")String boardContent,@Param("searchKeyword")String searchKeyword);
 	
 }

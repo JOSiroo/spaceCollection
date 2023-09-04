@@ -18,6 +18,8 @@
 		      (
 		         select * from COMMENTS
 		         where BOARD_NUM = #{boardNum}
+		         and COMMENT_DEL_FLAG is null 
+				order by COMMENT_REG_DATE desc
 		      )A   
 		   )
 			<![CDATA[
