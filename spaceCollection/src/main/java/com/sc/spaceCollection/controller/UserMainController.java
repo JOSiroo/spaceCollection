@@ -77,7 +77,7 @@ public class UserMainController {
    public String coupon2(HttpSession session, Model model) {
 	   String userId = (String)session.getAttribute("userId");
 		if(userId == null || userId.isEmpty()) {
-			model.addAttribute("msg", "먼저 로그인을 해주세요");
+			model.addAttribute("msg", "로그인 후 이용 가능합니다.");
 			model.addAttribute("url", "/");
 			
 			return "common/message";
