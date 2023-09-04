@@ -61,7 +61,8 @@ public class QnaServiceImpl implements QnaService {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		return cnt;
-
+	}
+	
 	public int getTotalRecordBySpaceNum(int spaceNum) {
 		return qnaDao.getTotalRecordBySpaceNum(spaceNum);
 	}
