@@ -38,11 +38,12 @@ pageEncoding="UTF-8"%>
   .modal-content{
   	margin-top: 50% !important;
   }
-  .qnaHead{
-  	font-size:20px;
+  .QnAHead{
+ 	font-size:20px;
   	font-weight: bold;
   	margin-right:78.7%;
   	margin-bottom:15px;
+    display: -webkit-inline-box;
   }
   .qnaBody{
   	font-size:16px;
@@ -65,7 +66,12 @@ pageEncoding="UTF-8"%>
 		padding:0% 0% 4% 0%;
 		margin:0% -5% 0% 0%;
 	}
-	
+	.reviewContent{
+		animation: fadeInDown 1s;
+	}
+	.qnaContent{
+		animation: fadeInDown 1s;
+	}
 	
   .date-deleteCol{
   	padding-right:18%;
@@ -259,13 +265,15 @@ pageEncoding="UTF-8"%>
 					<!-- 지도 -->
 					
 					<div class = "detail-navTab">
-						<h5 style="display: inline-block;color:#193D76; font-weight: bold;">Q&A&nbsp;${fn:length(qnaList)} </h5>
-						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
-						<div class = "nav-bar"></div>
-						<div class = 'row'>
+						<h5 style="display: inline-block;color:#193D76; font-weight: bold;">Q&A&nbsp; </h5>
 							<button type="button" class="btn btn-primary" id = "QNAWrite" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 								질문 등록하기
 							</button>
+						<span id="totalQnA" style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">
+							:  ${totalQnA}개
+						</span>
+						<div class = "nav-bar"></div>
+						<div class = 'row'>
 							<c:if test="${!empty sessionScope.userId}">
 							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog">
@@ -297,43 +305,30 @@ pageEncoding="UTF-8"%>
 							</c:if>
 						</div>
 						<div class = "question-box">
-						<c:if test="${empty qnaList }">
-							<h4>등록된 질문이 없습니다.</h4>
-						</c:if>
-						<c:if test="${!empty qnaList }">
-							<c:forEach var="qna" items="${qnaList }">
-								<div>
-									<div class="qnaHead" style="color:black; font-weight: bold"><span>${qna.USER_ID}</span></div>
-									<div class="qnaBody">${qna.QNA_CONTENT}</div>
-									<div style="font-size:14px;color:lightgrey;">
-									<div class="row" style="font-size:14px;">
-										<div class="col-6 date-deleteCol qna">
-											<span>${qna.QNA_REG_DATE}</span>
-										</div>
-										<c:if test="${sessionScope.userId == qna.USER_ID}">
-											<div class="col-6 delete-dateCol">
-												<a href="#"style="font-size:14px;" onclick="deleteQna(${qna.QNA_NUM})">삭제하기</a>
-											</div>
-										</c:if>
-									</div>
-									</div>
-								</div>
-								<hr>
-							</c:forEach>
-						</c:if>
+						
+						
+						</div>
+						<div class="pageArea" style="padding:2% 36.5% 4% 27.5%!important">
+						<input type="hidden" id="QnAPage" value="99999">
+							<nav aria-label="Page navigation example">
+							  <ul class="pagination" id = "QnAPagination">
+							   
+							   
+							  </ul>
+							</nav>
 						</div>
 					</div>
 					
 					<div class = "detail-navTab">
-						<h5 style="display: inline-block;color:#193D76; font-weight: bold;">이용 후기&nbsp;${fn:length(reviewList)} </h5>
-						<span style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
+						<h5 style="display: inline-block;color:#193D76; font-weight: bold;">이용 후기&nbsp;${totalReview.COUNT} </h5>
+						<span id="totalReview" style="display: inline-block; font-weight:bold; font-size:17px;color:#193D76">개</span>
 						<h5 style="display: inline-block;color:#193D76; font-weight: bold;margin-left: 2%;">평균 평점 : &nbsp;${avgReview}</h5>
 						<div class = "nav-bar"></div>
 						<div class = "review-box">
 						
 						</div>
 						<div class="pageArea">
-						<input type="hidden" id="reviewPage">
+						<input type="hidden" id="reviewPage" value="99999">
 							<nav aria-label="Page navigation example">
 							  <ul class="pagination" id = "reviewPagination">
 							   
@@ -358,7 +353,7 @@ pageEncoding="UTF-8"%>
 							<img alt="" src="<c:url value = '/img/icons/report.png'/>" width="41">
 						</div></a>
 						
-						<a href = ""><div style = "display : inline-block; float : right; margin-right : 4.5%;padding-top:3px;" >
+						<a href = "#" onclick="clip()"><div style = "display : inline-block; float : right; margin-right : 4.5%;padding-top:3px;" >
 							<img alt="" src="<c:url value = '/img/icons/link.png'/>" width="37">
 						</div></a>
 					</div>			
@@ -692,6 +687,20 @@ pageEncoding="UTF-8"%>
 			 location.reload();
 		 }
 	
+	function clip(){
+
+		var url = '';
+		var textarea = document.createElement("textarea");
+		document.body.appendChild(textarea);
+		url = window.document.location.href;
+		textarea.value = url;
+		textarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textarea);
+		alert("URL이 복사되었습니다.")
+	}
+		
+		
 	function resetQna(){
 		document.getElementById('message-text').value="";
 	}
@@ -835,18 +844,6 @@ pageEncoding="UTF-8"%>
         var milliseconds = today.getMilliseconds();
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
-        function deleteQna(qnaNum){
-			if(confirm('QnA를 삭제하시겠습니까?')){
-				location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>"
-						
-			}
-        }
-        
-		function deleteReview(reviewNum){
-			if(confirm('리뷰를 삭제하시겠습니까?')){
-				location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
-			}
-	       }
         
         function requestPay() {
             console.log(paymentType);
@@ -979,11 +976,25 @@ pageEncoding="UTF-8"%>
 		}
 	});
     
+  
+    
+	function deleteReview(reviewNum){
+		if(confirm('리뷰를 삭제하시겠습니까?')){
+			location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
+		}
+       }
+	
+	  function deleteQna(qnaNum){
+		if(confirm('QnA를 삭제하시겠습니까?')){
+			location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>";
+		}
+    }
+	  
     callReview(1);
-    $('#reviewPage').val(99999);
     function callReview(reviewPage){
+    
     	
-    	if(reviewPage >= 5){
+    	if(reviewPage >= parseInt($('#reviewPage').val())+1){
     		alert('마지막 페이지 입니다');
     		event.PreventDefault();
     		return false;
@@ -992,73 +1003,152 @@ pageEncoding="UTF-8"%>
     		event.PreventDefault();
     		return false;
     	}
-    	
 	    $.ajax({
 	    	url:"<c:url value='/callReview?spaceNum=${param.spaceNum}&page="+reviewPage+"'/>",
 	    	success:function(reviewList){
 	    		var htmlStr = "";
 				var resultStr = "";	    
 				var cnt = 1;
-	    		$.each(reviewList, function(item){
-	    			console.log(this);
-	    			var starCount = 1
-					htmlStr = 	'<div>'
-								+'<div class="reviewHead" style="color:black; font-weight: bold">'
-								+'<span>'+this.USER_ID+'</span>'
-								+'<div style="margin-left: 20%; padding-bottom: 1%">';
-	    			for(var i = 0; i <= (this.REVIEW_RATE / 2)-1; i++){
-						htmlStr += '<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">';
-						starCount++;
-					}
-					if(this.REVIEW_RATE % 2 != 0){
-						htmlStr += '<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">';
-						
-					}
-					for(var j = starCount; j <= 4; j++){
-						htmlStr += '<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">';						
-					}
-						htmlStr	+='</div>'
-								+'</div>'
-								+'<div class="qnaBody">'+this.REVIEW_CONTENT+'</div>'
-								+'<div class="row" style="font-size:14px;">'
-								+'<div class="col-6 date-deleteCol">'
-								+'<span>'+(this.REVIEW_REG_DATE).substring(0,10)+'</span>'
-								+'</div>';
-					if('${sessionScope.userId}' === this.USER_ID){
-						htmlStr +='<div class="col-6 delete-dateCol">'
-								+'<a href="#" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
-								+'</div>';
-					}
-						htmlStr +='</div>'
-								+'</div>'
-								+'<hr>';
-					resultStr += htmlStr;
-	    		});
-    			$(".review-box").html(resultStr);
-	    		
-    			$.ajax({
-    				url:"<c:url value='/reviewPage?spaceNum=${param.spaceNum}&page="+reviewPage+"'/>",
-    				success:function(page){
-    					$('#reviewPage').val(page.reviewBlockPages);
-    					var pageStr = '<li class="page-item"><a class="page-link" id="prevBt" href="javascript:void(0)" onclick="callReview('+(page.currentPage-1)+')"><</a></li>';
-    					for (var i = 1; i <= page.reviewBlockPages; i++) {
-    					    if (i === page.currentPage) {
-    					        pageStr += '<li class="page-item active">' +
-    					            '<a class="page-link">' + i + '</a>' +
-    					            '</li>';
-    					    } else {
-    					        pageStr += '<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callReview('+i+')">' + i + '</a></li>';
-    					    }
-    					}
-    					pageStr += '<li class="page-item">' 
-    					    +'<a class="page-link" id="nextBt" href="javascript:void(0)" onclick="callReview('+(page.currentPage+1)+')">></a>' 
-    					    +'</li>';
-    					$('#reviewPagination').html(pageStr);
-    				}
-    			});
+				if(reviewList.length !== 0){
+		    		$.each(reviewList, function(item){
+		    			console.log(this);
+		    			var starCount = 1
+						htmlStr = 	'<div class="reviewContent">'
+									+'<div class="reviewHead" style="color:black; font-weight: bold">'
+									+'<span>'+this.USER_ID+'</span>'
+									+'<div style="margin-left: 20%; padding-bottom: 1%">';
+		    			for(var i = 0; i <= (this.REVIEW_RATE / 2)-1; i++){
+							htmlStr += '<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">';
+							starCount++;
+						}
+						if(this.REVIEW_RATE % 2 != 0){
+							htmlStr += '<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">';
+							
+						}
+						for(var j = starCount; j <= 4; j++){
+							htmlStr += '<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">';						
+						}
+							htmlStr	+='</div>'
+									+'</div>'
+									+'<div class="qnaBody">'+this.REVIEW_CONTENT+'</div>'
+									+'<div class="row" style="font-size:14px;">'
+									+'<div class="col-6 date-deleteCol">'
+									+'<span>'+(this.REVIEW_REG_DATE).substring(0,10)+'</span>'
+									+'</div>';
+						if('${sessionScope.userId}' === this.USER_ID){
+							htmlStr +='<div class="col-6 delete-dateCol">'
+									+'<a href="#" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
+									+'</div>';
+						}
+							htmlStr +='</div>'
+									+'</div>'
+									+'<hr>';
+						resultStr += htmlStr;
+		    		});
+	    			$(".review-box").html(resultStr);
+		    		
+	    			$.ajax({
+	    				url:"<c:url value='/reviewPage?spaceNum=${param.spaceNum}&page="+reviewPage+"'/>",
+	    				success:function(page){
+	    					$('#reviewPage').val(page.reviewBlockPages);
+	    					var pageStr = '<li class="page-item"><a class="page-link reviewPage" id="prevBt" href="javascript:void(0)" onclick="callReview('+(page.currentPage-1)+')"><</a></li>';
+	    					for (var i = 1; i <= page.reviewBlockPages; i++) {
+	    					    if (i === page.currentPage) {
+	    					        pageStr += '<li class="page-item active">' +
+	    					            '<a class="page-link">' + i + '</a>' +
+	    					            '</li>';
+	    					    } else {
+	    					        pageStr += '<li class="page-item"><a class="page-link reviewPage" href="javascript:void(0)" onclick="callReview('+i+')">' + i + '</a></li>';
+	    					    }
+	    					}
+	    					pageStr += '<li class="page-item">' 
+	    					    +'<a class="page-link reviewPage" id="nextBt" href="javascript:void(0)" onclick="callReview('+(page.currentPage+1)+')">></a>' 
+	    					    +'</li>';
+	    					$('#reviewPagination').html(pageStr);
+	    				}
+	    			});
+				}else{
+					var resultStr = "<h4 style='font-weight:bold;'>등록된 이용 후기가 없습니다</h4>";
+					$(".review-box").html(resultStr);
+				}
 	    	}
 	    });
     }
+    
+   	callQnA(1);
+    function callQnA(QnAPage){
+    	
+    	if(QnAPage >= parseInt($('#QnAPage').val())+1){
+    		alert('마지막 페이지 입니다');
+    		event.PreventDefault();
+    		return false;
+    	}else if(QnAPage == 0){
+    		alert('첫번째 페이지 입니다');
+    		event.PreventDefault();
+    		return false;
+    	}
+	    $.ajax({
+	    	url:"<c:url value='/callQnA?spaceNum=${param.spaceNum}&page="+QnAPage+"'/>",
+	    	success:function(QnAList){
+	    		var htmlStr = "";
+				var resultStr = "";	    
+				var cnt = 1;
+				if(QnAList.length !== 0){
+		    		$.each(QnAList, function(item){
+		    			var starCount = 1
+						htmlStr = '<div class="qnaContent">'
+								+'<div class="QnAHead" style="color:black; font-weight: bold">'
+								+'<span>'+this.USER_ID+'</span>'
+						htmlStr	+='</div>'
+								+'<div class="qnaBody">'+this.QNA_CONTENT+'</div>'
+								+'<div class="row" style="font-size:14px;">'
+								+'<div class="col-6 date-deleteCol" style="padding-right:30% !important">'
+								+'<span>'+this.QNA_REG_DATE+'</span>'
+								+'</div>';
+						if('${sessionScope.userId}' === this.USER_ID){
+							htmlStr +='<div class="col-6 delete-dateCol">'
+									+'<a href="#" style="font-size:14px;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
+									+'</div>';
+						}
+							htmlStr +='</div>'
+									+'</div>'
+									+'<hr>';
+						resultStr += htmlStr;
+		    		});
+	    			$(".question-box").html(resultStr);
+		    		
+	    			$.ajax({
+	    				url:"<c:url value='/QnAPage?spaceNum=${param.spaceNum}&page="+QnAPage+"'/>",
+	    				success:function(page){
+	    					$('#QnAPage').val(page.QnABlockPages);
+	    					var pageStr = '<li class="page-item"><a class="page-link qnaPage" id="prevBt" href="javascript:void(0)" onclick="callQnA('+(page.currentPage-1)+')"><</a></li>';
+	    					for (var i = 1; i <= page.QnABlockPages; i++) {
+	    					    if (i === page.currentPage) {
+	    					        pageStr += '<li class="page-item active">' +
+	    					            '<a class="page-link">' + i + '</a>' +
+	    					            '</li>';
+	    					    } else {
+	    					        pageStr += '<li class="page-item"><a class="page-link qnaPage" href="javascript:void(0)" onclick="callQnA('+i+')">' + i + '</a></li>';
+	    					    }
+	    					}
+	    					pageStr += '<li class="page-item">' 
+	    					    +'<a class="page-link qnaPage" id="nextBt" href="javascript:void(0)" onclick="callQnA('+(page.currentPage+1)+')">></a>' 
+	    					    +'</li>';
+	    					$('#QnAPagination').html(pageStr);
+	    				}
+	    			});
+				}else{
+					var resultStr = "<h4 style='font-weight:bold;'>등록된 이용 후기가 없습니다</h4>";
+					$(".question-box").html(resultStr);
+				}
+	    	}
+	    });
+    }
+    
+    
+    
+    
+   
 	    
     
     

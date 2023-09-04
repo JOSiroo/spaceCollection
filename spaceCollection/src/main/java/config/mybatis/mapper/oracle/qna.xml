@@ -11,9 +11,19 @@
 		values(#{qnaNum},#{qnaContent},sysdate,#{userNum},#{spaceNum})
 	</insert>
 	
-	<select id="selectQnaBySpaceNum" parameterType="int" resultType="map">
-		select * from qna_sd_view
-		where space_num = #{spaceNum}
+	<select id="selectQnaBySpaceNum" resultType="map">
+		select *
+		 from 
+		 (
+		 	select A.*, rownum as rn
+		 	from
+		 	(
+		 		select * from qna_sd_view
+				where space_num = #{spaceNum} and qna_del_flag is null
+		 	)A
+		 )
+		 <![CDATA[
+		where rn >= #{startRow} and rn <= #{endRow}]]>
 	</select>
 	
 	<select id="selectQnaByUserId" parameterType="searchVo"  resultType="map">
@@ -23,12 +33,16 @@
 			(
 				select * from QNA_SN_VIEW
 				WHERE USER_ID=#{userId}
-				<if test="searchCondition=='Y'">
-					and QNA_ANSWER IS NOT NULL
+				AND QNA_OUT_DATE IS NULL
+				<if test="searchCondition!=null and searchCondition!=''">
+					<if test='searchCondition.equals("Y")'>
+						and QNA_ANSWER IS NOT NULL
+					</if>
+					<if test='searchCondition.equals("N")'>
+						and QNA_ANSWER IS NULL
+					</if>
 				</if>
-				<if test="searchCondition=='N'">
-					and QNA_ANSWER IS NULL
-				</if>
+				order by QNA_NUM desc
 			)A
 		)
 		<![CDATA[
@@ -39,19 +53,27 @@
 	
 	<select id="totalQnaByUserId" parameterType="searchVo" resultType="int">
 		select count(*) from QNA_SN_VIEW
-		<if test="searchCondition=='Y'">
-			and QNA_ANSWER IS NOT NULL
+		where USER_ID=#{userId}
+		AND QNA_OUT_DATE IS NULL
+		<if test="searchCondition!=null and searchCondition!=''">
+			<if test='searchCondition.equals("Y")'>
+				and QNA_ANSWER IS NOT NULL
+			</if>
+			<if test='searchCondition.equals("N")'>
+				and QNA_ANSWER IS NULL
+			</if>
 		</if>
-		<if test="searchCondition=='N'">
-			and QNA_ANSWER IS NULL
-		</if>
-		order by QNA_NUM desc
-		
 	</select>
 	
-	<delete id="deleteQna" parameterType="int">
-		delete qna
+	<update id="deleteQna" parameterType="int">
+		update qna
+		set qna_del_flag = 'Y'
 		where qna_num = #{qnaNum}
-	</delete>
+	</update>
+	<select id="getTotalRecordBySpaceNum" parameterType="int">
+		select count(*) from qna_sd_view
+		where space_num = #{spaceNum} and qna_del_flag is null
+	</select>
+	
 	
 </mapper>

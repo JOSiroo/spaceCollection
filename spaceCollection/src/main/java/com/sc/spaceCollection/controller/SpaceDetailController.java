@@ -36,29 +36,39 @@ public class SpaceDetailController {
 	private final QnaService qnaService;
 	
 	@GetMapping("/detail")
-	public String test2(@RequestParam int spaceNum, HttpSession session,Model model) {
+	public String test2(@RequestParam int spaceNum,Model model) {
 		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNum);
 		
 		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
 		SpaceVO vo = new SpaceVO();
-		List<Map<String, Object>> qnaList = qnaService.selectQnaBySpaceNum(spaceNum);
 		for (Entry<SpaceVO, List<Map<String, Object>>> entry : resultMap.entrySet()) {
 			vo = entry.getKey();
 		}
 		
 		RefundVO refundVo = spaceDetailService.selectRefund(vo.getRefundNum());
 		
+		Map<String, Object> reviewCnt = reviewService.getTotalRecordBySpaceNum(spaceNum);
+		int QnACnt = qnaService.getTotalRecordBySpaceNum(spaceNum);
 		
+		logger.info("reviewCnt.size = {}", reviewCnt.size());
+		String avgReview = "후기 없음";
+		if(reviewCnt.get("AVG") != null) {
+			float avg = Float.parseFloat(String.valueOf(reviewCnt.get("AVG")))/2.0F;
+			avgReview = Float.toString(avg) + "점";
+			logger.info("공간 상세 페이지, 4 = {}", avgReview);
+
+		}
 		
-		
+		logger.info("공간 상세 페이지 reviewCnt = {}", reviewCnt);
 		logger.info("공간 상세 페이지 resultMap = {}", resultMap.size());
-		logger.info("공간 상세 페이지 qnaList = {}", qnaList.size());
 		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
 		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
 		
+		model.addAttribute("totalQnA", QnACnt);
+		model.addAttribute("totalReview", reviewCnt);
+		model.addAttribute("avgReview", avgReview);
 		model.addAttribute("vo", vo);
-		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("map", resultMap.get(vo));
 		model.addAttribute("refundVo", refundVo);
 		
@@ -71,31 +81,23 @@ public class SpaceDetailController {
 		logger.info("page = {}", page);
 		List<Map<String, Object>> reviewList = reviewService.spaceDetailReview(spaceNum, page);
 		
-		int avg = 0;
-		float floatAvg = 0;
 		if(reviewList.size() != 0) {
 			for(Map<String, Object> map : reviewList) {
 				map.put("REVIEW_REG_DATE",map.get("REVIEW_REG_DATE")+"");
-				
-				 String tempAvg = String.valueOf(map.get("REVIEW_RATE"));
-				 avg += Integer.parseInt(tempAvg);
-				 
-				 floatAvg = (float)((avg/reviewList.size())/2.0);
 			}
 		}
 		
 		
-		String avgReview = Float.toString(floatAvg) + "점";
-		model.addAttribute("avgReview",avgReview);
 		logger.info("공간 상세 페이지 reviewList = {}", reviewList);
 		
 		return reviewList;
 	}
+	
 	@GetMapping("/reviewPage")
 	@ResponseBody
 	public Map<String,Integer> reviewPage(@RequestParam int spaceNum,@RequestParam int page){
 		
-		int reviewTotalSize = reviewService.getTotalRecordBySpaceNum(spaceNum);
+		int reviewTotalSize = Integer.parseInt(String.valueOf(reviewService.getTotalRecordBySpaceNum(spaceNum).get("COUNT")));
 		int reviewBlockPages = 0;
 		if(reviewTotalSize % 5 != 0) {
 			reviewBlockPages = reviewTotalSize/5 + 1;
@@ -108,4 +110,41 @@ public class SpaceDetailController {
 		reviewPage.put("currentPage", page);
 		return reviewPage;
 	}
+	
+	
+	@GetMapping("/callQnA")
+	@ResponseBody
+	public List<Map<String, Object>> callQnA(@RequestParam int spaceNum,@RequestParam int page ,Model model){
+		logger.info("page = {}", page);
+		List<Map<String, Object>> QnAList = qnaService.selectQnaBySpaceNum(spaceNum, page);
+		
+		if(QnAList.size() != 0) {
+			for(Map<String, Object> map : QnAList) {
+				map.put("QNA_REG_DATE",map.get("QNA_REG_DATE")+"");
+			}
+		}
+		
+		logger.info("공간 상세 페이지 reviewList = {}", QnAList);
+		
+		return QnAList;
+	}
+	
+	@GetMapping("/QnAPage")
+	@ResponseBody
+	public Map<String,Integer> QnAPage(@RequestParam int spaceNum,@RequestParam int page){
+		
+		int QnATotalSize = qnaService.getTotalRecordBySpaceNum(spaceNum);
+		int QnABlockPages = 0;
+		if(QnATotalSize % 5 != 0) {
+			QnABlockPages = QnATotalSize/5 + 1;
+		}else {
+			QnABlockPages = QnATotalSize/5;
+		}
+		
+		Map<String, Integer> QnAPage = new HashMap<>();
+		QnAPage.put("QnABlockPages", QnABlockPages);
+		QnAPage.put("currentPage", page);
+		return QnAPage;
+	}
+	
 }

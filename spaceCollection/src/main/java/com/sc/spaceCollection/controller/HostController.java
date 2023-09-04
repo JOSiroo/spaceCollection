@@ -118,7 +118,7 @@ public class HostController {
 		String userId = (String)session.getAttribute("userId");
 		if(userId == null || userId.isEmpty()) {
 			model.addAttribute("msg", "먼저 로그인을 해주세요");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/login/login");
 			
 			return "common/message";
 		}

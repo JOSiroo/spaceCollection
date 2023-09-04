@@ -65,7 +65,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public int getTotalRecordBySpaceNum(int spaceNum) {
+	public Map<String,Object> getTotalRecordBySpaceNum(int spaceNum) {
 		return reviewDao.getTotalRecordBySpaceNum(spaceNum);
 	}
 }

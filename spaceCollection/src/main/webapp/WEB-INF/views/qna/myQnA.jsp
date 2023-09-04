@@ -85,7 +85,7 @@
 	.editMenu{
 		padding-left:0px;
 	}
-	select[name=searchCondition] {
+	#condition {
 		width: 130px;
 		height: 43px;
 		border-radius: 0px;
@@ -100,7 +100,7 @@
 		float: right;
 		padding: 3px;
 	}
-	.deleteQna{
+	#deleteQna{
 		border: 1px solid #5a6ff2;
 		background: #6e81e5;
 		color: white;
@@ -108,9 +108,97 @@
 		padding: 15px 35px 15px 35px;
 		margin-left: 1200px;
 	}
+	
+	.qnaContent{
+		margin-top:100px;
+		word-wrap: break-word;
+	}
+	
+	.page_wrap {
+		text-align:center;
+		font-size:0;
+		margin-bottom: 150px;
+ 	}
+	.divPage {
+		text-align:center;
+		font-size:0;
+	}
+	.divPage {
+		display:inline-block;
+	}
+	.divPage .none {
+		display:none;
+	}
+	.divPage a {
+		display:block;
+		margin:0 3px;
+		float:left;
+		border:1px solid #e6e6e6;
+		width:28px;
+		height:28px;
+		line-height:28px;
+		text-align:center;
+		background-color:#fff;
+		font-size:13px;
+		color:#999999;
+		text-decoration:none;
+	}
+	.divPage .arrow {
+		border:1px solid #ccc;
+	}
+	.divPage .prev {
+		background:#f8f8f8 url('img/page_prev.png') no-repeat center center;
+		margin-right:7px;
+	}
+	.divPage .next {
+		background:#f8f8f8 url('img/page_next.png') no-repeat center center;
+		margin-left:7px;
+	}
+	.divPage .active {
+		background-color:#42454c;
+		color:#fff;
+		border:1px solid #42454c;
+	}
 </style>
-
-
+<script type="text/javascript">
+	$(function(){
+		
+		$("#condition").change(function(){
+			var condition = $('#condition').val();
+			$('input[name=searchCondition]').val(condition);
+			$('form[name=frmPage]').submit();
+		});
+		
+		$("#deleteQna").click(function(){
+			var count=$('input[type=checkbox]:checked').length;
+			
+			if(count>0){
+				
+				if(confirm('선택한 상품을 삭제하시겠습니까?')){
+					$('form[name=frmQna]').prop('action'
+							,"<c:url value='/deleteMyQna'/>")
+					$('form[name=frmQna]').submit();
+				}
+			}else{
+				alert("상품을 먼저 선택해주세요");
+			}
+			
+		});
+		
+	});//window.document
+	function qnaList(curPage){
+		var condition = $('#condition').val();
+		$('input[name=currentPage]').val(curPage);
+		$('input[name=searchCondition]').val(condition);
+		$('form[name=frmPage]').submit();
+	}
+</script>
+<!-- 페이징 처리를 위한 form 시작-->
+<form name="frmPage" method="post" action="<c:url value='/myQnA'/>">
+	<input type="hidden" name="searchCondition" value="">
+	<input type="hidden" name="currentPage" value="1">	
+</form>
+<!-- 페이징 처리 form 끝 -->
 <div class="wrap">
 	<div class="align_center">
 		<h1>나의 Q&A 관리</h1>
@@ -123,13 +211,19 @@
 			</a>
 		</div>
 		<form name="frmQna" action="<c:url value='/myQnA'/>" method="post">
-		<select name="searchCondition">
+		<select id="condition">
 			<option selected="selected" value="">전체</option>
-			<option value="Y">답변 있음</option>
-			<option value="N">답변 없음</option>
+			<option value="Y"
+				<c:if test="${param.searchCondition=='Y' }">
+				selected="selected"
+				</c:if>>답변 있음</option>
+			<option value="N"
+				<c:if test="${param.searchCondition=='N' }">
+				selected="selected"
+				</c:if>>답변 없음</option>
 		</select>
 		<div class="count">
-			Q&A<span style="color: #2d5aa0;">${pagingInfo.totalRecord }개</span>
+			Q&A <span style="color: #2d5aa0;">${pagingInfo.totalRecord }개</span>
 		</div>
 		<c:if test="${empty qnaList }">
 				<h1>등록된 QnA가 없습니다.</h1>
@@ -141,9 +235,9 @@
 				<div class="qnaList">
 					<div class="qnaDetail">
 						<label class="fontBold">${map['USER_ID'] }</label>
-						<input type="checkbox" class="chkBox" value="">
+						<input type="checkbox" class="chkBox" name="qnaNum" value="${map['QNA_NUM'] }">
 						<br>
-						<span>${map['QNA_CONTENT'] }</span>
+						<span class="qnaContent">${map['QNA_CONTENT'] }<br></span>
 						<div class="editMenu">
 							<a class="answer">${map['SPACE_NAME'] }</a>
 							${map['QNA_REG_DATE'] }
@@ -163,32 +257,32 @@
 				<c:set var="idx" value="${idx+1 }"/>
 			</c:forEach>
 			<!-- 반복끝 -->
+		<button type="button" id="deleteQna">삭제</button>
 		</c:if>
-		<button type="button" class="deleteQna">삭제</button>
 		</form>
 	</div>
+<div class="page_wrap">
 	<div class="divPage">
 		<!-- 페이지 번호 추가 -->		
 		<c:if test="${pagingInfo.firstPage>1 }">
-			<a href="#" onclick="boardList(${pagingInfo.firstPage-1})">			
-			    <img src='<c:url value="/images/first.JPG" />'  border="0">	</a>
+			<a href="#" onclick="qnaList(${pagingInfo.firstPage-1})" class="arrow prev">			
+			    <img src='<c:url value="/images/page_prev.png" />'  border="0">	</a>
 		</c:if>
-						
 		<!-- [1][2][3][4][5][6][7][8][9][10] -->
 		<c:forEach var="i" begin="${pagingInfo.firstPage }" end="${pagingInfo.lastPage }">
 			<c:if test="${i==pagingInfo.currentPage }">
-				<span style="color:blue;font-weight:bold">${i }</span>
+				<a class="active">${i }</a>
 			</c:if>
 			<c:if test="${i!=pagingInfo.currentPage }">						
-				<a href="#" onclick="boardList(${i})">
-					[${i }]
+				<a href="#" onclick="qnaList(${i})" >
+					${i }
 				</a>
 			</c:if>		
 		</c:forEach>
 		
 		<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-			<a href="#" onclick="boardList(${pagingInfo.lastPage+1})">			
-				<img src="<c:url value="/images/last.JPG" />" border="0">
+			<a href="#" onclick="qnaList(${pagingInfo.lastPage+1})" class="arrow next">			
+				<img src="<c:url value="/images/page_next.png" />" border="0" >
 			</a>
 		</c:if>
 		<!--  페이지 번호 끝 -->

@@ -7,6 +7,8 @@ public interface ConstUtil {
 	
 	//QNA 페이징 처리 관련 상수
 	int QNA_RECORD_COUNT=5;
+	//Review 페이징 처리 관련 상수
+	int REVIEW_RECORD_COUNT=5;
 	
 	//파일 업로드 처리 관련 상수
 	String FILE_UPLOAD_TYPE="test";

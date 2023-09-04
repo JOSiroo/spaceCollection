@@ -73,14 +73,17 @@ public class QnaController {
 		return "redirect:/detail?spaceNum="+spaceNum;
 	}
 	
-	@RequestMapping("myQnA")
-	public String selectMyQnA(@ModelAttribute SearchVO searchVo,HttpSession session,Model model) {
+	@RequestMapping("/myQnA")
+	public String selectMyQnA(@RequestParam(name="currentPage", defaultValue = "1") int currentPage
+			,@RequestParam(name="searchCondition", required = false) String searchCondition,HttpSession session,Model model) {
 		//1.
 		String userId=(String)session.getAttribute("userId");
-		logger.info("QnA 목록 조회, 파라미터 searchVo={},userId={}",searchVo, userId);
-	
+		logger.info("QnA 목록 조회, 파라미터 currentPage={},userId={},searchCondition={}",currentPage,userId,searchCondition);
 		//2.
 		//페이징처리
+		SearchVO searchVo = new SearchVO();
+		searchVo.setCurrentPage(currentPage);
+		searchVo.setSearchCondition(searchCondition);
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
@@ -91,17 +94,33 @@ public class QnaController {
 		searchVo.setUserId(userId);
 		searchVo.setRecordCountPerPage(ConstUtil.QNA_RECORD_COUNT);
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-		
+		logger.info("SearchVO 세팅결과 searchVo={}",searchVo);
 		List<Map<String,Object>> qnaList=qnaService.selectQnaByUserId(searchVo);
-		logger.info("QnA 조회 결과 qnaList",qnaList);
+		logger.info("QnA 조회 결과 qnaList={}",qnaList.size());
 		int totalRecord = qnaService.totalQnaByUserId(searchVo);
 		logger.info("Qna 총 레코드 수 ={}",totalRecord);
 		pagingInfo.setTotalRecord(totalRecord);
 		
 		model.addAttribute("qnaList",qnaList);
 		model.addAttribute("pagingInfo",pagingInfo);
-		
+
 		return "qna/myQnA";
+	}
+	
+	@RequestMapping("/deleteMyQna")
+	public String deleteMyQna(@RequestParam(name="qnaNum") List<Integer> qnaNum,Model model) {
+		logger.info("나의 QnA 삭제처리 qnaNum={}",qnaNum);
+		int cnt = qnaService.deleteMultiQna(qnaNum);
+		logger.info("QnA Multi삭제 결과 cnt={}",cnt);
+		
+		String url="/qna/myQna", msg="QnA삭제의 실패하였습니다.";
+		if(cnt>0) {
+			msg=qnaNum.size()+"건의 QnA삭제 성공!";
+		}
+		
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
+		return "common/message";
 	}
 }
 
