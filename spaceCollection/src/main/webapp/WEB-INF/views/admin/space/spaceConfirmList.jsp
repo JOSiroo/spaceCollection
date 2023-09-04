@@ -34,7 +34,7 @@ th, td {
 	text-align: center;
 }
 
-#searchDiv>div {
+.searchDiv>div {
 	float: right;
 }
 
@@ -42,7 +42,7 @@ div#select {
 	width: 150px;
 }
 
-#searchDiv>div {
+.searchDiv>div {
 	margin-left: 5px;
 }
 
@@ -66,7 +66,7 @@ td>span {
 	text-align: left;
 }
 
-#excelDownloadBt {
+.excelDownloadBt {
 	--bs-btn-bg: #dadddf;
 }
 
@@ -107,12 +107,16 @@ td>span {
 th>i{
 	cursor: pointer;
 }
+
+#status{
+	float: right;
+	width: 144px;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
-		$.spaceConfirmListSearch();
-		
+		$.spaceConfirmListSend(1);
 		
 		//페이지 출력 관련 시작
 		$('li button').click(function() {
@@ -123,7 +127,7 @@ th>i{
 			$.spaceConfirmListSend(1);
 		});
 		
-		$('button[name=spaceConfirmTab]').click(function() {
+		$('button[name=spaceConfirmListTab]').click(function() {
 			$.spaceConfirmListSearch();
 			$.spaceConfirmListSend(1);
 		});
@@ -153,7 +157,7 @@ th>i{
 		//엑셀 다운 관련 시작
 		$('#warning').hide();
 		
-		$('#excelDownloadBt').click(function() {
+		$('.excelDownloadBt').click(function() {
 			$('#excelModal').modal('show');
 		});
 		
@@ -185,9 +189,10 @@ th>i{
 		});
 		//엑셀 다운 관련 끝
 		
-		$('#spaceNumTh').click(function() {
-			$('input[name=order]').val('space_name desc');
-			$.spaceConfirmHistoryListSearch();
+		
+		$('#spaceNameTh').click(function() {
+			$('input[name=order]').val(' SPACE_NAME desc');
+			$.spaceConfirmHistoryListSend(1);
 		});
 	});
 	
@@ -290,9 +295,8 @@ th>i{
 				$('input[name=searchCondition]').val(res.searchVo.searchCondition);
 				var str = "";
 				if(res.ajaxList!=null && res.ajaxList.length>0){
-					
 					$('#spaceConfirmHistoryListTbody>form').html("");
-					
+										
 						$.each(res.ajaxList, function() {
 							str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
@@ -482,6 +486,20 @@ th>i{
 			});
 		}	
 	}
+	
+	function spaceNum(evt,th,thDesc,orderStand) {
+		if($(evt).hasClass(thDesc)){
+			$(evt).removeClass(thDesc);
+			$(evt).addClass(th);
+			$('input[name=order]').val(orderStand);
+			$.spaceConfirmHistoryListSend(1);
+		}else{
+			$(evt).removeClass(th);
+			$(evt).addClass(thDesc);
+			$('input[name=order]').val(orderStand +" desc");
+			$.spaceConfirmHistoryListSend(1);
+		}
+	}
 	//승인 또는 거절할 체크박스 유효성 검사 끝
 </script>
 <main id="main" class="main">
@@ -540,12 +558,11 @@ th>i{
 								</div>
 								<form class="col align-items-center"
 									name="spaceConfirmListSearchFrm" onsubmit="return false">
-									<input type="hidden" name="currentPage" value="1">
-									<input type="hidden" name="order">
-									<div id="searchDiv">
+									<input type="hidden" name="currentPage" value="1"> <input
+										type="hidden" name="order">
+									<div class="searchDiv">
 										<div style="float: left;">
-											<button class="btn btn-light" type="button"
-												id="excelDownloadBt">
+											<button class="btn btn-light excelDownloadBt" type="button">
 												<i class="bi bi-filetype-xlsx"></i> 엑셀 다운로드
 											</button>
 										</div>
@@ -593,59 +610,84 @@ th>i{
 
 						<!-- 장소 승인 내역 시작 -->
 						<div class="tab-pane fade pt-3" id="spaceConfirmHistoryList">
+							<form class="col align-items-center"
+								name="spaceConfirmHistoryListSearchFrm" onsubmit="return false">
+								<div class="row mb-3">
+									<div>
+										<select class="form-select" name="status" id="status">
+											<option value=""
+												<c:if test="${param.status=='user_id'}">
+								            		selected="selected"
+								            	</c:if>>전체보기</option>
+											<option value="Y"
+												<c:if test="${param.status=='Y'}">
+								            		selected="selected"
+								            	</c:if>>승인</option>
+											<option value="R"
+												<c:if test="${param.status=='R'}">
+								            		selected="selected"
+								            	</c:if>>승인요청</option>
+											<option value="N"
+												<c:if test="${param.status=='N'}">
+								            		selected="selected"
+								            	</c:if>>거절</option>
+										</select>
+									</div>
+									<table class="table">
+										<colgroup>
+											<col style="width: 6%;" />
+											<col style="width: 12%;" />
+											<col style="width: 31%;" />
+											<col style="width: 15%;" />
+											<col style="width: 14%;" />
+											<col style="width: 14%;" />
+											<col style="width: 8%;" />
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand spaceNumDesc"
+													onclick="spaceNum(this, 'spaceNum', 'spaceNumDesc', 'space_num')">
+												</i>번호</th>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand spaceTypeNameDesc"
+													onclick="spaceNum(this, 'spaceTypeName', 'spaceTypeNameDesc', 'SPACE_TYPE_NAME')">
+												</i>공간 타입</th>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand spaceNameDesc"
+													onclick="spaceNum(this, 'spaceName', 'spaceNameDesc', 'SPACE_NAME')">
+												</i>공간명</th>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand userIdDesc"
+													onclick="spaceNum(this, 'userId', 'userIdDesc', 'user_id')">
+												</i>신청인</th>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand spaceRequestDateDesc"
+													onclick="spaceNum(this, 'spaceRequestDate', 'spaceRequestDateDesc', 'space_request_date')">
+												</i>요청일</th>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand spaceRegDateDesc"
+													onclick="spaceNum(this, 'spaceRegDate', 'spaceRegDateDesc', 'space_reg_date')">
+												</i>결정일</th>
+												<th scope="col"><i
+													class="bi bi-chevron-bar-expand spaceRequestStatusDesc"
+													onclick="spaceNum(this, 'spaceRequestStatus', 'spaceRequestStatusDesc', 'space_request_status')">
+												</i>상태</th>
+											</tr>
+										</thead>
+										<tbody id="spaceConfirmHistoryListTbody">
+											<!-- ajax로 승인 내역 출력 -->
+										</tbody>
+									</table>
+									<div class="spaceConfirmHistoryListDivPage">
+										<!-- ajax로 페이징 -->
+									</div>
 
-							<div class="row mb-3">
-								<table class="table">
-									<colgroup>
-										<col style="width: 6%;" />
-										<col style="width: 12%;" />
-										<col style="width: 31%;" />
-										<col style="width: 15%;" />
-										<col style="width: 14%;" />
-										<col style="width: 14%;" />
-										<col style="width: 8%;" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="spaceNumTh"> </i>번호
-											</th>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="spaceNameTh"> </i>공간 타입
-											</th>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="spaceNameTh"> </i>공간명
-											</th>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="userIdTh"> </i>신청인
-											</th>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="spaceRequestDateTh"> </i>요청일
-											</th>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="spaceRegDateTh"> </i>결정일
-											</th>
-											<th scope="col">
-												<i class="bi bi-chevron-bar-expand" id="spaceRequestStatusTh"> </i>상태
-											</th>
-										</tr>
-									</thead>
-									<tbody id="spaceConfirmHistoryListTbody">
-										<!-- ajax로 승인 내역 출력 -->
-									</tbody>
-								</table>
-								<div class="spaceConfirmHistoryListDivPage">
-									<!-- ajax로 페이징 -->
-								</div>
-								<form class="col align-items-center"
-									name="spaceConfirmHistoryListSearchFrm" onsubmit="return false">
-									<input type="hidden" name="currentPage" value="1">
-									<input type="hidden" name="order" value="${param.order }">
-									<input type="hidden" name="status" value="Y">
-									<div id="searchDiv">
-										<div style="float: left;">
-											<button class="btn btn-light" type="button"
-												id="excelDownloadBt">
+									<input type="hidden" name="currentPage" value="1"> <input
+										type="hidden" name="order" value="${param.order }">
+									<div class="searchDiv" class="row" style="width: 100%">
+										<div style="float: left;" class="col">
+											<button class="btn btn-light excelDownloadBt" type="button">
 												<i class="bi bi-filetype-xlsx"></i> 엑셀 다운로드
 											</button>
 										</div>
@@ -681,11 +723,12 @@ th>i{
 								            		selected="selected"
 								            	</c:if>>신청인</option>
 											</select>
+
 										</div>
 
 									</div>
-								</form>
-							</div>
+								</div>
+							</form>
 
 						</div>
 						<!-- 승인 내역 끝 -->
@@ -735,15 +778,15 @@ th>i{
 					<div class="container text-center " id="MChkDiv">
 						<p id="warning">※ 최소 하나 이상의 컬럼을 선택하세요.</p>
 						<c:set var="columnListEng1"
-							value="${fn:split('userNum,userHp,userId,userRegDate,zipcode,addressDetail,userMarketingSmsOk', ',') }" />
+							value="${fn:split('spaceNum,spaceBusinessNum,userId,spacePhoneNum,spaceRequestStatus,spaceRegDate,sdType,sdpeople,sdTime', ',') }" />
 						<c:set var="columnListKor1"
-							value="${fn:split('회원번호,아이디,이메일,가입일,우편번호,상세주소,마케팅 동의(SMS)', ',') }" />
+							value="${fn:split('공간번호,사업자번호,아이디,연락처,상태,승인일,상세타입,사용인원,운영시간', ',') }" />
 						<c:set var="columnListEng2"
-							value="${fn:split('userName,userEmail,userOutType,userOutDate,address,userMarketingEmailOk', ',') }" />
+							value="${fn:split('spaceName,spaceAddress,userEmail,spaceTag,delFlag,spaceRequestDate,spaceTypeName,sdPrice,facility', ',') }" />
 						<c:set var="columnListKor2"
-							value="${fn:split('이름,연락처,가입상태,탈퇴일,주소,마케팅 동의(이메일)', ',') }" />
+							value="${fn:split('공간명,공간주소,이메일,공간태그,삭제여부,승인요청일,공간타입명,가격정보,시설', ',') }" />
 						<form name="excelFrm"
-							action="<c:url value='/admin/member/memberExcelDownload'/>"
+							action="<c:url value='/admin/space/spaceExcelDownload'/>"
 							method="post">
 							<div class="row align-items-start">
 								<div class="col marginTop">

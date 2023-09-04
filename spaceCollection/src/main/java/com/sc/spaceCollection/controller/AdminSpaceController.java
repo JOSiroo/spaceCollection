@@ -315,7 +315,7 @@ public class AdminSpaceController {
 	
 	@RequestMapping("/spaceConfirmList/ajax_spaceConfirmHistoryList")
 	@ResponseBody
-	public AjaxVO ajax_spaceConfirmHistoryList(@ModelAttribute SearchVO searchVo, @RequestParam(defaultValue = "space_reg_date")String order, @RequestParam String status) {
+	public AjaxVO ajax_spaceConfirmHistoryList(@ModelAttribute SearchVO searchVo, @RequestParam(defaultValue = "space_num desc")String order, @RequestParam String status) {
 		logger.info("ajax - 공간 승인 내역 조회, 파라미터 searchVo = {}, order = {}, status = {}", searchVo, order, status);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();

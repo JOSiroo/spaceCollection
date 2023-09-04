@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.sc.spaceCollection.common.ExcelVO;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 
@@ -39,5 +40,6 @@ public interface SpaceService {
 	int spaceDenine(SpaceListVO listVo);
 	List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
 	int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
+	List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo);
 	
 }
