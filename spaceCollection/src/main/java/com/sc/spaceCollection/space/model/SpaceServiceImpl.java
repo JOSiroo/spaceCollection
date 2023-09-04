@@ -214,5 +214,11 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 
+	@Override
+	public List<SpaceVO> selectAllMap() {
+		return spaceDao.selectAllMap();
+	}
+
+
 
 }
