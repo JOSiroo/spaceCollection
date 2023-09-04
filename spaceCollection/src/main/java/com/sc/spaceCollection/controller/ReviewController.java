@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.reservation.model.ReservationVO;
@@ -79,11 +81,20 @@ public class ReviewController {
 	
 	@RequestMapping("/myReview")
 	@Transactional
-	public String myReview(@RequestParam(defaultValue = "1") int page, HttpSession session,Model model ) {
+	public String myReview(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(name="searchKeyword")String searchKeyword, @RequestParam(name="searchCondition") String searchCondition
+			,HttpSession session,Model model ) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("나의 리뷰 페이지, 파라미터 userId={},page={}",userId,page);
 		
 		int size=5;
+		SearchVO searchVo = new SearchVO();
+		searchVo.setBlockSize(ConstUtil.REVIEW_RECORD_COUNT);
+		searchVo.setUserId(userId);
+		searchVo.setCurrentPage(page);
+		searchVo.setSearchCondition(searchCondition); //답변상태
+		searchVo.setSearchKeyword(searchKeyword); // 검색기능
+		
 		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId, size, page);
 		int total=reviewService.getTotalRecordByUserId(userId);
 		
