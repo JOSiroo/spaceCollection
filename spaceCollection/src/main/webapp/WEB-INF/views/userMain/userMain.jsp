@@ -18,9 +18,11 @@
             transform: translateZ(0);
         }
     	}
+
     .sectionCoupon{  
     	padding: 0% 7% 0% 7%;
    	}
+
     
       .icon-container {
         display: flex;
