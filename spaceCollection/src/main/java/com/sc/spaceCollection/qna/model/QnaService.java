@@ -11,4 +11,5 @@ public interface QnaService {
 	int deleteQna(int qnaNum);
 	List<Map<String,Object>> selectQnaByUserId(SearchVO searchVo);
 	int totalQnaByUserId(SearchVO searchVo);
+	int deleteMultiQna(List<Integer> qnaNum);
 }

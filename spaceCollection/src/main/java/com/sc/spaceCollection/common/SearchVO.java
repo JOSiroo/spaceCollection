@@ -1,5 +1,8 @@
 package com.sc.spaceCollection.common;
 
+import lombok.Data;
+
+@Data
 public class SearchVO{
 
 	/**

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -77,6 +78,7 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/myReview")
+	@Transactional
 	public String myReview(@RequestParam(defaultValue = "1") int page, HttpSession session,Model model ) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("나의 리뷰 페이지, 파라미터 userId={},page={}",userId,page);
@@ -85,7 +87,7 @@ public class ReviewController {
 		List<Map<String,Object>> reviewMap=reviewService.selectMyReview(userId, size, page);
 		int total=reviewService.getTotalRecordByUserId(userId);
 		
-		logger.info("나의 리뷰 불러오기 결과, map={}",reviewMap);
+		logger.info("나의 리뷰 불러오기 결과, map.size={}",reviewMap.size());
 		
 		model.addAttribute("reviewMap",reviewMap);
 		model.addAttribute("total",total);
