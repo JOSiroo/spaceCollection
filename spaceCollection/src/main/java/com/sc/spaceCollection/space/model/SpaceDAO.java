@@ -59,4 +59,5 @@ public interface SpaceDAO {
 															@Param("order")String order,
 															@Param("status")String status);
 	List<Map<String, Object>> selectSpaceForExcel();
+	String selectSpaceTypeName(int spaceTypeNo);
 }

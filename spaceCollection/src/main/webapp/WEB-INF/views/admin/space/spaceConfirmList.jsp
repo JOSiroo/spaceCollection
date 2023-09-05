@@ -116,6 +116,7 @@ th>i{
 .fade:not(.show){
 	display: none;
 }
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -238,7 +239,9 @@ th>i{
 					str2 += "<button type='button' class='btn btn-outline-danger' id='spaceDenineBt' onClick='$.spaceDenine()'>거절</button>";
 					
 					$('#buttonDiv').html(str2);
+					//$('#spaceConfirmListTbody').append("<form name='trFrm' method='post'>");
 					
+
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 								str += "<td>"
@@ -260,9 +263,10 @@ th>i{
 								
 								i++;
 						});
-						
+
 						i++;
-						$('#spaceConfirmListTbody').html(str);
+						$('#spaceConfirmListTbody').append(str);
+						//$('#spaceConfirmListTbody').append("</form>");
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
@@ -453,6 +457,7 @@ th>i{
 			$('#cancelBt').html("취소");
 			$('#okBt').html("승인");
 			$('#confirm1').modal("show");
+			alert($('form[name=trFrm] input[type=checkbox]:checked').length);
 			$('#okBt').click(function() {
 				$('#confirm1').modal("hide");
 				$(this).removeClass("btn-primary");
@@ -542,6 +547,7 @@ th>i{
 								<div class="col-12" id="buttonDiv"></div>
 							</div>
 							<div class="row mb-3">
+
 								<form name="trFrm" method="post">
 									<table class="table">
 										<colgroup>
@@ -570,6 +576,7 @@ th>i{
 										</tbody>
 									</table>
 								</form>
+
 								<div class="spaceConfirmListDivPage">
 									<!-- ajax로 페이징 -->
 								</div>
@@ -650,7 +657,7 @@ th>i{
 								            	</c:if>>거절</option>
 										</select>
 									</div>
-									<table class="table">
+									<table class="table" id="temp">
 										<colgroup>
 											<col style="width: 6%;" />
 											<col style="width: 12%;" />

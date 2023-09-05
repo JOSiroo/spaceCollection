@@ -154,7 +154,7 @@ p{
     padding: 2% 0% 1% 0%;
     
     .btn-group{
-		width: 28%;
+		width: 40%;
 	}
 	.dropdown{
 		margin-left: 2%;
@@ -330,7 +330,7 @@ p{
 		background: lightgrey;
 	}
 	.order-select{
-	    width: 8%;
+	    width: 12%;
 	    margin-left: 64.2%;
 	}
 	#order-selectBox{
@@ -581,7 +581,7 @@ p{
 	<c:if test="${empty param.spaceName && empty param.spaceTypeNo }">
 		<a href="<c:url value = '/search/map'/>"style="margin-left:3%; width:24%;">
 	</c:if>
-	<button type="button" class="btn btn-outline-dark menu" style="border-radius: 3rem">지도</button></a>
+	<button type="button" class="btn btn-outline-dark menu">지도</button></a>
 </div>
 </div>
 <hr>
