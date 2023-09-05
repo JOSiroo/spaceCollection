@@ -428,9 +428,14 @@ public class AdminSpaceController {
 	}
 	
 	@RequestMapping("/spaceConfirmList/spaceConfirmDetail")
-	public String spaceConfirmDetail(@RequestParam(defaultValue = "0")int spaceNum) {
+	public String spaceConfirmDetail(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
 		logger.info("공간 승인 관리 상세보기, 파라미터 spaceNum = {}", spaceNum);
 		
+		Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(spaceNum);
+		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
+		
+		
+		model.addAttribute("map", map);
 		return "admin/space/spaceConfirmDetail";
 	}
 }
