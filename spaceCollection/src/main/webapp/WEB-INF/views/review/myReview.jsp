@@ -6,6 +6,23 @@
 <script type="text/javascript">
 	$(function(){
 		
+		// Enter 키 이벤트 핸들러 추가
+		$('input[name=keyword]').on('keyup', function(event) {
+		    if (event.keyCode === 13) { // Enter 키의 키 코드는 13입니다.
+		        event.preventDefault(); // 기본 동작(폼 제출)을 막음
+		        var keyword = $(this).val();
+		        $('input[name=searchKeyword]').val(keyword);
+		        $("form[name=frmPage]").submit();
+		    }
+		});
+
+		// 검색 버튼 클릭 이벤트 핸들러 추가
+		$("#search").click(function(){
+			var keyword=$('input[name=keyword]').val();
+			$('input[name=searchKeyword]').val(keyword);
+			$("form[name=frmPage]").submit();
+		});
+		
 		if($("input[name=page]").val()<1){
 			$("input[name=page]").val(1);
 		}
@@ -170,8 +187,7 @@
 
 <form action="<c:url value='/myReview'/>" name="frmPage" method="post">
 	<input type="text" name="page" value="${param.page }">
-	<input type="text" name="searchCondition" value="">
-	<input type="text" name="searchKeyword" value="">
+	<input type="text" name="searchKeyword" value="${param.searchKeyword }">
 </form>
 <div class="wrap">
 	<div class="align_center">
@@ -185,8 +201,8 @@
 		</a>
 	</div>
 	<div id=searchbar>
-		<label >예약 정보 검색</label>
-		<input type="text" name="keyword" placeholder="공간명">
+		<label >후기 정보 검색</label>
+		<input type="text" name="keyword" value="${param.searchKeyword }"  placeholder="예약번호, 공간명, 후기내용 중 하나를 입력해주세요.">
 		<button type="button" id="search">검색</button>
 	</div>
 	<select name="condition">

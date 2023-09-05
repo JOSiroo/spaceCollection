@@ -21,6 +21,7 @@ public interface GuestService {
 	List<GuestVO> selectUserIdByEmail(String userEmail);
 	int updateUserName(GuestVO guestVo);
 	int updateUserHp(GuestVO guestVo);
+	int countByUserIdUserEmail(String userId, String userEmail);
 	
 	//소셜 로그인 관련
 	GuestVO selectSnsUserInfo(GuestVO guestVo);

@@ -20,10 +20,10 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectMyReview(String userId, int size, int page) {
+	public List<Map<String, Object>> selectMyReview(String userId, int size, int page, String searchKeyword) {
 		int startRow = 1;
 		int endRow = page * size;
-		return reviewDao.selectMyReview(userId, startRow, endRow);
+		return reviewDao.selectMyReview(userId, startRow, endRow,searchKeyword);
 	}
 
 	@Override
@@ -68,4 +68,5 @@ public class ReviewServiceImpl implements ReviewService{
 	public Map<String,Object> getTotalRecordBySpaceNum(int spaceNum) {
 		return reviewDao.getTotalRecordBySpaceNum(spaceNum);
 	}
+
 }

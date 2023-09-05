@@ -31,25 +31,29 @@
 	<script type="text/javascript" src="../js/jquery.center.js"></script>
 	<script type="text/javascript" src="../js/jquery.popupWindow.js"></script>
 	<script type="text/javascript" src="../js/jquery.autotab.js"></script>	
-</head>
-<body>
-	<script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodystart.js" charset="euc-kr"></script>
-	<script type="text/javascript">
+<script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodystart.js" charset="euc-kr"></script>
+<script type="text/javascript">
 		$(function () {
 
-						// 팝업 사이즈 재조정
+			// 팝업 사이즈 재조정
 			if (window.innerWidth < 600) {
 				window.resizeTo(630, 701);
 			}
-		
-
-			$("html").css("overflow", "hidden");			// 스크롤바 hidden 처리
-			$("[finda2sopt]").click(function (event) {		// a2s log
+			$("html").css("overflow", "hidden");
+			$("[finda2sopt]").click(function (event) {
 				MemberA2S.Click("MEMBERS_FIND_PW", $(this).attr("finda2sopt"));
 			});
+			
+			$("#ucInputLoginID_btnNext").click(function(){
+				window.open("${pageContext.request.contextPath}/email/emailCheck?type=findPwd"
+						,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
+			});
+			
 		});
-	</script>
-
+		
+</script>
+</head>
+<body>
 <div class="popupFind2">
 	<ul class="find2Tab">
 		<li class="id"><a href="<c:url value='/guest/findId'/>" finda2sopt="FindId">스페이스 컬렉션ID찾기</a></li>	<!-- A094 -->

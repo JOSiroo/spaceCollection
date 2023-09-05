@@ -47,11 +47,14 @@
 	<select id="selectCountEmail" parameterType="string" resultType="int">
 		select count(*) from USER_INFO
 		where USER_EMAIL=#{userEmail}
+		and USER_OUT_DATE IS NULL
+		and USER_SNS_CODE IS NULL
 	</select>
 	
 	<select id="selectUserIdByEmail" parameterType="string" resultType="guestVo">
 		select * from USER_INFO
 		WHERE USER_EMAIL=#{userEmail}
+		and USER_SNS_CODE IS NULL
 	</select>
 	
 	<select id="selectuserId" parameterType="int" resultType="string">
@@ -120,5 +123,13 @@
 		where USER_ID=#{userId}
 		and USER_OUT_DATE is null
 	</update>
+	
+	<select id="countByUserIdUserEmail" resultType="int">
+		select count(*) from USER_INFO
+		WHERE USER_ID=#{userId}
+		and USER_EMAIL=#{userEmail}
+		and USER_OUT_DATE IS NULL
+		and USER_SNS_CODE IS NULL
+	</select>
 	
 </mapper>

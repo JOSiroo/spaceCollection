@@ -3,6 +3,7 @@ package com.sc.spaceCollection.email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,8 +29,9 @@ public class EmailController {
 		return "email/emailCheck";
 	}
 	
+	@Transactional
 	@RequestMapping("/sendEmail")
-	public String sendeMail(@RequestParam(required = false) String userEmail
+	public String sendeMail(@RequestParam(required = false) String userEmail,@RequestParam(required = false)String userId
 			,@RequestParam(required = false)String type, Model model) {
 		
 		logger.info("이메일 인증 처리, 파라미터 userEmail={},type={}",userEmail,type);
@@ -45,6 +47,16 @@ public class EmailController {
 		}else if(type.equals("register")){ //회원가입 인 경우
 			if(cnt>0) {
 				msg="이미 가입된 이메일입니다.";
+				model.addAttribute("msg",msg);
+				model.addAttribute("url",url);
+				return "common/message";
+			}
+		}
+		
+		if(type.equals("findPwd")) {
+			cnt=guestService.countByUserIdUserEmail(userId, userEmail);
+			if(cnt>0) {
+				msg="일치하는 회원정보가 없습니다.";
 				model.addAttribute("msg",msg);
 				model.addAttribute("url",url);
 				return "common/message";
