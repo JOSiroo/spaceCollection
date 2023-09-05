@@ -3,6 +3,7 @@ package com.sc.spaceCollection.guest.model;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface GuestDAO {
@@ -15,6 +16,7 @@ public interface GuestDAO {
 	List<GuestVO> selectUserIdByEmail(String userEmail);
 	int updateUserName(GuestVO guestVo);
 	int updateUserHp(GuestVO guestVo);
+	int countByUserIdUserEmail(@Param("userId") String userId, @Param("userEmail")String userEmail);
 	
 	
 	//소셜 서비스 관련

@@ -18,8 +18,7 @@
 	</insert>
 	
 	<select id="selectMyReview" resultType="map">
-	select *
-		from
+	select * from
 		(
 			select rownum as RNUM, A.* from
 			(
@@ -27,6 +26,11 @@
 				review r join RESERVATION_SPACE_SD_VIEW v
 				on r.RESERVATION_NUM=v.RESERVATION_NUM
 				where USER_ID=#{userId}
+				<if test="searchKeyword!=null and searchKeyword!=''">
+				 and REVIEW_CONTENT LIKE '%' || #{searchKeyword} || '%'
+				OR SPACE_NAME LIKE '%' || #{searchKeyword} || '%'
+				OR REVIEW_NUM LIKE '%' || #{searchKeyword} || '%'
+				</if>
 				order by review_num desc
 				)A
 		)
