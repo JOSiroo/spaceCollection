@@ -231,8 +231,6 @@ public class AdminExcelController {
 				cell = row.createCell(cellCount);
 				cell.setCellValue(headerKor[excelVo.getHeaderListIndex().get(i)]);
 				cell.setCellStyle(cellStyle2);
-				sheet.setColumnWidth(cellCount, (sheet.getColumnWidth(i)+1024));
-				
 				cellCount++;
 			}
 		}
@@ -264,39 +262,18 @@ public class AdminExcelController {
 			voList.add(map.get("SD_PRICE")+"");
 			voList.add(map.get("SD_TIME")+"");
 			voList.add(map.get("FACILITY")+"");
-//			if(vo.getUserOutType()!=null) {
-//				if(vo.getUserOutType().equalsIgnoreCase("Y")) {
-//					voList.add("탈퇴");
-//				}
-//			}else {
-//				voList.add("정상");
-//			}
-//			
-//			if(vo.getUserRegDate()==null) {
-//				voList.add("");
-//			}else {
-//				voList.add((vo.getUserRegDate()+"").substring(0, 16));
-//			}
-//			
-//			if(vo.getUserOutDate()==null) {
-//				voList.add("");
-//			}else {
-//				voList.add((vo.getUserOutDate()+"").substring(0, 16));
-//			}
-			
-//			voList.add(vo.getZipcode());
-//			voList.add(vo.getAddress());
-//			voList.add(vo.getAddressDetail());
-//			voList.add(vo.getUserMarketingEmailOk());
-//			voList.add(vo.getUserMarketingSmsOk());
-			logger.info("헤더 설정 끝2");
+
 			cellCount = 0;
+			
 			for(int j=0; j<excelVo.getHeaderListIndex().size(); j++) {
 				
 				if(excelVo.getHeaderListIndex().get(j) != null) {
 					cell = row.createCell(cellCount);
 					cell.setCellValue(voList.get(excelVo.getHeaderListIndex().get(j)));
 					cell.setCellStyle(cellStyle);
+					sheet.autoSizeColumn(i);
+					sheet.setColumnWidth(i, (sheet.getColumnWidth(i))+(short)1024 );
+					
 					cellCount++;
 				}
 			}

@@ -241,28 +241,29 @@ th>i{
 					$('#buttonDiv').html(str2);
 					//$('#spaceConfirmListTbody').append("<form name='trFrm' method='post'>");
 					
-					$.each(res.ajaxList, function() {
-						    str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-						    str += "<td>"
-						    str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
-						    str += "</td>";
-						    str += "<td class='red' onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_NUM;
-						    str += "</td>";
-						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
-						    str += "</td>";
-						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_NAME;
-						    str += "</td>";
-						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.USER_ID;
-						    str += "</td>";
-						    str += "<td onclick='location.href=;'' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
-						    str += "</td>";
-						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
-						    str += "</td>";
-						    str += "</tr>";
-						    i++;
+
+						$.each(res.ajaxList, function() {
+								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
+								str += "<td>"
+								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
+								str += "</td>";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_NUM;
+								str += "</td>";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
+								str += "</td>";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_NAME;
+								str += "</td>";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.USER_ID;
+								str += "</td>";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
+								str += "</td>";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+								str += "</td>";
+								str += "</tr>";
+								
+								i++;
 						});
-						
-						console.log(str)
+
 						i++;
 						$('#spaceConfirmListTbody').append(str);
 						//$('#spaceConfirmListTbody').append("</form>");
@@ -502,14 +503,31 @@ th>i{
 			$.spaceConfirmHistoryListSend(1);
 		}
 	}
+	
+	function locationHref(spaceNum) {
+		location.href = "/spaceCollection/admin/space/spaceConfirmList/spaceConfirmDetail?spaceNum="+spaceNum;
+	}
 	//승인 또는 거절할 체크박스 유효성 검사 끝
 </script>
 <main id="main" class="main">
+
+	<div class="pagetitle">
+		<h1>공간 관리</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">홈</li>
+				<li class="breadcrumb-item">공간 관리</li>
+				<li class="breadcrumb-item active">공간 승인 관리</li>
+			</ol>
+		</nav>
+	</div>
+	
 	<section class="section profile">
 		<div class="row">
 			<div class="col-lg-6" style="width: 100%">
 				<div class="card" id="card">
 					<div class="card-body pt-3">
+						<h5 class="card-title" style="font-weight: bold;"><a>공간 승인 관리</a></h5>
 						<ul class="nav nav-tabs nav-tabs-bordered">
 							<li class="nav-item">
 								<button class="nav-link active" data-bs-toggle="tab"
@@ -529,34 +547,36 @@ th>i{
 								<div class="col-12" id="buttonDiv"></div>
 							</div>
 							<div class="row mb-3">
-							<form name='trFrm' method='post'>
-								<table class="table">
-									<colgroup>
-										<col style="width: 5%;" />
-										<col style="width: 7%;" />
-										<col style="width: 12%;" />
-										<col style="width: 33%;" />
-										<col style="width: 15%;" />
-										<col style="width: 13%;" />
-										<col style="width: 15%;" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th scope="col"><input type="checkbox" name="chkAll"></th>
-											<th scope="col">번호</th>
-											<th scope="col">공간 타입</th>
-											<th scope="col">공간명</th>
-											<th scope="col">신청인</th>
-											<th scope="col">상태</th>
-											<th scope="col">신청일</th>
-										</tr>
-									</thead>
 
-									<tbody id="spaceConfirmListTbody">
-										<!-- ajax로 승인 요청 내역 출력 -->
-									</tbody>
-								</table>
-							</form>
+								<form name="trFrm" method="post">
+									<table class="table">
+										<colgroup>
+											<col style="width: 5%;" />
+											<col style="width: 7%;" />
+											<col style="width: 12%;" />
+											<col style="width: 33%;" />
+											<col style="width: 15%;" />
+											<col style="width: 13%;" />
+											<col style="width: 15%;" />
+										</colgroup>
+										<thead>
+											<tr>
+												<th scope="col"><input type="checkbox" name="chkAll"></th>
+												<th scope="col">번호</th>
+												<th scope="col">공간 타입</th>
+												<th scope="col">공간명</th>
+												<th scope="col">신청인</th>
+												<th scope="col">상태</th>
+												<th scope="col">신청일</th>
+											</tr>
+										</thead>
+	
+										<tbody id="spaceConfirmListTbody">
+											<!-- ajax로 승인 요청 내역 출력 -->
+										</tbody>
+									</table>
+								</form>
+
 								<div class="spaceConfirmListDivPage">
 									<!-- ajax로 페이징 -->
 								</div>

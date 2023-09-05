@@ -170,6 +170,16 @@
 		where space_num = #{spaceNum}
 	</update>
 	
+	<update id="spaceConfirmOne" parameterType="int">
+		update space set space_reg_date = sysdate, space_request_status = 'Y' 
+		where space_num = #{spaceNum}
+	</update>
+	
+	<update id="spaceDenineOne" parameterType="int">
+		update space set space_reg_date = sysdate, space_request_status = 'N' 
+		where space_num = #{spaceNum}
+	</update>
+	
 	<select id="selectSpaceConfirmList" parameterType="searchVo" resultType="map">
 		select * from
 		(
