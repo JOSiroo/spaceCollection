@@ -192,7 +192,7 @@
 		padding-right: 10px;
 	}
 	
-	.lbRefund, .lbPrice {
+	.lbPrice {
 		cursor: default;
 		font-weight: 600;
 		display: inline-block; 
@@ -201,24 +201,6 @@
 		width: 163px;
 		padding-right: 16px; 
 		color: rgb(17, 17, 17);
-	}
-	
-	.opRefund {
-		display: flex;
-    	align-items: center;
-		width: 50%;
-		margin-left: 22px;
-	}
-	
-	.spRefund {
-		display: flex;
-    	align-items: center;
-    	margin-bottom: 25px; 
-	}
-	
-	.opRefund span {
-		font-size: 18px;
-		color: #656565;
 	}
 	
 	.form-select {
@@ -570,163 +552,7 @@
 			<div class="heading" style="margin-top: 120px;">
 				<span class="hd1">환불 기준를 입력해주세요.</span>
 			</div>
-			<!-- 예약 기준 -->
-			<div class="boxForm" style="margin-top: 60px;">
-				<div class="boxContents">
-					<div class="refund">
-						<div class="spRefund">
-							<label class="lbRefund">이용 7일전</label>
-							<div class="opRefund">
-								<span>총 금액의</span>
-								<div>
-									<select class="form-select" name="refund7Day"
-										aria-label="Default select example">
-										<option selected value="100%">100%</option>
-									</select>
-								</div>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 6일전</label>
-							<div class="opRefund">
-								<span>총 금액의</span>
-								<select class="form-select" name="refund6Day"
-									aria-label="Default select example">
-									<option value="100%">100%</option>
-									<option value="90%">90%</option>
-									<option value="80%">80%</option>
-									<option value="70%">70%</option>
-									<option value="60%">60%</option>
-									<option value="50%">50%</option>
-									<option value="40%">40%</option>
-									<option value="30%">30%</option>
-									<option value="20%">20%</option>
-									<option value="10%">10%</option>
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 5일전</label>
-							<div class="opRefund">
-								<span>총 금액의</span> 
-								<select class="form-select" name="refund5Day"
-									aria-label="Default select example">
-									<option value="100%">100%</option>
-									<option value="90%">90%</option>
-									<option value="80%">80%</option>
-									<option value="70%">70%</option>
-									<option value="60%">60%</option>
-									<option value="50%">50%</option>
-									<option value="40%">40%</option>
-									<option value="30%">30%</option>
-									<option value="20%">20%</option>
-									<option value="10%">10%</option>
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 4일전</label>
-							<div class="opRefund">
-								<span>총 금액의</span> 
-								<select class="form-select" name="refund4Day"
-									aria-label="Default select example">
-									<option value="100%">100%</option>
-									<option value="90%">90%</option>
-									<option value="80%">80%</option>
-									<option value="70%">70%</option>
-									<option value="60%">60%</option>
-									<option value="50%">50%</option>
-									<option value="40%">40%</option>
-									<option value="30%">30%</option>
-									<option value="20%">20%</option>
-									<option value="10%">10%</option>
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 3일전</label>
-							<div class="opRefund">
-								<span>총 금액의</span> 
-								<select class="form-select" name="refund3Day"
-									aria-label="Default select example">
-									<option value="100%">100%</option>
-									<option value="90%">90%</option>
-									<option value="80%">80%</option>
-									<option value="70%">70%</option>
-									<option value="60%">60%</option>
-									<option value="50%">50%</option>
-									<option value="40%">40%</option>
-									<option value="30%">30%</option>
-									<option value="20%">20%</option>
-									<option value="10%">10%</option>
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 2일전</label>
-							<div class="opRefund">
-								<span>총 금액의</span> 
-								<select class="form-select" name="refund2Day"
-									aria-label="Default select example">
-									<option value="100%">100%</option>
-									<option value="90%">90%</option>
-									<option value="80%">80%</option>
-									<option value="70%">70%</option>
-									<option value="60%">60%</option>
-									<option value="50%">50%</option>
-									<option value="40%">40%</option>
-									<option value="30%">30%</option>
-									<option value="20%">20%</option>
-									<option value="10%">10%</option>
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 전날</label>
-							<div class="opRefund">
-								<span>총 금액의</span> 
-								<select class="form-select" name="refund1Day"
-									aria-label="Default select example">
-									<option value="100%">100%</option>
-									<option value="90%">90%</option>
-									<option value="80%">80%</option>
-									<option value="70%">70%</option>
-									<option value="60%">60%</option>
-									<option value="50%">50%</option>
-									<option value="40%">40%</option>
-									<option value="30%">30%</option>
-									<option value="20%">20%</option>
-									<option value="10%">10%</option>
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-						<div class="spRefund">
-							<label class="lbRefund">이용 당일</label>
-							<div class="opRefund">
-								<span>총 금액의</span> 
-								<select class="form-select" name="refundDay"
-									aria-label="Default select example">
-									<option selected value="0%">0%</option>
-								</select>
-								<span>환불</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 			<div class="heading" style="margin-top: 80px;">
 				<span class="hd1">세부 공간의 가격을 입력해주세요.</span>
 				<span class="hd2">* 필수선택</span>

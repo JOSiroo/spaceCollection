@@ -41,8 +41,9 @@
 		    space_address_detail, space_location, space_intro, space_info, space_tag, space_facility, 
 		    space_phone_num, space_warn, latitude, longitude, user_num, space_type_no)
 		values (#{spaceNum}, #{spaceName}, #{spaceBusinessNum}, #{spaceZipcode}, #{spaceAddress},
-			#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
-			#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, #{latitude}, #{longitude}, #{userNum}, #{spaceTypeNo})
+				#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
+				#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, #{latitude}, #{longitude}, 
+				#{userNum}, #{spaceTypeNo})
 	</insert>
 	
 	<select id="selectSpaceTypeBySpaceTypeName" resultType="spaceTypeVo" parameterType="String">
