@@ -58,6 +58,17 @@ a.btn.btn-primary.py-2.px-3 {
      box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
  }
 </style>
+
+<script src="weather.js">
+button.addEventListener('click', () => {
+	  navigator.geolocation.getCurrentPosition(success, fail);
+	});
+	...
+	const fail = () => {
+	  alert("좌표를 받아올 수 없음");
+	}
+</script>
+
    <div class="hero">
       <div class="hero-slide">
          <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
@@ -151,15 +162,15 @@ a.btn.btn-primary.py-2.px-3 {
             </div>
             <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
                <div class="box-feature">
-                  <span class="flaticon-house-1"></span>
+               <%@ include file="/WEB-INF/views/userMain/weather.jsp" %>
+                   <%--<span class="flaticon-house-1"></span>
                   <h3 class="mb-3" id="hboldfont">공간 기획전</h3>
-                  <p><a href="https://www.spacecloud.kr/focus/25" class="learn-more">Learn More</a></p>
-               </div>
+                  <p><a href="<c:url value='/user/focusList'/>"  class="learn-more">Learn More</a></p>--%>
+               </div> 
             </div>   
          </div>
       </div>
    </section>
-
 
 <!-- 리뷰 시작 -->
    <div class="section sec-testimonials">

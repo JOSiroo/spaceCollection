@@ -5,7 +5,7 @@
 <style type="text/css">
 	.reservation-header{
 		margin-top :120px;
-		padding:5% 16% 5% 16%;
+		padding: 5% 20% 4% 20%;
 	}
 	.search-box{
 		border : 5px solid #193D76;
@@ -142,7 +142,7 @@
 	}
     .divBox2 {
     width: 1000px;
-    margin-left: 256px;
+    margin-left: 24%;
 	}
 	span#span1 {
     font-weight: bold;
