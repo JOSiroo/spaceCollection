@@ -112,6 +112,11 @@ th>i{
 	float: right;
 	width: 144px;
 }
+
+.fade:not(.show){
+	display: none;
+}
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -234,32 +239,33 @@ th>i{
 					str2 += "<button type='button' class='btn btn-outline-danger' id='spaceDenineBt' onClick='$.spaceDenine()'>거절</button>";
 					
 					$('#buttonDiv').html(str2);
+					//$('#spaceConfirmListTbody').append("<form name='trFrm' method='post'>");
 					
-					str += "<form name='trFrm' method='post'>";
-						$.each(res.ajaxList, function() {
-								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-								str += "<td>"
-								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
-								str += "</td>";
-								str += "<td class='red' onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
-								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_TYPE_NAME;
-								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
-								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
-								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
-								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
-								str += "</td>";
-								str += "</tr>";
-								
-								i++;
+					$.each(res.ajaxList, function() {
+						    str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
+						    str += "<td>"
+						    str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
+						    str += "</td>";
+						    str += "<td class='red' onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_NUM;
+						    str += "</td>";
+						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
+						    str += "</td>";
+						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_NAME;
+						    str += "</td>";
+						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.USER_ID;
+						    str += "</td>";
+						    str += "<td onclick='location.href=;'' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
+						    str += "</td>";
+						    str += "<td onclick='location.href=;'' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+						    str += "</td>";
+						    str += "</tr>";
+						    i++;
 						});
-						str += "</form>";
+						
+						console.log(str)
 						i++;
-						$('#spaceConfirmListTbody').html(str);
+						$('#spaceConfirmListTbody').append(str);
+						//$('#spaceConfirmListTbody').append("</form>");
 						pageMake(res.pagingInfo);
 				}else{
 					str = "<tr>"
@@ -450,6 +456,7 @@ th>i{
 			$('#cancelBt').html("취소");
 			$('#okBt').html("승인");
 			$('#confirm1').modal("show");
+			alert($('form[name=trFrm] input[type=checkbox]:checked').length);
 			$('#okBt').click(function() {
 				$('#confirm1').modal("hide");
 				$(this).removeClass("btn-primary");
@@ -522,6 +529,7 @@ th>i{
 								<div class="col-12" id="buttonDiv"></div>
 							</div>
 							<div class="row mb-3">
+							<form name='trFrm' method='post'>
 								<table class="table">
 									<colgroup>
 										<col style="width: 5%;" />
@@ -548,6 +556,7 @@ th>i{
 										<!-- ajax로 승인 요청 내역 출력 -->
 									</tbody>
 								</table>
+							</form>
 								<div class="spaceConfirmListDivPage">
 									<!-- ajax로 페이징 -->
 								</div>
@@ -628,7 +637,7 @@ th>i{
 								            	</c:if>>거절</option>
 										</select>
 									</div>
-									<table class="table">
+									<table class="table" id="temp">
 										<colgroup>
 											<col style="width: 6%;" />
 											<col style="width: 12%;" />

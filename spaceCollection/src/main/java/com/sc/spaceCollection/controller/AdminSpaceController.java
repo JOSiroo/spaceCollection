@@ -350,7 +350,7 @@ public class AdminSpaceController {
 		return ajaxVo;
 	}
 	
-	@RequestMapping("spaceConfirmList/confirm")
+	@RequestMapping("/spaceConfirmList/confirm")
 	public String spaceConfirm(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 승인, 파라미터 listVo = {}", listVo);
 		
