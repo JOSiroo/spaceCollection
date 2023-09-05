@@ -57,6 +57,9 @@ a.btn.btn-primary.py-2.px-3 {
     margin-top:15px;
      box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
  }
+ #tns2 > .tns-item {
+ 	padding-right:51px !important;
+ }
 </style>
 
 <script src="weather.js">

@@ -39,17 +39,36 @@
 		</selectKey>
 		insert into space(space_num, space_name, space_business_num, space_zipcode, space_address, 
 		    space_address_detail, space_location, space_intro, space_info, space_tag, space_facility, 
-		    space_phone_num, space_warn, latitude, longitude, user_num, space_type_no)
+		    space_phone_num, space_warn, latitude, longitude, refund_num, user_num, space_type_no)
 		values (#{spaceNum}, #{spaceName}, #{spaceBusinessNum}, #{spaceZipcode}, #{spaceAddress},
 				#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
 				#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, #{latitude}, #{longitude}, 
-				#{userNum}, #{spaceTypeNo})
+				#{refundNum}, #{userNum}, #{spaceTypeNo})
 	</insert>
 	
 	<select id="selectSpaceTypeBySpaceTypeName" resultType="spaceTypeVo" parameterType="String">
 		select * from space_type
 		where space_type_name = #{spaceTypeName}
 	</select>
+	
+	<insert id="insertRefund" parameterType="refundVo">
+		<selectKey keyProperty="refundNum" order="BEFORE" resultType="int">
+			select refund_seq.nextval from dual
+		</selectKey>
+		insert into refund
+		values (#{refundNum}, #{refund7Day}, #{refund6Day}, #{refund5Day}, #{refund4Day}, 
+				#{refund3Day}, #{refund2Day}, #{refund1Day}, #{refundDay})
+	</insert>
+	
+	<insert id="insertSpaceTotalFacility" parameterType="spaceTotalFacilityVo">
+		<selectKey keyProperty="spaceFacilityNum" order="BEFORE" resultType="int">
+			select space_total_facility_seq.nextval from dual
+		</selectKey>
+		insert into space_total_facility
+		values (spaceFacilityNum, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, #{facRestRoom},
+				 #{facPC}, #{facTV}, #{facWhiteBoard}, #{facElevator}, #{facParking},
+				 #{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio}, #{spaceNum})
+	</insert>
 	
 	<insert id="insertFacility" parameterType="facilityVo">
 		<selectKey keyProperty="facilityNum" order="BEFORE" resultType="int">
