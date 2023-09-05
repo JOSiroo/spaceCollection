@@ -147,7 +147,7 @@
 	</article>
 
 	<article class="main">
-		<form name="frmRegi1" method="post" action="<c:url value='/host/registration/registration2' />" >
+		<form name="frmRegi1" method="get" action="<c:url value='/host/registration/registration2' />" >
 		
 			<div class="accordion accordion-flush" id="accordionFlushExample">
 				<c:forEach var="AllVo" items="${type }" varStatus="loopStatus">
