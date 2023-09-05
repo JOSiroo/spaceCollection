@@ -131,5 +131,9 @@
 		and USER_OUT_DATE IS NULL
 		and USER_SNS_CODE IS NULL
 	</select>
+	<select id="selectByUserNum" parameterType="int" resultType="string">
+		select user_id from user_info where user_num = #{userNum}	
+	</select>
+	
 	
 </mapper>

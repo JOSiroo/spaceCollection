@@ -60,4 +60,5 @@ public interface SpaceDAO {
 															@Param("status")String status);
 	List<Map<String, Object>> selectSpaceForExcel();
 	String selectSpaceTypeName(int spaceTypeNo);
+	Map<String, Object> selectSpaceConfirmDetailBySpaceNum(int spaceNum);
 }

@@ -44,4 +44,5 @@ public interface SpaceService {
 	int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
 	List<Map<String, Object>> selectSpaceForExcel();
 	String selectSpaceTypeName(int spaceTypeNo);
+	Map<String, Object> selectSpaceConfirmDetailBySpaceNum(int spaceNum);
 }

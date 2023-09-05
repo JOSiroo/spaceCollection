@@ -72,6 +72,7 @@
 </style>
 
 <script>
+
 	var page = 1;
 	var boardNum = ${param.boardNum}; 
 	
@@ -85,7 +86,7 @@
 			        + "</form>"
 			        + "<form name='CommentsBox' method='post' action='#' var='list1' items='" + this.list1 + "' >"
 			        + "<div class='anonym' style='margin: 10px;'><img class='userIcon' src='<c:url value='/images/userIcon.png'/>'>"
-			        + "<input type='text'  id='com_writer' placeholder='id' value='" + this.userNum + "' readonly style='width: 80px; border:none; font-weight: bold; '>"
+			        + "<input type='text'  id='com_writer' placeholder='id' value='" + this.userId + "' readonly style='width: 80px; border:none; font-weight: bold; '>"
 			        + "<input type='text' value='" + (this.commentRegDate).substring(0,10) + " " + (this.commentRegDate).substring(11,19)  + "' style='border: none; color: #999;' />"
 			        + "</div>"
 			        + "<div class='anonym2' style='margin: 10px;'>"
@@ -294,7 +295,7 @@ $(function() {
 			                </div>
 						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							
-						<input type="hidden" name="userNum" value="${map.USER_NUM }"/>
+						<input type="hidden" name="userNum" id = "userComment" value="${map.USER_NUM }"/>
 						</div> 
 					</form>
 				
