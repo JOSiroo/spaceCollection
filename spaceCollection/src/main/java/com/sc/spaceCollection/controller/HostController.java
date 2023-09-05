@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,44 +62,70 @@ public class HostController {
 		return "host/registration/registration1";
 	}
 	
-	@RequestMapping("/registration/registration2")
-	public String registration2(Model model) {
+	@GetMapping("/registration/registration2")
+	public String registration3(Model model) {
 		//1
-		logger.info("공간등록 페이지2 보여주기");
+		logger.info("공간등록 페이지 보여주기");
 		
-		// 2
+		//2
 		List<SpaceCategoryAllVO> type = hostService.selectSpaceCategory();
 		logger.info("type = {}", type);
 		
-		// 3
+		//3
 		model.addAttribute("type", type);
-
+		
 		//4
 		return "host/registration/registration2";
 	}
 	
-	@RequestMapping("/registration/registration3")
-	public String registration3(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
-			Model model) {
-		//1
-		logger.info("공간등록 페이지3 보여주기, spaceVo = {}, spaceTypeVO = {}", spaceVo, spaceTypeVO);
+	@PostMapping("/registration/registration2")
+	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
+			HttpSession session, Model model) {
+		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}", spaceVo, spaceTypeVO);
 		
-		// 2
+		//공간 번호 조회
 		SpaceTypeVO spaceTypeVO2 = hostService.selectSpaceTypeBySpaceTypeName(spaceTypeVO.getSpaceTypeName());
-		logger.info("공간 타입 조회, spaceTypeVO2 = {}", spaceTypeVO2);
+		spaceVo.setSpaceTypeNo(spaceTypeVO2.getSpaceTypeNo());
+		logger.info("공간 타입 번호 조회, SpaceTypeNo = {}", spaceTypeVO2.getSpaceTypeNo());
 		
-		// 3
-		model.addAttribute("spaceVo", spaceVo);
-		model.addAttribute("spaceTypeVO", spaceTypeVO2);
+		//사용자 번호 조회
+		String userId = (String) session.getAttribute("userId");
+		UserInfoVO user = hostService.selectUserById(userId);
+		spaceVo.setUserNum(user.getUserNum());
+		logger.info("유저 번호 조회, UserNum = {}", user.getUserNum());
 		
-		//4
-		return "host/registration/registration3";
+		//주소
+		String zipcode = "우편번호", address = "주소", adDetail = "상세주소";
+		Double latitude = 1.1, longitude = 2.2;
+		spaceVo.setSpaceZipcode(zipcode);
+		spaceVo.setSpaceAddress(address);
+		spaceVo.setSpaceAddressDetail(adDetail);
+		spaceVo.setLatitude(latitude);
+		spaceVo.setLongitude(longitude);
+		
+		//공간 등록
+		int cnt = hostService.insertSpace(spaceVo);
+		logger.info("cnt = {}", cnt);
+		
+		return "redirect:/host/index";
 	}
 	
-	@RequestMapping("/registration/registration4")
+	@GetMapping("/registration/spDetail")
+	public String spDetail(Model model) {
+		//1
+		logger.info("세부 공간등록 보여주기");
+		
+		// 2
+		// 3
+		
+		//4
+		return "host/registration/spDetail";
+	}
+	
+	@PostMapping("/registration/spDetail")
 	public String registration4() {
 		//1
-		logger.info("공간등록 페이지4 보여주기");
+		logger.info("세부 공간등록 처리");
 		
 		//2
 		

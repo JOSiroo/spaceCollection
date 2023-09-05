@@ -62,7 +62,7 @@
 	    display: block;
 	}
 	
-	.spText, .spBusiness, .spTel {
+	.spText, .spBusiness, .spTel, .floor {
 		width: 100%;
 		height: 50px;
 		border: 1px solid #b7b7b7;
@@ -302,6 +302,16 @@
       	//대표 전화번호 정규화
         $(".spTel").on("input", function() {
             var isValid = validate_number($(this).val());
+
+            if (!isValid) {
+                alert('숫자만 입력 가능합니다.');
+                $(this).val('');
+            }
+        });
+        
+      	//공간 층수 정규화
+        $(".floor").on("input", function() {
+            var isValid = validate_number($(".floor").val());
 
             if (!isValid) {
                 alert('숫자만 입력 가능합니다.');
@@ -584,6 +594,16 @@
 				return false;
 			}
 
+    		//공간 층수
+    		if ($('.floor').val().toString().length < 1) {
+    			alert('공간 층수를 입력하세요.');
+    			$('.floor').focus();
+    			
+    			scrollMove($('.floor'));
+    			
+    			return false;
+    		}
+
 			//공간 태그
 			if ($('.spaceTag.tag').find('.tagRe').length < 1) {
 				alert('공간 태그를 하나라도 입력하세요.');
@@ -641,7 +661,7 @@
 
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration3' />">
+		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -773,6 +793,18 @@
 						<textarea class="spText" name="spaceInfo"
 							placeholder=" 게스트들에게 필요한 공간 정보를 상세하게 소개해주세요. 툴팁을 클릭해 작성 가이드를 확인할 수 있습니다." 
 							maxlength="500" rows="6" ></textarea>
+					</div>
+				</div>
+			</div>
+			<!-- 공간 층수 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>공간 층수 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spaceText">
+						<input type="text" class="spText floor" value=""
+							name="spaceLocation" placeholder="층수 여부를 입력하세요. ex. 지상 1층, 지하 2층">
 					</div>
 				</div>
 			</div>

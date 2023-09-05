@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,11 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public List<Integer> getDataByDate(String date, int userNum) {
 		return hostDao.getDataByDate(date, userNum);
+	}
+
+	@Override
+	public int insertSpace(SpaceVO spaceVo) {
+		return hostDao.insertSpace(spaceVo);
 	}
 
 

@@ -116,8 +116,8 @@
 		resize: none;
 	}
 	
-	.area, .floor {
-		width: 90%;
+	.area, .sdPrice {
+		width: 60%;
 		height: 50px;
 		border: 1px solid #b7b7b7;
 		font-size: 17px;
@@ -192,7 +192,7 @@
 		padding-right: 10px;
 	}
 	
-	.lbRefund {
+	.lbRefund, .lbPrice {
 		cursor: default;
 		font-weight: 600;
 		display: inline-block; 
@@ -258,19 +258,9 @@
 		    $('.eleve').not(this).removeClass('checked');
 		});
       	
-      	
+      	//공간 정규화
         $(".area").on("input", function() {
             var isValid = validate_number($(".area").val());
-
-            if (!isValid) {
-                alert('숫자만 입력 가능합니다.');
-                $(this).val('');
-            }
-        });
-        
-      	//공간 층수 정규화
-        $(".floor").on("input", function() {
-            var isValid = validate_number($(".floor").val());
 
             if (!isValid) {
                 alert('숫자만 입력 가능합니다.');
@@ -281,6 +271,16 @@
       	//인원 정규화
         $(".txtPerson").on("input", function() {
             var isValid = validate_number($(".txtPerson").val());
+
+            if (!isValid) {
+                alert('숫자만 입력 가능합니다.');
+                $(this).val('');
+            }
+        });
+        
+      	//가격 정규화
+        $(".sdPrice").on("input", function() {
+            var isValid = validate_number($(".sdPrice").val());
 
             if (!isValid) {
                 alert('숫자만 입력 가능합니다.');
@@ -304,16 +304,6 @@
     			return false;
     		}
 
-    		//공간 층수
-    		if ($('.floor').val().toString().length < 1) {
-    			alert('공간 층수를 입력하세요.');
-    			$('.floor').focus();
-    			
-    			scrollMove($('.floor'));
-    			
-    			return false;
-    		}
-
     		//세부 공간명
     		if ($('.sdName').val().toString().length < 1) {
     			alert('공간 층수를 입력하세요.');
@@ -323,7 +313,16 @@
     			
     			return false;
     		}
-    		
+
+    		//가격
+    		if ($('.sdPrice').val().toString().length < 1) {
+    			alert('공간 층수를 입력하세요.');
+    			$('.sdPrice').focus();
+    			
+    			scrollMove($('.sdPrice'));
+    			
+    			return false;
+    		}
 		
 		});
       	
@@ -369,7 +368,7 @@
 				<div class="boxContents">
 					<div class="spTime">
 						<select class="form-select openTime" name="sdOpenTime"
-							aria-label="Default select example" style="float: left; font-size: 17px;">
+							aria-label="Default select example" style="float: left; font-size: 17px; width: 20%;">
 						  	<option selected value="00">00시</option>
 						  	<option value="01">01시</option>
 						  	<option value="02">02시</option>
@@ -397,8 +396,8 @@
 						  	<option value="24">24시</option>
 						</select>
 						<span class="txtHour" style="float: left;">부터</span>
-						<select class="form-select closeTime" name="sdCloseTime"
-							aria-label="Default select example" style="float: left; font-size: 17px;">
+						<select class="form-select closeTime" name="sdCloseTime" aria-label="Default select example" 
+							style="float: left; font-size: 17px; width: 20%;">
 						  	<option value="00">00시</option>
 						  	<option value="01">01시</option>
 						  	<option value="02">02시</option>
@@ -433,6 +432,33 @@
 					</div>
 				</div>
 			</div>
+			<!-- 최소 이용시간 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>최소 이용시간 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spMinTime">
+						<select class="form-select openTime" name="sdMinTime" aria-label="Default select example" 
+							style="float: left; font-size: 16px; margin: 10px 0 0 0; width: 30%;">
+						  	<option selected value="1시간">1시간</option>
+						  	<option value="2시간">2시간</option>
+						  	<option value="3시간">3시간</option>
+						  	<option value="4시간">4시간</option>
+						  	<option value="5시간">5시간</option>
+						  	<option value="6시간">6시간</option>
+						  	<option value="7시간">7시간</option>
+						  	<option value="8시간">8시간</option>
+						  	<option value="9시간">9시간</option>
+						  	<option value="10시간">10시간</option>
+						</select>
+					</div>
+					<div class="boxnoti"  style="float: inherit;">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>예약이 가능한 최소 이용시간을 선택해주세요.</p>
+					</div>
+				</div>
+			</div>
 			<div class="heading" style="margin-top: 100px;">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
 			</div>
@@ -445,18 +471,6 @@
 					<div class="spaceArea">
 						<input type="text" class="area" maxlength="3" value="" name="sdArea" id="sdArea" >
 						<span style="font-size: 20px; color: black; margin-left: 15px; font-weight: bold;">평</span>
-					</div>
-				</div>
-			</div>
-			<!-- 공간 층수 -->
-			<div class="boxForm">
-				<div class="boxTitle">
-					<span>공간 층수 <span style="color: red;">*</span></span>
-				</div>
-				<div class="boxContents">
-					<div class="spaceText">
-						<input type="text" class="floor" value="" style="font-size: 18px;" name="spaceLocation"
-							placeholder="층수 여부를 입력하세요. ex. 지상 1층, 지하 2층">
 					</div>
 				</div>
 			</div>
@@ -714,37 +728,29 @@
 				</div>
 			</div>
 			<div class="heading" style="margin-top: 80px;">
-				<span class="hd1">세부 공간의 예약단위를 입력해주세요.</span>
+				<span class="hd1">세부 공간의 가격을 입력해주세요.</span>
 				<span class="hd2">* 필수선택</span>
-				<div class="boxnoti">
-					<img src="<c:url value='/images/pngwing.com.png' />" >
-					<p>시간단위, 패키지단위 중 최소 1개 예약단위 체크박스를 설정해주세요.</p>
-				</div>
 			</div>
 			<!-- 세부 공간명 -->
-			<div class="boxForm">
-				<div class="boxTitle">
-					<span>세부 공간명 <span style="color: red;">*</span></span>
-				</div>
+			<div class="boxForm" style="margin-top: 40px;">
 				<div class="boxContents">
-					<div class="spaceDetailName">
-						<input type="text" class="sdName" name="sdType" value="" required >
+					<div class="spaceDetailPrice">
+						<input type="text" class="sdPrice" name="sdPrice" value="" required >
+						<label class="lbPrice">원</label>
+					</div>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>1시간 기준의 금액입니다.</p>
 					</div>
 				</div>
 			</div>
+			
 
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
 				<button type="submit" class="btn btn-warning" id="next" >다음</button>
 			</div>
 			
-			<input type="text" name="spaceName" value="${spaceVo.spaceName }">
-			<input type="text" name="spaceTypeName" value="${spaceTypeVO.spaceTypeName } }">
-			<input type="text" name="spaceIntro" value="${spaceVo.spaceIntro } }">
-			<input type="text" name="spaceInfo" value="${spaceVo.spaceInfo } }">
-			<input type="text" name="spaceTag" value="${spaceVo.spaceTag } }">
-			<input type="text" name="spaceFacility" value="${spaceVo.spaceFacility } }">
-			<input type="text" name="spaceWarn" value="${spaceVo.spaceWarn } }">
 		</form>
 	</div>
 </article>

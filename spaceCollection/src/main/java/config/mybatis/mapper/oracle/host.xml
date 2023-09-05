@@ -33,7 +33,7 @@
 		where user_id = #{userId}
 	</select>
 	
-	<insert id="insertSpace">
+	<insert id="insertSpace" parameterType="spaceVo">
 		<selectKey keyProperty="spaceNum" order="BEFORE" resultType="int">
 			select space_seq.nextval from dual
 		</selectKey>
@@ -42,7 +42,7 @@
 		    space_phone_num, space_warn, latitude, longitude, user_num, space_type_no)
 		values (#{spaceNum}, #{spaceName}, #{spaceBusinessNum}, #{spaceZipcode}, #{spaceAddress},
 			#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
-			#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, 11, 22, #{userNum}, #{spaceTypeNo})
+			#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, #{latitude}, #{longitude}, #{userNum}, #{spaceTypeNo})
 	</insert>
 	
 	<select id="selectSpaceTypeBySpaceTypeName" resultType="spaceTypeVo" parameterType="String">
@@ -50,7 +50,23 @@
 		where space_type_name = #{spaceTypeName}
 	</select>
 	
+	<insert id="insertFacility" parameterType="facilityVo">
+		<selectKey keyProperty="facilityNum" order="BEFORE" resultType="int">
+			select facility_seq.nextval from dual
+		</selectKey>
+		insert into facility
+		values (#{facilityNum}, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, 
+				#{facRestRoom}, #{facPC}, #{facTV}, #{facWhiteBoard}, #{facElevator}, #{facParking}, 
+				#{facFloor}, #{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio})
+	</insert>
 	
+	<insert id="insertSpaceDetail" parameterType="spaceDetailVo">
+		<selectKey keyProperty="sdNum" order="BEFORE" resultType="int">
+			select space_detail_seq.nextval from dual
+		</selectKey>
+		insert into space_detail()
+		values ()
+	</insert>
 	
 	<select id="selectHostReservation" resultType="map">
 		select *
