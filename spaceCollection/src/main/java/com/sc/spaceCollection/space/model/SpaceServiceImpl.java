@@ -154,7 +154,6 @@ public class SpaceServiceImpl implements SpaceService{
 	@Transactional
 	public int spaceConfirm(SpaceListVO listVo) {
 		int cnt = 0;
-		
 		try {
 			for(SpaceVO vo : listVo.getSpaceItemList()) {
 				if(vo.getSpaceNum() > 0) {
@@ -370,6 +369,12 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<SpaceVO> selectAllMap() {
 		return spaceDao.selectAllMap();
 
+	}
+
+
+	@Override
+	public String selectSpaceTypeName(int spaceTypeNo) {
+		return spaceDao.selectSpaceTypeName(spaceTypeNo);
 	}
 
 
