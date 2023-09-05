@@ -24,13 +24,13 @@
  .mapHeader{
  	height: 70px;
  	background:#193D76;
- 	padding-top:0.5%;
  }
  .spaceType{
 	color : white;
 	float:left; 
   	margin-left : 2%;
-  	width: 50%;
+  	width: 5%;
+  	margin-top:1%;
  }
  .closeBtn{
  	font-weight: bold;
@@ -43,8 +43,10 @@
   	margin-left:97.7%;
  }
  .goSpace{
+ 	font-weight:bolder;
+ 	font-size:18px;
  	text-decoration: none;
- 	color : black;
+ 	color :#193D76 ;
  }
  .goSpace:hover{
  	text-decoration: none;
@@ -66,26 +68,37 @@
  	font-weight:bold;
  	text-decoration: none;
  	float:right;
- 	margin-right:1%;
+ 	margin-right:2%;
+ 	padding-top:0.5%;
  }
  .closeMap:hover{
  	color:#ffd014;
  }
+ #sideBar{
+ 	font-size:21px;
+ 	background:#ffd014;
+ 	color:black;
+ 	padding:0.5% 2% 0.5% 2%;
+ 	font-weight: bold;
+ 	border:1px solid white;
+ 	display: inline-block;
+ 	margin-left:17%;
+ 	margin-top:0.4%;
+ }
 	 .center{background: #193D76; color:white; padding:14% 24% 14% 24%; text-decoration:none; font-size:18px;border:white; border-radius: 2rem;}
 	 .center:hover{color:black; background: #ffd014}
 	    
- 	.wrap2 {border:4px solid #193D76 !important; border-radius:1rem; position: absolute;left: 0;bottom: 40px;width: 330px;height: 440px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+ 	.wrap2 {border:2px solid #ffd014 !important; border-radius:1rem; position: absolute;left: 0;bottom: 40px;width: 330px;height: 350px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap2 * {padding: 0;margin: 0;}
-    .wrap2 .info2 {width: 350px;height: 440px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap2 .info2 {width: 330px;height: 380px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info2 .title {padding: 4px 0px 0px 4px;height: 15px;background: white;color:white;
-    				font-size: 18px;font-weight: bold;
-    				    margin-bottom: 10px;}
+    .info2 .title {background: white;color:white;
+    				font-size: 18px;font-weight: bold;}
     .info2 .close {position: absolute;top: 10px;right: 10px;color: white;width: 17px;height: 17px;}
     .info2 .close:hover {cursor: pointer;}
-    .info2 .body2 {position: relative;overflow: hidden; width:90%; padding: 0% 0% 0% 4%;}
-    .info2 .desc {position: relative;margin: 13px 0 0 13px;height: 75px;}
-    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    .info2 .body2 {position: relative;overflow: hidden;}
+    .info2 .desc {position: relative; margin-top:15px; margin-left:10px; font-weight: bold;}
+    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin-top:6px;}
     .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
     .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info2 .link {color: #5085BB;}
@@ -97,10 +110,10 @@
 	<div class = "mapHeader">
 		<div class = "spaceType">
 			<h4 style="font-weight: bold;">${title}</h4>
-			<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" id="sideBarBt"data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-			  자세히 보기
-			</button>
 		</div>
+			<button class="btn btn-primary" id="sideBar" type="button" data-bs-toggle="offcanvas" id="sideBarBt"data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+			  자세히 보기&nbsp;&nbsp;<i id="sideBar-icon" class="bi bi-layout-sidebar-inset"></i>
+			</button>
 		<a class="closeMap" href="#" onclick="goBack()">
 			X
 		</a>
@@ -173,16 +186,16 @@ var content = '<div class="wrap2">' +
 	        '            <div class="close" onclick="closeOverlay()" title="닫기">X</div>' + 
 	        '        </div>' + 
 	        '        	<div class="body2">' + 
-						'	<div id="carouselExample" class="carousel slide">'+
+						'	<div id="carouselExample" class="carousel carousel-fade">'+
 					'		  	<div class="carousel-inner">'+
 						 '   		<div class="carousel-item active">'+
-						  '  			<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">'+
+						  '  			<img src="<c:url value="/images/img_8.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
 						   ' 		</div>'+
 						    '		<div class="carousel-item">'+
-						    '			<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">'+
+						    '			<img src="<c:url value="/images/img_7.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
 						    '		</div>'+
 						    '		<div class="carousel-item">'+
-						   '		 	<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">'+
+						   '		 	<img src="<c:url value="/images/img_6.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
 						   ' 		</div>'+
 						  '			</div>'+
 						'  			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">'+
@@ -197,7 +210,7 @@ var content = '<div class="wrap2">' +
 	        '            <div class="desc">' + 
 	        '			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum=${i.key.spaceNum}"/>">${i.key.spaceName}</a> '+
 	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
-	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:2%;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
+	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:5px;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
 	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5></div>' + 
 	        '            </div>' + 
 	        '        </div>' + 
