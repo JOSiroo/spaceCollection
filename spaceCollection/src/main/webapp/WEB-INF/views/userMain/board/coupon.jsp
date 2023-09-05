@@ -32,17 +32,18 @@ section {
         var today = new Date().toISOString().slice(0, 10);
         var lastClickDate = localStorage.getItem("lastClickDate");
 
-        if (lastClickDate !== today) {
-            // 오늘 클릭한 경우에만 쿠폰 발행
-            var generatedCoupon = "${num}"; // 서버에서 전달된 num 값
-            alert("발행된 쿠폰 번호 : \"" + generatedCoupon + "\"");
-            // 오늘의 날짜를 로컬 스토리지에 저장
-            localStorage.setItem("lastClickDate", today);
-            // 클릭 이벤트 핸들러를 제거하여 버튼이 다시 클릭되지 않게 함
-            document.getElementById("generateButton").removeEventListener("click", generateCoupon);
-        } else {
-            alert("쿠폰은 하루 한 번만 발급됩니다.");
-        }
+	        if (lastClickDate !== today) {
+	            // 오늘 클릭한 경우에만 쿠폰 발행
+	            var generatedCoupon = "${num}"; // 서버에서 전달된 num 값
+	            alert("발행된 쿠폰 번호 : \"" + generatedCoupon + "\"");
+	            // 오늘의 날짜를 로컬 스토리지에 저장
+	            localStorage.setItem("lastClickDate", today);
+	            // 클릭 이벤트 핸들러를 제거하여 버튼이 다시 클릭되지 않게 함
+	            document.getElementById("generateButton").removeEventListener("click", generateCoupon);
+	        } else {
+	            alert("쿠폰은 하루 한 번만 발급됩니다.");
+	        }
+	        
     }
     
  	// 페이지 로드 시에 실행되는 함수

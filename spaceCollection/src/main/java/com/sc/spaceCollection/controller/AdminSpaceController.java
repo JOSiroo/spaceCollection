@@ -350,7 +350,7 @@ public class AdminSpaceController {
 		return ajaxVo;
 	}
 	
-	@RequestMapping("spaceConfirmList/confirm")
+	@RequestMapping("/spaceConfirmList/confirm")
 	public String spaceConfirm(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 승인, 파라미터 listVo = {}", listVo);
 		
@@ -359,6 +359,11 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "승인 처리가 완료되었습니다.";
+			try {
+				admin.sendSpaceConfirmEmail();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		model.addAttribute("msg", msg);
@@ -369,7 +374,7 @@ public class AdminSpaceController {
 		
 	}
 	
-	@RequestMapping("spaceConfirmList/denine")
+	@RequestMapping("/spaceConfirmList/denine")
 	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
 		
@@ -384,7 +389,48 @@ public class AdminSpaceController {
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
+	}
+	
+	@RequestMapping("/spaceConfirmList/confirmOne")
+	public String spaceConfirm(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
+		logger.info("공간 승인, 파라미터 spaceNum = {}", spaceNum);
+		
+		int cnt = spaceService.spaceConfirmOne(spaceNum);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "승인 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
 		
 		
+	}
+	
+	@RequestMapping("/spaceConfirmList/denineOne")
+	public String spaceDenine(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
+		logger.info("공간 거절, 파라미터 spaceNum = {}", spaceNum);
+		
+		int cnt = spaceService.spaceDenineOne(spaceNum);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "거절 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@RequestMapping("/spaceConfirmList/spaceConfirmDetail")
+	public String spaceConfirmDetail(@RequestParam(defaultValue = "0")int spaceNum) {
+		logger.info("공간 승인 관리 상세보기, 파라미터 spaceNum = {}", spaceNum);
+		
+		return "admin/space/spaceConfirmDetail";
 	}
 }

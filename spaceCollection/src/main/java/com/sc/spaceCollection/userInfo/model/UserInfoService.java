@@ -3,6 +3,7 @@ package com.sc.spaceCollection.userInfo.model;
 import java.util.List;
 import java.util.Map;
 
+import com.sc.spaceCollection.comments.model.CommentsVO;
 import com.sc.spaceCollection.common.SearchVO;
 
 public interface UserInfoService {

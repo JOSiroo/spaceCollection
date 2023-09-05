@@ -104,5 +104,8 @@
 		update board set BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent} where BOARD_NUM = #{boardNum}
 	</update>
 	
+	<select id="selectFocus" resultType="boardVo">
+		select * from board where BOARD_TYPE_ID like 'b00019'
+	</select>
 	
 </mapper>

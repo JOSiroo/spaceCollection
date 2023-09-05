@@ -72,7 +72,7 @@
   	<h1 style="animation:fadeInDown 2s">어떤 공간을 찾고 있나요?</h1>
     <div class="icon-container">
 	  <c:forEach var="i" begin="5" end="16">
-  		<div class="icon" id="iconimage${i}" style="animation: fadeInDown ${(i / 10)*5}s">
+  		<div class="icon" id="iconimage${i}" style="animation: fadeInDown ${(i / 5)}s">
 		    <a href="<c:url value='/search?spaceTypeNo=${i}' />">
 		      <img src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>

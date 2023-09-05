@@ -90,6 +90,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.selectNotice(startRow, endRow, boardTitle,boardContent,searchKeyword);
 	}
 
+	@Override
+	public List<BoardVO> selectFocus() {
+		return boardDao.selectFocus();
+	}
+
 	
 
 }

@@ -6,14 +6,11 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-	
     .section1{
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
     justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto; 
+    align-items: center;
 	} 
 	.section2{
 	display: flex;
