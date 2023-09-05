@@ -549,10 +549,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="heading" style="margin-top: 120px;">
-				<span class="hd1">환불 기준를 입력해주세요.</span>
-			</div>
-			
 			<div class="heading" style="margin-top: 80px;">
 				<span class="hd1">세부 공간의 가격을 입력해주세요.</span>
 				<span class="hd2">* 필수선택</span>
