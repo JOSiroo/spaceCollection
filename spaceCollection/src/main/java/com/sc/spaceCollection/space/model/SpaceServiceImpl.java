@@ -226,7 +226,8 @@ public class SpaceServiceImpl implements SpaceService{
 			String address = "";
 			
 			Map<String, Object> map = list.get(i);
-			Map<String, Object> map2 = listtrans.get(i);
+			Map<String, Object> map2 = new HashMap<>();
+			
 			map2.put("SPACE_NUM", map.get("SPACE_NUM"));
 			map2.put("SPACE_NAME", map.get("SPACE_NAME"));
 			map2.put("SPACE_BUSINESS_NUM", map.get("SPACE_BUSINESS_NUM"));
@@ -237,21 +238,29 @@ public class SpaceServiceImpl implements SpaceService{
 			map2.put("SPACE_ADDRESS", address);
 			map2.put("SPACE_TAG", map.get("SPACE_TAG"));
 			map2.put("SPACE_PHONE_NUM", map.get("SPACE_PHONE_NUM"));
-			if(map.get("DEL_FLAG").equals("Y")) {
+			if((map.get("DEL_FLAG")+"").equals("Y")) {
 				map2.put("DEL_FLAG", "삭제");
 			}else {
 				map2.put("DEL_FLAG", "정상");
 			}
-			if(map.get("SPACE_REQUEST_STATUS").equals("Y")) {
+			if((map.get("SPACE_REQUEST_STATUS")+"").equals("Y")) {
 				map2.put("SPACE_REQUEST_STATUS", "승인");
-			}else if(map.get("SPACE_REQUEST_STATUS").equals("N")) {
+			}else if((map.get("SPACE_REQUEST_STATUS")+"").equals("N")) {
 				map2.put("SPACE_REQUEST_STATUS", "거절");
 			}else {
 				map2.put("SPACE_REQUEST_STATUS", "요청");
 			}
 			map2.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0, 10));
-			map2.put("SPACE_REG_DATE", (map.get("SPACE_REG_DATE")+"").substring(0, 10));
-			map2.put("SPACE_OUT_DATE", (map.get("SPACE_OUT_DATE")+"").substring(0, 10));
+			if(map.get("SPACE_REG_DATE") != null) {
+				map2.put("SPACE_REG_DATE", (map.get("SPACE_REG_DATE")+"").substring(0, 10));
+			}else {
+				map2.put("SPACE_REG_DATE", "");
+			}
+			if(map.get("SPACE_OUT_DATE") != null) {
+				map2.put("SPACE_OUT_DATE", (map.get("SPACE_OUT_DATE")+"").substring(0, 10));
+			}else {
+				map2.put("SPACE_OUT_DATE", "");
+			}
 			map2.put("SPACE_TYPE_NAME", map.get("SPACE_TYPE_NAME"));
 			map2.put("USER_ID", map.get("USER_ID"));
 			map2.put("USER_EMAIL", map.get("USER_EMAIL"));
@@ -363,13 +372,27 @@ public class SpaceServiceImpl implements SpaceService{
 			}
 			
 			map2.put("FACILITY", fac);
+			listtrans.add(map2);
 		}
 		
-		return list;
+		return listtrans;
 	}
+	
 	public List<SpaceVO> selectAllMap() {
 		return spaceDao.selectAllMap();
 
+	}
+
+
+	@Override
+	public int spaceConfirmOne(int spaceNum) {
+		return spaceDao.spaceConfirmOne(spaceNum);
+	}
+
+
+	@Override
+	public int spaceDenineOne(int spaceNum) {
+		return spaceDao.spaceDenineOne(spaceNum);
 	}
 
 
