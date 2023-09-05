@@ -177,7 +177,5 @@ public class GuestController {
 		}
 		return bool;
 	}
-
-	
 	
 }

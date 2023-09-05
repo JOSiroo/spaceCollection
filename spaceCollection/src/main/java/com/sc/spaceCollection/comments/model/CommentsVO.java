@@ -14,4 +14,7 @@ public class CommentsVO {
 	private int boardNum;
 	private int userNum;
 	private int addNum;
+	
+	//댓글 불러오기용
+	private String userId;
 }

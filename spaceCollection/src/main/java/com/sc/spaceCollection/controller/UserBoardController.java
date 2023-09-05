@@ -143,6 +143,14 @@ public class UserBoardController {
 		int count = commentsService.countComments(boardNum);
 	    List<CommentsVO> list1 = commentsService.selectPaging(page, size, boardNum);
 	    
+	    for(CommentsVO vo : list1) {
+	    	logger.info("getUserNum = {}",vo.getUserNum());
+	    	vo.setUserId(guestService.selectByUserNum(vo.getUserNum()));
+	    	
+	    	logger.info("getUserId = {}",vo.getUserId());
+	    }
+	    
+	    
 	    logger.info("list1={}",list1);
 	    
 	    model.addAttribute("list1", list1);

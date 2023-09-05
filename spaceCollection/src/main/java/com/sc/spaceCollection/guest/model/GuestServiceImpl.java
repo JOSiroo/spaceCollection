@@ -116,4 +116,9 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.countByUserIdUserEmail(userId, userEmail);
 	}
 
+	@Override
+	public String selectByUserNum(int userNum) {
+		return guestDao.selectByUserNum(userNum);
+	}
+
 }
