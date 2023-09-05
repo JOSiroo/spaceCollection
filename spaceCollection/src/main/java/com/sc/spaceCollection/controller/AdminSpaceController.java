@@ -2,6 +2,8 @@ package com.sc.spaceCollection.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +24,11 @@ import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.email.AdminEmailSender;
+import com.sc.spaceCollection.email.EmailVO;
 import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
+import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeListVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryListVO;
@@ -359,8 +363,89 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "승인 처리가 완료되었습니다.";
+			for(SpaceVO vo : listVo.getSpaceItemList()) {
+				EmailVO emailVo = new EmailVO();
+				if(vo.getSpaceNum() > 0) {
+					Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(vo.getSpaceNum());
+					emailVo.setSpaceNum(Integer.parseInt(map.get("SPACE_NUM")+""));
+					emailVo.setUserEmail(map.get("USER_EMAIL")+"");
+					emailVo.setSpaceTypeName(map.get("SPACE_TYPE_NAME")+"");
+					emailVo.setSpaceName(map.get("SPACE_NAME")+"");
+					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+					emailVo.setSpaceRequestStatus(map.get("SPACE_REQUEST_STATUS")+"");
+					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+					
+					try {
+						admin.sendSpaceConfirmEmail(emailVo);
+					} catch (MessagingException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			}
+			
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+		
+	}
+	
+	@RequestMapping("/spaceConfirmList/denine")
+	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
+		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
+		
+		int cnt = spaceService.spaceDenine(listVo);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "거절 처리가 완료되었습니다.";
+
+			for(SpaceVO vo : listVo.getSpaceItemList()) {
+				EmailVO emailVo = new EmailVO();
+				if(vo.getSpaceNum() > 0) {
+					Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(vo.getSpaceNum());
+					emailVo.setSpaceNum(Integer.parseInt(map.get("SPACE_NUM")+""));
+					emailVo.setUserEmail(map.get("USER_EMAIL")+"");
+					emailVo.setSpaceTypeName(map.get("SPACE_TYPE_NAME")+"");
+					emailVo.setSpaceName(map.get("SPACE_NAME")+"");
+					emailVo.setReason("검토 후 일괄 거절");
+					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+					emailVo.setSpaceRequestStatus(map.get("SPACE_REQUEST_STATUS")+"");
+					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+
+					try {
+						admin.sendSpaceConfirmEmail(emailVo);
+					} catch (MessagingException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@RequestMapping("/spaceConfirmList/confirmOne")
+	public String spaceConfirm(@ModelAttribute EmailVO vo, Model model) {
+		logger.info("공간 승인, 파라미터 vo = {}", vo);
+		
+		int cnt = spaceService.spaceConfirmOne(vo.getSpaceNum());
+		vo.setSpaceRequestStatus("Y");
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		vo.setSpaceRegDate(sdf.format(date));
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "승인 처리가 완료되었습니다.";
 			try {
-				admin.sendSpaceConfirmEmail();
+				admin.sendSpaceConfirmEmail(vo);
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
@@ -374,51 +459,24 @@ public class AdminSpaceController {
 		
 	}
 	
-	@RequestMapping("/spaceConfirmList/denine")
-	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
-		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
-		
-		int cnt = spaceService.spaceDenine(listVo);
-		
-		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
-		if(cnt>0) {
-			msg = "거절 처리가 완료되었습니다.";
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "admin/common/message";
-	}
-	
-	@RequestMapping("/spaceConfirmList/confirmOne")
-	public String spaceConfirm(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
-		logger.info("공간 승인, 파라미터 spaceNum = {}", spaceNum);
-		
-		int cnt = spaceService.spaceConfirmOne(spaceNum);
-		
-		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
-		if(cnt>0) {
-			msg = "승인 처리가 완료되었습니다.";
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "admin/common/message";
-		
-		
-	}
-	
 	@RequestMapping("/spaceConfirmList/denineOne")
-	public String spaceDenine(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
-		logger.info("공간 거절, 파라미터 spaceNum = {}", spaceNum);
+	public String spaceDenine(@ModelAttribute EmailVO vo, Model model) {
+		logger.info("공간 승인, 파라미터 vo = {}", vo);
 		
-		int cnt = spaceService.spaceDenineOne(spaceNum);
+		int cnt = spaceService.spaceDenineOne(vo.getSpaceNum());
+		vo.setSpaceRequestStatus("N");
 		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		vo.setSpaceRegDate(sdf.format(date));
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "거절 처리가 완료되었습니다.";
+			try {
+				admin.sendSpaceConfirmEmail(vo);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		model.addAttribute("msg", msg);

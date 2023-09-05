@@ -86,8 +86,9 @@
 		width: 100px;
 	}
 	
-	div>select{
-		margin-top: 10px;
+	.floatR{
+		clear: both;
+		float: right;
 	}
 	
 </style>
@@ -101,23 +102,22 @@
 		});
 		
 		$('#confirmBt').click(function() {
+			$('#confirm1 .modal-body').html("승인 처리하시겠습니까?");
+			$('#okBt').show();
+			$('#okBt').addClass("btn-primary");
+			$('#cancelBt').html("취소");
+			$('#okBt').html("승인");
 			$('#confirm1').modal("show");
-			$('#confirmOkBt').click(function() {
+			$('#okBt').click(function() {
 				$('#confirm1').modal("hide");
-				$('form[name=confirmFrm]').attr('action', '/spaceCollection/admin/space/spaceConfirmList/confirmOne');
-				$('form').submit();
+				$(this).removeClass("btn-primary");
+				$('#okBt').hide();
+				location.href="/spaceCollection/admin/space/spaceConfirmList/confirmOne?spaceNum="+$('input[name=spaceNum]').val();
 			});
 		});
 		
-		
-		
 		$('#denineBt').click(function() {
-			$('#confirm2').modal("show");
-			$('#denineOkBt').click(function() {
-				$('#confirm2').modal("hide");
-				$('form[name=confirmFrm]').attr('action', '/spaceCollection/admin/space/spaceConfirmList/denineOne');
-				$('form').submit();
-			});
+			
 		});
 	});
 </script>
@@ -143,7 +143,6 @@
 				<div class="card" id="pageDiv">
 					<div class="card-body">
 						<input type="hidden" name="spaceNum" value="${map.SPACE_NUM }">
-						<input type="hidden" name="userEmail" value="${map.USER_EMAIL }">
 						<h5 class="card-title" style="font-weight: bold;">공간 승인 상세보기</h5>
 						<div class="row-sm-3">
 							<h5 class="card-title">신청자 정보</h5>
@@ -302,6 +301,15 @@
 									<span>${map.SPACE_TAG }</span>
 								</div>
 							</div>
+
+							<div>
+								<div class="col fr">
+									<span class="tag">상세타입 :</span>
+								</div>
+								<div class="col back">
+									<span>${map.SD_TYPE }</span>
+								</div>
+							</div>
 							<div>
 								<div class="col fr">
 									<span class="tag">인트로 :</span>
@@ -311,8 +319,8 @@
 								</div>
 							</div>
 							<div>
-								<div class="col fr">
-									<span class="tag">설명 :</span>
+								<div class="col fr" style="height: 100px;">
+									<span class="tag" style="display: block;height: 100px;">설명 :</span>
 								</div>
 								<div class="col back">
 									<span style="text-align: right;">${map.SPACE_INFO }</span>
@@ -374,6 +382,98 @@
 						</div>
 						<hr>
 						<div class="row-sm-3">
+							<h5 class="card-title">운영 정보</h5>
+							<div>
+								<div class="col fr">
+									<span class="tag">최소 예약 시간 :</span>
+								</div>
+								<div class="col back">
+									<span>${map.SD_MIN_TIME }</span>
+								</div>
+							</div>
+							<div>
+								<div class="col fr">
+									<span class="tag">시간당 금액 :</span>
+								</div>
+								<div class="col back">
+									<span>${map.SD_PRICE }</span>
+								</div>
+							</div>
+							<div>
+								<div class="col fr">
+									<span class="tag">사용 인원 :</span>
+								</div>
+								<div class="col back">
+									<span>${map.SD_PEOPLE }</span>
+								</div>
+							</div>
+							<div>
+								<div class="col fr">
+									<span class="tag">운영시간 :</span>
+								</div>
+								<div class="col back">
+									<span>${map.SD_TIME }</span>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row-sm-3">
+							<h5 class="card-title">시설 정보</h5>
+							<table class="table">
+								<thead class="table-light">
+									<tr>
+										<th scope="col">WIFI</th>
+										<th scope="col">프린터</th>
+										<th scope="col">의자/테이블</th>
+										<th scope="col">흡연</th>
+										<th scope="col">화장실</th>
+										<th scope="col">PC</th>
+										<th scope="col">TV</th>
+										<th scope="col">화이트보드</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>${map.FAC_WIFI }</td>
+										<td>${map.FAC_PRINTER }</td>
+										<td>${map.FAC_CHAIR_TABLE }</td>
+										<td>${map.FAC_SMOKE }</td>
+										<td>${map.FAC_REST_ROOM }</td>
+										<td>${map.FAC_PC }</td>
+										<td>${map.FAC_TV }</td>
+										<td>${map.FAC_WHITE_BOARD }</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="table">
+								<thead class="table-light">
+									<tr>
+										<th scope="col">엘리베이터</th>
+										<th scope="col">주차</th>
+										<th scope="col">취식</th>
+										<th scope="col">주류반입</th>
+										<th scope="col">취사</th>
+										<th scope="col">반려동물반입</th>
+										<th scope="col">오디오시설</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>${map.FAC_ELEVATOR }</td>
+										<td>${map.FAC_PARKING }</td>
+										<td>${map.FAC_FOOD }</td>
+										<td>${map.FAC_DRINK }</td>
+										<td>${map.FAC_COOK }</td>
+										<td>${map.FAC_PET }</td>
+										<td>${map.FAC_AUDIO }</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<hr>
+						<div class="row-sm-3">
 							<h5 class="card-title">환불 정보</h5>
 							<table class="table">
 								<thead class="table-light">
@@ -404,12 +504,12 @@
 						</div>
 						<hr>
 						<div class="col-auto" id="btDiv">
-							<c:if test="${map.SPACE_REQUEST_STATUS == '요청중' }">
-								<button type="button" class="btn btn-outline-danger"
-									id="denineBt">거절</button>
-								<button type="button" class="btn btn-outline-primary"
-									id="confirmBt">승인</button>
-							</c:if>
+							<%-- <c:if test="${map.SPACE_REQUEST_STATUS == 'R' }"> --%>
+							<button type="button" class="btn btn-outline-danger"
+								id="denineBt">거절</button>
+							<button type="button" class="btn btn-outline-success"
+								id="confirmBt">승인</button>
+							<%-- </c:if> --%>
 							<button type="button" class="btn btn-secondary" id="listBt">목록</button>
 						</div>
 					</div>
@@ -427,50 +527,11 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					해당 공간을 승인하시겠습니까?
-				</div>
+				<div class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" id="cancelBt"
-						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="confirmOkBt">승인</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- EndModal1 -->
-	<!-- Moda1 -->
-	<div class="modal fade" id="confirm2" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					거절 사유를 선택하세요.
-					<form method="post" name="confirmFrm">
-						<input type="hidden" name="spaceNum" value="${map.SPACE_NUM }">
-						<input type="hidden" name="userEmail" value="${map.USER_EMAIL }">
-						<input type="hidden" name="spaceTypeName" value="${map.SPACE_TYPE_NAME }">
-						<input type="hidden" name="spaceName" value="${map.SPACE_NAME }">
-						<input type="hidden" name="spaceRequestDate" value="${map.SPACE_REQUEST_DATE }">
-						<input type="hidden" name="spaceRequestStatus" value="${map.SPACE_REQUEST_STATUS }">
-						<div class="d-flex justify-content-center">
-							<select class="form-select d-flex justify-content-center" name="reason"  style="width: 300px">
-								<option value="정보누락">정보누락</option>
-								<option value="허위정보 기재">허위정보 기재</option>
-								<option value="공간 부적합">공간 부적합</option>
-								<option value="기타 부적합 사유">기타 부적합 사유</option>
-							</select>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" id="cancelBt"
-						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-danger" id="denineOkBt">거절</button>
+						data-bs-dismiss="modal"></button>
+					<button type="button" class="btn" id="okBt"></button>
 				</div>
 			</div>
 		</div>

@@ -390,6 +390,8 @@ public class SpaceServiceImpl implements SpaceService{
 		if(map.get("SPACE_LOCATION")!=null) {
 			address += " " + map.get("SPACE_LOCATION");
 		}
+		map2.put("SPACE_INTRO", map.get("SPACE_INTRO"));
+		map2.put("SPACE_INFO", (map.get("SPACE_INFO")+"").replace("<br>", "\n"));
 		map2.put("SPACE_ADDRESS", address);
 		map2.put("SPACE_TAG", map.get("SPACE_TAG"));
 		map2.put("SPACE_WARN", map.get("SPACE_WARN"));
@@ -418,16 +420,18 @@ public class SpaceServiceImpl implements SpaceService{
 			map2.put("SPACE_OUT_DATE", "");
 		}
 		map2.put("SPACE_TYPE_NAME", map.get("SPACE_TYPE_NAME"));
-		map2.put("SD_AREA", map.get("SPACE_TYPE_NAME"));
+		map2.put("SD_AREA", map.get("SD_AREA"));
 		map2.put("USER_ID", map.get("USER_ID"));
 		map2.put("USER_EMAIL", map.get("USER_EMAIL"));
-		map2.put("USER_Name", map.get("USER_Name"));
+		map2.put("USER_NAME", map.get("USER_NAME"));
 		map2.put("USER_HP", map.get("USER_HP"));
 		map2.put("SD_TYPE", map.get("SD_TYPE"));
 		map2.put("SD_PRICE", map.get("SD_PRICE"));
 		map2.put("SD_PEOPLE", map.get("SD_MIN_PEOPLE") + " ~ " + map.get("SD_MAX_PEOPLE"));
 		map2.put("SD_MIN_TIME", map.get("SD_MIN_TIME"));
 		map2.put("SD_TIME", map.get("SD_OPEN_TIME") + " ~ " + map.get("SD_CLOSE_TIME"));
+		
+		map2.put("CATEGORY_NAME", map.get("CATEGORY_NAME"));
 		
 		if(map.get("FAC_WIFI") != null) {
 			map2.put("FAC_WIFI", "O");
