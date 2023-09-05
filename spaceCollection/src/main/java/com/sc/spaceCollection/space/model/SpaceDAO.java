@@ -56,5 +56,5 @@ public interface SpaceDAO {
 	int getTotalRecordSpaceConfirmHistoryList(@Param("searchVo")SearchVO searchVo,
 															@Param("order")String order,
 															@Param("status")String status);
-	List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo);
+	List<Map<String, Object>> selectSpaceForExcel();
 }

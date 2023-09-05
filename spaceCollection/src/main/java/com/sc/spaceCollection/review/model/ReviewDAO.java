@@ -7,12 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.guest.model.GuestVO;
 
 @Mapper
 public interface ReviewDAO {
 	int insertReview(ReviewVO vo);
 	List<Map<String,Object>> selectMyReview(@Param("userId") String userId,
-			@Param("startRow") int startRow,@Param("endRow") int endRow);
+			@Param("startRow") int startRow,@Param("endRow") int endRow,@Param("searchKeyword") String searchKeyword);
 	List<Map<String, Object>> selectReviewEachUser(SearchVO vo);
 	int getTotalRecord(SearchVO vo);
 	List<Map<String, Object>> selectNewReview();
@@ -21,4 +22,5 @@ public interface ReviewDAO {
 	int deleteReview(int reviewNum);
 	int getTotalRecordByUserId(String userId);
 	Map<String, Object> getTotalRecordBySpaceNum(int spaceNum);
+	
 }
