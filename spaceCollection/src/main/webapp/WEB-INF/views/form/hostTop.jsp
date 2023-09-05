@@ -217,7 +217,7 @@
 	            <a class="nav-link" href="<c:url value='/host/calculate' />">정산</a>
 	          </li>
 	          <li class="nav-item">
-	            <a class="nav-link" href="#">공지사항</a>
+	            <a class="nav-link" href="<c:url value='/host/notice' />">공지사항</a>
 	          </li>
 	          <li class="nav-item">
 	            <a class="nav-link" href="#">도움말</a>
