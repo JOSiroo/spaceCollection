@@ -40,6 +40,6 @@ public interface SpaceService {
 	int spaceDenine(SpaceListVO listVo);
 	List<Map<String, Object>> selectSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
 	int getTotalRecordSpaceConfirmHistoryList(SearchVO searchVo, String order, String status);
-	List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo);
+	List<Map<String, Object>> selectSpaceForExcel();
 	
 }

@@ -189,11 +189,6 @@ th>i{
 		});
 		//엑셀 다운 관련 끝
 		
-		
-		$('#spaceNameTh').click(function() {
-			$('input[name=order]').val(' SPACE_NAME desc');
-			$.spaceConfirmHistoryListSend(1);
-		});
 	});
 	
 	function mouseIn(evt) {
@@ -240,7 +235,7 @@ th>i{
 					
 					$('#buttonDiv').html(str2);
 					
-					str += "<form name='trFrm' method='post' action=''>";
+					str += "<form name='trFrm' method='post'>";
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
 								str += "<td>"

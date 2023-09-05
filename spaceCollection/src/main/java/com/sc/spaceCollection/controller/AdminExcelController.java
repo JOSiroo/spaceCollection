@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sc.spaceCollection.common.ExcelVO;
+import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.userInfo.model.UserInfoService;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
@@ -34,6 +36,7 @@ public class AdminExcelController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminExcelController.class);
 	
 	private final UserInfoService userInfoService;
+	private final SpaceService spaceService;
 	
 	@RequestMapping("/member/memberExcelDownload")
 	public void memberExcelDownload(@ModelAttribute ExcelVO excelVo, HttpServletResponse response) throws IOException {
@@ -217,7 +220,6 @@ public class AdminExcelController {
 		
 		String[] headerKor = {"공간번호","공간명","사업자번호","공간주소","아이디","이메일","연락처","공간태그","상태","삭제여부","승인일","승인요청일","상세타입","공간타입명","사용인원","가격정보","운영시간","시설"};
 		String[] headerEng = {"spaceNum","spaceName","spaceBusinessNum","spaceAddress","userId","userEmail","spacePhoneNum","spaceTag","spaceRequestStatus","delFlag","spaceRegDate","spaceRequestDate","sdType","spaceTypeName","sdpeople","sdPrice","sdTime","facility"};
-		int[] columnSize = {3300, 2850, 6000, 3600, 6000, 2160, 6000, 6000, 2160, 7890, 7890, 4200, 4200};
 		row = sheet.createRow(1);
 		int cellCount = 0;
 		
@@ -229,52 +231,65 @@ public class AdminExcelController {
 				cell = row.createCell(cellCount);
 				cell.setCellValue(headerKor[excelVo.getHeaderListIndex().get(i)]);
 				cell.setCellStyle(cellStyle2);
-				sheet.setColumnWidth(cellCount, columnSize[i]);
+				sheet.setColumnWidth(cellCount, (sheet.getColumnWidth(i)+1024));
 				
 				cellCount++;
 			}
 		}
-		
-		List<UserInfoVO> userInfoList = userInfoService.selectUserInfoForExcel();
+		logger.info("헤더 설정 끝");
+		List<Map<String, Object>> spaceConfirmList = spaceService.selectSpaceForExcel();
+		logger.info("list.size = {}", spaceConfirmList.size());
 		
 		//열 설정
-		for(int i=0; i<userInfoList.size(); i++) {
+		for(int i=0; i<spaceConfirmList.size(); i++) {
 			row = sheet.createRow(i+2);
-			UserInfoVO vo = userInfoList.get(i);
+			Map<String, Object> map = spaceConfirmList.get(i);
 			
 			List<String> voList = new ArrayList<>();
-			voList.add(vo.getUserNum()+"");
-			voList.add(vo.getUserName());
-			voList.add(vo.getUserId());
-			voList.add(vo.getUserHp());
-			voList.add(vo.getUserEmail());
-//			voList.add(vo.getUserOutType());
-			if(vo.getUserOutType()!=null) {
-				if(vo.getUserOutType().equalsIgnoreCase("Y")) {
-					voList.add("탈퇴");
-				}
-			}else {
-				voList.add("정상");
-			}
+			voList.add(map.get("SPACE_NUM")+"");
+			voList.add(map.get("SPACE_NAME")+"");
+			voList.add(map.get("SPACE_BUSINESS_NUM")+"");
+			voList.add(map.get("SPACE_ADDRESS")+"");
+			voList.add(map.get("USER_ID")+"");
+			voList.add(map.get("USER_EMAIL")+"");
+			voList.add(map.get("SPACE_PHONE_NUM")+"");
+			voList.add(map.get("SPACE_TAG")+"");
+			voList.add(map.get("SPACE_REQUEST_STATUS")+"");
+			voList.add(map.get("DEL_FLAG")+"");
+			voList.add(map.get("SPACE_REG_DATE")+"");
+			voList.add(map.get("SPACE_REQUEST_DATE")+"");
+			voList.add(map.get("SD_TYPE")+"");
+			voList.add(map.get("SPACE_TYPE_NAME")+"");
+			voList.add(map.get("SD_PEOPLE")+"");
+			voList.add(map.get("SD_PRICE")+"");
+			voList.add(map.get("SD_TIME")+"");
+			voList.add(map.get("FACILITY")+"");
+//			if(vo.getUserOutType()!=null) {
+//				if(vo.getUserOutType().equalsIgnoreCase("Y")) {
+//					voList.add("탈퇴");
+//				}
+//			}else {
+//				voList.add("정상");
+//			}
+//			
+//			if(vo.getUserRegDate()==null) {
+//				voList.add("");
+//			}else {
+//				voList.add((vo.getUserRegDate()+"").substring(0, 16));
+//			}
+//			
+//			if(vo.getUserOutDate()==null) {
+//				voList.add("");
+//			}else {
+//				voList.add((vo.getUserOutDate()+"").substring(0, 16));
+//			}
 			
-			if(vo.getUserRegDate()==null) {
-				voList.add("");
-			}else {
-				voList.add((vo.getUserRegDate()+"").substring(0, 16));
-			}
-			
-			if(vo.getUserOutDate()==null) {
-				voList.add("");
-			}else {
-				voList.add((vo.getUserOutDate()+"").substring(0, 16));
-			}
-			
-			voList.add(vo.getZipcode());
-			voList.add(vo.getAddress());
-			voList.add(vo.getAddressDetail());
-			voList.add(vo.getUserMarketingEmailOk());
-			voList.add(vo.getUserMarketingSmsOk());
-			
+//			voList.add(vo.getZipcode());
+//			voList.add(vo.getAddress());
+//			voList.add(vo.getAddressDetail());
+//			voList.add(vo.getUserMarketingEmailOk());
+//			voList.add(vo.getUserMarketingSmsOk());
+			logger.info("헤더 설정 끝2");
 			cellCount = 0;
 			for(int j=0; j<excelVo.getHeaderListIndex().size(); j++) {
 				
@@ -288,7 +303,7 @@ public class AdminExcelController {
 		}
 		
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy_MM_dd");
-		String fileName = "회원리스트" + sdf2.format(date) + ".xlsx";
+		String fileName = "공간 리스트" + sdf2.format(date) + ".xlsx";
 		String outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
 		
 		response.setContentType("ms-vnd/excel");

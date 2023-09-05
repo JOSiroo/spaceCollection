@@ -21,6 +21,7 @@ import com.sc.spaceCollection.common.AjaxVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.email.AdminEmailSender;
 import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
@@ -30,6 +31,7 @@ import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryListVO;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryService;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryVO;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -41,6 +43,7 @@ public class AdminSpaceController {
 	private final SpaceTypeCategoryService spaceTypeCategoryService;
 	private final SpaceTypeService spaceTypeService;
 	private final SpaceService spaceService;
+	private final AdminEmailSender admin;
 	
 	@RequestMapping("/spaceTypeCategoryList")
 	public void spaceTypeCategoryList(@ModelAttribute SearchVO searchVo, Model model) {

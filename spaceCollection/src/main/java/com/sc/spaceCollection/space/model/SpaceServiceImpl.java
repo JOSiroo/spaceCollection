@@ -219,8 +219,8 @@ public class SpaceServiceImpl implements SpaceService{
 
 
 	@Override
-	public List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo) {
-		List<Map<String, Object>> list = spaceDao.selectSpaceForExcel(vo);
+	public List<Map<String, Object>> selectSpaceForExcel() {
+		List<Map<String, Object>> list = spaceDao.selectSpaceForExcel();
 		List<Map<String, Object>> listtrans = new ArrayList<>();
 		for(int i=0; i<list.size(); i++) {
 			String address = "";
@@ -237,7 +237,7 @@ public class SpaceServiceImpl implements SpaceService{
 			map2.put("SPACE_ADDRESS", address);
 			map2.put("SPACE_TAG", map.get("SPACE_TAG"));
 			map2.put("SPACE_PHONE_NUM", map.get("SPACE_PHONE_NUM"));
-			if(map.get("SPACE_PHONE_NUM").equals("Y")) {
+			if(map.get("DEL_FLAG").equals("Y")) {
 				map2.put("DEL_FLAG", "삭제");
 			}else {
 				map2.put("DEL_FLAG", "정상");
