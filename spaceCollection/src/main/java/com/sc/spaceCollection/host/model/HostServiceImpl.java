@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
@@ -58,6 +59,11 @@ public class HostServiceImpl implements HostService {
 		spaceVo.setRefundNum(refundVo.getRefundNum());
 		cnt = hostDao.insertSpace(spaceVo);
 		return cnt;
+	}
+
+	@Override
+	public int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility) {
+		return hostDao.insertSpaceTotalFacility(spaceTotalFacility);
 	}
 
 

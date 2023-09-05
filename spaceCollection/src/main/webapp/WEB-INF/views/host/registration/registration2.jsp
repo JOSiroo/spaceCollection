@@ -72,7 +72,7 @@
 		resize: none;
 	}
 	
-	.spText::placeholder {
+	.spText::placeholder, .address::placeholder {
 		color: #b7b7b7;
 		font-weight: bold;
 	}
@@ -194,24 +194,24 @@
 		font-weight: bold;
 	}
 	
-	.spZip1 {
-		width: 850px;
-		height: 150px;
+	.address {
+		width: 85%;
 		border: 1px solid #b7b7b7;
 		font-size: 15px;
-		margin-top: 15px;
-		padding: 8px 8px 8px 8px;
+		margin-top: 1px;
+		padding: 12px 8px 8px 8px;
 		resize: none;
 		background: white;
+		height: 50px;
 	}
 	
-	.spZip2 {
-		width: 850px;
-		height: 150px;
+	.addressDetail {
+		width: 100%;
+		height: 50px;
 		border: 1px solid #b7b7b7;
 		font-size: 15px;
 		margin-top: 15px;
-		padding: 8px 8px 8px 8px;
+		padding: 12px 8px 8px 8px;
 		resize: none;
 		background: white;
 	}
@@ -264,17 +264,6 @@
 		height: 122px;
 	}
 	
-	.modal-content {
-		width: 850px;
-		min-height: 500px;
-		
-	}
-	
-	.modal-header {
-		background: #704de4;
-		font-weight: bold;
-	}
-	
 	.spRefund {
 		display: flex;
     	align-items: center;
@@ -310,8 +299,22 @@
 		margin: 0 10px 0 10px;
 	}
 	
+	.form-check-input {
+		padding-top: 20px;
+	}
+	
+	.form-check-label {
+		font-size: 18px;
+		color: black;
+	}
+	
+	.form-check.form-check-inline {
+		margin: 0 10px 25px 0;
+	}
+	
 </style>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
@@ -766,17 +769,55 @@
 			
 			$('form[name=frmRegi2]').submit();
 		});
-		
-		
 	});
 	
-	
-	//스크롤이동
-	function scrollMove(val) {
-		var offset = $(val).offset();	//해당 위치 반환
-		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
+	function sample6_execDaumPostcode() {
+		new daum.Postcode({
+			oncomplete: function(data) {
+		    	// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+		        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		        var addr = ''; // 주소 변수
+		        var extraAddr = ''; // 참고항목 변수
+
+		        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		        	addr = data.roadAddress;
+		        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		        	addr = data.jibunAddress;
+		        }
+
+		        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		        if(data.userSelectedType === 'R'){
+		        	// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		        	extraAddr += data.bname;
+		        }
+		        // 건물명이 있고, 공동주택일 경우 추가한다.
+		        if(data.buildingName !== '' && data.apartment === 'Y'){
+		            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		        }
+		        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		        if(extraAddr !== ''){
+		        	extraAddr = ' (' + extraAddr + ')';
+		        }
+		        // 조합된 참고항목을 해당 필드에 넣는다.
+		        document.getElementById("sample6_extraAddress").value = extraAddr;
+		                    
+		        } else {
+		        	document.getElementById("sample6_extraAddress").value = '';
+		        }
+
+		        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		        document.getElementById("spaceZipcode").value = data.zonecode;
+		        document.getElementById("spaceAddress").value = addr;
+		        // 커서를 상세주소 필드로 이동한다.
+		        document.getElementById("spaceAddressDetail").focus();
+			}
+		}).open();
 	}
-	
 </script>
 
 <article>
@@ -961,6 +1002,77 @@
 					</div>
 				</div>
 			</div>
+			<!-- 편의시설 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>편의시설</span>
+					<br><hr>
+				</div><br>
+				<div class="boxContents">
+					<div class="facility">
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facWifi" id="inlineCheckbox1" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox1">와이파이</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facPrinter" id="inlineCheckbox2" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox2">복사/인쇄기</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facChairTable" id="inlineCheckbox3" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox3">의자/테이블</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facSmoke" id="inlineCheckbox4" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox4">흡연가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facRestRoom" id="inlineCheckbox5" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox5">내부화장실</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facPC" id="inlineCheckbox6" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox6">PC/노트북</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facTV" id="inlineCheckbox7" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox7">TV/프로젝터</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facWhiteBoard" id="inlineCheckbox8" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox8">화이트보드</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facElevator" id="inlineCheckbox9" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox9">엘레베이터</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox9" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox9">주차가능</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox10" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox9">음식물섭취가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox11" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox10">주류반입가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox12" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox11">취사가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox13" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox12">애완동물동반가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox14" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox13">음향장비</label>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- 예약 시 주의사항 -->
 			<div class="boxForm">
 				<div class="boxTitle">
@@ -1037,35 +1149,17 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceZip">
-						<!-- Button trigger modal -->
-						<button type="button" class="btAdd btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin: 0;">
-						  주소등록
-						</button>
-						
-						<!-- Modal -->
-						<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: white; font-weight: bold;">주소 등록</h1>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <div class="modal-body">
-						        ...
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						        <button type="button" class="btn btn-primary">Understood</button>
-						      </div>
-						    </div>
-						  </div>
+						<input type="button" class="btAdd" value="주소등록" onclick="sample6_execDaumPostcode()"
+							style="margin: 0 0 10px 20px;">
+						<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+						<div class="spZip1">
+							<input type="hidden" name="spaceZipcode" id="spaceZipcode">
+							<input type="text" class="address" name="spaceAddress" id="spaceAddress"
+								placeholder="실제 서비스되는 공간의 주소를 입력해주세요." disabled="disabled">
 						</div>
-						<!-- <input type="button" class="btAdd" value="주소등록" style="margin: 0 0 10px 20px;"> -->
-						<div class="spZip1" style="height: 50px; padding-top: 15px;">
-							<span class="inner">실제 서비스되는 공간의 주소를 입력해주세요.</span>
-						</div>
-						<div class="spZip2" style="height: 50px; padding-top: 15px; width: 100%;">
-							<span class="inner">상세 주소</span>
+						<div class="spZip2">
+							<input type="text" class="addressDetail" name="spaceAddressDetail" 
+								id="addressDetail" onclick="sample6_execDaumPostcode()" >
 						</div>
 					</div>
 				</div>

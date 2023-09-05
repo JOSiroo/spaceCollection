@@ -60,6 +60,16 @@
 				#{refund3Day}, #{refund2Day}, #{refund1Day}, #{refundDay})
 	</insert>
 	
+	<insert id="insertSpaceTotalFacility" parameterType="spaceTotalFacilityVo">
+		<selectKey keyProperty="spaceFacilityNum" order="BEFORE" resultType="int">
+			select space_total_facility_seq.nextval from dual
+		</selectKey>
+		insert into space_total_facility
+		values (spaceFacilityNum, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, #{facRestRoom},
+				 #{facPC}, #{facTV}, #{facWhiteBoard}, #{facElevator}, #{facParking},
+				 #{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio}, #{spaceNum})
+	</insert>
+	
 	<insert id="insertFacility" parameterType="facilityVo">
 		<selectKey keyProperty="facilityNum" order="BEFORE" resultType="int">
 			select facility_seq.nextval from dual

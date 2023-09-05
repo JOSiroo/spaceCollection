@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
@@ -16,6 +17,7 @@ public interface HostDAO {
 	SpaceTypeVO selectSpaceTypeBySpaceTypeName(String spaceTypeName);
 	int insertSpace(SpaceVO spaceVo);
 	int insertRefund(RefundVO refundVo);
+	int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility);
 	
 	List<Map<String, Object>> selectHostReservation(@Param("startRow") int startRow, @Param("endRow") int endRow,
 													@Param("userNum")int userNum,@Param("status") String status,

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
+import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
@@ -81,7 +82,7 @@ public class HostController {
 	
 	@PostMapping("/registration/registration2")
 	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
-			RefundVO refundVo, HttpSession session, Model model) {
+			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacility, HttpSession session, Model model) {
 		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}", spaceVo, spaceTypeVO);
 		
 		//공간 번호 조회
@@ -104,6 +105,11 @@ public class HostController {
 		spaceVo.setLatitude(latitude);
 		spaceVo.setLongitude(longitude);
 		logger.info("spaceVo = {}, refundVo = {}", spaceVo, refundVo);
+		
+		//total facility
+		spaceTotalFacility.setSpaceNum(spaceVo.getSpaceNum());
+		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacility);
+		logger.info("spaceTotalFacility = {}, totalFac = {}", spaceTotalFacility, totalFac);
 		
 		//공간 등록
 		int space = hostService.insertSpace(spaceVo, refundVo);
