@@ -304,6 +304,12 @@
 		color: #656565;
 	}
 	
+	.form-select {
+		font-size: 18px;
+		width: 135px;
+		margin: 0 10px 0 10px;
+	}
+	
 </style>
 
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
@@ -331,16 +337,6 @@
       	//대표 전화번호 정규화
         $(".spTel").on("input", function() {
             var isValid = validate_number($(this).val());
-
-            if (!isValid) {
-                alert('숫자만 입력 가능합니다.');
-                $(this).val('');
-            }
-        });
-        
-      	//공간 층수 정규화
-        $(".floor").on("input", function() {
-            var isValid = validate_number($(".floor").val());
 
             if (!isValid) {
                 alert('숫자만 입력 가능합니다.');
@@ -377,6 +373,12 @@
 		    
 		});
 		
+		// URL에서 파라미터 값을 가져옵니다.
+		var spaceTypeNameParam = new URLSearchParams(window.location.search).get('spaceTypeName');
+
+		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
+		$('.typeSub[value="' + spaceTypeNameParam + '"]').addClass('checked');
+		
 		//태그 확인 숨기기
 		$('.spTag').hide();
 		
@@ -409,13 +411,23 @@
 
 	        		// 입력 필드 초기화
 	                $(this).siblings('.spText').val('');
-	                
+	        		
 	            } else {
 	                alert('태그는 최대 5개까지 입력할 수 있습니다.');
 	            }
 		    }
-		    
         });
+        
+	    // 삭제 버튼(.tagClose)을 클릭할 때 해당 태그를 배열과 화면에서 삭제
+	    $(document).on('click', '.tagClose', function() {
+	        var removedValue = $(this).closest('.tagRe').text().trim().substring(2); // "# " 제거
+	        var index = tag.indexOf(removedValue);
+	        if (index !== -1) {
+	        	tag.splice(index, 1); // 배열에서 제거
+	        }
+	        $(this).closest('.tagRe').remove(); // 화면에서 제거
+	    	$('#spaceTag').val(tag.join('/')); // hidden input 업데이트
+	    });
 	     
 		// 사용자가 입력한 값을 저장할 배열
         var facility = [];
@@ -424,12 +436,11 @@
         $('.btAdd.fa').click(function() {
         	var inputValue = $(this).siblings('.spText').val();
 		    var tagContainer = $(this).siblings('.spTag');
-		    var currentTagCount = tagContainer.find('.tagRe').length;
 
 		    if (inputValue.length < 1) {
 		    	alert('내용을 입력해주세요.');
 		    } else {
-		    	// 입력값이 비어 있지 않고, 최대 5개까지만 저장하도록 합니다.
+		    	// 입력값이 비어 있지 않고, 최대 10개까지만 저장하도록 합니다.
 	            if (inputValue && facility.length < 10) {
 	                tagContainer.show();
 	                
@@ -437,7 +448,7 @@
 	                facility.push(inputValue);
 	                
 	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
-	        	    tagContainer.append('<span class="tagRe"> ' + (currentTagCount + 1) + '. '  + inputValue 
+	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + (facility.length) + '</span>. '  + inputValue 
 	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
 	             	
 	        		// 입력값을 String으로 변환합니다.
@@ -448,6 +459,22 @@
 
 	        		// 입력 필드 초기화
 	                $(this).siblings('.spText').val('');
+	        		
+	             	// 태그 삭제 이벤트 핸들러 등록
+	                tagContainer.find('.tagClose').click(function() {
+	                    var tagRe = $(this).closest('.tagRe');
+	                    var index = tagRe.index();
+	                    facility.splice(index, 1); // 배열에서 제거
+	                    tagRe.remove(); // 화면에서 제거
+	                    
+	                    // 남은 태그의 숫자를 다시 설정
+	                    tagContainer.find('.tagRe').each(function(i) {
+	                        $(this).find('.num').text((i + 1));
+	                    });
+
+	                    // hidden input 업데이트
+	                    $('#spaceFacility').val(facility.join('||'));
+	                });
 	                
 	            } else {
 	                alert('태그는 최대 10개까지 입력할 수 있습니다.');
@@ -476,7 +503,7 @@
 	                warn.push(inputValue);
 	                
 	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
-	        	    tagContainer.append('<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue 
+	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + (warn.length) + '</span>. ' + inputValue 
 	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
 	             	
 	        		// 입력값을 String으로 변환합니다.
@@ -487,6 +514,22 @@
 
 	        		// 입력 필드 초기화
 	                $(this).siblings('.spText').val('');
+	        		
+	             	// 태그 삭제 이벤트 핸들러 등록
+	                tagContainer.find('.tagClose').click(function() {
+	                    var tagRe = $(this).closest('.tagRe');
+	                    var index = tagRe.index();
+	                    facility.splice(index, 1); // 배열에서 제거
+	                    tagRe.remove(); // 화면에서 제거
+	                    
+	                    // 남은 태그의 숫자를 다시 설정
+	                    tagContainer.find('.tagRe').each(function(i) {
+	                        $(this).find('.num').text((i + 1));
+	                    });
+
+	                    // hidden input 업데이트
+	                    $('#spaceFacility').val(facility.join('||'));
+	                });
 	                
 	            } else {
 	                alert('태그는 최대 10개까지 입력할 수 있습니다.');
@@ -538,6 +581,54 @@
 		        $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
 		    }
 		});
+		
+		// 이미지 업로드 관련 변수 초기화
+	    var imageCount = 0;
+	    var maxImages = 10;
+
+	    // 파일 선택 시
+	    $('#subImage').on('change', function() {
+	        var fileInput = this;
+	        var files = fileInput.files;
+
+	        if (files.length === 0) {
+	            return;
+	        }
+
+	        // 이미지 파일만 처리
+	        var imageTypeRegExp = /^image\/(jpeg|jpg|png)$/;
+	        for (var i = 0; i < files.length; i++) {
+	            var file = files[i];
+	            if (!imageTypeRegExp.test(file.type)) {
+	                alert('이미지 파일만 업로드 가능합니다.');
+	                return;
+	            }
+	        }
+
+	        // 이미지를 표시할 영역
+	        var insertSub = $('.insert.sub');
+
+	        // 이미지를 표시하고 카운트 증가
+	        for (var i = 0; i < files.length; i++) {
+	            var file = files[i];
+	            var reader = new FileReader();
+
+	            reader.onload = function(event) {
+	                var imageElement = $('<img>').attr('src', event.target.result).addClass('uploaded-image');
+	                insertSub.append(imageElement);
+	                imageCount++;
+
+	                // 이미지 제한 확인
+	                if (imageCount >= maxImages) {
+	                    $('#subImage').prop('disabled', true); // 이미지 업로드 비활성화
+	                    alert('최대 ' + maxImages + '개의 이미지를 업로드했습니다.');
+	                    return;
+	                }
+	            };
+
+	            reader.readAsDataURL(file);
+	        }
+	    });
 		
 	    
 	    //하단 버튼
@@ -690,7 +781,8 @@
 
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />">
+		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />"
+			enctype="multipart/form-data">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -746,7 +838,6 @@
 								<input type="button" class="typeSub" value="${list.spaceTypeName }" >
 							</c:forEach><br>
 						</c:forEach>
-						<input type="hidden" name="spaceTypeName" id="spaceTypeName">
 					</div>
 				</div>
 			</div>
@@ -757,7 +848,8 @@
 				</div>
 				<div class="boxContents">
 					<div class="spacepBusiness">
-						<input type="text" class="spBusiness" name="spaceBusinessNum" value="" required >
+						<input type="text" class="spBusiness" name="spaceBusinessNum" value="" 
+							maxlength="12" required >
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -772,7 +864,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spacepTel">
-						<input type="text" class="spTel" name="spacePhoneNum" value="" required >
+						<input type="text" class="spTel" name="spacePhoneNum" value="" maxlength="20" required >
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -832,7 +924,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceText">
-						<input type="text" class="spText floor" value=""
+						<input type="text" class="spText floor" value="" maxlength="20"
 							name="spaceLocation" placeholder="층수 여부를 입력하세요. ex. 지상 1층, 지하 2층">
 					</div>
 				</div>
@@ -922,7 +1014,7 @@
 				<div class="boxContents">
 					<div class="spaceImg sub">
 						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
-							<span class="inner">이미지 파일을 추가해 주세요.</span>
+							<div class="inner sub">이미지 파일을 추가해 주세요.</div>
 						</div>
 						<div class="btBox">
 							<label>
@@ -977,6 +1069,9 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="heading" style="margin-top: 120px;">
+				<span class="hd1">환불 기준를 입력해주세요.</span>
 			</div>
 			<!-- 환불 기준 -->
 			<div class="boxForm" style="margin-top: 60px;">

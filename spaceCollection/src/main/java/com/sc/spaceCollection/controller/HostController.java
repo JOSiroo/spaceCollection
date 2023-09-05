@@ -21,6 +21,7 @@ import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
 import com.sc.spaceCollection.host.model.SpaceCategoryAllVO;
 import com.sc.spaceCollection.host.model.SpaceTypeVO;
+import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
@@ -80,7 +81,7 @@ public class HostController {
 	
 	@PostMapping("/registration/registration2")
 	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
-			HttpSession session, Model model) {
+			RefundVO refundVo, HttpSession session, Model model) {
 		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}", spaceVo, spaceTypeVO);
 		
 		//공간 번호 조회
@@ -102,10 +103,11 @@ public class HostController {
 		spaceVo.setSpaceAddressDetail(adDetail);
 		spaceVo.setLatitude(latitude);
 		spaceVo.setLongitude(longitude);
+		logger.info("spaceVo = {}, refundVo = {}", spaceVo, refundVo);
 		
 		//공간 등록
-		int cnt = hostService.insertSpace(spaceVo);
-		logger.info("cnt = {}", cnt);
+		int space = hostService.insertSpace(spaceVo, refundVo);
+		logger.info("space = {}", space);
 		
 		return "redirect:/host/index";
 	}
