@@ -98,6 +98,10 @@ pageEncoding="UTF-8"%>
     transform: translateX(5px);
   }
  }
+ .bi-person-badge{
+ 	font-size:20px;
+ 	margin-left:8px;
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -1022,10 +1026,17 @@ pageEncoding="UTF-8"%>
 		    		$.each(reviewList, function(item){
 		    			console.log(this);
 		    			var starCount = 1
-						htmlStr = 	'<div class="reviewContent">'
-									+'<div class="reviewHead" style="color:black; font-weight: bold">'
-									+'<span>'+this.USER_ID+'</span>'
-									+'<div style="margin-left: 20%; padding-bottom: 1%">';
+						if('${sessionScope.userId}' !== this.USER_ID){
+							htmlStr = 	'<div class="reviewContent">'
+										+'<div class="reviewHead" style="color:black; font-weight: bold">'
+										+'<span>'+this.USER_ID+'</span>'
+										+'<div style="margin-left: 20%; padding-bottom: 1%">';
+						}else if('${sessionScope.userId}' === this.USER_ID){
+							htmlStr = 	'<div class="reviewContent" >'
+										+'<div class="reviewHead" style="color:black; font-weight: bold;">'
+										+'<span style="background:rgba(255, 208, 20, 0.5);border-radius:1rem; padding:5px 8px 5px 8px !important;">'+this.USER_ID+'<i class="bi bi-person-badge"></i></span>'
+										+'<div style="margin-left: 20%; padding-bottom: 1%">';
+						}
 		    			for(var i = 0; i <= (this.REVIEW_RATE / 2)-1; i++){
 							htmlStr += '<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">';
 							starCount++;
@@ -1105,10 +1116,16 @@ pageEncoding="UTF-8"%>
 				if(QnAList.length !== 0){
 		    		$.each(QnAList, function(item){
 		    			var starCount = 1
+
 						htmlStr = '<div class="qnaContent">'
-								+'<div class="QnAHead" style="color:black; font-weight: bold">'
-								+'<span>'+this.USER_ID+'</span>'
-						htmlStr	+='</div>'
+						if('${sessionScope.userId}' !== this.USER_ID){
+							htmlStr +='<div class="QnAHead" style="color:black; font-weight: bold">'
+									+'<span >'+this.USER_ID+'</span>';
+						}else if('${sessionScope.userId}' === this.USER_ID){
+							htmlStr +='<div class="QnAHead" style="color:black; font-weight: bold;background:rgba(255, 208, 20, 0.5)!important; border-radius:1rem; padding:5px 8px 5px 8px !important;">'
+									+'<span >'+this.USER_ID+'<i class="bi bi-person-badge"></i></span>';
+						}
+					 	htmlStr +='</div>'
 								+'<div class="qnaBody">'+this.QNA_CONTENT+'</div>'
 								+'<div class="row" style="font-size:14px;">'
 								+'<div class="col-6 date-deleteCol" style="padding-right:30% !important">'

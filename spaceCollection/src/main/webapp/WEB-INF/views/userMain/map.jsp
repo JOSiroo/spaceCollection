@@ -13,6 +13,16 @@
 <title>Insert title here</title>
 </head>
 <style type="text/css">
+#mapWrapper{
+	width: 100%;
+	height: 95%;
+	left:0;
+	top:0;
+	margin:0;
+	padding:0;
+	margin-top:2.8%;
+	position:absolute;
+}
 .carousel-item {
     position: relative;
     display: none;
@@ -85,19 +95,29 @@
  	margin-left:17%;
  	margin-top:0.4%;
  }
+  @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, 15%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    	}
 	 .center{background: #193D76; color:white; padding:14% 24% 14% 24%; text-decoration:none; font-size:18px;border:white; border-radius: 2rem;}
 	 .center:hover{color:black; background: #ffd014}
 	    
- 	.wrap2 {border:2px solid #ffd014 !important; border-radius:1rem; position: absolute;left: 0;bottom: 40px;width: 330px;height: 350px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+ 	.wrap2 {animation : fadeInDown 0.5s;cursor:auto;border:3px solid #ffd014;border-top: 4px solid #ffd014; border-radius:1rem; position: absolute;left: 0;bottom: 40px;width: 330px;height: 350px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap2 * {padding: 0;margin: 0;}
     .wrap2 .info2 {width: 330px;height: 380px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .info2 .title {background: white;color:white;
     				font-size: 18px;font-weight: bold;}
-    .info2 .close {position: absolute;top: 10px;right: 10px;color: white;width: 17px;height: 17px;}
-    .info2 .close:hover {cursor: pointer;}
+    .info2 .close {color: black !important;font-size:25px; margin-left:185px;}
+    .info2 .close:hover {cursor: pointer; color : #ffd014 !important;}
     .info2 .body2 {position: relative;overflow: hidden;}
-    .info2 .desc {position: relative; margin-top:15px; margin-left:10px; font-weight: bold;}
+    .info2 .desc {position: relative; margin-top:5px;margin-bottom:15px; margin-left:10px; font-weight: bold;}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin-top:6px;}
     .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
     .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
@@ -123,28 +143,30 @@
 	</c:if>
 </header>
 <body>
-<div id="map" style="width:100%;height:860px;">
-		<c:set var="paramName" value="" />
-		<c:set var="paramValue" value="" />
-		<c:if test="${!empty param.spaceTypeNo}">
-			<c:set var="paramName" value="spaceTypeNo"/>
-			<c:set var="paramValue" value="${param.spaceTypeNo}"/>
-		</c:if>
-		<c:if test="${!empty param.spaceName}">
-			<c:set var="paramName" value="spaceName"/>
-			<c:set var="paramValue" value="${param.spaceName}"/>
-		</c:if>
-		<c:if test="${!empty param.order}">
-			<c:set var="paramName" value="order"/>
-			<c:set var="paramValue" value="${param.order}"/>
-		</c:if>
-		<c:if test="${!empty param.page}">
-			<c:set var="paramName" value="page"/>
-			<c:set var="paramValue" value="${param.page}"/>
-		</c:if>
-	<c:import url="/mapSideMenu">
-		<c:param name="${paramName}" value="${paramValue}"></c:param>
-	</c:import>
+<div id="mapWrapper">
+	<div id="map" style="width:100%;height:100%;">
+			<c:set var="paramName" value="" />
+			<c:set var="paramValue" value="" />
+			<c:if test="${!empty param.spaceTypeNo}">
+				<c:set var="paramName" value="spaceTypeNo"/>
+				<c:set var="paramValue" value="${param.spaceTypeNo}"/>
+			</c:if>
+			<c:if test="${!empty param.spaceName}">
+				<c:set var="paramName" value="spaceName"/>
+				<c:set var="paramValue" value="${param.spaceName}"/>
+			</c:if>
+			<c:if test="${!empty param.order}">
+				<c:set var="paramName" value="order"/>
+				<c:set var="paramValue" value="${param.order}"/>
+			</c:if>
+			<c:if test="${!empty param.page}">
+				<c:set var="paramName" value="page"/>
+				<c:set var="paramValue" value="${param.page}"/>
+			</c:if>
+		<c:import url="/mapSideMenu">
+			<c:param name="${paramName}" value="${paramValue}"></c:param>
+		</c:import>
+	</div>
 </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -183,7 +205,6 @@ var a = 0;
 var content = '<div class="wrap2">' + 
 	        '    <div class="info2">' + 
 	        '        <div class="title">' + 
-	        '            <div class="close" onclick="closeOverlay()" title="닫기">X</div>' + 
 	        '        </div>' + 
 	        '        	<div class="body2">' + 
 						'	<div id="carouselExample" class="carousel carousel-fade">'+
@@ -211,7 +232,9 @@ var content = '<div class="wrap2">' +
 	        '			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum=${i.key.spaceNum}"/>">${i.key.spaceName}</a> '+
 	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
 	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:5px;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
-	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5></div>' + 
+	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold;display:inline-block;"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5>'+
+		           '			<div class="close" onclick="closeOverlay()" title="닫기" style="color:black; display:inline-block;">X</div>'+
+	           '            </div>' + 
 	        '            </div>' + 
 	        '        </div>' + 
 	        '    </div>' +    
@@ -229,6 +252,13 @@ var content = '<div class="wrap2">' +
 	
 	contents.push(content);
 	overlays.push(overlayz);
+	
+	kakao.maps.event.addListener(overlayz, 'dragstart', function () {
+        map.setDraggable(false);
+    });
+    kakao.maps.event.addListener(overlayz, 'dragend', function () {
+        map.setDraggable(true);
+    });
 	
 
 	
@@ -300,10 +330,10 @@ function panTo(x,y) {
     if (overlayAtLocation) {
       // 원하는 위치에 커스텀 오버레이를 찾았을 경우 조작 또는 사용합니다.
         createOverlayToggleFunction(overlayAtLocation);
-    
     } else {
       console.log('해당 위치에 커스텀 오버레이를 찾을 수 없습니다.');
     }
+        $('#sideBarClose').click();
     map.panTo(moveLatLon);    
 }        
 </script>
