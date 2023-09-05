@@ -240,4 +240,8 @@
 		select space_type_name from space_type where space_type_no = #{spaceTypeNo}
 	</select>
 	
+	<select id="selectSpaceConfirmDetailBySpaceNum" parameterType="int" resultType="map">
+		select * from spaceConfirmDetail_view where space_num = #{spaceNum}
+	</select>
+	
 </mapper>
