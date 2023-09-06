@@ -309,10 +309,18 @@
 					<div class="card-body pt-3">
 						<c:if test="${fn:length(spaceTotalInfo.spaceDetailList)>0 }">
 							<ul class="nav nav-tabs nav-tabs-bordered">
+								<c:set var="i" value="0"/>
 								<c:forEach var="map" items="${spaceTotalInfo.spaceDetailList }">
 									<li class="nav-item">
-										<button class="nav-link" data-bs-toggle="tab"
-											data-bs-target="#${map.SD_TYPE }">${map.SD_TYPE }</button>
+										<c:if test="${i != '0'}">
+											<button class="nav-link" data-bs-toggle="tab"
+												data-bs-target="#${fn:replace(map.SD_TYPE, ' ', '') }">${map.SD_TYPE }</button>
+										</c:if>
+										<c:if test="${i == '0'}">
+											<button class="nav-link active" data-bs-toggle="tab"
+												data-bs-target="#${fn:replace(map.SD_TYPE, ' ', '') }">${map.SD_TYPE }</button>
+											<c:set var="i" value="${i+1}" />
+										</c:if>
 									</li>
 								</c:forEach>
 							</ul>
@@ -322,8 +330,15 @@
 						</c:if>
 						<div class="tab-content pt-2 infoDiv">
 							<c:if test="${spaceTotalInfo.spaceDetailList != null }">
+								<c:set var="i" value="0"/>
 								<c:forEach var="map" items="${spaceTotalInfo.spaceDetailList }">
-									<div class="tab-pane" id="${map.SD_TYPE }">
+									<c:if test="${i != '0'}">
+										<div class="tab-pane" id="${fn:replace(map.SD_TYPE, ' ', '') }">
+									</c:if>
+									<c:if test="${i == '0'}">
+										<div class="tab-pane active show" id="${fn:replace(map.SD_TYPE, ' ', '') }">
+										<c:set var="i" value="1"/>
+									</c:if>
 										<div class="row-sm-3">
 											<h5 class="card-title">운영 정보</h5>
 											<div>
