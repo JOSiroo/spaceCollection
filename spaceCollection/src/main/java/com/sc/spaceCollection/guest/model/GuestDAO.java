@@ -30,4 +30,6 @@ public interface GuestDAO {
 	int selectNaverUser(GuestVO guestVo);
 	int insertNaverUser(GuestVO guestVo);
 	int updateNaverUser(GuestVO guestVo);
+	
+	String selectByUserNum(int userNum);
 }

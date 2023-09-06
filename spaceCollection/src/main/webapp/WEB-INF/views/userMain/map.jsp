@@ -13,6 +13,16 @@
 <title>Insert title here</title>
 </head>
 <style type="text/css">
+#mapWrapper{
+	width: 100%;
+	height: 95%;
+	left:0;
+	top:0;
+	margin:0;
+	padding:0;
+	margin-top:2.8%;
+	position:absolute;
+}
 .carousel-item {
     position: relative;
     display: none;
@@ -24,15 +34,13 @@
  .mapHeader{
  	height: 70px;
  	background:#193D76;
- 	position: relative;
  }
  .spaceType{
 	color : white;
 	float:left; 
-	justify-content: center;
-	position: absolute;
-  	top: 30%;
-  	margin-left : 1%;
+  	margin-left : 2%;
+  	width: 5%;
+  	margin-top:1%;
  }
  .closeBtn{
  	font-weight: bold;
@@ -45,28 +53,72 @@
   	margin-left:97.7%;
  }
  .goSpace{
+ 	font-weight:bolder;
+ 	font-size:18px;
  	text-decoration: none;
- 	color : white;
+ 	color :#193D76 ;
  }
  .goSpace:hover{
  	text-decoration: none;
- 	color : white;
+ 	color : #ffd014;
  }
+ .spaceType h4{
+ 	display:inline-block;
+ 	margin-right:10%;
+ }
+ #sideBarBt{
+ 	display:inline-block;
+ 	padding:1% 1% 1% 1%;
+ 	margin-bottom:1%;
+ 	margin-left:25%;
+ }
+ .closeMap{
+ 	font-size:30px;
+ 	color:white;
+ 	font-weight:bold;
+ 	text-decoration: none;
+ 	float:right;
+ 	margin-right:2%;
+ 	padding-top:0.5%;
+ }
+ .closeMap:hover{
+ 	color:#ffd014;
+ }
+ #sideBar{
+ 	font-size:21px;
+ 	background:#ffd014;
+ 	color:black;
+ 	padding:0.5% 2% 0.5% 2%;
+ 	font-weight: bold;
+ 	border:1px solid white;
+ 	display: inline-block;
+ 	margin-left:17%;
+ 	margin-top:0.4%;
+ }
+  @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, 15%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    	}
 	 .center{background: #193D76; color:white; padding:14% 24% 14% 24%; text-decoration:none; font-size:18px;border:white; border-radius: 2rem;}
 	 .center:hover{color:black; background: #ffd014}
 	    
- 	.wrap2 {position: absolute;left: 0;bottom: 40px;width: 330px;height: 440px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+ 	.wrap2 {animation : fadeInDown 0.5s;cursor:auto;border:3px solid #ffd014;border-top: 4px solid #ffd014; border-radius:1rem; position: absolute;left: 0;bottom: 40px;width: 330px;height: 350px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap2 * {padding: 0;margin: 0;}
-    .wrap2 .info2 {width: 350px;height: 440px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap2 .info2 {width: 330px;height: 380px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info2 .title {padding: 7px 0px 0px 11px;height: 40px;background: #193D76;color:white;
-    				font-size: 18px;font-weight: bold;
-    				    margin-bottom: 10px;}
-    .info2 .close {position: absolute;top: 10px;right: 10px;color: white;width: 17px;height: 17px;}
-    .info2 .close:hover {cursor: pointer;}
-    .info2 .body2 {position: relative;overflow: hidden; width:90%; padding: 0% 0% 0% 4%;}
-    .info2 .desc {position: relative;margin: 13px 0 0 13px;height: 75px;}
-    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    .info2 .title {background: white;color:white;
+    				font-size: 18px;font-weight: bold;}
+    .info2 .close {color: black !important;font-size:25px; margin-left:185px;}
+    .info2 .close:hover {cursor: pointer; color : #ffd014 !important;}
+    .info2 .body2 {position: relative;overflow: hidden;}
+    .info2 .desc {position: relative; margin-top:5px;margin-bottom:15px; margin-left:10px; font-weight: bold;}
+    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin-top:6px;}
     .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
     .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info2 .link {color: #5085BB;}
@@ -77,19 +129,45 @@
 <header>
 	<div class = "mapHeader">
 		<div class = "spaceType">
-			파티룸
+			<h4 style="font-weight: bold;">${title}</h4>
 		</div>
-		<a href="#" onclick="goBack()"><div class = "closeBtn">
+			<button class="btn btn-primary" id="sideBar" type="button" data-bs-toggle="offcanvas" id="sideBarBt"data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+			  자세히 보기&nbsp;&nbsp;<i id="sideBar-icon" class="bi bi-layout-sidebar-inset"></i>
+			</button>
+		<a class="closeMap" href="#" onclick="goBack()">
 			X
-		</div></a>
+		</a>
 	</div>
-	
 	<c:if test="${!empty spaceMap}">
 		<c:set var="space" value="${spaceMap}" />
 	</c:if>
 </header>
 <body>
-<div id="map" style="width:100%;height:1400px;"></div>
+<div id="mapWrapper">
+	<div id="map" style="width:100%;height:100%;">
+			<c:set var="paramName" value="" />
+			<c:set var="paramValue" value="" />
+			<c:if test="${!empty param.spaceTypeNo}">
+				<c:set var="paramName" value="spaceTypeNo"/>
+				<c:set var="paramValue" value="${param.spaceTypeNo}"/>
+			</c:if>
+			<c:if test="${!empty param.spaceName}">
+				<c:set var="paramName" value="spaceName"/>
+				<c:set var="paramValue" value="${param.spaceName}"/>
+			</c:if>
+			<c:if test="${!empty param.order}">
+				<c:set var="paramName" value="order"/>
+				<c:set var="paramValue" value="${param.order}"/>
+			</c:if>
+			<c:if test="${!empty param.page}">
+				<c:set var="paramName" value="page"/>
+				<c:set var="paramValue" value="${param.page}"/>
+			</c:if>
+		<c:import url="/mapSideMenu">
+			<c:param name="${paramName}" value="${paramValue}"></c:param>
+		</c:import>
+	</div>
+</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
@@ -102,6 +180,7 @@ mapOption = {
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 var overlays = [];
+var customOverlays = [];
 var contents = [];
 //33.450701+ (i/10)
 //126.570667 + (i/10)
@@ -117,43 +196,45 @@ var a = 0;
 	//커스텀 오버레이에 표시할 컨텐츠 입니다
 	//커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 	//별도의 이벤트 메소드를 제공하지 않습니다 
-	var content = '<div class="wrap2">' + 
+	
+	
+	
+					
+				
+	
+var content = '<div class="wrap2">' + 
 	        '    <div class="info2">' + 
 	        '        <div class="title">' + 
-	        '			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum=${i.key.spaceNum}"/>">${i.key.spaceName}</a> '+
-	        '            <div class="close" onclick="closeOverlay()" title="닫기">X</div>' + 
 	        '        </div>' + 
-	        '        <div class="body2">' + 
-	        '            <div id="carouselExampleIndicators" class="carousel slide">'+
-	        '              <div class="carousel-indicators">'+
-	        '              		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>'+
-	        '                	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>'+
-			'			  		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>'+
-			'			    </div>'+
-			'			    <div class="carousel-inner">'+
-				'			    <div class="carousel-item active">'+
-				'		      <img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">'+
-				'			    </div>'+
-				'			    <div class="carousel-item">'+
-				'			      <img src="<c:url value="/images/img_7.jpg"/>" class="d-block w-100" alt="...">'+
-				'			    </div>'+
-				'			    <div class="carousel-item">'+
-				'			      <img src="<c:url value="/images/img_6.jpg"/>" class="d-block w-100" alt="...">'+
-				'			    </div>'+
-			'			  </div>'+
-			'			   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">'+
-			'			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
-			'		    	<span class="visually-hidden">Previous</span>'+
-			'			  </button>'+
-			'			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">'+
-			'		    	<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
-			'			    <span class="visually-hidden">Next</span>'+
-			'		 	 </button>'+
-			'			</div>'+ 
+	        '        	<div class="body2">' + 
+						'	<div id="carouselExample" class="carousel carousel-fade">'+
+					'		  	<div class="carousel-inner">'+
+						 '   		<div class="carousel-item active">'+
+						  '  			<img src="<c:url value="/images/img_8.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+						   ' 		</div>'+
+						    '		<div class="carousel-item">'+
+						    '			<img src="<c:url value="/images/img_7.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+						    '		</div>'+
+						    '		<div class="carousel-item">'+
+						   '		 	<img src="<c:url value="/images/img_6.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+						   ' 		</div>'+
+						  '			</div>'+
+						'  			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">'+
+					 	'		   		<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
+					  '					<span class="visually-hidden">Previous</span>'+
+						 ' 			</button>'+
+						 ' 			<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">'+
+						 '   			<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
+						 '   			<span class="visually-hidden">Next</span>'+
+						 ' 			</button>'+
+						'		</div>'+
 	        '            <div class="desc">' + 
+	        '			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum=${i.key.spaceNum}"/>">${i.key.spaceName}</a> '+
 	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
-	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:2%;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
-	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5></div>' + 
+	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:5px;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
+	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold;display:inline-block;"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5>'+
+		           '			<div class="close" onclick="closeOverlay()" title="닫기" style="color:black; display:inline-block;">X</div>'+
+	           '            </div>' + 
 	        '            </div>' + 
 	        '        </div>' + 
 	        '    </div>' +    
@@ -172,6 +253,13 @@ var a = 0;
 	contents.push(content);
 	overlays.push(overlayz);
 	
+	kakao.maps.event.addListener(overlayz, 'dragstart', function () {
+        map.setDraggable(false);
+    });
+    kakao.maps.event.addListener(overlayz, 'dragend', function () {
+        map.setDraggable(true);
+    });
+	
 
 	
 	var markerContent = '<div class ="overlabel" style="margin : -16px 0px 0px -10px">'
@@ -186,7 +274,7 @@ var a = 0;
 	  position: markerPosition,
 	  content: markerContent,
 	});
-	
+	customOverlays.push(customOverlay);
 	customOverlay.setMap(map);
 	
 </c:forEach>
@@ -216,5 +304,37 @@ function goBack(){
 	history.go(-1);
 }
 
+function findOverlayAtLocation(targetX, targetY, tolerance = 1e-6) {
+	  for (var i = 0; i < overlays.length; i++) {
+	    var overlay = overlays[i];
+	    var overlayPosition = overlay.getPosition();
+
+	    // 부동소수점 숫자를 비교할 때 일정한 범위 내에 있는지 확인합니다.
+	    if (
+	      Math.abs(overlayPosition.getLat() - targetX) < tolerance &&
+	      Math.abs(overlayPosition.getLng() - targetY) < tolerance
+	    ) {
+	      return i+1; // 원하는 위치에 커스텀 오버레이를 찾았을 경우 반환합니다.
+	    }
+	  }
+	  return null; // 원하는 위치에 커스텀 오버레이가 없을 경우 null을 반환합니다.
+	}
+
+function panTo(x,y) {
+    // 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = new kakao.maps.LatLng(x, y);
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    
+    var overlayAtLocation = findOverlayAtLocation(x, y);
+    if (overlayAtLocation) {
+      // 원하는 위치에 커스텀 오버레이를 찾았을 경우 조작 또는 사용합니다.
+        createOverlayToggleFunction(overlayAtLocation);
+    } else {
+      console.log('해당 위치에 커스텀 오버레이를 찾을 수 없습니다.');
+    }
+        $('#sideBarClose').click();
+    map.panTo(moveLatLon);    
+}        
 </script>
 </html>

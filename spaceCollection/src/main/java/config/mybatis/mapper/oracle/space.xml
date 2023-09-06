@@ -170,6 +170,16 @@
 		where space_num = #{spaceNum}
 	</update>
 	
+	<update id="spaceConfirmOne" parameterType="int">
+		update space set space_reg_date = sysdate, space_request_status = 'Y' 
+		where space_num = #{spaceNum}
+	</update>
+	
+	<update id="spaceDenineOne" parameterType="int">
+		update space set space_reg_date = sysdate, space_request_status = 'N' 
+		where space_num = #{spaceNum}
+	</update>
+	
 	<select id="selectSpaceConfirmList" parameterType="searchVo" resultType="map">
 		select * from
 		(
@@ -225,6 +235,13 @@
 	
 	<select id="selectSpaceForExcel" resultType="map">
 		select * from ADMIN_SPACE_EXCEL_VIEW order by space_num
+	</select>
+	<select id="selectSpaceTypeName" parameterType="int" resultType="string">
+		select space_type_name from space_type where space_type_no = #{spaceTypeNo}
+	</select>
+	
+	<select id="selectSpaceConfirmDetailBySpaceNum" parameterType="int" resultType="map">
+		select * from spaceConfirmDetail_view where space_num = #{spaceNum}
 	</select>
 	
 </mapper>

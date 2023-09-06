@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%-- <script src="<c:url value='/userMain/board/couponscript.js'/>"></script> --%>
- <%@ include file="/WEB-INF/views/form/userTop.jsp" %> 
-  
+<%@ include file="/WEB-INF/views/form/userTop.jsp" %> 
 <style>
 
 section{
@@ -88,17 +86,26 @@ div#textBox{
     margin-left: 100px;
     font-weight: bold;
 }
+.myCoupon {
+}
+.CouponIcon{
+    width: 10%;
+}
 </style>
 <section>
   <div id="roulette" class="roulette">
 	    <div id="app">
-	    
 	    </div>
   </div>
-    <div id="textBox">
-	    <span id="textBox">가운데 Start 버튼을 클릭시 룰렛이 실행됩니다.
-	    <br> * 쿠폰은 1일 1회만 지급 됩니다. *</span>
-	</div>	    
+  
+  <div id="textBox">
+    <span id="textBox">가운데 Start 버튼을 클릭시 룰렛이 실행됩니다.
+    <br> * 쿠폰은 1일 1회만 지급 됩니다. *</span>
+     <br><br>
+     <a href="<c:url value='/user/couponList'/>"><img src=<c:url value='/images/couponIcon.png'/>  class="CouponIcon"></a>
+     => 나의 쿠폰함 이동 
+     
+  </div>	    
 	    
 </section>
 

@@ -264,7 +264,7 @@
 		  </div>
 		  
 		  <div class="col-sm-6 "  style="text-align: center;">
-		    <a href="<c:url value='/coupon'/>">
+		    <a href="<c:url value='/user/coupon'/>">
 		    <i class="bi bi-ticket-perforated"></i>
 		 	   <p>쿠폰함</p></a>
 		  </div>

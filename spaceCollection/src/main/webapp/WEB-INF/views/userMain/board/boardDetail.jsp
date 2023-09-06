@@ -6,16 +6,12 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-	
     .section1{
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
     justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto; 
+    align-items: center;
 	} 
-	
 	.section2{
 	display: flex;
 	flex-wrap: wrap;
@@ -24,7 +20,6 @@
     max-width: 1200px;
     margin: 0 auto;  
 	}
-	
 	#commentsMoreDiv{
 	cursor: pointer;
 	margin:40px;
@@ -39,59 +34,70 @@
 	}
 	.alleventBox {
     margin-top: 15%;
+    margin-bottom: 8%;
 	}
 	div#commentDiv {
     width: 1000px;
     margin-top: 20px;
     margin-left: 3px;
 	}
-
 	div#CommentsBox {
     margin-top: 40px;
 	}
-	
 	#sendBt{
     scale: 0.7;
 	}   
-	
 	button.commentsDel{
 	border-radius: 10px;
     background-color: white;
     float: right;
+    border: 0.1px white;
+    font-weight: bold;
+    font-size: 90%;
+    color: #193D76;
 	}
 	button.commentsEdit{
 	border-radius: 10px;
     background-color: white;
     float: right;
+    border: 0.1px white;
+    font-weight: bold;
+    font-size: 90%;
+    color: #193D76;
+	}
+	img.userIcon {
+    width: 5.5%;
 	}
 	
 </style>
 
 <script>
+
 	var page = 1;
 	var boardNum = ${param.boardNum}; 
 	
 	 function makeList(data) {
 		 console.log("로딩 메서드 시작");
-			 $.each(data, function() {
-			    var str = "<div class='CommentsBox' id='"+this.commentNum+"'  style='border: 1px solid #ccc; width: 600px;'>"
+			 $.each(data, function() {  
+			var str = "<div class='CommentsBox' id='"+this.commentNum+"'  style='border-top: 0.1px solid #ccc; width: 600px; '>"
+					+ "<form action='/user/board/boardDetail/commentsLoad' method='GET'>"
+					+ "<input type='text' name='userNum' id='userNum' value='"+this.userId+"' style='float: right; visibility: hidden;'/>"
+			        + "<input type='text' name='commentNum' id='commentNum' value='"+this.commentNum+"'style='float: right; visibility: hidden;' />"
+			        + "</form>"
 			        + "<form name='CommentsBox' method='post' action='#' var='list1' items='" + this.list1 + "' >"
-			        + "<input type='text' name='userNum' value='"+this.userNum+"'/>"
-			        + "<input type='text' name='commentNum' id='commentNum' value='"+this.commentNum+"'/>"
-			        + "<div class='anonym' style='margin: 10px;'>작성자 :"
-			        + "<input type='text'  id='com_writer' placeholder='id' name='com_writer' value='" + this.userNum + "' readonly style='width: 80px; border:none;'>"
-			        + "<input type='text' value='" + (this.commentRegDate).substring(0,10) + " " + (this.commentRegDate).substring(11,19)  + "' style='border: none;' />"
+			        + "<div class='anonym' style='margin: 10px;'><img class='userIcon' src='<c:url value='/images/userIcon.png'/>'>"
+			        + "<input type='text'  id='com_writer' placeholder='id' value='" + this.userId + "' readonly style='width: 80px; border:none; font-weight: bold; '>"
+			        + "<input type='text' value='" + (this.commentRegDate).substring(0,10) + " " + (this.commentRegDate).substring(11,19)  + "' style='border: none; color: #999;' />"
 			        + "</div>"
 			        + "<div class='anonym2' style='margin: 10px;'>"
-			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none;' />"
+			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none; width: 80%;' />"
 			        + "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>"
 					+ "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit("+this.commentNum+")'>수정</button>"
 			        + "</div>"
 			        + "</form>"
 			        + "</div>";
 			    $('#commentsLoad').append(str);
-			  /*   $('#commentsMoreDiv').append(str); */
-			    document.getElementById('commentNum').value = document.getElementById('commentNum').value;
+			
 			}); //each
 	 }//makeList
 	 
@@ -112,18 +118,11 @@
 			str += "</form>";
 			str += "<hr>";
 			$('#'+commentNum+'').append(str);
-			
 	}
 	 
 
 	 function commentDelete(commentNum) {
 		console.log("삭제 클릭 시작");
-		/*$('#okBt').show();
-		$('#cancelBt').html("취소");
-		$('#okBt').html("삭제");
-		$('#okBt').addClass('deleteComments');
-		$('.modal-body').html("댓글을 삭제하시겠습니까?");
-		$('#confirm1').modal('show');*/
 		$.ajax({
 			url : "<c:url value='/user/board/boardDetail/ajax_commentsDelete'/>",
 			type : 'get',
@@ -153,12 +152,10 @@
 					console.log(page);
 					makeList(data);
 					page++;
-					/* $('#commentsMoreDiv').click(function() {
-						$('#commentsMoreDiv').append(content);
-					}); */
 				}else{
 					str = "<span>등록된 댓글이 없습니다.</span>";
-					$('#commentsLoad').append(str);
+					$('#commentsMoreDiv').html(str);
+					return;
 				}
 			},
 			error:function(xhr, status, error){
@@ -298,7 +295,7 @@ $(function() {
 			                </div>
 						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							
-						<input type="hidden" name="userNum" value="${map.USER_NUM }"/>
+						<input type="hidden" name="userNum" id = "userComment" value="${map.USER_NUM }"/>
 						</div> 
 					</form>
 				
@@ -319,7 +316,7 @@ $(function() {
 					  	<c:if test="${!empty list }">	
 							<div class="col align-center" >
 								<!-- 댓글 추가 -->
-								<input type="hidden" name="addNum" > 
+								<input type="hidden" name="page" > 
 								<div id="ajaxComments" var="list1" items="${list1}"> 
 								</div>
 								<!-- 댓글 로딩 -->

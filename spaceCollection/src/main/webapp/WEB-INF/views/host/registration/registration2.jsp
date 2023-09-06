@@ -62,7 +62,7 @@
 	    display: block;
 	}
 	
-	.spText, .spBusiness, .spTel {
+	.spText, .spBusiness, .spTel, .floor {
 		width: 100%;
 		height: 50px;
 		border: 1px solid #b7b7b7;
@@ -72,7 +72,7 @@
 		resize: none;
 	}
 	
-	.spText::placeholder {
+	.spText::placeholder, .address::placeholder {
 		color: #b7b7b7;
 		font-weight: bold;
 	}
@@ -194,24 +194,24 @@
 		font-weight: bold;
 	}
 	
-	.spZip1 {
-		width: 850px;
-		height: 150px;
+	.address {
+		width: 85%;
 		border: 1px solid #b7b7b7;
 		font-size: 15px;
-		margin-top: 15px;
-		padding: 8px 8px 8px 8px;
+		margin-top: 1px;
+		padding: 12px 8px 8px 8px;
 		resize: none;
 		background: white;
+		height: 50px;
 	}
 	
-	.spZip2 {
-		width: 850px;
-		height: 150px;
+	.addressDetail {
+		width: 100%;
+		height: 50px;
 		border: 1px solid #b7b7b7;
 		font-size: 15px;
 		margin-top: 15px;
-		padding: 8px 8px 8px 8px;
+		padding: 12px 8px 8px 8px;
 		resize: none;
 		background: white;
 	}
@@ -264,19 +264,57 @@
 		height: 122px;
 	}
 	
-	.modal-content {
-		width: 850px;
-		min-height: 500px;
-		
+	.spRefund {
+		display: flex;
+    	align-items: center;
+    	margin-bottom: 25px; 
 	}
 	
-	.modal-header {
-		background: #704de4;
-		font-weight: bold;
+	.lbRefund {
+		cursor: default;
+		font-weight: 600;
+		display: inline-block; 
+		vertical-align: middle;
+		font-size: 18px;
+		width: 163px;
+		padding-right: 16px; 
+		color: rgb(17, 17, 17);
+	}
+	
+	.opRefund {
+		display: flex;
+    	align-items: center;
+		width: 50%;
+		margin-left: 22px;
+	}
+	
+	.opRefund span {
+		font-size: 18px;
+		color: #656565;
+	}
+	
+	.form-select {
+		font-size: 18px;
+		width: 135px;
+		margin: 0 10px 0 10px;
+	}
+	
+	.form-check-input {
+		padding-top: 20px;
+	}
+	
+	.form-check-label {
+		font-size: 18px;
+		color: black;
+	}
+	
+	.form-check.form-check-inline {
+		margin: 0 10px 25px 0;
 	}
 	
 </style>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
@@ -338,6 +376,12 @@
 		    
 		});
 		
+		// URL에서 파라미터 값을 가져옵니다.
+		var spaceTypeNameParam = new URLSearchParams(window.location.search).get('spaceTypeName');
+
+		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
+		$('.typeSub[value="' + spaceTypeNameParam + '"]').addClass('checked');
+		
 		//태그 확인 숨기기
 		$('.spTag').hide();
 		
@@ -370,13 +414,23 @@
 
 	        		// 입력 필드 초기화
 	                $(this).siblings('.spText').val('');
-	                
+	        		
 	            } else {
 	                alert('태그는 최대 5개까지 입력할 수 있습니다.');
 	            }
 		    }
-		    
         });
+        
+	    // 삭제 버튼(.tagClose)을 클릭할 때 해당 태그를 배열과 화면에서 삭제
+	    $(document).on('click', '.tagClose', function() {
+	        var removedValue = $(this).closest('.tagRe').text().trim().substring(2); // "# " 제거
+	        var index = tag.indexOf(removedValue);
+	        if (index !== -1) {
+	        	tag.splice(index, 1); // 배열에서 제거
+	        }
+	        $(this).closest('.tagRe').remove(); // 화면에서 제거
+	    	$('#spaceTag').val(tag.join('/')); // hidden input 업데이트
+	    });
 	     
 		// 사용자가 입력한 값을 저장할 배열
         var facility = [];
@@ -385,12 +439,11 @@
         $('.btAdd.fa').click(function() {
         	var inputValue = $(this).siblings('.spText').val();
 		    var tagContainer = $(this).siblings('.spTag');
-		    var currentTagCount = tagContainer.find('.tagRe').length;
 
 		    if (inputValue.length < 1) {
 		    	alert('내용을 입력해주세요.');
 		    } else {
-		    	// 입력값이 비어 있지 않고, 최대 5개까지만 저장하도록 합니다.
+		    	// 입력값이 비어 있지 않고, 최대 10개까지만 저장하도록 합니다.
 	            if (inputValue && facility.length < 10) {
 	                tagContainer.show();
 	                
@@ -398,7 +451,7 @@
 	                facility.push(inputValue);
 	                
 	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
-	        	    tagContainer.append('<span class="tagRe"> ' + (currentTagCount + 1) + '. '  + inputValue 
+	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + (facility.length) + '</span>. '  + inputValue 
 	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
 	             	
 	        		// 입력값을 String으로 변환합니다.
@@ -409,6 +462,22 @@
 
 	        		// 입력 필드 초기화
 	                $(this).siblings('.spText').val('');
+	        		
+	             	// 태그 삭제 이벤트 핸들러 등록
+	                tagContainer.find('.tagClose').click(function() {
+	                    var tagRe = $(this).closest('.tagRe');
+	                    var index = tagRe.index();
+	                    facility.splice(index, 1); // 배열에서 제거
+	                    tagRe.remove(); // 화면에서 제거
+	                    
+	                    // 남은 태그의 숫자를 다시 설정
+	                    tagContainer.find('.tagRe').each(function(i) {
+	                        $(this).find('.num').text((i + 1));
+	                    });
+
+	                    // hidden input 업데이트
+	                    $('#spaceFacility').val(facility.join('||'));
+	                });
 	                
 	            } else {
 	                alert('태그는 최대 10개까지 입력할 수 있습니다.');
@@ -437,7 +506,7 @@
 	                warn.push(inputValue);
 	                
 	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
-	        	    tagContainer.append('<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue 
+	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + (warn.length) + '</span>. ' + inputValue 
 	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
 	             	
 	        		// 입력값을 String으로 변환합니다.
@@ -448,6 +517,22 @@
 
 	        		// 입력 필드 초기화
 	                $(this).siblings('.spText').val('');
+	        		
+	             	// 태그 삭제 이벤트 핸들러 등록
+	                tagContainer.find('.tagClose').click(function() {
+	                    var tagRe = $(this).closest('.tagRe');
+	                    var index = tagRe.index();
+	                    facility.splice(index, 1); // 배열에서 제거
+	                    tagRe.remove(); // 화면에서 제거
+	                    
+	                    // 남은 태그의 숫자를 다시 설정
+	                    tagContainer.find('.tagRe').each(function(i) {
+	                        $(this).find('.num').text((i + 1));
+	                    });
+
+	                    // hidden input 업데이트
+	                    $('#spaceFacility').val(facility.join('||'));
+	                });
 	                
 	            } else {
 	                alert('태그는 최대 10개까지 입력할 수 있습니다.');
@@ -499,6 +584,54 @@
 		        $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
 		    }
 		});
+		
+		// 이미지 업로드 관련 변수 초기화
+	    var imageCount = 0;
+	    var maxImages = 10;
+
+	    // 파일 선택 시
+	    $('#subImage').on('change', function() {
+	        var fileInput = this;
+	        var files = fileInput.files;
+
+	        if (files.length === 0) {
+	            return;
+	        }
+
+	        // 이미지 파일만 처리
+	        var imageTypeRegExp = /^image\/(jpeg|jpg|png)$/;
+	        for (var i = 0; i < files.length; i++) {
+	            var file = files[i];
+	            if (!imageTypeRegExp.test(file.type)) {
+	                alert('이미지 파일만 업로드 가능합니다.');
+	                return;
+	            }
+	        }
+
+	        // 이미지를 표시할 영역
+	        var insertSub = $('.insert.sub');
+
+	        // 이미지를 표시하고 카운트 증가
+	        for (var i = 0; i < files.length; i++) {
+	            var file = files[i];
+	            var reader = new FileReader();
+
+	            reader.onload = function(event) {
+	                var imageElement = $('<img>').attr('src', event.target.result).addClass('uploaded-image');
+	                insertSub.append(imageElement);
+	                imageCount++;
+
+	                // 이미지 제한 확인
+	                if (imageCount >= maxImages) {
+	                    $('#subImage').prop('disabled', true); // 이미지 업로드 비활성화
+	                    alert('최대 ' + maxImages + '개의 이미지를 업로드했습니다.');
+	                    return;
+	                }
+	            };
+
+	            reader.readAsDataURL(file);
+	        }
+	    });
 		
 	    
 	    //하단 버튼
@@ -584,6 +717,16 @@
 				return false;
 			}
 
+    		//공간 층수
+    		if ($('.floor').val().toString().length < 1) {
+    			alert('공간 층수를 입력하세요.');
+    			$('.floor').focus();
+    			
+    			scrollMove($('.floor'));
+    			
+    			return false;
+    		}
+
 			//공간 태그
 			if ($('.spaceTag.tag').find('.tagRe').length < 1) {
 				alert('공간 태그를 하나라도 입력하세요.');
@@ -626,22 +769,61 @@
 			
 			$('form[name=frmRegi2]').submit();
 		});
-		
-		
 	});
 	
-	
-	//스크롤이동
-	function scrollMove(val) {
-		var offset = $(val).offset();	//해당 위치 반환
-		$("html, body").animate({scrollTop: offset.top - 150}, 200);	//선택한 위치로 이동. 두번째 인자는 시간 0.2초
+	function sample6_execDaumPostcode() {
+		new daum.Postcode({
+			oncomplete: function(data) {
+		    	// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+		        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		        var addr = ''; // 주소 변수
+		        var extraAddr = ''; // 참고항목 변수
+
+		        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		        	addr = data.roadAddress;
+		        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		        	addr = data.jibunAddress;
+		        }
+
+		        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		        if(data.userSelectedType === 'R'){
+		        	// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		        	extraAddr += data.bname;
+		        }
+		        // 건물명이 있고, 공동주택일 경우 추가한다.
+		        if(data.buildingName !== '' && data.apartment === 'Y'){
+		            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		        }
+		        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		        if(extraAddr !== ''){
+		        	extraAddr = ' (' + extraAddr + ')';
+		        }
+		        // 조합된 참고항목을 해당 필드에 넣는다.
+		        document.getElementById("sample6_extraAddress").value = extraAddr;
+		                    
+		        } else {
+		        	document.getElementById("sample6_extraAddress").value = '';
+		        }
+
+		        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		        document.getElementById("spaceZipcode").value = data.zonecode;
+		        document.getElementById("spaceAddress").value = addr;
+		        // 커서를 상세주소 필드로 이동한다.
+		        document.getElementById("spaceAddressDetail").focus();
+			}
+		}).open();
 	}
-	
 </script>
 
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration3' />">
+		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />"
+			enctype="multipart/form-data">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -697,7 +879,6 @@
 								<input type="button" class="typeSub" value="${list.spaceTypeName }" >
 							</c:forEach><br>
 						</c:forEach>
-						<input type="hidden" name="spaceTypeName" id="spaceTypeName">
 					</div>
 				</div>
 			</div>
@@ -708,7 +889,8 @@
 				</div>
 				<div class="boxContents">
 					<div class="spacepBusiness">
-						<input type="text" class="spBusiness" name="spaceBusinessNum" value="" required >
+						<input type="text" class="spBusiness" name="spaceBusinessNum" value="" 
+							maxlength="12" required >
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -723,7 +905,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spacepTel">
-						<input type="text" class="spTel" name="spacePhoneNum" value="" required >
+						<input type="text" class="spTel" name="spacePhoneNum" value="" maxlength="20" required >
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -776,6 +958,18 @@
 					</div>
 				</div>
 			</div>
+			<!-- 공간 층수 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>공간 층수 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spaceText">
+						<input type="text" class="spText floor" value="" maxlength="20"
+							name="spaceLocation" placeholder="층수 여부를 입력하세요. ex. 지상 1층, 지하 2층">
+					</div>
+				</div>
+			</div>
 			<!-- 공간 태그 -->
 			<div class="boxForm">
 				<div class="boxTitle">
@@ -805,6 +999,77 @@
 						<input type="button" class="btAdd fa" value="추가 ▽">
 						<div class="spTag fa"></div>
 						<input type="hidden" name="spaceFacility" id="spaceFacility">
+					</div>
+				</div>
+			</div>
+			<!-- 편의시설 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>편의시설</span>
+					<br><hr>
+				</div><br>
+				<div class="boxContents">
+					<div class="facility">
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facWifi" id="inlineCheckbox1" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox1">와이파이</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facPrinter" id="inlineCheckbox2" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox2">복사/인쇄기</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facChairTable" id="inlineCheckbox3" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox3">의자/테이블</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facSmoke" id="inlineCheckbox4" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox4">흡연가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facRestRoom" id="inlineCheckbox5" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox5">내부화장실</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facPC" id="inlineCheckbox6" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox6">PC/노트북</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facTV" id="inlineCheckbox7" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox7">TV/프로젝터</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facWhiteBoard" id="inlineCheckbox8" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox8">화이트보드</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facElevator" id="inlineCheckbox9" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox9">엘레베이터</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox9" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox9">주차가능</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox10" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox9">음식물섭취가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox11" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox10">주류반입가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox12" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox11">취사가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox13" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox12">애완동물동반가능여부</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox14" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox13">음향장비</label>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -861,7 +1126,7 @@
 				<div class="boxContents">
 					<div class="spaceImg sub">
 						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
-							<span class="inner">이미지 파일을 추가해 주세요.</span>
+							<div class="inner sub">이미지 파일을 추가해 주세요.</div>
 						</div>
 						<div class="btBox">
 							<label>
@@ -884,40 +1149,181 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceZip">
-						<!-- Button trigger modal -->
-						<button type="button" class="btAdd btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin: 0;">
-						  주소등록
-						</button>
-						
-						<!-- Modal -->
-						<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: white; font-weight: bold;">주소 등록</h1>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <div class="modal-body">
-						        ...
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						        <button type="button" class="btn btn-primary">Understood</button>
-						      </div>
-						    </div>
-						  </div>
+						<input type="button" class="btAdd" value="주소등록" onclick="sample6_execDaumPostcode()"
+							style="margin: 0 0 10px 20px;">
+						<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+						<div class="spZip1">
+							<input type="hidden" name="spaceZipcode" id="spaceZipcode">
+							<input type="text" class="address" name="spaceAddress" id="spaceAddress"
+								placeholder="실제 서비스되는 공간의 주소를 입력해주세요." disabled="disabled">
 						</div>
-						<!-- <input type="button" class="btAdd" value="주소등록" style="margin: 0 0 10px 20px;"> -->
-						<div class="spZip1" style="height: 50px; padding-top: 15px;">
-							<span class="inner">실제 서비스되는 공간의 주소를 입력해주세요.</span>
-						</div>
-						<div class="spZip2" style="height: 50px; padding-top: 15px; width: 100%;">
-							<span class="inner">상세 주소</span>
+						<div class="spZip2">
+							<input type="text" class="addressDetail" name="spaceAddressDetail" 
+								id="addressDetail" onclick="sample6_execDaumPostcode()" >
 						</div>
 					</div>
 				</div>
 			</div>
-			
+			<div class="heading" style="margin-top: 120px;">
+				<span class="hd1">환불 기준를 입력해주세요.</span>
+			</div>
+			<!-- 환불 기준 -->
+			<div class="boxForm" style="margin-top: 60px;">
+				<div class="boxContents">
+					<div class="refund">
+						<div class="spRefund">
+							<label class="lbRefund">이용 7일전</label>
+							<div class="opRefund">
+								<span>총 금액의</span>
+								<div>
+									<select class="form-select" name="refund7Day"
+										aria-label="Default select example">
+										<option selected value="100%">100%</option>
+									</select>
+								</div>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 6일전</label>
+							<div class="opRefund">
+								<span>총 금액의</span>
+								<select class="form-select" name="refund6Day"
+									aria-label="Default select example">
+									<option value="100%">100%</option>
+									<option value="90%">90%</option>
+									<option value="80%">80%</option>
+									<option value="70%">70%</option>
+									<option value="60%">60%</option>
+									<option value="50%">50%</option>
+									<option value="40%">40%</option>
+									<option value="30%">30%</option>
+									<option value="20%">20%</option>
+									<option value="10%">10%</option>
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 5일전</label>
+							<div class="opRefund">
+								<span>총 금액의</span> 
+								<select class="form-select" name="refund5Day"
+									aria-label="Default select example">
+									<option value="100%">100%</option>
+									<option value="90%">90%</option>
+									<option value="80%">80%</option>
+									<option value="70%">70%</option>
+									<option value="60%">60%</option>
+									<option value="50%">50%</option>
+									<option value="40%">40%</option>
+									<option value="30%">30%</option>
+									<option value="20%">20%</option>
+									<option value="10%">10%</option>
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 4일전</label>
+							<div class="opRefund">
+								<span>총 금액의</span> 
+								<select class="form-select" name="refund4Day"
+									aria-label="Default select example">
+									<option value="100%">100%</option>
+									<option value="90%">90%</option>
+									<option value="80%">80%</option>
+									<option value="70%">70%</option>
+									<option value="60%">60%</option>
+									<option value="50%">50%</option>
+									<option value="40%">40%</option>
+									<option value="30%">30%</option>
+									<option value="20%">20%</option>
+									<option value="10%">10%</option>
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 3일전</label>
+							<div class="opRefund">
+								<span>총 금액의</span> 
+								<select class="form-select" name="refund3Day"
+									aria-label="Default select example">
+									<option value="100%">100%</option>
+									<option value="90%">90%</option>
+									<option value="80%">80%</option>
+									<option value="70%">70%</option>
+									<option value="60%">60%</option>
+									<option value="50%">50%</option>
+									<option value="40%">40%</option>
+									<option value="30%">30%</option>
+									<option value="20%">20%</option>
+									<option value="10%">10%</option>
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 2일전</label>
+							<div class="opRefund">
+								<span>총 금액의</span> 
+								<select class="form-select" name="refund2Day"
+									aria-label="Default select example">
+									<option value="100%">100%</option>
+									<option value="90%">90%</option>
+									<option value="80%">80%</option>
+									<option value="70%">70%</option>
+									<option value="60%">60%</option>
+									<option value="50%">50%</option>
+									<option value="40%">40%</option>
+									<option value="30%">30%</option>
+									<option value="20%">20%</option>
+									<option value="10%">10%</option>
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 전날</label>
+							<div class="opRefund">
+								<span>총 금액의</span> 
+								<select class="form-select" name="refund1Day"
+									aria-label="Default select example">
+									<option value="100%">100%</option>
+									<option value="90%">90%</option>
+									<option value="80%">80%</option>
+									<option value="70%">70%</option>
+									<option value="60%">60%</option>
+									<option value="50%">50%</option>
+									<option value="40%">40%</option>
+									<option value="30%">30%</option>
+									<option value="20%">20%</option>
+									<option value="10%">10%</option>
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+						<div class="spRefund">
+							<label class="lbRefund">이용 당일</label>
+							<div class="opRefund">
+								<span>총 금액의</span> 
+								<select class="form-select" name="refundDay"
+									aria-label="Default select example">
+									<option selected value="0%">0%</option>
+								</select>
+								<span>환불</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
 				<button type="button" class="btn btn-warning" id="next" >다음</button>

@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
+import com.sc.spaceCollection.refund.model.RefundVO;
+import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +50,20 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public List<Integer> getDataByDate(String date, int userNum) {
 		return hostDao.getDataByDate(date, userNum);
+	}
+
+	@Override
+	@Transactional
+	public int insertSpace(SpaceVO spaceVo, RefundVO refundVo) {
+		int cnt = hostDao.insertRefund(refundVo);
+		spaceVo.setRefundNum(refundVo.getRefundNum());
+		cnt = hostDao.insertSpace(spaceVo);
+		return cnt;
+	}
+
+	@Override
+	public int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility) {
+		return hostDao.insertSpaceTotalFacility(spaceTotalFacility);
 	}
 
 

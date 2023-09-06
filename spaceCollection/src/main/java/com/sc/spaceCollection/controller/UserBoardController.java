@@ -28,6 +28,10 @@ import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.guest.model.GuestService;
+import com.sc.spaceCollection.guest.model.GuestVO;
+import com.sc.spaceCollection.userInfo.model.UserInfoService;
+import com.sc.spaceCollection.usermain.model.Coupon;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +45,8 @@ public class UserBoardController {
 	private final BoardService boardService;
 	private final CommentsService commentsService;
 	private final BoardTypeService boardTypeService;
+	private final UserInfoService userInfoService;
+	private final GuestService guestService;
 	
 	 //자주묻는질문
 	@RequestMapping("/faq")
@@ -129,22 +135,24 @@ public class UserBoardController {
 	
 	@GetMapping("/board/boardDetail/commentsLoad")
 	@ResponseBody
-	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, 
-			CommentsVO commentsVO, @RequestParam(defaultValue = "0")int page, String userId  ,Model model ) {
+	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, CommentsVO commentsVO,
+					 					@RequestParam(defaultValue = "0")int page, Model model ) {
 		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, page = {}", boardNum, page);
 		
 		int size=5;
 		int count = commentsService.countComments(boardNum);
-	    List<Map<String, Object>> list = commentsService.selectByBoardNum(commentsVO);
 	    List<CommentsVO> list1 = commentsService.selectPaging(page, size, boardNum);
 	    
+	    for(CommentsVO vo : list1) {
+	    	logger.info("getUserNum = {}",vo.getUserNum());
+	    	vo.setUserId(guestService.selectByUserNum(vo.getUserNum()));
+	    	
+	    	logger.info("getUserId = {}",vo.getUserId());
+	    }
 	    
-	    /*for(CommentVO vo : list1){
-	    	vo.setCommentRegDate((vo.getCommentRegDate+"").substring(0,6));
-	    	vo.setCommentContent((vo.getCommentContent).replace("\n","<br>"))
-	    	}*/
 	    
 	    logger.info("list1={}",list1);
+	    
 	    model.addAttribute("list1", list1);
 	    
 	    return list1;
@@ -176,6 +184,64 @@ public class UserBoardController {
 		return cnt;
 	}
 	
+	 @RequestMapping("/couponList")
+	   public String couponList(HttpSession session, Model model) {
+		   String userId = (String)session.getAttribute("userId");
+			if(userId == null || userId.isEmpty()) {
+				model.addAttribute("msg", "먼저 로그인을 해주세요");
+				model.addAttribute("url", "/login/login");
+				
+				return "common/message";
+			}
+			
+			GuestVO userInfo = new GuestVO();
+			userInfo = guestService.selectUserInfo(userId);
+			
+			logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
+			
+			model.addAttribute("guestVo",userInfo);
+			
+			return "userMain/board/couponList";
+	   }
+	   
+	   @RequestMapping("/coupon")
+	   public String coupon(HttpSession session, Model model) {
+		   String userId = (String)session.getAttribute("userId");
+			if(userId == null || userId.isEmpty()) {
+				model.addAttribute("msg", "먼저 로그인을 해주세요");
+				model.addAttribute("url", "/login/login");
+				
+				return "common/message";
+			}
+		    return "userMain/board/roulette";
+		}
+	   
+	   @RequestMapping("/coupon2")
+	   public String coupon2(HttpSession session, Model model) {
+		   String userId = (String)session.getAttribute("userId");
+			if(userId == null || userId.isEmpty()) {
+				model.addAttribute("msg", "로그인 후 이용 가능합니다.");
+				model.addAttribute("url", "/");
+				
+				return "common/message";
+			}
+		   
+		   String num = Coupon.generateCoupon();
+		   logger.info("num={}",num);
+		   model.addAttribute("num", num);
+		   
+		   return "userMain/board/coupon";
+	   }
+	
+	   @RequestMapping("/focusList")
+	   public String focusList(Model model) {
+		   
+		   List<BoardVO> list = boardService.selectFocus();
+		   logger.info("list={}",list);
+		   model.addAttribute(list);
+		   
+		   return "userMain/board/focusList";
+	   }
 	
 
 }

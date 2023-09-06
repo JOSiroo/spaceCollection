@@ -50,11 +50,15 @@ public interface SpaceDAO {
 	int getTotalRecordSpaceConfrimList(SearchVO vo);
 	int spaceConfirm(SpaceVO vo);
 	int spaceDenine(SpaceVO vo);
+	int spaceConfirmOne(int spaceNum);
+	int spaceDenineOne(int spaceNum);
 	List<Map<String, Object>> selectSpaceConfirmHistoryList(@Param("searchVo")SearchVO searchVo,
 															@Param("order")String order,
 															@Param("status")String status);
 	int getTotalRecordSpaceConfirmHistoryList(@Param("searchVo")SearchVO searchVo,
 															@Param("order")String order,
 															@Param("status")String status);
-	List<Map<String, Object>> selectSpaceForExcel(ExcelVO vo);
+	List<Map<String, Object>> selectSpaceForExcel();
+	String selectSpaceTypeName(int spaceTypeNo);
+	Map<String, Object> selectSpaceConfirmDetailBySpaceNum(int spaceNum);
 }

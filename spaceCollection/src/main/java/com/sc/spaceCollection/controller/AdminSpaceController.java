@@ -21,6 +21,7 @@ import com.sc.spaceCollection.common.AjaxVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.email.AdminEmailSender;
 import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
@@ -30,6 +31,7 @@ import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryListVO;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryService;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryVO;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -41,6 +43,7 @@ public class AdminSpaceController {
 	private final SpaceTypeCategoryService spaceTypeCategoryService;
 	private final SpaceTypeService spaceTypeService;
 	private final SpaceService spaceService;
+	private final AdminEmailSender admin;
 	
 	@RequestMapping("/spaceTypeCategoryList")
 	public void spaceTypeCategoryList(@ModelAttribute SearchVO searchVo, Model model) {
@@ -347,7 +350,7 @@ public class AdminSpaceController {
 		return ajaxVo;
 	}
 	
-	@RequestMapping("spaceConfirmList/confirm")
+	@RequestMapping("/spaceConfirmList/confirm")
 	public String spaceConfirm(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 승인, 파라미터 listVo = {}", listVo);
 		
@@ -356,6 +359,11 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "승인 처리가 완료되었습니다.";
+			try {
+				admin.sendSpaceConfirmEmail();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		model.addAttribute("msg", msg);
@@ -366,7 +374,7 @@ public class AdminSpaceController {
 		
 	}
 	
-	@RequestMapping("spaceConfirmList/denine")
+	@RequestMapping("/spaceConfirmList/denine")
 	public String spaceDenine(@ModelAttribute SpaceListVO listVo, Model model) {
 		logger.info("공간 거절, 파라미터 listVo = {}", listVo);
 		
@@ -381,7 +389,53 @@ public class AdminSpaceController {
 		model.addAttribute("url", url);
 		
 		return "admin/common/message";
+	}
+	
+	@RequestMapping("/spaceConfirmList/confirmOne")
+	public String spaceConfirm(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
+		logger.info("공간 승인, 파라미터 spaceNum = {}", spaceNum);
+		
+		int cnt = spaceService.spaceConfirmOne(spaceNum);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "승인 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
 		
 		
+	}
+	
+	@RequestMapping("/spaceConfirmList/denineOne")
+	public String spaceDenine(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
+		logger.info("공간 거절, 파라미터 spaceNum = {}", spaceNum);
+		
+		int cnt = spaceService.spaceDenineOne(spaceNum);
+		
+		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
+		if(cnt>0) {
+			msg = "거절 처리가 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "admin/common/message";
+	}
+	
+	@RequestMapping("/spaceConfirmList/spaceConfirmDetail")
+	public String spaceConfirmDetail(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
+		logger.info("공간 승인 관리 상세보기, 파라미터 spaceNum = {}", spaceNum);
+		
+		Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(spaceNum);
+		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
+		
+		
+		model.addAttribute("map", map);
+		return "admin/space/spaceConfirmDetail";
 	}
 }
