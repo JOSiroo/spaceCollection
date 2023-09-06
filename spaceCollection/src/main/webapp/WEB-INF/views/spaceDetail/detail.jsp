@@ -530,6 +530,7 @@ pageEncoding="UTF-8"%>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/spaceDetail.js"></script>
+    <script src="js/spaceDetail2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 	<script type="text/javascript">
@@ -610,32 +611,7 @@ pageEncoding="UTF-8"%>
 	    }
 	  });
 	});
- 		function noReservationRecord(result, begin, end, sdNum,sdPrice){
- 			var parent = sdNum.closest('.inAccordionLi');
-			var times = parent.children('.swiper-inBox');
- 			parent.find('.swiper-inBox').removeClass('reserved');
-			parent.find('.swiper-inBox').prop('disabled', false);
-			parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
-			parent.find('.swiper-inBox').val(sdPrice.val()); 			
- 		}
-	  
-	  
-		function makeTimeTable(data,sdNum){
-			$.each(data,function(){
-				console.log("makeTimeTable");
-				console.log("data = ", this);
-				var parent = sdNum.closest('.inAccordionLi');
-				var times = parent.children('.swiper-inBox');
-				var begin = this.startHour;
-				var end = this.endHour;
-
-				for(var i = begin; i <= end; i++){
-					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
-					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
-					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
-				}	
-			});
-		}
+		
 
 	});
 		$('#QNAWrite').click(function(){
@@ -653,80 +629,74 @@ pageEncoding="UTF-8"%>
 		});	
 	
 		
-	
-	
 		$('.totalPrice').text("예약 시간을 선택해주세요.");
-			$('.swiper-inBox').click(function(){
-			   	var result = 0;
-			   	var formattedTotalPrice = "";
-			   	if($('.swiper-inBox.on').length > 0){
-				    $('.swiper-inBox.on').each(function(){
-				        result += parseInt($(this).val());
-				    });
-				    $('.hiddenPrice').val(result);
-				    
-				    formattedTotalPrice = addComma(result);
-				    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
-			   	}else{
-					$('.totalPrice').text("예약 시간을 선택해주세요.");
-				}
-			});
-	
-		function QnAWriteBtn(){
-			var qnaContent = document.getElementById('message-text').value;
-			var userId = document.getElementById('userId').value;
-			var spaceNum = ${vo.spaceNum};
-			if(userId == null || userId == ""){
-				alert('질문을 하려면 로그인을 해야합니다.')
-				return false;
+		$('.swiper-inBox').click(function(){
+		   	var result = 0;
+		   	var formattedTotalPrice = "";
+		   	if($('.swiper-inBox.on').length > 0){
+			    $('.swiper-inBox.on').each(function(){
+			        result += parseInt($(this).val());
+			    });
+			    $('.hiddenPrice').val(result);
+			    
+			    formattedTotalPrice = addComma(result);
+			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		   	}else{
+				$('.totalPrice').text("예약 시간을 선택해주세요.");
 			}
-			console.log(qnaContent + ", " + userId + ", " + spaceNum);
-			 $.ajax({
-				url:"<c:url value='/writeQnA'/>",
-				type:"POST",
-				dataType:"json",
-				data:{
-					qnaContent:qnaContent,
-					spaceNum:spaceNum
-				},
-				success:function(rsp){
-					if(rsp === 1){
-						alert('QnA 등록 완료!');
-					}else if(rsp === 0){
-						alert('QnA 등록 실패!');
-					}
-				}
-			 });
-			 location.reload();
-		 }
-	
-	function clip(){
+		});
+		function noReservationRecord(result, begin, end, sdNum,sdPrice){
+ 			var parent = sdNum.closest('.inAccordionLi');
+			var times = parent.children('.swiper-inBox');
+ 			parent.find('.swiper-inBox').removeClass('reserved');
+			parent.find('.swiper-inBox').prop('disabled', false);
+			parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+			parent.find('.swiper-inBox').val(sdPrice.val()); 			
+ 		}
+ 		
+ 	function makeTimeTable(data,sdNum){
+			$.each(data,function(){
+				console.log("makeTimeTable");
+				console.log("data = ", this);
+				var parent = sdNum.closest('.inAccordionLi');
+				var times = parent.children('.swiper-inBox');
+				var begin = this.startHour;
+				var end = this.endHour;
 
-		var url = '';
-		var textarea = document.createElement("textarea");
-		document.body.appendChild(textarea);
-		url = window.document.location.href;
-		textarea.value = url;
-		textarea.select();
-		document.execCommand("copy");
-		document.body.removeChild(textarea);
-		alert("URL이 복사되었습니다.")
-	}
-		
-		
-	function resetQna(){
-		document.getElementById('message-text').value="";
-	}
+				for(var i = begin; i <= end; i++){
+					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
+					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
+					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
+				}	
+			});
+		}
 			
-			
-			
-	 function addComma(value){
-		    value = value+"";
-	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        return value; 
-	    }
-	 
-	 
+	function QnAWriteBtn(){
+		var qnaContent = document.getElementById('message-text').value;
+		var userId = document.getElementById('userId').value;
+		var spaceNum = '${vo.spaceNum}';
+		if(userId == null || userId == ""){
+			alert('질문을 하려면 로그인을 해야합니다.')
+			return false;
+		}
+		 $.ajax({
+			url:"<c:url value='/writeQnA'/>",
+			type:"POST",
+			dataType:"json",
+			data:{
+				qnaContent:qnaContent,
+				spaceNum:spaceNum
+			},
+			success:function(rsp){
+				if(rsp === 1){
+					alert('QnA 등록 완료!');
+				}else if(rsp === 0){
+					alert('QnA 등록 실패!');
+				}
+			},
+		 });
+		 location.reload();
+	 }
 	 
 	 var qnaText = document.getElementById('message-text');
 	 var textLimit = document.getElementsByClassName('textLimit');
@@ -741,7 +711,6 @@ pageEncoding="UTF-8"%>
 	 			textLimit[0].textContent="최대 " + this.value.length + "/ 200자 제한";
 	 		}
 	 });
-	 
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -991,21 +960,10 @@ pageEncoding="UTF-8"%>
     
   
     
-	function deleteReview(reviewNum){
-		if(confirm('리뷰를 삭제하시겠습니까?')){
-			location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
-		}
-       }
-	
-	  function deleteQna(qnaNum){
-		if(confirm('QnA를 삭제하시겠습니까?')){
-			location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>";
-		}
-    }
+
 	  
     callReview(1);
     function callReview(reviewPage){
-    
     	
     	if(reviewPage >= parseInt($('#reviewPage').val())+1){
     		alert('마지막 페이지 입니다');
@@ -1170,13 +1128,6 @@ pageEncoding="UTF-8"%>
 	    	}
 	    });
     }
-    
-    
-    
-    
-   
-	    
-    
     
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>

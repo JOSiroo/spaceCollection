@@ -95,12 +95,19 @@ public class UserBoardController {
 	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, HttpSession session, Model model) {
 		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 
+		String userId = (String)session.getAttribute("userId");
 		/*String userId = (String)session.getAttribute("userId");
 		int userNum = 0; // 기본값으로 초기화
-
+		if (userId == null) {
+			 userId ="null";
+	    }else {
+	    	userNum = guestService.selectUserInfo(userId).getUserNum();
+	    }
+		model.addAttribute("userNum", userNum);
     	userNum = guestService.selectUserInfo(userId).getUserNum();
     	logger.info(userId);
 		model.addAttribute("userNum", userNum);*/
+
 		
 				if (boardNum == 0) {
 					model.addAttribute("msg", "잘못된 URL 입니다.");
