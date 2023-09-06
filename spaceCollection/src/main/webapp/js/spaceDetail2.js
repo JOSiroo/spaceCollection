@@ -26,13 +26,13 @@ function clip(){
 			
  	function deleteReview(reviewNum){
 		if(confirm('리뷰를 삭제하시겠습니까?')){
-			location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
+			location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+"${param.spaceNum}"+"'/>"
 		}
    	}
 	
 	function deleteQna(qnaNum){
 		if(confirm('QnA를 삭제하시겠습니까?')){
-			location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>";
+			location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+"${param.spaceNum}"+"'/>";
 		}
     }
 			
