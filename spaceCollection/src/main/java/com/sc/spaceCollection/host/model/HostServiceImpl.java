@@ -62,8 +62,8 @@ public class HostServiceImpl implements HostService {
 	}
 
 	@Override
-	public int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility) {
-		return hostDao.insertSpaceTotalFacility(spaceTotalFacility);
+	public int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo) {
+		return hostDao.insertSpaceTotalFacility(spaceTotalFacilityVo);
 	}
 
 
