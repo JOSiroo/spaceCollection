@@ -41,9 +41,10 @@ pageEncoding="UTF-8"%>
   .QnAHead{
  	font-size:20px;
   	font-weight: bold;
-  	margin-right:78.7%;
   	margin-bottom:15px;
     display: -webkit-inline-box;
+    padding-left: 4%;
+    width: 100%;
   }
   .qnaBody{
   	font-size:16px;
@@ -54,11 +55,12 @@ pageEncoding="UTF-8"%>
   	word-wrap: break-word;
   }
   .reviewHead{
-  	font-size:20px;
+	font-size:20px;
   	font-weight: bold;
-  	margin-right:54.7%;
   	margin-bottom:15px;
     display: -webkit-inline-box;
+    padding-left: 4%;
+    width: 100%;
   }
   #star{
 		width: 29px;
@@ -74,7 +76,7 @@ pageEncoding="UTF-8"%>
 	}
 	
   .date-deleteCol{
-  	padding-right:18%;
+  	padding-right:27%;
   }
   .date-deleteCol.qna{
   	padding-right:30% !important;
@@ -309,6 +311,34 @@ pageEncoding="UTF-8"%>
 							</div>
 							</c:if>
 							</c:if>
+							<div class="modal fade" id="answerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<input type="hidden" id="answerNumVal">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header" style=" background: #ffd014;">
+							        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">답변 작성하기</h1>
+							        <button type="button" class="btn-close" id="closeBTN"onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <form>
+							          <div class="mb-3">
+							            <label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
+								            답변:
+							            </label>
+							            <label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>
+							            
+							            <textarea class="form-control" id="answerMessage" rows="10"></textarea>
+							          </div>
+							        </form>
+							        <p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
+							      </div>
+							      <div class="modal-footer" style="padding:2% 30% 2% 0%;">
+							        <button type="button" id="modalQuit" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+							        <button type="button" onclick="answerQna()" class="btn" style="background: #193D76; color:white" >등록</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 						</div>
 						<div class = "question-box">
 						
@@ -987,7 +1017,7 @@ pageEncoding="UTF-8"%>
 						if('${sessionScope.userId}' !== this.USER_ID){
 							htmlStr = 	'<div class="reviewContent">'
 										+'<div class="reviewHead" style="color:black; font-weight: bold">'
-										+'<span>'+this.USER_ID+'</span>'
+										+'<span padding:5px 8px 5px 8px !important;>'+this.USER_ID+'</span>'
 										+'<div style="margin-left: 20%; padding-bottom: 1%">';
 						}else if('${sessionScope.userId}' === this.USER_ID){
 							htmlStr = 	'<div class="reviewContent" >'
@@ -1078,10 +1108,10 @@ pageEncoding="UTF-8"%>
 						htmlStr = '<div class="qnaContent">'
 						if('${sessionScope.userId}' !== this.USER_ID){
 							htmlStr +='<div class="QnAHead" style="color:black; font-weight: bold">'
-									+'<span >'+this.USER_ID+'</span>';
+									+'<span style="padding:5px 8px 5px 8px !important;">'+this.USER_ID+'</span>';
 						}else if('${sessionScope.userId}' === this.USER_ID){
-							htmlStr +='<div class="QnAHead" style="color:black; font-weight: bold;background:rgba(255, 208, 20, 0.5)!important; border-radius:1rem; padding:5px 8px 5px 8px !important;">'
-									+'<span >'+this.USER_ID+'<i class="bi bi-person-badge"></i></span>';
+							htmlStr +='<div class="QnAHead">'
+									+'<span  style="color:black; font-weight: bold;background:rgba(255, 208, 20, 0.5)!important; border-radius:1rem; padding:5px 8px 5px 8px !important;">'+this.USER_ID+'<i class="bi bi-person-badge"></i></span>';
 						}
 					 	htmlStr +='</div>'
 								+'<div class="qnaBody">'+this.QNA_CONTENT+'</div>'
@@ -1089,9 +1119,15 @@ pageEncoding="UTF-8"%>
 								+'<div class="col-6 date-deleteCol" style="padding-right:30% !important">'
 								+'<span>'+this.QNA_REG_DATE+'</span>'
 								+'</div>';
+					 	if('${sessionScope.userId}' === '${user_id}'){
+							htmlStr += '<div class="col-6 delete-dateCol" style="padding-left: 38% !important;">'
+									+ '<a href="#" style="font-size:14px;" onclick="setAnswerNum('+this.QNA_NUM+')" data-bs-toggle="modal" data-bs-target="#answerModal"><span>답글 달기</span></a>';
+																
+						}else{
+							htmlStr += '<div class="col-6 delete-dateCol">';
+						}
 						if('${sessionScope.userId}' === this.USER_ID){
-							htmlStr +='<div class="col-6 delete-dateCol">'
-									+'<a href="#" style="font-size:14px;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
+							htmlStr +='<a href="#" style="font-size:14px;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
 									+'</div>';
 						}
 							htmlStr +='</div>'
@@ -1128,7 +1164,23 @@ pageEncoding="UTF-8"%>
 	    	}
 	    });
     }
+    function setAnswerNum(qnaNum){
+    	$('#answerNumVal').val(qnaNum);
+    }
     
+    function answerQna(inputQnaNum){
+    	var qnaNum = inputQnaNum;
+    	$.ajax({
+    		url:'<c:url value="/qnaAnswer"/>',
+    		data:{
+    			qnaNum:qnaNum,
+    			qnaContent:$('#answerMessage').val()
+    		},
+    		success:function(answer){
+				    			
+    		}
+    	});
+    }
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
 	<!--한국어  달력 쓰려면 추가 로드-->
