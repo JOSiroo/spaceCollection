@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoService;
 import com.sc.spaceCollection.usermain.model.Coupon;
+import com.sc.spaceCollection.zzim.model.ZzimServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -89,39 +92,56 @@ public class UserBoardController {
 	}
 
 	@GetMapping("/boardDetail")
-	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, Model model) {
+	public String boardDetail(@RequestParam(defaultValue = "0") int boardNum, HttpSession session, Model model) {
 		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 
-		if (boardNum == 0) {
-			model.addAttribute("msg", "잘못된 URL 입니다.");
-			model.addAttribute("url", "/user/boardList");
-			return "common/message";
-		} else {
-			Map<String, Object> map = boardService.selectByeventBoardNum(boardNum);
-			List<CommentsVO> list = commentsService.selectUserComments(boardNum);
-			int count = commentsService.countComments(boardNum);
-			logger.info("게시물 boardNum, boardNum = {}", boardNum);
-			logger.info("댓글 comments, list = {}", list);
-			logger.info("댓글 count = {}", count);
-				if (map == null ) {
-					model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
-					model.addAttribute("url", "/userMain/board/boardList");
+		String userId = (String)session.getAttribute("userId");
+		int userNum = 0; // 기본값으로 초기화
+
+		if (userId == null) {
+			 userId ="null";
+	    }else {
+	    	userNum = guestService.selectUserInfo(userId).getUserNum();
+	    }
+		model.addAttribute("userNum", userNum);
+		
+				if (boardNum == 0) {
+					model.addAttribute("msg", "잘못된 URL 입니다.");
+					model.addAttribute("url", "/user/boardList");
 					return "common/message";
 				} else {
-					logger.info("게시물 내용 조회결과, map = {}", map);
-	
-					model.addAttribute("map", map);
-					model.addAttribute("list", list);
-					model.addAttribute("count", count);
-	
-					return "userMain/board/boardDetail";
+					Map<String, Object> map = boardService.selectByeventBoardNum(boardNum);
+					List<CommentsVO> list = commentsService.selectUserComments(boardNum);
+					int count = commentsService.countComments(boardNum);
+					logger.info("게시물 boardNum, boardNum = {}", boardNum);
+					logger.info("댓글 comments, list = {}", list);
+					logger.info("댓글 count = {}", count);
+						if (map == null ) {
+							model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
+							model.addAttribute("url", "/userMain/board/boardList");
+							return "common/message";
+						} else {
+							logger.info("게시물 내용 조회결과, map = {}", map);
+			
+							model.addAttribute("map", map);
+							model.addAttribute("list", list);
+							model.addAttribute("count", count);
+							
+			
+							return "userMain/board/boardDetail";
+						}
 				}
-		}
+		
 	}
 	
 	@ResponseBody //=> vo가 json 으로 변환되서 리턴
 	@PostMapping("/board/boardDetail/commentsWrite")
-	public CommentsVO commentsWrite(@ModelAttribute CommentsVO vo, Model model) {
+	public CommentsVO commentsWrite(@ModelAttribute CommentsVO vo, 
+									HttpSession session ,Model model) {
+		
+		 int result = 0; 
+		 String userId = (String)session.getAttribute("userId");
+		 int userNum = guestService.selectUserInfo(userId).getUserNum();
 		
 		logger.info("vo={}",vo);
 		int cnt = commentsService.insertComments(vo);
@@ -129,14 +149,16 @@ public class UserBoardController {
 		logger.info("댓글 등록, 파라미터 vo = {}", vo);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("result", result);
 		
 		return vo;
 	}
 	
 	@GetMapping("/board/boardDetail/commentsLoad")
 	@ResponseBody
-	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum, CommentsVO commentsVO,
-					 					@RequestParam(defaultValue = "0")int page, Model model ) {
+	public List<CommentsVO> commentsLoad(@RequestParam(defaultValue = "0")int boardNum,
+					 					@RequestParam(defaultValue = "0")int page,
+					 					CommentsVO commentsVO, Model model ) {
 		logger.info("ajax - 댓글 조회, 파라미터 boardNum = {}, page = {}", boardNum, page);
 		
 		int size=5;
@@ -150,17 +172,19 @@ public class UserBoardController {
 	    	logger.info("getUserId = {}",vo.getUserId());
 	    }
 	    
+	    int userNum=0;
 	    
 	    logger.info("list1={}",list1);
 	    
 	    model.addAttribute("list1", list1);
+	    model.addAttribute("userNum", userNum);
 	    
 	    return list1;
 	}
 
 	@RequestMapping("/board/boardDetail/ajax_commentsDelete")
 	@ResponseBody
-	public int ajax_commentsDelete(@RequestParam(defaultValue = "0")int commentNum) {
+	public int ajax_commentsDelete(@RequestParam(defaultValue = "0")int commentNum, HttpSession session) {
 		logger.info("ajax - 댓글 삭제, 파라미터 commentNum = {}", commentNum);
 		
 		int cnt = commentsService.updateCommentsDelFlag(commentNum);
