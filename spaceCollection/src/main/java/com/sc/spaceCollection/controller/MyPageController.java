@@ -1,6 +1,9 @@
 package com.sc.spaceCollection.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.Encryption;
+import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
@@ -27,7 +32,7 @@ public class MyPageController {
 	private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
 	
 	private final GuestService guestService;
-	
+	private final FileUploadUtil fileUploadUtil;
 	private final Encryption encryption;
 	
 	
@@ -116,13 +121,48 @@ public class MyPageController {
 	}
 	
 	@PostMapping("/editImage")
-	public String editImage(@RequestParam("file") MultipartFile file, HttpSession session,HttpServletRequest request) {
-		String userProfileImage="";
+	public String editImage(HttpSession session,HttpServletRequest request,Model model) {
 		String userId = (String)session.getAttribute("userId");
-		logger.info("프로필이미지 변경 파라미터, file={}, userId={}",file,userId);
-		file.getName();
+		GuestVO guestVo = new GuestVO();
+		String fileName="", originalFileName="";
+		long fileSize=0;
+		try {
+			String uploadPath
+			=fileUploadUtil.getUploadPath(request, ConstUtil.UPLOAD_USER_IMAGE_FLAG);
+			guestVo=guestService.selectUserInfo(userId);
+			logger.info("사용자 정보 조회 결과 guestVo={}",guestVo);
+			if(guestVo.getUserProfileImage() !=null) {
+				File file = new File(uploadPath,guestVo.getUserProfileImage());
+				if(file.exists()) {
+					boolean bool=file.delete();
+					logger.info("파일 삭제여부: {}",bool);
+				}
+			}
+			
+			//2.
+			//파일 업로드 처리
+			List<Map<String, Object>> list=fileUploadUtil.userProfileupload(request,ConstUtil.UPLOAD_USER_IMAGE_FLAG, userId);
+						
+			for(Map<String, Object> map : list) {
+				fileName=(String)map.get("fileName");
+				originalFileName=(String)map.get("originalFileName");
+				fileSize=(long)map.get("fileSize");
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		return userProfileImage;
+		logger.info("파일이름, fileName={}",fileName);
+		guestVo.setUserId(userId);
+		guestVo.setUserProfileImage(fileName);
+		logger.info("VO세팅 결과 userId={},userProfileImage={}",guestVo.getUserId(),guestVo.getUserProfileImage());
+		int cnt = guestService.updateUserProfileImage(guestVo);
+		logger.info("상품등록 처리 결과, cnt={}",cnt);
+		
+		model.addAttribute("guestVo",guestVo);
+		return "guest/myPage/myProfile";
 	}
 
 }

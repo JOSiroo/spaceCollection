@@ -116,4 +116,14 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.countByUserIdUserEmail(userId, userEmail);
 	}
 
+	@Override
+	public int updateUserProfileImage(GuestVO guestVo) {
+		return guestDao.updateUserProfileImage(guestVo);
+	}
+
+	@Override
+	public int updateKakaoUser(GuestVO guestVO) {
+		return guestDao.updateKakaoUser(guestVO);
+	}
+
 }
