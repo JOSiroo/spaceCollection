@@ -87,8 +87,10 @@
 		<selectKey keyProperty="sdNum" order="BEFORE" resultType="int">
 			select space_detail_seq.nextval from dual
 		</selectKey>
-		insert into space_detail()
-		values ()
+		insert into space_detail(SD_NUM, SD_TYPE, SD_PRICE, SD_MIN_PEOPLE, SD_MAX_PEOPLE, SD_AREA,
+        						 SPACE_NUM, FACILITY_NUM, SD_MIN_TIME, SD_CLOSE_TIME, SD_OPEN_TIME)
+		values (#{sdNum}, #{sdType}, #{sdPrice}, #{sdOpenTime}, #{sdCloseTime}, 
+				#{sdMinPeople}, #{sdMaxPeople}, #{sdArea}, #{sdMinTime}, #{spaceNum}, #{facilityNum})
 	</insert>
 	
 	<select id="selectHostReservation" resultType="map">

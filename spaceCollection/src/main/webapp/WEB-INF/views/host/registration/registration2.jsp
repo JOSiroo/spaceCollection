@@ -576,6 +576,28 @@
 		    }
 		});
 		
+		//사업자 등록증 첨부
+		$('.btAdd.file.license').click(function() {
+		    //기존에 있던 이미지 지우기
+		    $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
+		    $('input[type="file"]').val('');
+		});
+
+		$('#license').change(function() {
+		  	var file = this.files[0];
+			if (file) {
+		      	var reader = new FileReader();
+		      	reader.onload = function(e) {
+		        	$('.spImg.license').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
+		      	};
+		      	reader.readAsDataURL(file);
+		    } else {
+		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
+		        $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
+		    }
+		});
+		
+		//파일 사이즈 지정
 		$('#fileInput').on('change', function() {
 			var fileInput = this;
 		    var maxSizeInBytes = 3 * 1024 * 1024; // 3MB
@@ -913,14 +935,14 @@
 				</div>
 				<div class="boxContents">
 					<div class="BusinessLicense">
-						<div class="spImg license" style="height: 50px; padding-top: 15px;">
-							<div class="inner license">이미지 파일을 추가해 주세요.</div>
+						<div class="spImg license" style="min-height: 50px; padding-top: 15px;">
+							<div class="inner license">사업자 등록증을 추가해 주세요.</div>
 						</div>
 						<div class="btBox">
 							<label>
-								<div class="btAdd file sub" >파일첨부</div>
+								<div class="btAdd file license" >파일첨부</div>
 								<input type="file" id="license" accept="image/jpg, image/png, image/jpeg" 
-									name="license" style="display: none;" multiple>
+									name="license" style="display: none;">
 							</label>
 						</div>
 					</div>
@@ -1138,7 +1160,7 @@
 						<div class="btBox">
 							<label>
 								<div class="btAdd file main" >파일첨부</div>
-								<input type="file" id="mainImage" name="spaceMain" multiple
+								<input type="file" id="mainImage" name="spaceMain"
 									accept="image/jpg, image/png, image/jpeg" style="display: none;">
 							</label>
 						</div>
