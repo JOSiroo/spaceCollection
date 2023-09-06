@@ -15,7 +15,7 @@ public class MvcConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(new LoginInterceptor())
 		.excludePathPatterns("/guest/completeFindId","/login/Login","/guest/findId","/guest/findPwd","/guest/register","/guest/ajaxCheckId")
 		.addPathPatterns("/host/registration/*", "/host/report/*", //저런 경로를 가진 것들은 인터셉트를 거치고 가도록 설정함
-				"/guest/*","/guest/myPage/*","/myReview","/login/memberOut");
+				"/guest/*","/guest/myPage/*","/myReview","/login/memberOut","/myQnA");
 		
 		/*
 		 * registry.addInterceptor(new AdminLoginInterceptor())

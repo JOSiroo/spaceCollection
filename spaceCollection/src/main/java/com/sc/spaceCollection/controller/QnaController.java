@@ -75,7 +75,7 @@ public class QnaController {
 	
 	@RequestMapping("/myQnA")
 	public String selectMyQnA(@RequestParam(name="currentPage", defaultValue = "1") int currentPage
-			,@RequestParam(name="searchCondition", required = false) String searchCondition,HttpSession session,Model model) {
+			,@RequestParam(name="searchCondition", defaultValue = "") String searchCondition,HttpSession session,Model model) {
 		//1.
 		String userId=(String)session.getAttribute("userId");
 		logger.info("QnA 목록 조회, 파라미터 currentPage={},userId={},searchCondition={}",currentPage,userId,searchCondition);

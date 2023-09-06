@@ -17,14 +17,15 @@ public interface GuestDAO {
 	int updateUserName(GuestVO guestVo);
 	int updateUserHp(GuestVO guestVo);
 	int countByUserIdUserEmail(@Param("userId") String userId, @Param("userEmail")String userEmail);
-	
-	
+	int updateUserProfileImage(GuestVO guestVo);
 	//소셜 서비스 관련
 	GuestVO selectSnsUserInfo(GuestVO guestVo);
+	int checkedUserIdBySnsCode(String userId);
+	
 	//카카오
 	int selectKakaoUser(GuestVO guestVo);
 	int insertKakaoUser(GuestVO guestVo);
-	int checkedUserIdBySnsCode(String userId);
+	int updateKakaoUser(GuestVO guestVO);
 	//네이버
 	int selectNaverUser(GuestVO guestVo);
 	int insertNaverUser(GuestVO guestVo);

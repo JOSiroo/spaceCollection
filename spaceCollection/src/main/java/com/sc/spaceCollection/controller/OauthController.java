@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sc.spaceCollection.common.Utility;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 import com.sc.spaceCollection.oauth.model.OauthService;
@@ -49,11 +50,12 @@ public class OauthController {
 		while(keys.hasNext()){
 		    String key = keys.next();
 		    System.out.println("[Key]:" + key + " [Value]:" +  userInfo.get(key));
+		    String id=(String) userInfo.get("id");
 		    String nickname=(String) userInfo.get("nickname");
 		    String email=(String) userInfo.get("email");
 		    String image=(String) userInfo.get("profile_image");
 		    guestVo.setUserName(nickname); //VO에 받아온 kakao정보 넣기
-		    guestVo.setUserId(email);
+		    guestVo.setUserId("kakao_"+id);
 		    guestVo.setUserEmail(email);
 		    guestVo.setUserProfileImage(image);
 		    guestVo.setUserSnsCode("kakao");
@@ -66,14 +68,14 @@ public class OauthController {
 		    int result=0;
 		    if(cnt<1) { //카카오로 저장된 정보가 DB에 없을 경우 회원가입처리
 		    	result=guestService.insertKakaoUser(guestVo);
-		    	logger.info("카카오 회원 등록 결과, result={}",result);
 		    }else if(cnt>0) { //만약 회원정보 있을경우 업데이트
-		    	
+				result=guestService.updateKakaoUser(guestVo);
 		    }
+		    logger.info("카카오 회원 DB처리 결과, result={}",result);
 		    
 		 // session
 		 HttpSession session = request.getSession();
-		 session.setAttribute("userId", email);
+		 session.setAttribute("userId", guestVo.getUserId());
 		 session.setAttribute("code", "kakao");
 		}
 		return "redirect:/";
@@ -106,8 +108,8 @@ public class OauthController {
 		    String email=(String) userInfo.get("email");
 		    String image=(String) userInfo.get("profile_image");
 		    String mobile=(String) userInfo.get("mobile");
-		    guestVo.setUserName(nickname); //VO에 받아온 네이버정보 넣기
-		    guestVo.setUserId(email);
+		    guestVo.setUserId("naver_"+nickname); //VO에 받아온 네이버정보 넣기
+		    guestVo.setUserName(nickname); 
 		    guestVo.setUserEmail(email);
 		    guestVo.setUserProfileImage(image);
 		    guestVo.setUserHp(mobile);
@@ -130,7 +132,7 @@ public class OauthController {
 		    
 		 // session
 		 HttpSession session = request.getSession();
-		 session.setAttribute("userId", email);
+		 session.setAttribute("userId", guestVo.getUserId());
 		 session.setAttribute("code", "naver");
 		}
 		

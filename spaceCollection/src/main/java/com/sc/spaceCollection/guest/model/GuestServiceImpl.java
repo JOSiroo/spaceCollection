@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -116,6 +117,16 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.countByUserIdUserEmail(userId, userEmail);
 	}
 
+	@Override
+	public int updateUserProfileImage(GuestVO guestVo) {
+		return guestDao.updateUserProfileImage(guestVo);
+	}
+
+	@Override
+	public int updateKakaoUser(GuestVO guestVO) {
+		return guestDao.updateKakaoUser(guestVO);
+	}
+	
 	@Override
 	public String selectByUserNum(int userNum) {
 		return guestDao.selectByUserNum(userNum);
