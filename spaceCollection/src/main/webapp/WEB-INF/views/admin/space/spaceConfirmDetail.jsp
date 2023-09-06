@@ -145,35 +145,35 @@
 						<h5 class="card-title" style="font-weight: bold;">공간 승인 상세보기</h5>
 						<div class="row-sm-3">
 							<h5 class="card-title">신청자 정보</h5>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">이름 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.USER_NAME }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">아이디 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.USER_ID }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">이메일 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.USER_EMAIL }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">연락처 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.USER_HP }</span>
 								</div>
 							</div>
@@ -182,100 +182,100 @@
 						<div class="row-sm-3">
 							<h5 class="card-title">공간 정보</h5>
 
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">카테고리 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.CATEGORY_NAME }</span>
 								</div>
 							</div>
 
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 타입명 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_TYPE_NAME }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 번호 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_NUM }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간명 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_NAME }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 주소 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_ADDRESS }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">제공 면적 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SD_AREA } m<sup>2</sup></span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">연락처 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_PHONE_NUM }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">사업자 번호 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_BUSINESS_NUM }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">사업자 등록증 파일 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span><a href="#">사업자 등록증 파일이름.pdf</a></span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">승인 요청일 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_REQUEST_DATE }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">결정일 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${map.SPACE_REG_DATE }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">상태 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<c:if test="${map.SPACE_REQUEST_STATUS=='승인' }">
 										<span class="confirm">${map.SPACE_REQUEST_STATUS }</span>
 									</c:if>
@@ -292,36 +292,36 @@
 						<hr>
 						<div class="row-sm-3">
 							<h5 class="card-title">공간 설명</h5>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 태그 :</span>
 								</div>
-								<div class="col back">
-									<span>${map.SPACE_TAG }</span>
+								<div class="col-9 back">
+									<p>${map.SPACE_TAG }</p>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">인트로 :</span>
 								</div>
-								<div class="col back">
-									<span>${map.SPACE_INTRO }</span>
+								<div class="col-9 back">
+									<p>${map.SPACE_INTRO }</p>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">설명 :</span>
 								</div>
-								<div class="col back">
-									<span style="text-align: right;">${map.SPACE_INFO }</span>
+								<div class="col-9 back">
+									<p>${map.SPACE_INFO }</p>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">주의사항 :</span>
 								</div>
-								<div class="col back">
-									<span>${map.SPACE_WARN }</span>
+								<div class="col-9 back">
+									<p>${map.SPACE_WARN }</p>
 								</div>
 							</div>
 						</div>
