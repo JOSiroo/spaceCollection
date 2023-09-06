@@ -64,11 +64,7 @@ a.btn.btn-primary.py-2.px-3 {
     border-radius: 5px;
  }
 #tns3 {
-    width: calc(440%);
-}
-#tns2 > .tns-item {
-    width: calc(6.6355%);
-    padding-right: 70px;
+    width: calc(480%);
 }
 </style>
 
