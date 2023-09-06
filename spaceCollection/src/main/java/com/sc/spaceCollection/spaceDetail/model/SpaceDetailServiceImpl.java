@@ -43,6 +43,11 @@ public class SpaceDetailServiceImpl implements SpaceDetailService{
 		return spaceDetailDao.selectBySpaceNo(spaceNo);
 	}
 
+	@Override
+	public int countReservationBySdNum(int sdNum) {
+		return spaceDetailDao.countReservationBySdNum(sdNum);
+	}
+
 	
 
 

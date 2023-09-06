@@ -376,17 +376,18 @@
 						</a>
 					</li>
 					<li>
-						<a href="<c:url value='/admin/space/spaceList'/>">
-							<i class="bi bi-circle"></i>
-							<span>공간 관리</span>
-						</a>
-					</li>
-					<li>
 						<a href="<c:url value='/admin/space/spaceConfirmList'/>">
 							<i class="bi bi-circle"></i>
 							<span>공간 승인 관리</span>
 						</a>
 					</li>
+					<li>
+						<a href="<c:url value='/admin/space/spaceList'/>">
+							<i class="bi bi-circle"></i>
+							<span>공간 관리</span>
+						</a>
+					</li>
+					
 				</ul>
 			</li>
 			<!-- End Tables Nav -->
