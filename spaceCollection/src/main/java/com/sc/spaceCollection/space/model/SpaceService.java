@@ -45,4 +45,5 @@ public interface SpaceService {
 	List<Map<String, Object>> selectSpaceForExcel();
 	String selectSpaceTypeName(int spaceTypeNo);
 	Map<String, Object> selectSpaceConfirmDetailBySpaceNum(int spaceNum);
+	List<Map<String, Object>> selectSpaceDtailViewBySpaceNum(int spaceNum);
 }

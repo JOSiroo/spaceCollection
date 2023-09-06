@@ -543,9 +543,6 @@ p{
 						</div>
 						<div class = "row top filter facility">
 							<div class = "col-3 filter">
-								<button class = 'filterBtn' value="FLOOR">플로어</button>
-							</div>
-							<div class = "col-3 filter">
 								<button class = 'filterBtn' value="COOK">취사가능</button>
 							</div>
 							<div class = "col-3 filter">
@@ -727,17 +724,40 @@ $(function(){
 				filterList.push(item.value);
 			}			
 		});
-		if(filterList.length == 0){
-			const urlSearchParams = new URLSearchParams(window.location.search);
-			var currentTotalUrl = window.location.href;
-			var currentUrl = currentTotalUrl.split("?");
-			urlSearchParams.delete("filterList");
-			location.href = currentUrl[0] + "?" + urlSearchParams;  
-		}else if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
+		if(filterList.length == 0 && lowerPrice == 0 && upperPrice == 0){
 			alert('필터 조건을 선택해 주세요!');
-		}else{
-			addFilterParam(filterList, lowerPrice, upperPrice);		
+			return false;
 		}
+		
+		
+		const urlSearchParams = new URLSearchParams(window.location.search);
+		var currentTotalUrl = window.location.href;
+		var currentUrl = currentTotalUrl.split("?");
+				
+		if(filterList.length == 0){
+			urlSearchParams.delete("filterList");
+		}else{
+			filterStr = "";
+			for(var i = 0; i < filterList.length; i++){
+				filterStr += filterList[i] + ',';
+			}
+			
+			urlSearchParams.set("filterList",filterStr);
+		}
+
+		if(lowerPrice == 0){
+			urlSearchParams.delete("lowerPrice");
+		}else{
+			urlSearchParams.set("lowerPrice", lowerPrice);
+		}
+
+		if(upperPrice == 0){
+			urlSearchParams.delete("upperPrice");
+		}else{
+			urlSearchParams.set("upperPrice", upperPrice);
+		}
+		
+		location.href = currentUrl[0] + "?" + urlSearchParams;
 	}
 	var filterItems = document.querySelectorAll('.filterBtn');
 	function resetFilter(){
@@ -954,65 +974,6 @@ function loadMoreData() {
 			 resultUrl = currentUrl + "?" + currentParam + addPeople;
 		 }
 		 location.href = resultUrl; 	 
-	 }
-	 
-	 
-	 //필터조건(가격,시설) 파라미터를 추가한 URL 반환하는 함수
-	 function addFilterParam(filterList, lowerPrice, upperPrice){
-		
-		var currentUrl = window.location.pathname; 
-		var currentParam = window.location.search.substring(1)+"";
-		 
-		var resultUrl = currentUrl;
-		var resultParam = "?";
-		var resultParameter = "";
-		
-		var filterArray = [];
-		if(lowerPrice !== 0){
-			filterArray.push("minPrice");
-		}
-		if(upperPrice !== 0){
-			filterArray.push("maxPrice");
-		}
-		if(filterList.length !== 0){
-			filterArray.push("filterList");
-		}
-		
-		for(var i = 0; i < filterArray.length; i++){
-			var paramValue;
-			var paramName;
-			if(filterArray[i] === "minPrice"){
-				paramValue = lowerPrice;
-			}else if(filterArray[i] === "maxPrice"){
-				paramValue = upperPrice;
-			}else if(filterArray[i] == "filterList"){
-				paramValue = filterList;
-			}
-			
-			var tempParam = currentParam.split('&');
-			for(var k = 0; k < tempParam.length; k++){
-				 if(tempParam[k].indexOf(filterArray[i]) != -1){
-					tempParam[k] = filterArray[i]+"=" + paramValue;
-				 }
-				 
-				if(k > 0){
-				 	resultParam = "&" +tempParam[k]; 
-				}else{
-				 	resultParam += tempParam[k]; 
-				}
-				resultParameter += resultParam;
-				resultParam = "";
-			}
-			if(currentParam.indexOf(filterArray[i]) < 0){
-				var addParam = "&"+filterArray[i]+"="+paramValue;
-				resultParameter += addParam;
-			}
-			currentParam = resultParameter;
-			resultParameter = "";
-		}
-		resultUrl += currentParam;
-		filterArray.length = 0;
-		location.href = resultUrl; 
 	 }
 
 	 //필터조건(가격 높은순, 낮은순) 파라미터를 추가한 URL 반환하는 함수

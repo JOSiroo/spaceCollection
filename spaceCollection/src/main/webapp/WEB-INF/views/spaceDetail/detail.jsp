@@ -41,9 +41,10 @@ pageEncoding="UTF-8"%>
   .QnAHead{
  	font-size:20px;
   	font-weight: bold;
-  	margin-right:78.7%;
   	margin-bottom:15px;
     display: -webkit-inline-box;
+    padding-left: 4%;
+    width: 100%;
   }
   .qnaBody{
   	font-size:16px;
@@ -54,11 +55,12 @@ pageEncoding="UTF-8"%>
   	word-wrap: break-word;
   }
   .reviewHead{
-  	font-size:20px;
+	font-size:20px;
   	font-weight: bold;
-  	margin-right:54.7%;
   	margin-bottom:15px;
     display: -webkit-inline-box;
+    padding-left: 4%;
+    width: 100%;
   }
   #star{
 		width: 29px;
@@ -74,7 +76,7 @@ pageEncoding="UTF-8"%>
 	}
 	
   .date-deleteCol{
-  	padding-right:18%;
+  	padding-right:27%;
   }
   .date-deleteCol.qna{
   	padding-right:30% !important;
@@ -309,6 +311,34 @@ pageEncoding="UTF-8"%>
 							</div>
 							</c:if>
 							</c:if>
+							<div class="modal fade" id="answerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<input type="hidden" id="answerNumVal">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header" style=" background: #ffd014;">
+							        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">답변 작성하기</h1>
+							        <button type="button" class="btn-close" id="closeBTN"onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <form>
+							          <div class="mb-3">
+							            <label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
+								            답변:
+							            </label>
+							            <label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>
+							            
+							            <textarea class="form-control" id="answerMessage" rows="10"></textarea>
+							          </div>
+							        </form>
+							        <p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
+							      </div>
+							      <div class="modal-footer" style="padding:2% 30% 2% 0%;">
+							        <button type="button" id="modalQuit" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+							        <button type="button" onclick="answerQna()" class="btn" style="background: #193D76; color:white" >등록</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 						</div>
 						<div class = "question-box">
 						
@@ -530,6 +560,7 @@ pageEncoding="UTF-8"%>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/spaceDetail.js"></script>
+    <script src="js/spaceDetail2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 	<script type="text/javascript">
@@ -610,32 +641,7 @@ pageEncoding="UTF-8"%>
 	    }
 	  });
 	});
- 		function noReservationRecord(result, begin, end, sdNum,sdPrice){
- 			var parent = sdNum.closest('.inAccordionLi');
-			var times = parent.children('.swiper-inBox');
- 			parent.find('.swiper-inBox').removeClass('reserved');
-			parent.find('.swiper-inBox').prop('disabled', false);
-			parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
-			parent.find('.swiper-inBox').val(sdPrice.val()); 			
- 		}
-	  
-	  
-		function makeTimeTable(data,sdNum){
-			$.each(data,function(){
-				console.log("makeTimeTable");
-				console.log("data = ", this);
-				var parent = sdNum.closest('.inAccordionLi');
-				var times = parent.children('.swiper-inBox');
-				var begin = this.startHour;
-				var end = this.endHour;
-
-				for(var i = begin; i <= end; i++){
-					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
-					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
-					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
-				}	
-			});
-		}
+		
 
 	});
 		$('#QNAWrite').click(function(){
@@ -653,80 +659,74 @@ pageEncoding="UTF-8"%>
 		});	
 	
 		
-	
-	
 		$('.totalPrice').text("예약 시간을 선택해주세요.");
-			$('.swiper-inBox').click(function(){
-			   	var result = 0;
-			   	var formattedTotalPrice = "";
-			   	if($('.swiper-inBox.on').length > 0){
-				    $('.swiper-inBox.on').each(function(){
-				        result += parseInt($(this).val());
-				    });
-				    $('.hiddenPrice').val(result);
-				    
-				    formattedTotalPrice = addComma(result);
-				    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
-			   	}else{
-					$('.totalPrice').text("예약 시간을 선택해주세요.");
-				}
-			});
-	
-		function QnAWriteBtn(){
-			var qnaContent = document.getElementById('message-text').value;
-			var userId = document.getElementById('userId').value;
-			var spaceNum = ${vo.spaceNum};
-			if(userId == null || userId == ""){
-				alert('질문을 하려면 로그인을 해야합니다.')
-				return false;
+		$('.swiper-inBox').click(function(){
+		   	var result = 0;
+		   	var formattedTotalPrice = "";
+		   	if($('.swiper-inBox.on').length > 0){
+			    $('.swiper-inBox.on').each(function(){
+			        result += parseInt($(this).val());
+			    });
+			    $('.hiddenPrice').val(result);
+			    
+			    formattedTotalPrice = addComma(result);
+			    $('.totalPrice').text("₩" + formattedTotalPrice + "원");
+		   	}else{
+				$('.totalPrice').text("예약 시간을 선택해주세요.");
 			}
-			console.log(qnaContent + ", " + userId + ", " + spaceNum);
-			 $.ajax({
-				url:"<c:url value='/writeQnA'/>",
-				type:"POST",
-				dataType:"json",
-				data:{
-					qnaContent:qnaContent,
-					spaceNum:spaceNum
-				},
-				success:function(rsp){
-					if(rsp === 1){
-						alert('QnA 등록 완료!');
-					}else if(rsp === 0){
-						alert('QnA 등록 실패!');
-					}
-				}
-			 });
-			 location.reload();
-		 }
-	
-	function clip(){
+		});
+		function noReservationRecord(result, begin, end, sdNum,sdPrice){
+ 			var parent = sdNum.closest('.inAccordionLi');
+			var times = parent.children('.swiper-inBox');
+ 			parent.find('.swiper-inBox').removeClass('reserved');
+			parent.find('.swiper-inBox').prop('disabled', false);
+			parent.find('.swiper-inBox').html(addComma(sdPrice.val()));
+			parent.find('.swiper-inBox').val(sdPrice.val()); 			
+ 		}
+ 		
+ 	function makeTimeTable(data,sdNum){
+			$.each(data,function(){
+				console.log("makeTimeTable");
+				console.log("data = ", this);
+				var parent = sdNum.closest('.inAccordionLi');
+				var times = parent.children('.swiper-inBox');
+				var begin = this.startHour;
+				var end = this.endHour;
 
-		var url = '';
-		var textarea = document.createElement("textarea");
-		document.body.appendChild(textarea);
-		url = window.document.location.href;
-		textarea.value = url;
-		textarea.select();
-		document.execCommand("copy");
-		document.body.removeChild(textarea);
-		alert("URL이 복사되었습니다.")
-	}
-		
-		
-	function resetQna(){
-		document.getElementById('message-text').value="";
-	}
+				for(var i = begin; i <= end; i++){
+					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
+					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
+					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
+				}	
+			});
+		}
 			
-			
-			
-	 function addComma(value){
-		    value = value+"";
-	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	        return value; 
-	    }
-	 
-	 
+	function QnAWriteBtn(){
+		var qnaContent = document.getElementById('message-text').value;
+		var userId = document.getElementById('userId').value;
+		var spaceNum = '${vo.spaceNum}';
+		if(userId == null || userId == ""){
+			alert('질문을 하려면 로그인을 해야합니다.')
+			return false;
+		}
+		 $.ajax({
+			url:"<c:url value='/writeQnA'/>",
+			type:"POST",
+			dataType:"json",
+			data:{
+				qnaContent:qnaContent,
+				spaceNum:spaceNum
+			},
+			success:function(rsp){
+				if(rsp === 1){
+					alert('QnA 등록 완료!');
+				}else if(rsp === 0){
+					alert('QnA 등록 실패!');
+				}
+			},
+		 });
+		 location.reload();
+	 }
 	 
 	 var qnaText = document.getElementById('message-text');
 	 var textLimit = document.getElementsByClassName('textLimit');
@@ -741,7 +741,6 @@ pageEncoding="UTF-8"%>
 	 			textLimit[0].textContent="최대 " + this.value.length + "/ 200자 제한";
 	 		}
 	 });
-	 
 	</script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -991,21 +990,10 @@ pageEncoding="UTF-8"%>
     
   
     
-	function deleteReview(reviewNum){
-		if(confirm('리뷰를 삭제하시겠습니까?')){
-			location.href = "<c:url value='/deleteReview?reviewNum="+reviewNum+"&spaceNum="+${param.spaceNum}+"'/>"
-		}
-       }
-	
-	  function deleteQna(qnaNum){
-		if(confirm('QnA를 삭제하시겠습니까?')){
-			location.href = "<c:url value='/deleteQnA?qnaNum="+qnaNum+"&spaceNum="+${param.spaceNum}+"'/>";
-		}
-    }
+
 	  
     callReview(1);
     function callReview(reviewPage){
-    
     	
     	if(reviewPage >= parseInt($('#reviewPage').val())+1){
     		alert('마지막 페이지 입니다');
@@ -1029,7 +1017,7 @@ pageEncoding="UTF-8"%>
 						if('${sessionScope.userId}' !== this.USER_ID){
 							htmlStr = 	'<div class="reviewContent">'
 										+'<div class="reviewHead" style="color:black; font-weight: bold">'
-										+'<span>'+this.USER_ID+'</span>'
+										+'<span padding:5px 8px 5px 8px !important;>'+this.USER_ID+'</span>'
 										+'<div style="margin-left: 20%; padding-bottom: 1%">';
 						}else if('${sessionScope.userId}' === this.USER_ID){
 							htmlStr = 	'<div class="reviewContent" >'
@@ -1120,10 +1108,10 @@ pageEncoding="UTF-8"%>
 						htmlStr = '<div class="qnaContent">'
 						if('${sessionScope.userId}' !== this.USER_ID){
 							htmlStr +='<div class="QnAHead" style="color:black; font-weight: bold">'
-									+'<span >'+this.USER_ID+'</span>';
+									+'<span style="padding:5px 8px 5px 8px !important;">'+this.USER_ID+'</span>';
 						}else if('${sessionScope.userId}' === this.USER_ID){
-							htmlStr +='<div class="QnAHead" style="color:black; font-weight: bold;background:rgba(255, 208, 20, 0.5)!important; border-radius:1rem; padding:5px 8px 5px 8px !important;">'
-									+'<span >'+this.USER_ID+'<i class="bi bi-person-badge"></i></span>';
+							htmlStr +='<div class="QnAHead">'
+									+'<span  style="color:black; font-weight: bold;background:rgba(255, 208, 20, 0.5)!important; border-radius:1rem; padding:5px 8px 5px 8px !important;">'+this.USER_ID+'<i class="bi bi-person-badge"></i></span>';
 						}
 					 	htmlStr +='</div>'
 								+'<div class="qnaBody">'+this.QNA_CONTENT+'</div>'
@@ -1131,9 +1119,15 @@ pageEncoding="UTF-8"%>
 								+'<div class="col-6 date-deleteCol" style="padding-right:30% !important">'
 								+'<span>'+this.QNA_REG_DATE+'</span>'
 								+'</div>';
+					 	if('${sessionScope.userId}' === '${user_id}'){
+							htmlStr += '<div class="col-6 delete-dateCol" style="padding-left: 38% !important;">'
+									+ '<a href="#" style="font-size:14px;" onclick="setAnswerNum('+this.QNA_NUM+')" data-bs-toggle="modal" data-bs-target="#answerModal"><span>답글 달기</span></a>';
+																
+						}else{
+							htmlStr += '<div class="col-6 delete-dateCol">';
+						}
 						if('${sessionScope.userId}' === this.USER_ID){
-							htmlStr +='<div class="col-6 delete-dateCol">'
-									+'<a href="#" style="font-size:14px;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
+							htmlStr +='<a href="#" style="font-size:14px;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
 									+'</div>';
 						}
 							htmlStr +='</div>'
@@ -1170,14 +1164,23 @@ pageEncoding="UTF-8"%>
 	    	}
 	    });
     }
+    function setAnswerNum(qnaNum){
+    	$('#answerNumVal').val(qnaNum);
+    }
     
-    
-    
-    
-   
-	    
-    
-    
+    function answerQna(inputQnaNum){
+    	var qnaNum = inputQnaNum;
+    	$.ajax({
+    		url:'<c:url value="/qnaAnswer"/>',
+    		data:{
+    			qnaNum:qnaNum,
+    			qnaContent:$('#answerMessage').val()
+    		},
+    		success:function(answer){
+				    			
+    		}
+    	});
+    }
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
 	<!--한국어  달력 쓰려면 추가 로드-->

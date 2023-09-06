@@ -301,24 +301,24 @@ th>i{
 										
 						$.each(res.ajaxList, function() {
 							str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
+							str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;''>" + this.SPACE_NUM;
 							str += "</td>";
-							str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_TYPE_NAME;
+							str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;''>" + this.SPACE_TYPE_NAME;
 							str += "</td>";
-							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+							str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_NAME;
 							str += "</td>";
-							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.USER_ID;
+							str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.USER_ID;
 							str += "</td>";
-							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
+							str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_REQUEST_DATE;
 							str += "</td>";
-							str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
+							str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_REG_DATE;
 							str += "</td>";
 							if(this.SPACE_REQUEST_STATUS=="Y"){
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(13,110,253)'>승인";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;color: rgb(13,110,253)'>승인";
 							}else if(this.SPACE_REQUEST_STATUS=="R"){
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;color: rgb(255,214,1)'>승인 요청";
 							}else if(this.SPACE_REQUEST_STATUS=="N"){
-								str += "<td onclick='location.href=';' style='cursor: pointer;color: red'>거절";
+								str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;color: red'>거절";
 							}
 							str += "</td>";
 							str += "</tr>";
@@ -457,7 +457,6 @@ th>i{
 			$('#cancelBt').html("취소");
 			$('#okBt').html("승인");
 			$('#confirm1').modal("show");
-			alert($('form[name=trFrm] input[type=checkbox]:checked').length);
 			$('#okBt').click(function() {
 				$('#confirm1').modal("hide");
 				$(this).removeClass("btn-primary");

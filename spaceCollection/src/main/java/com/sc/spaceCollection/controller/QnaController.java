@@ -122,6 +122,13 @@ public class QnaController {
 		model.addAttribute("msg",msg);
 		return "common/message";
 	}
+	@GetMapping("qnaAnswer")
+	@ResponseBody
+	public void qnaAnswer(@RequestParam int qnaNum) {
+		logger.info("qna 답변, 파라미터 qnaNum = {}", qnaNum);
+		
+		
+	}
 }
 
 
