@@ -102,6 +102,14 @@
 	 }//makeList
 	 
 	 function commentEdit(commentNum) {
+		    // 버튼 클릭 후 작업 수행
+		    // 버튼을 비활성화(disabled)시킴
+		    document.getElementById('commentsEdit').disabled = true;
+		    // 또는 클릭 이벤트 리스너를 삭제
+		    /* document.getElementById('commentsEdit').removeEventListener('click', commentEdit); */
+		}
+	 
+	 function commentEdit(commentNum) {
 			console.log("수정 메서드 시작");
 			console.log(commentNum);
 			var str = "";
@@ -110,13 +118,15 @@
 			str += "<input class='form-control' id='EditCommentContent' style='height: 100px; width: 580px;' name='commentContent'>";
 			str += "</div>";
 			str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
-			str += "<button class='btn btn-primary right' onclick='editCommentOkay()' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
+			str += "<button class='btn btn-primary right' onclick='editCommentOkay()' id='commentsEditGo' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
 			str += "</div>";
 			str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
 			str += "<input type='hidden' name='commentNum' value="+commentNum+">";
 			str += "</form>";
 			str += "<hr>";
-			$('#'+commentNum+'').append(str);
+			 $('#'+commentNum+'').append(str); 
+			// 수정 버튼 비활성화
+		    document.getElementById('#commentsEditGo').disabled = true;
 	}
 	 
 
@@ -203,7 +213,8 @@
 				console.log(res);
 				location.reload();
 			},error:function(xhr, status, error){
-				alert(status + " : " + error);
+				alert("내용을 입력하세요");
+				/* alert(status + " : " + error); */
 			}
 		});
 	}
@@ -236,37 +247,46 @@ $(function() {
 		}
 	});
 	
-	$('input[id=replyContentsNo]').submit(function() {
+	/* $('input[id=replyContentsNo]').submit(function() {
 		alert("로그인 후 댓글 기입이 가능합니다.");
 	    window.location.href = <c:url value='login/login' />;
-	});
+	}); */
 
 	
-		$('#sendBt').click(function() {
-			event.preventDefault();
-			var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
-	        /* var userId = ${empty sessionScope.userId }; */
-			    $.ajax({
-			        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
-			        method: 'post',
-			        data: sendDate,
-			        success: function(data) {
-		                 // data를 사용하여 필요한 작업 수행
-		                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
-								if(data!=null){
-									$('#ajaxComments').html("");
-		     						alert("댓글 등록 성공");
-		     						$('input[name=commentContent]').val('');
-		     						console.log("댓글 추가 성공");
-								   location.reload();  						
-								}else if(data==null){
-									alert("댓글 내용을 입력하세요");
-								}//if
-			        },//success
-			    	error:function(xhr, status, error){
-						alert(status + " : " + error);
-					}
-			    });//ajax
+			$('#sendBt').click(function() {
+				event.preventDefault();
+				var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+		        /* var userId = ${empty sessionScope.userId }; */
+		         /* var userId = ${empty sessionScope.userId };  */
+				event.preventDefault();
+			    var sendDate = $('form[name=commentsFrm]').serialize(); // 입력 양식 내용 쿼리 문자열로 만듦
+			    // 세션에 userId 값이 없는 경우
+			    if ("${!empty sessionScope.userId }") {
+			        window.location.href = 'http://localhost:9091/spaceCollection/login/login';
+			        /* window.location.href = '<c:url value="login/login" />'; */
+			        return;
+			    }
+				    $.ajax({
+				        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
+				        method: 'post',
+				        data: sendDate,
+				        success: function(data) {
+			                 // data를 사용하여 필요한 작업 수행
+			                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
+									if(data!=null){
+										$('#ajaxComments').html("");
+			     						alert("댓글 등록 성공");
+			     						$('input[name=commentContent]').val('');
+			     						console.log("댓글 추가 성공");
+									   location.reload();  						
+									}else if(data==null){
+										alert("댓글 내용을 입력하세요");
+									}//if
+				        },//success
+				    	error:function(xhr, status, error){
+							alert(status + " : " + error);
+						}
+				    });//ajax
 		});//#sendBt
 });//#function
 
@@ -303,6 +323,8 @@ $(function() {
 							</c:if>
 				                	<!-- <textarea class="form-control" style="height: 10px" name="commentContent"></textarea> -->
 								<button type="button" class="btn btn-primary" id="sendBt" >등록</button>
+							
+								
 			                </div>
 						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							

@@ -20,7 +20,6 @@
 	top:0;
 	margin:0;
 	padding:0;
-	margin-top:2.8%;
 	position:absolute;
 }
 .carousel-item {
@@ -32,8 +31,8 @@
     transition: transform .6s ease-in-out;
 }
  .mapHeader{
- 	height: 70px;
  	background:#193D76;
+ 	padding-bottom:0.5%;
  }
  .spaceType{
 	color : white;
@@ -127,6 +126,13 @@
     
 </style>
 <header>
+	
+	<c:if test="${!empty spaceMap}">
+		<c:set var="space" value="${spaceMap}" />
+	</c:if>
+</header>
+<body>
+<div id="mapWrapper">
 	<div class = "mapHeader">
 		<div class = "spaceType">
 			<h4 style="font-weight: bold;">${title}</h4>
@@ -138,12 +144,6 @@
 			X
 		</a>
 	</div>
-	<c:if test="${!empty spaceMap}">
-		<c:set var="space" value="${spaceMap}" />
-	</c:if>
-</header>
-<body>
-<div id="mapWrapper">
 	<div id="map" style="width:100%;height:100%;">
 			<c:set var="paramName" value="" />
 			<c:set var="paramValue" value="" />
