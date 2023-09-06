@@ -33,7 +33,6 @@ public class LoginController {
 	@GetMapping("/login")
 	public String Login_get() {
 		logger.info("로그인 화면 처리");
-		
 		return "login/login";
 	}
 	
@@ -90,7 +89,6 @@ public class LoginController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		logger.info("로그아웃");
-		
 		session.removeAttribute("userId");
 		session.removeAttribute("code");
 		

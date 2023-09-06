@@ -132,4 +132,24 @@ public class GuestServiceImpl implements GuestService {
 		return guestDao.selectByUserNum(userNum);
 	}
 
+	@Override
+	public int deleteUser(String userId) {
+		return guestDao.deleteUser(userId);
+	}
+
+	@Override
+	public int updateAgreementSms(GuestVO guestVo) {
+		return guestDao.updateAgreementSms(guestVo);
+	}
+
+	@Override
+	public int updateAgreementEmail(GuestVO guestVo) {
+		return guestDao.updateAgreementEmail(guestVo);
+	}
+
+	@Override
+	public int updateUserPwd(GuestVO guestVo) {
+		return guestDao.updateUserPwd(guestVo);
+	}
+
 }

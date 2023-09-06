@@ -18,6 +18,10 @@ public interface GuestDAO {
 	int updateUserHp(GuestVO guestVo);
 	int countByUserIdUserEmail(@Param("userId") String userId, @Param("userEmail")String userEmail);
 	int updateUserProfileImage(GuestVO guestVo);
+	int deleteUser(String userId);
+	int updateAgreementSms(GuestVO guestVo);
+	int updateAgreementEmail(GuestVO guestVo);
+	int updateUserPwd(GuestVO guestVo);
 	//소셜 서비스 관련
 	GuestVO selectSnsUserInfo(GuestVO guestVo);
 	int checkedUserIdBySnsCode(String userId);
