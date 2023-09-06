@@ -36,6 +36,7 @@ public class LoginController {
 	@GetMapping("/login")
 	public String Login_get( HttpServletRequest request) {
 		logger.info("로그인 화면 처리");
+		
 		HttpSession session = request.getSession();
 		
 		// 2페이지 이전 URL로 이동
@@ -105,7 +106,6 @@ public class LoginController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		logger.info("로그아웃");
-		
 		session.removeAttribute("userId");
 		session.removeAttribute("code");
 		

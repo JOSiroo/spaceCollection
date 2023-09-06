@@ -72,22 +72,31 @@
 		 }else if(snsCode=="naver"){
 			 $("input[name=naverLink]").prop("checked",true);
 		 }
-		 
-/* 		 
-		 $("input[name=userMarketingSmsOk]").change(function(){
+			
+		 //사용자 SMS 마케팅 동의
+ 		 $("input[name=userMarketingSmsOk]").change(function(){
+			 var status="";
+			 var inputElement = $(this);
+			 if($(this).is(":checked")) {
+		     	status= "Y";
+			 } else {
+			 	status = "N";
+			 }
 			 
 			 $.ajax({
-					url:"<c:url value='/guest/agreementSms' />",
-					type:'post',
+					url:"<c:url value='/guest/agreementSms'/>",
+					type:'get',
 					data:{
-						userMarketingSmsOk : $(this).val(),
+						userMarketingSmsOk : status
 					},
 					success:function(res){
 						
-						if(res){
-							$(this).prev().text("동의").css("color","gray");
+						if(res=='Y'){
+							inputElement.prev().text("동의").css("color","gray");
+						}else if(res=='N'){
+							inputElement.prev().text("비동의").css("color","#ea5454");
 						}else{
-							$(this).prev().text("비동의").css("color","#ea5454");
+							inputElement.prev().text("변경실패").css("color","#ea5454");
 						}
 						
 					},
@@ -95,22 +104,33 @@
 						alert(status+" : " + error);
 					}
 				}); 
-		 };
+		 });
+ 		 
 		 
-		 $("input[name=userMarketingEmailOk]").change(function(){
+ 		 //사용자 Email 마케팅 동의
+ 		 $("input[name=userMarketingEmailOk]").change(function(){
+			 var status="";
+			 var inputElement = $(this);
+			 if($(this).is(":checked")) {
+		     	status= "Y";
+			 } else {
+			 	status = "N";
+			 }
 			 
 			 $.ajax({
-					url:"<c:url value='/guest/agreementEmail' />",
-					type:'post',
+					url:"<c:url value='/guest/agreementEmail'/>",
+					type:'get',
 					data:{
-						userMarketingSmsOk : $(this).val(),
+						userMarketingEmailOk : status
 					},
 					success:function(res){
 						
-						if(res){
-							$(this).prev().text("동의").css("color","gray");
+						if(res=='Y'){
+							inputElement.prev().text("동의").css("color","gray");
+						}else if(res=='N'){
+							inputElement.prev().text("비동의").css("color","#ea5454");
 						}else{
-							$(this).prev().text("비동의").css("color","#ea5454");
+							inputElement.prev().text("변경실패").css("color","#ea5454");
 						}
 						
 					},
@@ -118,7 +138,7 @@
 						alert(status+" : " + error);
 					}
 				}); 
-		 }; */
+		 });
 		 
          $(".editInfo").click(function() {
         	 
@@ -194,6 +214,45 @@
 				 $('.error').text('\n전화번호 규칙에 맞지 않습니다.').css("color","#ea5454");
 			 }
 			 
+		 });
+		 
+		 $("#edit-pwd").click(function(){
+			 alert("하이");
+			 var newPwd = $("#userPwd").val();
+			 
+			 if(validate_userPwd(newPwd) && newPwd.length>8){
+				 $.ajax({ 
+					 url:"<c:url value='/guest/editPwd'/>",
+					 type:'post',
+					 data:{
+					 	userPwd : $("input[name=userPwd]").val(),
+					 },
+					 success:function(res){
+						 if(res){
+							 alert("정보수정이 완료되었습니다.");
+						 }else{
+							 alert("정보수정에 실패하였습니다.");
+						 }
+			        		 $(".userPwd").find('.hiddenText').hide();
+			        		 $('.userPwd').find('.editInfo').text("변경하기");
+						 
+					 },
+					 error:function(xhr,status,error){
+						 alert(error+"정보 수정의 실패했습니다.");
+					 }
+				 });//ajax
+			 }else{
+				 $(".userPwd").find(".error").text('\n비밀번호 규칙에 맞지 않습니다.').css("color","#ea5454");
+			 }
+			 
+		 });
+		 
+		 $("#deleteGuest").click(function(){
+			 if(confirm("탈퇴 삭제하시겠습니까?")){
+				 if(confirm("확인 시 즉시 회원탈퇴가 진행됩니다.")){
+					 location.href="<c:url value='/guest/deleteGuest'/>";
+				 }
+			 }
 		 });
 	});
 	
@@ -461,8 +520,9 @@
 						<td>
 							<div class="userPwd">
 								<div class="hiddenText">
-									<input type="text" class="edit-textbox" name="userPwd" id="userPwd">
-									<button class="edit-button" id="edit-pwd">확인</button>
+									<input type="password" class="edit-textbox" name="userPwd" id="userPwd" placeholder="-문자/숫자/특수문자 3가지 조합 (8~30자)">
+									<button type="button" class="edit-button" id="edit-pwd">확인</button>
+									<br><span class="error"></span>
 								</div>
 								<a href="#" class="editInfo">변경하기</a>
 							</div>
@@ -500,7 +560,8 @@
 				</table>
 				<div class="footProfile">
 					<hr>
-					<a href="<c:url value='/guest/deleteGuest'/>" class="editInfo" style="margin-left: 210px;">서비스 탈퇴하기</a>
+					<a href="#" class="editInfo" style="margin-left: 210px;" id="deleteGuest"
+						>서비스 탈퇴하기</a>
 					<c:if test="${!empty sessionScope.code }">
 						<br><sub>SNS계정인 경우 해당 SNS를 이용해주세요.</sub>
 					</c:if>

@@ -306,7 +306,7 @@ div#place {
 			                </c:choose> 
 			            </div>
 			            <!-- 리뷰 -->
-			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"> ${map.SPACE_NAME}(${map.SD_TYPE})</h3>
+			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"><a href="<c:url value='/detail?spaceNum=${map.SPACE_NUM }'/>"> ${map.SPACE_NAME}<br>${map.SD_TYPE}</a></h3>
 			            <blockquote>
 			                <p>&ldquo;리뷰내용 ${map.REVIEW_CONTENT }&rdquo;</p>
 			            </blockquote>

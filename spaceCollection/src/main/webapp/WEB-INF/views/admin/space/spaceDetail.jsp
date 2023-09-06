@@ -24,12 +24,16 @@
 		width: 100px;
 	}
 	
-	
-	#carouselExampleIndicators{
-		width: 600px;
-		height: 350px;
+	img{
+		width: auto;
+		height: auto;
+		object-fit: contain;
 	}
 	
+	#carouselExampleIndicators{
+		width: 100%;
+		aspect-ratio: 2.1;
+	}
 	
 	i.bi.bi-exclamation-circle {
  		color: #ffd600;
@@ -45,7 +49,6 @@
 	
 	.fr{
 		text-align: right;
-		width: 140px;
 		float: left;
 	}
 	
@@ -61,8 +64,8 @@
 		margin-bottom: 5px;
 	}
 	
-	img{
-		width: 100%;
+	.col-3{
+		font-weight: bold;
 	}
 	
 	
@@ -70,7 +73,6 @@
 <script type="text/javascript">
 	$(function() {
 		$('#okBt').hide();
-		$('div.infoDiv>div:first').addClass('active');
 		
 		
 		$('#withdrawal').click(function() {
@@ -147,7 +149,7 @@
 		<div class="row">
 			<div class="col-xl-4">
 				<div class="card">
-					<div class="card-body profile-card pt-4">
+					<div class="card-body pt-4">
 						<div class="row-sm-3">
 							<div class="row-sm-3">
 								<h5 class="card-title">공간 이미지</h5>
@@ -194,35 +196,35 @@
 							</div>
 							<hr>
 							<h5 class="card-title">신청자 정보</h5>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">이름 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.USER_NAME }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">아이디 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.USER_ID }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">이메일 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.USER_EMAIL }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">연락처 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.USER_HP }</span>
 								</div>
 							</div>
@@ -231,45 +233,69 @@
 						<div class="row-sm-3">
 							<h5 class="card-title">공간 정보</h5>
 
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">카테고리 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.CATEGORY_NAME }</span>
 								</div>
 							</div>
 
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 타입명 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.SPACE_TYPE_NAME }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 번호 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.SPACE_NUM }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간명 :</span>
 								</div>
-								<div class="col back">
+								<div class="col-9 back">
 									<span>${spaceTotalInfo.spaceDetail.SPACE_NAME }</span>
 								</div>
 							</div>
-							<div>
-								<div class="col fr">
+							<div class="row">
+								<div class="col-3 fr">
 									<span class="tag">공간 주소 :</span>
 								</div>
-								<div class="col back">
-									<span>${spaceTotalInfo.spaceDetail.SPACE_ADDRESS }</span>
+								<div class="col-9 back">
+									<p>${spaceTotalInfo.spaceDetail.SPACE_ADDRESS }</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-3 fr">
+									<span class="tag">간략 설명 :</span>
+								</div>
+								<div class="col-9 back">
+									<p>${spaceTotalInfo.spaceDetail.SPACE_INTRO }</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-3 fr">
+									<span class="tag">상세 설명 :</span>
+								</div>
+								<div class="col-9 back">
+									<p>${spaceTotalInfo.spaceDetail.SPACE_INFO }</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-3 fr">
+									<span class="tag">주의사항 :</span>
+								</div>
+								<div class="col-9 back">
+									<p>${spaceTotalInfo.spaceDetail.SPACE_WARN }</p>
 								</div>
 							</div>
 						</div>
@@ -283,10 +309,18 @@
 					<div class="card-body pt-3">
 						<c:if test="${fn:length(spaceTotalInfo.spaceDetailList)>0 }">
 							<ul class="nav nav-tabs nav-tabs-bordered">
+								<c:set var="i" value="0"/>
 								<c:forEach var="map" items="${spaceTotalInfo.spaceDetailList }">
 									<li class="nav-item">
-										<button class="nav-link" data-bs-toggle="tab"
-											data-bs-target="#${map.SD_TYPE }">${map.SD_TYPE }</button>
+										<c:if test="${i != '0'}">
+											<button class="nav-link" data-bs-toggle="tab"
+												data-bs-target="#${fn:replace(map.SD_TYPE, ' ', '') }">${map.SD_TYPE }</button>
+										</c:if>
+										<c:if test="${i == '0'}">
+											<button class="nav-link active" data-bs-toggle="tab"
+												data-bs-target="#${fn:replace(map.SD_TYPE, ' ', '') }">${map.SD_TYPE }</button>
+											<c:set var="i" value="${i+1}" />
+										</c:if>
 									</li>
 								</c:forEach>
 							</ul>
@@ -296,8 +330,15 @@
 						</c:if>
 						<div class="tab-content pt-2 infoDiv">
 							<c:if test="${spaceTotalInfo.spaceDetailList != null }">
+								<c:set var="i" value="0"/>
 								<c:forEach var="map" items="${spaceTotalInfo.spaceDetailList }">
-									<div class="tab-pane" id="${map.SD_TYPE }">
+									<c:if test="${i != '0'}">
+										<div class="tab-pane" id="${fn:replace(map.SD_TYPE, ' ', '') }">
+									</c:if>
+									<c:if test="${i == '0'}">
+										<div class="tab-pane active show" id="${fn:replace(map.SD_TYPE, ' ', '') }">
+										<c:set var="i" value="1"/>
+									</c:if>
 										<div class="row-sm-3">
 											<h5 class="card-title">운영 정보</h5>
 											<div>
@@ -389,7 +430,37 @@
 												</tbody>
 											</table>
 										</div>
+										<hr>
+										<div class="row-sm-3">
+											<h5 class="card-title">환불 정보</h5>
+											<table class="table">
+												<thead class="table-light">
+													<tr>
+														<th scope="col">7일 전</th>
+														<th scope="col">6일 전</th>
+														<th scope="col">5일 전</th>
+														<th scope="col">4일 전</th>
+														<th scope="col">3일 전</th>
+														<th scope="col">2일 전</th>
+														<th scope="col">1일 전</th>
+														<th scope="col">당일</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_7_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_6_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_5_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_4_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_3_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_2_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_1_DAY }</td>
+														<td>${spaceTotalInfo.spaceDetail.REFUND_DAY }</td>
+													</tr>
+												</tbody>
+											</table>
 										</div>
+									</div>
 								</c:forEach>
 							</c:if>
 
