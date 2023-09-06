@@ -23,6 +23,11 @@ public interface GuestService {
 	int updateUserHp(GuestVO guestVo);
 	int countByUserIdUserEmail(String userId, String userEmail);
 	int updateUserProfileImage(GuestVO guestVo);
+	int deleteUser(String userId);
+	int updateAgreementSms(GuestVO guestVo);
+	int updateAgreementEmail(GuestVO guestVo);
+	int updateUserPwd(GuestVO guestVo);
+
 	//소셜 로그인 관련
 	GuestVO selectSnsUserInfo(GuestVO guestVo);
 	int checkedUserIdBySnsCode(String userId);

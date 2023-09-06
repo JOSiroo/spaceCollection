@@ -18,6 +18,8 @@ import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -143,6 +145,31 @@ public class GuestController {
 		
 	}
 	
+	@GetMapping("/deleteGuest")
+	public String deleteGuest(HttpSession session,HttpServletResponse response,Model model) {
+		String userId=(String)session.getAttribute("userId");
+		logger.info("사용자 회원 탈퇴 처리 파라미터 userId={}",userId);
+		int cnt = guestService.deleteUser(userId);
+		logger.info("회원 탈퇴 결과 cnt={}",cnt);
+		
+		String msg="회원 탈퇴를 실패했습니다.", url="/guest/myPage/myProfile";
+		if(cnt>0) { //회원탈퇴 성공했을경우
+			session.invalidate(); //세션 삭제
+			Cookie ck = new Cookie("ck_userid", userId);
+			ck.setPath("/");
+			ck.setMaxAge(0); //쿠키 삭제
+			response.addCookie(ck);
+			
+			msg="회원탈퇴가 성공적으로 완료되었습니다!";
+			url="/";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
 	@ResponseBody
 	@PostMapping("/editName")
 	public boolean editName(@RequestParam String userName,HttpSession session) {
@@ -177,5 +204,67 @@ public class GuestController {
 		}
 		return bool;
 	}
+	
+	@ResponseBody
+	@GetMapping("/agreementSms")
+	public String agreementSms(@RequestParam String userMarketingSmsOk, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("이용자 SMS 동의여부 변경처리 파라미터, userId={},userMarketingSmsOk={}"
+													,userId,userMarketingSmsOk);
+		GuestVO vo = new GuestVO();
+		vo.setUserId(userId);
+		vo.setUserMarketingSmsOk(userMarketingSmsOk);
+		
+		int cnt = guestService.updateAgreementSms(vo);
+		String result="failUpdate";
+		if(cnt>0) {
+			result = vo.getUserMarketingSmsOk();
+		}
+		return result;
+		
+	}
+	
+	@ResponseBody
+	@GetMapping("/agreementEmail")
+	public String agreementEmail(@RequestParam String userMarketingEmailOk, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("이용자 Email 동의여부 변경처리 파라미터, userId={},userMarketingEmailOk={}"
+				,userId,userMarketingEmailOk);
+		GuestVO vo = new GuestVO();
+		vo.setUserId(userId);
+		vo.setUserMarketingEmailOk(userMarketingEmailOk);
+		
+		int cnt = guestService.updateAgreementEmail(vo);
+		String result="failUpdate";
+		if(cnt>0) {
+			result = vo.getUserMarketingEmailOk();
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/editPwd")
+	public boolean editPwd(@RequestParam String userPwd,HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		logger.info("이용자 비밀번호 변경처리 파라미터, userId={},userPwd={}",userId,userPwd);
+
+		//salt추출
+		GuestVO vo = new GuestVO();
+		String salt=encryption.getSalt();
+		logger.info("salt 불러오기 salt={}",salt);
+		//hex변환
+		String hex=encryption.getEncryption(salt,userPwd);
+		logger.info("userPwd=>hex변환 hex={}",hex);
+		vo.setUserId(userId);
+		vo.setSalt(salt);
+		vo.setUserPwd(hex);
+		int cnt = guestService.updateUserPwd(vo);
+		boolean bool=false;
+		if(cnt>0) {
+			bool = true;
+		}
+		return bool;
+	}
+	
 	
 }

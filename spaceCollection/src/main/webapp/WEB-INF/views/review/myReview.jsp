@@ -124,14 +124,15 @@
 	.reViewInfo {
 		width: 1120px;
 		background: #eee;
-		padding-left: 10px;
-		padding-right: 10px;
+		padding: 10px;
 		margin: 0 auto;
 		border: 2px solid #2d5aa0;
 	}
 	
 	.tbReview {
-		border-radius: 0 0 20px 0;
+		padding: 5px;
+		border: 2px solid #e1e1e1;;
+		background: #eeeeee;
 	}
 	
 	.spaceInfo {
@@ -156,6 +157,7 @@
 		border: 1px solid #484848;
 		border-radius: 0 0 3rem 0;
 		padding: 5px;
+		background: #fbfbfb;
 	}
 	
 	select[name=condition] {
@@ -171,7 +173,8 @@
 	
 	#moreReview{
 		background-color: #e5e5e5;
-		border: 2px solid #2d5aa0;
+		border: 1px solid #2d5aa0;
+		border-top:none;
 		color: black;
 		font-weight: bold;
 		font-size: 17px;
@@ -182,6 +185,7 @@
 		height: 3px; 
 		background: #2d5aa0;
 		margin-top: 10px;
+		padding-left: -50px;
 	}
 </style>
 
@@ -220,7 +224,6 @@
 		</option>
 	</select>
 	<div class="reViewInfo">
-		<div class="tbReview">
 		<c:if test="${empty reviewMap }">
 			<hr>
 			<div>
@@ -229,7 +232,7 @@
 		</c:if>
 		<c:if test="${!empty reviewMap }">
 			<c:forEach var="reviewMap" items="${reviewMap }">
-				<hr>
+			<div class="tbReview">
 				<div>
 					<a href="<c:url value='/detail?spaceNum=${reviewMap["SPACE_NUM"]}'/>" style="font-size: 20px; color: #484848;">
 						${reviewMap['SPACE_NAME'] } 〉</a>
@@ -276,13 +279,13 @@
 					<a href="<c:url value='/deleteReview?reviewNum=${reviewMap["REVIEW_NUM"] }&spaceNum=${reviewMap["SAPCE_NUM"]}  '/>">삭제</a>
 					<!-- <a href="#">수정</a> -->
 				</div>
-				<div class="emptyLine">&nbsp;</div>
+				<!-- <div class="emptyLine">&nbsp;</div> -->
+				</div>
 			</c:forEach>
 		</c:if>
 			<div class="pagingDiv">
 				<button type="button" id="moreReview">더보기</button>
 			</div> 
-		</div>
 	</div>
 	</div>
 </div>

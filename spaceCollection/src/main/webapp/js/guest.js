@@ -22,7 +22,7 @@
 	}
 	
 	function validate_userPwd(userPwd){
-		var pattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/);
+		var pattern = new RegExp(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,30}$/);
 		return pattern.test(userPwd);
 		/*정규식 /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,30}$/
 		영문, 숫자, 특수기호 조합 8자리 이상 30자리 이하*/
