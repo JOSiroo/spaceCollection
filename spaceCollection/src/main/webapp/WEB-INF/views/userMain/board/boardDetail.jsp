@@ -92,7 +92,7 @@
 			        + "<div class='anonym2' style='margin: 10px;'>"
 			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none; width: 80%;' />"
 			        + "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>"
-					+ "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit("+this.commentNum+")'>수정</button>"
+					+ "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this,"+this.commentNum+")'>수정</button>"
 			        + "</div>"
 			        + "</form>"
 			        + "</div>";
@@ -101,33 +101,49 @@
 			}); //each
 	 }//makeList
 	 
-	 function commentEdit(commentNum) {
-		    // 버튼 클릭 후 작업 수행
-		    // 버튼을 비활성화(disabled)시킴
-		    document.getElementById('commentsEdit').disabled = true;
-		    // 또는 클릭 이벤트 리스너를 삭제
-		    /* document.getElementById('commentsEdit').removeEventListener('click', commentEdit); */
-		}
-	 
-	 function commentEdit(commentNum) {
-			console.log("수정 메서드 시작");
-			console.log(commentNum);
-			var str = "";
-			str += "<form name='commentsEditFrm' method='post var='list'>";
-			str += "<div class='col-sm-10' id='commentDiv'>";
-			str += "<input class='form-control' id='EditCommentContent' style='height: 100px; width: 580px;' name='commentContent'>";
-			str += "</div>";
-			str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
-			str += "<button class='btn btn-primary right' onclick='editCommentOkay()' id='commentsEditGo' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
-			str += "</div>";
-			str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
-			str += "<input type='hidden' name='commentNum' value="+commentNum+">";
-			str += "</form>";
-			str += "<hr>";
-			 $('#'+commentNum+'').append(str); 
-			// 수정 버튼 비활성화
-		    document.getElementById('#commentsEditGo').disabled = true;
+	 function commentEdit(bt,commentNum) {
+			var div = $(bt).closest('div.CommentsBox');
+			var cnt = $(div).find('form[name=commentsEditFrm]').length;
+		 		
+		 	if(cnt == 0){
+				console.log("수정 메서드 시작");
+				console.log(commentNum);
+				var str = "";
+				str += "<form name='commentsEditFrm' method='post var='list'>";
+				str += "<div class='col-sm-10' id='commentDiv'>";
+				str += "<input class='form-control' id='EditCommentContent' style='height: 100px; width: 580px;' name='commentContent'>";
+				str += "</div>";
+				str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
+				str += "<button class='btn btn-primary right' onclick='editCommentOkay()' id='commentsEditGo' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
+				str += "</div>";
+				str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
+				str += "<input type='hidden' name='commentNum' value="+commentNum+">";
+				str += "</form>";
+				str += "<hr>";
+				 $('#'+commentNum+'').append(str); 
+			}
 	}
+	 
+	 function editCommentOkay(){
+			event.preventDefault();
+			console.log("수정하기 버튼 클릭 시작");
+			$.ajax({
+				url : "<c:url value='/user/board/boardDetail/ajax_commentsEdit'/>",
+				type : 'post',
+				data : {
+					commentContent:$('#EditCommentContent').val(),
+					commentNum:$('input[name=commentNum]').val()
+				},
+				dataType : 'json',
+				success:function(res){
+					console.log(res);
+					location.reload();
+				},error:function(xhr, status, error){
+					alert("내용을 입력하세요");
+					/* alert(status + " : " + error); */
+				}
+			});
+		}
 	 
 
 	 function commentDelete(commentNum) {
@@ -149,7 +165,6 @@
 		$('#confirm1').modal('hide');	
 	}
 	 
-	
 	loadComment(boardNum);
 	
 	 function loadComment(boardNum){
@@ -198,26 +213,7 @@
 		$.commentsLoad();
 	}
 	
-	function editCommentOkay(){
-		event.preventDefault();
-		console.log("수정하기 버튼 클릭 시작");
-		$.ajax({
-			url : "<c:url value='/user/board/boardDetail/ajax_commentsEdit'/>",
-			type : 'post',
-			data : {
-				commentContent:$('#EditCommentContent').val(),
-				commentNum:$('input[name=commentNum]').val()
-			},
-			dataType : 'json',
-			success:function(res){
-				console.log(res);
-				location.reload();
-			},error:function(xhr, status, error){
-				alert("내용을 입력하세요");
-				/* alert(status + " : " + error); */
-			}
-		});
-	}
+	
 	
 $(function() {
 
@@ -266,27 +262,27 @@ $(function() {
 			        /* window.location.href = '<c:url value="login/login" />'; */
 			        return;
 			    }
-				    $.ajax({
-				        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
-				        method: 'post',
-				        data: sendDate,
-				        success: function(data) {
-			                 // data를 사용하여 필요한 작업 수행
-			                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
-									if(data!=null){
-										$('#ajaxComments').html("");
-			     						alert("댓글 등록 성공");
-			     						$('input[name=commentContent]').val('');
-			     						console.log("댓글 추가 성공");
-									   location.reload();  						
-									}else if(data==null){
-										alert("댓글 내용을 입력하세요");
-									}//if
-				        },//success
-				    	error:function(xhr, status, error){
-							alert(status + " : " + error);
-						}
-				    });//ajax
+			    $.ajax({
+			        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
+			        method: 'post',
+			        data: sendDate,
+			        success: function(data) {
+		                 // data를 사용하여 필요한 작업 수행
+		                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
+								if(data!=null){
+									$('#ajaxComments').html("");
+		     						alert("댓글 등록 성공");
+		     						$('input[name=commentContent]').val('');
+		     						console.log("댓글 추가 성공");
+								   location.reload();  						
+								}else if(data==null){
+									alert("댓글 내용을 입력하세요");
+								}//if
+			        },//success
+			    	error:function(xhr, status, error){
+						alert(status + " : " + error);
+					}
+			    });//ajax
 		});//#sendBt
 });//#function
 
