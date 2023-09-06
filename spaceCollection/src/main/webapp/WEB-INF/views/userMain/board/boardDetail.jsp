@@ -114,7 +114,6 @@
 			str += "</div>";
 			str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
 			str += "<input type='hidden' name='commentNum' value="+commentNum+">";
-			str += "<input type='hidden' name='userNum' value='9999999'>";
 			str += "</form>";
 			str += "<hr>";
 			$('#'+commentNum+'').append(str);
@@ -237,10 +236,16 @@ $(function() {
 		}
 	});
 	
+	$('input[id=replyContentsNo]').submit(function() {
+		alert("로그인 후 댓글 기입이 가능합니다.");
+	    window.location.href = <c:url value='login/login' />;
+	});
+
+	
 		$('#sendBt').click(function() {
 			event.preventDefault();
 			var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
-	        var userId = ${empty sessionScope.userId };
+	        /* var userId = ${empty sessionScope.userId }; */
 			    $.ajax({
 			        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
 			        method: 'post',
@@ -265,6 +270,7 @@ $(function() {
 		});//#sendBt
 });//#function
 
+
 </script>
 
 <div class="alleventBox">
@@ -288,14 +294,18 @@ $(function() {
 	             	<form name="commentsFrm" method="post" action="<c:url value='/user/board/boardDetail/commentsWrite'/>">
 		                <div class="registering_comment"  style="position: absolute;"  var="vo" items="vo">
 							<div class="col-sm-10" id="commentDiv"  >
-							<%-- <c:if test="${empty sessionScope.userId }"> --%>
-								<input type="text" name="commentContent" id="replyContents" placeholder="로그인 후 글을 작성하실 수 있습니다." style="width: 450px;"/>
+							<input type="hidden" name="userNum" value="${userNum } "/>		
+							<c:if test="${empty sessionScope.userId }">
+								<input type="text" name="commentContent" id="replyContentsNo" placeholder="로그인 후 글을 작성하실 수 있습니다." style="width: 450px;"/>
+							</c:if>
+							<c:if test="${!empty sessionScope.userId }">
+								<input type="text" name="commentContent" id="replyContentsOk" placeholder="댓글을 입력하세요." style="width: 450px;"/>
+							</c:if>
 				                	<!-- <textarea class="form-control" style="height: 10px" name="commentContent"></textarea> -->
 								<button type="button" class="btn btn-primary" id="sendBt" >등록</button>
 			                </div>
 						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							
-						<input type="hidden" name="userNum" id = "userComment" value="${map.USER_NUM }"/>
 						</div> 
 					</form>
 				

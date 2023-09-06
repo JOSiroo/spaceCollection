@@ -55,21 +55,20 @@ a.btn.btn-primary.py-2.px-3 {
     height: 4px;
     background: #ffd014;
     margin-top:15px;
-     box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
  }
- #tns2 > .tns-item {
- 	padding-right:51px !important;
+ #reviewBox{
+    background: white;
+    box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
+    border: 2px solid #193D76;
+    border-radius: 5px;
  }
+#tns3 {
+    width: calc(480%);
+}
 </style>
 
 <script src="weather.js">
-button.addEventListener('click', () => {
-	  navigator.geolocation.getCurrentPosition(success, fail);
-	});
-	...
-	const fail = () => {
-	  alert("좌표를 받아올 수 없음");
-	}
 </script>
 
    <div class="hero">
@@ -165,10 +164,9 @@ button.addEventListener('click', () => {
             </div>
             <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
                <div class="box-feature">
-               <%@ include file="/WEB-INF/views/userMain/weather.jsp" %>
-                   <%--<span class="flaticon-house-1"></span>
-                  <h3 class="mb-3" id="hboldfont">공간 기획전</h3>
-                  <p><a href="<c:url value='/user/focusList'/>"  class="learn-more">Learn More</a></p>--%>
+                   <span class="flaticon-house-1"></span>
+                  <h3 class="mb-3" id="hboldfont">시즌 공간 기획전</h3>
+                  <p><a href="<c:url value='/collection?scNum=1'/>"  class="learn-more">Learn More</a></p>
                </div> 
             </div>   
          </div>
@@ -180,7 +178,7 @@ button.addEventListener('click', () => {
       <div class="container">
       
          <div class="row mb-5 align-items-center">
-            <div class="col-md-6">
+            <div  class="col-md-6">
                <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0" id="hboldfont">생생한 이용자 리뷰</h2>
             </div>
             <div class="col-md-6 text-md-end">
@@ -198,13 +196,13 @@ button.addEventListener('click', () => {
             </div>
          </div>
          
-		<div class="testimonial-slider-wrap">
-		<div class="testimonial-slider">
+		<div class="testimonial-slider-wrap"  id="reviewBox">
+		<div class="testimonial-slider" style='margin:2%; margin-right:70%'>
 			 <c:forEach var="map" items="${map}">
 				 <div class="item">
 			        <div class="testimonial">
 			            <a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="img">
-			                <img src="images/person_1-min.jpg" alt="Image" class="img-fluid w-140 mb-4 rounded">
+			                <!-- <img src="images/person_1-min.jpg" alt="Image" class="img-fluid w-140 mb-4 rounded"> --> 
 			                <%-- ${map.IMG_ORIGINAL_NAME} --%>
 			            </a>
 			            <div class="rate">
@@ -219,18 +217,6 @@ button.addEventListener('click', () => {
 			                        <span class="icon-star-empty text-warning"></span>
 			                    </c:otherwise>
 			                </c:choose> 
-								<%-- <c:set var="count" value="0"/>
-								<c:forEach var="i" begin="1" end="${reviewMap['REVIEW_RATE'] }">
-									<img alt="별.png" src="<c:url value='/images/fullStar.png'/>" id="star">
-									<c:set var="count" value="${count+1 }" />
-								</c:forEach>
-								<c:if test="${reviewMap['REVIEW_RATE']%1 >0 }">
-									<img alt="별.png" src="<c:url value='/images/halfStar.png'/>" id="star">
-									<c:set var="count" value="${count+1 }" />
-								</c:if>
-								<c:forEach var="j" begin="${count}" end="4">
-									<img alt="별.png" src="<c:url value='/images/emptyStar.png'/>" id="star">
-								</c:forEach> --%>
 			            </div>
 			            <!-- 리뷰 -->
 			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"> ${map.SPACE_NAME}(${map.SD_TYPE})</h3>
@@ -241,66 +227,9 @@ button.addEventListener('click', () => {
 			        </div>
 			    </div>
 			</c:forEach>
-
-
-               <!-- <div class="item">
-                  <div class="testimonial">
-                     <img src="images/person_2-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4" id="revimg">
-                     <div class="rate">
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                     </div>
-                     <h3 class="h5 text-primary mb-4">Mike Houston</h3>
-                     <blockquote>
-                        <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                     </blockquote>
-                     <p class="text-black-50">Designer, Co-founder</p>
-                  </div>
-               </div> -->
-         
-         
-
-             <!--   <div class="item">
-                  <div class="testimonial">
-                     <img src="images/person_3-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4">
-                     <div class="rate">
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                     </div>
-                     <h3 class="h5 text-primary mb-4">Cameron Webster</h3>
-                     <blockquote>
-                        <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                     </blockquote>
-                     <p class="text-black-50">Designer, Co-founder</p>
-                  </div>
-               </div> -->
-
-               <!-- <div class="item">
-                  <div class="testimonial">
-                     <img src="images/person_4-min.jpg" alt="Image" class="img-fluid rounded-circle w-25 mb-4">
-                     <div class="rate">
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                        <span class="icon-star text-warning"></span>
-                     </div>
-                     <h3 class="h5 text-primary mb-4">Dave Smith</h3>
-                     <blockquote>
-                        <p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-                     </blockquote>
-                     <p class="text-black-50">Designer, Co-founder</p>
-                  </div>
-               </div> -->
-
             </div>
          </div>
+         
       </div>
    </div>
 <!-- 리뷰 끝 -->
@@ -308,7 +237,6 @@ button.addEventListener('click', () => {
 
    <div class="section section-15 bg-light">
       <div class="container">
-         
 	        <div  class="content-center text-center" style= "margin-top: 20px;">
             <div class="row section-counter" var="map" items="${usercount}">
 		        <div class="col-4 col-sm-4 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
@@ -339,7 +267,6 @@ button.addEventListener('click', () => {
                <br>당신의 아이디어와 목표를 현실로 이끌어 줄 공간을 찾아보세요. 지금 바로 예약하여 성공적인 첫 걸음을 내딛어보세요.</p>
             </div>
             </div>
-         
       </div>
    </div>
 

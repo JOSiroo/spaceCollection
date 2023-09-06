@@ -23,12 +23,12 @@
 
 			    if (fileType == 'jpg' || fileType == 'gif' || fileType == 'jpeg' || fileType == 'png' || fileType == 'bmp') {
 			        // 정상적인 파일 확장자
-			        var formData = new FormData(); // FormData 객체 생성
+			        /* var formData = new FormData(); // FormData 객체 생성
         			formData.append('file', file); // 파일 데이터 추가
 			        $.ajax({
 			        	url:"<c:url value='/guest/myPage/editImage'/>",
 			        	type: 'post',
-			        	data: formData,
+			        	data: $('form[name=editProfile]').serialize(),
 			            contentType: false, // 컨텐츠 타입 설정하지 않음
 			            processData: false, // 데이터 처리 방지
 			        	success:function(res){
@@ -37,7 +37,9 @@
 						error:function(xhr,status,error){
 							alert("실패");
 						}
-			        });
+			        }); */
+			        $("form[name=editProfile]").attr("action","<c:url value='/guest/myPage/editImage'/>");
+			        $("form[name=editProfile]").submit();
 			        	
 			    } else {
 			        alert("이미지 파일만 선택할 수 있습니다.");
@@ -64,7 +66,7 @@
 			 $("input[name=userMarketingEmailOk]").prop("checked",false);
 		 }
 		 
-		 var snsCode=$("input[name=snsCode]").val();
+		 var snsCode=$("input[name=userSnsCode]").val();
 		 if(snsCode=="kakao"){
 			 $("input[name=kakaoLink]").prop("checked",true);
 		 }else if(snsCode=="naver"){
@@ -211,7 +213,7 @@
 	
 	.myProfile{
 		width: 250px;
-		height: 280px;
+		height: 300px;
 		background: white;
 		float: left;
 		margin-left: 120px;
@@ -329,12 +331,18 @@
 	.error{
 		font-size: 11px;
 	}
+	
+	sub{
+		margin-left: 160px;
+	}
 </style>
 
 <div class="wrapProfile">
-	<form name="editProfile" method="post" enctype="multipart/form-data"
-		action="<c:url value='/guest/myPage/editProfile'/>">
-		<input type="hidden" name="snsCode" value="${guestVo.userSnsCode }">
+	<form name="editProfile" method="post" enctype="multipart/form-data" 
+	action="<c:url value='/guest/myPage/editProfile'/>">
+		<input type="hidden" name="userProfileImage" value="${guestVo.userProfileImage }">
+		<input type="hidden" name="userSnsCode" value="${guestVo.userSnsCode }">
+		<input type="hidden" name="userNum" value="${guestVo.userNum }">
 		<div class="align_center">
 			<h1>프로필 관리</h1>
 			<div class="myProfile">
@@ -454,7 +462,7 @@
 							<div class="userPwd">
 								<div class="hiddenText">
 									<input type="text" class="edit-textbox" name="userPwd" id="userPwd">
-									<button class="edit-button">확인</button>
+									<button class="edit-button" id="edit-pwd">확인</button>
 								</div>
 								<a href="#" class="editInfo">변경하기</a>
 							</div>
@@ -492,7 +500,10 @@
 				</table>
 				<div class="footProfile">
 					<hr>
-					<a href="#" class="editInfo" style="margin-left: 210px;">서비스 탈퇴하기</a>
+					<a href="<c:url value='/guest/deleteGuest'/>" class="editInfo" style="margin-left: 210px;">서비스 탈퇴하기</a>
+					<c:if test="${!empty sessionScope.code }">
+						<br><sub>SNS계정인 경우 해당 SNS를 이용해주세요.</sub>
+					</c:if>
 				</div>
 			</div>
 		</div>

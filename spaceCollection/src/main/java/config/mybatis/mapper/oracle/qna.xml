@@ -67,7 +67,7 @@
 	
 	<update id="deleteQna" parameterType="int">
 		update qna
-		set qna_del_flag = 'Y'
+		set qna_del_flag = 'Y', QNA_OUT_DATE=SYSDATE
 		where qna_num = #{qnaNum}
 	</update>
 	<select id="getTotalRecordBySpaceNum" parameterType="int">
