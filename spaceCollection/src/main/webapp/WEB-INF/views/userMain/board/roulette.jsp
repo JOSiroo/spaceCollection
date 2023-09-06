@@ -94,13 +94,14 @@ div#textBox{
 </style>
 <section>
   <div id="roulette" class="roulette">
+	    <input type="hidden" value="${sessionScope.userId }"/>
 	    <div id="app">
 	    </div>
   </div>
   
   <div id="textBox">
     <span id="textBox">가운데 Start 버튼을 클릭시 룰렛이 실행됩니다.
-    <br> * 쿠폰은 1일 1회만 지급 됩니다. *</span>
+    <br> * 쿠폰은 로그인 후 발급 가능합니다. *</span>
      <br><br>
      <a href="<c:url value='/user/couponList'/>"><img src=<c:url value='/images/couponIcon.png'/>  class="CouponIcon"></a>
      => 나의 쿠폰함 이동 
@@ -124,6 +125,14 @@ div#textBox{
     };
 
 const rRotate = () => {
+	
+	if (${empty sessionScope.userId }) {
+		alert("로그인이 필요합니다.");
+		window.location.href = '/spaceCollection/login/login';
+		return;
+	} else {
+		alert("행운을 빌어요!! ${sessionScope.userId} 님!");
+
       var panel = document.querySelector(".rouletter-wacu");
       var btn = document.querySelector(".rouletter-btn");
       var deg = [];
@@ -145,15 +154,17 @@ const rRotate = () => {
         btn.style.pointerEvents = "none"; //a 태그
         
         // 총 50에 다달했을때, 즉 마지막 바퀴를 돌고나서
-        if (num === 50) {
+        if (num === 40) {
           clearInterval(ani);
           panel.style.transform = `rotate(${deg[setNum]}deg)`;
         }
-      }, 50);
+      }, 40);
+      
+	}
 };
 
     // 정해진 alert띄우기, custom modal등
-    const rLayerPopup = (num) => {
+    const rLayerPopup = (num) => { 
       switch (num) {
         case 1:
           alert("꽝!다음번에 다시 도전하세요.");
@@ -183,16 +194,19 @@ const rRotate = () => {
       	}
     });
 
-    // roulette default
-    document.getElementById("app").innerHTML = `
-    <div class="rouletter">
-        <div class="rouletter-bg">
-            <div class="rouletter-wacu"></div>
-        </div>
-        <div class="rouletter-arrow"></div>
-        <button class="rouletter-btn">start</button>
-    </div>
-    `;
+    //룰렛 생성  
+    document.getElementById("app").innerHTML =
+    	    `<div class="rouletter">
+	        <div class="rouletter-bg">
+	            <div class="rouletter-wacu"></div>
+	        </div>
+	        <div class="rouletter-arrow"></div>
+	        <button class="rouletter-btn">start</button>
+	    	</div>`;
+    	
+		    	
+	    	
+	
     </script>
     
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
