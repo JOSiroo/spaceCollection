@@ -11,4 +11,5 @@ public interface SpaceDetailService {
 	RefundVO selectRefund(int refundNo);
 	SpaceDetailVO selectJustDetailByNo(int sdNum);
 	List<SpaceDetailVO> selectBySpaceNo(int spaceNo);
+	int countReservationBySdNum(int sdNum);
 }

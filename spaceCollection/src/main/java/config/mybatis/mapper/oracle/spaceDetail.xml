@@ -30,4 +30,8 @@
 		where refund_num = #{refundNum}
 	</select>
 	
+	<select id="countReservationBySdNum" parameterType="int" resultType="int">
+		select sd_num, count(*) as reservationCount from reservation where sd_num = #{sdNum} group by sd_num
+	</select>
+	
 </mapper>
