@@ -107,11 +107,13 @@ public class OauthService {
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-
+            
+            String id = element.getAsJsonObject().get("id").getAsString();
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
             String profile_image = properties.getAsJsonObject().get("profile_image").getAsString();
-
+            
+            userInfo.put("id", id);
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("profile_image", profile_image);
@@ -218,21 +220,21 @@ public class OauthService {
             String nickname = responseObj.get("nickname").getAsString();
             String profile_image = responseObj.get("profile_image").getAsString();
             String mobile = responseObj.get("mobile").getAsString();
-            
+            String id = responseObj.get("id").getAsString();
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("profile_image", profile_image);
             userInfo.put("mobile", mobile);
             
 			/*
-			 * String id = responseObj.get("id").getAsString(); String age =
-			 * responseObj.get("age").getAsString(); String gender =
-			 * responseObj.get("gender").getAsString(); String mobile =
-			 * responseObj.get("mobile").getAsString(); String mobileE164 =
-			 * responseObj.get("mobile_e164").getAsString(); String name =
-			 * responseObj.get("name").getAsString(); String birthday =
-			 * responseObj.get("birthday").getAsString(); String birthYear =
-			 * responseObj.get("birthyear").getAsString();
+			 * String id = responseObj.get("id").getAsString(); 
+			 * String age = responseObj.get("age").getAsString();
+			 * String gender = responseObj.get("gender").getAsString();
+			 * String mobile = responseObj.get("mobile").getAsString();
+			 * String mobileE164 = responseObj.get("mobile_e164").getAsString();
+			 * String name = responseObj.get("name").getAsString(); 
+			 * String birthday = responseObj.get("birthday").getAsString();
+			 * String birthYear = responseObj.get("birthyear").getAsString();
 			 */
         } catch (Exception e) {
             System.out.println(e);

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Component
 public class FileUploadUtil {
@@ -62,6 +63,48 @@ public class FileUploadUtil {
 
 		return resultList;
 	}
+	
+	public List<Map<String, Object>> userProfileupload(HttpServletRequest request,
+			int pathFlag, String userId) throws IllegalStateException, IOException {
+		//파일 업로드 처리
+		MultipartHttpServletRequest multiRequest 
+		= (MultipartHttpServletRequest) request;
+		
+		Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
+		//List<MultipartFile> files =multiRequest.getFiles("upfile");
+		
+		//여러개 업로드된 파일의 정보를 저장할 리스트
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		
+		Iterator<String> iter = fileMap.keySet().iterator();
+		while(iter.hasNext()) {
+			String key=iter.next();
+			MultipartFile tempFile = fileMap.get(key);//업로드된 파일을 임시파일 형태로 제공
+			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
+				long fileSize=tempFile.getSize(); //파일 크기
+				String originName=tempFile.getOriginalFilename(); //변경전 파일명
+				
+				//변경된 파일 이름
+				String fileName = getUserIdFileName(originName,userId);
+				
+				//파일 업로드 처리
+				String uploadPath = getUploadPath(request, pathFlag);
+				File file = new File(uploadPath, fileName);
+				tempFile.transferTo(file);
+				
+				//업로드 파일 정보 저장
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("fileName", fileName);
+				resultMap.put("originalFileName", originName);
+				resultMap.put("fileSize", fileSize);
+				
+				resultList.add(resultMap);
+			}//if			
+		}//while
+		
+		return resultList;
+	}
+	
 
 
 	public String getUploadPath(HttpServletRequest request, int pathFlag) {
@@ -74,6 +117,8 @@ public class FileUploadUtil {
 				path=request.getSession().getServletContext().getRealPath(ConstUtil.FILE_UPLOAD_PATH_TEST);
 			}else if(pathFlag==ConstUtil.UPLOAD_IMAGE_FLAG) { //상품 이미지 업로드
 				path=request.getSession().getServletContext().getRealPath(ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST);				
+			}else if(pathFlag==ConstUtil.UPLOAD_USER_IMAGE_FLAG) { //유저 프로필 이미지 업로드
+				path=request.getSession().getServletContext().getRealPath(ConstUtil.USER_IMAGE_FILE_UPLOAD_PATH_TEST);
 			}
 		}else {  //deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
@@ -111,11 +156,15 @@ public class FileUploadUtil {
 
 		return result;
 	}
-	/*
-	public String getUserIdFileName(String originName,Ses) {
+	
+	public String getUserIdFileName(String originName,String userId) {
 		int idx = originName.lastIndexOf(".");
 		String ext = originName.substring(idx); //.txt
-	}*/
+		String result= userId+ext;
+		logger.info("변경된 파일명 : {}", result);
+		
+		return result;
+	}
 }
 
 
