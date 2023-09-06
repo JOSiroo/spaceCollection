@@ -22,6 +22,8 @@ public class MvcConfiguration implements WebMvcConfigurer{
 		 * .excludePathPatterns("/admin/login/adminLogin") //exclude - 제외하고
 		 * .addPathPatterns("/admin/**");
 		 */
+		
+		
 	}
 }
 
