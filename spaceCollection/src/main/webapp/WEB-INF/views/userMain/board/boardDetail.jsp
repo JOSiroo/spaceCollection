@@ -243,9 +243,16 @@ $(function() {
 
 	
 		$('#sendBt').click(function() {
-			event.preventDefault();
 			var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
-	        /* var userId = ${empty sessionScope.userId }; */
+	         /* var userId = ${empty sessionScope.userId };  */
+			event.preventDefault();
+		    var sendDate = $('form[name=commentsFrm]').serialize(); // 입력 양식 내용 쿼리 문자열로 만듦
+		    // 세션에 userId 값이 없는 경우
+		    if ("${!empty sessionScope.userId }") {
+		        window.location.href = 'http://localhost:9091/spaceCollection/login/login';
+		        /* window.location.href = '<c:url value="login/login" />'; */
+		        return;
+		    }
 			    $.ajax({
 			        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
 			        method: 'post',
@@ -303,6 +310,8 @@ $(function() {
 							</c:if>
 				                	<!-- <textarea class="form-control" style="height: 10px" name="commentContent"></textarea> -->
 								<button type="button" class="btn btn-primary" id="sendBt" >등록</button>
+							
+								
 			                </div>
 						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							
