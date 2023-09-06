@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
+import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.guest.model.GuestService;
@@ -26,8 +29,12 @@ import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.space.model.SpaceVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileServiceImpl;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +49,7 @@ public class HostController {
 	private final CalendarService calendarService;
 	private final BoardService boardService;
 	private final FileUploadUtil fileUploadUtil;
+	private final SpaceFileService spaceFileservice;
 	
 	
 	@RequestMapping("/index")
@@ -85,7 +93,8 @@ public class HostController {
 	
 	@PostMapping("/registration/registration2")
 	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
-			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, Model model) {
+			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, 
+			HttpServletRequest request, MultipartHttpServletRequest multiFile, Model model) {
 		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}, refund = {}", spaceVo, spaceTypeVO, refundVo);
 		
 		//공간 번호 조회
@@ -158,33 +167,51 @@ public class HostController {
 		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacilityVo);
 		logger.info("totalFac = {}", totalFac);
 		
+		//이미지 등록
+		logger.info("request = {}" + request);
+		SpaceFileVO spaceFileVo = new SpaceFileVO();
+		
+		try {
+			List<Map<String, Object>> list = 
+					fileUploadUtil.spaceImageUpload(request, ConstUtil.UPLOAD_SPACE_IMAGE_FLAG, spaceVo.getSpaceNum());
+			logger.info("파일 list.size = {}", list.size());
+			
+			for (Map<String, Object> map : list) {
+				if(map.get("fileName") != null && map.get("fileName") != ""){
+					String fileName = (String)map.get("fileName");
+					String originalFileName = (String)map.get("originalFileName");
+					long fileSize = (long)map.get("fileSize");
+					
+					spaceFileVo.setImgForeignKey("S" + spaceVo.getSpaceNum());
+					spaceFileVo.setImgOriginalName(originalFileName);
+					spaceFileVo.setImgTempName(fileName);
+					spaceFileVo.setImgSize(fileSize);
+					logger.info("spaceFileVo = {}", spaceFileVo);
+					
+					int spFile = spaceFileservice.insertSpaceFile(spaceFileVo);
+					logger.info("이미지 저장, spFile = {}", spFile);
+				}
+			}//for
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		return "redirect:/host/index";
 	}
 	
 	@GetMapping("/registration/spDetail")
 	public String spDetail(Model model) {
-		//1
 		logger.info("세부 공간등록 보여주기");
 		
-		// 2
-		// 3
-		
-		//4
 		return "host/registration/spDetail";
 	}
 	
 	@PostMapping("/registration/spDetail")
 	public String registration4() {
-		//1
 		logger.info("세부 공간등록 처리");
 		
-		//2
 		
-		
-		//3
-		
-		
-		//4
 		return "host/registration/registration4";
 	}
 	
