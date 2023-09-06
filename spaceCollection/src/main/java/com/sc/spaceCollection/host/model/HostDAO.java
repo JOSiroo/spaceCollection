@@ -17,7 +17,7 @@ public interface HostDAO {
 	SpaceTypeVO selectSpaceTypeBySpaceTypeName(String spaceTypeName);
 	int insertSpace(SpaceVO spaceVo);
 	int insertRefund(RefundVO refundVo);
-	int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility);
+	int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo);
 	
 	List<Map<String, Object>> selectHostReservation(@Param("startRow") int startRow, @Param("endRow") int endRow,
 													@Param("userNum")int userNum,@Param("status") String status,

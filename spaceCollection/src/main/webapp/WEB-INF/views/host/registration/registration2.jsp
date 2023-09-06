@@ -72,7 +72,7 @@
 		resize: none;
 	}
 	
-	.spText::placeholder, .address::placeholder {
+	.spText::placeholder, .address::placeholder, .addressDetail::placeholder {
 		color: #b7b7b7;
 		font-weight: bold;
 	}
@@ -133,6 +133,10 @@
 	
 	.typeSub.checked {
 		background: #ffd014;
+	}
+	
+	.typeTitle.checked {
+		background: #704de4;
 	}
 	
 	.subTitle {
@@ -314,6 +318,7 @@
 	
 </style>
 
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1cbef86a434933ba0775fc1a7a75578b&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
@@ -369,18 +374,22 @@
 		    $(this).addClass('checked');
 
 		    // 모든 typeTitle 버튼을 초기화
-		    spaceType.find('.typeTitle').css('background', '#656565');
+		    spaceType.find('.typeTitle').removeClass('checked');
 		    
 		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
-		    $(this).prevAll('.typeTitle').first().css('background', '#704de4');
-		    
+		    $(this).prevAll('.typeTitle').first().addClass('checked');
 		});
 		
 		// URL에서 파라미터 값을 가져옵니다.
 		var spaceTypeNameParam = new URLSearchParams(window.location.search).get('spaceTypeName');
 
 		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
-		$('.typeSub[value="' + spaceTypeNameParam + '"]').addClass('checked');
+		$('#${param.spaceTypeName}').addClass('checked');
+		
+		//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
+		$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
+		
+		$('#spaceTypeName').val($('.typeSub.checked').val());
 		
 		//태그 확인 숨기기
 		$('.spTag').hide();
@@ -541,24 +550,6 @@
             
         });
 		
-		/* $('.btAdd.fa, .btAdd.pre').click(function() {
-			var inputValue = $(this).siblings('.spText').val();
-		    var tagContainer = $(this).siblings('.spTag');
-		    
-		    var currentTagCount = tagContainer.find('.tagRe').length;
-		    
-		    if (inputValue && currentTagCount < 10) {
-		    	tagContainer.show();
-		    	         
-		    	var tagHTML = '<span class="tagRe"> ' + (currentTagCount + 1) + '. ' + inputValue + 
-		    		' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>';
-		    	tagContainer.append(tagHTML);
-		    	$(this).siblings('.spText').val('');
-		 	} else {
-		    	alert('태그는 최대 10개까지 입력할 수 있습니다.');
-		    }
-		 }); */
-		
 		// 이미지를 누르면 해당 태그 제거
 		$('.spTag').on('click', '.tagClose', function() {
 			$(this).closest('.tagRe').remove();
@@ -660,12 +651,6 @@
                 return false;
             }
 			
-          	//공간 유형 hidden에 넣기
-			var type = $('.typeSub.checked').val();
-			
-			// hidden input에 값을 설정합니다.
-		    $('#spaceTypeName').val(type);
-			
 		  	//사업자 등록번호
     		if ($('.spBusiness').val().length < 1) {
     			alert('사업자 등록번호를 입력하세요.');
@@ -746,6 +731,16 @@
 				
 				return false;
 			}
+			
+			// 편의시설 체크박스 중 하나라도 체크되었는지 확인
+	        if ($('input[name^="fac"]:checked').length === 0) {
+	            // 하나라도 체크되지 않았을 때
+	            alert('하나 이상의 편의시설을 선택하세요.'); // 사용자에게 메시지 표시
+	            
+				scrollMove('.facility');
+				
+				return false;
+	        }
 
 			//예약 시 주의사항
 			if ($('.spaceTag.pre').find($('.tagRe')).length < 1) {
@@ -759,7 +754,6 @@
 			
 			//대표 이미지
 			if ($('.spImg.main .imgBox').length === 0) {
-		        event.preventDefault(); // 폼 제출 막기
 		        alert('대표 이미지를 첨부해 주세요.');
 		        
 		        scrollMove('.spaceImg.main');
@@ -767,57 +761,102 @@
 		        return false;
 		    }
 			
+			//주소
+			if ($('.address').length === 0) {
+		        alert('주소를 입력해 주세요.');
+		        $('.address').focus();
+		        
+		        scrollMove('.address');
+		        
+		        return false;
+		    }
+			
+			
 			$('form[name=frmRegi2]').submit();
 		});
+		
 	});
 	
-	function sample6_execDaumPostcode() {
-		new daum.Postcode({
-			oncomplete: function(data) {
-		    	// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-		        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-		        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-		        var addr = ''; // 주소 변수
-		        var extraAddr = ''; // 참고항목 변수
-
-		        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-		        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-		        	addr = data.roadAddress;
-		        } else { // 사용자가 지번 주소를 선택했을 경우(J)
-		        	addr = data.jibunAddress;
-		        }
-
-		        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-		        if(data.userSelectedType === 'R'){
-		        	// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-		            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-		        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		        	extraAddr += data.bname;
-		        }
-		        // 건물명이 있고, 공동주택일 경우 추가한다.
-		        if(data.buildingName !== '' && data.apartment === 'Y'){
-		            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		        }
-		        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-		        if(extraAddr !== ''){
-		        	extraAddr = ' (' + extraAddr + ')';
-		        }
-		        // 조합된 참고항목을 해당 필드에 넣는다.
-		        document.getElementById("sample6_extraAddress").value = extraAddr;
-		                    
-		        } else {
-		        	document.getElementById("sample6_extraAddress").value = '';
-		        }
-
-		        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-		        document.getElementById("spaceZipcode").value = data.zonecode;
-		        document.getElementById("spaceAddress").value = addr;
-		        // 커서를 상세주소 필드로 이동한다.
-		        document.getElementById("spaceAddressDetail").focus();
-			}
-		}).open();
+	//스크롤이동
+	function scrollMove(val) {
+		var offset = $(val).offset(); //해당 위치 반환
+		$("html, body").animate({
+			scrollTop : offset.top - 150}, 200); //선택한 위치로 이동. 두번째 인자는 시간 0.2초
 	}
+	
+	//공간 타입 val넣기
+	function stNameHidden(spaceTypeName) {
+		$('#spaceTypeName').val(spaceTypeName);
+	}
+	
+	var geocoder = new kakao.maps.services.Geocoder();
+
+	//우편번호
+	function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+            	console.log(data);
+            	
+            	var callback = function(data, status) {
+            	    if (status === kakao.maps.services.Status.OK) {
+            	        console.log(data);
+            	        console.log(data[0].x);
+            	        console.log(data[0].y);
+            	        
+            	        $('input[name="longitude"]').val(data[0].x);
+            	        $('input[name="latitude"]').val(data[0].y);
+            	    }
+            	};
+            	
+            	geocoder.addressSearch(data.address, callback);
+            	
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+				console.log('addr' + addr);
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addressDetail").focus();
+            }
+        }).open();
+    }
+
+
 </script>
 
 <article>
@@ -876,9 +915,11 @@
 						<c:forEach var="allVo" items="${type }">
 							<input type="button" class="typeTitle" value="${allVo.spaceCategoryVo.categoryName }">
 							<c:forEach var="list" items="${allVo.spaceTypeList }" >
-								<input type="button" class="typeSub" value="${list.spaceTypeName }" >
+								<input type="button" id="${list.spaceTypeName}" class="typeSub" 
+									onclick='stNameHidden("${list.spaceTypeName }")' value="${list.spaceTypeName }">
 							</c:forEach><br>
 						</c:forEach>
+						<input type="hidden" name="spaceTypeName" id="spaceTypeName">
 					</div>
 				</div>
 			</div>
@@ -895,6 +936,26 @@
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
 						<p>-를 포함해서 입력해주세요. ex) 111-11-11111</p>
+					</div>
+				</div>
+			</div>
+			<!-- 사업자 등록증 -->
+			<div class="boxForm">
+				<div class="boxTitle">
+					<span>사업자 등록증 <span style="color: red;">*</span></span>
+				</div>
+				<div class="boxContents">
+					<div class="spaceImg sub">
+						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
+							<div class="inner sub">이미지 파일을 추가해 주세요.</div>
+						</div>
+						<div class="btBox">
+							<label>
+								<div class="btAdd file sub" >파일첨부</div>
+								<input type="file" id="subImage" accept="image/jpg, image/png, image/jpeg" 
+									style="display: none;">
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1005,7 +1066,7 @@
 			<!-- 편의시설 -->
 			<div class="boxForm">
 				<div class="boxTitle">
-					<span>편의시설</span>
+					<span>편의시설 <span style="color: red;">*</span></span>
 					<br><hr>
 				</div><br>
 				<div class="boxContents">
@@ -1151,15 +1212,17 @@
 					<div class="spaceZip">
 						<input type="button" class="btAdd" value="주소등록" onclick="sample6_execDaumPostcode()"
 							style="margin: 0 0 10px 20px;">
-						<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
 						<div class="spZip1">
-							<input type="hidden" name="spaceZipcode" id="spaceZipcode">
-							<input type="text" class="address" name="spaceAddress" id="spaceAddress"
-								placeholder="실제 서비스되는 공간의 주소를 입력해주세요." disabled="disabled">
+							<input type="hidden" name="spaceZipcode" id="zipcode">
+							<input type="text" class="address" name="spaceAddress" id="address"
+								placeholder="실제 서비스되는 공간의 주소를 입력해주세요." readonly="readonly">
 						</div>
 						<div class="spZip2">
 							<input type="text" class="addressDetail" name="spaceAddressDetail" 
-								id="addressDetail" onclick="sample6_execDaumPostcode()" >
+								id="addressDetail" placeholder="상세주소를 입력해주세요." >
+							<a id="sample6_extraAddress" ></a>
+							<input type="hidden" name="latitude">
+							<input type="hidden" name="longitude">
 						</div>
 					</div>
 				</div>
@@ -1326,7 +1389,7 @@
 			</div>
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="button" class="btn btn-warning" id="next" >다음</button>
+				<button type="button" class="btn btn-warning" id="next" >등록</button>
 			</div>
 			
 		</form>

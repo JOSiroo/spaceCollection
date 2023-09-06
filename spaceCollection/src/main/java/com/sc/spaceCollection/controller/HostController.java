@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
+import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
@@ -40,6 +41,8 @@ public class HostController {
 	private final ReservationService reservationService;
 	private final CalendarService calendarService;
 	private final BoardService boardService;
+	private final FileUploadUtil fileUploadUtil;
+	
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -82,11 +85,13 @@ public class HostController {
 	
 	@PostMapping("/registration/registration2")
 	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
-			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacility, HttpSession session, Model model) {
-		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}", spaceVo, spaceTypeVO);
+			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, Model model) {
+		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}, refund = {}", spaceVo, spaceTypeVO, refundVo);
 		
 		//공간 번호 조회
+		logger.info("공간번호 전 SpaceTypeName + {}", spaceTypeVO.getSpaceTypeName());
 		SpaceTypeVO spaceTypeVO2 = hostService.selectSpaceTypeBySpaceTypeName(spaceTypeVO.getSpaceTypeName());
+		logger.info("공간번호 후 spaceTypeVO2 = {}", spaceTypeVO2);
 		spaceVo.setSpaceTypeNo(spaceTypeVO2.getSpaceTypeNo());
 		logger.info("공간 타입 번호 조회, SpaceTypeNo = {}", spaceTypeVO2.getSpaceTypeNo());
 		
@@ -94,26 +99,64 @@ public class HostController {
 		String userId = (String) session.getAttribute("userId");
 		UserInfoVO user = hostService.selectUserById(userId);
 		spaceVo.setUserNum(user.getUserNum());
-		logger.info("유저 번호 조회, UserNum = {}", user.getUserNum());
-		
-		//주소
-		String zipcode = "우편번호", address = "주소", adDetail = "상세주소";
-		Double latitude = 1.1, longitude = 2.2;
-		spaceVo.setSpaceZipcode(zipcode);
-		spaceVo.setSpaceAddress(address);
-		spaceVo.setSpaceAddressDetail(adDetail);
-		spaceVo.setLatitude(latitude);
-		spaceVo.setLongitude(longitude);
-		logger.info("spaceVo = {}, refundVo = {}", spaceVo, refundVo);
-		
-		//total facility
-		spaceTotalFacility.setSpaceNum(spaceVo.getSpaceNum());
-		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacility);
-		logger.info("spaceTotalFacility = {}, totalFac = {}", spaceTotalFacility, totalFac);
+		logger.info("유저 번호 조회, UserNum = {}", spaceVo.getUserNum());
 		
 		//공간 등록
 		int space = hostService.insertSpace(spaceVo, refundVo);
 		logger.info("space = {}", space);
+		
+		//total facility
+		spaceTotalFacilityVo.setSpaceNum(spaceVo.getSpaceNum());
+		
+		if (spaceTotalFacilityVo.getFacWifi() == null) {
+			spaceTotalFacilityVo.setFacWifi("");
+		}
+		if (spaceTotalFacilityVo.getFacPrinter() == null) {
+			spaceTotalFacilityVo.setFacPrinter("");
+		}
+		if (spaceTotalFacilityVo.getFacChairTable() == null) {
+			spaceTotalFacilityVo.setFacChairTable("");
+		}
+		if (spaceTotalFacilityVo.getFacSmoke() == null) {
+			spaceTotalFacilityVo.setFacSmoke("");
+		}
+		if (spaceTotalFacilityVo.getFacRestRoom() == null) {
+			spaceTotalFacilityVo.setFacRestRoom("");
+		}
+		if (spaceTotalFacilityVo.getFacPC() == null) {
+			spaceTotalFacilityVo.setFacPC("");
+		}
+		if (spaceTotalFacilityVo.getFacTV() == null) {
+			spaceTotalFacilityVo.setFacTV("");
+		}
+		if (spaceTotalFacilityVo.getFacWhiteBoard() == null) {
+			spaceTotalFacilityVo.setFacWhiteBoard("");
+		}
+		if (spaceTotalFacilityVo.getFacElevator() == null) {
+			spaceTotalFacilityVo.setFacElevator("");
+		}
+		if (spaceTotalFacilityVo.getFacParking() == null) {
+			spaceTotalFacilityVo.setFacParking("");
+		}
+		if (spaceTotalFacilityVo.getFacFood() == null) {
+			spaceTotalFacilityVo.setFacFood("");
+		}
+		if (spaceTotalFacilityVo.getFacDrink() == null) {
+			spaceTotalFacilityVo.setFacDrink("");
+		}
+		if (spaceTotalFacilityVo.getFacCook() == null) {
+			spaceTotalFacilityVo.setFacCook("");
+		}
+		if (spaceTotalFacilityVo.getFacPet() == null) {
+			spaceTotalFacilityVo.setFacPet("");
+		}
+		if (spaceTotalFacilityVo.getFacAudio() == null) {
+			spaceTotalFacilityVo.setFacAudio("");
+		}
+		logger.info("TotalFacilityVo = {}", spaceTotalFacilityVo);
+		
+		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacilityVo);
+		logger.info("totalFac = {}", totalFac);
 		
 		return "redirect:/host/index";
 	}
