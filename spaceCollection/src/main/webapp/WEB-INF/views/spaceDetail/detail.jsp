@@ -344,7 +344,7 @@ pageEncoding="UTF-8"%>
 						
 						
 						</div>
-						<div class="pageArea" style="padding:2% 36.5% 4% 27.5%!important">
+						<div class="pageArea" style="margin-bottom:5%;">
 						<input type="hidden" id="QnAPage" value="99999">
 							<nav aria-label="Page navigation example">
 							  <ul class="pagination" id = "QnAPagination">
