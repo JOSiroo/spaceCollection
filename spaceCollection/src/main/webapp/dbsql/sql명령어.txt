@@ -108,7 +108,7 @@ as
 select 
 s.SPACE_NUM, s.SPACE_NAME, s.SPACE_BUSINESS_NUM, s.SPACE_ZIPCODE, s.SPACE_ADDRESS, s.SPACE_ADDRESS_DETAIL, s.SPACE_LOCATION, s.SPACE_INTRO, s.SPACE_INFO, s.SPACE_TAG, s.SPACE_PHONE_NUM, s.SPACE_WARN, s.SPACE_REQUEST_STATUS, s.SPACE_REQUEST_DATE, s.SPACE_REG_DATE, s.SPACE_OUT_DATE, 
 sd.SD_NUM, sd.SD_TYPE, sd.SD_PRICE, sd.SD_MIN_PEOPLE, sd.SD_MAX_PEOPLE, sd.SD_MIN_TIME, sd.SD_CLOSE_TIME, sd.SD_OPEN_TIME, sd.SD_AREA, 
-sc.category_no,
+sc.category_name,
 st.space_type_name,
 f.FAC_WIFI, f.FAC_PRINTER, f.FAC_CHAIR_TABLE, f.FAC_SMOKE, f.FAC_REST_ROOM, f.FAC_PC, f.FAC_TV, f.FAC_WHITE_BOARD, f.FAC_ELEVATOR, f.FAC_PARKING, f.FAC_FOOD, f.FAC_DRINK, f.FAC_COOK, f.FAC_PET, f.FAC_AUDIO,
 r.REFUND_7_DAY, r.REFUND_6_DAY, r.REFUND_5_DAY, r.REFUND_4_DAY, r.REFUND_3_DAY, r.REFUND_2_DAY, r.REFUND_1_DAY, r.REFUND_DAY, 
@@ -125,3 +125,30 @@ left join facility f
 on sd.facility_num = f.facility_num
 left join refund r
 on r.refund_num = s.refund_num;
+
+
+create or replace view spaceConfirmDetail_view
+as
+select 
+s.SPACE_NUM, s.SPACE_NAME, s.SPACE_BUSINESS_NUM, s.SPACE_ZIPCODE, s.SPACE_ADDRESS, s.SPACE_ADDRESS_DETAIL, s.SPACE_LOCATION, s.SPACE_INTRO, s.SPACE_INFO, s.SPACE_TAG, s.SPACE_PHONE_NUM, s.SPACE_WARN, s.SPACE_REQUEST_STATUS, s.SPACE_REQUEST_DATE, s.SPACE_REG_DATE, s.SPACE_OUT_DATE, 
+sc.category_name,
+st.space_type_name,
+r.REFUND_7_DAY, r.REFUND_6_DAY, r.REFUND_5_DAY, r.REFUND_4_DAY, r.REFUND_3_DAY, r.REFUND_2_DAY, r.REFUND_1_DAY, r.REFUND_DAY, 
+u.user_name, u.user_hp, u.user_id, u.user_email
+from space s 
+left join user_info u
+on s.user_num = u.user_num
+left join space_type st
+on s.space_type_no = st.space_type_no
+left join space_type_category sc
+on sc.category_no = st.category_no
+left join refund r
+on r.refund_num = s.refund_num;
+
+
+create or replace view spaceDetailView
+as
+select sd.*, f.FAC_WIFI, f.FAC_PRINTER,f.FAC_CHAIR_TABLE,f.FAC_SMOKE,f.FAC_REST_ROOM,f.FAC_PC,
+f.FAC_TV,f.FAC_WHITE_BOARD,f.FAC_ELEVATOR,f.FAC_PARKING,f.FAC_FOOD,f.FAC_DRINK,f.FAC_COOK,f.FAC_PET,f.FAC_AUDIO
+from space_detail sd
+left join facility f on sd.facility_num = f.facility_num;
