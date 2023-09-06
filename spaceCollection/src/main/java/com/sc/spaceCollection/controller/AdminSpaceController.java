@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.xmlbeans.impl.jam.mutable.MAnnotatedElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -495,5 +496,56 @@ public class AdminSpaceController {
 		
 		model.addAttribute("map", map);
 		return "admin/space/spaceConfirmDetail";
+	}
+	
+	@RequestMapping("/space/ajax_spaceList")
+	@ResponseBody
+	public AjaxVO ajax_spaceList(@ModelAttribute SearchVO searchVo, @RequestParam(defaultValue = "space_num desc")String order, @RequestParam(defaultValue = "Y")String status) {
+		logger.info("ajax - 공간 승인 내역 조회, 파라미터 searchVo = {}, order = {}", searchVo, order);
+		
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
+		pagingInfo.setKindFlag("spaceConfirmHistoryList");
+		logger.info("pagining = {}", pagingInfo.getBlockSize());
+		
+		searchVo.setRecordCountPerPage(20);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		
+		List<Map<String, Object>> spaceList = spaceService.selectSpaceConfirmHistoryList(searchVo, order, status);
+		logger.info("ajax - 공간 승인 내역 조회 결과, spaceList.size = {}", spaceList.size());
+		
+		int totalRecord = spaceService.getTotalRecordSpaceConfirmHistoryList(searchVo, order, status);
+		logger.info("ajax -전체 공간 승인 내역 수, totalRecord = {}", totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		AjaxVO ajaxVo = new AjaxVO();
+		ajaxVo.setPagingInfo(pagingInfo);
+		ajaxVo.setAjaxList(spaceList);
+		ajaxVo.setSearchVo(searchVo);
+		ajaxVo.setOrder(order);
+		
+		return ajaxVo;
+	}
+	
+	@RequestMapping("/spaceList/spaceDetail")
+	public String spaceDetail(@RequestParam(defaultValue = "0")int spaceNum, Model model) {
+		logger.info("공간 상세보기, 파라미터 spaceNum = {}", spaceNum);
+		
+		Map<String, Object> spaceDetail = spaceService.selectSpaceConfirmDetailBySpaceNum(spaceNum);
+		List<Map<String, Object>> spaceDetailList = spaceService.selectSpaceDtailViewBySpaceNum(spaceNum);
+		
+		Map<String, Object> spaceTotalInfo = new HashMap<>();
+		
+		spaceTotalInfo.put("spaceDetail", spaceDetail);
+		spaceTotalInfo.put("spaceDetailList", spaceDetailList);
+		
+		logger.info("spaceTotalInfo = {}", spaceTotalInfo);
+		model.addAttribute("spaceTotalInfo", spaceTotalInfo);
+		
+		return "admin/space/spaceDetail";
 	}
 }

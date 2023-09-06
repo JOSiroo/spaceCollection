@@ -42,17 +42,17 @@ public class AdminEmailSender {
 		text += "<br>";
 		text += "<span>신청일 : "+vo.getSpaceRequestDate()+"</span><br>";
 		text += "<br>";
-		if(vo.getSpaceRequestStatus().equals("승인")) {
+		if(vo.getSpaceRequestStatus().equals("Y")) {
 			text += "<h4 style=\'color: blue; font-weight: bold;\'>승인결과 : 승인</h4>";
 		}else {
 			text += "<h4 style=\'color: red; font-weight: bold;\'>승인결과 : 거절";
-			text += "<span><사유 : </span><span>" + vo.getReason() + "</span>";
+			text += "<span> (사유 : </span><span>" + vo.getReason() + ")</span>";
 		}
 		text += "</h4>";
 		text += "<br><span>결정일 : "+vo.getSpaceRegDate()+"</span><br><br>";
 		text += "</p>";
 		text += "</div><br>";
-		if(vo.getSpaceRequestStatus().equals("거절")) {
+		if(vo.getSpaceRequestStatus().equals("Y")) {
 			text += "<p>공간 예약을 받기 전, 반드시 홈페이지에 방문하여 서비스이용수칙을 확인해 주시기 바랍니다.</p>";
 		}else {
 			text += "<p>위 결정과 관련하여 문의가 있으신 경우, 메일 또는 1:1문의로 문의해주시기 바랍니다.";

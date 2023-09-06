@@ -144,3 +144,11 @@ left join space_type_category sc
 on sc.category_no = st.category_no
 left join refund r
 on r.refund_num = s.refund_num;
+
+
+create or replace view spaceDetailView
+as
+select sd.*, f.FAC_WIFI, f.FAC_PRINTER,f.FAC_CHAIR_TABLE,f.FAC_SMOKE,f.FAC_REST_ROOM,f.FAC_PC,
+f.FAC_TV,f.FAC_WHITE_BOARD,f.FAC_ELEVATOR,f.FAC_PARKING,f.FAC_FOOD,f.FAC_DRINK,f.FAC_COOK,f.FAC_PET,f.FAC_AUDIO
+from space_detail sd
+left join facility f on sd.facility_num = f.facility_num;

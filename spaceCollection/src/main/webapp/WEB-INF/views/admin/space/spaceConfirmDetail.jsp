@@ -38,8 +38,6 @@
 		width: 100%;
 	}
 	
-	.tag{
-	}
 	
 	.fr{
 		text-align: right;
