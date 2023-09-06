@@ -235,24 +235,13 @@ public class UserBoardController {
 	   @RequestMapping("/coupon")
 	   public String coupon(HttpSession session, Model model) {
 		   String userId = (String)session.getAttribute("userId");
-			if(userId == null || userId.isEmpty()) {
-				model.addAttribute("msg", "먼저 로그인을 해주세요");
-				model.addAttribute("url", "/login/login");
-				
-				return "common/message";
-			}
+		   
 		    return "userMain/board/roulette";
 		}
 	   
 	   @RequestMapping("/coupon2")
 	   public String coupon2(HttpSession session, Model model) {
 		   String userId = (String)session.getAttribute("userId");
-			if(userId == null || userId.isEmpty()) {
-				model.addAttribute("msg", "로그인 후 이용 가능합니다.");
-				model.addAttribute("url", "/");
-				
-				return "common/message";
-			}
 		   
 		   String num = Coupon.generateCoupon();
 		   logger.info("num={}",num);

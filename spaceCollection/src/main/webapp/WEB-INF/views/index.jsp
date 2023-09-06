@@ -69,10 +69,80 @@ a.btn.btn-primary.py-2.px-3 {
 .newTitle:hover{
 	color:#ffd014;
 }
+a#nowWeather {
+    font-size: 17px;
+}
+div#weatherBox {
+    background: rgb(101, 178, 255);
+    padding: 14px;
+    margin-bottom: 30px;
+    height: 208px;
+}
+div#temperature {
+    color: white;
+}
+div#description {
+    color: white;
+}
+div#place {
+    color: white;
+}
 </style>
 
-<script src="weather.js">
+<script >
+	$(function(){
+		getWeather();
+	});
+	
+
+	var weatherIcon = {
+		    '01' : 'fas fa-sun',
+		    '02' : 'fas fa-cloud-sun',
+		    '03' : 'fas fa-cloud',
+		    '04' : 'fas fa-cloud-meatball',
+		    '09' : 'fas fa-cloud-sun-rain',
+		    '10' : 'fas fa-cloud-showers-heavy',
+		    '11' : 'fas fa-poo-storm',
+		    '13' : 'far fa-snowflake',
+		    '50' : 'fas fa-smog'
+		};
+	
+	function getWeather(){
+		$.ajax({
+			url : "https://api.openweathermap.org/data/2.5/weather?lat=37.5683&lon=126.9778&appid=a408e82232cf7c21d3264d12924a62ab",
+			method : 'get',
+			dataType : 'json',
+			success:function(res){
+				console.log("res=", res);
+				console.log("icon=",res.weather[0].icon);
+				console.log("temperature=", res.main.temp);
+				console.log("place=", res.name);
+				console.log("description=", res.weather[0].description);
+				
+				var nowTeamp = (res.main.temp -273.15).toFixed(1);
+                var lowTemp = (res.main.temp_min - 273.15).toFixed(1);
+                var hightTemp = (res.main.temp_max - 273.15).toFixed(1);
+                console.log("nowTeamp=", nowTeamp);
+				
+                var weathericonUrl =
+                    '<img src= "http://openweathermap.org/img/wn/'
+                    + res.weather[0].icon +
+                    '.png" alt="' + res.weather[0].description + '"/>'
+
+                $('#iconWeather').html(weathericonUrl);
+				$("#temperature").text(nowTeamp+" C°");
+				$("#place").text(res.name);
+				$("#description").text(res.weather[0].description); 
+				
+				
+			},error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});
+	}
 </script>
+
+
 
    <div class="hero">
       <div class="hero-slide">
@@ -169,10 +239,21 @@ a.btn.btn-primary.py-2.px-3 {
                </div>
             </div>
             <div class="col-6 col-lg-3"  data-aos="fade-up" data-aos-delay="600">
-               <div class="box-feature">
-                   <span class="flaticon-house-1"></span>
+             	<div class="box-feature" id="weatherBox">
+                   <%-- <span class="flaticon-house-1"></span>
                   <h3 class="mb-3" id="hboldfont">시즌 공간 기획전</h3>
-                  <p><a href="<c:url value='/collection?scNum=1'/>"  class="learn-more">Learn More</a></p>
+                  <p><a href="<c:url value='/collection?scNum=1'/>"  class="learn-more">Learn More</a></p> --%>
+            	<!-- <div id="weatherBox" style="background-color : rgb(101, 178, 255); padding : 40px;color : #fff; height : 240px"> -->
+				   <a href="https://weather.naver.com/'/>" id="nowWeather">
+				   <div style="float : left;">
+					        <div id="iconWeather"></div>
+				   </div>
+				   <div style="float : right; margin-top : -45px;">
+					        <div class="current_temp" id="temperature" style="font-size : 50pt"></div>
+					        <div class="weather_description" id="description" style="font-size : 20pt"></div>
+					        <div class="city" id="place" style="font-size : 13pt"></div>
+				   </div>
+				   </a>
                </div> 
             </div>   
          </div>
