@@ -99,10 +99,11 @@ public class UserBoardController {
 		int userNum = 0; // 기본값으로 초기화
 
 		if (userId == null) {
-			 userId ="null";
+			 userId ="empty";
 	    }else {
 	    	userNum = guestService.selectUserInfo(userId).getUserNum();
 	    }
+		logger.info("userId = {}", userId);
 		model.addAttribute("userNum", userNum);
 		
 				if (boardNum == 0) {

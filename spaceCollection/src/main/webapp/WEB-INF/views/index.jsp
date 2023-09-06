@@ -66,6 +66,9 @@ a.btn.btn-primary.py-2.px-3 {
 #tns3 {
     width: calc(480%);
 }
+.newTitle:hover{
+	color:#ffd014;
+}
 </style>
 
 <script src="weather.js">
@@ -113,6 +116,9 @@ a.btn.btn-primary.py-2.px-3 {
 										<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 									</a>
 									<div class="property-content">
+										<div>
+											<h5 ><a class="newTitle" style="font-weight:900; color: #193D76;" href="<c:url value='detail?spaceNum=${map.SPACE_NUM}'/>">${map.SPACE_NAME}</a></h5>
+										</div>
 										<div class="price mb-2"><span>
 										<fmt:formatNumber value="${map.AVGPRICE }" pattern="#,###원" />
 										</span></div>
