@@ -177,7 +177,7 @@
 		min-height: 50px;
 	}
 	
-	.spaceImg {
+	.spaceImg, .BusinessLicense {
 		display: flex;
 	}
 	
@@ -576,53 +576,19 @@
 		    }
 		});
 		
-		// 이미지 업로드 관련 변수 초기화
-	    var imageCount = 0;
-	    var maxImages = 10;
+		$('#fileInput').on('change', function() {
+			var fileInput = this;
+		    var maxSizeInBytes = 3 * 1024 * 1024; // 3MB
 
-	    // 파일 선택 시
-	    $('#subImage').on('change', function() {
-	        var fileInput = this;
-	        var files = fileInput.files;
+		    if (fileInput.files.length > 0) {
+		    	var fileSize = fileInput.files[0].size; // 선택된 파일의 크기 (바이트 단위)
 
-	        if (files.length === 0) {
-	            return;
-	        }
-
-	        // 이미지 파일만 처리
-	        var imageTypeRegExp = /^image\/(jpeg|jpg|png)$/;
-	        for (var i = 0; i < files.length; i++) {
-	            var file = files[i];
-	            if (!imageTypeRegExp.test(file.type)) {
-	                alert('이미지 파일만 업로드 가능합니다.');
-	                return;
-	            }
-	        }
-
-	        // 이미지를 표시할 영역
-	        var insertSub = $('.insert.sub');
-
-	        // 이미지를 표시하고 카운트 증가
-	        for (var i = 0; i < files.length; i++) {
-	            var file = files[i];
-	            var reader = new FileReader();
-
-	            reader.onload = function(event) {
-	                var imageElement = $('<img>').attr('src', event.target.result).addClass('uploaded-image');
-	                insertSub.append(imageElement);
-	                imageCount++;
-
-	                // 이미지 제한 확인
-	                if (imageCount >= maxImages) {
-	                    $('#subImage').prop('disabled', true); // 이미지 업로드 비활성화
-	                    alert('최대 ' + maxImages + '개의 이미지를 업로드했습니다.');
-	                    return;
-	                }
-	            };
-
-	            reader.readAsDataURL(file);
-	        }
-	    });
+		        if (fileSize > maxSizeInBytes) {
+		          alert('파일 크기가 너무 큽니다. 3MB 이하의 파일을 선택해주세요.');
+		          $('#fileInput').val(''); // 파일 선택 취소
+		        }
+			}
+		});
 		
 	    
 	    //하단 버튼
@@ -631,6 +597,7 @@
 		});
 		
 		$('#next').click(function() {
+			/*
 			//필수 입력
 			//공간명
 			if ($('.spaceName').find($('.spText')).val() < 1) {
@@ -770,7 +737,7 @@
 		        
 		        return false;
 		    }
-			
+			*/
 			
 			$('form[name=frmRegi2]').submit();
 		});
@@ -945,15 +912,15 @@
 					<span>사업자 등록증 <span style="color: red;">*</span></span>
 				</div>
 				<div class="boxContents">
-					<div class="spaceImg sub">
-						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
-							<div class="inner sub">이미지 파일을 추가해 주세요.</div>
+					<div class="BusinessLicense">
+						<div class="spImg license" style="height: 50px; padding-top: 15px;">
+							<div class="inner license">이미지 파일을 추가해 주세요.</div>
 						</div>
 						<div class="btBox">
 							<label>
 								<div class="btAdd file sub" >파일첨부</div>
-								<input type="file" id="subImage" accept="image/jpg, image/png, image/jpeg" 
-									style="display: none;">
+								<input type="file" id="license" accept="image/jpg, image/png, image/jpeg" 
+									name="license" style="display: none;" multiple>
 							</label>
 						</div>
 					</div>
@@ -1171,7 +1138,7 @@
 						<div class="btBox">
 							<label>
 								<div class="btAdd file main" >파일첨부</div>
-								<input type="file" id="mainImage" name="imgOriginalName" 
+								<input type="file" id="mainImage" name="spaceMain" multiple
 									accept="image/jpg, image/png, image/jpeg" style="display: none;">
 							</label>
 						</div>
@@ -1193,7 +1160,7 @@
 							<label>
 								<div class="btAdd file sub" >파일첨부</div>
 								<input type="file" id="subImage" accept="image/jpg, image/png, image/jpeg" 
-									style="display: none;">
+									name="spaceSub" style="display: none;" multiple>
 							</label>
 						</div>
 					</div>

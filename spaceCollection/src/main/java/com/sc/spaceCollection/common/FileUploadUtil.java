@@ -105,6 +105,98 @@ public class FileUploadUtil {
 		return resultList;
 	}
 	
+	public List<Map<String, Object>> spaceImageUpload(HttpServletRequest request,
+			int pathFlag, int spaceNum) throws IllegalStateException, IOException {
+		//파일 업로드 처리
+		MultipartHttpServletRequest multiRequest 
+		= (MultipartHttpServletRequest) request;
+		
+		//Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
+		List<MultipartFile> license =multiRequest.getFiles("license");
+		List<MultipartFile> spaceMain =multiRequest.getFiles("spaceMain");
+		List<MultipartFile> spaceSub =multiRequest.getFiles("spaceSub");
+		
+		//여러개 업로드된 파일의 정보를 저장할 리스트
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		
+		//license
+		for(MultipartFile mpFile : license) {
+			MultipartFile tempFile = mpFile;//업로드된 파일을 임시파일 형태로 제공
+			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
+				long fileSize=tempFile.getSize(); //파일 크기
+				String originName=tempFile.getOriginalFilename(); //변경전 파일명
+				
+				//변경된 파일 이름
+				String fileName = getLicenseFileName(originName, spaceNum);
+				
+				//파일 업로드 처리
+				String uploadPath = getUploadPath(request, pathFlag);
+				File file = new File(uploadPath, fileName);
+				tempFile.transferTo(file);
+				
+				//업로드 파일 정보 저장
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("fileName", fileName);
+				resultMap.put("originalFileName", originName);
+				resultMap.put("fileSize", fileSize);
+				
+				resultList.add(resultMap);
+			}//if			
+		}//while
+		
+		//spaceMain
+		for(MultipartFile mpFile : spaceMain) {
+			MultipartFile tempFile = mpFile;//업로드된 파일을 임시파일 형태로 제공
+			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
+				long fileSize=tempFile.getSize(); //파일 크기
+				String originName=tempFile.getOriginalFilename(); //변경전 파일명
+				
+				//변경된 파일 이름
+				String fileName = getSpaceMainFileName(originName, spaceNum);
+				
+				//파일 업로드 처리
+				String uploadPath = getUploadPath(request, pathFlag);
+				File file = new File(uploadPath, fileName);
+				tempFile.transferTo(file);
+				
+				//업로드 파일 정보 저장
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("fileName", fileName);
+				resultMap.put("originalFileName", originName);
+				resultMap.put("fileSize", fileSize);
+				
+				resultList.add(resultMap);
+			}//if			
+		}//while
+		
+		//spaceSub
+		for(int i = 0; i < spaceSub.size(); i++) {
+			MultipartFile tempFile = spaceSub.get(i);//업로드된 파일을 임시파일 형태로 제공
+			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
+				long fileSize=tempFile.getSize(); //파일 크기
+				String originName=tempFile.getOriginalFilename(); //변경전 파일명
+				
+				//변경된 파일 이름
+				String fileName = getSpaceSubFileName(originName, spaceNum, i);
+				
+				//파일 업로드 처리
+				String uploadPath = getUploadPath(request, pathFlag);
+				File file = new File(uploadPath, fileName);
+				tempFile.transferTo(file);
+				
+				//업로드 파일 정보 저장
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("fileName", fileName);
+				resultMap.put("originalFileName", originName);
+				resultMap.put("fileSize", fileSize);
+				
+				resultList.add(resultMap);
+			}//if			
+		}//while
+		
+		return resultList;
+	}
+	
 
 
 	public String getUploadPath(HttpServletRequest request, int pathFlag) {
@@ -119,6 +211,8 @@ public class FileUploadUtil {
 				path=request.getSession().getServletContext().getRealPath(ConstUtil.IMAGE_FILE_UPLOAD_PATH_TEST);				
 			}else if(pathFlag==ConstUtil.UPLOAD_USER_IMAGE_FLAG) { //유저 프로필 이미지 업로드
 				path=request.getSession().getServletContext().getRealPath(ConstUtil.USER_IMAGE_FILE_UPLOAD_PATH_TEST);
+			} else if (pathFlag == ConstUtil.UPLOAD_SPACE_IMAGE_FLAG) {	//공간 이미지 업로드
+				path = request.getSession().getServletContext().getRealPath(ConstUtil.SPACE_IMAGE_FILE_UPLOAD_PATH_TEST);
 			}
 		}else {  //deploy
 			if(pathFlag== ConstUtil.UPLOAD_FILE_FLAG) {  //자료실
@@ -162,6 +256,39 @@ public class FileUploadUtil {
 		String ext = originName.substring(idx); //.txt
 		String result= userId+ext;
 		logger.info("변경된 파일명 : {}", result);
+		
+		return result;
+	}
+	
+	//사업자 등록증
+	public String getLicenseFileName(String originName, int spaceNum) {
+		int idx = originName.lastIndexOf(".");
+		String ext = originName.substring(idx); //.txt
+		
+		String result= "S" + spaceNum + "license" + ext;
+		logger.info("변경된 파일명(license) : {}", result);
+		
+		return result;
+	}
+	
+	//공간 대표사진
+	public String getSpaceMainFileName(String originName, int spaceNum) {
+		int idx = originName.lastIndexOf(".");
+		String ext = originName.substring(idx); //.txt
+		
+		String result= "S" + spaceNum + "Main" + ext;
+		logger.info("변경된 파일명(Main) : {}", result);
+		
+		return result;
+	}
+	
+	//공간 사진
+	public String getSpaceSubFileName(String originName, int spaceNum, int num) {
+		int idx = originName.lastIndexOf(".");
+		String ext = originName.substring(idx); //.txt
+		
+		String result= "S" + spaceNum + "Sub" + (num + 1) + ext;
+		logger.info("변경된 파일명(Sub) : {}", result);
 		
 		return result;
 	}
