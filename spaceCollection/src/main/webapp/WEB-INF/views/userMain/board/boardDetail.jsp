@@ -102,6 +102,14 @@
 	 }//makeList
 	 
 	 function commentEdit(commentNum) {
+		    // 버튼 클릭 후 작업 수행
+		    // 버튼을 비활성화(disabled)시킴
+		    document.getElementById('commentsEdit').disabled = true;
+		    // 또는 클릭 이벤트 리스너를 삭제
+		    /* document.getElementById('commentsEdit').removeEventListener('click', commentEdit); */
+		}
+	 
+	 function commentEdit(commentNum) {
 			console.log("수정 메서드 시작");
 			console.log(commentNum);
 			var str = "";
@@ -110,13 +118,15 @@
 			str += "<input class='form-control' id='EditCommentContent' style='height: 100px; width: 580px;' name='commentContent'>";
 			str += "</div>";
 			str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
-			str += "<button class='btn btn-primary right' onclick='editCommentOkay()' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
+			str += "<button class='btn btn-primary right' onclick='editCommentOkay()' id='commentsEditGo' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
 			str += "</div>";
 			str += "<input type='hidden' name='boardNum' value='${map.BOARD_NUM }'>";
 			str += "<input type='hidden' name='commentNum' value="+commentNum+">";
 			str += "</form>";
 			str += "<hr>";
-			$('#'+commentNum+'').append(str);
+			 $('#'+commentNum+'').append(str); 
+			// 수정 버튼 비활성화
+		    document.getElementById('#commentsEditGo').disabled = true;
 	}
 	 
 
@@ -203,7 +213,8 @@
 				console.log(res);
 				location.reload();
 			},error:function(xhr, status, error){
-				alert(status + " : " + error);
+				alert("내용을 입력하세요");
+				/* alert(status + " : " + error); */
 			}
 		});
 	}
