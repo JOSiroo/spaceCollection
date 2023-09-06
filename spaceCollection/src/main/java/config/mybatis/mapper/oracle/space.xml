@@ -244,4 +244,12 @@
 		select * from spaceConfirmDetail_view where space_num = #{spaceNum}
 	</select>
 	
+	<select id="selectSpaceDtailViewBySpaceNum" parameterType="int" resultType="map">
+		select * from spaceDetailView where space_num = #{spaceNum}
+	</select>
+	
+	
+	
+	
+	
 </mapper>

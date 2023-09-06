@@ -80,6 +80,7 @@
 				(
 					select * from review_detail_view
 					where space_num = #{spaceNum} and review_del_flag is null
+					order by review_reg_date desc
 				)A
 		)
 		<![CDATA[where rn >= #{startRow} and rn <= #{endRow}]]>

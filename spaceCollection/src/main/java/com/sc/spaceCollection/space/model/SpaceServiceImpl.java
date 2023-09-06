@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.space.model;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -390,6 +392,8 @@ public class SpaceServiceImpl implements SpaceService{
 		if(map.get("SPACE_LOCATION")!=null) {
 			address += " " + map.get("SPACE_LOCATION");
 		}
+		map2.put("SPACE_INTRO", map.get("SPACE_INTRO"));
+		map2.put("SPACE_INFO", (map.get("SPACE_INFO")+"").replace("<br>", "\n"));
 		map2.put("SPACE_ADDRESS", address);
 		map2.put("SPACE_TAG", map.get("SPACE_TAG"));
 		map2.put("SPACE_WARN", map.get("SPACE_WARN"));
@@ -418,92 +422,16 @@ public class SpaceServiceImpl implements SpaceService{
 			map2.put("SPACE_OUT_DATE", "");
 		}
 		map2.put("SPACE_TYPE_NAME", map.get("SPACE_TYPE_NAME"));
-		map2.put("SD_AREA", map.get("SPACE_TYPE_NAME"));
+		map2.put("SD_AREA", map.get("SD_AREA"));
 		map2.put("USER_ID", map.get("USER_ID"));
 		map2.put("USER_EMAIL", map.get("USER_EMAIL"));
-		map2.put("USER_Name", map.get("USER_Name"));
+		map2.put("USER_NAME", map.get("USER_NAME"));
 		map2.put("USER_HP", map.get("USER_HP"));
-		map2.put("SD_TYPE", map.get("SD_TYPE"));
-		map2.put("SD_PRICE", map.get("SD_PRICE"));
-		map2.put("SD_PEOPLE", map.get("SD_MIN_PEOPLE") + " ~ " + map.get("SD_MAX_PEOPLE"));
-		map2.put("SD_MIN_TIME", map.get("SD_MIN_TIME"));
-		map2.put("SD_TIME", map.get("SD_OPEN_TIME") + " ~ " + map.get("SD_CLOSE_TIME"));
 		
-		if(map.get("FAC_WIFI") != null) {
-			map2.put("FAC_WIFI", "O");
-		}else{
-			map2.put("FAC_WIFI", "X");
-		}
-		if(map.get("FAC_PRINTER") != null) {
-			map2.put("FAC_PRINTER", "O");
-		}else{
-			map2.put("FAC_PRINTER", "X");
-		}
-		if(map.get("FAC_CHAIR_TABLE") != null) {
-			map2.put("FAC_CHAIR_TABLE", "O");
-		}else{
-			map2.put("FAC_CHAIR_TABLE", "X");
-		}
-		if(map.get("FAC_SMOKE") != null) {
-			map2.put("FAC_SMOKE", "O");
-		}else{
-			map2.put("FAC_SMOKE", "X");
-		}
-		if(map.get("FAC_REST_ROOM") != null) {
-			map2.put("FAC_REST_ROOM", "O");
-		}else{
-			map2.put("FAC_REST_ROOM", "X");
-		}
-		if(map.get("FAC_PC") != null) {
-			map2.put("FAC_PC", "O");
-		}else{
-			map2.put("FAC_PC", "X");
-		}
-		if(map.get("FAC_TV") != null) {
-			map2.put("FAC_TV", "O");
-		}else{
-			map2.put("FAC_TV", "X");
-		}
-		if(map.get("FAC_WHITE_BOARD") != null) {
-			map2.put("FAC_WHITE_BOARD", "O");
-		}else{
-			map2.put("FAC_WHITE_BOARD", "X");
-		}
-		if(map.get("FAC_ELEVATOR") != null) {
-			map2.put("FAC_ELEVATOR", "O");
-		}else{
-			map2.put("FAC_ELEVATOR", "X");
-		}
-		if(map.get("FAC_PARKING") != null) {
-			map2.put("FAC_PARKING", "O");
-		}else{
-			map2.put("FAC_PARKING", "X");
-		}
-		if(map.get("FAC_FOOD") != null) {
-			map2.put("FAC_FOOD", "O");
-		}else{
-			map2.put("FAC_FOOD", "X");
-		}
-		if(map.get("FAC_DRINK") != null) {
-			map2.put("FAC_DRINK", "O");
-		}else{
-			map2.put("FAC_DRINK", "X");
-		}
-		if(map.get("FAC_COOK") != null) {
-			map2.put("FAC_COOK", "O");
-		}else{
-			map2.put("FAC_COOK", "X");
-		}
-		if(map.get("FAC_PET") != null) {
-			map2.put("FAC_PET", "O");
-		}else{
-			map2.put("FAC_PET", "X");
-		}
-		if(map.get("FAC_AUDIO") != null) {
-			map2.put("FAC_AUDIO", "O");
-		}else{
-			map2.put("FAC_AUDIO", "X");
-		}
+		
+		map2.put("CATEGORY_NAME", map.get("CATEGORY_NAME"));
+		
+		
 		
 		map2.put("REFUND_7_DAY", map.get("REFUND_7_DAY"));
 		map2.put("REFUND_6_DAY", map.get("REFUND_6_DAY"));
@@ -515,6 +443,107 @@ public class SpaceServiceImpl implements SpaceService{
 		map2.put("REFUND_DAY", map.get("REFUND_DAY"));
 		
 		return map2;
+	}
+
+
+	@Override
+	public List<Map<String, Object>> selectSpaceDtailViewBySpaceNum(int spaceNum) {
+		List<Map<String, Object>> list = spaceDao.selectSpaceDtailViewBySpaceNum(spaceNum);
+		List<Map<String, Object>> listtrans = new ArrayList<>();
+		
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		for(Map<String, Object> map : list) {
+			if(map != null) {
+				Map<String, Object> map2 = new HashMap<>();
+				
+				map2.put("SD_TYPE", map.get("SD_TYPE"));
+				map2.put("SD_PRICE", df.format(map.get("SD_PRICE"))+"원");
+				map2.put("SD_PEOPLE", "최소 " + map.get("SD_MIN_PEOPLE") + "명 ~ 최대 " + map.get("SD_MAX_PEOPLE")+"명");
+				map2.put("SD_MIN_TIME", map.get("SD_MIN_TIME"));
+				map2.put("SD_TIME", map.get("SD_OPEN_TIME") + ":00 ~ " + map.get("SD_CLOSE_TIME")+":00");
+				
+				if(map.get("FAC_WIFI") != null) {
+					map2.put("FAC_WIFI", "O");
+				}else{
+					map2.put("FAC_WIFI", "X");
+				}
+				if(map.get("FAC_PRINTER") != null) {
+					map2.put("FAC_PRINTER", "O");
+				}else{
+					map2.put("FAC_PRINTER", "X");
+				}
+				if(map.get("FAC_CHAIR_TABLE") != null) {
+					map2.put("FAC_CHAIR_TABLE", "O");
+				}else{
+					map2.put("FAC_CHAIR_TABLE", "X");
+				}
+				if(map.get("FAC_SMOKE") != null) {
+					map2.put("FAC_SMOKE", "O");
+				}else{
+					map2.put("FAC_SMOKE", "X");
+				}
+				if(map.get("FAC_REST_ROOM") != null) {
+					map2.put("FAC_REST_ROOM", "O");
+				}else{
+					map2.put("FAC_REST_ROOM", "X");
+				}
+				if(map.get("FAC_PC") != null) {
+					map2.put("FAC_PC", "O");
+				}else{
+					map2.put("FAC_PC", "X");
+				}
+				if(map.get("FAC_TV") != null) {
+					map2.put("FAC_TV", "O");
+				}else{
+					map2.put("FAC_TV", "X");
+				}
+				if(map.get("FAC_WHITE_BOARD") != null) {
+					map2.put("FAC_WHITE_BOARD", "O");
+				}else{
+					map2.put("FAC_WHITE_BOARD", "X");
+				}
+				if(map.get("FAC_ELEVATOR") != null) {
+					map2.put("FAC_ELEVATOR", "O");
+				}else{
+					map2.put("FAC_ELEVATOR", "X");
+				}
+				if(map.get("FAC_PARKING") != null) {
+					map2.put("FAC_PARKING", "O");
+				}else{
+					map2.put("FAC_PARKING", "X");
+				}
+				if(map.get("FAC_FOOD") != null) {
+					map2.put("FAC_FOOD", "O");
+				}else{
+					map2.put("FAC_FOOD", "X");
+				}
+				if(map.get("FAC_DRINK") != null) {
+					map2.put("FAC_DRINK", "O");
+				}else{
+					map2.put("FAC_DRINK", "X");
+				}
+				if(map.get("FAC_COOK") != null) {
+					map2.put("FAC_COOK", "O");
+				}else{
+					map2.put("FAC_COOK", "X");
+				}
+				if(map.get("FAC_PET") != null) {
+					map2.put("FAC_PET", "O");
+				}else{
+					map2.put("FAC_PET", "X");
+				}
+				if(map.get("FAC_AUDIO") != null) {
+					map2.put("FAC_AUDIO", "O");
+				}else{
+					map2.put("FAC_AUDIO", "X");
+				}
+				
+				listtrans.add(map2);
+			}
+		}
+		
+		return listtrans;
 	}
 
 }

@@ -20,6 +20,7 @@
 		 	(
 		 		select * from qna_sd_view
 				where space_num = #{spaceNum} and qna_del_flag is null
+				order by qna_reg_date desc
 		 	)A
 		 )
 		 <![CDATA[
@@ -74,6 +75,8 @@
 		select count(*) from qna_sd_view
 		where space_num = #{spaceNum} and qna_del_flag is null
 	</select>
+	<update id="qnaAnswer">
 	
+	</update>
 	
 </mapper>

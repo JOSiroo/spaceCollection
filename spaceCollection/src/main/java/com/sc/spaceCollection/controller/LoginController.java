@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
+import jakarta.mail.Session;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,13 +34,22 @@ public class LoginController {
 	private final Encryption encryption;
 	
 	@GetMapping("/login")
-	public String Login_get() {
+	public String Login_get( HttpServletRequest request) {
 		logger.info("로그인 화면 처리");
+		
+		HttpSession session = request.getSession();
+		
+		// 2페이지 이전 URL로 이동
+		String url = request.getHeader("referer");
+		String prevurl = url.substring(url.indexOf('n')+1);
+		logger.info("이전 페이지 ={}", prevurl);
+        session.setAttribute("prevurl", prevurl);
+		
 		return "login/login";
 	}
 	
 	@PostMapping("/login")
-	public String Login_post(@RequestParam String userId, @RequestParam String userPwd,
+	public String Login_post(@RequestParam String userId, @RequestParam String userPwd, HttpSession prevurl,
 			@RequestParam(required = false) String chkSave, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
 		
@@ -56,11 +68,15 @@ public class LoginController {
 
 		if (result == GuestService.LOGIN_OK) {
 			msg = userId + "님 로그인되었습니다.";
-			url = "/";
-
+			//url = "/";
 			// session
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
+			
+			//이전 페이지 
+			logger.info("prevurl={}", prevurl);
+			url = (String)session.getAttribute("prevurl");
+			logger.info("url 이전 페이지 ={}", url);
 
 			// cookie
 			Cookie ck = new Cookie("ck_userId", userId);
@@ -72,6 +88,7 @@ public class LoginController {
 				ck.setMaxAge(0); // 쿠키 제거
 				response.addCookie(ck);
 			}
+			
 		} else if (result == GuestService.PWD_DISAGREE) {
 			msg = "비밀번호가 일치하지 않습니다.";
 		} else if (result == GuestService.USERID_NONE) {
