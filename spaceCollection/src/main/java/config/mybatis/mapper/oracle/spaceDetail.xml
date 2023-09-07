@@ -33,5 +33,12 @@
 	<select id="countReservationBySdNum" parameterType="int" resultType="int">
 		select sd_num, count(*) as reservationCount from reservation where sd_num = #{sdNum} group by sd_num
 	</select>
-	
+	<select id="selectSpaceImg">
+		select IMG_TEMP_NAME from space_file
+		where IMG_TEMP_NAME like '%' || #{imgName} || '%'
+	</select>
+	<select id="selectSpaceMainImg">
+		select IMG_TEMP_NAME from space_file
+		where IMG_TEMP_NAME like '%' || #{imgName} || '%'
+	</select>
 </mapper>

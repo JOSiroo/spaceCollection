@@ -110,6 +110,9 @@ public class HostController {
 		spaceVo.setUserNum(user.getUserNum());
 		logger.info("유저 번호 조회, UserNum = {}", spaceVo.getUserNum());
 		
+		String spaceInfo = spaceVo.getSpaceInfo().replaceAll("\n", "<br>");
+		spaceVo.setSpaceInfo(spaceInfo);
+		
 		//공간 등록
 		int space = hostService.insertSpace(spaceVo, refundVo);
 		logger.info("space = {}", space);

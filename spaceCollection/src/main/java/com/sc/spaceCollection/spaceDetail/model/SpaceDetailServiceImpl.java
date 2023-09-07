@@ -48,6 +48,16 @@ public class SpaceDetailServiceImpl implements SpaceDetailService{
 		return spaceDetailDao.countReservationBySdNum(sdNum);
 	}
 
+	@Override
+	public List<String> selectSpaceImg(String imgName) {
+		return spaceDetailDao.selectSpaceImg(imgName);
+	}
+
+	@Override
+	public String selectSpaceMainImg(String imgName) {
+		return spaceDetailDao.selectSpaceMainImg(imgName);
+	}
+
 	
 
 
