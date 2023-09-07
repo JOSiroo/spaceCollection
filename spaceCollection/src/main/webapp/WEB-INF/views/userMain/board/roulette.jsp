@@ -167,7 +167,8 @@ const rRotate = () => {
     const rLayerPopup = (num) => { 
       switch (num) {
         case 1:
-          alert("꽝!다음번에 다시 도전하세요.");
+        	alert("당첨!! 쿠폰 일련번호를 확인해주세요.");
+      		window.location.href = './coupon2';
           break;
         default:
         	alert("당첨!! 쿠폰 일련번호를 확인해주세요.");
