@@ -101,12 +101,11 @@
 				userEmail= $("#acEmail").val();
 				var type="${param.type}";
 				var link="";
-				if(type==="findId"){
+				if(type=="findId"){
 					link = "<c:url value='/guest/completeFindId?userEmail=${acEamil }'/>";
-				}else if(type==="findPwd"){
-					alert("이메일 인증 성공!<br> 해당 이메일로 임시 비밀번호가 발송 되었습니다.");
-					self.close();
-				}else if(type==="register"){
+				}else if(type=="findPwd"){
+					link ="<c:url value='/guest/completeFindPwd?userId=${param.userId}'/>"
+				}else if(type=="register"){
 					alert("이메일 인증이 완료되었습니다!");
 					opener.$("#userEmail").val(userEmail);
 					opener.$("#userEmail").attr('readonly',true);
@@ -160,7 +159,8 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <form name="frmEmail" class="validation-form" method="post" action="<c:url value='/email/sendEmail'/>" novalidate>
-        <input type="hidden" name="type" value="${param.type }">
+        <input type="text" name="type" value="${param.type }">
+        <input type="text" name="userId" value="${param.userId }">
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="checkEmail">이메일</label>
@@ -178,7 +178,7 @@
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="acNumber">인증번호</label>
-	            	<input type="text" class="form-control" name="acNumber" id="acNumber" placeholder="인증번호 6자리를 입력해주세요" required>
+	            	<input type="number" class="form-control" name="acNumber" id="acNumber" placeholder="인증번호 6자리를 입력해주세요" required>
 	            	<input type="hidden" id="authCode" value="${authCode }">
 	            	<c:if test="${!empty authCode }">
 	            		<label>인증 만료 : </label><span id="timer">05:00</span>
