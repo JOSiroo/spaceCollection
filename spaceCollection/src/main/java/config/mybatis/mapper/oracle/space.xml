@@ -63,7 +63,7 @@
 					<![CDATA[ and MAXPEOPLE >=  #{maxPeople} ]]>
 				</if>
 				<if test="minPrice!=null and minPrice!=''">
-					<![CDATA[ and AVGPRICE >  #{minPrice} ]]> 
+					<![CDATA[ and AVGPRICE >=  #{minPrice} ]]> 
 				</if>
 				<if test="maxPrice!=null and maxPrice!=''">
 					<![CDATA[ and AVGPRICE <  #{maxPrice} ]]> 
