@@ -157,6 +157,11 @@ public class ReservationServiceImpl implements ReservationService{
 	public int countReservationList(String userId) {
 		return reservationDao.countReservationList(userId);
 	}
+
+	@Override
+	public int getReservationCntByInterverStandard(String intervalStandard) {
+		return reservationDao.getReservationCntByInterverStandard(intervalStandard);
+	}
 	
 	
 }

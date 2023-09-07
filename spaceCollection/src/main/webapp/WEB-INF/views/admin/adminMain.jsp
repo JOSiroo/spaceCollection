@@ -1,6 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../form/adminTop.jsp"%>
+<script type="text/javascript">
+	$(function() {
+		$.loadReservationCnt();
+	})
+	
+	$.loadReservationCnt = function() {
+		$.ajax({
+			url : "<c:url value = '/admin/adminMain/Ajax_getTotalReservation'/>",
+			type : 'get',
+			data : "intervalStandard=" + $('#intervalStandard').val(),
+			dataType: 'json',
+			success : function(res) {
+				var str = "";
+				str += "<h6>"+res+" 건</h6>"
+				
+				$('#totalReservationCnt').html(str);
+			},
+			error : function(xhr, status, error) {
+				alert(status + " : " + error);
+			}
+		});
+	}
+</script>
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -32,8 +55,9 @@
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cart"></i>
                     </div>
-                    <div class="ps-3">
+                    <div class="ps-3" id="totalReservationCnt">
                       <h6>145 건</h6>
+                      <input type="hidden" name="intervalStandard" id="intervalStandard" value="day">
                       <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
