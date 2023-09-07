@@ -131,7 +131,7 @@
 	
 	<select id="selectAllMap" resultType="spaceVo">
 		select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
-		and SPACE_REQUEST_STATUS = 'Y'
+		where SPACE_REQUEST_STATUS = 'Y'
 	</select>
 	
 	<select id="selectBySpaceNum"  resultType="spaceVo">
