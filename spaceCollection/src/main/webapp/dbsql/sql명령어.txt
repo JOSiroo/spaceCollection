@@ -157,8 +157,9 @@ left join facility f on sd.facility_num = f.facility_num;
 
 create or replace view adminStaticView
 as
-select r.*, sd.SD_PRICE, s.space_name 
+select r.*, sd.SD_PRICE, s.space_name, st.space_type_name 
 from reservation r
 left join space_detail sd on r.sd_num = sd.sd_num
 left join space s on sd.space_num = s.space_num
-left join user_info u on u.user_id = r.user_id;  
+left join user_info u on u.user_id = r.user_id
+left join space_type st on st.space_type_no = s.space_type_no;    

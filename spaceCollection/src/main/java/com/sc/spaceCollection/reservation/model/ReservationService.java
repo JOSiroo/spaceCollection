@@ -18,4 +18,8 @@ public interface ReservationService {
 	int getTotalRecord(SearchVO vo);
 	int countReservationList(String userId);
 	int getReservationCntByInterverStandard(String intervalStandard);
+	int getReservationCntByInterverStandard2(String intervalStandard);
+	int getReservationMoneyByInterverStandard(String intervalStandard);
+	int getReservationMoneyByInterverStandard2(String intervalStandard);
+	Map<String, Object> getReservationTypeByInterverStandard(String intervalStandard);
 }
