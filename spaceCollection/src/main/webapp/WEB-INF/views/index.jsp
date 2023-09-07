@@ -96,6 +96,7 @@ div#place {
     left: 50%; /* 이미지를 수평 중앙으로 이동합니다. */
 	overflow: hidden; 
 }
+
 </style>
 
 <script >
