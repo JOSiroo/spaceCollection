@@ -139,13 +139,12 @@ public class UserMainController {
 			  String imgStr = "S" + String.valueOf(list.get(i).get("SPACE_NUM")) + "Sub";
 			  List<String> imgList = sdService.selectSpaceImg(imgStr);
 			  
+			  
 			  tempMap.put(list.get(i), imgList);
 			  resultList.add(tempMap);
 		  }
 		  
-		  
-         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
-	         
+         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultList);
          model.addAttribute("totalRecord", list.size());
 	  }else if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
@@ -161,9 +160,7 @@ public class UserMainController {
 			  resultList.add(tempMap);
 		  }
          
-         
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultList.size());
-         
          model.addAttribute("totalRecord", resultList.size());
          
       }else if(spaceTypeNo != 0) {
@@ -204,6 +201,7 @@ public class UserMainController {
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
          List<SpaceDetailVO> sdList = new ArrayList<>();
+        
          for(int i = 0; i < list.size(); i++) {
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
             int averagePrice = 0;
@@ -226,9 +224,11 @@ public class UserMainController {
          List<Integer> priceList = new ArrayList();
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
+         logger.info("list.size = {}", list.size());
          for(int i = 0; i < list.size(); i++) {
             List<SpaceDetailVO> sdList = new ArrayList<>();
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+            logger.info("sdList.size = {}, list.get(i).getSpaceNum() = {}", sdList.size(),list.get(i).getSpaceNum());
             int averagePrice = 0;
             
             for(int j = 0; j < sdList.size(); j++) {
