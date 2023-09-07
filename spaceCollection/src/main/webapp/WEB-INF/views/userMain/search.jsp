@@ -756,15 +756,15 @@ $(function(){
 		}
 
 		if(lowerPrice == 0){
-			urlSearchParams.delete("lowerPrice");
+			urlSearchParams.delete("minPrice");
 		}else{
-			urlSearchParams.set("lowerPrice", lowerPrice);
+			urlSearchParams.set("minPrice", lowerPrice);
 		}
 
 		if(upperPrice == 0){
-			urlSearchParams.delete("upperPrice");
+			urlSearchParams.delete("maxPrice");
 		}else{
-			urlSearchParams.set("upperPrice", upperPrice);
+			urlSearchParams.set("maxPrice", upperPrice);
 		}
 		
 		location.href = currentUrl[0] + "?" + urlSearchParams;
@@ -796,6 +796,14 @@ $(function(){
 	var keyword = "";
 	
 	//ajax로 처리된 파라미터들이 있으면 url에 파라미터 추가하는 영역
+
+	//무한스크롤 ajax 함수 영역
+	var noDataNum = 0;
+	
+function loadMoreData() {
+    if (isLoading) {
+        return;
+    }
 	if(${!empty param.spaceTypeNo}){
 		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
 	}else if(${!empty param.spaceName}){
@@ -828,15 +836,6 @@ $(function(){
 	if(${!empty param.order}){
 		condition += "&order="+"${param.order}";
 	}
-	
-	//무한스크롤 ajax 함수 영역
-	var noDataNum = 0;
-	
-function loadMoreData() {
-    if (isLoading) {
-        return;
-    }
-    
     isLoading = true;
 
     $.ajax({
