@@ -555,11 +555,38 @@
 			$(this).closest('.tagRe').remove();
 		});
 		
+		//사업자 등록증 첨부
+		$('.btAdd.file.license').click(function() {
+			//기존에 이미지가 있으면
+			if ($('#license').val().length > 1) {
+			    //기존에 있던 이미지 지우기
+			    $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
+			    $('#license').val('');
+			}
+		});
+
+		$('#license').change(function() {
+		  	var file = this.files[0];
+			if (file) {
+		      	var reader = new FileReader();
+		      	reader.onload = function(e) {
+		        	$('.spImg.license').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
+		      	};
+		      	reader.readAsDataURL(file);
+		    } else {
+		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
+		        $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
+		    }
+		});
+		
 		//메인 이미지 첨부
 		$('.btAdd.file.main').click(function() {
-		    //기존에 있던 이미지 지우기
-		    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
-		    $('#mainImage').val('');
+			//기존에 이미지가 있으면
+			if ($('#mainImage').val().length > 1) {
+			    //기존에 있던 이미지 지우기
+			    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
+			    $('#mainImage').val('');
+			}
 		});
 
 		$('#mainImage').change(function() {
@@ -576,26 +603,30 @@
 		    }
 		});
 		
-		//사업자 등록증 첨부
-		$('.btAdd.file.license').click(function() {
-		    //기존에 있던 이미지 지우기
-		    $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
-		    $('#license').val('');
+		//공간 이미지 첨부
+		$('.btAdd.file.sub').click(function() {
+			//기존에 이미지가 있으면
+			if ($('#subImage').val().length > 1) {
+			    //기존에 있던 이미지 지우기
+			    $('.spImg.sub').empty().append('<span class="inner sub" style="color: #3c3c3c;"></span>');
+			    $('#subImage').val('');
+			}
 		});
+		
+		$('#subImage').on('change', function() {
+            var fileList = $(this)[0].files;
+            var innerSub = $('.inner.sub');
 
-		$('#license').change(function() {
-		  	var file = this.files[0];
-			if (file) {
-		      	var reader = new FileReader();
-		      	reader.onload = function(e) {
-		        	$('.spImg.license').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
-		      	};
-		      	reader.readAsDataURL(file);
-		    } else {
-		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
-		        $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
-		    }
-		});
+            innerSub.empty(); // 기존 파일명 초기화
+
+            if (fileList.length > 0) {
+                for (var i = 0; i < fileList.length; i++) {
+                    var fileName = fileList[i].name;
+                    innerSub.append('<p>' + fileName + '</p>'); // 파일 이름 추가
+                }
+            }
+        });
+		
 		
 		//파일 사이즈 지정
 		$('#fileInput').on('change', function() {
@@ -1160,8 +1191,8 @@
 						<div class="btBox">
 							<label>
 								<div class="btAdd file main" >파일첨부</div>
-								<input type="file" id="mainImage" name="spaceMain"
-									accept="image/jpg, image/png, image/jpeg" style="display: none;">
+								<input type="file" id="mainImage" name="spaceMain" style="display: none;"
+									accept="image/jpg, image/png, image/jpeg" >
 							</label>
 						</div>
 					</div>
@@ -1172,11 +1203,15 @@
 				<div class="boxTitle">
 					<span>이미지 <span style="color: red;">*</span></span>
 					<span class="subTitle">한 장당 최대 3MB<span style="color: #704de4;">(최대 10장)</span></span>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>이미지는 한번에 업로드해야 합니다. 변경하고 싶으면 다시 첨부해야 합니다.</p>
+					</div>
 				</div>
 				<div class="boxContents">
 					<div class="spaceImg sub">
-						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
-							<div class="inner sub">이미지 파일을 추가해 주세요.</div>
+						<div class="spImg sub" style="min-height: 50px; padding-top: 15px;">
+							<div class="inner sub" style="color: #3c3c3c;" ></div>
 						</div>
 						<div class="btBox">
 							<label>
