@@ -13,7 +13,8 @@ public class MvcConfiguration implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginInterceptor())
-		.excludePathPatterns("/guest/completeFindId","/login/Login","/guest/findId","/guest/findPwd","/guest/register","/guest/ajaxCheckId")
+		.excludePathPatterns("/guest/completeFindId","/login/Login","/guest/findId","/guest/findPwd","/guest/register"
+				,"/guest/ajaxCheckId","/guest/completeFindPwd","/guest/resetPwd")
 		.addPathPatterns("/host/registration/*", "/host/report/*", //저런 경로를 가진 것들은 인터셉트를 거치고 가도록 설정함
 				"/guest/*","/guest/myPage/*","/myReview","/login/memberOut","/myQnA");
 		

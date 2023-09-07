@@ -156,28 +156,6 @@
               휴대전화를 입력해주세요.
             </div>
           </div>
-<!-- 
-          <div class="row">
-            <div class="col-md-8 mb-3">
-              <label for="root">가입 경로</label>
-              <select class="custom-select d-block w-100" id="root">
-                <option value=""></option>
-                <option>검색</option>
-                <option>카페</option>
-              </select>
-              <div class="invalid-feedback">
-                가입 경로를 선택해주세요.
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="code">추천인 코드</label>
-              <input type="text" class="form-control" id="code" placeholder="" required>
-              <div class="invalid-feedback">
-                추천인 코드를 입력해주세요.
-              </div>
-            </div>
-          </div>
-           -->
           <br>
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="agreementAll">
