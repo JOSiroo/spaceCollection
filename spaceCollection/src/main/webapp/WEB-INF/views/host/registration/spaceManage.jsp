@@ -155,9 +155,9 @@
 		<div class="regi">
 			<a href="<c:url value='/host/registration/registration1' />">새 공간 등록하기</a>
 		</div>
-		<div class="regi">
+		<%-- <div class="regi">
 			<a href="<c:url value='/host/registration/spDetail' />">상혁님 이게 세부공간 등록</a>
-		</div>
+		</div> --%>
 		<c:forEach var="spaceVo" items="${spaceVo }">
 			<div class="spaceList">
 				<div class="ListBox">
