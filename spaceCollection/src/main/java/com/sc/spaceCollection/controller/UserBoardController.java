@@ -203,16 +203,32 @@ public class UserBoardController {
 		return cnt;
 	}
 	
+	   @RequestMapping("/coupon")
+	   public String coupon(HttpSession session, Model model) {
+		   String userId = (String)session.getAttribute("userId");
+		   
+		    return "userMain/board/roulette";
+		}
+	   
+	   @RequestMapping("/coupon2")
+	   public String coupon2(HttpSession session, Model model) {
+		   String userId = (String)session.getAttribute("userId");
+		   
+		   String num = Coupon.generateCoupon();
+		   logger.info("num={}",num);
+		   model.addAttribute("num", num);
+		   
+		   return "userMain/board/coupon";
+	   }
+	
 	 @RequestMapping("/couponList")
 	   public String couponList(CouponVO vo, HttpSession session, Model model) {
 		   String userId = (String)session.getAttribute("userId");
 			if(userId == null || userId.isEmpty()) {
 				model.addAttribute("msg", "먼저 로그인을 해주세요");
 				model.addAttribute("url", "/login/login");
-				
 				return "common/message";
 			}
-			
 			int userNum = guestService.selectUserInfo(userId).getUserNum();
 			
 			//쿠폰 조회
@@ -233,24 +249,39 @@ public class UserBoardController {
 			
 			return "userMain/board/couponList";
 	   }
-	   
-	   @RequestMapping("/coupon")
-	   public String coupon(HttpSession session, Model model) {
-		   String userId = (String)session.getAttribute("userId");
-		   
-		    return "userMain/board/roulette";
+	 
+	 	@GetMapping("/couponList/couponLoad")
+		@ResponseBody
+		public List<CouponVO> couponLoad(@RequestParam(defaultValue = "0")int userNum,
+											HttpSession session,
+						 					CouponVO vo, Model model ) {
+			logger.info("ajax - 쿠폰 조회, 파라미터 userNum = {}, vo = {}", userNum, vo);
+		    List<CouponVO> list = couponService.selectUserCoupon(userNum);
+		    logger.info("list={}",list);
+		    
+		    model.addAttribute("list", list);
+		    model.addAttribute("userNum", userNum);
+		    
+		    return list;
+		}
+	 	
+	 	@ResponseBody 
+		@PostMapping("/user/couponList/commentsWrit")
+		public CouponVO commentsWrite(@ModelAttribute CouponVO vo, 
+										HttpSession session ,Model model) {
+			int result = 0; 
+			String userId = (String)session.getAttribute("userId");
+			int userNum = guestService.selectUserInfo(userId).getUserNum();
+			int cnt = couponService.insertCoupon(vo);
+			logger.info("쿠폰 등록 결과 , cnt = {}", cnt);
+			logger.info("댓글 추가, vo = {}", vo);
+
+			model.addAttribute("vo", vo);
+			model.addAttribute("result", result);
+			
+			return vo;
 		}
 	   
-	   @RequestMapping("/coupon2")
-	   public String coupon2(HttpSession session, Model model) {
-		   String userId = (String)session.getAttribute("userId");
-		   
-		   String num = Coupon.generateCoupon();
-		   logger.info("num={}",num);
-		   model.addAttribute("num", num);
-		   
-		   return "userMain/board/coupon";
-	   }
 	
 	   @RequestMapping("/focusList")
 	   public String focusList(Model model) {
