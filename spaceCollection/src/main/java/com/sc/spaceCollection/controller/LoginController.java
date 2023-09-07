@@ -34,17 +34,28 @@ public class LoginController {
 	private final Encryption encryption;
 	
 	@GetMapping("/login")
-	public String Login_get( HttpServletRequest request) {
+	public String Login_get( HttpServletRequest request, Model model) {
 		logger.info("로그인 화면 처리");
 		
 		HttpSession session = request.getSession();
 		
 		// 2페이지 이전 URL로 이동
 		String url = request.getHeader("referer");
+		
+		logger.info("url={}", url);
+		
+		if(url == null) {
+			url="login/login";
+			logger.info("url2={}", url);
+			return "login/login"; 
+		}
+		
 		String prevurl = url.substring(url.indexOf('n')+1);
 		logger.info("이전 페이지 ={}", prevurl);
         session.setAttribute("prevurl", prevurl);
 		
+        model.addAttribute("url", url);
+        
 		return "login/login";
 	}
 	
