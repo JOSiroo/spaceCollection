@@ -559,7 +559,7 @@
 		$('.btAdd.file.main').click(function() {
 		    //기존에 있던 이미지 지우기
 		    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
-		    $('input[type="file"]').val('');
+		    $('#mainImage').val('');
 		});
 
 		$('#mainImage').change(function() {
@@ -580,7 +580,7 @@
 		$('.btAdd.file.license').click(function() {
 		    //기존에 있던 이미지 지우기
 		    $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
-		    $('input[type="file"]').val('');
+		    $('#license').val('');
 		});
 
 		$('#license').change(function() {
@@ -941,8 +941,8 @@
 						<div class="btBox">
 							<label>
 								<div class="btAdd file license" >파일첨부</div>
-								<input type="file" id="license" accept="image/jpg, image/png, image/jpeg" 
-									name="license" style="display: none;">
+								<input type="file" id="license" name="license"
+									accept="image/jpg, image/png, image/jpeg" style="display: none;" >
 							</label>
 						</div>
 					</div>
