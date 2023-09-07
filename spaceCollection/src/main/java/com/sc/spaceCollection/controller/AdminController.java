@@ -613,4 +613,9 @@ public class AdminController {
 		return cnt;
 	}
 	
+	@GetMapping("/chatting")
+	public String chatting() {
+		return "admin/common/chatting";
+	}
+	
 }
