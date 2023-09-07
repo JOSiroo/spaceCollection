@@ -30,6 +30,8 @@ import com.sc.spaceCollection.comments.model.CommentsService;
 import com.sc.spaceCollection.comments.model.CommentsVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.SearchVO;
+import com.sc.spaceCollection.coupon.model.CouponService;
+import com.sc.spaceCollection.coupon.model.CouponVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoService;
@@ -50,6 +52,7 @@ public class UserBoardController {
 	private final BoardTypeService boardTypeService;
 	private final UserInfoService userInfoService;
 	private final GuestService guestService;
+	private final CouponService couponService;
 	
 	 //자주묻는질문
 	@RequestMapping("/faq")
@@ -96,18 +99,6 @@ public class UserBoardController {
 		logger.info("게시물 상세보기, 파라미터 boardNum = {}", boardNum);
 
 		String userId = (String)session.getAttribute("userId");
-		/*String userId = (String)session.getAttribute("userId");
-		int userNum = 0; // 기본값으로 초기화
-		if (userId == null) {
-			 userId ="null";
-	    }else {
-	    	userNum = guestService.selectUserInfo(userId).getUserNum();
-	    }
-		model.addAttribute("userNum", userNum);
-    	userNum = guestService.selectUserInfo(userId).getUserNum();
-    	logger.info(userId);
-		model.addAttribute("userNum", userNum);*/
-
 		
 				if (boardNum == 0) {
 					model.addAttribute("msg", "잘못된 URL 입니다.");
@@ -213,7 +204,7 @@ public class UserBoardController {
 	}
 	
 	 @RequestMapping("/couponList")
-	   public String couponList(HttpSession session, Model model) {
+	   public String couponList(CouponVO vo, HttpSession session, Model model) {
 		   String userId = (String)session.getAttribute("userId");
 			if(userId == null || userId.isEmpty()) {
 				model.addAttribute("msg", "먼저 로그인을 해주세요");
@@ -222,12 +213,23 @@ public class UserBoardController {
 				return "common/message";
 			}
 			
+			int userNum = guestService.selectUserInfo(userId).getUserNum();
+			
+			//쿠폰 조회
+			List<CouponVO> list = couponService.selectUserCoupon(userNum);
+			int count = couponService.countCoupon(userNum);
+			logger.info("등록된 쿠폰 조회 list, list = {}", list);
+			logger.info("쿠폰 갯수 조회 count, count = {}", count);
+			
+			//사용자 정보 출력 
 			GuestVO userInfo = new GuestVO();
 			userInfo = guestService.selectUserInfo(userId);
-			
 			logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
 			
+			//값 저장
 			model.addAttribute("guestVo",userInfo);
+			model.addAttribute("list",list);
+			model.addAttribute("count",count);
 			
 			return "userMain/board/couponList";
 	   }

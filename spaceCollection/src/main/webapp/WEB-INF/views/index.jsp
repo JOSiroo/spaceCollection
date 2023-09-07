@@ -80,6 +80,8 @@ div#weatherBox {
 }
 div#temperature {
     color: white;
+    margin-top: 8%;
+    margin-right: 8%;
 }
 div#description {
     color: white;
@@ -249,7 +251,7 @@ div#place {
 					        <div id="iconWeather"></div>
 				   </div>
 				   <div class="weaterMinBox">
-					        <div class="current_temp" id="temperature" style="font-size : 50pt"></div>
+					        <div class="current_temp" id="temperature" style="font-size : 40pt"></div>
 					        <div class="weather_description" id="description" style="font-size : 20pt"></div>
 					        <div class="city" id="place" style="font-size : 13pt"></div>
 				   </div>
