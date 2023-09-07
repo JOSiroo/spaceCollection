@@ -129,6 +129,33 @@ public class QnaController {
 		
 		
 	}
+	@ResponseBody
+	@RequestMapping("/editQna")
+	public boolean editQna(@RequestParam(defaultValue = "") String qnaContent, @RequestParam(defaultValue = "1") int qnaNum) {
+		logger.info("Ajax-qna수정, 파라미터,qnaNum={}, qnaContent={}",qnaNum,qnaContent);
+		boolean bool=false;
+		QnaVO vo = new QnaVO();
+		vo.setQnaNum(qnaNum);
+		vo.setQnaContent(qnaContent);
+		int cnt = qnaService.editQna(vo);
+		if(cnt>0) {
+			bool=true;
+		}
+		return bool;
+	}
+	
+	@PostMapping("/qnaAnswer")
+	@ResponseBody
+	public int qnaAnswer(@ModelAttribute QnaVO vo) {
+		logger.info("qna 답변, 파라미터 vo = {}", vo);
+		
+		int cnt = qnaService.qnaAnswer(vo);
+		
+		logger.info("qna 결과, cnt = {}", cnt);
+		
+		
+		return cnt;
+	}
 }
 
 

@@ -650,7 +650,6 @@
 		});
 		
 		$('#next').click(function() {
-			/*
 			//필수 입력
 			//공간명
 			if ($('.spaceName').find($('.spText')).val() < 1) {
@@ -790,7 +789,6 @@
 		        
 		        return false;
 		    }
-			*/
 			
 			$('form[name=frmRegi2]').submit();
 		});
@@ -1128,28 +1126,28 @@
 						  	<label class="form-check-label" for="inlineCheckbox9">엘레베이터</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox9" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox9">주차가능</label>
+						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox10" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox10">주차가능</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox10" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox9">음식물섭취가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox11" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox11">음식물섭취가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox11" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox10">주류반입가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox12" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox12">주류반입가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox12" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox11">취사가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox13" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox13">취사가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox13" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox12">애완동물동반가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox14" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox14">애완동물동반가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox14" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox13">음향장비</label>
+						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox15" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox15">음향장비</label>
 						</div>
 					</div>
 				</div>
@@ -1419,8 +1417,6 @@
 		</form>
 	</div>
 </article>
-
-
 
 </body>
 </html>

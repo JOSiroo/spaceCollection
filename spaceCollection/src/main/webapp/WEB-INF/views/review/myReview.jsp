@@ -129,7 +129,7 @@
 	}
 	
 	.reViewInfo {
-		width: 1120px;
+		width: 1105px;
 		background: #eee;
 		padding: 10px;
 		margin: 0 auto;
@@ -184,7 +184,7 @@
 		border: none;
 		text-align: center;		
 		text-decoration: underline;
-		margin: 0px auto;
+		margin-left: 515px;
 				
 	}
 	.emptyLine{
@@ -193,6 +193,7 @@
 		margin-top: 10px;
 		padding-left: -50px;
 	}
+
 </style>
 
 <form action="<c:url value='/myReview'/>" name="frmPage" method="post">
@@ -290,10 +291,10 @@
 			</c:forEach>
 		</c:if>
 		<c:if test="${!empty reviewMap }">
+		</c:if>
 			<div class="pagingDiv">
 				<button type="button" id="moreReview">리뷰 더보기</button>
 			</div> 
-		</c:if>
 	</div>
 	</div>
 </div>
