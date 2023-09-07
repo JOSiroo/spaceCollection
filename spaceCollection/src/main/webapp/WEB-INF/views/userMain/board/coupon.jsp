@@ -35,19 +35,7 @@ section {
  		        if (lastClickDate !== today) {
  		            // 오늘 클릭한 경우에만 쿠폰 발행
  		            var generatedCoupon = "${num}"; // 서버에서 전달된 num 값
- 		            var couponType = type ;
- 		            
- 		            switch (type) {
-	 		          case 1:
-	 		        	 type = 10;
-	 		            break;
-	 		          default:
-	 		        	 type = 20;
-	 		        }
- 		            
-		            alert("발행된" + type + "% 할인가능, 쿠폰 번호 \" + generatedCoupon + "+"\");
-		            //alert("발행된 쿠폰 번호 : \"" + generatedCoupon + "\"" + );
-	 		            
+ 		            alert("발행된 쿠폰 번호 : \"" + generatedCoupon + "\"");
  		            // 오늘의 날짜를 로컬 스토리지에 저장
  		            localStorage.setItem("lastClickDate", today);
  		            // 클릭 이벤트 핸들러를 제거하여 버튼이 다시 클릭되지 않게 함
@@ -72,10 +60,7 @@ section {
 <section>
  <div var="num" class="couponBox">
  
-	   <button id="generateButton" class="btn btn-primary"  id="display" onclick="generateCoupon()" >
-	   랜덤 쿠폰 발급
-	   </button>
-	   
+	   <button id="generateButton" class="btn btn-primary"  id="display" onclick="generateCoupon()" >랜덤 쿠폰 발급</button>
 	   <p id="couponDisplay" ></p>
 		버튼을 클릭하여 쿠폰 일련번호를 받으세요 <br>
 		저장된 쿠폰은 쿠폰함에서 확인 하실 수 있습니다.<br>
