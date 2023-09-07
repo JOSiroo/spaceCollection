@@ -215,13 +215,14 @@ public class ReservationServiceImpl implements ReservationService{
 			Map<String, Object> map = list.get(i);
 			
 			try {
-				percent = Math.round(Integer.parseInt(map.get("RESERVATIONCNT")+"")/total*10)/10;
+				percent = Math.round(Double.parseDouble(map.get("RESERVATIONCNT")+"")/total*10)/10;
+				logger.info("ssss {}, {}",map.get("RESERVATIONCNT"), total);
 			} catch (ArithmeticException e) {
 				percent = 0;
 			}
 			
 			map.put("percent", percent);
-			logger.info("map={}", map);
+			logger.info("map={}, zzzztotal = {}", map, total);
 		}
 		
 		Map<String, Object> map = new HashMap<>();

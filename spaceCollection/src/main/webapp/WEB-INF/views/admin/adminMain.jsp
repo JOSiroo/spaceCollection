@@ -3,12 +3,8 @@
 <%@ include file="../form/adminTop.jsp"%>
 <style type="text/css">
 	.dropdown-item{
-		width: 80px;
+		cursor: pointer;
 	}
-	#reservationCnt{
-		width: 100px;
-	}
-	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -43,17 +39,19 @@
 		});
 		
 		$('#td').click(function() {
-			$('#intervalStandardPrice').val('');
+			$('#intervalStandardType').val('');
 			$.loadReservationType();
 		});
 		$('#tm').click(function() {
-			$('#intervalStandardPrice').val('month');
+			$('#intervalStandardType').val('month');
 			$.loadReservationType();
 		});
 		$('#ty').click(function() {
-			$('#intervalStandardPrice').val('year');
+			$('#intervalStandardType').val('year');
 			$.loadReservationType();
 		});
+		
+		
 	})
 	
 	$.loadReservationCnt = function() {
@@ -133,21 +131,51 @@
 				var str1 = "";
 				var str2 = "";
 				
+				var dataSet = [];
+				console.log(Object.keys(res.list));
+				$.each(res.list, function() {
+					dataSet.push({
+					    name: this.SPACE_TYPE_NAME,
+					    value: this.RESERVATIONCNT
+					  });
+				}) 
+					
 				str2 += "| "+res.standard;
-				if(res.list.length>0){	
-					
-					
-					
-					
-					
-					
-					
-					
-					$('#tStandard').html(str2);
+				$('#tStandard').html(str2);
+				if(res.list.length>0){
+					echarts.init(document.querySelector("#trafficChart")).setOption({
+				           tooltip: {
+				             trigger: 'item'
+				           },
+				           legend: {
+				             top: '5%',
+				             left: 'center'
+				           },
+				           series: [{
+				             name: 'Access From',
+				             type: 'pie',
+				             radius: ['40%', '70%'],
+				             avoidLabelOverlap: false,
+				             label: {
+				               show: false,
+				               position: 'center'
+				             },
+				             emphasis: {
+				               label: {
+				                 show: true,
+				                 fontSize: '18',
+				                 fontWeight: 'bold'
+				               }
+				             },
+				             labelLine: {
+				               show: false
+				             },
+				             data: dataSet
+				           }]
+				         });
 				}else{
 					str1 += "진행된 예약이 없습니다.";
-					
-					$('#script').html(str1);
+					$('#trafficChart').html(str1);
 				}
 				
 			},
@@ -156,6 +184,9 @@
 			}
 		});
 	}
+	 
+         
+     
 </script>
 <main id="main" class="main">
 
@@ -623,7 +654,7 @@
 				</div>
 				<!-- End Recent Activity -->
 
-				<!-- Budget Report -->
+				<!-- 공간 타입별 예약 건수 시작 -->
 				<div class="card">
 					<div class="filter">
 						<a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -633,92 +664,14 @@
 								<h6>Filter</h6>
 							</li>
 
-							<li><a class="dropdown-item" href="#">Today</a></li>
-							<li><a class="dropdown-item" href="#">This Month</a></li>
-							<li><a class="dropdown-item" href="#">This Year</a></li>
+							<li><a class="dropdown-item" id="td">Today</a></li>
+							<li><a class="dropdown-item" id="tm">This Month</a></li>
+							<li><a class="dropdown-item" id="ty">This Year</a></li>
 						</ul>
 					</div>
 
 					<div class="card-body pb-0">
-						<h5 class="card-title">
-							Budget Report <span>| This Month</span>
-						</h5>
-
-						<div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-						<script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-					</div>
-				</div>
-				<!-- End Budget Report -->
-
-				<!-- 공간 타입별 예약 건수 -->
-				<div class="card">
-					<div class="filter">
-						<a class="icon" href="#" data-bs-toggle="dropdown"><i
-							class="bi bi-three-dots"></i></a>
-						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="dropdown-header text-start">
-								<h6>Filter</h6>
-							</li>
-
-							<li><a class="dropdown-item" href="#" id="td">Today</a></li>
-							<li><a class="dropdown-item" href="#" id="tm">This Month</a></li>
-							<li><a class="dropdown-item" href="#" id="ty">This Year</a></li>
-						</ul>
-					</div>
-
-					<div class="card-body pb-0">
-						<h5 class="card-title">
+						<h5 class="card-title" style="font-weight: bold;">
 							공간 타입별 예약 건수 <span id="tStandard"><!-- Ajax 출력 --></span>
 						</h5>
 						<input type="hidden" name="intervalStandard"
@@ -731,7 +684,7 @@
 
 					</div>
 				</div>
-				<!-- 공간 타입별 예약 건수 -->
+				<!-- 공간 타입별 예약 건수 끝 -->
 
 				<!-- News & Updates Traffic -->
 				<div class="card">
