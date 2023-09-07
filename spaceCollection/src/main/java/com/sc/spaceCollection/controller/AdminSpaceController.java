@@ -30,6 +30,7 @@ import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeListVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryListVO;
@@ -48,6 +49,7 @@ public class AdminSpaceController {
 	private final SpaceTypeCategoryService spaceTypeCategoryService;
 	private final SpaceTypeService spaceTypeService;
 	private final SpaceService spaceService;
+	private final SpaceFileService spaceFileService;
 	private final AdminEmailSender admin;
 	
 	@RequestMapping("/spaceTypeCategoryList")
@@ -493,8 +495,11 @@ public class AdminSpaceController {
 		Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(spaceNum);
 		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
 		
+		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
+		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		model.addAttribute("map", map);
+		model.addAttribute("imgList", imgList);
 		return "admin/space/spaceConfirmDetail";
 	}
 	
@@ -543,8 +548,12 @@ public class AdminSpaceController {
 		spaceTotalInfo.put("spaceDetail", spaceDetail);
 		spaceTotalInfo.put("spaceDetailList", spaceDetailList);
 		
+		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
+		logger.info("이미지 이름 imgList= {}", imgList);
+		
 		logger.info("spaceTotalInfo = {}", spaceTotalInfo);
 		model.addAttribute("spaceTotalInfo", spaceTotalInfo);
+		model.addAttribute("imgList", imgList);
 		
 		return "admin/space/spaceDetail";
 	}

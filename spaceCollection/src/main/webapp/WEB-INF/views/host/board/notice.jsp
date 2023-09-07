@@ -133,16 +133,16 @@
 	
 	}
 	div#accordionFlushExample {
-    align-content: center;
+    	align-content: center;
 	}
 	.divBox2 {
-	border-top: 2.5px solid #656565;
-    border-bottom: 2.5px solid #656565;
-    background-color: #656565;
+		border-top: 2.5px solid #656565;
+	    border-bottom: 2.5px solid #656565;
+	    background-color: #656565;
 	}
     .divBox2 {
-    width: 1000px;
-    margin-left: 24%;
+	    width: 1000px;
+	    margin-left: 24%;
 	}
 	span#span1 {
     font-weight: bold;

@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sc.spaceCollection.board.model.BoardService;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
+import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.FileUploadUtil;
+import com.sc.spaceCollection.facility.model.FacilityVO;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
@@ -25,8 +30,13 @@ import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.space.model.SpaceVO;
+import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileServiceImpl;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +50,9 @@ public class HostController {
 	private final ReservationService reservationService;
 	private final CalendarService calendarService;
 	private final BoardService boardService;
+	private final FileUploadUtil fileUploadUtil;
+	private final SpaceFileService spaceFileservice;
+	
 	
 	@RequestMapping("/index")
 	public String hostMain() {
@@ -82,11 +95,14 @@ public class HostController {
 	
 	@PostMapping("/registration/registration2")
 	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
-			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacility, HttpSession session, Model model) {
-		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}", spaceVo, spaceTypeVO);
+			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, 
+			HttpServletRequest request, MultipartHttpServletRequest multiFile, Model model) {
+		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}, refund = {}", spaceVo, spaceTypeVO, refundVo);
 		
 		//공간 번호 조회
+		logger.info("공간번호 전 SpaceTypeName + {}", spaceTypeVO.getSpaceTypeName());
 		SpaceTypeVO spaceTypeVO2 = hostService.selectSpaceTypeBySpaceTypeName(spaceTypeVO.getSpaceTypeName());
+		logger.info("공간번호 후 spaceTypeVO2 = {}", spaceTypeVO2);
 		spaceVo.setSpaceTypeNo(spaceTypeVO2.getSpaceTypeNo());
 		logger.info("공간 타입 번호 조회, SpaceTypeNo = {}", spaceTypeVO2.getSpaceTypeNo());
 		
@@ -94,55 +110,123 @@ public class HostController {
 		String userId = (String) session.getAttribute("userId");
 		UserInfoVO user = hostService.selectUserById(userId);
 		spaceVo.setUserNum(user.getUserNum());
-		logger.info("유저 번호 조회, UserNum = {}", user.getUserNum());
+		logger.info("유저 번호 조회, UserNum = {}", spaceVo.getUserNum());
 		
-		//주소
-		String zipcode = "우편번호", address = "주소", adDetail = "상세주소";
-		Double latitude = 1.1, longitude = 2.2;
-		spaceVo.setSpaceZipcode(zipcode);
-		spaceVo.setSpaceAddress(address);
-		spaceVo.setSpaceAddressDetail(adDetail);
-		spaceVo.setLatitude(latitude);
-		spaceVo.setLongitude(longitude);
-		logger.info("spaceVo = {}, refundVo = {}", spaceVo, refundVo);
-		
-		//total facility
-		spaceTotalFacility.setSpaceNum(spaceVo.getSpaceNum());
-		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacility);
-		logger.info("spaceTotalFacility = {}, totalFac = {}", spaceTotalFacility, totalFac);
+		String spaceInfo = spaceVo.getSpaceInfo().replaceAll("\n", "<br>");
+		spaceVo.setSpaceInfo(spaceInfo);
 		
 		//공간 등록
 		int space = hostService.insertSpace(spaceVo, refundVo);
 		logger.info("space = {}", space);
 		
-		return "redirect:/host/index";
+		//total facility
+		spaceTotalFacilityVo.setSpaceNum(spaceVo.getSpaceNum());
+		
+		if (spaceTotalFacilityVo.getFacWifi() == null) {
+			spaceTotalFacilityVo.setFacWifi("");
+		}
+		if (spaceTotalFacilityVo.getFacPrinter() == null) {
+			spaceTotalFacilityVo.setFacPrinter("");
+		}
+		if (spaceTotalFacilityVo.getFacChairTable() == null) {
+			spaceTotalFacilityVo.setFacChairTable("");
+		}
+		if (spaceTotalFacilityVo.getFacSmoke() == null) {
+			spaceTotalFacilityVo.setFacSmoke("");
+		}
+		if (spaceTotalFacilityVo.getFacRestRoom() == null) {
+			spaceTotalFacilityVo.setFacRestRoom("");
+		}
+		if (spaceTotalFacilityVo.getFacPC() == null) {
+			spaceTotalFacilityVo.setFacPC("");
+		}
+		if (spaceTotalFacilityVo.getFacTV() == null) {
+			spaceTotalFacilityVo.setFacTV("");
+		}
+		if (spaceTotalFacilityVo.getFacWhiteBoard() == null) {
+			spaceTotalFacilityVo.setFacWhiteBoard("");
+		}
+		if (spaceTotalFacilityVo.getFacElevator() == null) {
+			spaceTotalFacilityVo.setFacElevator("");
+		}
+		if (spaceTotalFacilityVo.getFacParking() == null) {
+			spaceTotalFacilityVo.setFacParking("");
+		}
+		if (spaceTotalFacilityVo.getFacFood() == null) {
+			spaceTotalFacilityVo.setFacFood("");
+		}
+		if (spaceTotalFacilityVo.getFacDrink() == null) {
+			spaceTotalFacilityVo.setFacDrink("");
+		}
+		if (spaceTotalFacilityVo.getFacCook() == null) {
+			spaceTotalFacilityVo.setFacCook("");
+		}
+		if (spaceTotalFacilityVo.getFacPet() == null) {
+			spaceTotalFacilityVo.setFacPet("");
+		}
+		if (spaceTotalFacilityVo.getFacAudio() == null) {
+			spaceTotalFacilityVo.setFacAudio("");
+		}
+		logger.info("TotalFacilityVo = {}", spaceTotalFacilityVo);
+		
+		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacilityVo);
+		logger.info("totalFac = {}", totalFac);
+		
+		//이미지 등록
+		logger.info("request = {}" + request);
+		SpaceFileVO spaceFileVo = new SpaceFileVO();
+		
+		try {
+			List<Map<String, Object>> list = 
+					fileUploadUtil.spaceImageUpload(request, ConstUtil.UPLOAD_SPACE_IMAGE_FLAG, spaceVo.getSpaceNum());
+			logger.info("파일 list.size = {}", list.size());
+			
+			for (Map<String, Object> map : list) {
+				if(map.get("fileName") != null && map.get("fileName") != ""){
+					String fileName = (String)map.get("fileName");
+					String originalFileName = (String)map.get("originalFileName");
+					long fileSize = (long)map.get("fileSize");
+					
+					spaceFileVo.setImgForeignKey("S" + spaceVo.getSpaceNum());
+					spaceFileVo.setImgOriginalName(originalFileName);
+					spaceFileVo.setImgTempName(fileName);
+					spaceFileVo.setImgSize(fileSize);
+					logger.info("spaceFileVo = {}", spaceFileVo);
+					
+					int spFile = spaceFileservice.insertSpaceFile(spaceFileVo);
+					logger.info("이미지 저장, spFile = {}", spFile);
+				}
+			}//for
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/host/registration/spaceManage";
 	}
 	
 	@GetMapping("/registration/spDetail")
 	public String spDetail(Model model) {
-		//1
 		logger.info("세부 공간등록 보여주기");
 		
-		// 2
-		// 3
-		
-		//4
 		return "host/registration/spDetail";
 	}
 	
 	@PostMapping("/registration/spDetail")
-	public String registration4() {
-		//1
-		logger.info("세부 공간등록 처리");
+	public String registration4(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
+		logger.info("세부 공간등록 처리 spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
 		
-		//2
+		int cnt = hostService.insertSpaceDetail(spaceDetailVo, facilityVo);
+		logger.info("세부공간 등록 결과, cnt = {}", cnt);
 		
+		return "redirect:/host/registration/spaceManage";
+	}
+	
+	@RequestMapping("/registration/spaceManage")
+	public String spaceManage() {
+		logger.info("공간 관리 페이지");
 		
-		//3
-		
-		
-		//4
-		return "host/registration/registration4";
+		return "host/registration/spaceManage";
 	}
 	
 	//page=1&order=reservationNum&status=before&keyword=fd

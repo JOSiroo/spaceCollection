@@ -11,8 +11,12 @@
 		values(#{imgNum}, #{imgOriginalName}, #{imgSize}, #{imgTempName}, #{imgForeignKey})
 	</insert>
 	
-	<select id="selectSpaceFileByBoardNum" parameterType="int" resultType="spaceFileVo">
+	<select id="selectSpaceFileByBoardNum" parameterType="string" resultType="spaceFileVo">
 		select * from space_file where img_foreign_key = #{boardNum}
+	</select>
+	
+	<select id="selectSpaceImgBySpaceNum" resultType="String">
+		select img_temp_name from space_file where img_foreign_key = #{spaceNum}
 	</select>
 	
 	<delete id="deleteSpaceFileByImgeTempName" parameterType="string">

@@ -34,7 +34,7 @@
 <script type="text/javascript" src="https://ssl.nexon.com/s1/global/ngb_bodystart.js" charset="euc-kr"></script>
 <script type="text/javascript">
 		$(function () {
-
+			/* alert("gd");
 			// 팝업 사이즈 재조정
 			if (window.innerWidth < 600) {
 				window.resizeTo(630, 701);
@@ -42,11 +42,16 @@
 			$("html").css("overflow", "hidden");
 			$("[finda2sopt]").click(function (event) {
 				MemberA2S.Click("MEMBERS_FIND_PW", $(this).attr("finda2sopt"));
-			});
+			}); */
 			
 			$("#ucInputLoginID_btnNext").click(function(){
-				window.open("${pageContext.request.contextPath}/email/emailCheck?type=findPwd"
-						,"이메일 인증 팝업","width=768,height=434,scrollbars=no, resizable=no");
+			
+				if($('#userId').val().length<1){
+					alert("아이디를 입력해주세요.");
+					return false;
+				}
+				
+				$("form[name=frmFindPwd]").submit();
 			});
 			
 		});
@@ -56,9 +61,10 @@
 <body>
 <div class="popupFind2">
 	<ul class="find2Tab">
-		<li class="id"><a href="<c:url value='/guest/findId'/>" finda2sopt="FindId">스페이스 컬렉션ID찾기</a></li>	<!-- A094 -->
+		<li class="id"><a href="<c:url value='/guest/findPwd'/>" finda2sopt="FindId">스페이스 컬렉션ID찾기</a></li>	<!-- A094 -->
 		<li class="password"><a class="on">비밀번호찾기</a></li>
 	</ul>
+<form action="<c:url value='/guest/findPwd'/>" name="frmFindPwd" method="post">
 	<h2 class="hiddenTit">비밀번호찾기</h2>
 	<div class="contents">
 		<p class="stit">비밀번호 찾기를 위한 스페이스 컬렉션ID를 입력해주세요.</p>
@@ -77,27 +83,17 @@
 					</div>
 				</dd>
 				<dt></dt>
-				<dt>이메일</dt>
-				<dd>
-					<div class="inputCnts">
-						<div id="inputWrap" class="inputWrap "> <!-- error color <div class="inputWrap errorInput"> --> <!-- success color <div class="inputWrap successInput"> -->
-							<p class="inputTxtSec"><input name="userId" type="text" id="userId" class="inputTxt2 errorInput" placeholder="가입시 입력한 이메일을 입력해주세요." /></p>
-							<div class="inputAlertSec">
-								<p class="delBt" style="display:none;"><button type="button"><span class="hidden">입력삭제</span></button></p>
-							</div>
-						</div>
-						<p id="errorMsg" class="errorMsg"></p>
-					</div>
-				</dd>
+				
 			</dl>
 			<div class="btSec">
 				<a id="ucInputLoginID_btnNext" class="bt3" finda2sopt="Cfm" href="javascript:__doPostBack(&#39;ucInputLoginID$btnNext&#39;,&#39;&#39;)">다음</a>		<!-- A021 -->
 			</div>
 		</div>
 	</div>
+</form>
 	<div class="noticeSec">
 		<ul>
-            <li>외부계정(<a target="_blank" href="https://www.facebook.com/" class="link3" findA2sOpt="GoFacebook">페이스북</a>, <a target="_blank" href="https://www.google.com/" class="link3" findA2sOpt="GoGoogle">구글</a>, <a target="_blank" href="https://www.naver.com/" class="link3" findA2sOpt="GoNaver">네이버</a>, <a target="_blank" href="https://www.apple.com/" class="link3" findA2sOpt="GoApple">애플</a> 등)을 통해 넥슨에 로그인하시는 고객님은 해당 서비스에서 비밀번호 찾기를<br />이용해주세요.</li>	<!-- A482, A483 -->
+            <li>외부계정(<a target="_blank" href="https://www.facebook.com/" class="link3" findA2sOpt="GoFacebook">페이스북</a>, <a target="_blank" href="https://www.google.com/" class="link3" findA2sOpt="GoGoogle">구글</a>, <a target="_blank" href="https://www.naver.com/" class="link3" findA2sOpt="GoNaver">네이버</a>, <a target="_blank" href="https://www.apple.com/" class="link3" findA2sOpt="GoApple">애플</a> 등)을 통해 스페이스 컬렉션에 로그인하시는 고객님은 해당 서비스에서 비밀번호 찾기를<br />이용해주세요.</li>	<!-- A482, A483 -->
 		</ul>
 	</div>	
 </div>

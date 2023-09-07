@@ -161,9 +161,12 @@
 		$('.btLogin').click(function() {
 			location.href="<c:url value='/login/login' />";
 		});
-	});
+		
+		$('help').click(function() {
+			window.open('');
+		});
+			
 </script>
-
 </head>
 <body>
 	<nav class="navbar bg-body-tertiary fixed-top">
@@ -190,7 +193,7 @@
 	      	<c:if test="${!empty sessionScope.userId }">
 		        <span class="offcanvas-title" id="offcanvasNavbarLabel">${sessionScope.userId }</span>
 		    </c:if>
-	        <a class="frofile" href="#">프로필 관리</a>
+	        <a class="frofile" href="<c:url value='/guest/myPage/checkPwd'/>">프로필 관리</a>
 	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	      </div>
 	      <div class="offcanvas-body">
@@ -201,7 +204,7 @@
 	      		<a class="mng-item" href="#">
 	      			이용 후기 /<br>Q&A 관리
 	      		</a>
-	      		<a class="mng-item" href="#">
+	      		<a class="mng-item" href="<c:url value='/host/registration/spaceManage'/>">
 	      			공간정보 관리
 	      		</a>
 	      	</div>
@@ -220,7 +223,8 @@
 	            <a class="nav-link" href="<c:url value='/host/notice' />">공지사항</a>
 	          </li>
 	          <li class="nav-item">
-	            <a class="nav-link" href="#">도움말</a>
+	            <a class="nav-link" href="https://plucky-sleep-a52.notion.site/29468eb28f06418c8e6d5aea69674882"
+	            	target="_blank">도움말</a>
 	          </li>
 	          <li class="nav-item dropdown">
 	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

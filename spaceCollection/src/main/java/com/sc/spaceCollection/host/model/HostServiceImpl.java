@@ -6,9 +6,11 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sc.spaceCollection.facility.model.FacilityVO;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceVO;
+import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import lombok.RequiredArgsConstructor;
@@ -58,13 +60,71 @@ public class HostServiceImpl implements HostService {
 		int cnt = hostDao.insertRefund(refundVo);
 		spaceVo.setRefundNum(refundVo.getRefundNum());
 		cnt = hostDao.insertSpace(spaceVo);
+		
 		return cnt;
 	}
 
 	@Override
-	public int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility) {
-		return hostDao.insertSpaceTotalFacility(spaceTotalFacility);
+	public int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo) {
+		return hostDao.insertSpaceTotalFacility(spaceTotalFacilityVo);
 	}
+
+	@Override
+	@Transactional
+	public int insertSpaceDetail(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
+		if (facilityVo.getFacWifi() == null) {
+			facilityVo.setFacWifi("");
+		}
+		if (facilityVo.getFacPrinter() == null) {
+			facilityVo.setFacPrinter("");
+		}
+		if (facilityVo.getFacChairTable() == null) {
+			facilityVo.setFacChairTable("");
+		}
+		if (facilityVo.getFacSmoke() == null) {
+			facilityVo.setFacSmoke("");
+		}
+		if (facilityVo.getFacRestRoom() == null) {
+			facilityVo.setFacRestRoom("");
+		}
+		if (facilityVo.getFacPC() == null) {
+			facilityVo.setFacPC("");
+		}
+		if (facilityVo.getFacTV() == null) {
+			facilityVo.setFacTV("");
+		}
+		if (facilityVo.getFacWhiteBoard() == null) {
+			facilityVo.setFacWhiteBoard("");
+		}
+		if (facilityVo.getFacElevator() == null) {
+			facilityVo.setFacElevator("");
+		}
+		if (facilityVo.getFacParking() == null) {
+			facilityVo.setFacParking("");
+		}
+		if (facilityVo.getFacFood() == null) {
+			facilityVo.setFacFood("");
+		}
+		if (facilityVo.getFacDrink() == null) {
+			facilityVo.setFacDrink("");
+		}
+		if (facilityVo.getFacCook() == null) {
+			facilityVo.setFacCook("");
+		}
+		if (facilityVo.getFacPet() == null) {
+			facilityVo.setFacPet("");
+		}
+		if (facilityVo.getFacAudio() == null) {
+			facilityVo.setFacAudio("");
+		}
+		
+		int cnt = hostDao.insertFacility(facilityVo);
+		spaceDetailVo.setFacilityNum(facilityVo.getFacilityNum());
+		cnt = hostDao.insertSpaceDetail(spaceDetailVo);
+		
+		return cnt;
+	}
+
 
 
 }
