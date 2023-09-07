@@ -196,7 +196,11 @@ p{
 		padding: 4% 6% 4% 6%;
 	}
 	.h5{
-	    	font-weight: bold	
+    	font-weight: bold;
+    	display: inline-block;
+    }
+    .h5:hover{
+    	color:#ffd014;
     }
 	
 	.dropdounUl.filter{
@@ -362,6 +366,12 @@ p{
 		border: #ffd014 4px solid;
 		background: white;
 	}
+	.nav-bar {
+    width: 45px;
+    height: 3px;
+    background: #ffd014;
+    margin-bottom: 10px;
+}
 </style>
 <div class="search-wrapper"></div>
 <div class = "asd">
@@ -477,7 +487,7 @@ p{
 						<div class = "row top filter">
 							<div class = "col filter">
 									<div class = "priceDiv">
-										<div><h5 style="font-weight: bold;text-align: left;">가격</h5></div>
+										<div><h5 style="font-weight: bold;text-align: left">가격</h5></div>
 										<br>
 										<div class="form-floating">
 									      <input type="text"  class="form-control" id="slider-snap-value-lower" placeholder="name@example.com" value="0">
@@ -746,15 +756,15 @@ $(function(){
 		}
 
 		if(lowerPrice == 0){
-			urlSearchParams.delete("lowerPrice");
+			urlSearchParams.delete("minPrice");
 		}else{
-			urlSearchParams.set("lowerPrice", lowerPrice);
+			urlSearchParams.set("minPrice", lowerPrice);
 		}
 
 		if(upperPrice == 0){
-			urlSearchParams.delete("upperPrice");
+			urlSearchParams.delete("maxPrice");
 		}else{
-			urlSearchParams.set("upperPrice", upperPrice);
+			urlSearchParams.set("maxPrice", upperPrice);
 		}
 		
 		location.href = currentUrl[0] + "?" + urlSearchParams;
@@ -786,6 +796,14 @@ $(function(){
 	var keyword = "";
 	
 	//ajax로 처리된 파라미터들이 있으면 url에 파라미터 추가하는 영역
+
+	//무한스크롤 ajax 함수 영역
+	var noDataNum = 0;
+	
+function loadMoreData() {
+    if (isLoading) {
+        return;
+    }
 	if(${!empty param.spaceTypeNo}){
 		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
 	}else if(${!empty param.spaceName}){
@@ -818,15 +836,6 @@ $(function(){
 	if(${!empty param.order}){
 		condition += "&order="+"${param.order}";
 	}
-	
-	//무한스크롤 ajax 함수 영역
-	var noDataNum = 0;
-	
-function loadMoreData() {
-    if (isLoading) {
-        return;
-    }
-    
     isLoading = true;
 
     $.ajax({
@@ -912,10 +921,10 @@ function loadMoreData() {
 		        htmlStr += '<span class="visually-hidden">Next</span>';
 		        htmlStr += '</button>';
 		        htmlStr += '</div>';
-		        htmlStr += '<div class="card-body">';
+		        htmlStr += '<div class="card-body"><div class="nav-bar" style="width:200px"></div>';
 		        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><h5 class="h5">' + space.SPACE_NAME + '</h5></a>';
 		        htmlStr += '<p>(우편) '+ space.SPACE_ZIPCODE +',<br> '+space.SPACE_ADDRESS +space.SPACE_ADDRESS_DETAIL +' '+ space.SPACE_LOCATION+ '</p>';
-		        htmlStr += '<h5 style="font-weight:bold">'+addComma(space.AVGPRICE)+'원</h5> 평균최대 인원'+space.AVGMAXPEOPLE+' 명';
+		        htmlStr += '<h5 style="font-weight:bold;color:#193D76;">'+addComma(space.AVGPRICE)+'원</h5><div class="nav-bar"></div> 평균최대 인원'+space.AVGMAXPEOPLE+' 명';
 		        htmlStr += '</div>';
 		        htmlStr += '</div>';
 		        htmlStr += '</div>';

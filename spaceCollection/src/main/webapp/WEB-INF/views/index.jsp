@@ -80,6 +80,8 @@ div#weatherBox {
 }
 div#temperature {
     color: white;
+    margin-top: 8%;
+    margin-right: 8%;
 }
 div#description {
     color: white;
@@ -87,10 +89,14 @@ div#description {
 div#place {
     color: white;
 }
-.img-fluid{
-	height:400px !important; 
-	width:400px !important;
+.img-fluid {
+	width:412px;
+	height:400px !important;
+    top: 80% !important; /* 이미지를 수직 중앙으로 이동합니다. */
+    left: 50%; /* 이미지를 수평 중앙으로 이동합니다. */
+	overflow: hidden; 
 }
+
 </style>
 
 <script >
@@ -259,7 +265,7 @@ div#place {
 					        <div id="iconWeather"></div>
 				   </div>
 				   <div class="weaterMinBox">
-					        <div class="current_temp" id="temperature" style="font-size : 50pt"></div>
+					        <div class="current_temp" id="temperature" style="font-size : 40pt"></div>
 					        <div class="weather_description" id="description" style="font-size : 20pt"></div>
 					        <div class="city" id="place" style="font-size : 13pt"></div>
 				   </div>

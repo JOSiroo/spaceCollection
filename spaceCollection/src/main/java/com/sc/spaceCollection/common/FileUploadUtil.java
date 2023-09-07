@@ -164,6 +164,7 @@ public class FileUploadUtil {
 			resultMap.put("fileSize", fileSize);
 
 			resultList.add(resultMap);
+			logger.info("spaceMain = {}", resultList);
 		} // if
 		
 		//spaceSub
@@ -188,6 +189,7 @@ public class FileUploadUtil {
 				resultMap.put("fileSize", fileSize);
 				
 				resultList.add(resultMap);
+				logger.info("spaceSub = {}", resultList);
 			}//if			
 		}//while
 		

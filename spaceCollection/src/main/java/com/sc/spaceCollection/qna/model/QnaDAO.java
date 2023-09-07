@@ -17,4 +17,5 @@ public interface QnaDAO {
 	int totalQnaByUserId(SearchVO searchVo);
 	int getTotalRecordBySpaceNum(int spaceNum);
 	int editQna(QnaVO qnaVo);
+	int qnaAnswer(QnaVO vo);
 }

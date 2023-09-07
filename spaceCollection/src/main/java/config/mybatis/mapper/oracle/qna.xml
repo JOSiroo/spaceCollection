@@ -82,4 +82,10 @@
 		where QNA_NUM=#{qnaNum}
 	</update>
 	
+	<update id="qnaAnswer" parameterType="qnaVo">
+		update qna
+		set QNA_ANSWER = #{qnaAnswer}
+		where QNA_NUM = #{qnaNum}
+	</update>
+	
 </mapper>

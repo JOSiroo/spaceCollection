@@ -143,6 +143,19 @@ public class QnaController {
 		}
 		return bool;
 	}
+	
+	@PostMapping("/qnaAnswer")
+	@ResponseBody
+	public int qnaAnswer(@ModelAttribute QnaVO vo) {
+		logger.info("qna 답변, 파라미터 vo = {}", vo);
+		
+		int cnt = qnaService.qnaAnswer(vo);
+		
+		logger.info("qna 결과, cnt = {}", cnt);
+		
+		
+		return cnt;
+	}
 }
 
 
