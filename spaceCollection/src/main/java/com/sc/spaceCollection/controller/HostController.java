@@ -261,6 +261,22 @@ public class HostController {
 		return "host/registration/spaceManage";
 	}
 	
+	@RequestMapping("/host/registration/deleteSpace")
+	public String deleteSpace(@RequestParam(defaultValue = "0") int spaceNum, Model model) {
+		logger.info("공간 삭제, spaceNum = {}", spaceNum);
+		
+		String msg = "공간 삭제를 실패했습니다.", url = "/host/registration/spaceManage";
+		if (spaceNum > 0) {
+			int cnt = hostService.deleteSpace(spaceNum);
+			msg = spaceNum + " 공간이 삭제되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
 	//page=1&order=reservationNum&status=before&keyword=fd
 	@RequestMapping("/reservation")
 	public String hostReservation(HttpSession session, Model model,

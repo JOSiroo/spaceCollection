@@ -19,6 +19,7 @@ public interface HostService {
 	int insertSpaceDetail(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo);
 	SpaceFileVO selectSpaceFile(int spaceNum);
 	List<SpaceVO> selectSpaceByUserNum(int userNum);
+	int deleteSpace(int spaceNum);
 	
 	List<Map<String, Object>> selectHostReservation(int page, int size, int userNum,String status,String order,String keyword);
 	List<Map<String, Object>> HostReservationCalendar(int userNum);

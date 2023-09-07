@@ -600,7 +600,7 @@
 
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="submit" class="btn btn-warning" id="next" >다음</button>
+				<button type="submit" class="btn btn-warning" id="next" >등록</button>
 			</div>
 			
 		</form>

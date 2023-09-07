@@ -25,6 +25,7 @@ public interface HostDAO {
 	int insertSpaceDetail(SpaceDetailVO spaceDetailVo);
 	SpaceFileVO selectSpaceFile(int spaceNum);
 	List<SpaceVO> selectSpaceByUserNum(int userNum);
+	int deleteSpace(int spaceNum);
 	
 	List<Map<String, Object>> selectHostReservation(@Param("startRow") int startRow, @Param("endRow") int endRow,
 													@Param("userNum")int userNum,@Param("status") String status,

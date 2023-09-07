@@ -179,7 +179,8 @@
 						<div class="btnArea">
 							<a class="spaceModify" href="<c:url value='/host/registration/' />">공간정보 수정</a>
 							<a class="productModify" href="#">세부 공간 추가/수정</a>
-							<a class="delete" href="#">삭제</a>
+							<a class="delete" 
+								href="<c:url value='/host/registration/deleteSpace?spaceNum=${spaceVo.spaceNum}' />">삭제</a>
 						</div>
 					</div>
 				</div>

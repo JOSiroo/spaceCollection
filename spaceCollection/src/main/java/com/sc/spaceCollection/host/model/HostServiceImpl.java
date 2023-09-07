@@ -136,6 +136,11 @@ public class HostServiceImpl implements HostService {
 		return hostDao.selectSpaceByUserNum(userNum);
 	}
 
+	@Override
+	public int deleteSpace(int spaceNum) {
+		return hostDao.deleteSpace(spaceNum);
+	}
+
 
 
 }

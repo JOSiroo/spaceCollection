@@ -106,6 +106,17 @@
 		where img_temp_name like 'S' || #{spaceNum} ||'Main%'
 	</select>
 	
+	<update id="deleteSpace" parameterType="int">
+		update space
+		set del_flag = 'Y', space_out_date = sysdate
+		where space_num = #{spaceNum}
+	</update>
+	
+	<update id="deleteSpaceDetail" parameterType="int">
+		update space
+		set del_flag = 'Y', space_out_date = sysdate
+		where space_num = #{spaceNum}
+	</update>
 	
 	<select id="selectHostReservation" resultType="map">
 		select *
