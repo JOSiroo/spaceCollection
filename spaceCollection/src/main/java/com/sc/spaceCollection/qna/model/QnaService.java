@@ -13,5 +13,6 @@ public interface QnaService {
 	int totalQnaByUserId(SearchVO searchVo);
 	int deleteMultiQna(List<Integer> qnaNum);
 	int getTotalRecordBySpaceNum(int spaceNum);
+	int editQna(QnaVO qnaVo);
 	int qnaAnswer(QnaVO vo);
 }

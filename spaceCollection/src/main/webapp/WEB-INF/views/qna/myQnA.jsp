@@ -110,7 +110,14 @@
 	}
 	
 	.qnaContent{
-		margin-top:100px;
+		color: #000000d1;
+		margin:15px 0px 15px 10px;
+		word-wrap: break-word;
+	}
+	
+	#qnaAnswer{
+		color: #000000d1;
+		margin:15px 0px 15px 10px;
 		word-wrap: break-word;
 	}
 	
@@ -159,6 +166,15 @@
 		color:#fff;
 		border:1px solid #42454c;
 	}
+	
+	#QNAWrite{
+		width: 40px;
+		height: 20px;
+		border-radius: 5px;
+		font-size: 15px;
+		padding: 0px
+	}
+	
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -185,6 +201,18 @@
 			
 		});
 		
+		$('.QNAWriteBt').click(function(){
+			// 현재 클릭한 버튼의 부모 요소인 .qnaDetail 찾기
+		    var qnaDetail = $(this).closest(".qnaDetail");
+			//QnA번호 가져오기
+		    var  qnaNum= qnaDetail.find(".chkBox").val(); 
+			//내용 가져오기
+		    var qnaContent = qnaDetail.find(".qnaContent").text();
+		    
+			$('#message-text').val(qnaContent);
+			$('#editQnaNum').val(qnaNum);
+		});
+		
 	});//window.document
 	function qnaList(curPage){
 		var condition = $('#condition').val();
@@ -192,6 +220,32 @@
 		$('input[name=searchCondition]').val(condition);
 		$('form[name=frmPage]').submit();
 	}
+	
+	function QnAEditBtn(){
+		var qnaContent = document.getElementById('message-text').value;
+		var qnaNum = document.getElementById('editQnaNum').value;
+		alert("test");
+		 $.ajax({
+			url:"<c:url value='/editQna'/>",
+			type:"POST",
+			dataType:"json",
+			data:{
+				qnaContent:qnaContent,
+				qnaNum:qnaNum
+			},
+			success:function(res){
+				if(res){
+					alert('QnA 수정 완료!');
+					location.reload();
+				}else{
+					alert('QnA 수정 실패!');
+				}
+			},
+		 });
+		 
+		 
+	 }
+
 </script>
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" action="<c:url value='/myQnA'/>">
@@ -232,21 +286,24 @@
 		<!-- 반복시작 -->
 		<c:set var="idx" value="0"/>
 			<c:forEach var="map" items="${qnaList }">
+			<input type="hidden" name=qnaNum value="${map['QNA_NUM'] }">
 				<div class="qnaList">
 					<div class="qnaDetail">
 						<label class="fontBold">${map['USER_ID'] }</label>
 						<input type="checkbox" class="chkBox" name="qnaNum" value="${map['QNA_NUM'] }">
 						<br>
-						<span class="qnaContent">${map['QNA_CONTENT'] }<br></span>
+						<div class="qnaContent">${map['QNA_CONTENT'] }<br></div>
 						<div class="editMenu">
 							<a class="answer">${map['SPACE_NAME'] }</a>
 							${map['QNA_REG_DATE'] }
-							| <a href="#">수정</a>
+							| <button type="button" class="btn btn-primary QNAWriteBt" id="QNAWrite" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+								수정
+							  </button>
 						</div>
 						<hr>
 						<c:if test="${!empty map['QNA_ANSWER'] }">
 							<label class="fontBold">호스트님의 답글</label><br>
-							<p>${map['QNA_ANSWER'] }</p>
+							<p id="qnaAnswer">${map['QNA_ANSWER'] }</p>
 						</c:if>
 						<c:if test="${empty map['QNA_ANSWER'] }">
 							<div>호스트님의 답변을 기다리는 중 입니다.</div>
@@ -261,6 +318,68 @@
 		</c:if>
 		</form>
 	</div>
+<div class = 'row'>
+	<c:if test="${!empty sessionScope.userId}">
+	<c:if test="${sessionScope.userId != user_id}">
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style=" background: #ffd014; padding: 0 20px 0 0;">
+						<h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px; padding: 20px;"
+						>질문 수정하기</h1>
+						<button type="button" class="btn-close" id="closeBTN"onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<input type="hidden" name="qnaNum" id="editQnaNum">
+							<div class="mb-3">
+							<label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
+							질문:
+							</label>
+							<label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>		            
+							<textarea class="form-control" id="message-text" rows="10"></textarea>
+							</div>
+						</form>
+						<p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
+					</div>
+					<div class="modal-footer" style="padding:2% 30% 2% 0%;">
+					<button type="button" id="modalQuit" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+					<button type="button" onclick="QnAEditBtn()" class="btn" style="background: #193D76; color:white" >등록</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	</c:if>
+	<div class="modal fade" id="answerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<input type="hidden" id="answerNumVal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style=" background: #ffd014; height: 60px;">
+					<h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; font-size:24px">답변 작성하기</h1>
+					<button type="button" class="btn-close" id="closeBTN"onclick="resetQna()" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
+							답변:
+							</label>
+							<label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>
+							 <textarea class="form-control" id="answerMessage" rows="10"></textarea>
+						</div>
+					</form>
+					<p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
+				</div>
+				<div class="modal-footer" style="padding:2% 30% 2% 0%;">
+					<button type="button" id="modalQuit" class="btn" onclick="resetQna()" style="background: #ffd014;" data-bs-dismiss="modal">취소</button>
+					<button type="button" onclick="answerQna()" class="btn" style="background: #193D76; color:white;">수정</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+						
 <div class="page_wrap">
 	<div class="divPage">
 		<!-- 페이지 번호 추가 -->		
