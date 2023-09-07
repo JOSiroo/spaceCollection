@@ -27,10 +27,11 @@
 				on r.RESERVATION_NUM=v.RESERVATION_NUM
 				where USER_ID=#{userId}
 				<if test="searchKeyword!=null and searchKeyword!=''">
-				 and REVIEW_CONTENT LIKE '%' || #{searchKeyword} || '%'
-				OR SPACE_NAME LIKE '%' || #{searchKeyword} || '%'
-				OR REVIEW_NUM LIKE '%' || #{searchKeyword} || '%'
+					and REVIEW_CONTENT LIKE '%' || #{searchKeyword} || '%'
+					OR SPACE_NAME LIKE '%' || #{searchKeyword} || '%'
+					OR REVIEW_NUM LIKE '%' || #{searchKeyword} || '%'
 				</if>
+				and REVIEW_OUT_DATE IS NULL
 				order by review_num desc
 				)A
 		)
@@ -86,10 +87,12 @@
 		<![CDATA[where rn >= #{startRow} and rn <= #{endRow}]]>
 	</select>
 	
-	<delete id="deleteReview" parameterType="int">
-		delete review
+	<update id="deleteReview" parameterType="int">
+		update review
+		set REVIEW_DEL_FLAG='Y' , REVIEW_OUT_DATE=sysdate
 		where review_num = #{reviewNum}
-	</delete>
+	</update>
+	
 	<select id="getTotalRecordBySpaceNum" parameterType="int">
 		select count(*) as count,avg(REVIEW_RATE) as avg from review_detail_view
 		where space_num = #{spaceNum} and review_del_flag is null
