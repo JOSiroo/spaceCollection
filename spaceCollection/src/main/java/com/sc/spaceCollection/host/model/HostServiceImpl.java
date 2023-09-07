@@ -72,6 +72,52 @@ public class HostServiceImpl implements HostService {
 	@Override
 	@Transactional
 	public int insertSpaceDetail(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
+		if (facilityVo.getFacWifi() == null) {
+			facilityVo.setFacWifi("");
+		}
+		if (facilityVo.getFacPrinter() == null) {
+			facilityVo.setFacPrinter("");
+		}
+		if (facilityVo.getFacChairTable() == null) {
+			facilityVo.setFacChairTable("");
+		}
+		if (facilityVo.getFacSmoke() == null) {
+			facilityVo.setFacSmoke("");
+		}
+		if (facilityVo.getFacRestRoom() == null) {
+			facilityVo.setFacRestRoom("");
+		}
+		if (facilityVo.getFacPC() == null) {
+			facilityVo.setFacPC("");
+		}
+		if (facilityVo.getFacTV() == null) {
+			facilityVo.setFacTV("");
+		}
+		if (facilityVo.getFacWhiteBoard() == null) {
+			facilityVo.setFacWhiteBoard("");
+		}
+		if (facilityVo.getFacElevator() == null) {
+			facilityVo.setFacElevator("");
+		}
+		if (facilityVo.getFacParking() == null) {
+			facilityVo.setFacParking("");
+		}
+		if (facilityVo.getFacFood() == null) {
+			facilityVo.setFacFood("");
+		}
+		if (facilityVo.getFacDrink() == null) {
+			facilityVo.setFacDrink("");
+		}
+		if (facilityVo.getFacCook() == null) {
+			facilityVo.setFacCook("");
+		}
+		if (facilityVo.getFacPet() == null) {
+			facilityVo.setFacPet("");
+		}
+		if (facilityVo.getFacAudio() == null) {
+			facilityVo.setFacAudio("");
+		}
+		
 		int cnt = hostDao.insertFacility(facilityVo);
 		spaceDetailVo.setFacilityNum(facilityVo.getFacilityNum());
 		cnt = hostDao.insertSpaceDetail(spaceDetailVo);

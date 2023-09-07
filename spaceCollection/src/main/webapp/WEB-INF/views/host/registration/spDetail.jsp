@@ -350,7 +350,7 @@
 <article>
 	<div class="main">
 		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/spDetail' />">
-			<input type="hidden" name="${param.spaceNum }" value="131">
+			<input type="hidden" name="spaceNum" value="131">
 			<div class="heading">
 				<span class="hd1">세부 공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>

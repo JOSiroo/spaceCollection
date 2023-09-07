@@ -83,7 +83,7 @@
 		
 		values (#{facilityNum}, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, 
 				#{facRestRoom}, #{facPC}, #{facTV}, #{facWhiteBoard}, #{facElevator}, #{facParking}, 
-				#{facFloor}, #{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio})
+				#{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio})
 	</insert>
 	
 	<insert id="insertSpaceDetail" parameterType="spaceDetailVo">
@@ -92,8 +92,8 @@
 		</selectKey>
 		insert into space_detail(SD_NUM, SD_TYPE, SD_PRICE, SD_MIN_PEOPLE, SD_MAX_PEOPLE, SD_AREA,
         						 SPACE_NUM, FACILITY_NUM, SD_MIN_TIME, SD_CLOSE_TIME, SD_OPEN_TIME)
-		values (#{sdNum}, #{sdType}, #{sdPrice}, #{sdOpenTime}, #{sdCloseTime}, 
-				#{sdMinPeople}, #{sdMaxPeople}, #{sdArea}, #{sdMinTime}, #{spaceNum}, #{facilityNum})
+		values (#{sdNum}, #{sdType}, #{sdPrice}, #{sdMinPeople}, #{sdMaxPeople}, #{sdArea}, #{spaceNum},
+				#{facilityNum}, #{sdMinTime}, #{sdCloseTime}, #{sdOpenTime})
 	</insert>
 	
 	<select id="selectSpace" resultType="spaceVo" parameterType="int">
