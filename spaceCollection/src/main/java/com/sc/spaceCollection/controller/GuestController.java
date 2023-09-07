@@ -102,10 +102,25 @@ public class GuestController {
 	
 
 	
-	@RequestMapping("/findPwd")
+	@GetMapping("/findPwd")
 	public String findPwd() {
 		logger.info("비밀번호 찾기 페이지, 파라미터");
 		return "find/findPwd";
+	}
+	
+	@PostMapping("/findPwd")
+	public String findPwd(@RequestParam String userId,Model model) {
+		logger.info("비밀번호 찾기 처리, 파라미터 userId={}",userId);
+		
+		int cnt=guestService.guestCheckId(userId);
+		logger.info("회원 조회 결과, cnt={}",cnt);
+		if(cnt<1) {
+			model.addAttribute("msg","등록된 회원정보가 없습니다");
+			model.addAttribute("url","/find/findPwd");
+			return "common/message";
+		}
+		
+		return "redirect:/email/emailCheck?type=findPwd&userId="+userId;
 	}
 	
 	@RequestMapping("/findId")
@@ -131,6 +146,15 @@ public class GuestController {
 		model.addAttribute("guestVo",guestVo);
 		
 		return "find/completeFindId";
+	}
+	
+	@GetMapping("/completeFindPwd")
+	public String completeFindPwd(@RequestParam String userId,@RequestParam(required = false) String complete,Model model) {
+		logger.info("비밀번호 찾기 재설정페이지, 파라미터 userId={}",userId);
+		
+		model.addAttribute("userId",userId);
+		
+		return "find/completeFindPwd";
 	}
 	
 	@GetMapping("/editInfo")
@@ -259,10 +283,35 @@ public class GuestController {
 		vo.setSalt(salt);
 		vo.setUserPwd(hex);
 		int cnt = guestService.updateUserPwd(vo);
+		logger.info("비밀번호 재설정 결과 cnt={}",cnt);
 		boolean bool=false;
 		if(cnt>0) {
 			bool = true;
 		}
+		return bool;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/resetPwd")
+	public boolean resetPwd(@RequestParam String userId, @RequestParam String userPwd, Model model) {
+		logger.info("Ajax-비밀번호 재설정 처리, 파라미터 userId={}, userPwd={}",userId,userPwd);
+		//salt추출
+		GuestVO vo = new GuestVO();
+		String salt=encryption.getSalt();
+		logger.info("salt 불러오기 salt={}",salt);
+		//hex변환
+		String hex=encryption.getEncryption(salt,userPwd);
+		logger.info("userPwd=>hex변환 hex={}",hex);
+		vo.setUserId(userId);
+		vo.setSalt(salt);
+		vo.setUserPwd(hex);
+		int cnt = guestService.updateUserPwd(vo);
+		logger.info("비밀번호 재설정 결과 cnt={}",cnt);
+		boolean bool=false;
+		if(cnt>0) {
+			bool=true;
+		}
+		
 		return bool;
 	}
 	

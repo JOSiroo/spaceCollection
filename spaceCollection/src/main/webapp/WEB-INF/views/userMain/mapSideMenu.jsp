@@ -32,6 +32,7 @@
 .offcanvas-start{
 	scroll-behavior: smooth;
 	transition: all 0.4s ease;
+	width:450px;
 }
 #orderBtn{
 	background:#193D76;
@@ -63,6 +64,7 @@
 }
 .collapsing{
 	margin-top:10px;
+	box-shadow: 5px 10px 5px 5px rgba(0, 0, 0, 0.06) !important;
 }
 </style>
 
@@ -93,7 +95,7 @@
       		${vo.key.spaceName}
    		</a>
    			&nbsp;<span class="avgPrice"><fmt:formatNumber value="${map.value}" pattern="#,###원"/></span>
-   			<a style="display:inline-block"class="addressBtn" data-bs-toggle="collapse" href="#collapseExample${vo.key.spaceNum}" role="button" aria-expanded="false" aria-controls="collapseExample">
+   			<a style="display:inline-block; float:right; margin-right:10px;"class="addressBtn" data-bs-toggle="collapse" href="#collapseExample${vo.key.spaceNum}" role="button" aria-expanded="false" aria-controls="collapseExample">
     			<i class="bi bi-arrow-down-square"></i>&nbsp;주소
   			</a>
   			<div class="collapse" id="collapseExample${vo.key.spaceNum}">

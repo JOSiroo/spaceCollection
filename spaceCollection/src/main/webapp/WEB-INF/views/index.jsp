@@ -89,9 +89,12 @@ div#description {
 div#place {
     color: white;
 }
-.img-fluid{
-	height:400px !important; 
-	width:400px !important;
+.img-fluid {
+	width:412px;
+	height:400px !important;
+    top: 80% !important; /* 이미지를 수직 중앙으로 이동합니다. */
+    left: 50%; /* 이미지를 수평 중앙으로 이동합니다. */
+	overflow: hidden; 
 }
 
 </style>
