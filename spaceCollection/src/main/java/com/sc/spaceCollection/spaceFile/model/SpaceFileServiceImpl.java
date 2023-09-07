@@ -17,13 +17,18 @@ public class SpaceFileServiceImpl implements SpaceFileService{
 	}
 
 	@Override
-	public List<SpaceFileVO> selectSpaceFileByBoardNum(int boardNum) {
+	public List<SpaceFileVO> selectSpaceFileByBoardNum(String boardNum) {
 		return spaceFileDao.selectSpaceFileByBoardNum(boardNum);
 	}
 
 	@Override
 	public int deleteSpaceFileByImgeTempName(String imgTempName) {
 		return spaceFileDao.deleteSpaceFileByImgeTempName(imgTempName);
+	}
+
+	@Override
+	public List<String> selectSpaceImgBySpaceNum(String spaceNum) {
+		return spaceFileDao.selectSpaceImgBySpaceNum(spaceNum);
 	}
 	
 	

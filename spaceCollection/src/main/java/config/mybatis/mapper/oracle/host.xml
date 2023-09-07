@@ -39,11 +39,11 @@
 		</selectKey>
 		insert into space(space_num, space_name, space_business_num, space_zipcode, space_address, 
 		    space_address_detail, space_location, space_intro, space_info, space_tag, space_facility, 
-		    space_phone_num, space_warn, latitude, longitude, refund_num, user_num, space_type_no)
+		    space_phone_num, space_warn, latitude, longitude, refund_num, user_num, space_type_no,space_request_status)
 		values (#{spaceNum}, #{spaceName}, #{spaceBusinessNum}, #{spaceZipcode}, #{spaceAddress},
 				#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
 				#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, #{latitude}, #{longitude}, 
-				#{refundNum}, #{userNum}, #{spaceTypeNo})
+				#{refundNum}, #{userNum}, #{spaceTypeNo}, 'R')
 	</insert>
 	
 	<select id="selectSpaceTypeBySpaceTypeName" resultType="spaceTypeVo" parameterType="String">
@@ -64,8 +64,11 @@
 		<selectKey keyProperty="spaceFacilityNum" order="BEFORE" resultType="int">
 			select space_total_facility_seq.nextval from dual
 		</selectKey>
-		insert into space_total_facility
-		values (spaceFacilityNum, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, #{facRestRoom},
+		insert into space_total_facility(SPACE_FACILITY_NUM, FAC_WIFI, FAC_PRINTER, FAC_CHAIR_TABLE,
+										FAC_SMOKE, FAC_REST_ROOM, FAC_PC, FAC_TV, FAC_WHITE_BOARD, FAC_ELEVATOR, 
+										FAC_PARKING, FAC_FOOD, FAC_DRINK, FAC_COOK, FAC_PET, FAC_AUDIO, SPACE_NUM)
+    
+		values (#{spaceFacilityNum}, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, #{facRestRoom},
 				 #{facPC}, #{facTV}, #{facWhiteBoard}, #{facElevator}, #{facParking},
 				 #{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio}, #{spaceNum})
 	</insert>

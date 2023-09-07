@@ -155,10 +155,20 @@
 								<h5 class="card-title">공간 이미지</h5>
 								<div id="carouselExampleIndicators" class="carousel slide">
 									<div class="carousel-indicators">
-										<button type="button"
-											data-bs-target="#carouselExampleIndicators"
-											data-bs-slide-to="0" class="active" aria-current="true"
-											aria-label="Slide 1"></button>
+										<c:set var="i" value="0"/>
+										<c:forEach var="imgName" items="${imgList }">
+											<button type="button"
+												data-bs-target="#carouselExampleIndicators"
+												<c:if test="${i==0 }">
+												data-bs-slide-to="${i }" 
+												class="active" aria-current="true"
+												</c:if>
+												<c:if test="${i>0 }">
+												data-bs-slide-to="${i }" 
+												class="active" aria-current="true"
+												</c:if>
+												aria-label="Slide ${i+1 }"></button>
+										</c:forEach>
 										<button type="button"
 											data-bs-target="#carouselExampleIndicators"
 											data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -167,33 +177,23 @@
 											data-bs-slide-to="2" aria-label="Slide 3"></button>
 									</div>
 									<div class="carousel-inner">
-										<div class="carousel-item active">
-											<img src="<c:url value='/board_images/1.jpg'/>"
-												class="d-block w-100">
-										</div>
-										<div class="carousel-item">
-											<img src="<c:url value='/board_images/2.jpg'/>"
-												class="d-block w-100">
-										</div>
-										<div class="carousel-item">
-											<img src="<c:url value='/board_images/3.jpg'/>"
-												class="d-block w-100">
-										</div>
+										<c:set var="i" value="0"/>
+										<c:forEach var="imgName" items="${imgList }">
+											<c:if test="${i==0 }">
+												<div class="carousel-item active">
+											</c:if>
+											<c:if test="${i>0 }">
+												<div class="carousel-item">
+											</c:if>
+												<img src="<c:url value='/space_images/${imgName }'/>"
+													class="d-block w-100">
+											</div>
+											<c:set var="i" value="${i+1 }"/>
+										</c:forEach>
 									</div>
-									<button class="carousel-control-prev" type="button"
-										data-bs-target="#carouselExampleIndicators"
-										data-bs-slide="prev">
-										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										<span class="visually-hidden">Previous</span>
-									</button>
-									<button class="carousel-control-next" type="button"
-										data-bs-target="#carouselExampleIndicators"
-										data-bs-slide="next">
-										<span class="carousel-control-next-icon" aria-hidden="true"></span>
-										<span class="visually-hidden">Next</span>
-									</button>
 								</div>
 							</div>
+							
 							<hr>
 							<h5 class="card-title">신청자 정보</h5>
 							<div class="row">
@@ -309,10 +309,18 @@
 					<div class="card-body pt-3">
 						<c:if test="${fn:length(spaceTotalInfo.spaceDetailList)>0 }">
 							<ul class="nav nav-tabs nav-tabs-bordered">
+								<c:set var="i" value="0"/>
 								<c:forEach var="map" items="${spaceTotalInfo.spaceDetailList }">
 									<li class="nav-item">
-										<button class="nav-link" data-bs-toggle="tab"
-											data-bs-target="#${map.SD_TYPE }">${map.SD_TYPE }</button>
+										<c:if test="${i != '0'}">
+											<button class="nav-link" data-bs-toggle="tab"
+												data-bs-target="#${fn:replace(map.SD_TYPE, ' ', '') }">${map.SD_TYPE }</button>
+										</c:if>
+										<c:if test="${i == '0'}">
+											<button class="nav-link active" data-bs-toggle="tab"
+												data-bs-target="#${fn:replace(map.SD_TYPE, ' ', '') }">${map.SD_TYPE }</button>
+											<c:set var="i" value="${i+1}" />
+										</c:if>
 									</li>
 								</c:forEach>
 							</ul>
@@ -322,8 +330,15 @@
 						</c:if>
 						<div class="tab-content pt-2 infoDiv">
 							<c:if test="${spaceTotalInfo.spaceDetailList != null }">
+								<c:set var="i" value="0"/>
 								<c:forEach var="map" items="${spaceTotalInfo.spaceDetailList }">
-									<div class="tab-pane" id="${map.SD_TYPE }">
+									<c:if test="${i != '0'}">
+										<div class="tab-pane" id="${fn:replace(map.SD_TYPE, ' ', '') }">
+									</c:if>
+									<c:if test="${i == '0'}">
+										<div class="tab-pane active show" id="${fn:replace(map.SD_TYPE, ' ', '') }">
+										<c:set var="i" value="1"/>
+									</c:if>
 										<div class="row-sm-3">
 											<h5 class="card-title">운영 정보</h5>
 											<div>

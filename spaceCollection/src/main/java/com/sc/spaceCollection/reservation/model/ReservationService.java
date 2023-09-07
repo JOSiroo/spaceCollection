@@ -17,4 +17,5 @@ public interface ReservationService {
 	List<Map<String, Object>> selectReservationAll(SearchVO vo);
 	int getTotalRecord(SearchVO vo);
 	int countReservationList(String userId);
+	int getReservationCntByInterverStandard(String intervalStandard);
 }

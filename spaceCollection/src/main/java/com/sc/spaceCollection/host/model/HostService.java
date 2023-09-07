@@ -12,7 +12,7 @@ public interface HostService {
 	List<SpaceCategoryAllVO> selectSpaceCategory();
 	SpaceTypeVO selectSpaceTypeBySpaceTypeName(String spaceTypeName);
 	int insertSpace(SpaceVO spaceVo, RefundVO refundVo);
-	int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacility);
+	int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo);
 	
 	List<Map<String, Object>> selectHostReservation(int page, int size, int userNum,String status,String order,String keyword);
 	List<Map<String, Object>> HostReservationCalendar(int userNum);
