@@ -247,7 +247,7 @@ public class AdminController {
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		
-		logger.info("게시물 조회 결과, list.size = {}", list.size());
+		logger.info("게시물 조회 결과, list.size = {}", boardTypeList.size());
 
 		int totalRecord=boardService.getTotalRecord(searchVo);
 		logger.info("글 목록 전체 조회 - totalRecord={}", totalRecord);

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +96,7 @@ public class UserMainController {
    
    @GetMapping("/getSearchData")
    @ResponseBody
-   public List<Map<String, Object>> search_get( 
+   public List<Map<Map<String, Object>,List<String>>> search_get( 
 		 @RequestParam int page, @RequestParam int size,
 		 @RequestParam(required = false) String spaceName,
          @RequestParam(defaultValue = "0") int spaceTypeNo,
@@ -127,39 +128,70 @@ public class UserMainController {
 	  logger.info("spaceRegion = {}, maxPeople = {}", region,maxPeople); 
 	  logger.info("minPrice = {}, maxPrice = {}", minPrice,maxPrice); 
 	   
-	  List<Map<String, Object>> list = new ArrayList<>();
+	  List<Map<Map<String, Object>,List<String>>> resultList = new ArrayList<>();
 	  
 	  
 	  if((spaceName == null || spaceName.isEmpty()) && spaceTypeNo == 0) {
-		  list = spaceService.selectAll(page, size,region,maxPeople,minPrice,maxPrice,filterItem,order);
-	            
+		  List<Map<String, Object>> list = spaceService.selectAll(page, size,region,maxPeople,minPrice,maxPrice,filterItem,order);
+	      
+		  for(int i = 0; i < list.size(); i++) {
+			  Map<Map<String, Object>, List<String>> tempMap = new HashMap<>();
+			  String imgStr = "S" + String.valueOf(list.get(i).get("SPACE_NUM")) + "Sub";
+			  List<String> imgList = sdService.selectSpaceImg(imgStr);
+			  
+			  tempMap.put(list.get(i), imgList);
+			  resultList.add(tempMap);
+		  }
+		  
+		  
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
 	         
          model.addAttribute("totalRecord", list.size());
 	  }else if(spaceName != null && !spaceName.isEmpty()) {
          logger.info("검색창 공간 검색, 파라미터 spaceName = {}", spaceName);
-         list = spaceService.selectBySpaceName(page, size, spaceName,
+         List<Map<String, Object>> list = spaceService.selectBySpaceName(page, size, spaceName,
         		 region,maxPeople,minPrice,maxPrice,filterItem,order);
             
-         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", list.size());
+		  for(int i = 0; i < list.size(); i++) {
+			  Map<Map<String, Object>, List<String>> tempMap = new HashMap<>();
+			  String imgStr = "S" + String.valueOf(list.get(i).get("SPACE_NUM")) + "Sub";
+			  List<String> imgList = sdService.selectSpaceImg(imgStr);
+			  
+			  tempMap.put(list.get(i), imgList);
+			  resultList.add(tempMap);
+		  }
          
-         model.addAttribute("totalRecord", list.size());
+         
+         logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultList.size());
+         
+         model.addAttribute("totalRecord", resultList.size());
          
       }else if(spaceTypeNo != 0) {
 		  logger.info("타입별 공간 리스트 조회, 파라미터 spaceTypeNo = {}, page = {}, size = {}", spaceTypeNo,page, size);
-		  list = spaceService.selectBySpaceType(page, size, spaceTypeNo,
+		  List<Map<String, Object>> list = spaceService.selectBySpaceType(page, size, spaceTypeNo,
 	        		 region,maxPeople,minPrice,maxPrice,filterItem,order);
 		  logger.info("타입별 공간 리스트 조회, 파라미터 list.size = {}", list.size());
-         
+		  
+		  for(int i = 0; i < list.size(); i++) {
+			  Map<Map<String, Object>, List<String>> tempMap = new HashMap<>();
+			  String imgStr = "S" + String.valueOf(list.get(i).get("SPACE_NUM")) + "Sub";
+			  List<String> imgList = sdService.selectSpaceImg(imgStr);
+			  
+			  tempMap.put(list.get(i), imgList);
+			  resultList.add(tempMap);
+		  }
+      
       }
 	  
-	  for(Map<String, Object> map : list) {
-		  map.put("SPACE_REG_DATE", map.get("SPACE_REG_DATE")+"");
-	  }//timestamp 오류나서 String으로 변환
+	  for(Map<Map<String, Object>,List<String>> map : resultList) {
+		  for (Entry<Map<String, Object>, List<String>> entry : map.entrySet()) {
+			  entry.getKey().put("SPACE_REG_DATE", map.get("SPACE_REG_DATE")+"");
+			}
+	  }//timestamp 오류나서 String으로 변환*/
 	  
-	  model.addAttribute("list", list);
-	  
-      return list;
+	  model.addAttribute("list", resultList);
+	  logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultList.size());
+      return resultList;
    }
    
    @GetMapping("/search/map")

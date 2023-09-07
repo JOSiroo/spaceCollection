@@ -60,12 +60,22 @@ public class SpaceDetailController {
 			logger.info("공간 상세 페이지, 4 = {}", avgReview);
 
 		}
+		String imgName = "S" + Integer.toString(spaceNum) + "Sub";
+		String mainImgName = "S" + Integer.toString(spaceNum) + "Main";
+		logger.info("공간 상세 페이지 imgName = {}", imgName);
 		
+		List<String> imgList = spaceDetailService.selectSpaceImg(imgName);
+		String imgMain = spaceDetailService.selectSpaceMainImg(mainImgName);
+		
+		
+		logger.info("공간 상세 페이지 imgList = {}", imgList);
 		logger.info("공간 상세 페이지 reviewCnt = {}", reviewCnt);
 		logger.info("공간 상세 페이지 resultMap = {}", resultMap.size());
 		logger.info("공간 상세 페이지 resultMap.get(vo) = {}", resultMap.get(vo));
 		logger.info("공간 상세 페이지 refundVO vo = {}", refundVo);
 		
+		model.addAttribute("mainImg", imgMain);
+		model.addAttribute("imgList", imgList);
 		model.addAttribute("user_id", spaceOwnerId);
 		model.addAttribute("totalQnA", QnACnt);
 		model.addAttribute("totalReview", reviewCnt);
