@@ -39,11 +39,11 @@
 		</selectKey>
 		insert into space(space_num, space_name, space_business_num, space_zipcode, space_address, 
 		    space_address_detail, space_location, space_intro, space_info, space_tag, space_facility, 
-		    space_phone_num, space_warn, latitude, longitude, refund_num, user_num, space_type_no)
+		    space_phone_num, space_warn, latitude, longitude, refund_num, user_num, space_type_no,space_request_status)
 		values (#{spaceNum}, #{spaceName}, #{spaceBusinessNum}, #{spaceZipcode}, #{spaceAddress},
 				#{spaceAddressDetail}, #{spaceLocation}, #{spaceIntro}, #{spaceInfo}, #{spaceTag}, 
 				#{spaceFacility}, #{spacePhoneNum}, #{spaceWarn}, #{latitude}, #{longitude}, 
-				#{refundNum}, #{userNum}, #{spaceTypeNo})
+				#{refundNum}, #{userNum}, #{spaceTypeNo}, 'R')
 	</insert>
 	
 	<select id="selectSpaceTypeBySpaceTypeName" resultType="spaceTypeVo" parameterType="String">

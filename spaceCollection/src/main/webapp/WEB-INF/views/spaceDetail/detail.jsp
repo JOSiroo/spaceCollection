@@ -104,6 +104,11 @@ pageEncoding="UTF-8"%>
  	font-size:20px;
  	margin-left:8px;
  }
+ .d-block.img{
+ 	width:800px;
+ 	height: 800px;
+ }
+ 
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -117,7 +122,7 @@ pageEncoding="UTF-8"%>
 	</div>
 
 
-	<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_3.jpg');">
+	<div class="hero page-inner overlay" style="background-image: url('space_images/${mainImg}');">
 
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
@@ -145,28 +150,28 @@ pageEncoding="UTF-8"%>
 			<div class="row justify-content-between" >
 			<!-- 섹션의 이미지 슬라이드 부분 -->
 				<div class="col-lg-7">
-				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-				  <div class="carousel-indicators">
-				    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-				    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-				  </div>
+				<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 				  <div class="carousel-inner">
-				    <div class="carousel-item active">
-				      <img src="images/img_2.jpg" class="d-block w-100" alt="...">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="images/img_1.jpg" class="d-block w-100" alt="...">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="images/img_3.jpg" class="d-block w-100" alt="...">
-				    </div>
+				  	<c:set var="i" value="0"/>
+				  	<c:forEach var="img" items="${imgList}">
+				  		<c:if test="${i != '0'}">
+						    <div class="carousel-item">
+						      <img src="space_images/${img}" class="d-block img" alt="...">
+						    </div>
+					  	</c:if>
+				  		<c:if test="${i == '0'}">
+						    <div class="carousel-item active">
+						      <img src="space_images/${img}" class="d-block img" alt="...">
+						    </div>
+						  	<c:set var="i" value="1"/>
+					  	</c:if>
+				    </c:forEach>
 				  </div>
-				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
 				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				    <span class="visually-hidden">Previous</span>
 				  </button>
-				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
 				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 				    <span class="visually-hidden">Next</span>
 				  </button>

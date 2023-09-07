@@ -247,7 +247,7 @@ public class AdminController {
 
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
 		
-		logger.info("게시물 조회 결과, list.size = {}", list.size());
+		logger.info("게시물 조회 결과, list.size = {}", boardTypeList.size());
 
 		int totalRecord=boardService.getTotalRecord(searchVo);
 		logger.info("글 목록 전체 조회 - totalRecord={}", totalRecord);
@@ -369,7 +369,7 @@ public class AdminController {
 				originalFileName = (String)map.get("originalFileName");
 				fileSize = (long)map.get("fileSize");
 				
-				spaceFileVo.setImgForeignKey(vo.getBoardNum());
+				spaceFileVo.setImgForeignKey("b"+vo.getBoardNum());
 				spaceFileVo.setImgOriginalName(originalFileName);
 				spaceFileVo.setImgTempName(fileName);
 				spaceFileVo.setImgSize(fileSize);
@@ -410,7 +410,7 @@ public class AdminController {
 	         return "admin/common/message";
 	      }else {
 	         Map<String, Object> map = boardService.selectByBoardNum(boardNum);
-	         List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+	         List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum("b"+boardNum);
 	         logger.info("게시물 상세조회 결과, map = {}, spaceFileList.size = {}", map, spaceFileList.size());
 	         if(map==null || map.isEmpty()) {
 	            model.addAttribute("msg", "삭제되었거나 존재하지 않는 게시물입니다.");
@@ -514,7 +514,7 @@ public class AdminController {
 		Map<String, Object> map = boardService.selectByBoardNum(boardNum);
 		logger.info("게시물 내용 조회결과, map = {}", map);
 		
-		List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum(boardNum);
+		List<SpaceFileVO> spaceFileList = spaceFileService.selectSpaceFileByBoardNum("b"+boardNum);
 		logger.info("첨부파일 조회결과, spaceFileList.size = {}", spaceFileList.size());
 		
 		model.addAttribute("list", list);
@@ -567,7 +567,7 @@ public class AdminController {
 				originalFileName = (String)map.get("originalFileName");
 				fileSize = (long)map.get("fileSize");
 				
-				spaceFileVo.setImgForeignKey(boardVo.getBoardNum());
+				spaceFileVo.setImgForeignKey("b"+boardVo.getBoardNum());
 				spaceFileVo.setImgOriginalName(originalFileName);
 				spaceFileVo.setImgTempName(fileName);
 				spaceFileVo.setImgSize(fileSize);

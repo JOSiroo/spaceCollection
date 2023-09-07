@@ -331,10 +331,20 @@
 							<h5 class="card-title">공간 이미지</h5>
 							<div id="carouselExampleIndicators" class="carousel slide">
 								<div class="carousel-indicators">
-									<button type="button"
-										data-bs-target="#carouselExampleIndicators"
-										data-bs-slide-to="0" class="active" aria-current="true"
-										aria-label="Slide 1"></button>
+									<c:set var="i" value="0"/>
+									<c:forEach var="imgName" items="${imgList }">
+										<button type="button"
+											data-bs-target="#carouselExampleIndicators"
+											<c:if test="${i==0 }">
+											data-bs-slide-to="${i }" 
+											class="active" aria-current="true"
+											</c:if>
+											<c:if test="${i>0 }">
+											data-bs-slide-to="${i }" 
+											class="active" aria-current="true"
+											</c:if>
+											aria-label="Slide ${i+1 }"></button>
+									</c:forEach>
 									<button type="button"
 										data-bs-target="#carouselExampleIndicators"
 										data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -343,18 +353,19 @@
 										data-bs-slide-to="2" aria-label="Slide 3"></button>
 								</div>
 								<div class="carousel-inner">
-									<div class="carousel-item active">
-										<img src="<c:url value='/board_images/1.jpg'/>"
-											class="d-block w-100">
-									</div>
-									<div class="carousel-item">
-										<img src="<c:url value='/board_images/2.jpg'/>"
-											class="d-block w-100">
-									</div>
-									<div class="carousel-item">
-										<img src="<c:url value='/board_images/3.jpg'/>"
-											class="d-block w-100">
-									</div>
+									<c:set var="i" value="0"/>
+									<c:forEach var="imgName" items="${imgList }">
+										<c:if test="${i==0 }">
+											<div class="carousel-item active">
+										</c:if>
+										<c:if test="${i>0 }">
+											<div class="carousel-item">
+										</c:if>
+											<img src="<c:url value='/space_images/${imgName }'/>"
+												class="d-block w-100">
+										</div>
+										<c:set var="i" value="${i+1 }"/>
+									</c:forEach>
 								</div>
 								<button class="carousel-control-prev" type="button"
 									data-bs-target="#carouselExampleIndicators"

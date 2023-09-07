@@ -84,4 +84,12 @@
 		<include refid="searchWhere"/>
 	</select>
 	
+	<select id="getReservationCntByInterverStandard" parameterType="string" resultType="int">
+		select count(RESERVER_PAY_DAY) as reservationCnt
+		from adminStaticView
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)-(interval '1' ${intervalStandard})
+		and RESERVER_PAY_DAY <= sysdate]]>
+		
+	</select>
+	
 </mapper>
