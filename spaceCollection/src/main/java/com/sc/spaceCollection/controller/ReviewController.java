@@ -78,6 +78,18 @@ public class ReviewController {
 		return "redirect:/detail?spaceNum="+spaceNum;
 	}
 	
+	@GetMapping("/deleteMyReview")
+	public String deleteMyReview(@RequestParam int reviewNum) {
+		logger.info("나의 리뷰삭제, 파라미터 reviewNum={}",reviewNum);
+		
+		int cnt = reviewService.deleteReview(reviewNum);
+		logger.info("리뷰삭제 결과, cnt={}",cnt);
+		
+		return "redirect:/myReview";
+	}
+	
+	
+	
 	
 	@RequestMapping("/myReview")
 	@Transactional
