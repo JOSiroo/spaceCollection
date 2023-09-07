@@ -1166,7 +1166,7 @@ pageEncoding="UTF-8"%>
 					var resultStr = "<h4 style='font-weight:bold;'>등록된 이용 후기가 없습니다</h4>";
 					$(".question-box").html(resultStr);
 				}
-	    	}
+	    	} 
 	    });
     }
     function setAnswerNum(qnaNum){
