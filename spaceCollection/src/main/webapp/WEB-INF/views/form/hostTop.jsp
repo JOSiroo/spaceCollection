@@ -204,7 +204,7 @@
 	      		<a class="mng-item" href="#">
 	      			이용 후기 /<br>Q&A 관리
 	      		</a>
-	      		<a class="mng-item" href="#">
+	      		<a class="mng-item" href="<c:url value='/host/registration/spaceManage'/>">
 	      			공간정보 관리
 	      		</a>
 	      	</div>

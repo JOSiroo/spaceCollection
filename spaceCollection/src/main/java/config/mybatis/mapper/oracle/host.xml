@@ -77,7 +77,10 @@
 		<selectKey keyProperty="facilityNum" order="BEFORE" resultType="int">
 			select facility_seq.nextval from dual
 		</selectKey>
-		insert into facility
+		insert into facility (FACILITY_NUM, FAC_WIFI, FAC_PRINTER, FAC_CHAIR_TABLE,
+								FAC_SMOKE, FAC_REST_ROOM, FAC_PC, FAC_TV, FAC_WHITE_BOARD, FAC_ELEVATOR, 
+								FAC_PARKING, FAC_FOOD, FAC_DRINK, FAC_COOK, FAC_PET, FAC_AUDIO)
+		
 		values (#{facilityNum}, #{facWifi}, #{facPrinter}, #{facChairTable}, #{facSmoke}, 
 				#{facRestRoom}, #{facPC}, #{facTV}, #{facWhiteBoard}, #{facElevator}, #{facParking}, 
 				#{facFloor}, #{facFood}, #{facDrink}, #{facCook}, #{facPet}, #{facAudio})
@@ -92,6 +95,11 @@
 		values (#{sdNum}, #{sdType}, #{sdPrice}, #{sdOpenTime}, #{sdCloseTime}, 
 				#{sdMinPeople}, #{sdMaxPeople}, #{sdArea}, #{sdMinTime}, #{spaceNum}, #{facilityNum})
 	</insert>
+	
+	<select id="selectSpace" resultType="spaceVo" parameterType="int">
+		select * from space
+		where space_num = #{spaceNum}
+	</select>
 	
 	<select id="selectHostReservation" resultType="map">
 		select *
