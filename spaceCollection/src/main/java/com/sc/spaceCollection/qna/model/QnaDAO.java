@@ -16,4 +16,5 @@ public interface QnaDAO {
 	List<Map<String,Object>> selectQnaByUserId(SearchVO searchVo);
 	int totalQnaByUserId(SearchVO searchVo);
 	int getTotalRecordBySpaceNum(int spaceNum);
+	int editQna(QnaVO qnaVo);
 }
