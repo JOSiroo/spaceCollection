@@ -87,6 +87,10 @@ div#description {
 div#place {
     color: white;
 }
+.img-fluid{
+	height:400px !important; 
+	width:400px !important;
+}
 </style>
 
 <script >
@@ -182,9 +186,15 @@ div#place {
 						<div class="property-slider">
 							<c:forEach var="map" items="${list}">
 							  	  <div class="property-item">
-							  	  <a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="img">
-										<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-									</a>
+							  	  <c:forEach var="entry" items="${imgList}" varStatus="status">
+										<fmt:parseNumber var="entryVal" type="number" value="${entry.key}" />
+										<fmt:parseNumber var="mapVal" type="number" value="${map.SPACE_NUM}" />
+											<c:if test="${entryVal == mapVal}">
+										  	  	<a href="<c:url value='/detail'/>?spaceNum=${entry.key}" class="img">
+													<img src="<c:url value="/space_images/${entry.value}"/>" alt="Image" class="img-fluid">
+												</a>
+											</c:if>
+									</c:forEach>
 									<div class="property-content">
 										<div>
 											<h5 ><a class="newTitle" style="font-weight:900; color: #193D76;" href="<c:url value='detail?spaceNum=${map.SPACE_NUM}'/>">${map.SPACE_NAME}</a></h5>
