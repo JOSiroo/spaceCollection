@@ -96,10 +96,16 @@
 				#{facilityNum}, #{sdMinTime}, #{sdCloseTime}, #{sdOpenTime})
 	</insert>
 	
-	<select id="selectSpace" resultType="spaceVo" parameterType="int">
+	<select id="selectSpaceByUserNum" resultType="spaceVo" parameterType="int">
 		select * from space
-		where space_num = #{spaceNum}
+		where user_num = #{userNum}
 	</select>
+	
+	<select id="selectSpaceFile" resultType="spaceFileVo" parameterType="int">
+		select * from space_file 
+		where img_temp_name like 'S' || #{spaceNum} ||'Main%'
+	</select>
+	
 	
 	<select id="selectHostReservation" resultType="map">
 		select *

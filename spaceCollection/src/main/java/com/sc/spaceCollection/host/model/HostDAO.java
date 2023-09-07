@@ -11,6 +11,7 @@ import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 @Mapper
@@ -22,6 +23,8 @@ public interface HostDAO {
 	int insertSpaceTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo);
 	int insertFacility(FacilityVO facilityVo);
 	int insertSpaceDetail(SpaceDetailVO spaceDetailVo);
+	SpaceFileVO selectSpaceFile(int spaceNum);
+	List<SpaceVO> selectSpaceByUserNum(int userNum);
 	
 	List<Map<String, Object>> selectHostReservation(@Param("startRow") int startRow, @Param("endRow") int endRow,
 													@Param("userNum")int userNum,@Param("status") String status,
