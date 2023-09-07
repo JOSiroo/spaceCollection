@@ -73,7 +73,7 @@ a#nowWeather {
     font-size: 17px;
 }
 div#weatherBox {
-    background: rgb(101, 178, 255);
+    background: #00204a;
     padding: 14px;
     margin-bottom: 30px;
     height: 208px;
@@ -248,7 +248,7 @@ div#place {
 				   <div style="float : left;">
 					        <div id="iconWeather"></div>
 				   </div>
-				   <div style="float : right; margin-top : -45px;">
+				   <div class="weaterMinBox">
 					        <div class="current_temp" id="temperature" style="font-size : 50pt"></div>
 					        <div class="weather_description" id="description" style="font-size : 20pt"></div>
 					        <div class="city" id="place" style="font-size : 13pt"></div>
