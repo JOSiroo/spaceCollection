@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,6 @@ import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 import com.sc.spaceCollection.zzim.model.ZzimServiceImpl;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -83,6 +81,7 @@ public class SpaceDetailController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("map", resultMap.get(vo));
 		model.addAttribute("refundVo", refundVo);
+		
 		
 		return "spaceDetail/detail";
 	}

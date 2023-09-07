@@ -213,6 +213,27 @@
 			$('#editQnaNum').val(qnaNum);
 		});
 		
+		$('#message-text').keyup(function (e) {
+			let content = $(this).val();
+		    
+		    // 글자수 세기
+		    if (content.length == 0 || content == '') {
+		    	$('.textLimit').text('최대 0 / 200자 제한');
+		    } else {
+		    	$('.textLimit').text('최대 '+content.length +' / 200자 제한');
+		    }
+		    
+		    // 글자수 제한
+		    if (content.length > 200) {
+		    	// 200자 부터는 타이핑 되지 않도록
+		        $(this).val($(this).val().substring(0, 200));
+		        // 200자 넘으면 알림창 빨간글씨로 알려주기
+		        $('.textLimit').css("color","red");
+		    }else{
+		    	$('.textLimit').css("color","black");
+		    };
+		});
+		
 	});//window.document
 	function qnaList(curPage){
 		var condition = $('#condition').val();
@@ -242,8 +263,6 @@
 				}
 			},
 		 });
-		 
-		 
 	 }
 
 </script>
@@ -336,8 +355,9 @@
 							<label for="message-text" class="col-form-label" style="float:left; font-size:16px;font-weight: bold;color:black; margin-bottom:1%;">
 							질문:
 							</label>
-							<label class = "textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;">최대 0 / 200자 제한</label>		            
-							<textarea class="form-control" id="message-text" rows="10"></textarea>
+							<label class ="textLimit" style="float:left; font-size:16px;color:black;margin-left:50%;margin-top:1%;"></label>		            
+							<textarea class="form-control" id="message-text" rows="10" maxlength="210"></textarea>
+							<span class="error"></span>
 							</div>
 						</form>
 						<p style="color:red"> 단, 공간 및 예약에 대한 문의가 아닌 글은 무통보 삭제될 수 있습니다.</p>
