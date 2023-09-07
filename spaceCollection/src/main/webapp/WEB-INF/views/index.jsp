@@ -73,13 +73,15 @@ a#nowWeather {
     font-size: 17px;
 }
 div#weatherBox {
-    background: rgb(101, 178, 255);
+    background: #00204a;
     padding: 14px;
     margin-bottom: 30px;
     height: 208px;
 }
 div#temperature {
     color: white;
+    margin-top: 8%;
+    margin-right: 8%;
 }
 div#description {
     color: white;
@@ -87,6 +89,14 @@ div#description {
 div#place {
     color: white;
 }
+.img-fluid {
+	width:412px;
+	height:400px !important;
+    top: 80% !important; /* 이미지를 수직 중앙으로 이동합니다. */
+    left: 50%; /* 이미지를 수평 중앙으로 이동합니다. */
+	overflow: hidden; 
+}
+
 </style>
 
 <script >
@@ -182,9 +192,15 @@ div#place {
 						<div class="property-slider">
 							<c:forEach var="map" items="${list}">
 							  	  <div class="property-item">
-							  	  <a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="img">
-										<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-									</a>
+							  	  <c:forEach var="entry" items="${imgList}" varStatus="status">
+										<fmt:parseNumber var="entryVal" type="number" value="${entry.key}" />
+										<fmt:parseNumber var="mapVal" type="number" value="${map.SPACE_NUM}" />
+											<c:if test="${entryVal == mapVal}">
+										  	  	<a href="<c:url value='/detail'/>?spaceNum=${entry.key}" class="img">
+													<img src="<c:url value="/space_images/${entry.value}"/>" alt="Image" class="img-fluid">
+												</a>
+											</c:if>
+									</c:forEach>
 									<div class="property-content">
 										<div>
 											<h5 ><a class="newTitle" style="font-weight:900; color: #193D76;" href="<c:url value='detail?spaceNum=${map.SPACE_NUM}'/>">${map.SPACE_NAME}</a></h5>
@@ -248,8 +264,8 @@ div#place {
 				   <div style="float : left;">
 					        <div id="iconWeather"></div>
 				   </div>
-				   <div style="float : right; margin-top : -45px;">
-					        <div class="current_temp" id="temperature" style="font-size : 50pt"></div>
+				   <div class="weaterMinBox">
+					        <div class="current_temp" id="temperature" style="font-size : 40pt"></div>
 					        <div class="weather_description" id="description" style="font-size : 20pt"></div>
 					        <div class="city" id="place" style="font-size : 13pt"></div>
 				   </div>

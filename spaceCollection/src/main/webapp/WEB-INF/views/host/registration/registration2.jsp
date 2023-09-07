@@ -555,11 +555,38 @@
 			$(this).closest('.tagRe').remove();
 		});
 		
+		//사업자 등록증 첨부
+		$('.btAdd.file.license').click(function() {
+			//기존에 이미지가 있으면
+			if ($('#license').val().length > 1) {
+			    //기존에 있던 이미지 지우기
+			    $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
+			    $('#license').val('');
+			}
+		});
+
+		$('#license').change(function() {
+		  	var file = this.files[0];
+			if (file) {
+		      	var reader = new FileReader();
+		      	reader.onload = function(e) {
+		        	$('.spImg.license').empty().append('<div class="imgBox"><img src="' + e.target.result + '"></div>');
+		      	};
+		      	reader.readAsDataURL(file);
+		    } else {
+		        // 파일 선택이 취소되거나 없을 경우 기본 이미지 또는 안내 메시지를 보여줄 수 있음
+		        $('.spImg.license').empty().append('<span class="inner">사업자 등록증을 추가해 주세요.</span>');
+		    }
+		});
+		
 		//메인 이미지 첨부
 		$('.btAdd.file.main').click(function() {
-		    //기존에 있던 이미지 지우기
-		    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
-		    $('input[type="file"]').val('');
+			//기존에 이미지가 있으면
+			if ($('#mainImage').val().length > 1) {
+			    //기존에 있던 이미지 지우기
+			    $('.spImg.main').empty().append('<span class="inner">이미지 파일을 추가해 주세요.</span>');
+			    $('#mainImage').val('');
+			}
 		});
 
 		$('#mainImage').change(function() {
@@ -576,6 +603,32 @@
 		    }
 		});
 		
+		//공간 이미지 첨부
+		$('.btAdd.file.sub').click(function() {
+			//기존에 이미지가 있으면
+			if ($('#subImage').val().length > 1) {
+			    //기존에 있던 이미지 지우기
+			    $('.spImg.sub').empty().append('<span class="inner sub" style="color: #3c3c3c;"></span>');
+			    $('#subImage').val('');
+			}
+		});
+		
+		$('#subImage').on('change', function() {
+            var fileList = $(this)[0].files;
+            var innerSub = $('.inner.sub');
+
+            innerSub.empty(); // 기존 파일명 초기화
+
+            if (fileList.length > 0) {
+                for (var i = 0; i < fileList.length; i++) {
+                    var fileName = fileList[i].name;
+                    innerSub.append('<p>' + fileName + '</p>'); // 파일 이름 추가
+                }
+            }
+        });
+		
+		
+		//파일 사이즈 지정
 		$('#fileInput').on('change', function() {
 			var fileInput = this;
 		    var maxSizeInBytes = 3 * 1024 * 1024; // 3MB
@@ -597,7 +650,6 @@
 		});
 		
 		$('#next').click(function() {
-			/*
 			//필수 입력
 			//공간명
 			if ($('.spaceName').find($('.spText')).val() < 1) {
@@ -737,7 +789,6 @@
 		        
 		        return false;
 		    }
-			*/
 			
 			$('form[name=frmRegi2]').submit();
 		});
@@ -913,14 +964,14 @@
 				</div>
 				<div class="boxContents">
 					<div class="BusinessLicense">
-						<div class="spImg license" style="height: 50px; padding-top: 15px;">
-							<div class="inner license">이미지 파일을 추가해 주세요.</div>
+						<div class="spImg license" style="min-height: 50px; padding-top: 15px;">
+							<div class="inner license">사업자 등록증을 추가해 주세요.</div>
 						</div>
 						<div class="btBox">
 							<label>
-								<div class="btAdd file sub" >파일첨부</div>
-								<input type="file" id="license" accept="image/jpg, image/png, image/jpeg" 
-									name="license" style="display: none;" multiple>
+								<div class="btAdd file license" >파일첨부</div>
+								<input type="file" id="license" name="license"
+									accept="image/jpg, image/png, image/jpeg" style="display: none;" >
 							</label>
 						</div>
 					</div>
@@ -1075,28 +1126,28 @@
 						  	<label class="form-check-label" for="inlineCheckbox9">엘레베이터</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox9" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox9">주차가능</label>
+						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox10" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox10">주차가능</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox10" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox9">음식물섭취가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox11" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox11">음식물섭취가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox11" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox10">주류반입가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox12" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox12">주류반입가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox12" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox11">취사가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox13" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox13">취사가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox13" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox12">애완동물동반가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox14" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox14">애완동물동반가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox14" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox13">음향장비</label>
+						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox15" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox15">음향장비</label>
 						</div>
 					</div>
 				</div>
@@ -1138,8 +1189,8 @@
 						<div class="btBox">
 							<label>
 								<div class="btAdd file main" >파일첨부</div>
-								<input type="file" id="mainImage" name="spaceMain" multiple
-									accept="image/jpg, image/png, image/jpeg" style="display: none;">
+								<input type="file" id="mainImage" name="spaceMain" style="display: none;"
+									accept="image/jpg, image/png, image/jpeg" >
 							</label>
 						</div>
 					</div>
@@ -1150,11 +1201,15 @@
 				<div class="boxTitle">
 					<span>이미지 <span style="color: red;">*</span></span>
 					<span class="subTitle">한 장당 최대 3MB<span style="color: #704de4;">(최대 10장)</span></span>
+					<div class="boxnoti">
+						<img src="<c:url value='/images/pngwing.com.png' />" >
+						<p>이미지는 한번에 업로드해야 합니다. 변경하고 싶으면 다시 첨부해야 합니다.</p>
+					</div>
 				</div>
 				<div class="boxContents">
 					<div class="spaceImg sub">
-						<div class="spImg sub" style="height: 50px; padding-top: 15px;">
-							<div class="inner sub">이미지 파일을 추가해 주세요.</div>
+						<div class="spImg sub" style="min-height: 50px; padding-top: 15px;">
+							<div class="inner sub" style="color: #3c3c3c;" ></div>
 						</div>
 						<div class="btBox">
 							<label>
@@ -1362,8 +1417,6 @@
 		</form>
 	</div>
 </article>
-
-
 
 </body>
 </html>

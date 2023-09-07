@@ -34,34 +34,39 @@ public class EmailController {
 	public String sendeMail(@RequestParam(required = false) String userEmail,@RequestParam(required = false)String userId
 			,@RequestParam(required = false)String type, Model model) {
 		
-		logger.info("이메일 인증 처리, 파라미터 userEmail={},type={}",userEmail,type);
-		int cnt = guestService.selectCountEmail(userEmail);
-		logger.info("이메일로 아이디 조회결과, cnt={}",cnt);
+		logger.info("이메일 인증 처리, 파라미터 userEmail={},type={},userId={}",userEmail,type,userId);
 		String msg="등록된 이메일이 없습니다.", url="/email/emailCheck?type="+type;
-		if(!type.equals("register")) { //회원가입이 아닌 경우
+		
+		if(type.equals("findId")) { //아이디 찾기인 경우
+			int cnt = guestService.selectCountEmail(userEmail);
+			logger.info("이메일로 아이디 조회결과, cnt={}",cnt);
 			if(cnt<1) {
 				model.addAttribute("msg",msg);
 				model.addAttribute("url",url);
 				return "common/message";
 			}
 		}else if(type.equals("register")){ //회원가입 인 경우
+			int cnt = guestService.selectCountEmail(userEmail);
+			logger.info("이메일로 아이디 조회결과, cnt={}",cnt);
 			if(cnt>0) {
 				msg="이미 가입된 이메일입니다.";
 				model.addAttribute("msg",msg);
 				model.addAttribute("url",url);
 				return "common/message";
 			}
-		}
-		
-		if(type.equals("findPwd")) {
-			cnt=guestService.countByUserIdUserEmail(userId, userEmail);
-			if(cnt>0) {
+		}else if(type.equals("findPwd")) {
+			int cnt=guestService.countByUserIdUserEmail(userId, userEmail);
+			logger.info("비밀번호 찾기 아이디,이메일 일치조회 결과, cnt={}",cnt);
+			if(cnt<1) {
 				msg="일치하는 회원정보가 없습니다.";
+				url="/guest/findPwd";
 				model.addAttribute("msg",msg);
 				model.addAttribute("url",url);
 				return "common/message";
 			}
 		}
+		
+		
 		
 		int authCode=(int)(Math.random() * 899999) + 100000;//100000~999999 난수 생성
 		logger.info("난수 생성처리, authCode={}",authCode);

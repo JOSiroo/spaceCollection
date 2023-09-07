@@ -63,7 +63,7 @@
 					<![CDATA[ and MAXPEOPLE >=  #{maxPeople} ]]>
 				</if>
 				<if test="minPrice!=null and minPrice!=''">
-					<![CDATA[ and AVGPRICE >  #{minPrice} ]]> 
+					<![CDATA[ and AVGPRICE >=  #{minPrice} ]]> 
 				</if>
 				<if test="maxPrice!=null and maxPrice!=''">
 					<![CDATA[ and AVGPRICE <  #{maxPrice} ]]> 
@@ -121,14 +121,17 @@
 	<select id="selectBySpaceTypeMap" resultType="spaceVo">
 		select * from space
 		where space_Type_no = #{spaceTypeNo}	
+		and SPACE_REQUEST_STATUS = 'Y'
 	</select>
 	<select id="selectBySpaceNameMap" resultType="spaceVo">
 		select * from space
-		where space_Name like '%' || #{spaceName} || '%'	
+		where space_Name like '%' || #{spaceName} || '%'
+		and SPACE_REQUEST_STATUS = 'Y'	
 	</select>
 	
 	<select id="selectAllMap" resultType="spaceVo">
 		select * from SPACE_SD_AVERAGEPRICE_FACILITY_VIEW
+		where SPACE_REQUEST_STATUS = 'Y'
 	</select>
 	
 	<select id="selectBySpaceNum"  resultType="spaceVo">

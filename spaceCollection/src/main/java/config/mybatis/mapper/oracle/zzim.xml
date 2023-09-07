@@ -30,7 +30,7 @@
 			select A.*, rownum as rn
 			from 
 			(
-				select * from ZZIM_SPACE_VIEW
+				select * from zzim_space_view
 				where user_num = #{userNum} 
 			)A	
 		)

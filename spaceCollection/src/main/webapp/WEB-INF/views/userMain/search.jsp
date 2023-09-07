@@ -193,10 +193,14 @@ p{
 	    animation : fadeInDown 1s;
 	}
 	.card-body{
-		padding: 4% 8% 4% 8%;
+		padding: 4% 6% 4% 6%;
 	}
 	.h5{
-	    	font-weight: bold	
+    	font-weight: bold;
+    	display: inline-block;
+    }
+    .h5:hover{
+    	color:#ffd014;
     }
 	
 	.dropdounUl.filter{
@@ -362,6 +366,12 @@ p{
 		border: #ffd014 4px solid;
 		background: white;
 	}
+	.nav-bar {
+    width: 45px;
+    height: 3px;
+    background: #ffd014;
+    margin-bottom: 10px;
+}
 </style>
 <div class="search-wrapper"></div>
 <div class = "asd">
@@ -477,7 +487,7 @@ p{
 						<div class = "row top filter">
 							<div class = "col filter">
 									<div class = "priceDiv">
-										<div><h5 style="font-weight: bold;text-align: left;">가격</h5></div>
+										<div><h5 style="font-weight: bold;text-align: left">가격</h5></div>
 										<br>
 										<div class="form-floating">
 									      <input type="text"  class="form-control" id="slider-snap-value-lower" placeholder="name@example.com" value="0">
@@ -746,15 +756,15 @@ $(function(){
 		}
 
 		if(lowerPrice == 0){
-			urlSearchParams.delete("lowerPrice");
+			urlSearchParams.delete("minPrice");
 		}else{
-			urlSearchParams.set("lowerPrice", lowerPrice);
+			urlSearchParams.set("minPrice", lowerPrice);
 		}
 
 		if(upperPrice == 0){
-			urlSearchParams.delete("upperPrice");
+			urlSearchParams.delete("maxPrice");
 		}else{
-			urlSearchParams.set("upperPrice", upperPrice);
+			urlSearchParams.set("maxPrice", upperPrice);
 		}
 		
 		location.href = currentUrl[0] + "?" + urlSearchParams;
@@ -786,6 +796,14 @@ $(function(){
 	var keyword = "";
 	
 	//ajax로 처리된 파라미터들이 있으면 url에 파라미터 추가하는 영역
+
+	//무한스크롤 ajax 함수 영역
+	var noDataNum = 0;
+	
+function loadMoreData() {
+    if (isLoading) {
+        return;
+    }
 	if(${!empty param.spaceTypeNo}){
 		condition = "spaceTypeNo="+"${param.spaceTypeNo}";
 	}else if(${!empty param.spaceName}){
@@ -818,21 +836,11 @@ $(function(){
 	if(${!empty param.order}){
 		condition += "&order="+"${param.order}";
 	}
-	
-	//무한스크롤 ajax 함수 영역
-	var noDataNum = 0;
-	
-function loadMoreData() {
-    if (isLoading) {
-        return;
-    }
-    
     isLoading = true;
 
     $.ajax({
         url: '<c:url value="/getSearchData?page='+page+'&size='+size+'&'+condition+'"/>',
         type:'get',
-        dataType: 'json',
         success: function(data) {
         	if(data != null){
 				makeList(data);
@@ -858,43 +866,72 @@ function loadMoreData() {
 	// ajax로 불러온 데이터들 html 생성하는 함수
 	var num =1;
 	function makeList(data) {
+	    $.each(data, function(index) {
 	    var htmlStr = "";
-	    $.each(data, function() {
-	    	console.log(data);
+	    	var innerVal = Object.values(this);
+	    	var innerMap =Object.keys(this)[0];
+			var input = innerMap;
+			console.log(input);
+			
+			var keyValueRegex = /(\w+)=(.*?)(?=, \w+=|$)/g;
 
-	        htmlStr += '<div class="col-sm-4">';
-	        htmlStr += '<div class="card" style="width: 18rem;">';
-	        htmlStr += '<div id="carouselExample'+num+'" class="carousel slide">';
-	        htmlStr += '<div class="carousel-inner">';
-	        htmlStr += '<div class="carousel-item active">';
-	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
-	        htmlStr += '</div>';
-	        htmlStr += '<div class="carousel-item">';
-	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
-	        htmlStr += '</div>';
-	        htmlStr += '<div class="carousel-item">';
-	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
-	        htmlStr += '</div>';
-	        htmlStr += '</div>';
-	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="prev">';
-	        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-	        htmlStr += '<span class="visually-hidden">Previous</span>';
-	        htmlStr += '</button>';
-	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="next">';
-	        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-	        htmlStr += '<span class="visually-hidden">Next</span>';
-	        htmlStr += '</button>';
-	        htmlStr += '</div>';
-	        htmlStr += '<div class="card-body">';
-	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
-	        htmlStr += '<p>(우편) '+this.SPACE_ZIPCODE+',<br> '+this.SPACE_ADDRESS +this.SPACE_ADDRESS_DETAIL +' '+ this.SPACE_LOCATION+ '</p>';
-	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5> 평균최대 인원'+this.AVGMAXPEOPLE+' 명';
-	        htmlStr += '</div>';
-	        htmlStr += '</div>';
-	        htmlStr += '</div>';
-	        num++;
+			// 결과를 저장할 객체 생성
+			var space = {};
+
+			if (input !== undefined && input !== null) {
+				// 정규 표현식과 매치하여 키-값 쌍 추출
+				var matches = input.matchAll(keyValueRegex);
+	
+				for (const match of matches) {
+				    var key = match[1];
+				    var value = match[2];
+	
+				    // 값이 따옴표로 감싸져 있지 않으면 따옴표로 감싸기
+	
+				    // 결과 객체에 키-값 쌍 추가
+				    space[key] = value;
+				}
+	
+				// 결과 출력
+				console.log(space);
+				console.log(typeof(innerVal[index]));
+				
+				htmlStr += '<div class="col-sm-4">';
+		        htmlStr += '<div class="card" style="width: 18rem;">';
+		        htmlStr += '<div id="carouselExampleAutoplaying'+num+'" class="carousel slide" data-bs-ride="carousel">';
+		        htmlStr += '<div class="carousel-inner">';
+				for(var i = 0; i < innerVal[0].length; i++){
+					if(i == 0){
+				        htmlStr += '<div class="carousel-item active">';
+				        htmlStr += '<img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="...">';
+				        htmlStr += '</div>';
+					}else{
+				        htmlStr += '<div class="carousel-item">';
+				        htmlStr += '<img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="...">';
+				        htmlStr += '</div>';
+					}
+				}
+		        htmlStr += '</div>';
+		        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying'+num+'" data-bs-slide="prev">';
+		        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+		        htmlStr += '<span class="visually-hidden">Previous</span>';
+		        htmlStr += '</button>';
+		        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying'+num+'" data-bs-slide="next">';
+		        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+		        htmlStr += '<span class="visually-hidden">Next</span>';
+		        htmlStr += '</button>';
+		        htmlStr += '</div>';
+		        htmlStr += '<div class="card-body"><div class="nav-bar" style="width:200px"></div>';
+		        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><h5 class="h5">' + space.SPACE_NAME + '</h5></a>';
+		        htmlStr += '<p>(우편) '+ space.SPACE_ZIPCODE +',<br> '+space.SPACE_ADDRESS +space.SPACE_ADDRESS_DETAIL +' '+ space.SPACE_LOCATION+ '</p>';
+		        htmlStr += '<h5 style="font-weight:bold;color:#193D76;">'+addComma(space.AVGPRICE)+'원</h5><div class="nav-bar"></div> 평균최대 인원'+space.AVGMAXPEOPLE+' 명';
+		        htmlStr += '</div>';
+		        htmlStr += '</div>';
+		        htmlStr += '</div>';
+			}
+		        num++;
+		    $('#data-container').append(htmlStr);
 	    });
-	    $('#data-container').append(htmlStr);
 	}
 	
 	//ajax로 불러올 데이터가 없을때 호출하는 함수

@@ -21,6 +21,7 @@ import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.FileUploadUtil;
+import com.sc.spaceCollection.facility.model.FacilityVO;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.host.model.HostService;
@@ -29,6 +30,7 @@ import com.sc.spaceCollection.host.model.SpaceTypeVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.space.model.SpaceVO;
+import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileServiceImpl;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
@@ -109,6 +111,9 @@ public class HostController {
 		UserInfoVO user = hostService.selectUserById(userId);
 		spaceVo.setUserNum(user.getUserNum());
 		logger.info("유저 번호 조회, UserNum = {}", spaceVo.getUserNum());
+		
+		String spaceInfo = spaceVo.getSpaceInfo().replaceAll("\n", "<br>");
+		spaceVo.setSpaceInfo(spaceInfo);
 		
 		//공간 등록
 		int space = hostService.insertSpace(spaceVo, refundVo);
@@ -197,7 +202,7 @@ public class HostController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/host/index";
+		return "redirect:/host/registration/spaceManage";
 	}
 	
 	@GetMapping("/registration/spDetail")
@@ -208,11 +213,20 @@ public class HostController {
 	}
 	
 	@PostMapping("/registration/spDetail")
-	public String registration4() {
-		logger.info("세부 공간등록 처리");
+	public String registration4(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
+		logger.info("세부 공간등록 처리 spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
 		
+		int cnt = hostService.insertSpaceDetail(spaceDetailVo, facilityVo);
+		logger.info("세부공간 등록 결과, cnt = {}", cnt);
 		
-		return "host/registration/registration4";
+		return "redirect:/host/registration/spaceManage";
+	}
+	
+	@RequestMapping("/registration/spaceManage")
+	public String spaceManage() {
+		logger.info("공간 관리 페이지");
+		
+		return "host/registration/spaceManage";
 	}
 	
 	//page=1&order=reservationNum&status=before&keyword=fd

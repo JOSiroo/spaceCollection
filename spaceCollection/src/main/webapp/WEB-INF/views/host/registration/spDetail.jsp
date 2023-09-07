@@ -240,7 +240,7 @@
 		    $('.eleve').not(this).removeClass('checked');
 		});
       	
-      	//공간 정규화
+      	//공간면적 정규화
         $(".area").on("input", function() {
             var isValid = validate_number($(".area").val());
 
@@ -276,6 +276,16 @@
 		});
         
       	$('#next').click(function() {
+      		//세부 공간명
+    		if ($('.sdName').val().toString().length < 1) {
+    			alert('세부 공간명를 입력하세요.');
+    			$('.sdName').focus();
+    			
+    			scrollMove($('.sdName'));
+    			
+    			return false;
+    		}
+      		
     		//공간 면적
     		if ($('#sdArea').val().length < 1) {
     			alert('공간 면적를 입력하세요.');
@@ -286,19 +296,38 @@
     			return false;
     		}
 
-    		//세부 공간명
-    		if ($('.sdName').val().toString().length < 1) {
-    			alert('공간 층수를 입력하세요.');
-    			$('.sdName').focus();
+    		//편의시설
+	        if ($('input[name^="fac"]:checked').length === 0) {
+	            alert('하나 이상의 편의시설을 선택하세요.');
+	            
+				scrollMove('.facility');
+				
+				return false;
+	        }
+
+    		//최소 인원
+    		if ($('.min').val().toString().length < 1) {
+    			alert('최소 수용인원을 입력하세요.');
+    			$('#sdMinPeople').focus();
     			
-    			scrollMove($('.sdName'));
+    			scrollMove($('#sdMinPeople'));
+    			
+    			return false;
+    		}
+			
+    		//최대 인원
+    		if ($('.max').val().toString().length < 1) {
+    			alert('최대 수용인원을 입력하세요.');
+    			$('#sdMaxPeople').focus();
+    			
+    			scrollMove($('#sdMaxPeople'));
     			
     			return false;
     		}
 
     		//가격
     		if ($('.sdPrice').val().toString().length < 1) {
-    			alert('공간 층수를 입력하세요.');
+    			alert('공간 가격를 입력하세요.');
     			$('.sdPrice').focus();
     			
     			scrollMove($('.sdPrice'));
@@ -320,7 +349,8 @@
 
 <article>
 	<div class="main">
-		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/registration4' />">
+		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/spDetail' />">
+			<input type="hidden" name="spaceNum" value="131">
 			<div class="heading">
 				<span class="hd1">세부 공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -451,7 +481,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceArea">
-						<input type="text" class="area" maxlength="3" value="" name="sdArea" id="sdArea" >
+						<input type="text" class="area" maxlength="3" value="" name="sdArea" id="sdArea" required>
 						<span style="font-size: 20px; color: black; margin-left: 15px; font-weight: bold;">평</span>
 					</div>
 				</div>
@@ -459,7 +489,7 @@
 			<!-- 편의시설 -->
 			<div class="boxForm">
 				<div class="boxTitle">
-					<span>편의시설</span>
+					<span>편의시설 <span style="color: red;">*</span></span>
 					<br><hr>
 				</div><br>
 				<div class="boxContents">
@@ -501,28 +531,28 @@
 						  	<label class="form-check-label" for="inlineCheckbox9">엘레베이터</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox9" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox9">주차가능</label>
+						  	<input class="form-check-input" type="checkbox" name="facParking" id="inlineCheckbox10" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox10">주차가능</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox10" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox9">음식물섭취가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facFood" id="inlineCheckbox11" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox11">음식물섭취가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox11" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox10">주류반입가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facDrink" id="inlineCheckbox12" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox12">주류반입가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox12" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox11">취사가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facCook" id="inlineCheckbox13" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox13">취사가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox13" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox12">애완동물동반가능여부</label>
+						  	<input class="form-check-input" type="checkbox" name="facPet" id="inlineCheckbox14" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox14">애완동물동반가능여부</label>
 						</div>
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox14" value="Y">
-						  	<label class="form-check-label" for="inlineCheckbox13">음향장비</label>
+						  	<input class="form-check-input" type="checkbox" name="facAudio" id="inlineCheckbox15" value="Y">
+						  	<label class="form-check-label" for="inlineCheckbox15">음향장비</label>
 						</div>
 					</div>
 				</div>
@@ -540,11 +570,11 @@
 					<div class="criteria">
 						<div class="minPerson" style="float: left; margin-right: 8%;">
 							<label class="lbPerson">최소 수용인원</label>
-							<input type="text" class="txtPerson" name="sdMinPeople" > 명
+							<input type="text" class="txtPerson min" name="sdMinPeople" required> 명
 						</div>
 						<div class="maxPerson" style="float: left;">
 							<label class="lbPerson">최대 수용인원</label>
-							<input type="text" class="txtPerson" name="sdMaxPeople" > 명
+							<input type="text" class="txtPerson max" name="sdMaxPeople" required> 명
 						</div>
 					</div>
 				</div>
@@ -553,7 +583,7 @@
 				<span class="hd1">세부 공간의 가격을 입력해주세요.</span>
 				<span class="hd2">* 필수선택</span>
 			</div>
-			<!-- 세부 공간명 -->
+			<!-- 세부 공간 가격 -->
 			<div class="boxForm" style="margin-top: 40px;">
 				<div class="boxContents">
 					<div class="spaceDetailPrice">

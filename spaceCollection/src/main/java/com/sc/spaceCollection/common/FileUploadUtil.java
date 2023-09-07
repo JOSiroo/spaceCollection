@@ -112,62 +112,60 @@ public class FileUploadUtil {
 		= (MultipartHttpServletRequest) request;
 		
 		//Map<String, MultipartFile> fileMap=multiRequest.getFileMap();
-		List<MultipartFile> license =multiRequest.getFiles("license");
-		List<MultipartFile> spaceMain =multiRequest.getFiles("spaceMain");
+		MultipartFile license =multiRequest.getFile("license");
+		MultipartFile spaceMain =multiRequest.getFile("spaceMain");
 		List<MultipartFile> spaceSub =multiRequest.getFiles("spaceSub");
 		
 		//여러개 업로드된 파일의 정보를 저장할 리스트
 		List<Map<String, Object>> resultList = new ArrayList<>();
-		
+		logger.info("1. license = {}, empty= {}", license, license.isEmpty() );
+		logger.info("1. spaceMain = {}, empty= {}", spaceMain, spaceMain.isEmpty() );
+		logger.info("1. spaceSub = {}, empty= {}", spaceSub, spaceSub.isEmpty() );
 		//license
-		for(MultipartFile mpFile : license) {
-			MultipartFile tempFile = mpFile;//업로드된 파일을 임시파일 형태로 제공
-			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
-				long fileSize=tempFile.getSize(); //파일 크기
-				String originName=tempFile.getOriginalFilename(); //변경전 파일명
-				
-				//변경된 파일 이름
-				String fileName = getLicenseFileName(originName, spaceNum);
-				
-				//파일 업로드 처리
-				String uploadPath = getUploadPath(request, pathFlag);
-				File file = new File(uploadPath, fileName);
-				tempFile.transferTo(file);
-				
-				//업로드 파일 정보 저장
-				Map<String, Object> resultMap = new HashMap<>();
-				resultMap.put("fileName", fileName);
-				resultMap.put("originalFileName", originName);
-				resultMap.put("fileSize", fileSize);
-				
-				resultList.add(resultMap);
-			}//if			
-		}//while
+		if (!license.isEmpty()) { // 파일이 업로드된 경우
+			long fileSize = license.getSize(); // 파일 크기
+			String originName = license.getOriginalFilename(); // 변경전 파일명
+
+			// 변경된 파일 이름
+			String fileName = getLicenseFileName(originName, spaceNum);
+
+			// 파일 업로드 처리
+			String uploadPath = getUploadPath(request, pathFlag);
+			File file = new File(uploadPath, fileName);
+			license.transferTo(file);
+
+			// 업로드 파일 정보 저장
+			Map<String, Object> resultMap = new HashMap<>();
+			resultMap.put("fileName", fileName);
+			resultMap.put("originalFileName", originName);
+			resultMap.put("fileSize", fileSize);
+
+			resultList.add(resultMap);
+			logger.info("license = {}", resultList);
+		} // if	
 		
 		//spaceMain
-		for(MultipartFile mpFile : spaceMain) {
-			MultipartFile tempFile = mpFile;//업로드된 파일을 임시파일 형태로 제공
-			if(!tempFile.isEmpty()) { //파일이 업로드된 경우
-				long fileSize=tempFile.getSize(); //파일 크기
-				String originName=tempFile.getOriginalFilename(); //변경전 파일명
-				
-				//변경된 파일 이름
-				String fileName = getSpaceMainFileName(originName, spaceNum);
-				
-				//파일 업로드 처리
-				String uploadPath = getUploadPath(request, pathFlag);
-				File file = new File(uploadPath, fileName);
-				tempFile.transferTo(file);
-				
-				//업로드 파일 정보 저장
-				Map<String, Object> resultMap = new HashMap<>();
-				resultMap.put("fileName", fileName);
-				resultMap.put("originalFileName", originName);
-				resultMap.put("fileSize", fileSize);
-				
-				resultList.add(resultMap);
-			}//if			
-		}//while
+		if (!spaceMain.isEmpty()) { // 파일이 업로드된 경우
+			long fileSize = spaceMain.getSize(); // 파일 크기
+			String originName = spaceMain.getOriginalFilename(); // 변경전 파일명
+
+			// 변경된 파일 이름
+			String fileName = getSpaceMainFileName(originName, spaceNum);
+
+			// 파일 업로드 처리
+			String uploadPath = getUploadPath(request, pathFlag);
+			File file = new File(uploadPath, fileName);
+			spaceMain.transferTo(file);
+
+			// 업로드 파일 정보 저장
+			Map<String, Object> resultMap = new HashMap<>();
+			resultMap.put("fileName", fileName);
+			resultMap.put("originalFileName", originName);
+			resultMap.put("fileSize", fileSize);
+
+			resultList.add(resultMap);
+			logger.info("spaceMain = {}", resultList);
+		} // if
 		
 		//spaceSub
 		for(int i = 0; i < spaceSub.size(); i++) {
@@ -191,9 +189,11 @@ public class FileUploadUtil {
 				resultMap.put("fileSize", fileSize);
 				
 				resultList.add(resultMap);
+				logger.info("spaceSub = {}", resultList);
 			}//if			
 		}//while
 		
+		logger.info("전체 = {}", resultList );
 		return resultList;
 	}
 	
