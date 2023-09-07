@@ -93,6 +93,7 @@ div#place {
 	height:400px !important; 
 	width:400px !important;
 }
+
 </style>
 
 <script >

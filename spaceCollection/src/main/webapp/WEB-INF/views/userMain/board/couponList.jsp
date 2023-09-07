@@ -19,10 +19,9 @@ section{
 }
 .profileImg {
 	background-color: white;
-    width: 70%;
-    height: 70%;
+    width: 85%;
     border-radius: 50%;
-    margin: 10%;
+    margin: 5%;
 }
 
 .couponList {
@@ -32,6 +31,7 @@ section{
     margin-left: 4%;
     text-align: center;
 }
+
 
 #userName{
 	font-weight: bold;
@@ -65,19 +65,19 @@ section{
 	color: #fff;
 }
 o{
-    float: left;
-    margin-left: 6%;
+    float: right;
+    margin-right: 4%;
     font-weight: bold;
 }
 .CouponList {
     display: flex;
     justify-content: flex-start;
     height: 95vh;
-    max-width: 75%;
+    max-width: 100%;
     max-height: 90%;
     align-items: flex-start;
-    margin-top: 10%;
-    margin-left: 10%;
+    margin: 0px;
+    margin-top: 5%;
 }
 button#mypage {
     color: #999;
@@ -88,13 +88,16 @@ button#mypage {
 table {
     caption-side: bottom;
     border-collapse: collapse;
-    width: 145%;
+    width: 100%;
 }
 tr#oneBox {
     border-bottom: 1px solid #999;
 }
-td#tdR{
-    border-right: 1px solid #999;
+td{
+     border-bottom: 0.1px solid lightgray;
+}
+td {
+    height: 40px;
 }
 th#tdR {
     border-right: 1px solid white;
@@ -104,12 +107,15 @@ th{
     background-color: #193D76;
     color: white;
 }
+form#couponListForm {
+    width: 100%;
+}
 </style>
 
 <section>
 <article class="profile">
 		<input type="hidden" name="snsCode" value="${guestVo.userSnsCode }">
-		<input type="text" name=userNum value="${guestVo.userNum }">
+		<input type="hidden" name=userNum value="${guestVo.userNum }">
 			<div class="profileImg">
 				<img src="
 					<c:if test="${empty sessionScope.code}">
@@ -151,7 +157,7 @@ th{
 			
 			<div class="CouponList">
 			
-				<form name="selectUserCoupon" var="list" items="${list }" action="#">
+				<form id="couponListForm" name="selectUserCoupon" var="list" items="${list }" action="#">
 					<c:if test="${empty list}">
 						<img alt="" src="<c:url value='/images/couponSubmit.png'/>">
 					</c:if>
