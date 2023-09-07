@@ -33,7 +33,9 @@
 			$("input[name=page]").val(plus);
 			$("form[name=frmPage]").submit();
 		});
+		
 	});
+	
 </script>
 <style type="text/css">
 	.wrap {
@@ -172,14 +174,13 @@
 	}
 	
 	#moreReview{
-		background-color: #e5e5e5;
-		border: 1px solid #2d5aa0;
-		border-top:none;
-		color: black;
-		font-weight: bold;
-		font-size: 17px;
-		width: 100%;
-		
+		color: gray;
+		font-size: 14px;
+		border: none;
+		text-align: center;		
+		text-decoration: underline;
+		margin: 0px auto;
+				
 	}
 	.emptyLine{
 		height: 3px; 
@@ -209,7 +210,7 @@
 		<input type="text" name="keyword" value="${param.searchKeyword }"  placeholder="예약번호, 공간명, 후기내용 중 하나를 입력해주세요.">
 		<button type="button" id="search">검색</button>
 	</div>
-	<select name="condition">
+<%-- 	<select name="condition">
 		<option selected="selected" value="">전체</option>
 		<option value="Y"
 			<c:if test="${param.searchCondition=='Y' }">
@@ -222,7 +223,7 @@
 			</c:if>
 		>답변 없음
 		</option>
-	</select>
+	</select> --%>
 	<div class="reViewInfo">
 		<c:if test="${empty reviewMap }">
 			<hr>
@@ -275,17 +276,19 @@
 				</div>
 				<br>
 				<div style="margin-left: 75%;">
-					<span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
-					<a href="<c:url value='/deleteReview?reviewNum=${reviewMap["REVIEW_NUM"] }&spaceNum=${reviewMap["SAPCE_NUM"]}  '/>">삭제</a>
+					 <span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
+					<a href="<c:url value='/deleteMyReview?reviewNum=${reviewMap["REVIEW_NUM"] }'/>">삭제</a>
 					<!-- <a href="#">수정</a> -->
 				</div>
 				<!-- <div class="emptyLine">&nbsp;</div> -->
 				</div>
 			</c:forEach>
 		</c:if>
+		<c:if test="${!empty reviewMap }">
 			<div class="pagingDiv">
-				<button type="button" id="moreReview">더보기</button>
+				<button type="button" id="moreReview">리뷰 더보기</button>
 			</div> 
+		</c:if>
 	</div>
 	</div>
 </div>
