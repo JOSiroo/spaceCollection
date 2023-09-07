@@ -76,17 +76,14 @@ pageEncoding="UTF-8"%>
 	}
 	
   .date-deleteCol{
-  	padding-right:27%;
+  	/*padding-right:27%;*/
   }
   .date-deleteCol.qna{
-  	padding-right:30% !important;
+  	/*padding-right:30% !important;*/
   }
   
   .delete-dateCol{
-  	padding-left:40% !important;
-  }
-  .pageArea{
-  	padding:2% 36.5% 0% 36.5%;
+  	/*padding-left:40% !important;*/
   }
   
 @keyframes shake {
@@ -108,7 +105,14 @@ pageEncoding="UTF-8"%>
  	width:800px;
  	height: 800px;
  }
- 
+ #QnAPagination{
+ 	display: flex;
+ 	justify-content: center;
+ }
+ #reviewPagination{
+ 	display: flex;
+ 	justify-content: center;
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -349,14 +353,16 @@ pageEncoding="UTF-8"%>
 						
 						
 						</div>
-						<div class="pageArea" style="margin-bottom:5%;">
-						<input type="hidden" id="QnAPage" value="99999">
-							<nav aria-label="Page navigation example">
-							  <ul class="pagination" id = "QnAPagination">
-							   
-							   
-							  </ul>
-							</nav>
+						<div class="row">
+							<div class="pageArea" style="margin-bottom:5%;">
+							<input type="hidden" id="QnAPage" value="99999">
+								<nav aria-label="Page navigation example">
+								  <ul class="pagination" id = "QnAPagination">
+								   
+								   
+								  </ul>
+								</nav>
+							</div>
 						</div>
 					</div>
 					
@@ -863,6 +869,11 @@ pageEncoding="UTF-8"%>
 
         
         function requestPay() {
+        	var userId = '${sessionScope.userId}';
+        	if(userId === null || userId === ""){
+        		alert('예약은 로그인 후 가능합니다');
+        		return false;
+        	}
             console.log(paymentType);
             console.log($('.hiddenPrice').val());
             
@@ -1121,22 +1132,27 @@ pageEncoding="UTF-8"%>
 					 	htmlStr +='</div>'
 								+'<div class="qnaBody">'+this.QNA_CONTENT+'</div>'
 								+'<div class="row" style="font-size:14px;">'
-								+'<div class="col-6 date-deleteCol" style="padding-right:30% !important">'
-								+'<span>'+this.QNA_REG_DATE+'</span>'
+								+'<div class="col-6 date-deleteCol" >'
+								+'<span style="float:left; margin-left:10%;">'+this.QNA_REG_DATE+'</span>'
 								+'</div>';
-					 	if('${sessionScope.userId}' === '${user_id}'){
-							htmlStr += '<div class="col-6 delete-dateCol" style="padding-left: 38% !important;">'
-									+ '<a href="#" style="font-size:14px;" onclick="setAnswerNum('+this.QNA_NUM+')" data-bs-toggle="modal" data-bs-target="#answerModal"><span>답글 달기</span></a>';
+					 	if('${sessionScope.userId}' === '${user_id}' && this.QNA_ANSWER == null){
+							htmlStr += '&nbsp;<div class="col-5 delete-dateCol" style="float:right">'
+									+ '<a href="#" style="font-size:14px; display: inline-block;" onclick="setAnswerNum('+this.QNA_NUM+')" data-bs-toggle="modal" data-bs-target="#answerModal"><span>답글 달기&nbsp;&nbsp;</span></a>';
 																
 						}else{
-							htmlStr += '<div class="col-6 delete-dateCol">';
+							htmlStr += '<div class="col-5 delete-dateCol">';
 						}
 						if('${sessionScope.userId}' === this.USER_ID){
-							htmlStr +='<a href="#" style="font-size:14px;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
+							htmlStr +='<a href="#" style="font-size:14px; display: inline-block;" onclick="deleteQna('+this.QNA_NUM+')">삭제하기</a>'
 									+'</div>';
 						}
-							htmlStr +='</div>'
+							htmlStr +='</div>';
+						if(this.QNA_ANSWER != null){
+							htmlStr +='<div class="row" style = "text-align:left; background:rgba(255, 208, 20, 0.15);margin-top:15px; padding-top:20px; padding-left:65px;"><span style="font-weight:600; color:#193D76;font-size:15px;"><i style="font-size:15px; font-weight:bold"class="bi bi-arrow-return-right"></i>호스트님의 답글<span> <br><br>'
+									+'<p>'+this.QNA_ANSWER+'</p>'
 									+'</div>'
+								}
+							htmlStr+='</div>'
 									+'<hr>';
 						resultStr += htmlStr;
 		    		});
@@ -1173,16 +1189,22 @@ pageEncoding="UTF-8"%>
     	$('#answerNumVal').val(qnaNum);
     }
     
-    function answerQna(inputQnaNum){
-    	var qnaNum = inputQnaNum;
+    function answerQna(){
+    	var qnaNum = $('#answerNumVal').val();
     	$.ajax({
     		url:'<c:url value="/qnaAnswer"/>',
+    		type:'post',
     		data:{
     			qnaNum:qnaNum,
-    			qnaContent:$('#answerMessage').val()
+    			qnaAnswer:$('#answerMessage').val()
     		},
     		success:function(answer){
-				    			
+				if(answer === 1){
+					alert('답변 등록 성공');
+					location.reload();
+				}else if(answer === 0){
+					alert('답변 등록 실패');					
+				}
     		}
     	});
     }

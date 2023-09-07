@@ -67,4 +67,9 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.getTotalRecordBySpaceNum(spaceNum);
 	}
 
+	@Override
+	public int qnaAnswer(QnaVO vo) {
+		return qnaDao.qnaAnswer(vo);
+	}
+
 }
