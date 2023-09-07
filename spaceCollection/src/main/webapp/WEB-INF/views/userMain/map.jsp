@@ -145,7 +145,7 @@
 		</a>
 	</div>
 	<div id="map" style="width:100%;height:100%;">
-			<c:set var="paramName" value="" />
+		<%-- <c:set var="paramName" value="" />
 			<c:set var="paramValue" value="" />
 			<c:if test="${!empty param.spaceTypeNo}">
 				<c:set var="paramName" value="spaceTypeNo"/>
@@ -163,8 +163,9 @@
 				<c:set var="paramName" value="page"/>
 				<c:set var="paramValue" value="${param.page}"/>
 			</c:if>
-		<c:import url="/mapSideMenu">
 			<c:param name="${paramName}" value="${paramValue}"></c:param>
+		--%>
+		<c:import url="/mapSideMenu">
 		</c:import>
 	</div>
 </div>

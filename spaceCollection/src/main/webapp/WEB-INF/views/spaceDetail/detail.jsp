@@ -773,7 +773,7 @@ pageEncoding="UTF-8"%>
 		            '        </div>' + 
 		            '        <div class="body">' + 
 		            '            <div class="img">' +
-		            '                <img src="images/img_1.jpg" width="73" height="70">' +
+		            '                <img src="space_images/${mainImg}" width="73" height="70">' +
 		            '           </div>' + 
 		            '            <div class="desc">' + 
 		            '                <div class="ellipsis">${vo.spaceAddress} ${vo.spaceAddressDetail}</div>' + 
