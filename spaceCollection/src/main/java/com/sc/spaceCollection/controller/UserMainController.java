@@ -49,6 +49,17 @@ public class UserMainController {
        List<Map<String,Object>> list = spaceService.selectAll(1, 9,"",0,0,0,nullList,"SPACE_REG_DATE");
        logger.info("새로운 공간 보여주기, list.size={}", list.size());
        
+       
+     Map<String, String> mainImgList = new HashMap<>();
+       for(int i = 0; i < list.size(); i ++) {
+    	   String imgName = "S" + list.get(i).get("SPACE_NUM") + "Main";
+    	   String mainImg = sdService.selectSpaceMainImg(imgName);
+    	   
+    	   mainImgList.put(list.get(i).get("SPACE_NUM")+"", mainImg);
+       }
+       
+       
+       
        List<Map<String, Object>> map = reviewService.selectNewReview();
        logger.info("리뷰, reviewlist={}", map.size());
        
@@ -56,6 +67,7 @@ public class UserMainController {
        logger.info("카운팅, userCounts={}", usercount);
 
        model.addAttribute("list", list);
+       model.addAttribute("imgList", mainImgList);
        model.addAttribute("map", map);
        model.addAttribute("usercount", usercount);
        
@@ -132,6 +144,7 @@ public class UserMainController {
 	  
 	  
 	  if((spaceName == null || spaceName.isEmpty()) && spaceTypeNo == 0) {
+		 
 		  List<Map<String, Object>> list = spaceService.selectAll(page, size,region,maxPeople,minPrice,maxPrice,filterItem,order);
 	      
 		  for(int i = 0; i < list.size(); i++) {
@@ -161,6 +174,7 @@ public class UserMainController {
 		  }
          
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultList.size());
+         
          model.addAttribute("totalRecord", resultList.size());
          
       }else if(spaceTypeNo != 0) {

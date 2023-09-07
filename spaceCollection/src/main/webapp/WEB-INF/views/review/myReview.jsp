@@ -6,6 +6,11 @@
 <script type="text/javascript">
 	$(function(){
 		
+		if($('input[name=page]').val()>0){
+			var scrollPosition = $(document).height() - $(window).height() + 300;
+			$('html, body').scrollTop(scrollPosition);
+		}
+		
 		// Enter 키 이벤트 핸들러 추가
 		$('input[name=keyword]').on('keyup', function(event) {
 		    if (event.keyCode === 13) { // Enter 키의 키 코드는 13입니다.
@@ -191,8 +196,8 @@
 </style>
 
 <form action="<c:url value='/myReview'/>" name="frmPage" method="post">
-	<input type="text" name="page" value="${param.page }">
-	<input type="text" name="searchKeyword" value="${param.searchKeyword }">
+	<input type="hidden" name="page" value="${param.page }">
+	<input type="hidden" name="searchKeyword" value="${param.searchKeyword }">
 </form>
 <div class="wrap">
 	<div class="align_center">
