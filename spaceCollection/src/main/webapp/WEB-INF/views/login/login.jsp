@@ -206,7 +206,7 @@
     $("#kakaoLogin").click(function(){
     	location.href=
         	"https://kauth.kakao.com/oauth/authorize?client_id=ea07e405c3b0c040cbfc223938101433&prompt=login"
-           +"&redirect_uri=http://localhost:9091/spaceCollection/oauth/kakao&response_type=code";
+           +"&redirect_uri=http://59.6.102.18:9091/spaceCollection/oauth/kakao&response_type=code";
     });
     
 </script>
@@ -216,7 +216,7 @@
 	$("#naverLogin").click(function(){
 		location.href=
 			"https://nid.naver.com/oauth2.0/authorize?response_type=code"
-		   +"&client_id=rzHcvCcMSYFOv9ojCavh&state=STATE_STRING&redirect_uri=http://localhost:9091/spaceCollection/oauth/naver";
+		   +"&client_id=rzHcvCcMSYFOv9ojCavh&state=STATE_STRING&redirect_uri=http://59.6.102.18:9091:9091/spaceCollection/oauth/naver";
 	});
 /* 	var naverLogin = new naver.LoginWithNaverId(
 			{

@@ -254,13 +254,18 @@
 				 }
 			 }
 		 });
+		 
 	});
+	
+	function qnaList(curPage){
+		$('input[name=currentPage]').val(curPage);
+		$('form[name=frmPage]').submit();
+	}
 	
 </script>
 <style type="text/css">
 	.wrapProfile{
-	  min-height: 100vh;
-	  
+	  min-height: 130vh;
 	  background: -webkit-gradient(linear, left bottom, right top, from(#F6F6F6), to(#F6F6F6));
       background: -webkit-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
       background: -moz-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
@@ -272,11 +277,13 @@
 	
 	.myProfile{
 		width: 250px;
-		height: 300px;
-		background: white;
-		float: left;
-		margin-left: 120px;
-		border: 0.5px solid	#193d76;
+	    height: 300px;
+	    background: white;
+	    float: left;
+	    margin-left: 120px;
+	    border: 0.5px solid #193d76;
+	    box-shadow: 5px 5px 5px gray;
+	    margin-top: 3%;
 	}
 	
 	.align_center{
@@ -299,8 +306,12 @@
 	
 	.profileInfo{
 		width: 584px;
-		height: 500px;
-		margin-left: 30%;
+	    height: 500px;
+	    float: left;
+	    margin-left: 6%;
+	    box-shadow: 5px 5px 5px gray;
+	    display: inline-block;
+	    margin-top: 3%;
 	}
 	
 	.tbProfile{
@@ -363,6 +374,7 @@
 		background: white;
 		border: 0.5px solid #193d76;
     	border-top: none;
+    	box-shadow: 5px 5px 5px gray;
 	}
 	
 	.edit-textbox{
@@ -394,9 +406,101 @@
 	sub{
 		margin-left: 160px;
 	}
+	
+	.todaySpaceImg{
+		width: 200px;
+		height: 180px;
+		border-radius: 1rem 1rem 0 0;
+	}
+	
+	#recentSpaceList{
+		width: 200px;
+	    float: left;
+	    display: inline-block;
+	    margin-left: 9%;
+	}
+	
+	.recentSpace{
+		height: 240px;
+		border-radius: 1rem;
+		background: #d9dbe400;
+		font-family: "Work Sans", sans-serif;
+		font-weight:bold;
+    	color: #00204a;
+    	box-shadow: 5px 5px 5px gray;
+    	border: 1px solid #a3b1c8;
+	}
+	
+	.recentSpace a{
+		margin: 0px 2px 0px 2px;
+	}
+	
+	hr[name=boundary]{
+		height: 3px;
+	    background: #ffd014;
+	    margin: 4px 4px 4px 4px;
+	}
+	
+	.divPage {
+		text-align:center;
+		font-size:0;
+		display: inline-block;
+	}
+	.divPage {
+		padding-top: 3px;
+	}
+	.divPage .none {
+		display:none;
+	}
+	.divPage a {
+		display:block;
+		float:left;
+		border:1px solid #e6e6e6;
+		width:28px;
+		height:28px;
+		line-height:28px;
+		text-align:center;
+		background-color:#fff;
+		font-size:12px;
+		color:#999999;
+		text-decoration:none;
+		display: inline-block;
+	}
+	.divPage .arrow {
+		border:1px solid #193d76;
+	}
+	.divPage .prev {
+		background:#f8f8f8 url('img/page_prev.png') no-repeat center center;
+	}
+	.divPage .next {
+		background:#f8f8f8 url('img/page_next.png') no-repeat center center;
+	}
+	.divPage .active {
+		background-color:#42454c;
+		color:#fff;
+		border:1px solid #42454c;
+	}
+	
+	h5{
+		text-align: center;
+		display: inline-block;
+		font-weight: bold;
+		font-size: 24px;
+		padding-top: 5px;
+		margin: 0 5px 0 5px;
+	}
+	
+	.flex{
+		display: flex;
+		justify-content: center;
+	}
+	
 </style>
 
 <div class="wrapProfile">
+<form name="frmPage" method="get" action="<c:url value='/guest/myPage/myProfile'/>">
+	<input type="hidden" name="currentPage">
+</form>
 	<form name="editProfile" method="post" enctype="multipart/form-data" 
 	action="<c:url value='/guest/myPage/editProfile'/>">
 		<input type="hidden" name="userProfileImage" value="${guestVo.userProfileImage }">
@@ -567,8 +671,43 @@
 					</c:if>
 				</div>
 			</div>
+			<c:if test="${!empty todaySdList }">
+				<div id="recentSpaceList">
+				<div class="flex">
+					<div class="divPage">
+						<c:if test="${pageVo.firstPage>1 }">
+							<a href="#" onclick="qnaList(${pageVo.firstPage-1})" class="arrow prev">			
+						    <img src='<c:url value="/images/page_prev.png" />'  border="0">	</a>
+						</c:if>
+					</div>
+						<h5>최근 본 공간</h5>
+					<div class="divPage">
+						<c:if test="${pageVo.lastPage<pageVo.totalPage }">
+							<a href="#" onclick="qnaList(${pageVo.lastPage+1})" class="arrow next">			
+								<img src="<c:url value="/images/page_next.png" />" border="0" >
+							</a>
+						</c:if>
+				 	</div>
+				</div>
+					<c:set var="num" value="${pageVo.num }"/>
+					<c:set var="curPos" value="${pageVo.curPos }"/>
+					<c:forEach var="i" begin="1" end="${pageVo.pageSize }">
+						<c:if test="${num>=1 }">
+							<c:set var="map" value="${todaySdList[curPos] }"/>
+							<c:set var="curPos" value="${curPos+1 }"/>
+							<c:set var="num" value="${num-1 }"/>
+						<div class="recentSpace">
+							<img src="<c:url value='/space_images/${map["IMG_TEMP_NAME"] }'/>"  alt="${map['SPACE_NAME'] } 이미지" class="todaySpaceImg"><br>
+							<hr name="boundary">
+							<a href="<c:url value='/detail?spaceNum=${map["SPACE_NUM"] }'/>">${map['SPACE_NAME'] }</a>
+						</div>
+						</c:if>
+						<br>
+					</c:forEach>
+				</div>
+			</c:if>
 		</div>
 	</form>
-	<div>${spaceNum[i] }</div>
+	
 </div>
 <%@include file="../../form/userBottom.jsp" %>

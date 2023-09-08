@@ -29,6 +29,7 @@ section{
     background-color: white;
     height: 55%;
     margin-left: 4%;
+    margin-bottom: 21%;
     text-align: center;
 }
 #userName{
@@ -69,21 +70,14 @@ input#addCode {
 }
 o{
     float: right;
-    margin-right: 12%;
+    margin-right: 3%;
     font-weight: bold;
 }
 .CouponBox {
-    /* display: flex; */
     justify-content: flex-start;
     height: 95vh;
-    width: 100%;
-    /* max-width: 100%; */
-    /* max-height: 90%; */
-    width: 80%;
-    margin-left: 10%;
     align-items: flex-start;
-    /* margin: 0px; */
-    margin-top: 8%;
+    margin-top: 4%;
 }
 button#mypage {
     color: #999;
@@ -116,22 +110,31 @@ th{
 form#couponListForm {
     width: 100%;
 }
+.list-group-numbered {
+    list-style-type: none;
+    counter-reset: section;
+    width: 100%;
+}
+span#left{
+	float: left;
+}
 </style>
 
 <script>
 	var userNum = ${guestVo.userNum }; 
 	function makeList(data) {
 		 console.log("로딩 시작");
-			$.each(data, function() {  
-			var str="<li class='list-group-item d-flex justify-content-between align-items-start'>"
-				   +"<div class='ms-2 me-auto'>"
-			  	   +"<div class='fw-bold'> 쿠폰 코드 : "+this.couponName+"</div>"
-			       +""+this.couponStartDay+" ~ "+this.couponFinishDay+""
-			       +"</div>"
-			       +"<span class='badge bg-primary rounded-pill'>"+this.couponType+" %</span>"
-			       +"</li>";
-			    $('#selectCoupon').append(str);
+		var str="";	
+		 $.each(data, function() {  
+				str+="<li class='list-group-item d-flex  align-items-start'>";
+				str+="<div class='ms-2 me-auto'>";
+				str+="<div class='fw-bold' ><span id='left'>쿠폰 코드 : "+this.couponName+"</span></div><br>";
+				str+=""+this.couponStartDay+" ~ "+this.couponFinishDay+"";
+				str+="</div>";
+				str+="<span class='badge bg-primary rounded-pill'>"+this.couponType+" %</span>";
+				str+="</li>";
 			}); //each
+			$('#selectCoupon').html(str);
 	 }//makeList
 	
 	 loadCoupon(userNum);
@@ -156,25 +159,22 @@ form#couponListForm {
 		});//ajax
 	 }
 	
-	function addcoupon(data) {
-		 console.log("추가 메서드 시작");
-		 console.log(data);
-			 var str="";
-			 var str="<li class='list-group-item d-flex justify-content-between align-items-start'>"
-				   +"<div class='ms-2 me-auto'>"
-			  	   +"<div class='fw-bold'> 쿠폰 코드 : "+this.couponName+"</div>"
-			       +""+this.couponStartDay+" ~ "+this.couponFinishDay+""
-			       +"</div>"
-			       +"<span class='badge bg-primary rounded-pill'>"+this.couponType+" %</span>"
-			       +"</li>";
-			 $('#addcoupon').append(str);
-	}
-	
 $(function() {	
 	$('#addCoupon').click(function() {
 		event.preventDefault();
-		var data = $('form[name=couponNum]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
-		console.log("추가 성공");
+		
+		var couponNumber = $('input[name="couponName"]');
+		console.log(couponNumber.val().length);
+		
+        if (couponNumber.val().length === 0){
+        	alert("쿠폰 번호를 입력해주세요.");
+            return;
+        }else if(couponNumber.val().length !== 12){
+            alert("유효하지 않은 쿠폰입니다.");
+            return;
+        }
+	    
+		var data = $('form[name=couponNum]').serialize();
 		console.log(data);
 	    $.ajax({
 	        url: "<c:url value='/user/couponList/couponWrite' />",
@@ -182,14 +182,9 @@ $(function() {
 	        data: data,
 	        success: function(data) {
 	        	 console.log("추가 성공");
-						if(data!=null){
      						alert("쿠폰을 등록했습니다.");
-							$('#addcoupon').html("");
      						console.log("쿠폰 추가 성공");
-						   location.reload();  						
-						}else if(data==null){
-							alert("쿠폰 일련 번호를 입력해주세요.");
-						}//if
+						    location.reload();  						
 	        },//success
 	    	error:function(xhr, status, error){
 				alert(status + " : " + error);
@@ -238,7 +233,7 @@ $(function() {
 	
 	<div class="couponList">
 			<form name="couponNum" method="post" action="<c:url value='/user/couponList/couponWrite'/>">
-				<input id="addCode" value="${couponName } " name="couponName"  placeholder="쿠폰 일련번호를 입력하세요" type="text" />
+				<input id="addCode" value="" name="couponName"  placeholder="쿠폰 일련번호를 입력하세요" type="text" />
 				<button id="addCoupon" type="button" >등록</button>
 				<input value="${guestVo.userNum } "  name="userNum" type="hidden" />
 				<input value="10" name="couponType" type="hidden" />
@@ -246,7 +241,6 @@ $(function() {
 				<br><o>총 ${count }장</o>
 		<div class="CouponBox">
 			<ol class="list-group list-group-numbered" id="selectCoupon">
-				<div id="addcoupon"></div>
 			</ol>
 		</div>
 	</div>

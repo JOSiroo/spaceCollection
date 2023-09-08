@@ -149,12 +149,12 @@
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 
-					<a href="http://localhost:9091/spaceCollection/"
+					<a href="<c:url value='/'/>"
 						class="logo float-start" id="topLogo">SpaceCollection</a>
 
 					<div class="topbar">
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-							<li class="active"><a href="http://localhost:9091/spaceCollection/">Home</a></li>
+							<li class="active"><a href="<c:url value='/'/>">Home</a></li>
 							<li><a href="<c:url value='/search' />">SpaceCollection</a>
 								<!-- 공간 대분류 카테고리별 나열하기 !!!
 								<li class="has-children">
@@ -228,7 +228,14 @@
 		 </div>
 			
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="<c:url value='/guest/myPage/checkPwd' />">
+				<a href="
+				<c:if test="${!empty sessionScope.code }">
+					<c:url value='/guest/myPage/myProfile' />
+				</c:if>
+				<c:if test="${empty sessionScope.code }">
+					<c:url value='/guest/myPage/checkPwd' />
+				</c:if>
+				">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>

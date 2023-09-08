@@ -546,4 +546,10 @@ public class SpaceServiceImpl implements SpaceService{
 		return listtrans;
 	}
 
+
+	@Override
+	public Map<String, Object> selectSpaceFileViewBySpaceNum(String spaceNum) {
+		return spaceDao.selectSpaceFileViewBySpaceNum(spaceNum);
+	}
+
 }

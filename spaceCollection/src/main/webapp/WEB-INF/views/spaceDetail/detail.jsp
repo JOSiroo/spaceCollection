@@ -113,6 +113,48 @@ pageEncoding="UTF-8"%>
  	display: flex;
  	justify-content: center;
  }
+ .breadcrumb-item{
+ 	color: white !important;
+ 	background:rgba(255,255,255,0.2);
+ 	margin:0px 3px 0px 3px;
+ 	font-size:18px;
+ 	border-radius:2rem;
+ 	border: white 1px solid;
+ 	font-weight:500;
+ 	padding-right:8px;
+ 	padding-left:8px;
+ 	padding-top:8px;
+ 	padding-bottom:8px;
+ }
+ .breadcrumb-item + .breadcrumb-item::before {
+ 	content:"";
+ }
+ .space-title{
+ 	font-weight: bold; 
+ 	margin-top:5px;
+ }
+ .space-intro{
+ 	margin-bottom:15px;
+ 	color:grey;
+ }
+ .title-span{
+ 	background: rgba(200, 200, 200, 0.2);
+ 	border:rgba(200, 200, 200, 0.8) 1.7px solid;
+ 	border-radius:2rem;
+ 	padding:8px 8px 8px 8px;
+ 	font-size:15px;
+ 	font-weight:550;
+ 	margin-right : 8px;
+ 	color:grey;
+ 	box-shadow:0px 0px 0px 0px;
+ }
+ #spaceIntro{
+ 	font-weight:300; 
+ }
+ .facility-icon{
+ 	width: 60px !important;
+ 	height: 60px !important;
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -133,7 +175,7 @@ pageEncoding="UTF-8"%>
 				<div class="col-lg-9 text-center mt-5">
 				<!-- 공간명이 들어갈 자리 -->
 					<h1 class="heading" data-aos="fade-up">${vo.spaceName }</h1>
-					<h2 class="heading" data-aos="fade-up">${vo.spaceIntro }</h2>
+					<h2 class="heading" id = "spaceIntro"data-aos="fade-up">${vo.spaceIntro }</h2>
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">
 						<c:if test="${!empty vo.spaceTag}">
@@ -182,7 +224,15 @@ pageEncoding="UTF-8"%>
 				</div>
 					
 				<br>
-				<h1>${vo.spaceName }</h1>
+				<h1 class="space-title">${vo.spaceName }</h1>
+				<h4 class="space-intro">${vo.spaceIntro}</h4>
+				<div style="margin-bottom:15px; overflow: visible;width : 1000px; margin-top:40px">
+					<c:if test="${!empty vo.spaceTag}">
+					    <c:forEach items="${fn:split(vo.spaceTag, '/')}" var="tags">
+					    	<span class="title-span">#${tags}</span>
+					    </c:forEach>
+					</c:if>
+				</div>
 				<br>
 				<div class="sticky-top">
 					<nav class="navbar navbar-expand-lg bg-light bd-highlight sticky-top custom-nav" style="justify-content:center !important; border-bottom : 1px #6d3bff solid;">
@@ -452,10 +502,12 @@ pageEncoding="UTF-8"%>
 									<span class="tit">수용인원</span>
 									<span class="city text-black">최소 ${detail.SD_MIN_PEOPLE }명 ~ 최대${detail.SD_MAX_PEOPLE }명</span>
 									<hr>
-								    <div class = "facility-box" style = "display: inline-block;">
+								    <div class = "row facility-box" style = "display: inline-block; width:100%;">
 										<c:forEach var="key" items="${detail.keySet()}">
 										    <c:if test="${fn:contains(key, 'FAC_')}" >
-												<img class = "facility-icon"src="<c:url value='/img/icons/facilityIcons/${key }.png'/>" width="70" height="70" >
+										    	<div class="col-4" style="display:inline">
+													<img class = "facility-icon"src="<c:url value='/img/icons/facilityIcons/${key }.png'/>" >
+												</div>
 										    </c:if>
 										</c:forEach>
 									</div>

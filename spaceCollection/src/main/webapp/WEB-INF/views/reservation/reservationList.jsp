@@ -105,6 +105,7 @@
 .pageArea{
 	display: flex;
 	justify-content: center;
+	margin-top:5%;
 }
 </style>
 <section>
@@ -171,7 +172,7 @@
 			  </ul>
 			</nav>
 		</div>
-	</div>
+		</div>
 </section>
 <script type="text/javascript">
 	function goReservation(reservationNum){

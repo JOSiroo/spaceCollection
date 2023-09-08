@@ -251,7 +251,12 @@
 		select * from spaceDetailView where space_num = #{spaceNum}
 	</select>
 	
-	
+	<select id="selectSpaceFileViewBySpaceNum" parameterType="String" resultType="map">
+		select s.space_num,s.space_name ,v.IMG_TEMP_NAME
+		from space s join SPACE_FILE_VIEW v
+		on s.space_num=v.space_num
+		where s.space_num=#{spaceNum}
+	</select>
 	
 	
 	
