@@ -569,5 +569,6 @@
 			</div>
 		</div>
 	</form>
+	<div>${spaceNum[i] }</div>
 </div>
 <%@include file="../../form/userBottom.jsp" %>

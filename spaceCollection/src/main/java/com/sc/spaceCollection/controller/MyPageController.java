@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ public class MyPageController {
 	
 	
 	@GetMapping("/myProfile")
-	public String myPage_get(HttpSession session,Model model) {
+	public String myPage_get(HttpSession session,Model model, HttpServletRequest request) {
 		String userId = (String)session.getAttribute("userId");
 		logger.info("마이페이지 처리, 파라미터 userId={}",userId);
 		
@@ -47,6 +49,20 @@ public class MyPageController {
 		logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
 		
 		model.addAttribute("guestVo",userInfo);
+		Cookie[] cookies=request.getCookies();
+		String[] spaceNum = new String[5];
+		String ckSpaceNum="";
+		if(cookies!=null){
+	        for (Cookie c : cookies) {
+	            String name = c.getName(); // 쿠키 이름 가져오기
+	            String ckVal = c.getValue(); // 쿠키 값 가져오기
+	            if (name.equals("RecentSpace")) {
+	            	ckSpaceNum=ckVal;
+	            	logger.info("쿠키찾기 결과 ckSpaceNum={}",ckSpaceNum);
+	            }
+	        }
+	    }
+		model.addAttribute("spaceNum",spaceNum);
 		return "guest/myPage/myProfile";
 	} 
 	
@@ -64,6 +80,7 @@ public class MyPageController {
 		logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
 		
 		model.addAttribute("guestVo",userInfo);
+		
 		return "guest/myPage/myProfile";
 	} 
 	

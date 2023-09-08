@@ -103,7 +103,7 @@ pageEncoding="UTF-8"%>
  }
  .d-block.img{
  	width:800px;
- 	height: 800px;
+ 	height: 680px;
  }
  #QnAPagination{
  	display: flex;
@@ -425,7 +425,7 @@ pageEncoding="UTF-8"%>
 							    </button>
 							    <div id="menu2" class="content">
 							    <div style="margin-top: 5px">	
-									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+									<img src="space_images/${mainImg}" alt="Image" class="img-fluid" style="height:350px; margin-top: 20px; margin-bottom:20px; padding-right:5px; padding-left:5px;">
 								</div>
 								<div class="property-item">
 								  <div class="property-content">
@@ -1208,6 +1208,19 @@ pageEncoding="UTF-8"%>
     		}
     	});
     }
+   //	let localData = JSON.parse(localStorage.getItem('recent'));
+    //localStorage.setItem('recent', JSON.stringify(localData+"/"+'${vo.spaceNum}'));
+    //let localData = JSON.parse(localStorage.getItem('recent'));
+    // 수정된 배열을 다시 'recent'로 LocalStorage에 저장합니다.
+    const localData = JSON.parse(localStorage.getItem('recent'));
+    const newValue = '${vo.spaceNum}';
+
+    // 기존 데이터와 새로운 값을 합칩니다.
+    const combinedData = localData ? localData + "/" + newValue : newValue;
+
+    // 중복을 제거하고 다시 'recent'로 LocalStorage에 저장합니다.
+    const uniqueArr = [...new Set(combinedData.split("/"))];
+    localStorage.setItem('recent', JSON.stringify(uniqueArr));
     </script>
 	<script src="<c:url value='/js/datepickerJs/datepicker.js'/>"></script>
 	<!--한국어  달력 쓰려면 추가 로드-->
