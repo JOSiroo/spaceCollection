@@ -75,8 +75,9 @@
 
 	var page = 1;
 	var boardNum = ${param.boardNum}; 
-	
+		
 	 function makeList(data) {
+		 
 		 console.log("로딩 메서드 시작");
 			 $.each(data, function() {  
 			var str = "<div class='CommentsBox' id='"+this.commentNum+"'  style='border-top: 0.1px solid #ccc; width: 600px; '>"
@@ -91,8 +92,13 @@
 			        + "</div>"
 			        + "<div class='anonym2' style='margin: 10px;'>"
 			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none; width: 80%;' />"
-			        + "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>"
-					+ "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this,"+this.commentNum+")'>수정</button>"
+
+			        /* id 값 같을 경우만 bt 출력 */
+			        <%-- if ("<%= sessionScope.userId %>" === "'" + this.userId + "'") {
+			            str += "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this," + this.commentNum + ")'>수정</button>"
+			            	+ "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>"
+			        } --%>
+			        
 			        + "</div>"
 			        + "</form>"
 			        + "</div>";
@@ -319,8 +325,6 @@ $(function() {
 							</c:if>
 				                	<!-- <textarea class="form-control" style="height: 10px" name="commentContent"></textarea> -->
 								<button type="button" class="btn btn-primary" id="sendBt" >등록</button>
-							
-								
 			                </div>
 						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							
