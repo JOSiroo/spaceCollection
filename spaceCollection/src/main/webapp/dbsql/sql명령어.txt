@@ -178,9 +178,9 @@ on b.board_num = c.board_num
 order by board_reg_date desc;  
 
 
-create or replace view admin_recent_reservation_List_View
+ccreate or replace view ADMIN_RECENT_RESERVATION_LIST_VIEW
 as
-select r.RESERVATION_NUM, r.RESERVE_PEOPLE, r.RESERVE_PRICE, RESERVER_PAY_DAY, u.USER_ID, sd.SD_TYPE, sd.SD_PRICE, s.SPACE_NAME
+select r.RESERVATION_NUM, r.RESERVE_PEOPLE, r.RESERVE_PRICE, r.RESERVATION_DEL_FLAG, RESERVER_PAY_DAY, u.USER_ID, sd.SD_TYPE, sd.SD_PRICE, s.SPACE_NAME
 from reservation r
 left join user_info u on u.user_id = r.user_id
 left join space_detail sd on sd.sd_num = r.sd_num

@@ -69,9 +69,9 @@
 				str2 += "<h6>"+res.precentCnt+" 건</h6>";
 				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastCnt+"건)</span>";
 				str2 += "<br>";
-				if(res.percentage>0){
-					str2 += "<span class='text-success small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
-				}else if(res.percentage<0){
+				if(Number(res.percent)>0){
+					str2 += "<span class='text-success small pt-1 fw-bold'>+"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
+				}else if(Number(res.percent)<0){
 					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
 				}else{
 					str2 += "<span class='small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>-</span>";
@@ -102,9 +102,9 @@
 				str2 += "<h6>"+res.precentTotalPrice+"원</h6>";
 				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastTotalPrice+"원)</span>";
 				str2 += "<br>";
-				if(res.percentage>0){
+				if(Number(res.percent)>0){
 					str2 += "<span class='text-success small pt-1 fw-bold'>${pastPrice}% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
-				}else if(res.percentage<0){
+				}else if(Number(res.percent)<0){
 					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
 				}else{
 					str2 += "<span class='small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>-</span>";
@@ -396,7 +396,7 @@
 
 							<div class="card-body">
 								<h5 class="card-title" style="font-weight: bold;">
-									최근 예약 내역 <span>| Today</span>
+									최근 예약 내역 <span id="">| Today ( ${fn:length(list) } 건 )</span>
 								</h5>
 
 								<table class="table table-borderless">
@@ -407,6 +407,7 @@
 											<th scope="col">공간명</th>
 											<th scope="col">결제액</th>
 											<th scope="col">예약 인원</th>
+											<th scope="col">예약 상태</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -418,12 +419,20 @@
 												<td><a href="#" class="text-primary">${map.SPACE_NAME } - ${map.SD_TYPE }</a></td>
 												<td><fmt:formatNumber value="${map.RESERVE_PRICE }" pattern="#,###"/>원</td>
 												<td><span>${map.RESERVE_PEOPLE }명</span></td>
+												<td>
+													<c:if test="${map.RESERVATION_DEL_FLAG == 'N' }">
+														<span class="badge bg-success">결재 완료</span>
+													</c:if>
+													<c:if test="${map.RESERVATION_DEL_FLAG == 'Y' }">
+														<span class="badge bg-danger">환불 완료</span>
+													</c:if>
+												</td>
 											</tr>
 										</c:forEach>
 									</c:if>
 									<c:if test="${fn:length(list)<1 }">
 										<tr>
-											<td colspan="5">예약된 공간이 없습니다.</td>
+											<td colspan="6">예약된 공간이 없습니다.</td>
 										</tr>
 									</c:if>
 										
@@ -456,7 +465,7 @@
 
 							<div class="card-body pb-0">
 								<h5 class="card-title" style="font-weight:bold;">
-									예약 순위 <span>| Today</span>
+									예약 TOP 10 <span>| Today</span>
 								</h5>
 
 								<table class="table table-borderless">

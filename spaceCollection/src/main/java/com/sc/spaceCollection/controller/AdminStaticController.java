@@ -53,7 +53,7 @@ public class AdminStaticController {
 		
 		double percent = 0;
 		try {
-			percent = Math.round(((precentCnt-pastCnt)/pastCnt)*10)/10;
+			percent = Math.round((((double)(precentCnt-pastCnt)/pastCnt)*100)*10)/10.0;
 		} catch (ArithmeticException e) {
 			percent = 0;
 		}
@@ -97,11 +97,12 @@ public class AdminStaticController {
 		
 		double percent = 0;
 		try {
-			percent = Math.round(((precentTotalPrice-pastTotalPrice)/pastTotalPrice)*10)/10;
+			percent = (Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10))/10.0;
 		} catch (ArithmeticException e) {
 			percent = 0;
 		}
 		
+		logger.info("percent = {}", percent);
 		DecimalFormat df = new DecimalFormat("#,###");
 		String precentTotalPriceTrans = df.format(precentTotalPrice);
 		String pastTotalPriceTrans = df.format(pastTotalPrice);
