@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -223,10 +224,57 @@ public class HostController {
 	}
 	
 	@RequestMapping("/registration/spaceManage")
-	public String spaceManage() {
+	public String spaceManage(HttpSession session, Model model) {
 		logger.info("공간 관리 페이지");
 		
+		String userId = (String) session.getAttribute("userId");
+		UserInfoVO userInfoVo = hostService.selectUserById(userId);
+		int userNum = userInfoVo.getUserNum();
+		logger.info("유저 정보 조회, userId = {}, userNum = {}", userId, userNum);
+		
+		List<SpaceFileVO> spaceFileVo = new ArrayList<>();
+		List<SpaceVO> spaceVo = hostService.selectSpaceByUserNum(userNum);
+		logger.info("공간 조회, spaceVo.size = {}", spaceVo.size());
+
+		for (int i = 0; i < spaceVo.size(); i++) {
+			SpaceVO vo = spaceVo.get(i);
+			int spNum = vo.getUserNum();
+			logger.info("spNum = {}", spNum);
+		}
+		
+		for (int i = 0; i < spaceVo.size(); i++) {
+			SpaceVO space = spaceVo.get(i);
+			int spaceNum = space.getSpaceNum();
+			logger.info("spaceNum = {}", spaceNum);
+			
+			SpaceFileVO file = hostService.selectSpaceFile(spaceNum);
+			logger.info("파일조회, file = {}", file);
+			
+			spaceFileVo.add(file);
+		}
+		logger.info("공간 메인이미지 조회, spaceFileVo.size = {}", spaceFileVo.size());
+		
+		
+		model.addAttribute("spaceVo", spaceVo);
+		model.addAttribute("spaceFileVo", spaceFileVo);
+		
 		return "host/registration/spaceManage";
+	}
+	
+	@RequestMapping("/host/registration/deleteSpace")
+	public String deleteSpace(@RequestParam(defaultValue = "0") int spaceNum, Model model) {
+		logger.info("공간 삭제, spaceNum = {}", spaceNum);
+		
+		String msg = "공간 삭제를 실패했습니다.", url = "/host/registration/spaceManage";
+		if (spaceNum > 0) {
+			int cnt = hostService.deleteSpace(spaceNum);
+			msg = spaceNum + " 공간이 삭제되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
 	}
 	
 	//page=1&order=reservationNum&status=before&keyword=fd

@@ -112,6 +112,78 @@ form#couponListForm {
 }
 </style>
 
+<script>
+/* var str="<tr>"
+ +"<td id='tdR'>"+this.couponName+"</td>"
+ +"<td id='tdR'>"+this.couponType+" %</td>"
+ +"<td>"+this.couponStartDay+" ~ "+this.couponFinishDay+"</td>"
+ +"</tr>";
+ */
+	var userNum = ${guestVo.userNum }; 
+	function makeList(data) {
+		 console.log("로딩 시작");
+			$.each(data, function() {  
+			var str="<li class='list-group-item d-flex justify-content-between align-items-start'>"
+				   +"<div class='ms-2 me-auto'>"
+			  	   +"<div class='fw-bold'>"+this.couponName+"</div>"
+			       +""+this.couponStartDay+" ~ "+this.couponFinishDay+""
+			       +"</div>"
+			       +"<span class='badge bg-primary rounded-pill'>"+this.couponType+" %</span>"
+			       +"</li>";
+			    $('#selectCoupon').append(str);
+			}); //each
+	 }//makeList
+	
+	 loadCoupon(userNum);
+	function loadCoupon(userNum){
+	 console.log("로딩성공귣귣!!!!!!!!이제디자인");
+		$.ajax({
+			url : '<c:url value="/user/couponList/couponLoad?userNum='+userNum+'"/>',
+			type: 'get',
+			success:function(data){
+				if(data!=null && data.length>0){
+					makeList(data);
+				}else{  
+					str = "<img alt='쿠폰없음' src='<c:url value="/images/couponSubmit.png"/>'>";
+					console.log("없음 확인");
+					$('#selectCoupon').html(str);
+					return;
+				}
+			},
+			error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+		});//ajax
+	 }
+	
+$(function() {	
+	$('#addCoupon').click(function() {
+		event.preventDefault();
+		var sendDate = $('form[name=couponNum]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+	    $.ajax({
+	        url: "<c:url value='/user/couponList/commentsWrite' />",
+	        method: 'post',
+	        data: sendDate,
+	        success: function(data) {
+                 // data를 사용하여 필요한 작업 수행
+                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
+						if(data!=null){
+     						alert("쿠폰을 등록했습니다.");
+							$('#addCoupon').html("");
+     						console.log("쿠폰 추가 성공");
+						   location.reload();  						
+						}else if(data==null){
+							alert("쿠폰 일련 번호를 입력해주세요.");
+						}//if
+	        },//success
+	    	error:function(xhr, status, error){
+				alert(status + " : " + error);
+			}
+	    });//ajax
+	});//#sendBt
+});	
+</script>
+
 <section>
 <article class="profile">
 		<input type="hidden" name="snsCode" value="${guestVo.userSnsCode }">
@@ -148,17 +220,38 @@ form#couponListForm {
 </article>
 	
 		<div class="couponList">
-			<input id="code"  placeholder="쿠폰 코드를 입력하세요" type="text">
-			<button id="addCoupon">등록</button>
-				
-				<form name="couponCount" var="count" items="${count }" action="#">
+			<form name="couponNum" method="post" action="<c:url value='/user/couponList/commentsWrite'/>">
+				<input id="addCode" placeholder="쿠폰 일련번호를 입력하세요" type="text">
+				<button id="addCoupon" onclick="couponAdd()">등록</button>
+			</form>	
 				<br><o>총 ${count }장</o>
-				</form>
-			
-			<div class="CouponList">
-			
-				<form id="couponListForm" name="selectUserCoupon" var="list" items="${list }" action="#">
-					<c:if test="${empty list}">
+		<div class="CouponList">
+			<ol class="list-group list-group-numbered" >
+				  <li class="list-group-item d-flex justify-content-between align-items-start" id="addCoupon">
+				  </li>
+				  <li class="list-group-item d-flex justify-content-between align-items-start" id="selectCoupon">
+				     <!--<div class="ms-2 me-auto">
+					      <div class="fw-bold">Subheading</div>
+					      Content for list item
+					    </div>
+					    <span class="badge bg-primary rounded-pill">10 %</span>-->
+				  </li>
+				  <!--<li class="list-group-item d-flex justify-content-between align-items-start">
+					    <div class="ms-2 me-auto">
+					      <div class="fw-bold">Subheading</div>
+					      Content for list item
+					    </div>
+					    <span class="badge bg-primary rounded-pill">14</span>
+					  </li>
+					  <li class="list-group-item d-flex justify-content-between align-items-start">
+					    <div class="ms-2 me-auto">
+					      <div class="fw-bold">Subheading</div>
+					      Content for list item
+					    </div>
+					    <span class="badge bg-primary rounded-pill">14</span>
+					  </li> -->
+			</ol>	
+					<%-- <c:if test="${empty list}">
 						<img alt="" src="<c:url value='/images/couponSubmit.png'/>">
 					</c:if>
 					<c:if test="${!empty list}">
@@ -168,22 +261,16 @@ form#couponListForm {
 						        <th id="tdR">할인률</th>
 						        <th colspan = "2" >쿠폰 사용 기간</th>
 						    </tr>
-						    <tr>
-						       <c:forEach var="list" items="${list}">
-					                <tr>
+						    <tr id="selectCoupon">
+					               <tr>
 					                    <td id="tdR">${list.couponName}</td>
 					                    <td id="tdR">${list.couponType} %</td>
-					                    <td>${list.couponStartDay} ~ ${list.couponFinishDay}</td>
+					                    <td>${list.couponStartDay} ~ ${list.couponFinishDay}</td> 
 					                </tr>
-					            </c:forEach>
 						    </tr>
 						</table>
-					</c:if>
-				</form>
-				
+					</c:if> --%>
 			</div>
 		</div>
-	
-	
 </section>
 

@@ -108,11 +108,7 @@
 		});
 		
 		$('#goMList').click(function() {
-			location.href="<c:url value = '/admin/member/memberList'/>";
-		});
-		
-		$('#goWMList').click(function() {
-			location.href="<c:url value = '/admin/member/withdrawalMemberList'/>";
+			location.href="<c:url value = '/admin/space/spaceList'/>";
 		});
 		
 	});

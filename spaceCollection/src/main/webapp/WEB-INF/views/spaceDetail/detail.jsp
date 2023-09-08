@@ -103,7 +103,7 @@ pageEncoding="UTF-8"%>
  }
  .d-block.img{
  	width:800px;
- 	height: 800px;
+ 	height: 680px;
  }
  #QnAPagination{
  	display: flex;
@@ -425,7 +425,7 @@ pageEncoding="UTF-8"%>
 							    </button>
 							    <div id="menu2" class="content">
 							    <div style="margin-top: 5px">	
-									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+									<img src="space_images/${mainImg}" alt="Image" class="img-fluid" style="height:350px; margin-top: 20px; margin-bottom:20px; padding-right:5px; padding-left:5px;">
 								</div>
 								<div class="property-item">
 								  <div class="property-content">
