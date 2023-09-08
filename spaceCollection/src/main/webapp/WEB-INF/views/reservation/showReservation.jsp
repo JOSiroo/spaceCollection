@@ -83,13 +83,18 @@ font-weight : bold;
 	font-size: 20px;
 	font-weight: bold;
 }
-
+.container.text-center{
+	border: 3px solid lightgrey;
+	border-radius: 2rem;
+	padding:1.5% 1.5% 1.5% 1.5%;
+	width:50%;
+}
 
 </style>
 <section>
 	<div class="asd"></div>
 	<div class="receiption">
-		<h1 style = "margin-bottom:2%; font-weight: 800">예약 완료!</h1>
+		<h1 style = "margin-bottom:2%; font-weight: 800">예약 내역</h1>
 		<div class="container text-center">
 			<div class="row row-cols-auto">
 				<div class="col-2"><h4>공간 정보</h4></div>
@@ -99,20 +104,20 @@ font-weight : bold;
 			<br>
 			<div class="row row-cols-auto">
 				<div class="col-2">공간명</div>
-				<div class="col-6">${map.SPACE_NAME }</div>
+				<div class="col-9">${map.SPACE_NAME }</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">타입</div>
-				<div class="col-6">${map.SD_TYPE}</div>
+				<div class="col-9">${map.SD_TYPE}</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">주소</div>
-				<div class="col-6">(우)${map.SPACE_ZIPCODE} ${map.SPACE_ADDRESS}
+				<div class="col-9">(우)${map.SPACE_ZIPCODE} ${map.SPACE_ADDRESS}
 					${map.SPACE_ADDRESS_DETAIL} ${map.SPACE_LOCATION}</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">연락처</div>
-				<div class="col-6">
+				<div class="col-9">
 					<c:if test='${fn:length(map.SPACE_PHONE_NUM) > 9}'>
 						${fn:substring(map.SPACE_PHONE_NUM, 0, 3)} -
 						${fn:substring(map.SPACE_PHONE_NUM, 3, 7)} -
@@ -134,36 +139,36 @@ font-weight : bold;
 			<br>
 			<div class="row row-cols-auto">
 				<div class="col-2">예약 인원</div>
-				<div class="col-6">${map.RESERVE_PEOPLE}명</div>
+				<div class="col-9">${map.RESERVE_PEOPLE}명</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">날짜</div>
-				<div class="col-6">${map.RESERVE_START_DAY}/
+				<div class="col-9">${map.RESERVE_START_DAY}/
 					${map.RESERVE_START_HOUR}시 ~ ${map.RESERVE_FINISH_HOUR}시</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">금액</div>
-				<div class="col-6">
+				<div class="col-9">
 					<fmt:formatNumber value="${map.RESERVE_PRICE}" pattern="#,###"/> 원
 				</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">결제 수단</div>
-				<div class="col-6">
+				<div class="col-9">
 					${map.PAYMENT_INFO }
 				</div>
 			</div>
 			<div class="row row-cols-auto">
 				<div class="col-2">결제일</div>
-				<div class="col-6">${map.RESERVER_PAY_DAY}</div>
+				<div class="col-9">${map.RESERVER_PAY_DAY}</div>
 			</div>
 			<div class="row row-cols-auto">
 			<div class="col-2">예약번호</div>
-			<div class="col-6">${map.RESERVATION_NUM}</div>
+			<div class="col-9">${map.RESERVATION_NUM}</div>
 		</div>
 			<div class="row row-cols-auto">
 			<div class="col-2">예약고유번호</div>
-			<div class="col-6">${map.RESERVATION_UID}</div>
+			<div class="col-9">${map.RESERVATION_UID}</div>
 		</div>
 		</div><!-- 아래는 컨테이너 밖에있는거임 -->
 		<jsp:useBean id="now" class="java.util.Date" />

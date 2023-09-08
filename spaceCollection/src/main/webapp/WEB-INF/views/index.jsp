@@ -96,7 +96,9 @@ div#place {
     left: 50%; /* 이미지를 수평 중앙으로 이동합니다. */
 	overflow: hidden; 
 }
-
+.contentBody{
+	height:40px;
+}
 </style>
 
 <script >
@@ -208,11 +210,11 @@ div#place {
 										<div class="price mb-2"><span>
 										<fmt:formatNumber value="${map.AVGPRICE }" pattern="#,###원" />
 										</span></div>
-										<div>
+										<div class="contentBody">
 											<span class="d-block mb-2 text-black-50">${map.SPACE_TAG}</span>
-											<span class="city d-block mb-3">${map.SPACE_ADDRESS}</span>
-											<a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="btn btn-primary py-2 px-3">상세보기</a>
 										</div>
+										<span class="city d-block mb-3">${map.SPACE_ADDRESS}</span>
+										<a href="<c:url value='/detail'/>?spaceNum=${map.SPACE_NUM}" class="btn btn-primary py-2 px-3">상세보기</a>
 									</div>
 							  	</div>
 					    	</c:forEach>
