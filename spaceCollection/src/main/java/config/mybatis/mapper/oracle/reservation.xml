@@ -144,5 +144,9 @@
 		<![CDATA[and RESERVER_PAY_DAY <= sysdate]]>
 		group by space_type_name
 	</select>
+	
+	<select id="getRecentReservationList" resultType="map">
+		select * from admin_recent_reservation_List_View
+	</select>
 		
 </mapper>

@@ -245,37 +245,47 @@ $(function() {
 	});
 	
 			$('#sendBt').click(function() {
-				event.preventDefault();
 				var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
 			    // 세션에 userId 값이 없는 경우
 			    if ("${sessionScope.userId }"=='') {
 			        window.location.href = '<c:url value='/login/login'/>';
 			        return;
 			    }
-				    $.ajax({
-				        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
-				        method: 'post',
-				        data: sendDate,
-				        success: function(data) {
-			                 // data를 사용하여 필요한 작업 수행
-			                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
-									if(data!=null){
-										$('#ajaxComments').html("");
-			     						alert("댓글 등록 성공");
-			     						$('input[name=commentContent]').val('');
-			     						console.log("댓글 추가 성공");
-									   location.reload();  						
-									}else if(data==null){
-										alert("댓글 내용을 입력하세요");
-									}//if
-				        },//success
-				    	error:function(xhr, status, error){
-							alert(status + " : " + error);
-						}
-				    });//ajax
+			    $('#confirm1').modal('show');
+			    $('#ok').click(function(){
+			    	$.sendAjax();
+			    });
+				    
 		});//#sendBt
 });//#function
 
+
+$.sendAjax = function(){
+	
+	$.ajax({
+        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
+        method: 'post',
+        data: sendDate,
+        success: function(data) {
+             // data를 사용하여 필요한 작업 수행
+             // 가져온 data를 이용하여 댓글 목록을 다시 구성
+					if(data!=null){
+						$('#ajaxComments').html("");
+ 						//alert("댓글 등록 성공");
+ 						$('input[name=commentContent]').val('');
+ 						console.log("댓글 추가 성공");
+					   location.reload();  						
+ 						//$('#confirm1').modal('show');
+					}else if(data==null){
+						alert("댓글 내용을 입력하세요");
+					}//if
+        },//success
+    	error:function(xhr, status, error){
+			alert(status + " : " + error);
+		}
+    });//ajax
+	
+}
 
 </script>
 
@@ -297,7 +307,7 @@ $(function() {
 	<section class="section2" >
 			<div class="comment-box" >
 	             <div class="comment-name">
-	             	<form name="commentsFrm" method="post" action="<c:url value='/user/board/boardDetail/commentsWrite'/>">
+	             	<form name="commentsFrm" method="post" action="<c:url value='/user/board/boardDetail/commentsWrite'/>" onsubmit="return false">
 		                <div class="registering_comment"  style="position: absolute;"  var="vo" items="vo">
 							<div class="col-sm-10" id="commentDiv"  >
 							<c:if test="${empty sessionScope.userId }">
@@ -363,7 +373,10 @@ $(function() {
 			</div>
 		</div>
 	</div>
+	
   </div>	
+  
+  
   
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %>
 		

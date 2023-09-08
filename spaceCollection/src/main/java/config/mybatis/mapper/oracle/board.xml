@@ -41,7 +41,7 @@
 		(
 			select rownum as RNUM, A.* from
 			(
-				select * from admin_board_view 
+				select * from BOARD_BOARDTYPE_USER_VIEW 
 				where BOARD_DEL_FLAG is null and BOARD_TYPE_USE ='Y' 
 				<include refid="searchWhere"/>
 				order by board_reg_date desc
@@ -55,7 +55,7 @@
 	
 
 	<select id="getTotalRecord" parameterType="searchVo" resultType="int">
-		select count(*) from admin_board_view
+		select count(*) from BOARD_BOARDTYPE_USER_VIEW
 		where BOARD_DEL_FLAG is null
 		<include refid="searchWhere"/>
 	</select>

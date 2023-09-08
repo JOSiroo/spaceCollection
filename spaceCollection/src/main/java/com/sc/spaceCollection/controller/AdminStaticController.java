@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +53,7 @@ public class AdminStaticController {
 		
 		double percent = 0;
 		try {
-			percent = Math.round(((precentCnt-pastCnt)/pastCnt)*10)/10;
+			percent = Math.round((((double)(precentCnt-pastCnt)/pastCnt)*100)*10)/10.0;
 		} catch (ArithmeticException e) {
 			percent = 0;
 		}
@@ -96,11 +97,12 @@ public class AdminStaticController {
 		
 		double percent = 0;
 		try {
-			percent = Math.round(((precentTotalPrice-pastTotalPrice)/pastTotalPrice)*10)/10;
+			percent = (Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10))/10.0;
 		} catch (ArithmeticException e) {
 			percent = 0;
 		}
 		
+		logger.info("percent = {}", percent);
 		DecimalFormat df = new DecimalFormat("#,###");
 		String precentTotalPriceTrans = df.format(precentTotalPrice);
 		String pastTotalPriceTrans = df.format(pastTotalPrice);
@@ -125,5 +127,15 @@ public class AdminStaticController {
 		logger.info("예약 금액 조회 결과, map = {}", map);
 		
 		return map;
+	}
+	
+	@RequestMapping("/adminMain")
+	public String getRecentReservationList(Model model) {
+		
+		List<Map<String, Object>> list = reservationService.getRecentReservationList();
+		
+		model.addAttribute("list", list);
+		
+		return "admin/adminMain";
 	}
 }

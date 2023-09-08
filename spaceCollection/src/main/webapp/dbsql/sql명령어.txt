@@ -9,7 +9,7 @@ on b.user_num = u.user_num
 left outer join (select board_num, count(*) as commentCount from comments where COMMENT_DEL_FLAG is null group by board_num)c
 on b.board_num = c.board_num
 left outer join (select img_foreign_key, count(*) as fileCount from space_file group by img_foreign_key)sf
-on b.board_num = sf.img_foreign_key
+on 'b'||b.board_num = sf.img_foreign_key
 order by board_reg_date desc;
 
 
@@ -176,3 +176,24 @@ on b.user_num = u.user_num
 left join (select board_num, count(*) as commentCount from comments where COMMENT_DEL_FLAG is null group by board_num)c
 on b.board_num = c.board_num
 order by board_reg_date desc;  
+
+
+ccreate or replace view ADMIN_RECENT_RESERVATION_LIST_VIEW
+as
+select r.RESERVATION_NUM, r.RESERVE_PEOPLE, r.RESERVE_PRICE, r.RESERVATION_DEL_FLAG, RESERVER_PAY_DAY, u.USER_ID, sd.SD_TYPE, sd.SD_PRICE, s.SPACE_NAME
+from reservation r
+left join user_info u on u.user_id = r.user_id
+left join space_detail sd on sd.sd_num = r.sd_num
+left join space s on s.space_num = sd.space_num
+where RESERVER_PAY_DAY>=trunc(sysdate) and RESERVER_PAY_DAY<=sysdate
+and rownum <=10
+order by RESERVATION_NUM desc;
+
+
+create or replace view admin_reservation_List_View
+as
+select r.RESERVATION_NUM, r.RESERVE_PEOPLE, r.RESERVE_PRICE, RESERVER_PAY_DAY, u.USER_ID, sd.SD_TYPE, sd.SD_PRICE, s.SPACE_NAME
+from reservation r
+left join user_info u on u.user_id = r.user_id
+left join space_detail sd on sd.sd_num = r.sd_num
+left join space s on s.space_num = sd.space_num;
