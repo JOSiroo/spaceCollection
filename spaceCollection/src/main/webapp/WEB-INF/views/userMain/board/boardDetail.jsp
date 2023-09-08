@@ -76,10 +76,11 @@
 	var page = 1;
 	var boardNum = ${param.boardNum}; 
 		
-	 function makeList(data) {
+	 function makeList(data, userId) {
 		 
 		 console.log("로딩 메서드 시작");
 			 $.each(data, function() {  
+		 console.log(this.userId);
 			var str = "<div class='CommentsBox' id='"+this.commentNum+"'  style='border-top: 0.1px solid #ccc; width: 600px; '>"
 					+ "<form action='/user/board/boardDetail/commentsLoad' method='GET'>"
 					+ "<input type='text' name='userNum' id='userNum' value='"+this.userId+"' style='float: right; visibility: hidden;'/>"
@@ -91,17 +92,12 @@
 			        + "<input type='text' value='" + (this.commentRegDate).substring(0,10) + " " + (this.commentRegDate).substring(11,19)  + "' style='border: none; color: #999;' />"
 			        + "</div>"
 			        + "<div class='anonym2' style='margin: 10px;'>"
-			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none; width: 80%;' />"
-
-			        /* id 값 같을 경우만 bt 출력 */
-			        <%-- if ("<%= sessionScope.userId %>" === "'" + this.userId + "'") {
-			            str += "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this," + this.commentNum + ")'>수정</button>"
-			            	+ "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>"
-			        } --%>
-			        
-			        + "</div>"
-			        + "</form>"
-			        + "</div>";
+			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none; width: 80%;' />";
+			       if ( userId === this.userId) {
+		            str+= "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this," + this.commentNum + ")'>수정</button>";
+		            str+= "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>";
+		       		 }
+			        str+= "</div></form></div>";
 			    $('#commentsLoad').append(str);
 			
 			}); //each
@@ -180,7 +176,7 @@
 			success:function(data){
 				if(data!=null && data.length>0){
 					console.log(page);
-					makeList(data);
+					makeList(data, '${sessionScope.userId}');
 					page++;
 				}else{
 					str = "<span>등록된 댓글이 없습니다.</span>";
@@ -251,7 +247,7 @@ $(function() {
 				event.preventDefault();
 				var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
 			    // 세션에 userId 값이 없는 경우
-			    if ("${!empty sessionScope.userId }") {
+			    if ("${sessionScope.userId }"=='') {
 			        window.location.href = 'http://localhost:9091/spaceCollection/login/login';
 			        return;
 			    }
@@ -303,7 +299,6 @@ $(function() {
 	             	<form name="commentsFrm" method="post" action="<c:url value='/user/board/boardDetail/commentsWrite'/>">
 		                <div class="registering_comment"  style="position: absolute;"  var="vo" items="vo">
 							<div class="col-sm-10" id="commentDiv"  >
-							<input type="hidden" name="userNum" value="${userNum } "/>		
 							<c:if test="${empty sessionScope.userId }">
 								<input type="text" name="commentContent" id="replyContentsNo" placeholder="로그인 후 글을 작성하실 수 있습니다." style="width: 450px;"/>
 							</c:if>
