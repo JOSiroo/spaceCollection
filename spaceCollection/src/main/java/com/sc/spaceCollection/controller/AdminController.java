@@ -237,6 +237,7 @@ public class AdminController {
 		pagingInfo.setBlockSize(ConstUtil.BLOCK_SIZE);
 		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		pagingInfo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
+		
 
 		//[2]SearchVo에 입력되지 않은 두 개의 변수에 값 셋팅
 		searchVo.setRecordCountPerPage(ConstUtil.RECORD_COUNT);
@@ -244,15 +245,14 @@ public class AdminController {
 		
 		searchVo.setBoardTypeName(boardTypeName);
 		List<BoardTypeVO> boardTypeList = boardTypeService.selectBoardTypeUse();
-
 		List<Map<String, Object>> list = boardService.selectBoardAll(searchVo);
+		
 		
 		logger.info("게시물 조회 결과, list.size = {}", boardTypeList.size());
 
 		int totalRecord=boardService.getTotalRecord(searchVo);
 		logger.info("글 목록 전체 조회 - totalRecord={}", totalRecord);
 		pagingInfo.setTotalRecord(totalRecord);
-
 		//3
 		model.addAttribute("list", list);
 		model.addAttribute("searchVo", searchVo);
