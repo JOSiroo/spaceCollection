@@ -33,13 +33,14 @@
  .mapHeader{
  	background:#193D76;
  	padding-bottom:0.5%;
+ 	padding-top:0.5%;
  }
  .spaceType{
 	color : white;
 	float:left; 
   	margin-left : 2%;
-  	width: 5%;
-  	margin-top:1%;
+  	width: 10%;
+  	1.5%
  }
  .closeBtn{
  	font-weight: bold;
@@ -49,7 +50,7 @@
 	justify-content: center;
 	position: absolute;
   	top: 16%;
-  	margin-left:97.7%;
+  	margin-left:98.7%;
  }
  .goSpace{
  	font-weight:bolder;
@@ -64,6 +65,7 @@
  .spaceType h4{
  	display:inline-block;
  	margin-right:10%;
+ 	margin-top: 5.1%;
  }
  #sideBarBt{
  	display:inline-block;
@@ -78,7 +80,6 @@
  	text-decoration: none;
  	float:right;
  	margin-right:2%;
- 	padding-top:0.5%;
  }
  .closeMap:hover{
  	color:#ffd014;
@@ -91,8 +92,7 @@
  	font-weight: bold;
  	border:1px solid white;
  	display: inline-block;
- 	margin-left:17%;
- 	margin-top:0.4%;
+ 	margin-left:14%;
  }
   @keyframes fadeInDown {
         0% {
@@ -113,7 +113,7 @@
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .info2 .title {background: white;color:white;
     				font-size: 18px;font-weight: bold;}
-    .info2 .close {color: black !important;font-size:25px; margin-left:185px;}
+    .info2 .close {color: black !important;font-size:25px; margin-left:203px;}
     .info2 .close:hover {cursor: pointer; color : #ffd014 !important;}
     .info2 .body2 {position: relative;overflow: hidden;}
     .info2 .desc {position: relative; margin-top:5px;margin-bottom:15px; margin-left:10px; font-weight: bold;}
@@ -173,6 +173,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff"></script>
 <script>
+function addComma(value){
+    value = value+"";
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value; 
+}
+
 var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 mapOption = { 
     center: new kakao.maps.LatLng(37.498095, 127.027610), // 지도의 중심좌표
@@ -199,9 +205,35 @@ var a = 0;
 	//별도의 이벤트 메소드를 제공하지 않습니다 
 	
 	
+	// 결과를 저장할 객체 생성
 	
-					
-				
+	
+	
+		// 정규 표현식과 매치하여 키-값 쌍 추출
+		var space = {};
+		var tempPrice = "${i.key}";
+		var price = tempPrice.substr(tempPrice.lastIndexOf('=')+1, tempPrice.lastIndexOf('}') - tempPrice.lastIndexOf('=')-1);
+		var avgPrice = parseInt(price);
+		
+		input = "${i.key}";
+		var keyValueRegex = /(\w+)=(.*?)(?=, \w+=|$)/g;
+		var matches = input.matchAll(keyValueRegex);
+
+		for (const match of matches) {
+		    var key = match[1];
+		    var value = match[2];
+
+		    // 값이 따옴표로 감싸져 있지 않으면 따옴표로 감싸기
+
+		    // 결과 객체에 키-값 쌍 추가
+		    space[key] = value;
+		}
+	
+	console.log(space);
+	var imgStr = '${i.value}';
+	imgStr = imgStr.substr(1,imgStr.length-2);
+	var img = imgStr.split(', ');
+	console.log(img.length);
 	
 var content = '<div class="wrap2">' + 
 	        '    <div class="info2">' + 
@@ -209,17 +241,21 @@ var content = '<div class="wrap2">' +
 	        '        </div>' + 
 	        '        	<div class="body2">' + 
 						'	<div id="carouselExample" class="carousel carousel-fade">'+
-					'		  	<div class="carousel-inner">'+
-						 '   		<div class="carousel-item active">'+
-						  '  			<img src="<c:url value="/images/img_8.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
-						   ' 		</div>'+
-						    '		<div class="carousel-item">'+
-						    '			<img src="<c:url value="/images/img_7.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
-						    '		</div>'+
-						    '		<div class="carousel-item">'+
-						   '		 	<img src="<c:url value="/images/img_6.jpg"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
-						   ' 		</div>'+
-						  '			</div>'+
+					'		  	<div class="carousel-inner">';
+								
+								img.forEach(function(item,index){
+									console.log(item);
+									if(index != 0){
+										content += '   <div class="carousel-item">'+
+								  				'  			<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+								   				' 		</div>';
+									}else{
+										content += '   	<div class="carousel-item active">'+
+											  		'  		<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+											   		' 	</div>';
+									}									
+								});
+					content += '			</div>'+
 						'  			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">'+
 					 	'		   		<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
 					  '					<span class="visually-hidden">Previous</span>'+
@@ -230,10 +266,10 @@ var content = '<div class="wrap2">' +
 						 ' 			</button>'+
 						'		</div>'+
 	        '            <div class="desc">' + 
-	        '			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum=${i.key.spaceNum}"/>">${i.key.spaceName}</a> '+
-	        '                <div class="ellipsis">${i.key.spaceAddress} ${i.key.spaceAddressDetail} ${i.key.spaceLocation}</div>' + 
-	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:5px;font-size:14px">(우) ${i.key.spaceZipcode} (지번) 영평동 2181</div>' + 
-	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold;display:inline-block;"><fmt:formatNumber value="${i.value}" pattern="₩#,###"/>원</h5>'+
+	        	'			<a class = "goSpace" href = "<c:url value = "/detail?spaceNum='+space.spaceNum+'"/>">'+space.spaceName+'</a> '+
+	        '                <div class="ellipsis">'+space.spaceAddress + '&nbsp;' + space.spaceAddressDetail + '&nbsp;' + space.spaceLocation+'</div>' + 
+	        '                <div class="jibun ellipsis" style="font-weight:bold; margin-bottom:5px;font-size:14px">(우) ' + space.spaceZipcode + ' (지번) 영평동 2181</div>' + 
+	        '                <div><h5 class = "h5" style="color:#193D76;font-weight:bold;display:inline-block;">'+addComma(price)+'원</h5>'+
 		           '			<div class="close" onclick="closeOverlay()" title="닫기" style="color:black; display:inline-block;">X</div>'+
 	           '            </div>' + 
 	        '            </div>' + 
@@ -243,7 +279,7 @@ var content = '<div class="wrap2">' +
 
 	
 	
-    var markerPosition = new kakao.maps.LatLng(${i.key.latitude}, ${i.key.longitude}); // 마커 위치
+    var markerPosition = new kakao.maps.LatLng(space.latitude, space.longitude); // 마커 위치
     
 	var overlayz = new kakao.maps.CustomOverlay({
 		content: content,
@@ -266,8 +302,8 @@ var content = '<div class="wrap2">' +
 	var markerContent = '<div class ="overlabel" style="margin : -16px 0px 0px -10px">'
 				        +  '<span class="left"></span>'
 				        +	'<a href="javascript:void(0);"onclick="createOverlayToggleFunction('+overlays.length+')"  class="center">'
-				        +	'<fmt:formatNumber value="${i.value}" pattern="₩#,###"/>'
-					    +	'</a>'
+					   	+	addComma(price)	
+				        +	'원</a>'
 				        +	'<span class="right"></span>'
 				        +	'</div>';
 
@@ -277,7 +313,6 @@ var content = '<div class="wrap2">' +
 	});
 	customOverlays.push(customOverlay);
 	customOverlay.setMap(map);
-	
 </c:forEach>
 closeOverlay();
 
