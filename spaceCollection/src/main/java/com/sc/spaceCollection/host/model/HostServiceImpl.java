@@ -11,6 +11,7 @@ import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
 import lombok.RequiredArgsConstructor;
@@ -123,6 +124,21 @@ public class HostServiceImpl implements HostService {
 		cnt = hostDao.insertSpaceDetail(spaceDetailVo);
 		
 		return cnt;
+	}
+
+	@Override
+	public SpaceFileVO selectSpaceFile(int spaceNum) {
+		return hostDao.selectSpaceFile(spaceNum);
+	}
+
+	@Override
+	public List<SpaceVO> selectSpaceByUserNum(int userNum) {
+		return hostDao.selectSpaceByUserNum(userNum);
+	}
+
+	@Override
+	public int deleteSpace(int spaceNum) {
+		return hostDao.deleteSpace(spaceNum);
 	}
 
 
