@@ -249,7 +249,7 @@ $(function() {
 				var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
 			    // 세션에 userId 값이 없는 경우
 			    if ("${sessionScope.userId }"=='') {
-			        window.location.href = 'http://localhost:9091/spaceCollection/login/login';
+			        window.location.href = '<c:url value='/login/login'/>';
 			        return;
 			    }
 				    $.ajax({
