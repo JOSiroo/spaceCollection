@@ -228,7 +228,14 @@
 		 </div>
 			
 			 	<div class="col-sm-6 " style="text-align: center;">
-				<a href="<c:url value='/guest/myPage/checkPwd' />">
+				<a href="
+				<c:if test="${!empty sessionScope.code }">
+					<c:url value='/guest/myPage/myProfile' />
+				</c:if>
+				<c:if test="${empty sessionScope.code }">
+					<c:url value='/guest/myPage/checkPwd' />
+				</c:if>
+				">
 		  		<i class="bi bi-person-video" ></i>
 		 	    <p>마이페이지</p></a>
 		 	</div>
