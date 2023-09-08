@@ -191,6 +191,7 @@ p{
 	    margin-bottom:8%;
 	    box-shadow: 5px 5px 15px 10px rgba(0, 0, 0, 0.2);
 	    animation : fadeInDown 1s;
+	    height: 500px;
 	}
 	.card-body{
 		padding: 4% 6% 4% 6%;
@@ -936,7 +937,7 @@ function loadMoreData() {
 	
 	//ajax로 불러올 데이터가 없을때 호출하는 함수
 	function noData(){
-		 var htmlStr = "<h1 class='nodata'>표시 할 공간이 없어요</h1>";
+		var htmlStr = "<div style='text-align:center'><h1 class='nodata'>표시 할 공간이 없어요</h1><i class='bi bi-emoji-dizzy' style='font-size:70px;font-weight:bolder; color:#193D76'></i></div>";
 		 $('#data-container').append(htmlStr);
 		 isLoading = true;
 	 }
