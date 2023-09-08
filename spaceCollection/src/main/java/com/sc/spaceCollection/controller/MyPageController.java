@@ -77,6 +77,7 @@ public class MyPageController {
 		int pageSize=3;
 		int blockSize=1;
 		PagingVO pageVo = new PagingVO(currentPage,totalRecord,pageSize,blockSize);
+		//최근 본 상품 끝
 		
 		model.addAttribute("todaySdList",todaySdList);
 		model.addAttribute("pageVo",pageVo);
@@ -196,6 +197,34 @@ public class MyPageController {
 		logger.info("상품등록 처리 결과, cnt={}",cnt);
 		
 		model.addAttribute("guestVo",guestVo);
+		
+		//최근 본 상품 쿠키 불러오기
+		Cookie[] cookies=request.getCookies();
+		
+		List<Map<String, Object>> todaySdList = new ArrayList<Map<String, Object>>();
+		if(cookies!=null){
+	        for (int i=0; i<cookies.length; i++) {
+	            if (cookies[i].getName().startsWith("today")) {
+	            	logger.info("cookieName={}",cookies[i].getName());
+	            	Map<String,Object> map=spaceService.selectSpaceFileViewBySpaceNum(cookies[i].getValue());
+	            	todaySdList.add(map);
+	            }
+	        }
+	        Collections.reverse(todaySdList);//최신 순으로
+	        logger.info("쿠키찾기 결과 todaySd={}",todaySdList);
+	    }
+		int currentPage = 1;
+		if(request.getParameter("currentPage")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int totalRecord=todaySdList.size();
+		int pageSize=3;
+		int blockSize=1;
+		PagingVO pageVo = new PagingVO(currentPage,totalRecord,pageSize,blockSize);
+		//최근 본 상품 끝
+		
+		model.addAttribute("todaySdList",todaySdList);
+		model.addAttribute("pageVo",pageVo);
 		return "guest/myPage/myProfile";
 	}
 
