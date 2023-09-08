@@ -2,6 +2,8 @@ package com.sc.spaceCollection.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +21,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.common.FileUploadUtil;
+import com.sc.spaceCollection.common.PagingVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
+import com.sc.spaceCollection.space.model.SpaceService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +38,7 @@ public class MyPageController {
 	private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
 	
 	private final GuestService guestService;
+	private final SpaceService spaceService;
 	private final FileUploadUtil fileUploadUtil;
 	private final Encryption encryption;
 	
@@ -49,20 +54,32 @@ public class MyPageController {
 		logger.info("마이페이지 유저 정보 불러오기 결과, userInfo={}",userInfo);
 		
 		model.addAttribute("guestVo",userInfo);
+		//최근 본 상품 쿠키 불러오기
 		Cookie[] cookies=request.getCookies();
-		String[] spaceNum = new String[5];
-		String ckSpaceNum="";
+		
+		List<Map<String, Object>> todaySdList = new ArrayList<Map<String, Object>>();
 		if(cookies!=null){
-	        for (Cookie c : cookies) {
-	            String name = c.getName(); // 쿠키 이름 가져오기
-	            String ckVal = c.getValue(); // 쿠키 값 가져오기
-	            if (name.equals("RecentSpace")) {
-	            	ckSpaceNum=ckVal;
-	            	logger.info("쿠키찾기 결과 ckSpaceNum={}",ckSpaceNum);
+	        for (int i=0; i<cookies.length; i++) {
+	            if (cookies[i].getName().startsWith("today")) {
+	            	logger.info("cookieName={}",cookies[i].getName());
+	            	Map<String,Object> map=spaceService.selectSpaceFileViewBySpaceNum(cookies[i].getValue());
+	            	todaySdList.add(map);
 	            }
 	        }
+	        Collections.reverse(todaySdList);//최신 순으로
+	        logger.info("쿠키찾기 결과 todaySd={}",todaySdList);
 	    }
-		model.addAttribute("spaceNum",spaceNum);
+		int currentPage = 1;
+		if(request.getParameter("currentPage")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int totalRecord=todaySdList.size();
+		int pageSize=3;
+		int blockSize=1;
+		PagingVO pageVo = new PagingVO(currentPage,totalRecord,pageSize,blockSize);
+		
+		model.addAttribute("todaySdList",todaySdList);
+		model.addAttribute("pageVo",pageVo);
 		return "guest/myPage/myProfile";
 	} 
 	
