@@ -119,7 +119,6 @@
     .info2 .desc {position: relative; margin-top:5px;margin-bottom:15px; margin-left:10px; font-weight: bold;}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;margin-top:6px;}
     .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-    .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info2 .link {color: #5085BB;}
     
     
@@ -247,11 +246,11 @@ var content = '<div class="wrap2">' +
 									console.log(item);
 									if(index != 0){
 										content += '   <div class="carousel-item">'+
-								  				'  			<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+								  				'  			<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px;  box-shadow: -15px -15px 5px 5px;" alt="...">'+
 								   				' 		</div>';
 									}else{
 										content += '   	<div class="carousel-item active">'+
-											  		'  		<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
+											  		'  		<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px; box-shadow: -15px -15px 5px 5px;" alt="...">'+
 											   		' 	</div>';
 									}									
 								});
