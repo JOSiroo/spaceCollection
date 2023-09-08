@@ -106,6 +106,11 @@
 		where img_temp_name like 'S' || #{spaceNum} ||'Main%'
 	</select>
 	
+	<select id="selectSpaceDetailBySpaceNum" resultType="spaceDetailVo" parameterType="int">
+		select * from space_detail
+		where space_num = #{spaceNum}
+	</select>
+	
 	<update id="deleteSpace" parameterType="int">
 		update space
 		set del_flag = 'Y', space_out_date = sysdate
@@ -117,6 +122,68 @@
 		set del_flag = 'Y', space_out_date = sysdate
 		where space_num = #{spaceNum}
 	</update>
+	
+	<update id="updateSpace" parameterType="spaceVo">
+		update space 
+		set SPACE_NAME = #{spaceName}, SPACE_BUSINESS_NUM = #{spaceBusinessNum}, SPACE_ZIPCODE = #{spaceZipcode}, 
+			SPACE_ADDRESS = #{spaceAddress}, SPACE_ADDRESS_DETAIL = #{spaceAddressDetail}, 
+			SPACE_LOCATION = #{spaceLocation}, SPACE_INTRO = #{spaceIntro}, SPACE_INFO = #{spaceInfo}, 
+			SPACE_TAG = #{spaceTag}, SPACE_FACILITY = #{spaceFacility}, SPACE_PHONE_NUM = #{spacePhoneNum}, 
+			SPACE_WARN = #{spaceWarn}, LATITUDE = #{latitude}, LONGITUDE = #{longitude}, SPACE_TYPE_NO = #{spaceTypeNo}
+		where space_num = #{spaceNum}
+	</update>
+	
+	<update id="updateTotalFacility" parameterType="spaceTotalFacilityVo">
+		update space_total_facility
+		set FAC_WIFI = #{facWifi}, FAC_PRINTER = #{facPrinter}, FAC_CHAIR_TABLE = #{facChairTable},
+		FAC_SMOKE = #{facSmoke}, FAC_REST_ROOM = #{facRestRoom}, FAC_PC = #{facPC}, FAC_TV = #{facTV},
+		FAC_WHITE_BOARD = #{facWhiteBoard}, FAC_ELEVATOR = #{facElevator}, FAC_PARKING = #{facParking},
+		FAC_FOOD = #{facFood}, FAC_DRINK = #{facDrink}, FAC_COOK = #{facCook}, FAC_PET = #{facPet},
+		FAC_AUDIO = #{facAudio}
+		where space_num = #{spaceNum}
+	</update>
+	
+	<update id="updateRefund" parameterType="refundvo">
+		update refund
+		set REFUND_7_DAY = #{refund7Day}, REFUND_6_DAY = #{refund6Day}, REFUND_5_DAY = #{refund5Day},
+			REFUND_4_DAY = #{refund4Day}, REFUND_3_DAY = #{refund3Day}, REFUND_2_DAY = #{refund2Day},
+			REFUND_1_DAY = #{refund1Day}, REFUND_DAY = #{refundDay}
+		where refund_num = #{refundNum}
+	</update>
+	
+	<update id="updateSpaceDetail" parameterType="spaceDetailVo">
+		update space_detail
+		set SD_TYPE = #{sdType}, SD_PRICE = #{sdPrice}, SD_MIN_PEOPLE = #{sdMinPeople},
+		SD_MAX_PEOPLE = #{sdMaxPeople}, SD_AREA = #{sdArea}, SPACE_NUM = #{spaceNum},
+		FACILITY_NUM = #{facilityNum}, SD_MIN_TIME = #{sdMinTime}, SD_CLOSE_TIME = #{sdCloseTime},
+		SD_OPEN_TIME = #{sdOpenTime}
+		where sd_num = #{sdNum}
+	</update>
+	
+	<update id="updateFacility" parameterType="facilityVo">
+		update facility
+		set FAC_WIFI = #{facWifi}, FAC_PRINTER = #{facPrinter}, FAC_CHAIR_TABLE = #{facChairTable},
+		FAC_SMOKE = #{facSmoke}, FAC_REST_ROOM = #{facRestRoom}, FAC_PC = #{facPC}, FAC_TV = #{facTV},
+		FAC_WHITE_BOARD = #{facWhiteBoard}, FAC_ELEVATOR = #{facElevator}, FAC_PARKING = #{facParking},
+		FAC_FOOD = #{facFood}, FAC_DRINK = #{facDrink}, FAC_COOK = #{facCook}, FAC_PET = #{facPet},
+		FAC_AUDIO = #{facAudio}
+		where FACILITY_NUM = #{facilityNum}
+	</update>
+	
+	<delete id="deleteMainImg" parameterType="String">
+		delete space_file
+		where img_temp_name like 'S' || #{imgTempName} || 'Main%'
+	</delete>
+	
+	<delete id="deleteSubImg" parameterType="String">
+		delete space_file
+		where img_temp_name like 'S' || #{imgTempName} || 'Sub%'
+	</delete>
+	
+	<delete id="deleteLicenseImg" parameterType="String">
+		delete space_file
+		where img_temp_name like 'S' || #{imgTempName} || 'license%'
+	</delete>
 	
 	<select id="selectHostReservation" resultType="map">
 		select *

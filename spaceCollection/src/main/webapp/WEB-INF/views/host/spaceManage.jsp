@@ -188,7 +188,7 @@
 								<li class="date">공간번호 ${spaceVo.spaceNum }</li>
 								<br>
 								<li class="date">등록일 
-									${spaceVo.spaceRegDate }
+									<fmt:formatDate value="${spaceVo.spaceRegDate }" pattern="yyyy.MM.dd"/>
 								</li>
 							</ul>
 						</div>	<!-- infoArea -->
@@ -197,7 +197,7 @@
 								href="<c:url value='/host/registration/registration2?spaceNum=${spaceVo.spaceNum }' />">공간정보 수정
 							</a>
 							<a class="productModify" 
-								href="<c:url value='/host/registration/spDetail?spaceNum=${spaceVo.spaceNum }' />">세부 공간 추가/수정
+								href="<c:url value='/host/spaceDetailManage?spaceNum=${spaceVo.spaceNum }' />">세부 공간 추가/수정
 							</a>
 							<a class="delete" 
 								href="<c:url value='/host/registration/deleteSpace?spaceNum=${spaceVo.spaceNum}' />">삭제</a>
