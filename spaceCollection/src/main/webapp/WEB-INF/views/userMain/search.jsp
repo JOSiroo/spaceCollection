@@ -904,11 +904,11 @@ function loadMoreData() {
 				for(var i = 0; i < innerVal[0].length; i++){
 					if(i == 0){
 				        htmlStr += '<div class="carousel-item active">';
-				        htmlStr += '<img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="...">';
+				        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="..."></a>';
 				        htmlStr += '</div>';
 					}else{
 				        htmlStr += '<div class="carousel-item">';
-				        htmlStr += '<img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="...">';
+				        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="..."></a>';
 				        htmlStr += '</div>';
 					}
 				}
