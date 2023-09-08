@@ -31,8 +31,6 @@ section{
     margin-left: 4%;
     text-align: center;
 }
-
-
 #userName{
 	font-weight: bold;
 	color: black;
@@ -64,20 +62,28 @@ section{
 	letter-spacing: 1px;
 	color: #fff;
 }
+input#addCode {
+    height: 35px;
+    margin-top: 4%;
+    width: 70%;
+}
 o{
     float: right;
-    margin-right: 4%;
+    margin-right: 12%;
     font-weight: bold;
 }
-.CouponList {
-    display: flex;
+.CouponBox {
+    /* display: flex; */
     justify-content: flex-start;
     height: 95vh;
-    max-width: 100%;
-    max-height: 90%;
+    width: 100%;
+    /* max-width: 100%; */
+    /* max-height: 90%; */
+    width: 80%;
+    margin-left: 10%;
     align-items: flex-start;
-    margin: 0px;
-    margin-top: 5%;
+    /* margin: 0px; */
+    margin-top: 8%;
 }
 button#mypage {
     color: #999;
@@ -113,19 +119,13 @@ form#couponListForm {
 </style>
 
 <script>
-/* var str="<tr>"
- +"<td id='tdR'>"+this.couponName+"</td>"
- +"<td id='tdR'>"+this.couponType+" %</td>"
- +"<td>"+this.couponStartDay+" ~ "+this.couponFinishDay+"</td>"
- +"</tr>";
- */
 	var userNum = ${guestVo.userNum }; 
 	function makeList(data) {
 		 console.log("로딩 시작");
 			$.each(data, function() {  
 			var str="<li class='list-group-item d-flex justify-content-between align-items-start'>"
 				   +"<div class='ms-2 me-auto'>"
-			  	   +"<div class='fw-bold'>"+this.couponName+"</div>"
+			  	   +"<div class='fw-bold'> 쿠폰 코드 : "+this.couponName+"</div>"
 			       +""+this.couponStartDay+" ~ "+this.couponFinishDay+""
 			       +"</div>"
 			       +"<span class='badge bg-primary rounded-pill'>"+this.couponType+" %</span>"
@@ -136,7 +136,7 @@ form#couponListForm {
 	
 	 loadCoupon(userNum);
 	function loadCoupon(userNum){
-	 console.log("로딩성공귣귣!!!!!!!!이제디자인");
+	 console.log("로딩성공");
 		$.ajax({
 			url : '<c:url value="/user/couponList/couponLoad?userNum='+userNum+'"/>',
 			type: 'get',
@@ -156,20 +156,35 @@ form#couponListForm {
 		});//ajax
 	 }
 	
+	function addcoupon(data) {
+		 console.log("추가 메서드 시작");
+		 console.log(data);
+			 var str="";
+			 var str="<li class='list-group-item d-flex justify-content-between align-items-start'>"
+				   +"<div class='ms-2 me-auto'>"
+			  	   +"<div class='fw-bold'> 쿠폰 코드 : "+this.couponName+"</div>"
+			       +""+this.couponStartDay+" ~ "+this.couponFinishDay+""
+			       +"</div>"
+			       +"<span class='badge bg-primary rounded-pill'>"+this.couponType+" %</span>"
+			       +"</li>";
+			 $('#addcoupon').append(str);
+	}
+	
 $(function() {	
 	$('#addCoupon').click(function() {
 		event.preventDefault();
-		var sendDate = $('form[name=couponNum]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+		var data = $('form[name=couponNum]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+		console.log("추가 성공");
+		console.log(data);
 	    $.ajax({
-	        url: "<c:url value='/user/couponList/commentsWrite' />",
+	        url: "<c:url value='/user/couponList/couponWrite' />",
 	        method: 'post',
-	        data: sendDate,
+	        data: data,
 	        success: function(data) {
-                 // data를 사용하여 필요한 작업 수행
-                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
+	        	 console.log("추가 성공");
 						if(data!=null){
      						alert("쿠폰을 등록했습니다.");
-							$('#addCoupon').html("");
+							$('#addcoupon').html("");
      						console.log("쿠폰 추가 성공");
 						   location.reload();  						
 						}else if(data==null){
@@ -182,6 +197,8 @@ $(function() {
 	    });//ajax
 	});//#sendBt
 });	
+
+
 </script>
 
 <section>
@@ -219,58 +236,19 @@ $(function() {
 			</div>
 </article>
 	
-		<div class="couponList">
-			<form name="couponNum" method="post" action="<c:url value='/user/couponList/commentsWrite'/>">
-				<input id="addCode" placeholder="쿠폰 일련번호를 입력하세요" type="text">
-				<button id="addCoupon" onclick="couponAdd()">등록</button>
+	<div class="couponList">
+			<form name="couponNum" method="post" action="<c:url value='/user/couponList/couponWrite'/>">
+				<input id="addCode" value="${couponName } " name="couponName"  placeholder="쿠폰 일련번호를 입력하세요" type="text" />
+				<button id="addCoupon" type="button" >등록</button>
+				<input value="${guestVo.userNum } "  name="userNum" type="hidden" />
+				<input value="10" name="couponType" type="hidden" />
 			</form>	
 				<br><o>총 ${count }장</o>
-		<div class="CouponList">
-			<ol class="list-group list-group-numbered" >
-				  <li class="list-group-item d-flex justify-content-between align-items-start" id="addCoupon">
-				  </li>
-				  <li class="list-group-item d-flex justify-content-between align-items-start" id="selectCoupon">
-				     <!--<div class="ms-2 me-auto">
-					      <div class="fw-bold">Subheading</div>
-					      Content for list item
-					    </div>
-					    <span class="badge bg-primary rounded-pill">10 %</span>-->
-				  </li>
-				  <!--<li class="list-group-item d-flex justify-content-between align-items-start">
-					    <div class="ms-2 me-auto">
-					      <div class="fw-bold">Subheading</div>
-					      Content for list item
-					    </div>
-					    <span class="badge bg-primary rounded-pill">14</span>
-					  </li>
-					  <li class="list-group-item d-flex justify-content-between align-items-start">
-					    <div class="ms-2 me-auto">
-					      <div class="fw-bold">Subheading</div>
-					      Content for list item
-					    </div>
-					    <span class="badge bg-primary rounded-pill">14</span>
-					  </li> -->
-			</ol>	
-					<%-- <c:if test="${empty list}">
-						<img alt="" src="<c:url value='/images/couponSubmit.png'/>">
-					</c:if>
-					<c:if test="${!empty list}">
-					    <table align = "center">
-						    <tr id="oneBox" >
-						        <th id="tdR">쿠폰 번호</th>
-						        <th id="tdR">할인률</th>
-						        <th colspan = "2" >쿠폰 사용 기간</th>
-						    </tr>
-						    <tr id="selectCoupon">
-					               <tr>
-					                    <td id="tdR">${list.couponName}</td>
-					                    <td id="tdR">${list.couponType} %</td>
-					                    <td>${list.couponStartDay} ~ ${list.couponFinishDay}</td> 
-					                </tr>
-						    </tr>
-						</table>
-					</c:if> --%>
-			</div>
+		<div class="CouponBox">
+			<ol class="list-group list-group-numbered" id="selectCoupon">
+				<div id="addcoupon"></div>
+			</ol>
 		</div>
+	</div>
 </section>
 

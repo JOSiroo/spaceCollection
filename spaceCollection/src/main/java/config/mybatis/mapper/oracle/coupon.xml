@@ -9,7 +9,7 @@
 			select coupon_seq.nextval from dual
 		</selectKey>
 		INSERT INTO COUPON (COUPON_NUM, COUPON_NAME, USER_NUM, COUPON_TYPE)
-		VALUES (#{couponNum}, #{couponName}, #{userNum}, #{couonType})
+		VALUES (#{couponNum}, #{couponName}, #{userNum}, #{couponType})
 	</insert>
 	
 	<select id="countCoupon" parameterType="int" resultType="int">
