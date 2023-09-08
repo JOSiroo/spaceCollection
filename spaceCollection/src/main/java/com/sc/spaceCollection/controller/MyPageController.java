@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.sc.spaceCollection.common.ConstUtil;
 import com.sc.spaceCollection.common.Encryption;
 import com.sc.spaceCollection.common.FileUploadUtil;
+import com.sc.spaceCollection.common.PagingVO;
 import com.sc.spaceCollection.guest.model.GuestService;
 import com.sc.spaceCollection.guest.model.GuestVO;
 import com.sc.spaceCollection.space.model.SpaceService;
@@ -55,8 +56,8 @@ public class MyPageController {
 		model.addAttribute("guestVo",userInfo);
 		//최근 본 상품 쿠키 불러오기
 		Cookie[] cookies=request.getCookies();
+		
 		List<Map<String, Object>> todaySdList = new ArrayList<Map<String, Object>>();
-		String ckSpaceNum="";
 		if(cookies!=null){
 	        for (int i=0; i<cookies.length; i++) {
 	            if (cookies[i].getName().startsWith("today")) {
@@ -68,7 +69,17 @@ public class MyPageController {
 	        Collections.reverse(todaySdList);//최신 순으로
 	        logger.info("쿠키찾기 결과 todaySd={}",todaySdList);
 	    }
+		int currentPage = 1;
+		if(request.getParameter("currentPage")!=null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int totalRecord=todaySdList.size();
+		int pageSize=3;
+		int blockSize=1;
+		PagingVO pageVo = new PagingVO(currentPage,totalRecord,pageSize,blockSize);
+		
 		model.addAttribute("todaySdList",todaySdList);
+		model.addAttribute("pageVo",pageVo);
 		return "guest/myPage/myProfile";
 	} 
 	
