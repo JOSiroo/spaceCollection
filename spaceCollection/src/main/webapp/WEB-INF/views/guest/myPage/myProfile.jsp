@@ -428,7 +428,7 @@
 		font-weight:bold;
     	color: #00204a;
     	box-shadow: 5px 5px 5px gray;
-    	border: 1px solid #193d76;
+    	border: 1px solid #a3b1c8;
 	}
 	
 	.recentSpace a{
