@@ -217,19 +217,24 @@ public class UserMainController {
          List<SpaceVO> list = spaceService.selectBySpaceNameMap(spaceName);
         
          for(int i = 0; i < list.size(); i++) {
-        	Map<SpaceVO, Integer> tempMap = new HashMap<>();
-        	Map<Map<SpaceVO, Integer>, List<String>> tempMap2 = new HashMap<>();
-            sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-            imgList = sdService.selectSpaceImg("S" + list.get(i).getSpaceNum() + "Sub");
-            list.get(i).setSpaceInfo(null);
-            
-            int averagePrice = 0;
-            for(int j = 0; j < sdList.size(); j++) {
-            	averagePrice += sdList.get(j).getSdPrice(); 
-            }
-            tempMap.put(list.get(i),averagePrice/sdList.size());
-            resultMap.put(tempMap, imgList);
-         }
+           	Map<SpaceVO, Integer> tempMap = new HashMap<>();
+           	Map<Map<SpaceVO, Integer>, List<String>> tempMap2 = new HashMap<>();
+           	
+           	
+               sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+               imgList = sdService.selectSpaceImg("S" + list.get(i).getSpaceNum() + "Sub");
+               list.get(i).setSpaceInfo(null);
+               list.get(i).setSpaceWarn(null);
+               list.get(i).setSpaceFacility(null);
+               
+               
+               int averagePrice = 0;
+               for(int j = 0; j < sdList.size(); j++) {
+               	averagePrice += sdList.get(j).getSdPrice(); 
+               }
+               tempMap.put(list.get(i),averagePrice/sdList.size());
+               resultMap.put(tempMap, imgList);
+           }
          
          logger.info("공간 검색 리스트 조회, 결과 resultMap = {}", resultMap.size());
          model.addAttribute("title", spaceName);
@@ -242,20 +247,24 @@ public class UserMainController {
          
          logger.info("list.size = {}", list.size());
          for(int i = 0; i < list.size(); i++) {
-         	Map<SpaceVO, Integer> tempMap = new HashMap<>();
-         	Map<Map<SpaceVO, Integer>, List<String>> tempMap2 = new HashMap<>();
-             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-             imgList = sdService.selectSpaceImg("S" + list.get(i).getSpaceNum() + "Sub");
-             list.get(i).setSpaceInfo(null);
-             
-             
-             int averagePrice = 0;
-             for(int j = 0; j < sdList.size(); j++) {
-             	averagePrice += sdList.get(j).getSdPrice(); 
-             }
-             tempMap.put(list.get(i),averagePrice/sdList.size());
-             resultMap.put(tempMap, imgList);
-          }
+           	Map<SpaceVO, Integer> tempMap = new HashMap<>();
+           	Map<Map<SpaceVO, Integer>, List<String>> tempMap2 = new HashMap<>();
+           	
+           	
+               sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+               imgList = sdService.selectSpaceImg("S" + list.get(i).getSpaceNum() + "Sub");
+               list.get(i).setSpaceInfo(null);
+               list.get(i).setSpaceWarn(null);
+               list.get(i).setSpaceFacility(null);
+               
+               
+               int averagePrice = 0;
+               for(int j = 0; j < sdList.size(); j++) {
+               	averagePrice += sdList.get(j).getSdPrice(); 
+               }
+               tempMap.put(list.get(i),averagePrice/sdList.size());
+               resultMap.put(tempMap, imgList);
+            }
          
          String typeName = spaceService.selectSpaceTypeName(spaceTypeNo);
          model.addAttribute("title", typeName);
@@ -269,9 +278,14 @@ public class UserMainController {
           for(int i = 0; i < list.size(); i++) {
           	Map<SpaceVO, Integer> tempMap = new HashMap<>();
           	Map<Map<SpaceVO, Integer>, List<String>> tempMap2 = new HashMap<>();
+          	
+          	
               sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
               imgList = sdService.selectSpaceImg("S" + list.get(i).getSpaceNum() + "Sub");
               list.get(i).setSpaceInfo(null);
+              list.get(i).setSpaceWarn(null);
+              list.get(i).setSpaceFacility(null);
+              
               
               int averagePrice = 0;
               for(int j = 0; j < sdList.size(); j++) {

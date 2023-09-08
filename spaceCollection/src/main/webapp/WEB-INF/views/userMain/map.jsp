@@ -33,13 +33,14 @@
  .mapHeader{
  	background:#193D76;
  	padding-bottom:0.5%;
+ 	padding-top:0.5%;
  }
  .spaceType{
 	color : white;
 	float:left; 
   	margin-left : 2%;
-  	width: 5%;
-  	margin-top:1%;
+  	width: 10%;
+  	1.5%
  }
  .closeBtn{
  	font-weight: bold;
@@ -49,7 +50,7 @@
 	justify-content: center;
 	position: absolute;
   	top: 16%;
-  	margin-left:97.7%;
+  	margin-left:98.7%;
  }
  .goSpace{
  	font-weight:bolder;
@@ -64,6 +65,7 @@
  .spaceType h4{
  	display:inline-block;
  	margin-right:10%;
+ 	margin-top: 5.1%;
  }
  #sideBarBt{
  	display:inline-block;
@@ -78,7 +80,6 @@
  	text-decoration: none;
  	float:right;
  	margin-right:2%;
- 	padding-top:0.5%;
  }
  .closeMap:hover{
  	color:#ffd014;
@@ -91,8 +92,7 @@
  	font-weight: bold;
  	border:1px solid white;
  	display: inline-block;
- 	margin-left:17%;
- 	margin-top:0.4%;
+ 	margin-left:14%;
  }
   @keyframes fadeInDown {
         0% {
@@ -113,7 +113,7 @@
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .info2 .title {background: white;color:white;
     				font-size: 18px;font-weight: bold;}
-    .info2 .close {color: black !important;font-size:25px; margin-left:185px;}
+    .info2 .close {color: black !important;font-size:25px; margin-left:203px;}
     .info2 .close:hover {cursor: pointer; color : #ffd014 !important;}
     .info2 .body2 {position: relative;overflow: hidden;}
     .info2 .desc {position: relative; margin-top:5px;margin-bottom:15px; margin-left:10px; font-weight: bold;}
@@ -203,19 +203,20 @@ var a = 0;
 	//커스텀 오버레이에 표시할 컨텐츠 입니다
 	//커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 	//별도의 이벤트 메소드를 제공하지 않습니다 
-	console.log('${i.key}')
-	input = '${i.key}';
-	var keyValueRegex = /(\w+)=(.*?)(?=, \w+=|$)/g;
+	
 	
 	// 결과를 저장할 객체 생성
-	var space = {};
-	var tempPrice = '${i.key}';
 	
-	var price = tempPrice.substr(tempPrice.lastIndexOf('=')+1, tempPrice.lastIndexOf('}') - tempPrice.lastIndexOf('=')-1);
-	var avgPrice = parseInt(price);
-	console.log(avgPrice);
-	if (input !== undefined && input !== null) {
+	
+	
 		// 정규 표현식과 매치하여 키-값 쌍 추출
+		var space = {};
+		var tempPrice = "${i.key}";
+		var price = tempPrice.substr(tempPrice.lastIndexOf('=')+1, tempPrice.lastIndexOf('}') - tempPrice.lastIndexOf('=')-1);
+		var avgPrice = parseInt(price);
+		
+		input = "${i.key}";
+		var keyValueRegex = /(\w+)=(.*?)(?=, \w+=|$)/g;
 		var matches = input.matchAll(keyValueRegex);
 
 		for (const match of matches) {
@@ -227,7 +228,7 @@ var a = 0;
 		    // 결과 객체에 키-값 쌍 추가
 		    space[key] = value;
 		}
-	}
+	
 	console.log(space);
 	var imgStr = '${i.value}';
 	imgStr = imgStr.substr(1,imgStr.length-2);
@@ -244,7 +245,6 @@ var content = '<div class="wrap2">' +
 								
 								img.forEach(function(item,index){
 									console.log(item);
-									console.log(index);
 									if(index != 0){
 										content += '   <div class="carousel-item">'+
 								  				'  			<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
@@ -253,12 +253,8 @@ var content = '<div class="wrap2">' +
 										content += '   	<div class="carousel-item active">'+
 											  		'  		<img src="<c:url value="/space_images/'+item+'"/>" class="d-block" style="width:330px; height:220px" alt="...">'+
 											   		' 	</div>';
-									}
+									}									
 								});
-									
-								
-							   		
-						   
 					content += '			</div>'+
 						'  			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">'+
 					 	'		   		<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
@@ -317,7 +313,6 @@ var content = '<div class="wrap2">' +
 	});
 	customOverlays.push(customOverlay);
 	customOverlay.setMap(map);
-	
 </c:forEach>
 closeOverlay();
 
