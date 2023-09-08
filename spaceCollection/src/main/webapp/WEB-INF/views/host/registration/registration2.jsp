@@ -877,9 +877,19 @@
 
 </script>
 
+<c:if test="${empty param.spaceTypeName }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/registration2/edit" />
+</c:if>
+<c:if test="${!empty param.spaceTypeName }" >
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/registration2/write" />
+</c:if>
+
+
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />"
+		<form name="frmRegi2" method="post" action="${url }"
 			enctype="multipart/form-data">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
@@ -899,8 +909,10 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceName">
+						<c:if test="">
 						<input type="text" class="spText name" value="" name="spaceName"
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
+						</c:if>
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -1411,7 +1423,7 @@
 			</div>
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="button" class="btn btn-warning" id="next" >등록</button>
+				<button type="button" class="btn btn-warning" id="next" >${next }</button>
 			</div>
 			
 		</form>

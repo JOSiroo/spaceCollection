@@ -79,7 +79,7 @@ public class HostController {
 	}
 	
 	@GetMapping("/registration/registration2")
-	public String registration3(Model model) {
+	public String registration2(Model model) {
 		//1
 		logger.info("공간등록 페이지 보여주기");
 		
@@ -94,8 +94,120 @@ public class HostController {
 		return "host/registration/registration2";
 	}
 	
-	@PostMapping("/registration/registration2")
-	public String registration2(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
+	@PostMapping("/registration/registration2/write")
+	public String registration2_write(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
+			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, 
+			HttpServletRequest request, MultipartHttpServletRequest multiFile, Model model) {
+		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}, refund = {}", spaceVo, spaceTypeVO, refundVo);
+		
+		//공간 번호 조회
+		logger.info("공간번호 전 SpaceTypeName + {}", spaceTypeVO.getSpaceTypeName());
+		SpaceTypeVO spaceTypeVO2 = hostService.selectSpaceTypeBySpaceTypeName(spaceTypeVO.getSpaceTypeName());
+		logger.info("공간번호 후 spaceTypeVO2 = {}", spaceTypeVO2);
+		spaceVo.setSpaceTypeNo(spaceTypeVO2.getSpaceTypeNo());
+		logger.info("공간 타입 번호 조회, SpaceTypeNo = {}", spaceTypeVO2.getSpaceTypeNo());
+		
+		//사용자 번호 조회
+		String userId = (String) session.getAttribute("userId");
+		UserInfoVO user = hostService.selectUserById(userId);
+		spaceVo.setUserNum(user.getUserNum());
+		logger.info("유저 번호 조회, UserNum = {}", spaceVo.getUserNum());
+		
+		String spaceInfo = spaceVo.getSpaceInfo().replaceAll("\n", "<br>");
+		spaceVo.setSpaceInfo(spaceInfo);
+		
+		//공간 등록
+		int space = hostService.insertSpace(spaceVo, refundVo);
+		logger.info("space = {}", space);
+		
+		//total facility
+		spaceTotalFacilityVo.setSpaceNum(spaceVo.getSpaceNum());
+		
+		if (spaceTotalFacilityVo.getFacWifi() == null) {
+			spaceTotalFacilityVo.setFacWifi("");
+		}
+		if (spaceTotalFacilityVo.getFacPrinter() == null) {
+			spaceTotalFacilityVo.setFacPrinter("");
+		}
+		if (spaceTotalFacilityVo.getFacChairTable() == null) {
+			spaceTotalFacilityVo.setFacChairTable("");
+		}
+		if (spaceTotalFacilityVo.getFacSmoke() == null) {
+			spaceTotalFacilityVo.setFacSmoke("");
+		}
+		if (spaceTotalFacilityVo.getFacRestRoom() == null) {
+			spaceTotalFacilityVo.setFacRestRoom("");
+		}
+		if (spaceTotalFacilityVo.getFacPC() == null) {
+			spaceTotalFacilityVo.setFacPC("");
+		}
+		if (spaceTotalFacilityVo.getFacTV() == null) {
+			spaceTotalFacilityVo.setFacTV("");
+		}
+		if (spaceTotalFacilityVo.getFacWhiteBoard() == null) {
+			spaceTotalFacilityVo.setFacWhiteBoard("");
+		}
+		if (spaceTotalFacilityVo.getFacElevator() == null) {
+			spaceTotalFacilityVo.setFacElevator("");
+		}
+		if (spaceTotalFacilityVo.getFacParking() == null) {
+			spaceTotalFacilityVo.setFacParking("");
+		}
+		if (spaceTotalFacilityVo.getFacFood() == null) {
+			spaceTotalFacilityVo.setFacFood("");
+		}
+		if (spaceTotalFacilityVo.getFacDrink() == null) {
+			spaceTotalFacilityVo.setFacDrink("");
+		}
+		if (spaceTotalFacilityVo.getFacCook() == null) {
+			spaceTotalFacilityVo.setFacCook("");
+		}
+		if (spaceTotalFacilityVo.getFacPet() == null) {
+			spaceTotalFacilityVo.setFacPet("");
+		}
+		if (spaceTotalFacilityVo.getFacAudio() == null) {
+			spaceTotalFacilityVo.setFacAudio("");
+		}
+		logger.info("TotalFacilityVo = {}", spaceTotalFacilityVo);
+		
+		int totalFac = hostService.insertSpaceTotalFacility(spaceTotalFacilityVo);
+		logger.info("totalFac = {}", totalFac);
+		
+		//이미지 등록
+		logger.info("request = {}" + request);
+		SpaceFileVO spaceFileVo = new SpaceFileVO();
+		
+		try {
+			List<Map<String, Object>> list = 
+					fileUploadUtil.spaceImageUpload(request, ConstUtil.UPLOAD_SPACE_IMAGE_FLAG, spaceVo.getSpaceNum());
+			logger.info("파일 list.size = {}", list.size());
+			
+			for (Map<String, Object> map : list) {
+				if(map.get("fileName") != null && map.get("fileName") != ""){
+					String fileName = (String)map.get("fileName");
+					String originalFileName = (String)map.get("originalFileName");
+					long fileSize = (long)map.get("fileSize");
+					
+					spaceFileVo.setImgForeignKey("S" + spaceVo.getSpaceNum());
+					spaceFileVo.setImgOriginalName(originalFileName);
+					spaceFileVo.setImgTempName(fileName);
+					spaceFileVo.setImgSize(fileSize);
+					logger.info("spaceFileVo = {}", spaceFileVo);
+					
+					int spFile = spaceFileservice.insertSpaceFile(spaceFileVo);
+					logger.info("이미지 저장, spFile = {}", spFile);
+				}
+			}//for
+			
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/host/registration/spaceManage";
+	}
+
+	@PostMapping("/registration/registration2/edit")
+	public String registration2_edit(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
 			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, 
 			HttpServletRequest request, MultipartHttpServletRequest multiFile, Model model) {
 		logger.info("공간등록 처리, spaceVo = {}, spaceTypeVo = {}, refund = {}", spaceVo, spaceTypeVO, refundVo);
@@ -261,13 +373,15 @@ public class HostController {
 		return "host/registration/spaceManage";
 	}
 	
-	@RequestMapping("/host/registration/deleteSpace")
+	@GetMapping("/registration/deleteSpace")
 	public String deleteSpace(@RequestParam(defaultValue = "0") int spaceNum, Model model) {
 		logger.info("공간 삭제, spaceNum = {}", spaceNum);
 		
 		String msg = "공간 삭제를 실패했습니다.", url = "/host/registration/spaceManage";
 		if (spaceNum > 0) {
 			int cnt = hostService.deleteSpace(spaceNum);
+			logger.info("cnt = {}", cnt);
+			
 			msg = spaceNum + " 공간이 삭제되었습니다.";
 		}
 		

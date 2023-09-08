@@ -150,21 +150,37 @@
 	
 </style>
 
+<script type="text/javascript">
+	$(function() {
+		$('.delete').click(function() {
+			var cf = confirm('공간을 삭제하시겠습니까?');
+			
+			if (!cf) {
+				alert('삭제가 취소되었습니다.');
+				return false;
+			}
+		});
+	});
+
+</script>
+
 <article>
 	<div class="main">
 		<div class="regi">
 			<a href="<c:url value='/host/registration/registration1' />">새 공간 등록하기</a>
 		</div>
-		<%-- <div class="regi">
-			<a href="<c:url value='/host/registration/spDetail' />">상혁님 이게 세부공간 등록</a>
-		</div> --%>
 		<c:forEach var="spaceVo" items="${spaceVo }">
 			<div class="spaceList">
 				<div class="ListBox">
 					<div class="inner">
 						<div class="imgBox">
-							<!-- <span class="img" style="background-image: url();"></span> -->
-							<span class="lbWriting">작성중 입니다.</span>
+							<!-- <span class="img" style="background-image: url('../../../space_images/S118Main.jpeg');"></span> -->
+							<c:if test="${spaceVo.spaceRequestStatus == 'R' }">
+								<span class="lbWriting">공간 검수 중 입니다.</span>
+							</c:if>
+							<c:if test="${spaceVo.spaceRequestStatus == 'N' }">
+								<span class="lbWriting">공간 등록이 반려되었습니다.</span>
+							</c:if>
 						</div> <!-- imgBox -->
 						<div class="infoArea">
 							<p class="spName">${spaceVo.spaceName }</p>
@@ -177,8 +193,12 @@
 							</ul>
 						</div>	<!-- infoArea -->
 						<div class="btnArea">
-							<a class="spaceModify" href="<c:url value='/host/registration/' />">공간정보 수정</a>
-							<a class="productModify" href="#">세부 공간 추가/수정</a>
+							<a class="spaceModify" 
+								href="<c:url value='/host/registration/registration2?spaceNum=${spaceVo.spaceNum }' />">공간정보 수정
+							</a>
+							<a class="productModify" 
+								href="<c:url value='/host/registration/spDetail?spaceNum=${spaceVo.spaceNum }' />">세부 공간 추가/수정
+							</a>
 							<a class="delete" 
 								href="<c:url value='/host/registration/deleteSpace?spaceNum=${spaceVo.spaceNum}' />">삭제</a>
 						</div>
