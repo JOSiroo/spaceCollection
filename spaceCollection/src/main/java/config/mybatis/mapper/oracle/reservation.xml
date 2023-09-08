@@ -87,9 +87,62 @@
 	<select id="getReservationCntByInterverStandard" parameterType="string" resultType="int">
 		select count(RESERVER_PAY_DAY) as reservationCnt
 		from adminStaticView
-		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)-(interval '1' ${intervalStandard})
-		and RESERVER_PAY_DAY <= sysdate]]>
-		
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
+		<![CDATA[and RESERVER_PAY_DAY <= sysdate]]>
+	</select>
+	<select id="getReservationCntByInterverStandard2" parameterType="string" resultType="int">
+		select count(RESERVER_PAY_DAY) as reservationCnt
+		from adminStaticView
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard == null || intervalStandard ==''">
+			-(interval '1' day)
+		</if>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '2' ${intervalStandard})
+		</if>
+		<![CDATA[and RESERVER_PAY_DAY <trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
 	</select>
 	
+	<select id="getReservationMoneyByInterverStandard" parameterType="string" resultType="int">
+		select nvl(sum(RESERVE_PRICE),0) as reservationMoney
+		from adminStaticView
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
+		<![CDATA[and RESERVER_PAY_DAY <= sysdate]]>
+	</select>
+	<select id="getReservationMoneyByInterverStandard2" parameterType="string" resultType="int">
+		select nvl(sum(RESERVE_PRICE),0) as reservationMoney
+		from adminStaticView
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard == null || intervalStandard ==''">
+			-(interval '1' day)
+		</if>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '2' ${intervalStandard})
+		</if>
+		<![CDATA[and RESERVER_PAY_DAY <trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
+	</select>
+	
+	<select id="getReservationTypeByInterverStandard" parameterType="string" resultType="map">
+		select space_type_name, count(*) reservationCnt
+		from adminStaticView
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
+		<![CDATA[and RESERVER_PAY_DAY <= sysdate]]>
+		group by space_type_name
+	</select>
+		
 </mapper>

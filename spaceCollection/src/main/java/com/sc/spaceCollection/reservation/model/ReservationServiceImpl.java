@@ -7,6 +7,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -161,6 +164,76 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public int getReservationCntByInterverStandard(String intervalStandard) {
 		return reservationDao.getReservationCntByInterverStandard(intervalStandard);
+	}
+	
+	@Override
+	public int getReservationCntByInterverStandard2(String intervalStandard) {
+		return reservationDao.getReservationCntByInterverStandard2(intervalStandard);
+	}
+
+	@Override
+	public int getReservationMoneyByInterverStandard(String intervalStandard) {
+		return reservationDao.getReservationMoneyByInterverStandard(intervalStandard);
+	}
+
+	@Override
+	public int getReservationMoneyByInterverStandard2(String intervalStandard) {
+		return reservationDao.getReservationMoneyByInterverStandard2(intervalStandard);
+	}
+
+	@Override
+	public Map<String, Object> getReservationTypeByInterverStandard(String intervalStandard) {
+		List<Map<String, Object>> list = reservationDao.getReservationTypeByInterverStandard(intervalStandard);
+		
+		String standard = "";
+		String str = "";
+		
+		if(intervalStandard == null || intervalStandard.isEmpty()) {
+			standard = "Today";
+			str = "전일";
+		}else if(intervalStandard.equals("month")){
+			standard = "This Week";
+			str = "전월";
+		}else if(intervalStandard.equals("year")) {
+			standard = "This Year";
+			str = "전년";
+		}
+		
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		int total = 0;
+		
+		for(Map<String, Object> map : list) {
+			total += Integer.parseInt(map.get("RESERVATIONCNT")+"");
+		}
+		
+		String totalTrans = df.format(total);
+		
+		double percent = 0;
+		
+		for(int i=0; i<list.size(); i++) {
+			Map<String, Object> map = list.get(i);
+			
+			try {
+				percent = Math.round(Double.parseDouble(map.get("RESERVATIONCNT")+"")/total*10)/10;
+				logger.info("ssss {}, {}",map.get("RESERVATIONCNT"), total);
+			} catch (ArithmeticException e) {
+				percent = 0;
+			}
+			
+			map.put("percent", percent);
+			logger.info("map={}, zzzztotal = {}", map, total);
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("standard", standard);
+		map.put("str", str);
+		map.put("list", list);
+		map.put("total", totalTrans);
+		
+		logger.info("정상적으로 돌았음");
+		return map;
 	}
 	
 	
