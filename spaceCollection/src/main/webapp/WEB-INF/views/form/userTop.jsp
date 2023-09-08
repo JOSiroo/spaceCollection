@@ -154,7 +154,7 @@
 
 					<div class="topbar">
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-							<li class="active"><a href="http://localhost:9091/spaceCollection/">Home</a></li>
+							<li class="active"><a href="<c:url value='/'/>">Home</a></li>
 							<li><a href="<c:url value='/search' />">SpaceCollection</a>
 								<!-- 공간 대분류 카테고리별 나열하기 !!!
 								<li class="has-children">
