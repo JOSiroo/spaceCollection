@@ -137,6 +137,7 @@ public class UserBoardController {
 		 int result = 0; 
 		 String userId = (String)session.getAttribute("userId");
 		 int userNum = guestService.selectUserInfo(userId).getUserNum();
+		 vo.setUserNum(userNum);
 		
 		logger.info("vo={}",vo);
 		int cnt = commentsService.insertComments(vo);
@@ -247,7 +248,7 @@ public class UserBoardController {
 			model.addAttribute("guestVo",userInfo);
 			model.addAttribute("list",list);
 			model.addAttribute("count",count);
-			model.addAttribute("count",couponType);
+			model.addAttribute("couponType",couponType);
 			
 			return "userMain/board/couponList";
 	   }
