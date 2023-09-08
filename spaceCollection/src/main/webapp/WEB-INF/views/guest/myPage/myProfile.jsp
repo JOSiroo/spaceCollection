@@ -428,7 +428,7 @@
 		font-weight:bold;
     	color: #00204a;
     	box-shadow: 5px 5px 5px gray;
-    	border: 1px solid #193d76;
+    	border: 1px solid #a3b1c8;
 	}
 	
 	.recentSpace a{
@@ -671,40 +671,41 @@
 					</c:if>
 				</div>
 			</div>
-		
-			<div id="recentSpaceList">
-			<div class="flex">
-				<div class="divPage">
-					<c:if test="${pageVo.firstPage>1 }">
-						<a href="#" onclick="qnaList(${pageVo.firstPage-1})" class="arrow prev">			
-					    <img src='<c:url value="/images/page_prev.png" />'  border="0">	</a>
-					</c:if>
-				</div>
-					<h5>최근 본 공간</h5>
-				<div class="divPage">
-					<c:if test="${pageVo.lastPage<pageVo.totalPage }">
-						<a href="#" onclick="qnaList(${pageVo.lastPage+1})" class="arrow next">			
-							<img src="<c:url value="/images/page_next.png" />" border="0" >
-						</a>
-					</c:if>
-			 	</div>
-			</div>
-				<c:set var="num" value="${pageVo.num }"/>
-				<c:set var="curPos" value="${pageVo.curPos }"/>
-				<c:forEach var="i" begin="1" end="${pageVo.pageSize }">
-					<c:if test="${num>=1 }">
-						<c:set var="map" value="${todaySdList[curPos] }"/>
-						<c:set var="curPos" value="${curPos+1 }"/>
-						<c:set var="num" value="${num-1 }"/>
-					<div class="recentSpace">
-						<img src="<c:url value='/space_images/${map["IMG_TEMP_NAME"] }'/>"  alt="${map['SPACE_NAME'] } 이미지" class="todaySpaceImg"><br>
-						<hr name="boundary">
-						<a href="<c:url value='/detail?spaceNum=${map["SPACE_NUM"] }'/>">${map['SPACE_NAME'] }</a>
+			<c:if test="${!empty todaySdList }">
+				<div id="recentSpaceList">
+				<div class="flex">
+					<div class="divPage">
+						<c:if test="${pageVo.firstPage>1 }">
+							<a href="#" onclick="qnaList(${pageVo.firstPage-1})" class="arrow prev">			
+						    <img src='<c:url value="/images/page_prev.png" />'  border="0">	</a>
+						</c:if>
 					</div>
-					</c:if>
-					<br>
-				</c:forEach>
-			</div>
+						<h5>최근 본 공간</h5>
+					<div class="divPage">
+						<c:if test="${pageVo.lastPage<pageVo.totalPage }">
+							<a href="#" onclick="qnaList(${pageVo.lastPage+1})" class="arrow next">			
+								<img src="<c:url value="/images/page_next.png" />" border="0" >
+							</a>
+						</c:if>
+				 	</div>
+				</div>
+					<c:set var="num" value="${pageVo.num }"/>
+					<c:set var="curPos" value="${pageVo.curPos }"/>
+					<c:forEach var="i" begin="1" end="${pageVo.pageSize }">
+						<c:if test="${num>=1 }">
+							<c:set var="map" value="${todaySdList[curPos] }"/>
+							<c:set var="curPos" value="${curPos+1 }"/>
+							<c:set var="num" value="${num-1 }"/>
+						<div class="recentSpace">
+							<img src="<c:url value='/space_images/${map["IMG_TEMP_NAME"] }'/>"  alt="${map['SPACE_NAME'] } 이미지" class="todaySpaceImg"><br>
+							<hr name="boundary">
+							<a href="<c:url value='/detail?spaceNum=${map["SPACE_NUM"] }'/>">${map['SPACE_NAME'] }</a>
+						</div>
+						</c:if>
+						<br>
+					</c:forEach>
+				</div>
+			</c:if>
 		</div>
 	</form>
 	
