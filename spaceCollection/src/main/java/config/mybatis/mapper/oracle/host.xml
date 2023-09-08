@@ -98,7 +98,7 @@
 	
 	<select id="selectSpaceByUserNum" resultType="spaceVo" parameterType="int">
 		select * from space
-		where user_num = #{userNum}
+		where user_num = #{userNum} and del_flag is null
 	</select>
 	
 	<select id="selectSpaceFile" resultType="spaceFileVo" parameterType="int">
