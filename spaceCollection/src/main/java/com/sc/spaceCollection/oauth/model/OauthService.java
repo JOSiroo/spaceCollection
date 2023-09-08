@@ -38,7 +38,7 @@ public class OauthService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=ea07e405c3b0c040cbfc223938101433");
-            sb.append("&redirect_uri=http://localhost:9091/spaceCollection/oauth/kakao");
+            sb.append("&redirect_uri=http://59.6.102.18:9091/spaceCollection/oauth/kakao");
             sb.append("&code=" + authorizeCode);
             bw.write(sb.toString());
             bw.flush();
@@ -148,7 +148,7 @@ public class OauthService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=rzHcvCcMSYFOv9ojCavh&client_secret=mh_vTHp8iJ");
-            sb.append("&redirect_uri=http://localhost:9091/spaceCollection/oauth/naver");
+            sb.append("&redirect_uri=http://59.6.102.18:9091:9091/spaceCollection/oauth/naver");
             sb.append("&code=" + authorizeCode);
             bw.write(sb.toString());
             bw.flush();
