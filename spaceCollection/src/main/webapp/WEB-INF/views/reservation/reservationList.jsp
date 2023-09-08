@@ -106,7 +106,7 @@
 	display: flex;
 	justify-content: center;
 	margin-top:5%;
-}
+} 
 </style>
 <section>
 	<div class="asd"></div>
