@@ -29,6 +29,7 @@ section{
     background-color: white;
     height: 55%;
     margin-left: 4%;
+    margin-bottom: 21%;
     text-align: center;
 }
 #userName{
