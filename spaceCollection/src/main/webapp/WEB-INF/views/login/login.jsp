@@ -216,7 +216,7 @@
 	$("#naverLogin").click(function(){
 		location.href=
 			"https://nid.naver.com/oauth2.0/authorize?response_type=code"
-		   +"&client_id=rzHcvCcMSYFOv9ojCavh&state=STATE_STRING&redirect_uri=http://59.6.102.18:9091:9091/spaceCollection/oauth/naver";
+		   +"&client_id=rzHcvCcMSYFOv9ojCavh&state=STATE_STRING&redirect_uri=http://59.6.102.18:9091/spaceCollection/oauth/naver";
 	});
 /* 	var naverLogin = new naver.LoginWithNaverId(
 			{

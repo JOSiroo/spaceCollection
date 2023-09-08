@@ -226,7 +226,7 @@ public class UserMainController {
                list.get(i).setSpaceInfo(null);
                list.get(i).setSpaceWarn(null);
                list.get(i).setSpaceFacility(null);
-               
+               list.get(i).setSpaceIntro(null);
                
                int averagePrice = 0;
                for(int j = 0; j < sdList.size(); j++) {
@@ -256,7 +256,7 @@ public class UserMainController {
                list.get(i).setSpaceInfo(null);
                list.get(i).setSpaceWarn(null);
                list.get(i).setSpaceFacility(null);
-               
+               list.get(i).setSpaceIntro(null);
                
                int averagePrice = 0;
                for(int j = 0; j < sdList.size(); j++) {
@@ -285,6 +285,7 @@ public class UserMainController {
               list.get(i).setSpaceInfo(null);
               list.get(i).setSpaceWarn(null);
               list.get(i).setSpaceFacility(null);
+              list.get(i).setSpaceIntro(null);
               
               
               int averagePrice = 0;
