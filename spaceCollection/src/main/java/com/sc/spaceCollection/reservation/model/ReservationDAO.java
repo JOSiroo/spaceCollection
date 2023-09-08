@@ -25,4 +25,5 @@ public interface ReservationDAO {
 	int getReservationMoneyByInterverStandard(String intervalStandard);
 	int getReservationMoneyByInterverStandard2(String intervalStandard);
 	List<Map<String, Object>> getReservationTypeByInterverStandard(String intervalStandard);
+	List<Map<String, Object>> getRecentReservationList();
 }

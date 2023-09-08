@@ -118,14 +118,6 @@ public class AdminController {
 		return "admin/common/message";
 	}
 	
-	
-	@RequestMapping("/adminMain")
-	public String adminMain() {
-		logger.info("관리자 메인화면");
-		
-		return "admin/adminMain";
-	}
-	
 	@RequestMapping("/board/boardTypeList")
 	public void boardSetting(Model model) {
 		logger.info("게시판 종합 관리");

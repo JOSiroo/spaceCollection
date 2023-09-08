@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -125,5 +126,15 @@ public class AdminStaticController {
 		logger.info("예약 금액 조회 결과, map = {}", map);
 		
 		return map;
+	}
+	
+	@RequestMapping("/adminMain")
+	public String getRecentReservationList(Model model) {
+		
+		List<Map<String, Object>> list = reservationService.getRecentReservationList();
+		
+		model.addAttribute("list", list);
+		
+		return "admin/adminMain";
 	}
 }

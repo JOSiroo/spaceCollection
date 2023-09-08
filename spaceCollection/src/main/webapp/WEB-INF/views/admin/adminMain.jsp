@@ -333,13 +333,13 @@
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
                           name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56, 40, 52],
+                          data: [31, 40, 28, 51, 42, 82, 56, 40, 52, 52, 52, 52, 52],
                         }, {
                           name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41, 42, 51]
+                          data: [11, 32, 45, 32, 34, 52, 41, 42, 51, 51, 51, 51, 51]
                         }, {
                           name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11, 21, 34]
+                          data: [15, 11, 32, 18, 9, 24, 11, 21, 34, 34, 34, 34, 34]
                         }],
                         chart: {
                           height: 350,
@@ -370,12 +370,13 @@
                         },
                         xaxis: {
                           type: 'datetime',
-                          categories: ["2023-08-01 00:00:000", "2018-09-19T03:00:00.000", "2018-09-19T06:00:00.000", "2018-09-19T09:00:00.000", "2018-09-19T12:00:00.000", 
-                        	  "2018-09-19T15:00:00.000", "2018-09-19T18:00:00.000", "2018-09-19T21:00:00.000", "2018-09-20T24:00:00.000"]
+                          categories: ["2023-08-01 00:00:000","2023-08-02 00:00:000","2023-08-03 00:00:000","2023-08-04 00:00:000","2023-08-05 00:00:000",
+                        	  "2023-08-06 00:00:000","2023-08-07 00:00:000","2023-08-08 00:00:000","2023-08-09 00:00:000","2023-08-09 00:00:000","2023-08-09 00:00:000",
+                        	  "2023-08-09 00:00:000","2023-08-09 00:00:000",]
                         },
                         tooltip: {
                           x: {
-                            format: 'yyyy/MM/dd HH:mm'
+                            format: 'yyyy/MM/dd'
                           },
                         }
                       }).render();
@@ -389,80 +390,43 @@
 					</div>
 					<!-- End Reports -->
 
-					<!-- Recent Sales -->
+					<!-- 최근 예약 내역 시작 -->
 					<div class="col-12">
 						<div class="card recent-sales overflow-auto">
 
-							<div class="filter">
-								<a class="icon" href="#" data-bs-toggle="dropdown"><i
-									class="bi bi-three-dots"></i></a>
-								<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									<li class="dropdown-header text-start">
-										<h6>Filter</h6>
-									</li>
-
-									<li><a class="dropdown-item" href="#">Today</a></li>
-									<li><a class="dropdown-item" href="#">This Month</a></li>
-									<li><a class="dropdown-item" href="#">This Year</a></li>
-								</ul>
-							</div>
-
 							<div class="card-body">
-								<h5 class="card-title">
-									Recent Sales <span>| Today</span>
+								<h5 class="card-title" style="font-weight: bold;">
+									최근 예약 내역 <span>| Today</span>
 								</h5>
 
-								<table class="table table-borderless datatable">
+								<table class="table table-borderless">
 									<thead>
 										<tr>
 											<th scope="col">#</th>
-											<th scope="col">Customer</th>
-											<th scope="col">Product</th>
-											<th scope="col">Price</th>
-											<th scope="col">Status</th>
+											<th scope="col">예약ID</th>
+											<th scope="col">공간명</th>
+											<th scope="col">결제액</th>
+											<th scope="col">예약 인원</th>
 										</tr>
 									</thead>
 									<tbody>
+									<c:if test="${fn:length(list) >0 }">
+										<c:forEach var="map" items="${list }">
+											<tr>
+												<th scope="row"><a href="#">${map.RESERVATION_NUM }</a></th>
+												<td>${map.USER_ID }</td>
+												<td><a href="#" class="text-primary">${map.SPACE_NAME } - ${map.SD_TYPE }</a></td>
+												<td><fmt:formatNumber value="${map.RESERVE_PRICE }" pattern="#,###"/>원</td>
+												<td><span>${map.RESERVE_PEOPLE }명</span></td>
+											</tr>
+										</c:forEach>
+									</c:if>
+									<c:if test="${fn:length(list)<1 }">
 										<tr>
-											<th scope="row"><a href="#">#2457</a></th>
-											<td>Brandon Jacob</td>
-											<td><a href="#" class="text-primary">At praesentium
-													minu</a></td>
-											<td>$64</td>
-											<td><span class="badge bg-success">Approved</span></td>
+											<td colspan="5">예약된 공간이 없습니다.</td>
 										</tr>
-										<tr>
-											<th scope="row"><a href="#">#2147</a></th>
-											<td>Bridie Kessler</td>
-											<td><a href="#" class="text-primary">Blanditiis
-													dolor omnis similique</a></td>
-											<td>$47</td>
-											<td><span class="badge bg-warning">Pending</span></td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#">#2049</a></th>
-											<td>Ashleigh Langosh</td>
-											<td><a href="#" class="text-primary">At recusandae
-													consectetur</a></td>
-											<td>$147</td>
-											<td><span class="badge bg-success">Approved</span></td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#">#2644</a></th>
-											<td>Angus Grady</td>
-											<td><a href="#" class="text-primar">Ut voluptatem id
-													earum et</a></td>
-											<td>$67</td>
-											<td><span class="badge bg-danger">Rejected</span></td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#">#2644</a></th>
-											<td>Raheem Lehner</td>
-											<td><a href="#" class="text-primary">Sunt similique
-													distinctio</a></td>
-											<td>$165</td>
-											<td><span class="badge bg-success">Approved</span></td>
-										</tr>
+									</c:if>
+										
 									</tbody>
 								</table>
 
@@ -470,9 +434,9 @@
 
 						</div>
 					</div>
-					<!-- End Recent Sales -->
+					<!-- 최근 예약 내역 끝 -->
 
-					<!-- Top Selling -->
+					<!-- 예약 순위 시작 -->
 					<div class="col-12">
 						<div class="card top-selling overflow-auto">
 
@@ -491,65 +455,29 @@
 							</div>
 
 							<div class="card-body pb-0">
-								<h5 class="card-title">
-									Top Selling <span>| Today</span>
+								<h5 class="card-title" style="font-weight:bold;">
+									예약 순위 <span>| Today</span>
 								</h5>
 
 								<table class="table table-borderless">
 									<thead>
 										<tr>
-											<th scope="col">Preview</th>
-											<th scope="col">Product</th>
-											<th scope="col">Price</th>
-											<th scope="col">Sold</th>
-											<th scope="col">Revenue</th>
+											<th scope="col">순위</th>
+											<th scope="col">공간명</th>
+											<th scope="col">예약건수</th>
+											<th scope="col">이용 인원</th>
+											<th scope="col">예약 금액</th>
 										</tr>
 									</thead>
 									<tbody>
+									<c:set var="i" value="1"/>
 										<tr>
-											<th scope="row"><a href="#"><img
-													src="assets/img/product-1.jpg" alt=""></a></th>
+											<th scope="row"><a href="#">${i }</a></th>
 											<td><a href="#" class="text-primary fw-bold">Ut
 													inventore ipsa voluptas nulla</a></td>
 											<td>$64</td>
 											<td class="fw-bold">124</td>
 											<td>$5,828</td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#"><img
-													src="assets/img/product-2.jpg" alt=""></a></th>
-											<td><a href="#" class="text-primary fw-bold">Exercitationem
-													similique doloremque</a></td>
-											<td>$46</td>
-											<td class="fw-bold">98</td>
-											<td>$4,508</td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#"><img
-													src="assets/img/product-3.jpg" alt=""></a></th>
-											<td><a href="#" class="text-primary fw-bold">Doloribus
-													nisi exercitationem</a></td>
-											<td>$59</td>
-											<td class="fw-bold">74</td>
-											<td>$4,366</td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#"><img
-													src="assets/img/product-4.jpg" alt=""></a></th>
-											<td><a href="#" class="text-primary fw-bold">Officiis
-													quaerat sint rerum error</a></td>
-											<td>$32</td>
-											<td class="fw-bold">63</td>
-											<td>$2,016</td>
-										</tr>
-										<tr>
-											<th scope="row"><a href="#"><img
-													src="assets/img/product-5.jpg" alt=""></a></th>
-											<td><a href="#" class="text-primary fw-bold">Sit
-													unde debitis delectus repellendus</a></td>
-											<td>$79</td>
-											<td class="fw-bold">41</td>
-											<td>$3,239</td>
 										</tr>
 									</tbody>
 								</table>
@@ -558,7 +486,7 @@
 
 						</div>
 					</div>
-					<!-- End Top Selling -->
+					<!-- 예약 순위 끝 -->
 
 				</div>
 			</div>
