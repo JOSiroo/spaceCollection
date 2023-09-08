@@ -132,8 +132,8 @@ public class UserBoardController {
 	@ResponseBody //=> vo가 json 으로 변환되서 리턴
 	@PostMapping("/board/boardDetail/commentsWrite")
 	public CommentsVO commentsWrite(@ModelAttribute CommentsVO vo, 
+									@RequestParam(defaultValue = "0")int page,
 									HttpSession session ,Model model) {
-		
 		 int result = 0; 
 		 String userId = (String)session.getAttribute("userId");
 		 int userNum = guestService.selectUserInfo(userId).getUserNum();
@@ -234,6 +234,7 @@ public class UserBoardController {
 			//쿠폰 조회
 			List<CouponVO> list = couponService.selectUserCoupon(userNum);
 			int count = couponService.countCoupon(userNum);
+			int couponType = 10; 
 			logger.info("등록된 쿠폰 조회 list, list = {}", list);
 			logger.info("쿠폰 갯수 조회 count, count = {}", count);
 			
@@ -246,6 +247,7 @@ public class UserBoardController {
 			model.addAttribute("guestVo",userInfo);
 			model.addAttribute("list",list);
 			model.addAttribute("count",count);
+			model.addAttribute("count",couponType);
 			
 			return "userMain/board/couponList";
 	   }
@@ -265,16 +267,16 @@ public class UserBoardController {
 		    return list;
 		}
 	 	
-	 	@ResponseBody 
-		@PostMapping("/user/couponList/commentsWrit")
-		public CouponVO commentsWrite(@ModelAttribute CouponVO vo, 
-										HttpSession session ,Model model) {
+	 	@ResponseBody
+		@PostMapping("/couponList/couponWrite")
+		public CouponVO couponWrite(@ModelAttribute CouponVO vo, Model model) {
+	 		logger.info("확인용");
+	 		
 			int result = 0; 
-			String userId = (String)session.getAttribute("userId");
-			int userNum = guestService.selectUserInfo(userId).getUserNum();
+			//String userId = (String)session.getAttribute("userId");
 			int cnt = couponService.insertCoupon(vo);
 			logger.info("쿠폰 등록 결과 , cnt = {}", cnt);
-			logger.info("댓글 추가, vo = {}", vo);
+			logger.info("쿠폰 추가, vo = {}", vo);
 
 			model.addAttribute("vo", vo);
 			model.addAttribute("result", result);
