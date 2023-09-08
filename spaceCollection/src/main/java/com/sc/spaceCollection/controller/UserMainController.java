@@ -46,7 +46,7 @@ public class UserMainController {
    public String home(Model model) {
 	   List<String> nullList = null; 
 	   
-       List<Map<String,Object>> list = spaceService.selectAll(1, 9,"",0,0,0,nullList,"SPACE_REG_DATE");
+       List<Map<String,Object>> list = spaceService.selectAll(1, 9,"",0,0,0,nullList,"SPACE_REG_DATE desc");
        logger.info("새로운 공간 보여주기, list.size={}", list.size());
        
        
