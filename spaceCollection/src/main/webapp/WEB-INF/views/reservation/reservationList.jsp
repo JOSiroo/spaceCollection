@@ -30,14 +30,18 @@
 .col-4.wrapper{
 	font-size: 24px;
 	font-weight: bold;
-	padding-top: 6%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
 	border-right : 2px solid lightgrey;
 }
 .col-1{
+	display:flex;
+	justify-content: center;
+	align-items: center;
 	font-size: 24px;
 	font-weight: bold;
 	border-right : 2px solid lightgrey;
-	padding-top: 6%;
 }
 .col-5{
 	border-right : 2px solid lightgrey;
@@ -99,11 +103,13 @@
 	background-color: white !important;
 }
 .pageArea{
-	padding:1% 40% 0% 40%;
+	display: flex;
+	justify-content: center;
 }
 </style>
 <section>
 	<div class="asd"></div>
+	<br>
 	<h1 style = "text-align: center; margin-top : 1%;padding-top:1%; font-weight: 700;"> 예약 내역 </h1>
 	<br>
 	<br>
