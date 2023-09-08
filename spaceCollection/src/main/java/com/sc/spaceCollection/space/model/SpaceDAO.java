@@ -62,4 +62,5 @@ public interface SpaceDAO {
 	String selectSpaceTypeName(int spaceTypeNo);
 	Map<String, Object> selectSpaceConfirmDetailBySpaceNum(int spaceNum);
 	List<Map<String, Object>> selectSpaceDtailViewBySpaceNum(int spaceNum);
+	Map<String,Object> selectSpaceFileViewBySpaceNum(String spaceNum);
 }

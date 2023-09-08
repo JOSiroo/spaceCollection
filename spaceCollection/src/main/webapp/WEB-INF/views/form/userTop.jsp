@@ -149,7 +149,7 @@
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 
-					<a href="http://localhost:9091/spaceCollection/"
+					<a href="<c:url value='/'/>"
 						class="logo float-start" id="topLogo">SpaceCollection</a>
 
 					<div class="topbar">

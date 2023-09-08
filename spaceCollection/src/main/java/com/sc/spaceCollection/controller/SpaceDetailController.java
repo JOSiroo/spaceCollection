@@ -23,6 +23,8 @@ import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 import com.sc.spaceCollection.zzim.model.ZzimServiceImpl;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -34,7 +36,7 @@ public class SpaceDetailController {
 	private final QnaService qnaService;
 	
 	@GetMapping("/detail")
-	public String test2(@RequestParam int spaceNum,Model model) {
+	public String test2(@RequestParam int spaceNum,Model model, HttpServletResponse response) {
 		logger.info("공간 상세 페이지, 파라미터 no = {}", spaceNum);
 		
 		Map<SpaceVO, List<Map<String, Object>>> resultMap = spaceDetailService.selectDetailByNo(spaceNum);
@@ -82,6 +84,10 @@ public class SpaceDetailController {
 		model.addAttribute("map", resultMap.get(vo));
 		model.addAttribute("refundVo", refundVo);
 		
+		//today+spaceNum으로 오늘본 쿠키 저장
+		Cookie todaySd = new Cookie("today"+spaceNum,Integer.toString(spaceNum));
+		todaySd.setMaxAge(60*60*24);
+		response.addCookie(todaySd);
 		
 		return "spaceDetail/detail";
 	}
