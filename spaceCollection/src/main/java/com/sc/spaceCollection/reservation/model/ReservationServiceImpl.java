@@ -235,6 +235,13 @@ public class ReservationServiceImpl implements ReservationService{
 		logger.info("정상적으로 돌았음");
 		return map;
 	}
+
+	@Override
+	public List<Map<String, Object>> getRecentReservationList() {
+		return reservationDao.getRecentReservationList();
+	}
+
+	
 	
 	
 }
