@@ -272,11 +272,13 @@
 	
 	.myProfile{
 		width: 250px;
-		height: 300px;
-		background: white;
-		float: left;
-		margin-left: 120px;
-		border: 0.5px solid	#193d76;
+	    height: 300px;
+	    background: white;
+	    float: left;
+	    margin-left: 120px;
+	    border: 0.5px solid #193d76;
+	    box-shadow: 5px 5px 5px gray;
+	    margin-top: 3%;
 	}
 	
 	.align_center{
@@ -299,8 +301,12 @@
 	
 	.profileInfo{
 		width: 584px;
-		height: 500px;
-		margin-left: 30%;
+	    height: 500px;
+	    float: left;
+	    margin-left: 6%;
+	    box-shadow: 5px 5px 5px gray;
+	    display: inline-block;
+	    margin-top: 3%;
 	}
 	
 	.tbProfile{
@@ -363,6 +369,7 @@
 		background: white;
 		border: 0.5px solid #193d76;
     	border-top: none;
+    	box-shadow: 5px 5px 5px gray;
 	}
 	
 	.edit-textbox{
@@ -393,6 +400,41 @@
 	
 	sub{
 		margin-left: 160px;
+	}
+	
+	.todaySpaceImg{
+		width: 198px;
+		height: 180px;
+		border-radius: 1rem 1rem 0 0;
+	}
+	
+	#recentSpaceList{
+		width: 200px;
+	    float: left;
+	    display: inline-block;
+	    margin-left: 9%;
+	}
+	
+	.recentSpace{
+		height: 240px;
+		border-radius: 1rem;
+		background: #d9dbe400;
+		font-family: "Work Sans", sans-serif;
+		font-weight:bold;
+    	color: #00204a;
+    	box-shadow: 5px 5px 5px gray;
+    	padding: 1px;
+    	border: 1px solid #193d76;
+	}
+	
+	.recentSpace a{
+		margin: 0px 2px 0px 2px;
+	}
+	
+	hr[name=boundary]{
+		height: 3px;
+	    background: #ffd014;
+	    margin: 4px 4px 4px 4px;
 	}
 </style>
 
@@ -567,8 +609,19 @@
 					</c:if>
 				</div>
 			</div>
+			<div id="recentSpaceList">
+				<h4 style="text-align: center;">최근 본 공간</h4>
+					<c:forEach var="map" items="${todaySdList }">
+						<div class="recentSpace">
+							<img src="<c:url value='/space_images/${map["IMG_TEMP_NAME"] }'/>"  alt="${map['SPACE_NAME'] } 이미지" class="todaySpaceImg"><br>
+							<hr name="boundary">
+							<a href="<c:url value='/detail?spaceNum=${map["SPACE_NUM"] }'/>">${map['SPACE_NAME'] }</a>
+						</div>
+						<br>
+					</c:forEach>
+			</div>
 		</div>
 	</form>
-	<div>${spaceNum[i] }</div>
+	
 </div>
 <%@include file="../../form/userBottom.jsp" %>
