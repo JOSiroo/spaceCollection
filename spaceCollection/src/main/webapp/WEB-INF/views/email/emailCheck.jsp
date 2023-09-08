@@ -159,8 +159,8 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <form name="frmEmail" class="validation-form" method="post" action="<c:url value='/email/sendEmail'/>" novalidate>
-        <input type="text" name="type" value="${param.type }">
-        <input type="text" name="userId" value="${param.userId }">
+        <input type="hidden" name="type" value="${param.type }">
+        <input type="hidden" name="userId" value="${param.userId }">
         <div class="row">
 	            <div class="col-md-8 mb-3">
 	            	<label for="checkEmail">이메일</label>
