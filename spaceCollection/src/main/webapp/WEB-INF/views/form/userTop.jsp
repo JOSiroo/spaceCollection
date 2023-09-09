@@ -49,7 +49,16 @@
 	{
 	margin-top: 10px;
 } */
-
+  @keyframes fadeInUp {
+      0% {
+          opacity: 0;
+          transform: translate3d(0, -30%, 0);
+      }
+      to {
+          opacity: 1;
+          transform: translateZ(0);
+      }
+    }
 .topSearch {
 	width: 1000px;
     padding: 20px 40px 50px 260px;
@@ -73,6 +82,7 @@
 	font-weight: bolder;
 	margin-left: 20px;
 	margin-top: 13px;
+	animation: fadeInUp 1s;
 }
 
 /* side */
@@ -99,6 +109,10 @@
 	font-size: 40px;
 	width: 50px;
 	height: 30px;
+	}
+	.bi:hover{
+		color: #ffd014;
+		transition:0.2s;
 	}
 	
 	#sidemenubtcl{
@@ -128,6 +142,13 @@
 		font-weight: bold; 
 		margin-bottom:5%;
 	}
+	.hostCenter:hover{
+		.goHostCenter{
+			color:#193D76;
+			background: #ffd014;
+			transition:0.4s;
+		}
+	}
 </style>
 </head>
 
@@ -155,7 +176,7 @@
 					<div class="topbar">
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 							<li class="active"><a href="<c:url value='/'/>">Home</a></li>
-							<li><a href="<c:url value='/search' />">SpaceCollection</a>
+							<li ><a href="<c:url value='/search' />">SpaceCollection</a>
 								<!-- 공간 대분류 카테고리별 나열하기 !!!
 								<li class="has-children">
 									<ul class="dropdown">
@@ -200,7 +221,7 @@
     <!--사이드메뉴 시작-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" >
     <div class="offcanvas-header" style="background-color: #f6f6f6; text-align: center;">     	 		
-		<div><a href="#"><h5> Space Collection</h5></a></div>	
+		<div><a style="font-weight: bold;" href="#"><h5> Space Collection</h5></a></div>	
 		<div><button type="button" class="btn-close text-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
   	</div>
       
@@ -291,9 +312,9 @@
 	</div><!-- sideform -->	      
 	      <!--Host이동 --> 
 	      <div class="service_menu">
-			<div class="goHostCenter">
-	      		<a style="color:#ffd014" href="${pageContext.request.contextPath }/host/index">Host센터로 이동하기</a>
-			</div>
+	      		<a class="hostCenter" style="color:#ffd014" href="${pageContext.request.contextPath }/host/index">
+	      			<div class="goHostCenter">Host센터로 이동하기</div>
+	      		</a>
 	      <p class="copyright">Powered by © nada Crew.</p>
 	      </div>
        

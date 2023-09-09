@@ -65,7 +65,13 @@
       section.sectionIcon {
 		    margin-top: 70px;
 		}
-		
+		.iconImg:hover{
+			transform:scale(1.3);
+			transition:0.5s;
+		}
+		.iconImg{
+			transition:0.8s;
+		}
     </style>
   
   	<section class="sectionIcon" >
@@ -74,7 +80,7 @@
 	  <c:forEach var="i" begin="5" end="16">
   		<div class="icon" id="iconimage${i}" style="animation: fadeInDown ${(i / 5)}s">
 		    <a href="<c:url value='/search?spaceTypeNo=${i}' />">
-		      <img src="<c:url value='/images/main_icon${i}.png' />">
+		      <img class="iconImg"src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>
 		</div>
 	 </c:forEach>
@@ -87,17 +93,17 @@
 		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
 	  <div class="carousel-inner" >
 	    <div class="carousel-item active" >
-	    	<a href="<c:url value='/collection?scNum=1' />" >
+	    	<a href="<c:url value='/collection?scCode=1' />" >
 	      	<img src="<c:url value='/images/couponView1.jpg' />" class="d-block w-100" alt="...">
 	      	</a>
 	    </div>
 	    <div class="carousel-item">
-	    	<a href="<c:url value='/collection?scNum=1' />" >
+	    	<a href="<c:url value='/collection?scCode=1' />" >
 	      	<img src="<c:url value='/images/couponView2.jpg' />" class="d-block w-100" alt="...">
 	      	</a>
 	    </div>
 	    <div class="carousel-item">
-	    	<a href="<c:url value='/collection?scNum=1' />" >
+	    	<a href="<c:url value='/collection?scCode=1' />" >
 	      	<img src="<c:url value='/images/couponView3.jpg' />" class="d-block w-100" alt="...">
 	      	</a>
 	    </div>

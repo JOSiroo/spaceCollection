@@ -181,27 +181,27 @@
 											'<div class="contentBox">'+
 											'<div class="row">'+
 											'	<div class="col-4">신청일</div>'+
-											'<div class="col-8">'+response.RESERVER_PAY_DAY+'</div>'+
+											'<div class="col-8" style="font-weight:bold; font-size:21px">'+response.RESERVER_PAY_DAY+'</div>'+
 											'</div>'+
 											'<hr>'+
 											'<div class="row">'+
 											'	<div class="col-4">예약공간</div>'+
-											'	<div class="col-8">'+response.SPACE_NAME + response.SD_TYPE+'</div>'+
+											'	<div class="col-8" style="font-weight:bold; font-size:21px">'+response.SPACE_NAME + response.SD_TYPE+'</div>'+
 											'</div>'+
 											'<hr>'+
 											'<div class="row">'+
 											'		<div class="col-4">예약내용</div>'+
-											'			<div class="col-8"> '+ response.RESERVE_START_DAY + '('+response.RESERVE_START_HOUR +'시'+ ~ response.RESERVE_FINISH_HOUR시+')</div>'+
+											'			<div class="col-8" style="font-weight:bold; font-size:23px"> '+ response.RESERVE_START_DAY + '('+response.RESERVE_START_HOUR +'시'+ ~ response.RESERVE_FINISH_HOUR시+')</div>'+
 											'		</div>'+
 											'		<hr>'+
 											'		<div class="row">'+
 											'			<div class="col-4">예약인원</div>'+
-											'			<div class="col-8">'+response.RESERVE_PEOPLE +'명</div>'+
+											'			<div class="col-8" style="font-weight:bold; font-size:23px">'+response.RESERVE_PEOPLE +'명</div>'+
 											'		</div>'+
 											'		<hr>'+
 											'		<div class="row">'+
 											'			<div class="col-4">결제정보</div>'+
-											'			<div class="col-8">카카오페이('+response.RESERVE_PRICE+'원)</div>'+
+											'			<div class="col-8" style="font-weight:bold; font-size:23px">카카오페이('+response.RESERVE_PRICE+'원)</div>'+
 											'		</div>'+
 											'	</div>'+
 											'</div>';

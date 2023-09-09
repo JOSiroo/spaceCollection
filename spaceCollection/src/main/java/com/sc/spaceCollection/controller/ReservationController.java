@@ -1,30 +1,24 @@
 package com.sc.spaceCollection.controller;
 
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sc.spaceCollection.guest.model.GuestService;
-import com.sc.spaceCollection.reservation.model.ReservationDAO;
 import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.reservation.model.ReservationVO;
-import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailService;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 
@@ -38,7 +32,6 @@ public class ReservationController {
 	private final static Logger logger = LoggerFactory.getLogger(ReservationController.class);
 	private final ReservationService reservationService;
 	private final SpaceDetailService sdService;
-
 	
 	
 	@ResponseBody

@@ -66,6 +66,10 @@ a.btn.btn-primary.py-2.px-3 {
 #tns3 {
     width: calc(480%);
 }
+#tns3 > .tns-item {
+    word-wrap: break-word;
+}
+
 .newTitle:hover{
 	color:#ffd014;
 }
