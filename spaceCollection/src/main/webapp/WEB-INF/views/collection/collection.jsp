@@ -429,87 +429,101 @@
 
 <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
 <script type="text/javascript">
-
-	//ajax이용 무한스크롤 페이징 관련 변수들
-	var currentPage = 1;
-	var page = 1;
-	var size = 21;
-	var isLoading = false;
+       
+	loadCollection();
 	
 	
-	//무한스크롤 ajax 함수 영역
-	var noDataNum = 0;
-function loadMoreData() {
-    if (isLoading) {
-        return;
-    }
-    
-    isLoading = true;
-
-    $.ajax({
-        url: '<c:url value="/getCollection?page='+page+'&size='+size+'&scNum='+${param.scNum}+'"/>',
-        type:'get',
-        dataType: 'json',
-        success: function(data) {
-        	if(data != null){
-				makeList(data);
-                page++;
-			}
-        	if(data.length == 0 ){
-				if(noDataNum == 0){
-					noData();
+	function loadCollection(){
+		$.ajax({
+			url: '<c:url value="/getCollection?scCode='+${param.scCode}+'"/>',
+	        type:'get',
+	        success: function(data) {
+	        	if(data != null){
+					makeList(data);
 				}
-				noDataNum++;
-				return;
-        	}
-			
-        },
-        complete: function(data) {
-            isLoading = false;
-        }
-    });
-}
-loadMoreData();
-
+	        	if(data.length == 0 ){
+					if(noDataNum == 0){
+						noData();
+					}
+					noDataNum++;
+					return;
+	        	}
+				
+	        },
+	        complete: function() {
+	            isLoading = false;
+	        }
+	    });
+	}	
+	
 	// ajax로 불러온 데이터들 html 생성하는 함수
 	var num =1;
 	function makeList(data) {
+	    $.each(data, function(index) {
 	    var htmlStr = "";
-	    $.each(data, function() {
+	    	var innerVal = Object.values(this);
+	    	var innerMap =Object.keys(this)[0];
+			var input = innerMap;
+			console.log(this);
+			
+			var keyValueRegex = /(\w+)=(.*?)(?=, \w+=|$)/g;
 
-	        htmlStr += '<div class="col-sm-4">';
-	        htmlStr += '<div class="card" style="width: 18rem;">';
-	        htmlStr += '<div id="carouselExample'+num+'" class="carousel slide">';
-	        htmlStr += '<div class="carousel-inner">';
-	        htmlStr += '<div class="carousel-item active">';
-	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
-	        htmlStr += '</div>';
-	        htmlStr += '<div class="carousel-item">';
-	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
-	        htmlStr += '</div>';
-	        htmlStr += '<div class="carousel-item">';
-	        htmlStr += '<img src="<c:url value="/images/img_8.jpg"/>" class="d-block w-100" alt="...">';
-	        htmlStr += '</div>';
-	        htmlStr += '</div>';
-	        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="prev">';
-	        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-	        htmlStr += '<span class="visually-hidden">Previous</span>';
-	        htmlStr += '</button>';
-	        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample'+num+'" data-bs-slide="next">';
-	        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-	        htmlStr += '<span class="visually-hidden">Next</span>';
-	        htmlStr += '</button>';
-	        htmlStr += '</div>';
-	        htmlStr += '<div class="card-body">';
-	        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + this.SPACE_NUM + '"/>"><h5 class="h5">' + this.SPACE_NAME + '</h5></a>';
-	        htmlStr += '<p>(우편) '+this.SPACE_ZIPCODE+',<br> '+this.SPACE_ADDRESS +this.SPACE_ADDRESS_DETAIL +' '+ this.SPACE_LOCATION+ '</p>';
-	        htmlStr += '<h5 style="font-weight:bold">'+addComma(this.AVGPRICE)+'원</h5> 평균최대 인원'+this.AVGMAXPEOPLE+' 명';
-	        htmlStr += '</div>';
-	        htmlStr += '</div>';
-	        htmlStr += '</div>';
-	        num++;
+			// 결과를 저장할 객체 생성
+			var space = {};
+
+			if (input !== undefined && input !== null) {
+				// 정규 표현식과 매치하여 키-값 쌍 추출
+				var matches = input.matchAll(keyValueRegex);
+	
+				for (const match of matches) {
+				    var key = match[1];
+				    var value = match[2];
+	
+				    // 값이 따옴표로 감싸져 있지 않으면 따옴표로 감싸기
+	
+				    // 결과 객체에 키-값 쌍 추가
+				    space[key] = value;
+				}
+	
+				// 결과 출력
+				console.log(space);
+				
+				htmlStr += '<div class="col-sm-4">';
+		        htmlStr += '<div class="card" style="width: 18rem;">';
+		        htmlStr += '<div id="carouselExampleAutoplaying'+num+'" class="carousel slide" data-bs-ride="carousel">';
+		        htmlStr += '<div class="carousel-inner">';
+				for(var i = 0; i < innerVal[0].length; i++){
+					if(i == 0){
+				        htmlStr += '<div class="carousel-item active">';
+				        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="..."></a>';
+				        htmlStr += '</div>';
+					}else{
+				        htmlStr += '<div class="carousel-item">';
+				        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><img src="<c:url value="/space_images/'+innerVal[0][i]+'"/>" class="d-block w-100" alt="..."></a>';
+				        htmlStr += '</div>';
+					}
+				}
+		        htmlStr += '</div>';
+		        htmlStr += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying'+num+'" data-bs-slide="prev">';
+		        htmlStr += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+		        htmlStr += '<span class="visually-hidden">Previous</span>';
+		        htmlStr += '</button>';
+		        htmlStr += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying'+num+'" data-bs-slide="next">';
+		        htmlStr += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+		        htmlStr += '<span class="visually-hidden">Next</span>';
+		        htmlStr += '</button>';
+		        htmlStr += '</div>';
+		        htmlStr += '<div class="card-body"><div class="nav-bar" style="width:200px"></div>';
+		        htmlStr += '<a href = "<c:url value = "/detail?spaceNum=' + space.SPACE_NUM + '"/>"><h5 class="h5">' + space.SPACE_NAME + '</h5></a>';
+		        htmlStr += '<p>(우편) '+ space.SPACE_ZIPCODE +',<br> '+space.SPACE_ADDRESS +space.SPACE_ADDRESS_DETAIL +' '+ space.SPACE_LOCATION+ '</p>';
+		        htmlStr += '<h5 style="font-weight:bold;color:#193D76;">'+addComma(space.AVGPRICE)+'원</h5><div class="nav-bar"></div> 평균최대 인원'+space.AVGMAXPEOPLE+' 명';
+		        htmlStr += '</div>';
+		        htmlStr += '</div>';
+		        htmlStr += '</div>';
+		        num++;
+		    $('#data-container').append(htmlStr);
+			}
 	    });
-	    $('#data-container').append(htmlStr);
 	}
 	
 	//ajax로 불러올 데이터가 없을때 호출하는 함수

@@ -446,7 +446,7 @@ pageEncoding="UTF-8"%>
 							<img alt="" id = "zzim" src="<c:url value = '/img/icons/zzim.png'/>" width="35">
 						</div></a>
 						
-						<a href = ""><div style = "display : inline-block; float : right; margin-right : 5%;" >
+						<a href = "https://docs.google.com/forms/d/e/1FAIpQLSeuiNC6V2HLHtm0dW-XLVu87KrVwNhTAxD0nddpUWLFYOJZOg/viewform"><div style = "display : inline-block; float : right; margin-right : 5%;" >
 							<img alt="" src="<c:url value = '/img/icons/report.png'/>" width="41">
 						</div></a>
 						

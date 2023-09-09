@@ -8,19 +8,11 @@
 		where sc_num = #{scNum}
 	</select>
 	<select id="showCollectionList" resultType="map">
-		select * 
-		from(
-			select A.*, rownum as rn
-			from 
-			(
-				select s.*, e.sc_num 
-				from exhibition e,
-					SPACE_SD_AVERAGEPRICE_FACILITY_VIEW s
-				where sc_num = #{scNum}  
-			)A	
-		)
-		<![CDATA[
-		where rn >= #{startRow} and rn <= #{endRow} ]]>
+		select s.*
+		from 
+		SPACE_SD_AVERAGEPRICE_FACILITY_VIEW s left outer join exhibition e
+		on s.space_num = e.space_Num
+		where sc_code = #{scCode}
 	</select>
 	
 </mapper>
