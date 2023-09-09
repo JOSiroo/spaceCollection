@@ -130,29 +130,31 @@
 
 <article>
 	<div class="main">
-		<div class="regi">
-			<a href="<c:url value='/host/registration/spDetail' />">세부 공간 추가하기</a>
-		</div>
-		<div class="sdList">
-			<c:forEach var="sd" items="${spaceDetailVo }">
-				<div class="boxManage closed_product">
-					<div class="inner closed_txt">
-						<strong class="titSpace">${sd.sdType }</strong>
-						<div class="optionObj">
-							<span class="price"><strong>${sd.sdPrice }</strong>원~/시간</span>
-						</div>
-						<div class="infoState">
-							<!-- <span class="imgBox" style="background-image: url();">
-							</span> -->
-							<div class="btns">
-								<a class="bt edit" href="/space/54594/product/90975/basic_info/">수정</a>
-								<a class="bt delete">삭제</a>
+		<form name="frmSd" method="post" action="<c:url value='/host/spaceDetailManage' />">
+			<div class="regi">
+				<a href="<c:url value='/host/registration/spDetail?spaceNum=${param.spaceNum }' />">세부 공간 추가하기</a>
+			</div>
+			<div class="sdList">
+				<c:forEach var="sd" items="${spaceDetailVo }">
+					<div class="boxManage closed_product">
+						<div class="inner closed_txt">
+							<strong class="titSpace">${sd.sdType }</strong>
+							<div class="optionObj">
+								<span class="price"><strong>${sd.sdPrice }</strong>원~/시간</span>
+							</div>
+							<div class="infoState">
+								<!-- <span class="imgBox" style="background-image: url();">
+								</span> -->
+								<div class="btns">
+									<a class="bt edit" href="<c:url value='/host/registration/spDetail/edit' />">수정</a>
+									<a class="bt delete">삭제</a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
-		</div>
+				</c:forEach>
+			</div>
+		</form>
 	</div>
 </article>
 

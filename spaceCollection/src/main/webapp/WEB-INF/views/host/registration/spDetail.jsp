@@ -356,6 +356,15 @@
 
 </script>
 
+<%-- <c:if test="${empty param.sdType }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/registration2/edit" />
+</c:if>
+<c:if test="${!empty param.sdType }" >
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/registration2/write" />
+</c:if> --%>
+
 <article>
 	<div class="main">
 		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/spDetail' />">
@@ -609,7 +618,7 @@
 
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="submit" class="btn btn-warning" id="next" >${next }</button>
+				<button type="submit" class="btn btn-warning" id="next" >등록</button>
 			</div>
 			
 		</form>
