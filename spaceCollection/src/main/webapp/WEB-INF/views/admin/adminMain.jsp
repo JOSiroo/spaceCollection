@@ -388,15 +388,9 @@
 					</div>
 					<!-- 일일 방문자 수 -->
 
-					<!-- Reports -->
+					<!-- 종합 그래프 -->
 					<div class="col-12">
 						<div class="card">
-
-							<div class="filter">
-								<a class="icon" href="#" data-bs-toggle="dropdown"><i
-									class="bi bi-three-dots"></i></a>
-							</div>
-
 							<div class="card-body">
 								<h5 class="card-title" style="font-weight: bold;">
 									종합 그래프 <span>/Today</span>
@@ -409,20 +403,29 @@
                     document.addEventListener("DOMContentLoaded", () => {
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56, 40, 52, 52, 52, 52, 52],
+                          name: '공간예약건수',
+                          data: [31, 40, 28, 51, 42, 20, 10]
                         }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41, 42, 51, 51, 51, 51, 51]
+                          name: '공간등록건수',
+                          data: [11, 32, 45, 32, 34, 52, 12]
                         }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11, 21, 34, 34, 34, 34, 34]
+                          name: '회원가입자수',
+                          data: [15, 11, 32, 18, 9, 24, 10]
                         }],
                         chart: {
                           height: 350,
                           type: 'area',
                           toolbar: {
-                            show: false
+                            show: false,
+                            tools: {
+                            	download: false,
+                                selection: false,
+                                zoom: false,
+                                zoomin: false,
+                                zoomout: false,
+                                pan: false,
+                                reset: true | '<img src="/static/icons/reset.png" width="20">'
+                            }
                           },
                         },
                         markers: {
@@ -439,7 +442,7 @@
                           }
                         },
                         dataLabels: {
-                          enabled: false
+                          enabled: true
                         },
                         stroke: {
                           curve: 'smooth',
@@ -448,8 +451,7 @@
                         xaxis: {
                           type: 'datetime',
                           categories: ["2023-08-01 00:00:000","2023-08-02 00:00:000","2023-08-03 00:00:000","2023-08-04 00:00:000","2023-08-05 00:00:000",
-                        	  "2023-08-06 00:00:000","2023-08-07 00:00:000","2023-08-08 00:00:000","2023-08-09 00:00:000","2023-08-09 00:00:000","2023-08-09 00:00:000",
-                        	  "2023-08-09 00:00:000","2023-08-09 00:00:000",]
+                        	  "2023-08-06 00:00:000","2023-08-07 00:00:000"]
                         },
                         tooltip: {
                           x: {
@@ -459,7 +461,7 @@
                       }).render();
                     });
                   </script>
-								<!-- End Line Chart -->
+								<!-- 종합 그래프 -->
 
 							</div>
 
