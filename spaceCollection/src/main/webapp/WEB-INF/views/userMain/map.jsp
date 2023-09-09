@@ -113,7 +113,8 @@
     .wrap2 .info2:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .info2 .title {background: white;color:white;
     				font-size: 18px;font-weight: bold;}
-    .info2 .close {color: black !important;font-size:25px; margin-left:203px;}
+    .info2 .close {color: black !important;font-size:25px; float: right;
+    margin-right: 18px;}
     .info2 .close:hover {cursor: pointer; color : #ffd014 !important;}
     .info2 .body2 {position: relative;overflow: hidden;}
     .info2 .desc {position: relative; margin-top:5px;margin-bottom:15px; margin-left:10px; font-weight: bold;}
