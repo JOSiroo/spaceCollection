@@ -18,9 +18,10 @@ public class CollectionServiceImpl implements CollectionService{
 	}
 
 	@Override
-	public String selectCollectionName(int scNum) {
+	public Map<String, String> selectCollectionName(int scNum) {
 		return collectionDao.selectCollectionName(scNum);
 	}
+
 	
 	
 	

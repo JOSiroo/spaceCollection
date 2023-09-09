@@ -65,7 +65,13 @@
       section.sectionIcon {
 		    margin-top: 70px;
 		}
-		
+		.iconImg:hover{
+			transform:scale(1.3);
+			transition:0.5s;
+		}
+		.iconImg{
+			transition:0.8s;
+		}
     </style>
   
   	<section class="sectionIcon" >
@@ -74,7 +80,7 @@
 	  <c:forEach var="i" begin="5" end="16">
   		<div class="icon" id="iconimage${i}" style="animation: fadeInDown ${(i / 5)}s">
 		    <a href="<c:url value='/search?spaceTypeNo=${i}' />">
-		      <img src="<c:url value='/images/main_icon${i}.png' />">
+		      <img class="iconImg"src="<c:url value='/images/main_icon${i}.png' />">
 		    </a>
 		</div>
 	 </c:forEach>
