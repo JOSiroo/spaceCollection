@@ -137,13 +137,27 @@ public class AdminStaticController {
 		return map;
 	}
 	
-	@RequestMapping("/adminMain")
-	public String getRecentReservationList(Model model) {
+	@RequestMapping("/adminMain/Ajax_getRecentReservation")
+	@ResponseBody
+	public List<Map<String, Object>> getRecentReservationList() {
 		
 		List<Map<String, Object>> list = reservationService.getRecentReservationList();
 		
-		model.addAttribute("list", list);
+		return list;
+	}
+	
+	@RequestMapping("/adminMain")
+	public String adminMain() {
 		
 		return "admin/adminMain";
+	}
+	
+	@RequestMapping("/adminMain/Ajax_getReservationRank")
+	@ResponseBody
+	public Map<String, Object> Ajax_getReservationRank(@RequestParam String intervalStandard) {
+		
+		Map<String, Object> map = reservationService.getReservationRank(intervalStandard);
+		
+		return map;
 	}
 }

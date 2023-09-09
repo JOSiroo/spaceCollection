@@ -11,6 +11,8 @@
 		$.loadReservationCnt();
 		$.loadReservationTotalPrice();
 		$.loadReservationType();
+		$.loadReservationRank();
+		$.loadRecentReservation();
 		
 		$('#rd').click(function() {
 			$('#intervalStandard').val('');
@@ -51,6 +53,18 @@
 			$.loadReservationType();
 		});
 		
+		$('#rrd').click(function() {
+			$('#intervalStandardRank').val('');
+			$.loadReservationRank();
+		});
+		$('#rrm').click(function() {
+			$('#intervalStandardRank').val('month');
+			$.loadReservationRank();
+		});
+		$('#rry').click(function() {
+			$('#intervalStandardRank').val('year');
+			$.loadReservationRank();
+		});
 		
 	})
 	
@@ -128,17 +142,17 @@
 			data : "intervalStandard=" + $('#intervalStandardType').val(),
 			dataType: 'json',
 			success : function(res) {
+				
 				var str1 = "";
 				var str2 = "";
 				
 				var dataSet = [];
-				console.log(Object.keys(res.list));
 				$.each(res.list, function() {
 					dataSet.push({
 					    name: this.SPACE_TYPE_NAME,
 					    value: this.RESERVATIONCNT
 					  });
-				}) 
+				}); 
 					
 				str2 += "| "+res.standard;
 				$('#tStandard').html(str2);
@@ -184,7 +198,82 @@
 			}
 		});
 	}
-	 
+	
+	$.loadRecentReservation = function() {
+		$.ajax({
+			url : "<c:url value = '/admin/adminMain/Ajax_getRecentReservation'/>",
+			type : 'get',
+			data : "",
+			dataType: 'json',
+			success : function(res) {
+				var str1 = "";
+				var str2 = "";
+				
+				str1 += "| Today ( "+res.length+" 건 )";
+				if(res.length > 0){
+					$.each(res.list, function() {
+						str2 += "<tr>";
+						str2 += "<th scope='row'><a href='#'>"+this.RESERVATION_NUM+"</a></th>";
+						str2 += "<td><a href='#' class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
+						str2 += "<td>"+this.RESERVE_PRICE+"원</td>";
+						str2 += "<td><span>"+this.RESERVE_PEOPLE+"명</span></td>";
+						str2 += "<td>";
+						if(this.RESERVATION_DEL_FLAG === 'N'){
+							str2 += "<span class='badge bg-success'>결재 완료</span>";		
+						}else{
+							str2 += "<span class='badge bg-danger'>환불 완료</span>";
+						}
+						str2 += "</td>";
+						str2 += "</tr>";
+					});
+				}else{
+					str2 += "<tr>";
+					str2 += "<td colspan='6'>예약된 공간이 없습니다.</td>";
+					str2 += "<tr>";
+				}
+				$('#rrListCnt').html(str1);
+				$('#recentReservation').html(str2);
+			},
+			error : function(xhr, status, error) {
+				alert(status + " : " + error);
+			}
+		});
+	}
+	
+	$.loadReservationRank = function() {
+		$.ajax({
+			url : "<c:url value = '/admin/adminMain/Ajax_getReservationRank'/>",
+			type : 'get',
+			data : "intervalStandard=" + $('#intervalStandardRank').val(),
+			dataType: 'json',
+			success : function(res) {
+				var str1 = "";
+				var str2 = "";
+				str1 += "| "+res.standard;
+				if(res.list.length > 0){
+					$.each(res.list, function() {
+						str2 += "<tr>";
+						str2 += "<th scope='row'><a>"+1+"</a></th>";
+						str2 += "<td><a href='/spaceCollection/admin/space/spaceList/spaceDetail?spaceNum="+this.SPACE_NUM+"' class='text-primary fw-bold'>"+this.SPACE_NAME+"</a></td>";
+						str2 += "<td>"+this.TOTALCNT+" 건</td>";
+						str2 += "<td class='fw-bold'>"+this.TOTALPEOPLE+" 명</td>";
+						str2 += "<td style='text-align: right;'>"+this.TOTALPRICE+" 원</td>";
+						str2 += "</tr>";
+					});
+				}else{
+					str2 += "<tr>";
+					str2 += "<td colspan='5'>예약 내역이 없어 순위를 표시할 수 없습니다.<td>";
+					str2 += "<tr>"
+				}
+				
+				$('#rStandard').html(str1);
+				$('#totalReservationRank').html(str2);
+			},
+			error : function(xhr, status, error) {
+				alert(status + " : " + error);
+			}
+		});
+	}
          
      
 </script>
@@ -398,7 +487,7 @@
 
 							<div class="card-body">
 								<h5 class="card-title" style="font-weight: bold;">
-									최근 예약 내역 <span id="">| Today ( ${fn:length(list) } 건 )</span>
+									최근 예약 내역 <span id="rrListCnt"></span>
 								</h5>
 
 								<table class="table table-borderless">
@@ -412,32 +501,8 @@
 											<th scope="col">예약 상태</th>
 										</tr>
 									</thead>
-									<tbody>
-									<c:if test="${fn:length(list) >0 }">
-										<c:forEach var="map" items="${list }">
-											<tr>
-												<th scope="row"><a href="#">${map.RESERVATION_NUM }</a></th>
-												<td>${map.USER_ID }</td>
-												<td><a href="#" class="text-primary">${map.SPACE_NAME } - ${map.SD_TYPE }</a></td>
-												<td><fmt:formatNumber value="${map.RESERVE_PRICE }" pattern="#,###"/>원</td>
-												<td><span>${map.RESERVE_PEOPLE }명</span></td>
-												<td>
-													<c:if test="${map.RESERVATION_DEL_FLAG == 'N' }">
-														<span class="badge bg-success">결재 완료</span>
-													</c:if>
-													<c:if test="${map.RESERVATION_DEL_FLAG == 'Y' }">
-														<span class="badge bg-danger">환불 완료</span>
-													</c:if>
-												</td>
-											</tr>
-										</c:forEach>
-									</c:if>
-									<c:if test="${fn:length(list)<1 }">
-										<tr>
-											<td colspan="6">예약된 공간이 없습니다.</td>
-										</tr>
-									</c:if>
-										
+									<tbody id="recentReservation">
+									
 									</tbody>
 								</table>
 
@@ -449,8 +514,8 @@
 
 					<!-- 예약 순위 시작 -->
 					<div class="col-12">
-						<div class="card top-selling overflow-auto">
-
+						<div class="card top-selling">
+							<input type="hidden" name="intervalStandardRank" id="intervalStandardRank" value="">
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
@@ -458,16 +523,15 @@
 									<li class="dropdown-header text-start">
 										<h6>Filter</h6>
 									</li>
-
-									<li><a class="dropdown-item" href="#">Today</a></li>
-									<li><a class="dropdown-item" href="#">This Month</a></li>
-									<li><a class="dropdown-item" href="#">This Year</a></li>
+									<li><a class="dropdown-item" id="rrd">Today</a></li>
+									<li><a class="dropdown-item" id="rrm">This Month</a></li>
+									<li><a class="dropdown-item" id="rry">This Year</a></li>
 								</ul>
 							</div>
 
 							<div class="card-body pb-0">
 								<h5 class="card-title" style="font-weight:bold;">
-									예약 TOP 10 <span>| Today</span>
+									예약 TOP 10 <span id="rStandard"></span>
 								</h5>
 
 								<table class="table table-borderless">
@@ -480,16 +544,8 @@
 											<th scope="col">예약 금액</th>
 										</tr>
 									</thead>
-									<tbody>
-									<c:set var="i" value="1"/>
-										<tr>
-											<th scope="row"><a href="#">${i }</a></th>
-											<td><a href="#" class="text-primary fw-bold">Ut
-													inventore ipsa voluptas nulla</a></td>
-											<td>$64</td>
-											<td class="fw-bold">124</td>
-											<td>$5,828</td>
-										</tr>
+									<tbody id="totalReservationRank">
+										
 									</tbody>
 								</table>
 

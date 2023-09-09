@@ -229,9 +229,37 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getReservationRank(String intervalStandard) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> getReservationRank(String intervalStandard) {
+		List<Map<String, Object>> list = reservationDao.getReservationRank(intervalStandard);
+		
+		DecimalFormat df = new DecimalFormat("#,###");
+		for(Map<String, Object> map : list) {
+			map.put("TOTALPRICE", df.format(map.get("TOTALPRICE")));
+		}
+		
+		String standard = "";
+		String str = "";
+		
+		if(intervalStandard == null || intervalStandard.isEmpty()) {
+			standard = "Today";
+			str = "전일";
+		}else if(intervalStandard.equals("month")){
+			standard = "This Week";
+			str = "전월";
+		}else if(intervalStandard.equals("year")) {
+			standard = "This Year";
+			str = "전년";
+		}
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("standard", standard);
+		map.put("str", str);
+		map.put("list", list);
+		
+		return map;
+		
 	}
 
 	
