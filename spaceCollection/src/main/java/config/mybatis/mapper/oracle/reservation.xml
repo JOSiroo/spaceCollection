@@ -148,5 +148,18 @@
 	<select id="getRecentReservationList" resultType="map">
 		select * from admin_recent_reservation_List_View
 	</select>
+	
+	<select id="getReservationRank" parameterType="string" resultType="map">
+		select rownum, a.*
+		from
+		(select space_name, count(*) totalCnt, sum(RESERVE_PRICE) totalPrice, sum(RESERVE_PEOPLE) totalPeople
+		from ADMIN_RESERVATION_LIST_VIEW
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
+		group by space_name
+		order by totalCnt desc) a;
+	</select>
 		
 </mapper>
