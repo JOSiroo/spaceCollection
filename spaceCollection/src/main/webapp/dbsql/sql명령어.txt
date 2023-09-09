@@ -197,3 +197,10 @@ from reservation r
 left join user_info u on u.user_id = r.user_id
 left join space_detail sd on sd.sd_num = r.sd_num
 left join space s on s.space_num = sd.space_num;
+
+
+create or replace view admin_reservation_top10_view
+as
+select s.space_name, total_cnt, total_people, total_price
+from reservation_rank r
+join space s on r.space_num = s.space_num;

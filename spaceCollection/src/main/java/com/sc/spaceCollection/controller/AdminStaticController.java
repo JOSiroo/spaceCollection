@@ -53,7 +53,11 @@ public class AdminStaticController {
 		
 		double percent = 0;
 		try {
-			percent = Math.round((((double)(precentCnt-pastCnt)/pastCnt)*100)*10)/10.0;
+			if(pastCnt < 1) {
+				percent = 0;
+			}else {
+				percent = Math.round((((double)(precentCnt-pastCnt)/pastCnt)*100)*10)/10.0;
+			}
 		} catch (ArithmeticException e) {
 			percent = 0;
 		}
@@ -81,7 +85,7 @@ public class AdminStaticController {
 			standard = "Today";
 			str = "전일";
 		}else if(intervalStandard.equals("month")){
-			standard = "This Week";
+			standard = "This Month";
 			str = "전월";
 		}else if(intervalStandard.equals("year")) {
 			standard = "This Year";
@@ -97,7 +101,11 @@ public class AdminStaticController {
 		
 		double percent = 0;
 		try {
-			percent = (Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10))/10.0;
+			if(pastTotalPrice==0) {
+				percent = 0;
+			}else {
+				percent = (Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10))/10.0;
+			}
 		} catch (ArithmeticException e) {
 			percent = 0;
 		}
