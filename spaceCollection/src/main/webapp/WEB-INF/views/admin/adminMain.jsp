@@ -12,7 +12,11 @@
 		$.loadReservationTotalPrice();
 		$.loadReservationType();
 		$.loadReservationRank();
-		$.loadRecentReservation();
+		$.loadRecentReservation()
+		setInterval(function() {
+			$.loadRecentReservation()	
+		}, 10000);
+			
 		
 		$('#rd').click(function() {
 			$('#intervalStandard').val('');
@@ -211,9 +215,10 @@
 				
 				str1 += "| Today ( "+res.length+" 건 )";
 				if(res.length > 0){
-					$.each(res.list, function() {
+					$.each(res, function() {
 						str2 += "<tr>";
 						str2 += "<th scope='row'><a href='#'>"+this.RESERVATION_NUM+"</a></th>";
+						str2 += "<th>"+this.USER_ID+"</th>";
 						str2 += "<td><a href='#' class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
 						str2 += "<td>"+this.RESERVE_PRICE+"원</td>";
 						str2 += "<td><span>"+this.RESERVE_PEOPLE+"명</span></td>";
@@ -244,12 +249,12 @@
 		$.ajax({
 			url : "<c:url value = '/admin/adminMain/Ajax_getReservationRank'/>",
 			type : 'get',
-			data : "intervalStandard=" + $('#intervalStandardRank').val(),
+			data : "intervalStandard=" + $('#intervalStandardRank').val() +"&order=" + $('#order').val(),
 			dataType: 'json',
 			success : function(res) {
 				var str1 = "";
 				var str2 = "";
-				str1 += "| "+res.standard;
+				str1 += "| "+res.intervalStandard;
 				if(res.list.length > 0){
 					$.each(res.list, function() {
 						str2 += "<tr>";
@@ -303,7 +308,7 @@
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu" id="reservationCnt">
+									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="reservationCnt">
 								 		<li><a class="dropdown-item" href="#" id="rd">일</a></li>
 								    	<li><a class="dropdown-item" href="#" id="rm">월</a></li>
 								    	<li><a class="dropdown-item" href="#" id="ry">년</a></li>
@@ -339,7 +344,7 @@
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu">
+									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 								 		<li><a class="dropdown-item" href="#" id="md">일</a></li>
 								    	<li><a class="dropdown-item" href="#" id="mm">월</a></li>
 								    	<li><a class="dropdown-item" href="#" id="my">년</a></li>
@@ -516,16 +521,14 @@
 					<div class="col-12">
 						<div class="card top-selling">
 							<input type="hidden" name="intervalStandardRank" id="intervalStandardRank" value="">
+							<input type="hidden" name="order" id="order" value="totalPrice">
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
 								<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									<li class="dropdown-header text-start">
-										<h6>Filter</h6>
-									</li>
-									<li><a class="dropdown-item" id="rrd">Today</a></li>
-									<li><a class="dropdown-item" id="rrm">This Month</a></li>
-									<li><a class="dropdown-item" id="rry">This Year</a></li>
+									<li><a class="dropdown-item" id="rrd">일</a></li>
+									<li><a class="dropdown-item" id="rrm">월</a></li>
+									<li><a class="dropdown-item" id="rry">년</a></li>
 								</ul>
 							</div>
 

@@ -8,7 +8,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -140,7 +139,6 @@ public class AdminStaticController {
 	@RequestMapping("/adminMain/Ajax_getRecentReservation")
 	@ResponseBody
 	public List<Map<String, Object>> getRecentReservationList() {
-		
 		List<Map<String, Object>> list = reservationService.getRecentReservationList();
 		
 		return list;
@@ -154,9 +152,13 @@ public class AdminStaticController {
 	
 	@RequestMapping("/adminMain/Ajax_getReservationRank")
 	@ResponseBody
-	public Map<String, Object> Ajax_getReservationRank(@RequestParam String intervalStandard) {
+	public Map<String, Object> Ajax_getReservationRank(@RequestParam String intervalStandard, @RequestParam String order) {
+		Map<String, Object> paramMap = new HashMap<>();
 		
-		Map<String, Object> map = reservationService.getReservationRank(intervalStandard);
+		paramMap.put("order", order);
+		paramMap.put("intervalStandard", intervalStandard);
+		
+		Map<String, Object> map = reservationService.getReservationRank(paramMap);
 		
 		return map;
 	}

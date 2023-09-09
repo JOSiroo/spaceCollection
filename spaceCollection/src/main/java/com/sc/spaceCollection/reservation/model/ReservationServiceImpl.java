@@ -225,40 +225,48 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<Map<String, Object>> getRecentReservationList() {
-		return reservationDao.getRecentReservationList();
+		List<Map<String, Object>> list = reservationDao.getRecentReservationList();
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		for(Map<String, Object> map : list) {
+			map.put("RESERVER_PAY_DAY", map.get("RESERVER_PAY_DAY")+"");
+			map.put("RESERVE_PRICE", df.format(map.get("RESERVE_PRICE")));
+		}
+		
+		return list;
 	}
 
 	@Override
-	public Map<String, Object> getReservationRank(String intervalStandard) {
-		List<Map<String, Object>> list = reservationDao.getReservationRank(intervalStandard);
+	public Map<String, Object> getReservationRank(Map<String, Object> map) {
+		List<Map<String, Object>> list = reservationDao.getReservationRank(map);
 		
 		DecimalFormat df = new DecimalFormat("#,###");
-		for(Map<String, Object> map : list) {
-			map.put("TOTALPRICE", df.format(map.get("TOTALPRICE")));
+		for(Map<String, Object> map1 : list) {
+			map1.put("TOTALPRICE", df.format(map1.get("TOTALPRICE")));
 		}
 		
 		String standard = "";
 		String str = "";
 		
-		if(intervalStandard == null || intervalStandard.isEmpty()) {
+		if(map.get("inervalStandard") == null || map.get("inervalStandard") == "") {
 			standard = "Today";
 			str = "전일";
-		}else if(intervalStandard.equals("month")){
+		}else if(map.get("inervalStandard").equals("month")){
 			standard = "This Week";
 			str = "전월";
-		}else if(intervalStandard.equals("year")) {
+		}else if(map.get("inervalStandard").equals("year")) {
 			standard = "This Year";
 			str = "전년";
 		}
 		
 		
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("order", map.get("order"));
+		map2.put("standard", standard);
+		map2.put("str", str);
+		map2.put("list", list);
 		
-		map.put("standard", standard);
-		map.put("str", str);
-		map.put("list", list);
-		
-		return map;
+		return map2;
 		
 	}
 
