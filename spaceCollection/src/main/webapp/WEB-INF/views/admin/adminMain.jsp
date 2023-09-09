@@ -234,11 +234,13 @@
 									<div class="ps-3" id="totalReservationCnt">
 										<!-- ajax 출력 -->
 									</div>
+		            
 								</div>
 							</div>
 
 						</div>
 					</div>
+					
 					<!-- 일일 예약건수 -->
 
 					<!-- 일일 예약금액 -->

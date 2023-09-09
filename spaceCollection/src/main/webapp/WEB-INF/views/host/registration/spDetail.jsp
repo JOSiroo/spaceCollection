@@ -211,6 +211,15 @@
 	
 </style>
 
+<c:if test="${empty param.sdNum }" >
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/spDetail/write" />
+</c:if>
+<c:if test="${!empty param.sdNum }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/spDetail/edit" />
+</c:if>
+
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
@@ -600,7 +609,7 @@
 
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="submit" class="btn btn-warning" id="next" >등록</button>
+				<button type="submit" class="btn btn-warning" id="next" >${next }</button>
 			</div>
 			
 		</form>
