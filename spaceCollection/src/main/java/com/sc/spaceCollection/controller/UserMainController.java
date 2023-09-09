@@ -115,7 +115,7 @@ public class UserMainController {
          @RequestParam(required = false) String region,
          @RequestParam(defaultValue = "0") int maxPeople,
          @RequestParam(defaultValue = "0") int minPrice,
-         @RequestParam(defaultValue = "300000") int maxPrice,
+         @RequestParam(defaultValue = "21000000") int maxPrice,
          @RequestParam(required = false) String filterList,
          @RequestParam(required = false) String order,
          Model model) {
