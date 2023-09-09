@@ -318,7 +318,7 @@
 	
 </style>
 
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1cbef86a434933ba0775fc1a7a75578b&libraries=services"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
@@ -889,7 +889,7 @@
 
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="${url }"
+		<form name="frmRegi2" method="post" action="<c:url value='${url }' />"
 			enctype="multipart/form-data">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
@@ -909,10 +909,8 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceName">
-						<c:if test="">
 						<input type="text" class="spText name" value="" name="spaceName"
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
-						</c:if>
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >

@@ -15,7 +15,6 @@ public class FacilityVO {
 	private String facWhiteBoard;
 	private String facElevator;
 	private String facParking;
-	private String facFloor;
 	private String facFood;
 	private String facDrink;
 	private String facCook;

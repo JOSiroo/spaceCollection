@@ -3,29 +3,17 @@ package com.sc.spaceCollection.reservation.model;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailDAO;
@@ -216,13 +204,13 @@ public class ReservationServiceImpl implements ReservationService{
 			
 			try {
 				percent = Math.round(Double.parseDouble(map.get("RESERVATIONCNT")+"")/total*10)/10;
-				logger.info("ssss {}, {}",map.get("RESERVATIONCNT"), total);
+				
 			} catch (ArithmeticException e) {
 				percent = 0;
 			}
 			
 			map.put("percent", percent);
-			logger.info("map={}, zzzztotal = {}", map, total);
+			logger.info("map={}, total = {}", map, total);
 		}
 		
 		Map<String, Object> map = new HashMap<>();
@@ -232,7 +220,6 @@ public class ReservationServiceImpl implements ReservationService{
 		map.put("list", list);
 		map.put("total", totalTrans);
 		
-		logger.info("정상적으로 돌았음");
 		return map;
 	}
 

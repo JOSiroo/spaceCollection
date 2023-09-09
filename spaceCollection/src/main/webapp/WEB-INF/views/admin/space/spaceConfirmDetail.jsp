@@ -58,8 +58,13 @@
 	}
 	
 	#carouselExampleIndicators{
-		width: 600px;
-		height: 350px;
+		width: 360px;
+	    height: 280px;
+	}
+	
+	.carousel-inner {
+	    width: 360px;
+	    height: 280px;
 	}
 	
 	#carouselExampleIndicators img{

@@ -9,12 +9,12 @@ public class SpaceDetailVO extends SpaceVO{
 	private int sdNum;	
 	private String sdType;
 	private int sdPrice;
-	private int sdOpenTime;
-	private int sdCloseTime;
 	private int sdMinPeople;
 	private int sdMaxPeople;
 	private String sdArea;
-	private String sdMinTime;
 	private int spaceNum;
 	private int facilityNum;
+	private String sdMinTime;
+	private int sdCloseTime;
+	private int sdOpenTime;
 }
