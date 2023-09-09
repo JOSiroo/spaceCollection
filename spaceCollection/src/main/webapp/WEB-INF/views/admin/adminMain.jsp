@@ -5,6 +5,7 @@
 	.dropdown-item{
 		cursor: pointer;
 	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -16,61 +17,32 @@
 		setInterval(function() {
 			$.loadRecentReservation()	
 		}, 10000);
-			
-		
-		$('#rd').click(function() {
-			$('#intervalStandard').val('');
-			$.loadReservationCnt();
-		});
-		$('#rm').click(function() {
-			$('#intervalStandard').val('month');
-			$.loadReservationCnt();
-		});
-		$('#ry').click(function() {
-			$('#intervalStandard').val('year');
-			$.loadReservationCnt();
-		});
-		
-		$('#md').click(function() {
-			$('#intervalStandardPrice').val('');
-			$.loadReservationTotalPrice();
-		});
-		$('#mm').click(function() {
-			$('#intervalStandardPrice').val('month');
-			$.loadReservationTotalPrice();
-		});
-		$('#my').click(function() {
-			$('#intervalStandardPrice').val('year');
-			$.loadReservationTotalPrice();
-		});
-		
-		$('#td').click(function() {
-			$('#intervalStandardType').val('');
-			$.loadReservationType();
-		});
-		$('#tm').click(function() {
-			$('#intervalStandardType').val('month');
-			$.loadReservationType();
-		});
-		$('#ty').click(function() {
-			$('#intervalStandardType').val('year');
-			$.loadReservationType();
-		});
-		
-		$('#rrd').click(function() {
-			$('#intervalStandardRank').val('');
-			$.loadReservationRank();
-		});
-		$('#rrm').click(function() {
-			$('#intervalStandardRank').val('month');
-			$.loadReservationRank();
-		});
-		$('#rry').click(function() {
-			$('#intervalStandardRank').val('year');
-			$.loadReservationRank();
-		});
 		
 	})
+	function rTotalCnt(val) {
+		$('#intervalStandard').val(val);
+		$.loadReservationCnt();
+	}
+	
+	function rTotalPrice(val) {
+		$('#intervalStandardPrice').val(val);
+		$.loadReservationTotalPrice();
+	}
+	
+	function rReserveType(val) {
+		$('#intervalStandardType').val(val);
+		$.loadReservationType();
+	}
+	
+	function rRankInterval(val) {
+		$('#intervalStandardRank').val(val);
+		$.loadReservationRank();
+	}
+	
+	function rRank(val) {
+		$('#order').val(val);
+		$.loadReservationRank();
+	}
 	
 	$.loadReservationCnt = function() {
 		$.ajax({
@@ -254,24 +226,34 @@
 			success : function(res) {
 				var str1 = "";
 				var str2 = "";
-				str1 += "| "+res.intervalStandard;
+				str1 += "| "+res.standard;
 				if(res.list.length > 0){
+					var num = 1;
 					$.each(res.list, function() {
 						str2 += "<tr>";
-						str2 += "<th scope='row'><a>"+1+"</a></th>";
+						if(num == 1){
+							str2 += "<th scope='row' style='text-align: center'><img src='<c:url value='/images/1st.png'/>' style='width: 25px'></a></th>";
+						}else if(num == 2){
+							str2 += "<th scope='row' style='text-align: center'><a><img src='<c:url value='/images/2nd.png'/>' style='width: 25px'></a></th>";
+						}else if(num == 3){
+							str2 += "<th scope='row' style='text-align: center'><a><img src='<c:url value='/images/3th.png'/>' style='width: 25px'></a></th>";
+						}else{
+							str2 += "<th scope='row' style='text-align: center'><a>"+num+"</a></th>";
+						}
 						str2 += "<td><a href='/spaceCollection/admin/space/spaceList/spaceDetail?spaceNum="+this.SPACE_NUM+"' class='text-primary fw-bold'>"+this.SPACE_NAME+"</a></td>";
 						str2 += "<td>"+this.TOTALCNT+" 건</td>";
 						str2 += "<td class='fw-bold'>"+this.TOTALPEOPLE+" 명</td>";
 						str2 += "<td style='text-align: right;'>"+this.TOTALPRICE+" 원</td>";
 						str2 += "</tr>";
+						
+						num++;
 					});
 				}else{
 					str2 += "<tr>";
 					str2 += "<td colspan='5'>예약 내역이 없어 순위를 표시할 수 없습니다.<td>";
 					str2 += "<tr>"
 				}
-				
-				$('#rStandard').html(str1);
+				$('#rrStandard').html(str1);
 				$('#totalReservationRank').html(str2);
 			},
 			error : function(xhr, status, error) {
@@ -309,9 +291,9 @@
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
 									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="reservationCnt">
-								 		<li><a class="dropdown-item" href="#" id="rd">일</a></li>
-								    	<li><a class="dropdown-item" href="#" id="rm">월</a></li>
-								    	<li><a class="dropdown-item" href="#" id="ry">년</a></li>
+								 		<li><a class="dropdown-item" onclick="rTotalCnt('')">일</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalCnt('month')">월</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalCnt('year')">년</a></li>
 									</ul>
 							</div>
 							<div class="card-body">
@@ -345,9 +327,9 @@
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
 									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								 		<li><a class="dropdown-item" href="#" id="md">일</a></li>
-								    	<li><a class="dropdown-item" href="#" id="mm">월</a></li>
-								    	<li><a class="dropdown-item" href="#" id="my">년</a></li>
+								 		<li><a class="dropdown-item" onclick="rTotalPrice('')">일</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalPrice('month')">월</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalPrice('year')">년</a></li>
 									</ul>
 							</div>
 							<div class="card-body">
@@ -394,10 +376,9 @@
 										<i class="bi bi-people"></i>
 									</div>
 									<div class="ps-3">
-										<h6>1244 명</h6>
+										<h6>12 명</h6>
 										<span class="text-danger small pt-1 fw-bold">12%</span> <span
 											class="text-muted small pt-2 ps-1">decrease</span>
-
 									</div>
 								</div>
 
@@ -526,15 +507,15 @@
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
 								<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									<li><a class="dropdown-item" id="rrd">일</a></li>
-									<li><a class="dropdown-item" id="rrm">월</a></li>
-									<li><a class="dropdown-item" id="rry">년</a></li>
+									<li><a class="dropdown-item" onclick="rRankInterval('')">일</a></li>
+									<li><a class="dropdown-item" onclick="rRankInterval('month')">월</a></li>
+									<li><a class="dropdown-item" onclick="rRankInterval('year')">년</a></li>
 								</ul>
 							</div>
 
 							<div class="card-body pb-0">
 								<h5 class="card-title" style="font-weight:bold;">
-									예약 TOP 10 <span id="rStandard"></span>
+									예약 TOP 10 <span id="rrStandard"></span>
 								</h5>
 
 								<table class="table table-borderless">
@@ -542,9 +523,9 @@
 										<tr>
 											<th scope="col">순위</th>
 											<th scope="col">공간명</th>
-											<th scope="col">예약건수</th>
-											<th scope="col">이용 인원</th>
-											<th scope="col">예약 금액</th>
+											<th scope="col" style="cursor: pointer;" onclick="rRank('totalcnt')">예약건수</th>
+											<th scope="col" style="cursor: pointer;" onclick="rRank('totalpeople')">이용 인원</th>
+											<th scope="col" style="cursor: pointer;" onclick="rRank('totalprice')">예약 금액</th>
 										</tr>
 									</thead>
 									<tbody id="totalReservationRank">
@@ -658,13 +639,9 @@
 						<a class="icon" href="#" data-bs-toggle="dropdown"><i
 							class="bi bi-three-dots"></i></a>
 						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="dropdown-header text-start">
-								<h6>Filter</h6>
-							</li>
-
-							<li><a class="dropdown-item" id="td">Today</a></li>
-							<li><a class="dropdown-item" id="tm">This Month</a></li>
-							<li><a class="dropdown-item" id="ty">This Year</a></li>
+							<li><a class="dropdown-item" onclick="rReserveType('')">일</a></li>
+							<li><a class="dropdown-item" onclick="rReserveType('month')">월</a></li>
+							<li><a class="dropdown-item" onclick="rReserveType('year')">년</a></li>
 						</ul>
 					</div>
 

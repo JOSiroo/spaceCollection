@@ -180,7 +180,7 @@ public class ReservationServiceImpl implements ReservationService{
 			standard = "Today";
 			str = "전일";
 		}else if(intervalStandard.equals("month")){
-			standard = "This Week";
+			standard = "This Month";
 			str = "전월";
 		}else if(intervalStandard.equals("year")) {
 			standard = "This Year";
@@ -248,13 +248,13 @@ public class ReservationServiceImpl implements ReservationService{
 		String standard = "";
 		String str = "";
 		
-		if(map.get("inervalStandard") == null || map.get("inervalStandard") == "") {
+		if(map.get("intervalStandard") == null || map.get("intervalStandard") == "") {
 			standard = "Today";
 			str = "전일";
-		}else if(map.get("inervalStandard").equals("month")){
-			standard = "This Week";
+		}else if(map.get("intervalStandard").equals("month")){
+			standard = "This Month";
 			str = "전월";
-		}else if(map.get("inervalStandard").equals("year")) {
+		}else if(map.get("intervalStandard").equals("year")) {
 			standard = "This Year";
 			str = "전년";
 		}
