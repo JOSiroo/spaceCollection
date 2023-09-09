@@ -141,6 +141,51 @@ public class HostServiceImpl implements HostService {
 		return hostDao.deleteSpace(spaceNum);
 	}
 
+	@Override
+	public int updateSpace(SpaceVO spaceVo) {
+		return hostDao.updateSpace(spaceVo);
+	}
+
+	@Override
+	public int updateTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo) {
+		return hostDao.updateTotalFacility(spaceTotalFacilityVo);
+	}
+
+	@Override
+	public int updateRefund(RefundVO refundVO) {
+		return hostDao.updateRefund(refundVO);
+	}
+
+	@Override
+	public int deleteLicenseImg(String fileName) {
+		return hostDao.deleteLicenseImg(fileName);
+	}
+
+	@Override
+	public int deleteMainImg(String fileName) {
+		return hostDao.deleteMainImg(fileName);
+	}
+
+	@Override
+	public int deleteSubImg(String fileName) {
+		return hostDao.deleteSubImg(fileName);
+	}
+
+	@Override
+	public int updateSpaceDetail(SpaceDetailVO spaceDetailVo) {
+		return hostDao.updateSpaceDetail(spaceDetailVo);
+	}
+
+	@Override
+	public int updateFacility(FacilityVO facilityVo) {
+		return hostDao.updateFacility(facilityVo);
+	}
+
+	@Override
+	public List<SpaceDetailVO> selectSpaceDetailBySpaceNum(int spaceNum) {
+		return hostDao.selectSpaceDetailBySpaceNum(spaceNum);
+	}
+
 
 
 }
