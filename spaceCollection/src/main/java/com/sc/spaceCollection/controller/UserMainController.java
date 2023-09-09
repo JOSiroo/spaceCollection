@@ -228,11 +228,16 @@ public class UserMainController {
                list.get(i).setSpaceFacility(null);
                list.get(i).setSpaceIntro(null);
                
+               int size= sdList.size();
                int averagePrice = 0;
                for(int j = 0; j < sdList.size(); j++) {
                	averagePrice += sdList.get(j).getSdPrice(); 
                }
-               tempMap.put(list.get(i),averagePrice/sdList.size());
+               if(size == 0) {
+            	   size = 1;
+               }
+               
+               tempMap.put(list.get(i),averagePrice/size);
                resultMap.put(tempMap, imgList);
            }
          
@@ -258,11 +263,16 @@ public class UserMainController {
                list.get(i).setSpaceFacility(null);
                list.get(i).setSpaceIntro(null);
                
+               int size= sdList.size();
                int averagePrice = 0;
                for(int j = 0; j < sdList.size(); j++) {
                	averagePrice += sdList.get(j).getSdPrice(); 
                }
-               tempMap.put(list.get(i),averagePrice/sdList.size());
+               if(size == 0) {
+            	   size = 1;
+               }
+               
+               tempMap.put(list.get(i),averagePrice/size);
                resultMap.put(tempMap, imgList);
             }
          
@@ -288,11 +298,16 @@ public class UserMainController {
               list.get(i).setSpaceIntro(null);
               
               
+              int size= sdList.size();
               int averagePrice = 0;
               for(int j = 0; j < sdList.size(); j++) {
               	averagePrice += sdList.get(j).getSdPrice(); 
               }
-              tempMap.put(list.get(i),averagePrice/sdList.size());
+              if(size == 0) {
+           	   size = 1;
+              }
+              
+              tempMap.put(list.get(i),averagePrice/size);
               resultMap.put(tempMap, imgList);
            }
           
@@ -320,12 +335,17 @@ public class UserMainController {
          for(int i = 0; i < list.size(); i++) {
             List<SpaceDetailVO> sdList = new ArrayList<>();
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
-            int averagePrice = 0;
             
+            int size= sdList.size();
+            int averagePrice = 0;
             for(int j = 0; j < sdList.size(); j++) {
             	averagePrice += sdList.get(j).getSdPrice(); 
             }
-            priceList.add(averagePrice/sdList.size());
+            if(size == 0) {
+            	   size = 1;
+            }
+            
+            priceList.add(averagePrice/size);
             
             resultMap.put(list.get(i), priceList.get(i));
             
@@ -344,13 +364,19 @@ public class UserMainController {
          Map<SpaceVO, Integer> resultMap = new HashMap<>(); 
          
          List<SpaceDetailVO> sdList = new ArrayList<>();
+         
          for(int i = 0; i < list.size(); i++) {
             sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+            int size= sdList.size();
             int averagePrice = 0;
             for(int j = 0; j < sdList.size(); j++) {
             	averagePrice += sdList.get(j).getSdPrice(); 
             }
-            priceList.add(averagePrice/sdList.size());
+            if(size == 0) {
+            	   size = 1;
+            }
+            
+            priceList.add(averagePrice/size);
             
             
             resultMap.put(list.get(i), priceList.get(i));
@@ -370,12 +396,16 @@ public class UserMainController {
           for(int i = 0; i < list.size(); i++) {
              List<SpaceDetailVO> sdList = new ArrayList<>();
              sdList = sdService.selectBySpaceNo(list.get(i).getSpaceNum());
+             int size= sdList.size();
              int averagePrice = 0;
-             
              for(int j = 0; j < sdList.size(); j++) {
              	averagePrice += sdList.get(j).getSdPrice(); 
              }
-             priceList.add(averagePrice/sdList.size());
+             if(size == 0) {
+             	   size = 1;
+             }
+             
+             priceList.add(averagePrice/size);
              
              resultMap.put(list.get(i), priceList.get(i));
              
