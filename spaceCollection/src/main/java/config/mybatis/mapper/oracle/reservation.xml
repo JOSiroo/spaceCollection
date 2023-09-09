@@ -159,7 +159,7 @@
 			-(interval '1' ${intervalStandard})
 		</if>
 		group by space_name
-		order by totalCnt desc) a;
+		order by totalCnt desc) a
 	</select>
 		
 </mapper>

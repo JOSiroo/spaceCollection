@@ -232,6 +232,11 @@ public class ReservationServiceImpl implements ReservationService{
 	public Map<String, Object> getReservationRank(String intervalStandard) {
 		List<Map<String, Object>> list = reservationDao.getReservationRank(intervalStandard);
 		
+		DecimalFormat df = new DecimalFormat("#,###");
+		for(Map<String, Object> map : list) {
+			map.put("TOTALPRICE", df.format(map.get("TOTALPRICE")));
+		}
+		
 		String standard = "";
 		String str = "";
 		
@@ -245,6 +250,7 @@ public class ReservationServiceImpl implements ReservationService{
 			standard = "This Year";
 			str = "전년";
 		}
+		
 		
 		Map<String, Object> map = new HashMap<>();
 		

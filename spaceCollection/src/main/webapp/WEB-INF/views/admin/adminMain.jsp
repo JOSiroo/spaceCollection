@@ -11,6 +11,7 @@
 		$.loadReservationCnt();
 		$.loadReservationTotalPrice();
 		$.loadReservationType();
+		$.loadReservationRank();
 		
 		$('#rd').click(function() {
 			$('#intervalStandard').val('');
@@ -128,11 +129,11 @@
 			data : "intervalStandard=" + $('#intervalStandardType').val(),
 			dataType: 'json',
 			success : function(res) {
+				
 				var str1 = "";
 				var str2 = "";
 				
 				var dataSet = [];
-				console.log(Object.keys(res.list));
 				$.each(res.list, function() {
 					dataSet.push({
 					    name: this.SPACE_TYPE_NAME,
@@ -195,27 +196,29 @@
 			success : function(res) {
 				var str1 = "";
 				var str2 = "";
-				
 				str1 += "| "+res.standard;
-				
-				str2 += "<h6>"+res.precentTotalPrice+"원</h6>";
-				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastTotalPrice+"원)</span>";
-				str2 += "<br>";
-				if(Number(res.percent)>0){
-					str2 += "<span class='text-success small pt-1 fw-bold'>${pastPrice}% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
-				}else if(Number(res.percent)<0){
-					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
+				console.log(res.list);
+				if(res.list.length > 0){
+					$.each(res.list, function() {
+						str2 += "<tr>";
+						str2 += "<th scope='row'><a>"+1+"</a></th>";
+						str2 += "<td><a href='#' class='text-primary fw-bold'>"+this.SPACE_NAME+"</a></td>";
+						str2 += "<td>"+this.TOTALCNT+" 건</td>";
+						str2 += "<td class='fw-bold'>"+this.TOTALPEOPLE+" 명</td>";
+						str2 += "<td>"+this.TOTALPRICE+" 원</td>";
+						str2 += "</tr>";
+					});
 				}else{
-					str2 += "<span class='small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>-</span>";
+					str2 += "<tr>";
+					str2 += "<td colspan='5'>예약 내역이 없어 순위를 표시할 수 없습니다.<td>";
+					str2 += "<tr>"
 				}
-				
 				
 				$('#rStandard').html(str1);
 				$('#totalReservationRank').html(str2);
 			},
 			error : function(xhr, status, error) {
 				alert(status + " : " + error);
-				alert(str);
 			}
 		});
 	}
@@ -484,7 +487,7 @@
 					<!-- 예약 순위 시작 -->
 					<div class="col-12">
 						<div class="card top-selling overflow-auto">
-
+							<input type="hidden" name="intervalStandard" id="intervalStandardRank" value="">
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
@@ -514,16 +517,8 @@
 											<th scope="col">예약 금액</th>
 										</tr>
 									</thead>
-									<tbody>
-									<c:set var="i" value="1"/>
-										<tr>
-											<th scope="row"><a href="#">${i }</a></th>
-											<td><a href="#" class="text-primary fw-bold">Ut
-													inventore ipsa voluptas nulla</a></td>
-											<td>$64</td>
-											<td class="fw-bold">124</td>
-											<td>$5,828</td>
-										</tr>
+									<tbody id="totalReservationRank">
+										
 									</tbody>
 								</table>
 
