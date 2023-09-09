@@ -140,8 +140,13 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<Map<String, Object>> selectSpaceConfirmList(SearchVO vo) {
 		List<Map<String, Object>> list = spaceDao.selectSpaceConfirmList(vo);
 		for(Map<String, Object> map : list) {
-			map.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0, 10));
-			map.put("SPACE_OUT_DATE", (map.get("SPACE_OUT_DATE")+"").substring(0, 10));
+				map.put("SPACE_REQUEST_DATE", (map.get("SPACE_REQUEST_DATE")+"").substring(0, 10));
+			
+			if(map.get("SPACE_OUT_DATE") != null) {
+				map.put("SPACE_OUT_DATE", (map.get("SPACE_OUT_DATE")+"").substring(0, 10));
+			}else {
+				map.put("SPACE_REQUEST_DATE", "");
+			}
 		}
 		return list;
 	}
