@@ -13,13 +13,20 @@
 	</insert>
 	
 	<select id="countCoupon" parameterType="int" resultType="int">
-		select DISTINCT count(*) from coupon where user_num = #{userNum} and COUPON_DEL_FLAG is null
+		SELECT COUNT(DISTINCT COUPON_NAME)
+		FROM coupon
+		WHERE user_num = #{userNum} AND COUPON_DEL_FLAG IS NULL
 	</select>
 	
 	<select id="selectUserCoupon" parameterType="int" resultType="couponVO">
-		select COUPON_NAME, COUPON_TYPE, COUPON_START_DAY, COUPON_FINISH_DAY 
-		from coupon where user_num = #{userNum} and COUPON_DEL_FLAG is null
-		order by COUPON_START_DAY
+		SELECT COUPON_NAME, COUPON_TYPE, COUPON_START_DAY, COUPON_FINISH_DAY
+		FROM COUPON
+		WHERE user_num = #{userNum} AND COUPON_DEL_FLAG IS NULL
+		ORDER BY COUPON_START_DAY	
 	</select>
-
+	
+		<!-- UPDATE coupon
+		SET COUPON_DEL_FLAG = 'Y'
+		WHERE TRUNC(COUPON_FINISH_DAY) = TRUNC(SYSDATE) -->
+	
 </mapper>
