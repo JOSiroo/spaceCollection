@@ -14,4 +14,9 @@
 		select * from calendar_memo
 		where user_num = #{user_num}
 	</select>
+	<delete id="deleteMemo" parameterType="int">
+		delete calendar_memo
+		where memo_num = #{memoNum}
+	</delete>
+	
 </mapper>
