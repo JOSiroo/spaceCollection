@@ -70,11 +70,12 @@
 		height: 180px;
 		background: #ffd014;
 		padding-right: 20px;
+		text-align: center;
 	}
 	
 	.offcanvas-title {
 		width: 80%;  
-		color: white;
+		color: #193D76;
 		font-weight: bold;
 		font-size: 25px;
 		text-align: center;
@@ -88,11 +89,21 @@
 	}
 	
 	.frofile {
-		font-size: 16px; 
-		color: white; 
-		text-decoration: underline;
-		width: 200px;
+		font-size: 18px;
+		font-weight:bold;
+	    color: white;
+	    width: 170px;
+	    text-decoration: none;
+	    padding: 7px 7px 7px 7px;
+	    margin-right: 19px;
+	    border: 2px solid #193D76;
+	    background: #193D76;
+	    border-radius: 0.4rem;
 	}
+	.frofile:hover{
+		color:#ffd014;
+	}
+	
 	
 	.offcanvas-body {
 		font-size: 19px;
@@ -121,16 +132,7 @@
 		display: flex;
 	}
 	
-	.mng-item {
-		height: 130px;
-		width: 150px;
-		font-size: 15px;
-		padding: 47px 14px 0 17px;
-		border-right: 1px solid gray;
-		text-align: center;
-		background: white;
-		color: #656565;
-	}
+
 	
 	.btLogin {
 		border: 1px solid #ffd014;
@@ -153,6 +155,44 @@
 	.goHome {
 		border: 0;
 	}
+	.goHome:hover{
+		background: #193D76;
+		transition: 0.5s;
+		
+		.home{
+			color:white !important;
+		}
+	}
+	
+	
+	.nav-item:hover{
+		background: #193D76;
+		transition: 0.5s;
+
+		.nav-link{
+			color:white;
+		}
+		.nav-link.active{
+			color: #ffd014 !important;
+		}
+	}
+	.mng-item {
+		height: 130px;
+		width: 150px;
+		font-size: 16px;
+		padding: 47px 14px 0 17px;
+		border-right: 1px solid gray;
+		text-align: center;
+		background: white;
+		color: #656565;
+	}
+	
+	.mng-item:hover{
+		background: #193D76;
+		transition: 0.5s;
+		color:white;
+	}
+	
 </style>
 
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
@@ -191,7 +231,7 @@
 		        </span>
 		    </c:if>
 	      	<c:if test="${!empty sessionScope.userId }">
-		        <span class="offcanvas-title" id="offcanvasNavbarLabel">${sessionScope.userId }</span>
+		        <span class="offcanvas-title" id="offcanvasNavbarLabel">호스트<br>${sessionScope.userId }</span>
 		    </c:if>
 	        <a class="frofile" href="<c:url value='/guest/myPage/checkPwd'/>">프로필 관리</a>
 	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -204,13 +244,13 @@
 	      		<a class="mng-item" href="#">
 	      			이용 후기 /<br>Q&A 관리
 	      		</a>
-	      		<a class="mng-item" href="<c:url value='/host/spaceManage'/>">
+	      		<a class="mng-item" href="<c:url value='/host/spaceManage'/>" style="padding-top:57px">
 	      			공간정보 관리
 	      		</a>
 	      	</div>
 	        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 	          <li class="nav-item">
-	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />" style="color: #6d3bff !important;">
+	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />" style="color: #6d3bff;">
 	            호스트센터 홈</a>
 	          </li>
 	          <li class="nav-item">
@@ -240,7 +280,7 @@
 	        </ul>
 	        <div class="login">
 	        	<div class="goHome">
-	        		<a href="<c:url value='/'/>" style="color:#193D76;">스페이스컬렉션(사용자)으로 이동</a>
+	        		<a class = "home" href="<c:url value='/'/>" style="color:#193D76;">스페이스컬렉션(사용자)으로 이동</a>
 	        	</div>
 	        	<br>
 	        	<c:if test="${empty sessionScope.userId }">
