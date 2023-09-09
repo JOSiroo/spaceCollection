@@ -228,6 +228,12 @@ public class ReservationServiceImpl implements ReservationService{
 		return reservationDao.getRecentReservationList();
 	}
 
+	@Override
+	public List<Map<String, Object>> getReservationRank(String intervalStandard) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	
