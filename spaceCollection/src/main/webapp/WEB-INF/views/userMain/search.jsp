@@ -791,7 +791,7 @@ $(function(){
 	
 	//ajax이용 무한스크롤 페이징 관련 변수들
 	var page = 1;
-	var size = 21;
+	var size = 9;
 	var isLoading = false;
 	var condition = "";
 	var keyword = "";
