@@ -330,7 +330,7 @@ public class HostController {
 		return "host/registration/spDetail";
 	}
 	
-	@PostMapping("/registration/spDetail/write")
+	@PostMapping("/registration/spDetail")
 	public String spDetail_write(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
 		logger.info("세부 공간등록 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
 		
@@ -362,17 +362,20 @@ public class HostController {
 		return "host/spaceDetailManage";
 	}
 	
-	@PostMapping("/registration/spDetail/edit")
-	public String spDetail_edit(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
-		logger.info("세부 공간수정 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
-		
-		int spaceDetail = hostService.updateSpaceDetail(spaceDetailVo);
-		facilityVo.setFacilityNum(spaceDetailVo.getFacilityNum());
-		int facility = hostService.updateFacility(facilityVo);
-		logger.info("세부공간 수정 결과, spaceDetail = {}, facility = {}", spaceDetail, facility);
-		
-		return "redirect:/host/spaceDetailManage";
-	}
+	/*
+	 * @PostMapping("/registration/spDetail/edit") public String
+	 * spDetail_edit(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
+	 * logger.info("세부 공간수정 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo,
+	 * facilityVo);
+	 * 
+	 * int spaceDetail = hostService.updateSpaceDetail(spaceDetailVo);
+	 * facilityVo.setFacilityNum(spaceDetailVo.getFacilityNum()); int facility =
+	 * hostService.updateFacility(facilityVo);
+	 * logger.info("세부공간 수정 결과, spaceDetail = {}, facility = {}", spaceDetail,
+	 * facility);
+	 * 
+	 * return "redirect:/host/spaceDetailManage"; }
+	 */
 	
 	@RequestMapping("/spaceManage")
 	public String spaceManage(HttpSession session, Model model) {
@@ -389,7 +392,7 @@ public class HostController {
 
 		for (int i = 0; i < spaceVo.size(); i++) {
 			SpaceVO vo = spaceVo.get(i);
-			logger.info("vo = {}", vo);
+			logger.info("SpaceNum = {}", vo.getSpaceNum());
 		}
 		
 		for (int i = 0; i < spaceVo.size(); i++) {
