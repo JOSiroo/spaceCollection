@@ -185,6 +185,40 @@
 		});
 	}
 	 
+	
+	$.loadReservationRank = function() {
+		$.ajax({
+			url : "<c:url value = '/admin/adminMain/Ajax_getTotalReservationPrice'/>",
+			type : 'get',
+			data : "intervalStandard=" + $('#intervalStandardPrice').val(),
+			dataType: 'json',
+			success : function(res) {
+				var str1 = "";
+				var str2 = "";
+				
+				str1 += "| "+res.standard;
+				
+				str2 += "<h6>"+res.precentTotalPrice+"원</h6>";
+				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastTotalPrice+"원)</span>";
+				str2 += "<br>";
+				if(Number(res.percent)>0){
+					str2 += "<span class='text-success small pt-1 fw-bold'>${pastPrice}% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
+				}else if(Number(res.percent)<0){
+					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
+				}else{
+					str2 += "<span class='small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>-</span>";
+				}
+				
+				
+				$('#mStandard').html(str1);
+				$('#totalReservationPrice').html(str2);
+			},
+			error : function(xhr, status, error) {
+				alert(status + " : " + error);
+				alert(str);
+			}
+		});
+	}
          
      
 </script>

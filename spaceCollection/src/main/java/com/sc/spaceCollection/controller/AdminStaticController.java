@@ -146,4 +146,7 @@ public class AdminStaticController {
 		
 		return "admin/adminMain";
 	}
+	
+	
+	
 }
