@@ -147,6 +147,11 @@ public class AdminStaticController {
 		return "admin/adminMain";
 	}
 	
-	
-	
+	@RequestMapping("/adminMain/Ajax_getReservationRank")
+	public Map<String, Object> Ajax_getReservationRank(@RequestParam String intervalStandard) {
+		
+		Map<String, Object> map = reservationService.getReservationRank(intervalStandard);
+		
+		return map;
+	}
 }

@@ -188,9 +188,9 @@
 	
 	$.loadReservationRank = function() {
 		$.ajax({
-			url : "<c:url value = '/admin/adminMain/Ajax_getTotalReservationPrice'/>",
+			url : "<c:url value = '/admin/adminMain/Ajax_getReservationRank'/>",
 			type : 'get',
-			data : "intervalStandard=" + $('#intervalStandardPrice').val(),
+			data : "intervalStandard=" + $('#intervalStandardRank').val(),
 			dataType: 'json',
 			success : function(res) {
 				var str1 = "";
@@ -210,8 +210,8 @@
 				}
 				
 				
-				$('#mStandard').html(str1);
-				$('#totalReservationPrice').html(str2);
+				$('#rStandard').html(str1);
+				$('#totalReservationRank').html(str2);
 			},
 			error : function(xhr, status, error) {
 				alert(status + " : " + error);
@@ -501,7 +501,7 @@
 
 							<div class="card-body pb-0">
 								<h5 class="card-title" style="font-weight:bold;">
-									예약 TOP 10 <span>| Today</span>
+									예약 TOP 10 <span id="rStandard"></span>
 								</h5>
 
 								<table class="table table-borderless">
