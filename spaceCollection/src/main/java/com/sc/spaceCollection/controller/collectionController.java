@@ -27,14 +27,14 @@ public class collectionController {
 	private static final Logger logger = LoggerFactory.getLogger(collectionController.class);
 	
 	
-	@GetMapping("collection")
+	@GetMapping("/collection")
 	public String collection(@RequestParam int scCode, Model model) {
 		logger.info("기획전 조회, 파라미터 scNum = {}",scCode);
 		
-		String collectionName = collectionService.selectCollectionName(scCode);
+		Map<String, String> collectionName = collectionService.selectCollectionName(scCode);
 		
 		model.addAttribute("collectionName", collectionName);
-		
+		logger.info("기획전 이름 = {}", collectionName);
 		return "collection/collection";
 	}
 	

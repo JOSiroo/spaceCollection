@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface CollectionService {
 	List<Map<String, Object>> showCollectionList(int scCode);
-	String selectCollectionName(int scNum);
+	Map<String, String> selectCollectionName(int scNum);
 }

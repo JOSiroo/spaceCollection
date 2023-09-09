@@ -5,6 +5,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
+   @keyframes fadeInUp {
+      0% {
+          opacity: 0;
+          transform: translate3d(0, -100%, 0);
+      }
+      to {
+          opacity: 1;
+          transform: translateZ(0);
+      }
+    }
+
  @keyframes fadeInDown {
         0% {
             opacity: 0;
@@ -131,10 +142,10 @@
 }
 .asd{
 	text-align: center;
-    padding: 3% 0% 2% 0%;
+    padding: 2% 0% 0% 0%;
     background: rgba(45, 90, 205, 0.95);
-    height: 200px;
-    color:white;
+    height: 300px;
+    color: white;
     font-weight: bold;
     font-size: 23px;
     
@@ -382,6 +393,9 @@
 	    margin-left: 39%;
         margin-top: 5%;
 	}
+	.contentTitle{
+		animation: fadeInUp 2s;
+	}
 </style>
 <div class="hero page-inner overlay" style="background-image: url('images/collection_bg.png');">
 		<div class="container">
@@ -391,36 +405,19 @@
 					<h5 id="headerKeyword"  data-aos="fade-up" >
 						워케이션 기획전
 					</h5>
-					<h1 class="heading" data-aos="fade-up" style="padding-top:8%;">산으로 바다로<br>휴가지에서 출근해요</h1>
-					<h5  data-aos="fade-up" style="font-weight: 400 !important; color:white">
-						일(work)과 휴가(vacation)를 동시에!<br>
-						퇴근 후 서핑, 맛집 탐방 어때요?<br>
-						가볍게 노트북만 챙겨오세요
-					</h5>
+					<h1 class="heading" data-aos="fade-up" style="padding-top:8%;">${collectionName.SC_TYPE}</h1>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 <div class = "asd">
-여름휴가를 멋지게 보내는 법<br>
-전국 워케이션 공간을 만나보세요
-</div>
-<div class="search-wrapper">
-	<h2>
-		혼자 오롯이 집중<br>
-		코워킹 스페이스 자유석
-	</h2>
-	<br>
-	<p>
-		자연과 가까운 낯선 장소에서<br>
-		몰입의 즐거움을 느껴보세요<br>
-		새로운 영감이 떠오를 거예요!<br>
-	</p>
+<p class= "contentTitle">
+${collectionName.SC_CONTENT }</p>
 </div>
 <section class = "search-section">
 	<div class="container" >
 	<hr>
-	<h2>${collectionName}</h2>
 		<div class="row" id = "data-container">
 		</div>
   	</div>

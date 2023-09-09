@@ -3,9 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sc.spaceCollection.collection.model.CollectionDAO">
-	<select id="selectCollectionName" parameterType="int" resultType="string">
-		select sc_type from exhibition
-		where sc_num = #{scNum}
+	<select id="selectCollectionName" parameterType="int" resultType="map">
+		select distinct sc_type, sc_content from exhibition
+		where sc_code = #{scCode}
 	</select>
 	<select id="showCollectionList" resultType="map">
 		select s.*

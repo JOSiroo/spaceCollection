@@ -65,6 +65,11 @@
 		color: #193D76;
 		margin-left: 15px;
 	}
+	.navbar-toggler:hover{
+		background: white !important;
+		border:#ffd014 1px solid;
+	}
+	
 	
 	.offcanvas-header {
 		height: 180px;
@@ -142,6 +147,10 @@
 		color: #ffd014;
 		font-size: 16px;
 		text-align: center;
+	}
+	.btLogin:hover{
+		color:white;
+		border:white 1px solid;
 	}
 	.goHome{
 	    border: #193D76 solid 2px;
