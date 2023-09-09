@@ -150,16 +150,19 @@
 	</select>
 	
 	<select id="getReservationRank" parameterType="string" resultType="map">
-		select rownum, a.*
+		select b.*, s.space_name
 		from
-		(select space_name, count(*) totalCnt, sum(RESERVE_PRICE) totalPrice, sum(RESERVE_PEOPLE) totalPeople
+		(select rownum, a.*
+		from
+		(select space_num,  count(*) totalCnt, sum(RESERVE_PRICE) totalPrice, sum(RESERVE_PEOPLE) totalPeople
 		from ADMIN_RESERVATION_LIST_VIEW
 		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
 		<if test="intervalStandard != null and intervalStandard !=''">
 			-(interval '1' ${intervalStandard})
 		</if>
-		group by space_name
+		group by space_num
 		order by totalCnt desc) a
+		<![CDATA[where rownum<=10]]>)b join space s on s.space_num = b.space_num
 	</select>
 		
 </mapper>
