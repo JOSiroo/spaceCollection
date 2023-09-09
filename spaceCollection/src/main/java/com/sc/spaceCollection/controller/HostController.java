@@ -33,7 +33,6 @@ import com.sc.spaceCollection.reservation.model.ReservationService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
-import com.sc.spaceCollection.spaceFile.model.SpaceFileServiceImpl;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
