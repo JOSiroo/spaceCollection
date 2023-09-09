@@ -149,7 +149,7 @@
 		select * from admin_recent_reservation_List_View
 	</select>
 	
-	<select id="getReservationRank" parameterType="string" resultType="map">
+	<select id="getReservationRank" parameterType="hashMap" resultType="map">
 		select b.*, s.space_name
 		from
 		(select rownum, a.*
@@ -161,7 +161,7 @@
 			-(interval '1' ${intervalStandard})
 		</if>
 		group by space_num
-		order by totalCnt desc) a
+		order by ${order} desc) a
 		<![CDATA[where rownum<=10]]>)b join space s on s.space_num = b.space_num
 	</select>
 		
