@@ -164,6 +164,61 @@
 	    border: 0;
 	}
 	
+	.notice {
+		width: 1200px;
+		margin: 0 auto;
+    	padding: 75px 0;
+	}
+	
+	.noticeTitle {
+		font-size: 40px;
+	    font-weight: 700;
+	    font-stretch: normal;
+	    font-style: normal;
+	    line-height: 1.4;
+	    letter-spacing: -.5px;
+	    text-align: center;
+	    color: #333;
+	    margin-bottom: 50px;
+	}
+	
+	.noticeWrap {
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: space-evenly;
+	    border-bottom: 1px solid #e0e0e0;
+	}
+	
+	.item {
+		font-size: 14px;
+		height: 57px;
+	    border-top: 1px solid #e0e0e0;
+	    padding-top: 23px;
+	}
+	
+	.boardWrap {
+		height: 100%;
+	    font-family: NanumBarunGothic;
+	    font-size: 16px;
+	    font-weight: 400;
+	    font-stretch: normal;
+	    font-style: normal;
+	    line-height: 1;
+	    letter-spacing: -.5px;
+	    color: #333;
+	}
+	
+	.boardDate {
+		float: right;
+	    font-weight: 300;
+	    font-size: 16px;
+	    font-stretch: normal;
+	    font-style: normal;
+	    line-height: 1;
+	    letter-spacing: -.5px;
+	    color: #333;
+	}
+	
 </style>
 
 <script type="text/javascript">
@@ -230,7 +285,20 @@
 	<br><br>
 	
 	<div class="notice">
-		<p class="notiTitle">공지사항</p>
+		<div class="noticeTitle">공지사항</div>
+		<c:forEach var="vo" items="${boardVo }">
+			<div class="noticeWrap">
+				<div class="item">
+					<a href="<c:url value='/host/notice' />" class="board_title">
+						<div class="boardWrap">${vo.boardTitle }
+							<div class="boardDate"> 
+								<fmt:formatDate value="${vo.boardRegDate }" pattern="yyyy.MM.dd"/> 
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</c:forEach>
 	</div>
 	<br><br>
 	

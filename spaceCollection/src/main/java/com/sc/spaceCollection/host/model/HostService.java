@@ -3,6 +3,7 @@ package com.sc.spaceCollection.host.model;
 import java.util.List;
 import java.util.Map;
 
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.facility.model.FacilityVO;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
@@ -43,6 +44,9 @@ public interface HostService {
 	//세부공간 수정
 	int updateSpaceDetail(SpaceDetailVO spaceDetailVo);
 	int updateFacility(FacilityVO facilityVo);
+	
+	//공지사항
+	List<BoardVO> selectNotice(String boardTypeId);
 	
 	List<Map<String, Object>> selectHostReservation(int page, int size, int userNum,String status,String order,String keyword);
 	List<Map<String, Object>> HostReservationCalendar(int userNum);
