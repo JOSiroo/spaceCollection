@@ -340,7 +340,7 @@ p{
 		margin-bottom:15px;
 		width:10%;
 		float:right;
-		margin-right:12%;
+		margin-right:25%;
 	}
 	.select-option:hover{
 		background-color: #ffd014 !important;
@@ -603,8 +603,8 @@ p{
 	</button></a>
 <a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >전체 초기화</button></a>
 </div>
-</div>
-<hr>
+<br>
+<br>
 	<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
            onchange='this.size=1; this.blur();'>
 	  <option class = "select-option" selected>정렬</option>
@@ -613,6 +613,9 @@ p{
 	  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
 	  <option value="spaceRegDate_desc" class = "select-option">공간 등록순</option>
 	</select>
+<br>
+</div>
+<hr>
 <section class = "search-section">
 <div class="order-select">
 	</div>

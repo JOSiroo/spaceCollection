@@ -448,7 +448,8 @@
         $('.btAdd.fa').click(function() {
         	var inputValue = $(this).siblings('.spText').val();
 		    var tagContainer = $(this).siblings('.spTag');
-
+		    var count = tagContainer.find('.tagRe').length;
+		    
 		    if (inputValue.length < 1) {
 		    	alert('내용을 입력해주세요.');
 		    } else {
@@ -460,8 +461,8 @@
 	                facility.push(inputValue);
 	                
 	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
-	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + (facility.length) + '</span>. '  + inputValue 
-	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
+	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + ++count + '</span>. '  + inputValue 
+	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span><br>');
 	             	
 	        		// 입력값을 String으로 변환합니다.
 	        	    var inputValueString = facility.join('||');
@@ -473,13 +474,15 @@
 	                $(this).siblings('.spText').val('');
 	        		
 	             	// 태그 삭제 이벤트 핸들러 등록
-	                tagContainer.find('.tagClose').click(function() {
+	             	var tagReElements = tagContainer.find('.tagRe');
+	                
+	                tagReElements.find('.tagClose').click(function() {
 	                    var tagRe = $(this).closest('.tagRe');
 	                    var index = tagRe.index();
 	                    facility.splice(index, 1); // 배열에서 제거
 	                    tagRe.remove(); // 화면에서 제거
 	                    
-	                    // 남은 태그의 숫자를 다시 설정
+	                 	// 남은 태그의 숫자를 다시 설정
 	                    tagContainer.find('.tagRe').each(function(i) {
 	                        $(this).find('.num').text((i + 1));
 	                    });
@@ -502,7 +505,7 @@
         $('.btAdd.pre').click(function() {
         	var inputValue = $(this).siblings('.spText').val();
 		    var tagContainer = $(this).siblings('.spTag');
-		    var currentTagCount = tagContainer.find('.tagRe').length;
+		    var count = tagContainer.find('.tagRe').length;
 
 		    if (inputValue.length < 1) {
 		    	alert('내용을 입력해주세요.');
@@ -515,8 +518,8 @@
 	                warn.push(inputValue);
 	                
 	             	// 화면에 입력값을 표시할 부분을 업데이트합니다.
-	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + (warn.length) + '</span>. ' + inputValue 
-	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span>');
+	        	    tagContainer.append('<span class="tagRe"><span class="num"> ' + ++count + '</span>. ' + inputValue 
+	        	    		+ ' <span class="tagClose"> <img class="imgClose" src="<c:url value='/images/btClose.png' />"/></span></span><br>');
 	             	
 	        		// 입력값을 String으로 변환합니다.
 	        	    var inputValueString = warn.join('||');
@@ -534,7 +537,7 @@
 	                    facility.splice(index, 1); // 배열에서 제거
 	                    tagRe.remove(); // 화면에서 제거
 	                    
-	                    // 남은 태그의 숫자를 다시 설정
+	                 	// 남은 태그의 숫자를 다시 설정
 	                    tagContainer.find('.tagRe').each(function(i) {
 	                        $(this).find('.num').text((i + 1));
 	                    });
