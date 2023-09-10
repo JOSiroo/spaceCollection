@@ -665,7 +665,7 @@ pageEncoding="UTF-8"%>
 	  $(element).datepicker({
 	    language: 'ko',
 	    inline: true,
-	    minDate: new Date(),
+	    minDate: new Date(new Date().setDate(new Date().getDate() + 1)),
 	    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
 	    onSelect: function(selectedDates, instance) {
 	      console.log("선택한 날짜:", selectedDates);
