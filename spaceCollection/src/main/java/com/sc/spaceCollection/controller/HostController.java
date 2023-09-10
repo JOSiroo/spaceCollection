@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sc.spaceCollection.board.model.BoardService;
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.common.ConstUtil;
@@ -55,8 +56,13 @@ public class HostController {
 	
 	
 	@RequestMapping("/index")
-	public String hostMain() {
+	public String hostMain(Model model) {
 		logger.info("호스트 메인 보여주기");
+		
+		List<BoardVO> boardVo = hostService.selectNotice("b00012");
+		logger.info("공지사항 조회, boardVo = {}", boardVo);
+		
+		model.addAttribute("boardVo", boardVo);
 		
 		return "host/index";
 	}
