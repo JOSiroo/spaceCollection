@@ -118,6 +118,9 @@ form#couponListForm {
 span#left{
 	float: left;
 }
+img#noCoupon {
+    scale: 0.6;
+}
 </style>
 
 <script>
@@ -147,7 +150,7 @@ span#left{
 				if(data!=null && data.length>0){
 					makeList(data);
 				}else{  
-					str = "<img alt='쿠폰없음' src='<c:url value="/images/couponSubmit.png"/>'>";
+					str = "<img id='noCoupon' alt='쿠폰없음' src='<c:url value="/images/couponSubmit.png"/>'>";
 					console.log("없음 확인");
 					$('#selectCoupon').html(str);
 					return;
