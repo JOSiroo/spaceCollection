@@ -232,6 +232,14 @@
 	.logo.float-start{
 		transition:3s;
 	}
+	::-webkit-scrollbar {
+	    width: 15px;
+	    background-color: white;
+  	}
+	::-webkit-scrollbar-thumb{
+		background: #193D76;
+		border-radius: 1rem;
+	} 
 </style>
 </head>
 <body>
