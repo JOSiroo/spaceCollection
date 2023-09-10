@@ -6,6 +6,48 @@
 		cursor: pointer;
 	}
 	
+	@keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -5%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    }
+    
+    #line0{
+		animation: fadeInDown 0.3s
+	}
+	#line1{
+		animation: fadeInDown 0.5s
+	}
+	#line2{
+		animation: fadeInDown 0.7s
+	}
+	#line3{
+		animation: fadeInDown 0.9s
+	}
+	#line4{
+		animation: fadeInDown 1.1s
+	}
+	#line5{
+		animation: fadeInDown 1.3s
+	}
+	#line6{
+		animation: fadeInDown 1.5s
+	}
+	#line7{
+		animation: fadeInDown 1.7s
+	}
+	#line8{
+		animation: fadeInDown 1.9s
+	}
+	#line9{
+		animation: fadeInDown 2.1s
+	}
+		
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -188,8 +230,9 @@
 				
 				str1 += "| Today ( "+res.length+" 건 )";
 				if(res.length > 0){
+					var i=0;
 					$.each(res, function() {
-						str2 += "<tr>";
+						str2 += "<tr id='line"+i+"'>";
 						str2 += "<th scope='row'><a href='#'>"+this.RESERVATION_NUM+"</a></th>";
 						str2 += "<th>"+this.USER_ID+"</th>";
 						str2 += "<td><a href='#' class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
@@ -203,6 +246,8 @@
 						}
 						str2 += "</td>";
 						str2 += "</tr>";
+						
+						i++;
 					});
 				}else{
 					str2 += "<tr>";
