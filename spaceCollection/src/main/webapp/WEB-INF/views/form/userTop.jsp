@@ -49,6 +49,12 @@
 	{
 	margin-top: 10px;
 } */
+	@font-face {
+	    font-family: 'Pretendard-Regular';
+	    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+	    font-weight: 400;
+	    font-style: normal;
+	}
   @keyframes fadeInUp {
       0% {
           opacity: 0;
@@ -59,6 +65,30 @@
           transform: translateZ(0);
       }
     }
+	*{
+		font-family: 'Pretendard-Regular' !important;
+	}
+
+    
+    body{
+		font-family: 'Pretendard-Regular' !important;
+	}
+	
+	h1{
+		font-family: 'Pretendard-Regular' !important;
+	}
+	h3{
+		font-family: 'Pretendard-Regular' !important;
+	}
+	h4{
+		font-family: 'Pretendard-Regular' !important;
+	}
+	h5{
+		font-family: 'Pretendard-Regular' !important;
+	}
+	h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, .logo{
+		font-family: 'Pretendard-Regular' !important;
+	}
 .topSearch {
 	width: 1000px;
     padding: 20px 40px 50px 260px;
@@ -149,6 +179,7 @@
 			transition:0.4s;
 		}
 	}
+	
 </style>
 </head>
 
