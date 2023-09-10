@@ -107,7 +107,7 @@
 		});
 		
 		$('#next').click(function() {
-			var count = $('.accordion-button:checked').length;
+			var count = $('input[type=checkbox]:checked').length;
 			if (count > 0) {
 				
 			} else {
