@@ -206,7 +206,7 @@
 					<div class="topSearch">
 						<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
 							<input type="text" class="form-control px-4"
-								placeholder="지역, 공간유형, 공간명으로 찾아보세요" id="inputSearch" name="spaceName">
+								placeholder="공간명으로 찾아보세요" id="inputSearch" name="spaceName">
 							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
 						</form>
 					</div>
