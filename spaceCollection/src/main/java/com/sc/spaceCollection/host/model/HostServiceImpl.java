@@ -191,6 +191,16 @@ public class HostServiceImpl implements HostService {
 		return hostDao.deleteSpaceDetail(sdNum);
 	}
 
+	@Override
+	public SpaceDetailVO selectSpaceDetailBySdNum(int sdNum) {
+		return hostDao.selectSpaceDetailBySdNum(sdNum);
+	}
+
+	@Override
+	public FacilityVO selectFacilityByFaNum(int facilityNum) {
+		return hostDao.selectFacilityByFaNum(facilityNum);
+	}
+
 
 
 }

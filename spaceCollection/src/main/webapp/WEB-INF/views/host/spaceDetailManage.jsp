@@ -147,9 +147,10 @@
 								<!-- <span class="imgBox" style="background-image: url();">
 								</span> -->
 								<div class="btns">
-									<a class="bt edit" href="<c:url value='/host/registration/spDetail/edit' />">수정</a>
+									<a class="bt edit" 
+										href="<c:url value='/host/registration/spDetail?sdNum=${sd.sdNum}&spaceNum=${param.spaceNum }' />">수정</a>
 									<a class="bt delete" 
-										href="<c:url value='/host/registration/deleteSpaceDetail?sdNum=${sd.sdNum}&spaceNum=${param.spaceNum }' />">삭제</a>
+										href="<c:url value='/host/registration/deleteSpaceDetail?sdNum=${sd.sdNum}' />">삭제</a>
 								</div>
 							</div>
 						</div>
