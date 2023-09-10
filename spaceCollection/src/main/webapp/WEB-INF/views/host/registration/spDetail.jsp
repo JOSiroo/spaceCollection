@@ -285,50 +285,50 @@
         $('.minTime').val('${sdVo.sdMinTime}').prop("selected",true);
         
         // 가져온 값에 따라 체크박스 체크 여부 설정
-        if ('${faVo.facWifi}' === "Y") {
+        if ('${faVo.facWifi}' == "Y") {
         	$('input[name="facWifi"]').prop('checked', true);
         }
-        if ('${faVo.facPrinter}' === "Y") {
+        if ('${faVo.facPrinter}' == "Y") {
         	$('input[name="facPrinter"]').prop('checked', true);
         }
-        if ('${faVo.facChairTable}' === "Y") {
+        if ('${faVo.facChairTable}' == "Y") {
         	$('input[name="facChairTable"]').prop('checked', true);
         }
-        if ('${faVo.facSmoke}' === "Y") {
-          $('input[id="facSmoke"]').prop('checked', true);
+        if ('${faVo.facSmoke}' == "Y") {
+          $('input[name="facSmoke"]').prop('checked', true);
         }
-        if ('${faVo.facRestRoom}' === "Y") {
-          $('input[id="facRestRoom"]').prop('checked', true);
+        if ('${faVo.facRestRoom}' == "Y") {
+          $('input[name="facRestRoom"]').prop('checked', true);
         }
-        if ('${faVo.facPC}' === "Y") {
-          $('input[id="facPC"]').prop('checked', true);
+        if ('${faVo.facPC}' == "Y") {
+          $('input[name="facPC"]').prop('checked', true);
         }
-        if ('${faVo.facTV}' === "Y") {
-          $('input[id="facTV"]').prop('checked', true);
+        if ('${faVo.facTV}' == "Y") {
+          $('input[name="facTV"]').prop('checked', true);
         }
-        if ('${faVo.facWhiteBoard}' === "Y") {
-          $('input[id="facWhiteBoard"]').prop('checked', true);
+        if ('${faVo.facWhiteBoard}' == "Y") {
+          $('input[name="facWhiteBoard"]').prop('checked', true);
         }
-        if ('${faVo.facElevator}' === "Y") {
-          $('input[id="facElevator"]').prop('checked', true);
+        if ('${faVo.facElevator}' == "Y") {
+          $('input[name="facElevator"]').prop('checked', true);
         }
-        if ('${faVo.facParking}' === "Y") {
-          $('input[id="facParking"]').prop('checked', true);
+        if ('${faVo.facParking}' == "Y") {
+          $('input[name="facParking"]').prop('checked', true);
         }
-        if ('${faVo.facFood}' === "Y") {
-          $('input[id="facFood"]').prop('checked', true);
+        if ('${faVo.facFood}' == "Y") {
+          $('input[name="facFood"]').prop('checked', true);
         }
-        if ('${faVo.facDrink}' === "Y") {
-          $('input[id="facDrink"]').prop('checked', true);
+        if ('${faVo.facDrink}' == "Y") {
+          $('input[name="facDrink"]').prop('checked', true);
         }
-        if ('${faVo.facCook}' === "Y") {
-          $('input[id="facCook"]').prop('checked', true);
+        if ('${faVo.facCook}' == "Y") {
+          $('input[name="facCook"]').prop('checked', true);
         }
-        if ('${faVo.facPet}' === "Y") {
-          $('input[id="facPet"]').prop('checked', true);
+        if ('${faVo.facPet}' == "Y") {
+          $('input[name="facPet"]').prop('checked', true);
         }
-        if ('${faVo.facAudio}' === "Y") {
-          $('input[id="facAudio"]').prop('checked', true);
+        if ('${faVo.facAudio}' == "Y") {
+          $('input[name="facAudio"]').prop('checked', true);
         }
         
       	//하단 버튼
@@ -409,18 +409,26 @@
 </script>
 
 <c:if test="${empty param.sdNum }" >
-	<c:set var="next" value="수정" />
-	<c:set var="url" value="/host/registration/registration2/edit" />
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/spDetail/write" />
+	<c:set var="sdNum" value="0" />
+	<c:set var="spaceNum" value="0" />
+	<c:set var="facilityNum" value="0" />
 </c:if>
 <c:if test="${!empty param.sdNum }" >
 	<c:set var="next" value="등록" />
-	<c:set var="url" value="/host/registration/registration2/write" />
+	<c:set var="url" value="/host/registration/spDetail/edit" />
+	<c:set var="sdNum" value="${param.sdNum }" />
+	<c:set var="spaceNum" value="${param.sdNum }" />
+	<c:set var="facilityNum" value="${param.facilityNum }" />
 </c:if>
 
 <article>
 	<div class="main">
 		<form name="frmRegi3" method="post" action="<c:url value='${url }' />">
 			<input type="hidden" name="spaceNum" value="${param.spaceNum }">
+			<input type="hidden" name="sdNum" value="${param.sdNum }">
+			<input type="hidden" name="facilityNum" value="${param.facilityNum }">
 			<div class="heading">
 				<span class="hd1">세부 공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -565,7 +573,7 @@
 				<div class="boxContents">
 					<div class="facility">
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facWifi" id="inlineCheckbox1" value="Y" class="wifi">
+						  	<input class="form-check-input" type="checkbox" name="facWifi" id="inlineCheckbox1" value="Y">
 						  	<label class="form-check-label" for="inlineCheckbox1">와이파이</label>
 						</div>
 						<div class="form-check form-check-inline">
