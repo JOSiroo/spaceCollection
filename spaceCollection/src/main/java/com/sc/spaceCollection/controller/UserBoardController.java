@@ -219,7 +219,7 @@ public class UserBoardController {
 		    return "userMain/board/roulette";
 		}
 	   
-	   @GetMapping("/coupon2")
+	   @RequestMapping("/coupon2")
 	   public String coupon2(GuestVO vo, HttpSession session, Model model) {
 		    String userId = (String)session.getAttribute("userId");
 		    logger.info("userId={}",userId);
@@ -235,29 +235,20 @@ public class UserBoardController {
 		   return "userMain/board/coupon";
 	   }
 	   
-		@PostMapping("/coupon2/couponWrite")
+	   @ResponseBody
+	   @RequestMapping("/coupon2/couponWrite")
 		public String couponWrite2(@ModelAttribute CouponVO vo,
 								@RequestParam(defaultValue = "5")int couponSave,
 								@RequestParam(defaultValue = "0")int userNum,
 								@RequestParam(required = false)String couponName,
 								@RequestParam(defaultValue = "0")int couponType,
 								HttpSession session, Model model) {
-	   		logger.info("쿠폰 등록 컨트롤시작");
-		   
-	   		if(couponSave > 0 ) {
-		   		 vo.setUserNum(userNum);
-		         vo.setCouponName(couponName);
-		         vo.setCouponType(10);
+	   			
+		   	    logger.info("쿠폰 등록 ajax 시작");
 	   			
 	   			int cnt = couponService.insertCoupon(vo);
 	   			logger.info("쿠폰 등록 결과, cnt = {}", cnt);
-	   			logger.info("쿠폰 추가, vo = {}", vo);
-	   			return "user/coupon";
-	   		}
-	   		
-	   		logger.info("쿠폰은 하루만 ");
-	   		
-	        return "redirect:/userMain/board/couponList";
+	   			return "userMain/board/couponList";
 	        
 	 	}
 	   	
