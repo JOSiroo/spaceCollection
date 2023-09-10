@@ -278,12 +278,64 @@
                 $(this).val('');
             }
         });
+      	
+     	// 해당 값을 가지는 옵션을 선택
+        $('.closeTime').val('${sdVo.sdCloseTime}').prop("selected",true);
+        $('.openTime').val('${sdVo.sdOpenTime}').prop("selected",true);
+        $('.minTime').val('${sdVo.sdMinTime}').prop("selected",true);
+        
+        // 가져온 값에 따라 체크박스 체크 여부 설정
+        if ('${faVo.facWifi}' === "Y") {
+        	$('input[name="facWifi"]').prop('checked', true);
+        }
+        if ('${faVo.facPrinter}' === "Y") {
+        	$('input[name="facPrinter"]').prop('checked', true);
+        }
+        if ('${faVo.facChairTable}' === "Y") {
+        	$('input[name="facChairTable"]').prop('checked', true);
+        }
+        if ('${faVo.facSmoke}' === "Y") {
+          $('input[id="facSmoke"]').prop('checked', true);
+        }
+        if ('${faVo.facRestRoom}' === "Y") {
+          $('input[id="facRestRoom"]').prop('checked', true);
+        }
+        if ('${faVo.facPC}' === "Y") {
+          $('input[id="facPC"]').prop('checked', true);
+        }
+        if ('${faVo.facTV}' === "Y") {
+          $('input[id="facTV"]').prop('checked', true);
+        }
+        if ('${faVo.facWhiteBoard}' === "Y") {
+          $('input[id="facWhiteBoard"]').prop('checked', true);
+        }
+        if ('${faVo.facElevator}' === "Y") {
+          $('input[id="facElevator"]').prop('checked', true);
+        }
+        if ('${faVo.facParking}' === "Y") {
+          $('input[id="facParking"]').prop('checked', true);
+        }
+        if ('${faVo.facFood}' === "Y") {
+          $('input[id="facFood"]').prop('checked', true);
+        }
+        if ('${faVo.facDrink}' === "Y") {
+          $('input[id="facDrink"]').prop('checked', true);
+        }
+        if ('${faVo.facCook}' === "Y") {
+          $('input[id="facCook"]').prop('checked', true);
+        }
+        if ('${faVo.facPet}' === "Y") {
+          $('input[id="facPet"]').prop('checked', true);
+        }
+        if ('${faVo.facAudio}' === "Y") {
+          $('input[id="facAudio"]').prop('checked', true);
+        }
         
       	//하단 버튼
 		$('#back').click(function() {
 			history.back();
 		});
-        
+      	
       	$('#next').click(function() {
       		//세부 공간명
     		if ($('.sdName').val().toString().length < 1) {
@@ -356,18 +408,18 @@
 
 </script>
 
-<%-- <c:if test="${empty param.sdType }" >
+<c:if test="${empty param.sdNum }" >
 	<c:set var="next" value="수정" />
 	<c:set var="url" value="/host/registration/registration2/edit" />
 </c:if>
-<c:if test="${!empty param.sdType }" >
+<c:if test="${!empty param.sdNum }" >
 	<c:set var="next" value="등록" />
 	<c:set var="url" value="/host/registration/registration2/write" />
-</c:if> --%>
+</c:if>
 
 <article>
 	<div class="main">
-		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/spDetail' />">
+		<form name="frmRegi3" method="post" action="<c:url value='${url }' />">
 			<input type="hidden" name="spaceNum" value="${param.spaceNum }">
 			<div class="heading">
 				<span class="hd1">세부 공간 정보를 입력해주세요.</span>
@@ -380,7 +432,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceDetailName">
-						<input type="text" class="sdName" name="sdType" value="" required >
+						<input type="text" class="sdName" name="sdType" value="${sdVo.sdType }" required >
 					</div>
 				</div>
 			</div>
@@ -389,7 +441,7 @@
 				<div class="boxTitle">
 					<span>이용시간 <span style="color: red;">*</span></span>
 					<div class="form-check timeCheck">
-					  	<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+					  	<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
 					  	<label class="form-check-label" for="flexCheckChecked">
 					    	24시 운영
 					  	</label>
@@ -399,16 +451,16 @@
 					<div class="spTime">
 						<select class="form-select openTime" name="sdOpenTime"
 							aria-label="Default select example" style="float: left; font-size: 17px; width: 20%;">
-						  	<option selected value="00">00시</option>
-						  	<option value="01">01시</option>
-						  	<option value="02">02시</option>
-						  	<option value="03">03시</option>
-						  	<option value="04">04시</option>
-						  	<option value="05">05시</option>
-						  	<option value="06">06시</option>
-						  	<option value="07">07시</option>
-						  	<option value="08">08시</option>
-						  	<option value="09">09시</option>
+						  	<option value="0" selected>00시</option>
+						  	<option value="1">01시</option>
+						  	<option value="2">02시</option>
+						  	<option value="3">03시</option>
+						  	<option value="4">04시</option>
+						  	<option value="5">05시</option>
+						  	<option value="6">06시</option>
+						  	<option value="7">07시</option>
+						  	<option value="8">08시</option>
+						  	<option value="9">09시</option>
 						  	<option value="10">10시</option>
 						  	<option value="11">11시</option>
 						  	<option value="12">12시</option>
@@ -428,16 +480,16 @@
 						<span class="txtHour" style="float: left;">부터</span>
 						<select class="form-select closeTime" name="sdCloseTime" aria-label="Default select example" 
 							style="float: left; font-size: 17px; width: 20%;">
-						  	<option value="00">00시</option>
-						  	<option value="01">01시</option>
-						  	<option value="02">02시</option>
-						  	<option value="03">03시</option>
-						  	<option value="04">04시</option>
-						  	<option value="05">05시</option>
-						  	<option value="06">06시</option>
-						  	<option value="07">07시</option>
-						  	<option value="08">08시</option>
-						  	<option value="09">09시</option>
+						  	<option value="0">00시</option>
+						  	<option value="1">01시</option>
+						  	<option value="2">02시</option>
+						  	<option value="3">03시</option>
+						  	<option value="4">04시</option>
+						  	<option value="5">05시</option>
+						  	<option value="6">06시</option>
+						  	<option value="7">07시</option>
+						  	<option value="8">08시</option>
+						  	<option value="9">09시</option>
 						  	<option value="10">10시</option>
 						  	<option value="11">11시</option>
 						  	<option value="12">12시</option>
@@ -469,7 +521,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spMinTime">
-						<select class="form-select openTime" name="sdMinTime" aria-label="Default select example" 
+						<select class="form-select minTime" name="sdMinTime" aria-label="Default select example" 
 							style="float: left; font-size: 16px; margin: 10px 0 0 0; width: 30%;">
 						  	<option selected value="1시간">1시간</option>
 						  	<option value="2시간">2시간</option>
@@ -499,7 +551,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceArea">
-						<input type="text" class="area" maxlength="3" value="" name="sdArea" id="sdArea" required>
+						<input type="text" class="area" maxlength="3" value="${sdVo.sdArea }" name="sdArea" id="sdArea" required>
 						<span style="font-size: 20px; color: black; margin-left: 15px; font-weight: bold;">평</span>
 					</div>
 				</div>
@@ -513,7 +565,7 @@
 				<div class="boxContents">
 					<div class="facility">
 						<div class="form-check form-check-inline">
-						  	<input class="form-check-input" type="checkbox" name="facWifi" id="inlineCheckbox1" value="Y">
+						  	<input class="form-check-input" type="checkbox" name="facWifi" id="inlineCheckbox1" value="Y" class="wifi">
 						  	<label class="form-check-label" for="inlineCheckbox1">와이파이</label>
 						</div>
 						<div class="form-check form-check-inline">
@@ -588,11 +640,11 @@
 					<div class="criteria">
 						<div class="minPerson" style="float: left; margin-right: 8%;">
 							<label class="lbPerson">최소 수용인원</label>
-							<input type="text" class="txtPerson min" name="sdMinPeople" required> 명
+							<input type="text" class="txtPerson min" name="sdMinPeople" value="${sdVo.sdMinPeople }" required> 명
 						</div>
 						<div class="maxPerson" style="float: left;">
 							<label class="lbPerson">최대 수용인원</label>
-							<input type="text" class="txtPerson max" name="sdMaxPeople" required> 명
+							<input type="text" class="txtPerson max" name="sdMaxPeople" value="${sdVo.sdMaxPeople }" required> 명
 						</div>
 					</div>
 				</div>
@@ -605,7 +657,7 @@
 			<div class="boxForm" style="margin-top: 40px;">
 				<div class="boxContents">
 					<div class="spaceDetailPrice">
-						<input type="text" class="sdPrice" name="sdPrice" value="" required >
+						<input type="text" class="sdPrice" name="sdPrice" value="${sdVo.sdPrice }" required >
 						<label class="lbPrice">원</label>
 					</div>
 					<div class="boxnoti">
@@ -618,7 +670,7 @@
 
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="submit" class="btn btn-warning" id="next" >등록</button>
+				<button type="submit" class="btn btn-warning" id="next" >${next }</button>
 			</div>
 			
 		</form>

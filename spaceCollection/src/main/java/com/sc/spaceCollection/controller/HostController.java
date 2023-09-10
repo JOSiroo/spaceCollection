@@ -324,8 +324,16 @@ public class HostController {
 	}
 	
 	@GetMapping("/registration/spDetail")
-	public String spDetail() {
+	public String spDetail(@RequestParam(defaultValue = "0") int sdNum, Model model) {
 		logger.info("세부 공간등록 보여주기");
+		
+		SpaceDetailVO sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
+		logger.info("sdVo = {}", sdVo);
+		FacilityVO  faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
+		logger.info("faVo = {}", faVo);
+		
+		model.addAttribute("sdVo", sdVo);
+		model.addAttribute("faVo", faVo);
 		
 		return "host/registration/spDetail";
 	}
@@ -337,7 +345,7 @@ public class HostController {
 		int cnt = hostService.insertSpaceDetail(spaceDetailVo, facilityVo);
 		logger.info("세부공간 등록 결과, cnt = {}", cnt);
 		
-		return "redirect:/host/spaceDetailManage";
+		return "redirect:/host/spaceDetailManage?spaceNum=" + spaceDetailVo.getSpaceNum();
 	}
 
 	@RequestMapping("/spaceDetailManage")
@@ -362,20 +370,19 @@ public class HostController {
 		return "host/spaceDetailManage";
 	}
 	
-	/*
-	 * @PostMapping("/registration/spDetail/edit") public String
-	 * spDetail_edit(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
-	 * logger.info("세부 공간수정 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo,
-	 * facilityVo);
-	 * 
-	 * int spaceDetail = hostService.updateSpaceDetail(spaceDetailVo);
-	 * facilityVo.setFacilityNum(spaceDetailVo.getFacilityNum()); int facility =
-	 * hostService.updateFacility(facilityVo);
-	 * logger.info("세부공간 수정 결과, spaceDetail = {}, facility = {}", spaceDetail,
-	 * facility);
-	 * 
-	 * return "redirect:/host/spaceDetailManage"; }
-	 */
+	
+	@PostMapping("/registration/spDetail/edit")
+	public String spDetail_edit(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
+		logger.info("세부 공간수정 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
+
+		int spaceDetail = hostService.updateSpaceDetail(spaceDetailVo);
+		facilityVo.setFacilityNum(spaceDetailVo.getFacilityNum());
+		int facility = hostService.updateFacility(facilityVo);
+		logger.info("세부공간 수정 결과, spaceDetail = {}, facility = {}", spaceDetail, facility);
+
+		return "redirect:/host/spaceDetailManage";
+	}
+	 
 	
 	@RequestMapping("/spaceManage")
 	public String spaceManage(HttpSession session, Model model) {
@@ -413,13 +420,30 @@ public class HostController {
 		return "host/spaceManage";
 	}
 	
-	
+	@GetMapping("/registration/deleteSpaceDetail")
+	public String deleteSpaceDetail(@RequestParam(defaultValue = "0") int sdNum, 
+			@RequestParam(defaultValue = "0") int spaceNum, Model model) {
+		logger.info("세부공간 삭제, spaceNum = {}", sdNum);
+		
+		String msg = "세부공간 삭제를 실패했습니다.", url = "/host/spaceDetailManage?spaceNum=" + spaceNum;
+		if (sdNum > 0) {
+			int cnt = hostService.deleteSpaceDetail(sdNum);
+			logger.info("cnt = {}", cnt);
+			
+			msg = sdNum + " 공간이 삭제되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 	
 	@GetMapping("/registration/deleteSpace")
 	public String deleteSpace(@RequestParam(defaultValue = "0") int spaceNum, Model model) {
 		logger.info("공간 삭제, spaceNum = {}", spaceNum);
 		
-		String msg = "공간 삭제를 실패했습니다.", url = "/host/spaceManage";
+		String msg = "공간 삭제를 실패했습니다.", url = "/host/spaceManage?spaceNum=" + spaceNum;
 		if (spaceNum > 0) {
 			int cnt = hostService.deleteSpace(spaceNum);
 			logger.info("cnt = {}", cnt);
@@ -432,6 +456,7 @@ public class HostController {
 		
 		return "common/message";
 	}
+	
 	
 	//page=1&order=reservationNum&status=before&keyword=fd
 	@RequestMapping("/reservation")

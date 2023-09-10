@@ -25,6 +25,11 @@
 		ORDER BY COUPON_START_DAY	
 	</select>
 	
+	<select id="selectCheckCoupon" parameterType="string" resultType="int">
+		select count(COUPON_NAME) from coupon 
+		where COUPON_NAME = #{couponName}
+	</select>
+	
 		<!-- UPDATE coupon
 		SET COUPON_DEL_FLAG = 'Y'
 		WHERE TRUNC(COUPON_FINISH_DAY) = TRUNC(SYSDATE) -->

@@ -28,5 +28,10 @@ public class CouponServiceImpl implements CouponService {
 		return couponDAO.selectUserCoupon(userNum);
 	}
 
+	@Override
+	public int selectCheckCoupon(String couponName) {
+		return couponDAO.selectCheckCoupon(couponName);
+	}
+
 
 }

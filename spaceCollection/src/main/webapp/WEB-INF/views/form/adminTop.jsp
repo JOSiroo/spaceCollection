@@ -210,7 +210,7 @@
 			</li>
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				href="http://localhost:9091/spaceCollection/admin/chatting"> <i class="bi bi-question-circle"></i> 
+				href="<c:url value='/admin/chatting'/>"> <i class="bi bi-question-circle"></i> 
 				<span>실시간 채팅</span>
 			</a></li>
 		</ul>

@@ -25,9 +25,12 @@ public interface HostService {
 	SpaceFileVO selectSpaceFile(int spaceNum);
 	List<SpaceVO> selectSpaceByUserNum(int userNum);
 	List<SpaceDetailVO> selectSpaceDetailBySpaceNum(int spaceNum);
+	SpaceDetailVO selectSpaceDetailBySdNum(int sdNum);
+	FacilityVO selectFacilityByFaNum(int facilityNum);
 	
 	//공간 삭제
 	int deleteSpace(int spaceNum);
+	int deleteSpaceDetail(int sdNum);
 	
 	//공간 수정
 	int updateSpace(SpaceVO spaceVo);

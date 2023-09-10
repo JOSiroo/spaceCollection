@@ -189,7 +189,7 @@
 		height: 130px;
 		width: 150px;
 		font-size: 16px;
-		padding: 47px 14px 0 17px;
+		padding: 42px 5px 0 5px;
 		border-right: 1px solid gray;
 		text-align: center;
 		background: white;
@@ -261,9 +261,6 @@
 	          <li class="nav-item">
 	            <a class="nav-link active" aria-current="page" href="<c:url value='/host/index' />" style="color: #6d3bff;">
 	            호스트센터 홈</a>
-	          </li>
-	          <li class="nav-item">
-	            <a class="nav-link" href="#">운영지표</a>
 	          </li>
 	          <li class="nav-item">
 	            <a class="nav-link" href="<c:url value='/host/calculate' />">정산</a>

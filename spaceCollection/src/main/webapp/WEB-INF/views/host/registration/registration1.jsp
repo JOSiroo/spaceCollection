@@ -107,7 +107,7 @@
 		});
 		
 		$('#next').click(function() {
-			var count = $('input[type=checkbox]:checked').length;
+			var count = $('.accordion-button:checked').length;
 			if (count > 0) {
 				
 			} else {
@@ -153,7 +153,7 @@
 				<c:forEach var="AllVo" items="${type }" varStatus="loopStatus">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
+							<button class="accordion-button collapsed btacco" type="button"
 								data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${loopStatus.index}"
 								aria-expanded="false" aria-controls="flush-collapseOne">
 								<span>${AllVo.spaceCategoryVo.categoryName }</span>
