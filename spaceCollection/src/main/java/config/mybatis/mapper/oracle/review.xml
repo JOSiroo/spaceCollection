@@ -22,21 +22,24 @@
 		(
 			select rownum as RNUM, A.* from
 			(
-				select * from 
-				review r join RESERVATION_SPACE_SD_VIEW v
-				on r.RESERVATION_NUM=v.RESERVATION_NUM
-				where USER_ID=#{userId}
+				select C.* from
+				(
+					select * from 
+					review r join RESERVATION_SPACE_SD_VIEW v
+					on r.RESERVATION_NUM=v.RESERVATION_NUM
+					where REVIEW_OUT_DATE IS NULL
+					and USER_ID=#{userId}
+					order by review_num desc
+				)C
 				<if test="searchKeyword!=null and searchKeyword!=''">
-					and REVIEW_CONTENT LIKE '%' || #{searchKeyword} || '%'
-					OR SPACE_NAME LIKE '%' || #{searchKeyword} || '%'
-					OR REVIEW_NUM LIKE '%' || #{searchKeyword} || '%'
+					where REVIEW_CONTENT LIKE '%' || #{searchKeyword} || '%'
+					or SPACE_NAME LIKE '%' || #{searchKeyword} || '%'
+					or REVIEW_NUM LIKE '%' || #{searchKeyword} || '%'
 				</if>
-				and REVIEW_OUT_DATE IS NULL
-				order by review_num desc
-				)A
+			)A
 		)
 		<![CDATA[
-		where RNUM> #{startRow} 
+		where RNUM>= #{startRow} 
 		and RNUM<=#{startRow} + #{endRow}]]>
 	</select>
 	
