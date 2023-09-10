@@ -154,7 +154,7 @@ p{
     padding: 2% 0% 1% 0%;
     position:sticky;
     top:123px;
-    z-index:12;
+    z-index:1;
     background: white;
     transition:1s;
     
