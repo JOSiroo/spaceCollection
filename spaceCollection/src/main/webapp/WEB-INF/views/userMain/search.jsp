@@ -345,7 +345,6 @@ p{
 		margin-bottom:15px;
 		width:10%;
 		float:right;
-		margin-right:25%;
 	}
 	.select-option:hover{
 		background-color: #ffd014 !important;
@@ -610,6 +609,7 @@ p{
 </div>
 <br>
 <br>
+<div style="    padding-right: 25%;height: 20px;display: inline-block;width: 100%;">
 	<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
            onchange='this.size=1; this.blur();'>
 	  <option class = "select-option" selected>정렬</option>
@@ -618,6 +618,7 @@ p{
 	  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
 	  <option value="spaceRegDate_desc" class = "select-option">공간 등록순</option>
 	</select>
+</div>
 <br>
 </div>
 <hr>
