@@ -237,7 +237,7 @@
 	    background-color: white;
   	}
 	::-webkit-scrollbar-thumb{
-		background: #193D76;
+		background: #ffd014;
 		border-radius: 1rem;
 	} 
 </style>
