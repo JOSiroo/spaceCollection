@@ -91,7 +91,7 @@
 	}
 	
 	.offcanvas-title {
-		width: 80%;  
+		width: 75%;  
 		color: #193D76;
 		font-weight: bold;
 		font-size: 25px;
@@ -252,7 +252,9 @@
 		        </span>
 		    </c:if>
 	      	<c:if test="${!empty sessionScope.userId }">
-		        <span class="offcanvas-title" id="offcanvasNavbarLabel">호스트<br>${sessionScope.userId }</span>
+		        <span class="offcanvas-title" id="offcanvasNavbarLabel">
+		        	<span style="font-size: 19px; color: #704de4;">호스트</span>
+		        	<br>${sessionScope.userId }</span>
 		    </c:if>
 	        <a class="frofile" href="<c:url value='/guest/myPage/checkPwd'/>">프로필 관리</a>
 	        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

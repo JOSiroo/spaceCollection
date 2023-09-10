@@ -34,12 +34,13 @@ public interface HostService {
 	int deleteSpaceDetail(int sdNum);
 	
 	//공간 수정
+	SpaceVO selectSpaceByspaceNum(int spaceNum);
+	SpaceTypeVO selectSpaceTypeBySpaceTypeNo(int spaceTypeNo);
+	SpaceToTalFacilityVO selectTotalFacilityBySpaceNum(int spaceNum);
+	RefundVO selectRefundByRefundNum(int refundNum);
 	int updateSpace(SpaceVO spaceVo);
 	int updateTotalFacility(SpaceToTalFacilityVO spaceTotalFacilityVo);
 	int updateRefund(RefundVO refundVo);
-	int deleteLicenseImg(String fileName);
-	int deleteMainImg(String fileName);
-	int deleteSubImg(String fileName);
 	
 	//세부공간 수정
 	int updateSpaceDetail(SpaceDetailVO spaceDetailVo);
