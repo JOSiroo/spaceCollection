@@ -17,7 +17,7 @@
 		$.loadLineStatic();
 		setInterval(function() {
 			$.loadRecentReservation()	
-		}, 10000);
+		}, 5000);
 		
 	})
 	function rTotalCnt(val) {
@@ -276,35 +276,19 @@
 				var sCntSet = [];
 				var uCntSet = [];
 				var rCntSet = [];
+				
+				res.forEach(function(staticsVo) {
+				    var day = staticsVo.day;
+				    var scnt = staticsVo.scnt;
+				    var ucnt = staticsVo.ucnt;
+				    var rcnt = staticsVo.rcnt;
 
-				for(var i=0; i<res.length; i++){
-					regdateSet.push({
-						this[i].DAY;
-					});
-					sCntSet.push({
-					    this.scnt
-					});
-					uCntSet.push({
-					    this.ucnt
-					});
-					rCntSet.push({
-					    this.rcnt
-					});
-				}
-				/* $.each(res, function() {
-					regdateSet.push({
-					    DAY;
-					});
-					sCntSet.push({
-					    this.scnt
-					});
-					uCntSet.push({
-					    this.ucnt
-					});
-					rCntSet.push({
-					    this.rcnt
-					});	
-				}); */
+				    regdateSet.push(day);
+				    sCntSet.push(scnt);
+				    uCntSet.push(ucnt);
+				    rCntSet.push(rcnt);
+				});
+				
 					
 				if(res.length>0){
 					new ApexCharts(document.querySelector("#reportsChart"), {
