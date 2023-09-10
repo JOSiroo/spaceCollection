@@ -75,6 +75,10 @@
 	.goList{
 		margin-top: -10px;
 	}
+	
+	#profileImg{
+		height: 190px;
+	}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -364,7 +368,13 @@
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
 								str += "</td>";
-								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_NAME;
+								if(this.SPACE_REQUEST_STATUS == '승인'){
+									str += "<td onclick='locationHref("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_NAME;
+	
+								}else{
+									str += "<td onclick='locationHref2("+this.SPACE_NUM+")' style='cursor: pointer;'>" + this.SPACE_NAME;
+								}
+								
 								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.SPACE_TYPE_NAME;
 								str += "</td>";
@@ -558,6 +568,13 @@
 			}
 		});
 	}
+	
+	function locationHref(spaceNum) {
+		location.href = "/spaceCollection/admin/space/spaceList/spaceDetail?spaceNum=" + spaceNum;
+	}
+	function locationHref2(spaceNum) {
+		location.href = "/spaceCollection/admin/space/spaceConfirmList/spaceConfirmDetail?spaceNum=" + spaceNum;
+	}
 				
 </script>
 <main id="main" class="main">
@@ -589,10 +606,10 @@
 				<div class="card">
 					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 						<c:if test="${memberMap.USER_SNS_CODE != null }">
-							<img src="${memberMap.USER_PROFILE_IMAGE }" alt="Profile" class="rounded-circle">
+							<img src="${memberMap.USER_PROFILE_IMAGE }" alt="Profile" class="rounded-circle" id="profileImg">
 						</c:if>
 						<c:if test="${memberMap.USER_SNS_CODE == null }">
-							<img src="<c:url value='/user_images/test1.jpg'/>" alt="Profile" class="rounded-circle">	
+							<img src="<c:url value='/user_images/default_profile.jpg'/>" alt="Profile" class="rounded-circle">	
 						</c:if>
 						<h2>${memberMap.USER_NAME }</h2>
 						<h3>${memberMap.USER_ID }</h3>
