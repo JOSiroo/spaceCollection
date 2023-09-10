@@ -8,14 +8,14 @@ body {
 }
 section{
 	display: flex;
-	margin:10%;
+	justify-content:center;
+	width:100%;
 }
 .profile{
 	background-color: white;
 	width: 18%;
 	height: 55%;
 	text-align: -webkit-center;
-	margin-left: 20%;
 }
 .profileImg {
 	background-color: white;
@@ -29,7 +29,7 @@ section{
     background-color: white;
     height: 55%;
     margin-left: 4%;
-    margin-bottom: 50%;
+    margin-bottom: 10%;
     text-align: center;
 }
 #userName{
@@ -222,6 +222,9 @@ $(function() {
 
 </script>
 
+<div style="text-align: center; padding-top:7%;padding-bottom:2%;">
+	<h1>쿠폰 리스트</h1>
+</div>
 <section>
 <article class="profile">
 		<input type="hidden" name="snsCode" value="${guestVo.userSnsCode }">
