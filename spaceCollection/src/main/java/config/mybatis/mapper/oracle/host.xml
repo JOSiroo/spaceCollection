@@ -113,6 +113,11 @@
 		order by sd_num desc
 	</select>
 	
+	<select id="selectSpaceDetailBySdNum" resultType="spaceDetailVo" parameterType="int">
+		select * from space_detail
+		where sd_num = #{sdNum}
+	</select>
+	
 	<update id="deleteSpace" parameterType="int">
 		update space
 		set del_flag = 'Y', space_out_date = sysdate
@@ -170,6 +175,11 @@
 		FAC_AUDIO = #{facAudio}
 		where FACILITY_NUM = #{facilityNum}
 	</update>
+	
+	<select id="selectFacilityByFaNum" resultType="facilityVo" parameterType="int">
+		select * from facility
+		where facility_Num = #{facilityNum}
+	</select>
 	
 	<delete id="deleteMainImg" parameterType="String">
 		delete space_file
