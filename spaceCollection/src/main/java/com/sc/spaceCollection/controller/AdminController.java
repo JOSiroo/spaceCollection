@@ -519,7 +519,6 @@ public class AdminController {
 	public String boardEdit(@RequestParam String boardTypeName, @ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
 				HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile, Model model) {
 		logger.info("게시판 수정, 파라미터 boardVo = {}, spaceFileListVo = {}", boardVo, spaceFileListVo);
-		logger.info("boardTypeName이 왜 두번 찍히냐 시발 = {}", boardTypeName);
 		
 		String transBtn = "";
 		try {

@@ -558,6 +558,12 @@ public class AdminSpaceController {
 		spaceTotalInfo.put("spaceDetailList", spaceDetailList);
 		
 		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
+		for(int i=0; i<imgList.size(); i++) {
+			if(imgList.get(i).contains("license")) {
+				imgList.remove(i);
+			}
+		}
+		
 		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		logger.info("spaceTotalInfo = {}", spaceTotalInfo);

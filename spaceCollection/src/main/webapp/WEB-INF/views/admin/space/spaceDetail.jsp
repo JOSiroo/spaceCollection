@@ -25,17 +25,20 @@
 	}
 	
 	#carouselExampleIndicators{
-		width: 440px;
-	    height: 300px;
+		width: 900px;
+		height: 500px;
 	}
 	
 	.carousel-inner {
-	   width: 440px;
-	   height: 300px;
+		width: 900px;
+		height: 500px;
+		
 	}
 	
 	#carouselExampleIndicators img{
-		width: 100%;
+		display: block;
+	    margin-left: auto;
+	    margin-right: auto 
 	}
 	
 	
@@ -72,6 +75,8 @@
 	.col-3{
 		font-weight: bold;
 	}
+	
+	
 	
 	
 </style>
@@ -182,7 +187,7 @@
 											<div class="carousel-item">
 										</c:if>
 											<img src="<c:url value='/space_images/${imgName }'/>"
-												class="d-block w-100">
+												class="d-block">
 										</div>
 										<c:set var="i" value="${i+1 }"/>
 									</c:forEach>
