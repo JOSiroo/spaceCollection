@@ -72,6 +72,8 @@
     
     body{
 		font-family: 'Pretendard-Regular' !important;
+		overflow: visible !important;
+		height: auto !important;
 	}
 	
 	h1{
@@ -92,7 +94,6 @@
 .topSearch {
 	width: 1000px;
     padding: 20px 40px 50px 260px;
-	margin-left: 450px;
 	scale: 0.8;
 	position: absolute;
 	border-radius: 10px;
@@ -179,10 +180,45 @@
 			transition:0.4s;
 		}
 	}
-	
+
+	.site-nav{
+		max-width: 100% !important;
+		width:100% !important;
+		padding:0 !important;
+		background:#193D76;
+		position: sticky !important;
+		top: 0;
+		
+	}
+	.menu-bg-wrap *{
+		max-width: 100% !important;
+		position: sticky;
+		top: 0;
+	}
+	#topContainer{
+		max-width: 100% !important;
+		width: 100% !important;
+		padding:0 !important;
+		height: auto;
+	}
+	.topbar{
+		float:right;
+		padding:0% 0% 0% 0%;
+		display: grid;
+	}
+	.search{
+		scale:0.9;
+		display:block !important;
+		float: right;
+	}
+	.topText{
+		float: right;
+	}
+	header{
+		height: auto !important;
+	}
 </style>
 </head>
-
 <body>
 	<!-- 스크롤 -->
 	<div class="site-mobile-menu site-navbar-target">
@@ -197,7 +233,7 @@
 
 <!-- 상단메뉴 -->
 <nav class="site-nav">
-		<div class="container">
+		<div class="container" id="topContainer">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 
@@ -205,49 +241,50 @@
 						class="logo float-start" id="topLogo">SpaceCollection</a>
 
 					<div class="topbar">
-						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-							<li class="active"><a href="<c:url value='/'/>">Home</a></li>
-							<li ><a href="<c:url value='/search' />">SpaceCollection</a>
-								<!-- 공간 대분류 카테고리별 나열하기 !!!
-								<li class="has-children">
-									<ul class="dropdown">
-									<li><a href="#">Buy Property</a></li>
-									<li><a href="#">Sell Property</a></li>
-									<li class="has-children"><a href="#">Dropdown</a>
+							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end" style="padding-left:3%;">
+								<li class="active"><a href="<c:url value='/'/>">Home</a></li>
+								<li ><a href="<c:url value='/search' />">SpaceCollection</a>
+									<!-- 공간 대분류 카테고리별 나열하기 !!!
+									<li class="has-children">
 										<ul class="dropdown">
-											<li><a href="#">Sub Menu One</a></li>
-											<li><a href="#">Sub Menu Two</a></li>
-											<li><a href="#">Sub Menu Three</a></li>
-										</ul></li>
-								</ul> -->
-							</li>
-							<li><a href="<c:url value='/user/boardList'/>">시즌 이벤트</a></li>
-							<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
-						<!-- 로그인 안된 경우 -->
-							<c:if test="${empty sessionScope.userId }">
-								<li><a href="<c:url value='/login/login'/>">로그인</a></li>
-							</c:if>
-						<!-- 로그인 된 경우 -->
-							<c:if test="${!empty sessionScope.userId }">
-								<li><a href="<c:url value='/login/logout'/>">로그아웃</a></li>
-							</c:if>
-						</ul>
-						<br>
-					
-					<div class="topSearch">
-						<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
-							<input type="text" class="form-control px-4"
-								placeholder="공간명으로 찾아보세요" id="inputSearch" name="spaceName">
-							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
-						</form>
+										<li><a href="#">Buy Property</a></li>
+										<li><a href="#">Sell Property</a></li>
+										<li class="has-children"><a href="#">Dropdown</a>
+											<ul class="dropdown">
+												<li><a href="#">Sub Menu One</a></li>
+												<li><a href="#">Sub Menu Two</a></li>
+												<li><a href="#">Sub Menu Three</a></li>
+											</ul></li>
+									</ul> -->
+								</li>
+								<li><a href="<c:url value='/user/boardList'/>">시즌 이벤트</a></li>
+								<li><a href="<c:url value='/about'/>">서비스 소개</a></li>
+							<!-- 로그인 안된 경우 -->
+								<c:if test="${empty sessionScope.userId }">
+									<li><a href="<c:url value='/login/login'/>">로그인</a></li>
+								</c:if>
+							<!-- 로그인 된 경우 -->
+								<c:if test="${!empty sessionScope.userId }">
+									<li><a href="<c:url value='/login/logout'/>">로그아웃</a></li>
+								</c:if>
+							</ul>
+							<div class="search">
+								<form class="narrow-w form-search d-flex align-items-stretch mb-3" method="get" action="${pageContext.request.contextPath }/search">
+									<input type="text" class="form-control px-4"
+										placeholder="공간명으로 찾아보세요" id="inputSearch" name="spaceName">
+									<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
+									<button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+								      <i class="bi bi-list" id="sidemenubtcl"></i>
+								    </button>
+								</form>
+							</div>
 					</div>
-					
-					
+				</div>
+			</div>
+		</div>
 <!-- 사이드시작  -->      
 <div class="sidemenust">
-    <button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-      <i class="bi bi-list" id="sidemenubtcl"></i>
-    </button>
+    
     
     <!--사이드메뉴 시작-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" >
@@ -351,14 +388,10 @@
        
     </div><!--사이드메뉴끝-->
 <!-- 사이드종료 -->
-					
-					
 
+</div>	
+<!-- 상단메뉴 끝 -->	</nav>
 
-
-
-	
-<!-- 상단메뉴 끝 -->	</nav>	
 		
 	<!-- 채팅api -->			
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
