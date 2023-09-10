@@ -38,7 +38,7 @@
     margin-bottom: 8%;
 	}
 	div#commentDiv {
-    width: 1000px;
+    width: 100%;
     margin-top: 20px;
     margin-left: 3px;
 	}
@@ -90,10 +90,10 @@
 			        + "<form name='CommentsBox' method='post' action='#' var='list1' items='" + this.list1 + "' >"
 			        + "<div class='anonym' style='margin: 10px;'><img class='userIcon' src='<c:url value='/images/userIcon.png'/>'>"
 			        + "<input type='text'  id='com_writer' placeholder='id' value='" + this.userId + "' readonly style='width: 80px; border:none; font-weight: bold; '>"
-			        + "<input type='text' value='" + (this.commentRegDate).substring(0,10) + " " + (this.commentRegDate).substring(11,19)  + "' style='border: none; color: #999;' />"
+			        + "<input type='text' id='com_Date' value='" + (this.commentRegDate).substring(0,10) + " " + (this.commentRegDate).substring(11,19)  + "' readonly style='border: none; color: #999;' />"
 			        + "</div>"
 			        + "<div class='anonym2' style='margin: 10px;'>"
-			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' style='border: none; width: 80%;' />";
+			        + "<input type='text' value='" + this.commentContent + " 'id='commentContent' readonly style='border: none; width: 80%;' />";
 			       if ( userId === this.userId) {
 		            str+= "<button type='button' id='commentsEdit' class='commentsEdit' onClick='commentEdit(this," + this.commentNum + ")'>수정</button>";
 		            str+= "<button type='button' id='commentsDel' class='commentsDel' onClick='commentDelete("+this.commentNum+")'>삭제</button>";
@@ -114,7 +114,7 @@
 				var str = "";
 				str += "<form name='commentsEditFrm' method='post var='list'>";
 				str += "<div class='col-sm-10' id='commentDiv'>";
-				str += "<input class='form-control' id='EditCommentContent' style='height: 100px; width: 580px;' name='commentContent'>";
+				str += "<input class='form-control' name='commentContent' id='EditCommentContent' style='height: 100px; width: 580px;' >";
 				str += "</div>";
 				str += "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>";
 				str += "<button class='btn btn-primary right' onclick='editCommentOkay()' id='commentsEditGo' name='commentEditBt' style='scale:0.7;'>댓글 수정</button>";
@@ -123,49 +123,67 @@
 				str += "<input type='hidden' name='commentNum' value="+commentNum+">";
 				str += "</form>";
 				str += "<hr>";
-				 $('#'+commentNum+'').append(str); 
+				$('#'+commentNum+'').append(str);  
 			}
 	}
 	 
 	 function editCommentOkay(){
-			event.preventDefault();
+		 
+		 	$('#confirm1').modal('hide');	
+			$('#cancelBt').html("확인");
+			$('.modal-body').html("댓글을 수정하시겠습니까?");
+	        $('#confirm1').modal('show');
+	        
+			event.preventDefault(); 
+			
+			var sendDate = $('form[name=commentsEditFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
 			console.log("수정하기 버튼 클릭 시작");
-			$.ajax({
-				url : "<c:url value='/user/board/boardDetail/ajax_commentsEdit'/>",
-				type : 'post',
-				data : {
-					commentContent:$('#EditCommentContent').val(),
-					commentNum:$('input[name=commentNum]').val()
-				},
-				dataType : 'json',
-				success:function(res){
-					console.log(res);
-					location.reload();
-				},error:function(xhr, status, error){
-					alert("내용을 입력하세요");
-					/* alert(status + " : " + error); */
-				}
-			});
-		}
+		    
+			$('#cancelBt').click(function(){
+	        console.log(sendDate);
+		
+					$.ajax({
+						url : "<c:url value='/user/board/boardDetail/ajax_commentsEdit'/>",
+						type : 'post',
+						data : sendDate,
+						dataType : 'json',
+						success:function(sendDate){
+							console.log("ajax 성공");
+							console.log(sendDate);
+							location.reload(); 
+						},error:function(xhr, status, error){
+							alert("내용을 입력하세요");
+							location.reload(); 
+							/* alert(status + " : " + error); */
+						}
+					});//ajax
+					
+        });
+	 }
 	 
 
 	 function commentDelete(commentNum) {
-		console.log("삭제 클릭 시작");
-		$.ajax({
-			url : "<c:url value='/user/board/boardDetail/ajax_commentsDelete'/>",
-			type : 'get',
-			data : {
-				commentNum: commentNum
-			},
-			dataType : 'json',
-			success:function(){
-				alert("삭제되었습니다.");
-				location.reload();
-			},error:function(xhr, status, error){
-				alert(status + " : " + error);
-			}
-		});
 		$('#confirm1').modal('hide');	
+		$('#cancelBt').html("확인");
+		$('.modal-body').html("댓글을 삭제하시겠습니까?");
+        $('#confirm1').modal('show');
+        
+        $('#cancelBt').click(function(){
+				$.ajax({
+					url : "<c:url value='/user/board/boardDetail/ajax_commentsDelete'/>",
+					type : 'get',
+					data : {
+						commentNum: commentNum
+					},
+					dataType : 'json',
+					success:function(){
+						location.reload();
+					},error:function(xhr, status, error){
+						alert(status + " : " + error);
+						location.reload();
+					}
+				});
+        });
 	}
 	 
 	loadComment(boardNum);
@@ -216,6 +234,7 @@
 		$.commentsLoad();
 	}
 	
+	
 $(function() {
 
   	$("#commentsMoreDiv").click(function(){
@@ -233,59 +252,53 @@ $(function() {
 		$('#fileList').toggle();
 	});
 	
-	$('form[name=commentsFrm]').submit(function() {
-		if($('textarea').val().trim()==''){
-			$('#okBt').hide();
-			$('#cancelBt').html("확인");
-			$('.modal-body').html("댓글을 입력해주세요.");
-	        $('#confirm1').modal('show');
-			
-			event.preventDefault();
-		}
-	});
 	
-			$('#sendBt').click(function() {
-				var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+	$('#sendBt').click(function() {
+				$('#cancelBt').html("확인");
+				$('.modal-body').html("댓글을 등록하시겠습니까?");
+		        $('#confirm1').modal('show');
+		        
 			    // 세션에 userId 값이 없는 경우
-			    if ("${sessionScope.userId }"=='') {
-			        window.location.href = '<c:url value='/login/login'/>';
-			        return;
-			    }
-			    $('#confirm1').modal('show');
-			    $('#ok').click(function(){
-			    	$.sendAjax();
-			    });
-				    
-		});//#sendBt
+				    if ("${sessionScope.userId }"=='') {
+				        window.location.href = '<c:url value='/login/login'/>';
+				        return;
+				    }
+			    
+				$('#cancelBt').click(function(){
+					var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+				    console.log(sendDate);
+				    console.log(sendDate.commentContent);
+					
+				        $.ajax({
+				            url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
+				            method: 'post',
+				            data: sendDate,
+				            success: function(sendDate) {
+				                 // data를 사용하여 필요한 작업 수행
+				                 // 가져온 data를 이용하여 댓글 목록을 다시 구성
+				           				if(sendDate!==null){
+				    						$('#ajaxComments').html("");
+				     						$('input[name=commentContent]').val('');
+				     						console.log("댓글 추가 성공");
+				    					    location.reload();  						
+				     						//$('#confirm1').modal('show');
+				    					 }else {
+				    						alert("댓글 내용을 입력해주세요");
+				     				       	location.reload();
+				    					}//if
+				            },//success
+				        	error:function(xhr, status, error){
+	    						alert("댓글 내용을 입력해주세요");
+				    			//alert(status + " : " + error);
+				    		}
+				        });//ajax
+				        
+		    });//cancelBt
+	});//#sendBt
+			
+	
 });//#function
 
-
-$.sendAjax = function(){
-	
-	$.ajax({
-        url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
-        method: 'post',
-        data: sendDate,
-        success: function(data) {
-             // data를 사용하여 필요한 작업 수행
-             // 가져온 data를 이용하여 댓글 목록을 다시 구성
-					if(data!=null){
-						$('#ajaxComments').html("");
- 						//alert("댓글 등록 성공");
- 						$('input[name=commentContent]').val('');
- 						console.log("댓글 추가 성공");
-					   location.reload();  						
- 						//$('#confirm1').modal('show');
-					}else if(data==null){
-						alert("댓글 내용을 입력하세요");
-					}//if
-        },//success
-    	error:function(xhr, status, error){
-			alert(status + " : " + error);
-		}
-    });//ajax
-	
-}
 
 </script>
 
@@ -363,7 +376,7 @@ $.sendAjax = function(){
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close""></button>
 				</div>
 				<div class="modal-body"></div>
 				<div class="modal-footer">
