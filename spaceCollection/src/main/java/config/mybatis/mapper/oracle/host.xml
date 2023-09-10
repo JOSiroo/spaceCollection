@@ -196,6 +196,17 @@
 		where img_temp_name like 'S' || #{imgTempName} || 'license%'
 	</delete>
 	
+	<select id="selectNotice" resultType="boardVo" parameterType="String">
+		select rownum, a.* 
+		from 
+		(
+		    select * from board
+		    where board_type_id = 'b00012'
+		    order by board_num desc
+		) a
+		<![CDATA[where rownum <= 5]]>
+	</select>
+	
 	<select id="selectHostReservation" resultType="map">
 		select *
 		from
