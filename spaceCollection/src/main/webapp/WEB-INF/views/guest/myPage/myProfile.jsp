@@ -632,20 +632,22 @@
 						</c:if>
 						</td>
 					</tr>
-					<tr>
-						<th>
-							<label>주소</label>
-						</th>
-						<td>
-							<div class="userAddress">
-								<p class="userInfo" id="dbUserAddress">${guestVo.address } 
-									<c:if test="${!empty guestVo.addressDetail }">
-										${guestVo.addressDetail }
-									</c:if>
-								</p>
-							</div>
-						</td>
-					</tr>
+					<c:if test="${!empty guestVo.address }">
+						<tr>
+							<th>
+								<label>주소</label>
+							</th>
+							<td>
+								<div class="userAddress">
+									<p class="userInfo" id="dbUserAddress">${guestVo.address } 
+										<c:if test="${!empty guestVo.addressDetail }">
+											${guestVo.addressDetail }
+										</c:if>
+									</p>
+								</div>
+							</td>
+						</tr>
+					</c:if>
 					<tr>
 						<th>
 							<label>SNS연동</label>
