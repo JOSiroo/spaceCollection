@@ -74,6 +74,17 @@
 	    line-height: 1.4;
 	    margin-left: -30px;
 	}
+	
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+	
+	/* Firefox  */
+	input[type='number'] {
+	  -moz-appearance: textfield;
+	}
   </style>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
