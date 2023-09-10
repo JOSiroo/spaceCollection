@@ -505,6 +505,11 @@ public class AdminSpaceController {
 		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
 		
 		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
+		for(int i=0; i<imgList.size(); i++) {
+			if(imgList.get(i).contains("license")) {
+				imgList.remove(i);
+			}
+		}
 		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		model.addAttribute("map", map);
