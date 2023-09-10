@@ -72,7 +72,7 @@
 		<div class="d-flex align-items-center justify-content-between">
 			<a href="<c:url value='/admin/adminMain'/>"
 				class="logo d-flex align-items-center"> <img
-				src="<c:url value='/NiceAdmin-pro/assets/img/logo.png'/>" alt="">
+				src="<c:url value='/img/icons/SpaceCollection.png'/>" alt="마크">
 				<span class="d-none d-lg-block">SpaceCollection</span>
 			</a> <i class="bi bi-list toggle-sidebar-btn" id="togglebtn"></i>
 		</div>
@@ -84,7 +84,7 @@
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
 					href="#" data-bs-toggle="dropdown"><span
-						class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.adminId }</span>
+						class="d-none d-md-block dropdown-toggle ps-2">관리자</span>
 				</a> 
 					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 						<li><a class="dropdown-item d-flex align-items-center"

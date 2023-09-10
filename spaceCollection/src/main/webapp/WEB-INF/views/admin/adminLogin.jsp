@@ -17,6 +17,13 @@
 			$('#logoutBtn').click(function() {
 				location.href="<c:url value='/admin/adminLogout'/>";
 			});
+			
+			$('#button').click(function() {
+				if($('#userId').val().trim().length<1){
+					
+					return false;
+				}
+			});
 		});
 	</script>
 <meta content="" name="description">
@@ -86,7 +93,7 @@
 					
 					<label class="form-check-label" for="exampleCheck1">아이디 저장</label>
   				</div>
-  				<button type="submit" class="btn btn-primary">로그인</button>
+  				<button type="submit" id="button" class="btn btn-primary">로그인</button>
 			</form>
 		</div>
 	</section>
