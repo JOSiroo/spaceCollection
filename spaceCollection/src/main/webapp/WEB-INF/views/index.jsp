@@ -68,7 +68,10 @@ a.btn.btn-primary.py-2.px-3 {
 #tns3 > .tns-item {
     word-wrap: break-word;
 }
-
+.tns-ovh{
+	padding-right:1%;
+	padding-left:1%;
+}
 .newTitle:hover{
 	color:#ffd014;
 }
@@ -110,6 +113,11 @@ div#place {
 }
 .col-lg-9{
 	width:100% !important;
+}
+.btn:hover{
+	background:lightgrey !important;
+	color:black !important;
+	transition:0.2s;
 }
 </style>
 
@@ -178,7 +186,7 @@ div#place {
       <div class="container">
          <div class="row justify-content-center align-items-center">
             <div class="col-lg-9 text-center">
-               <h1 class="heading" data-aos="fade-up" style="font-size:65px">Space Collection에 오신 것을 환영합니다.</h1>
+               <h1 class="heading" id="mainTitle" data-aos="fade-up" style="font-size:65px">Space Collection에 오신 것을 환영합니다.</h1>
             </div>
          </div>
       </div>
@@ -359,19 +367,19 @@ div#place {
 		        <div class="col-4 col-sm-4 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.SPACE_COUNT}</span></span>
-		                <span class="caption text-black-50"># 공간 예약 수</span>
+		                <span class="caption text-black-50"># 등록 된 공간</span>
 		            </div>
 		        </div>
 		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.RESERVATION_COUNT}</span></span>
-		                <span class="caption text-black-50"># 공간 예약 사용자</span>
+		                <span class="caption text-black-50"># 예약 된 공간</span>
 		            </div>
 		        </div>
 		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.USER_COUNT}</span></span>
-		                <span class="caption text-black-50"># 판매되는 공간</span>
+		                <span class="caption text-black-50"># 사용자 수</span>
 		            </div>
 		        </div>
 			</div>

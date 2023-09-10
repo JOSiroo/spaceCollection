@@ -152,6 +152,11 @@ p{
 .asd{
 	text-align: center;
     padding: 2% 0% 1% 0%;
+    position:sticky;
+    top:123px;
+    z-index:12;
+    background: white;
+    transition:1s;
     
     .btn-group{
 		width: 50%;

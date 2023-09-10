@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sc.spaceCollection.board.model.BoardService;
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.common.ConstUtil;
@@ -55,8 +56,13 @@ public class HostController {
 	
 	
 	@RequestMapping("/index")
-	public String hostMain() {
+	public String hostMain(Model model) {
 		logger.info("호스트 메인 보여주기");
+		
+		List<BoardVO> boardVo = hostService.selectNotice("b00012");
+		logger.info("공지사항 조회, boardVo = {}", boardVo);
+		
+		model.addAttribute("boardVo", boardVo);
 		
 		return "host/index";
 	}
@@ -327,10 +333,15 @@ public class HostController {
 	public String spDetail(@RequestParam(defaultValue = "0") int sdNum, Model model) {
 		logger.info("세부 공간등록 보여주기");
 		
-		SpaceDetailVO sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
-		logger.info("sdVo = {}", sdVo);
-		FacilityVO  faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
-		logger.info("faVo = {}", faVo);
+		SpaceDetailVO sdVo = new SpaceDetailVO();
+		FacilityVO  faVo = new FacilityVO();
+		if (sdNum != 0) {
+			sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
+			logger.info("sdVo = {}", sdVo);
+			faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
+			logger.info("faVo = {}", faVo);
+			
+		}
 		
 		model.addAttribute("sdVo", sdVo);
 		model.addAttribute("faVo", faVo);
@@ -338,7 +349,7 @@ public class HostController {
 		return "host/registration/spDetail";
 	}
 	
-	@PostMapping("/registration/spDetail")
+	@PostMapping("/registration/spDetail/write")
 	public String spDetail_write(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
 		logger.info("세부 공간등록 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
 		
@@ -470,14 +481,14 @@ public class HostController {
 	@GetMapping("/registration/deleteSpaceDetail")
 	public String deleteSpaceDetail(@RequestParam(defaultValue = "0") int sdNum, 
 			@RequestParam(defaultValue = "0") int spaceNum, Model model) {
-		logger.info("세부공간 삭제, spaceNum = {}", sdNum);
+		logger.info("세부공간 삭제, spaceNum = {}, sdNum = {}", spaceNum, sdNum);
 		
 		String msg = "세부공간 삭제를 실패했습니다.", url = "/host/spaceDetailManage?spaceNum=" + spaceNum;
 		if (sdNum > 0) {
 			int cnt = hostService.deleteSpaceDetail(sdNum);
-			logger.info("cnt = {}", cnt);
+			logger.info("cnt = {}, spaceNum = {}", cnt, spaceNum);
 			
-			msg = sdNum + " 공간이 삭제되었습니다.";
+			msg = sdNum + " 세부공간이 삭제되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);

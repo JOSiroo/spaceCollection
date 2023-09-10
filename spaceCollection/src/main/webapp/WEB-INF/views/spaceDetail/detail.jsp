@@ -155,6 +155,20 @@ pageEncoding="UTF-8"%>
  	width: 60px !important;
  	height: 60px !important;
  }
+ .sticky-top{
+ 	top:125px !important;
+ }
+ #QNAWrite:hover{
+ 	background:white;
+ 	color:black;
+ 	border:#193D76 1px solid !important;
+ }
+ .nav-item:hover{
+ 	background:rgba(255, 208, 20, 0.3) !important;
+ }
+ .navbar{
+ 	border-top:rgba(0,0,0,0.05) 2px solid !important;
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
@@ -1108,7 +1122,7 @@ pageEncoding="UTF-8"%>
 									+'</div>'
 									+'<div class="qnaBody">'+this.REVIEW_CONTENT+'</div>'
 									+'<div class="row" style="font-size:14px;">'
-									+'<div class="col-6 date-deleteCol">'
+									+'<div class="col-6 date-deleteCol" style="padding-right:28% !important">'
 									+'<span>'+(this.REVIEW_REG_DATE).substring(0,10)+'</span>'
 									+'</div>';
 						if('${sessionScope.userId}' === this.USER_ID){

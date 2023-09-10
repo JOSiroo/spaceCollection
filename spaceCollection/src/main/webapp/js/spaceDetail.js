@@ -23,7 +23,7 @@ const getAbsoluteTop = (element) => {
   return rect.top + scrollTop;
 };
 // navItems의 offsetTop 값에 추가할 값을 설정합니다.
-const offsetValue = 60;
+const offsetValue = 185;
 
 const scrollToElementWithStickyTop = (element) => {
   const targetTop = getAbsoluteTop(element);

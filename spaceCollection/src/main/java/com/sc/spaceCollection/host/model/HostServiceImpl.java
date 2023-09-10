@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.facility.model.FacilityVO;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
@@ -199,6 +200,11 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public FacilityVO selectFacilityByFaNum(int facilityNum) {
 		return hostDao.selectFacilityByFaNum(facilityNum);
+	}
+
+	@Override
+	public List<BoardVO> selectNotice(String boardTypeId) {
+		return hostDao.selectNotice(boardTypeId);
 	}
 
 

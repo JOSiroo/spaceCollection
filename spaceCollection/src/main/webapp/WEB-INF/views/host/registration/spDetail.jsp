@@ -227,11 +227,11 @@
         $('#flexCheckChecked').change(function () {
             if ($(this).is(':checked')) {
                 // 체크박스가 체크되면 openTime과 closeTime을 설정
-                $('.openTime').val('00');
+                $('.openTime').val('0');
                 $('.closeTime').val('24');
             } else {
                 // 체크박스가 체크 해제되면 select 엘리먼트를 초기화
-                $('.openTime').val('00');
+                $('.openTime').val('0');
                 $('.closeTime').val('24');
             }
         });
@@ -412,23 +412,23 @@
 	<c:set var="next" value="등록" />
 	<c:set var="url" value="/host/registration/spDetail/write" />
 	<c:set var="sdNum" value="0" />
-	<c:set var="spaceNum" value="0" />
+	<c:set var="spaceNum" value="${param.spaceNum }" />
 	<c:set var="facilityNum" value="0" />
 </c:if>
 <c:if test="${!empty param.sdNum }" >
-	<c:set var="next" value="등록" />
+	<c:set var="next" value="수정" />
 	<c:set var="url" value="/host/registration/spDetail/edit" />
 	<c:set var="sdNum" value="${param.sdNum }" />
-	<c:set var="spaceNum" value="${param.sdNum }" />
+	<c:set var="spaceNum" value="${param.spaceNum }" />
 	<c:set var="facilityNum" value="${param.facilityNum }" />
 </c:if>
 
 <article>
 	<div class="main">
 		<form name="frmRegi3" method="post" action="<c:url value='${url }' />">
-			<input type="hidden" name="spaceNum" value="${param.spaceNum }">
-			<input type="hidden" name="sdNum" value="${param.sdNum }">
-			<input type="hidden" name="facilityNum" value="${param.facilityNum }">
+			<input type="hidden" name="spaceNum" value="${spaceNum }">
+			<input type="hidden" name="sdNum" value="${sdNum }">
+			<input type="hidden" name="facilityNum" value="${facilityNum }">
 			<div class="heading">
 				<span class="hd1">세부 공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
