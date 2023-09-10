@@ -370,19 +370,22 @@ public class AdminSpaceController {
 				EmailVO emailVo = new EmailVO();
 				if(vo.getSpaceNum() > 0) {
 					Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(vo.getSpaceNum());
-					emailVo.setSpaceNum(Integer.parseInt(map.get("SPACE_NUM")+""));
-					emailVo.setUserEmail(map.get("USER_EMAIL")+"");
-					emailVo.setSpaceTypeName(map.get("SPACE_TYPE_NAME")+"");
-					emailVo.setSpaceName(map.get("SPACE_NAME")+"");
-					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
-					emailVo.setSpaceRequestStatus(map.get("SPACE_REQUEST_STATUS")+"");
-					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+					if(map.get("USER_EMAIL") != null) {
+						emailVo.setSpaceNum(Integer.parseInt(map.get("SPACE_NUM")+""));
+						emailVo.setUserEmail(map.get("USER_EMAIL")+"");
+						emailVo.setSpaceTypeName(map.get("SPACE_TYPE_NAME")+"");
+						emailVo.setSpaceName(map.get("SPACE_NAME")+"");
+						emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+						emailVo.setSpaceRequestStatus(map.get("SPACE_REQUEST_STATUS")+"");
+						emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
 					
-					try {
-						admin.sendSpaceConfirmEmail(emailVo);
-					} catch (MessagingException e) {
-						e.printStackTrace();
+						try {
+							admin.sendSpaceConfirmEmail(emailVo);
+						} catch (MessagingException e) {
+							e.printStackTrace();
+						}
 					}
+					
 					
 				}
 			}
@@ -410,19 +413,21 @@ public class AdminSpaceController {
 				EmailVO emailVo = new EmailVO();
 				if(vo.getSpaceNum() > 0) {
 					Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(vo.getSpaceNum());
-					emailVo.setSpaceNum(Integer.parseInt(map.get("SPACE_NUM")+""));
-					emailVo.setUserEmail(map.get("USER_EMAIL")+"");
-					emailVo.setSpaceTypeName(map.get("SPACE_TYPE_NAME")+"");
-					emailVo.setSpaceName(map.get("SPACE_NAME")+"");
-					emailVo.setReason("검토 후 일괄 거절");
-					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
-					emailVo.setSpaceRequestStatus(map.get("SPACE_REQUEST_STATUS")+"");
-					emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
-
-					try {
-						admin.sendSpaceConfirmEmail(emailVo);
-					} catch (MessagingException e) {
-						e.printStackTrace();
+					if(map.get("USER_EMAIL") != null) {
+						emailVo.setSpaceNum(Integer.parseInt(map.get("SPACE_NUM")+""));
+						emailVo.setUserEmail(map.get("USER_EMAIL")+"");
+						emailVo.setSpaceTypeName(map.get("SPACE_TYPE_NAME")+"");
+						emailVo.setSpaceName(map.get("SPACE_NAME")+"");
+						emailVo.setReason("검토 후 일괄 거절");
+						emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+						emailVo.setSpaceRequestStatus(map.get("SPACE_REQUEST_STATUS")+"");
+						emailVo.setSpaceRegDate(map.get("SPACE_REG_DATE")+"");
+						
+						try {
+							admin.sendSpaceConfirmEmail(emailVo);
+						} catch (MessagingException e) {
+							e.printStackTrace();
+						}
 					}
 
 				}
