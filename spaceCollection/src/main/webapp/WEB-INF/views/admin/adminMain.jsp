@@ -341,104 +341,102 @@
      
 	
 	 $.loadLineStatic = function() {
-		$.ajax({
-			url : "<c:url value = '/admin/adminMain/Ajax_LineStatic'/>",
-			type : 'get',
-			data : "",
-			dataType: 'json',
-			success : function(res) {
-				
-				var regdateSet = [];
-				var sCntSet = [];
-				var uCntSet = [];
-				var rCntSet = [];
-				
-				res.forEach(function(staticsVo) {
-				    var day = staticsVo.day;
-				    var scnt = staticsVo.scnt;
-				    var ucnt = staticsVo.ucnt;
-				    var rcnt = staticsVo.rcnt;
+		 $.ajax({
+				url : "<c:url value = '/admin/adminMain/Ajax_LineStatic'/>",
+				type : 'get',
+				data : "",
+				dataType: 'json',
+				success : function(res) {
+					
+					var regdateSet = [];
+					var sCntSet = [];
+					var uCntSet = [];
+					var rCntSet = [];
+					
+					res.forEach(function(staticsVo) {
+						let date = new Date(staticsVo.day);
+						date.setDate(date.getDate()+1);
+					    var day = date;
+					    var scnt = staticsVo.scnt;
+					    var ucnt = staticsVo.ucnt;
+					    var rcnt = staticsVo.rcnt;
 
-				    regdateSet.push(day);
-				    sCntSet.push(scnt);
-				    uCntSet.push(ucnt);
-				    rCntSet.push(rcnt);
-				});
-				
-				alert(regdateSet);
-				alert(sCntSet);
-				alert(uCntSet);
-				alert(rCntSet);
+					    regdateSet.push(day);
+					    sCntSet.push(scnt);
+					    uCntSet.push(ucnt);
+					    rCntSet.push(rcnt);
+					});
+					alert(regdateSet);
+						
+					if(res.length>0){
+						new ApexCharts(document.querySelector("#reportsChart"), {
+	                        series: [{
+	                          name: '공간예약건수',
+	                          data: rCntSet
+	                        }, {
+	                          name: '공간등록건수',
+	                          data: sCntSet
+	                        }, {
+	                          name: '회원가입자수',
+	                          data: uCntSet
+	                        }],
+	                        chart: {
+	                          height: 350,
+	                          type: 'area',
+	                          toolbar: {
+	                            show: false,
+	                            tools: {
+	                            	download: false,
+	                                selection: false,
+	                                zoom: false,
+	                                zoomin: false,
+	                                zoomout: false,
+	                                pan: false,
+	                                reset: true | '<img src="/static/icons/reset.png" width="20">'
+	                            }
+	                          },
+	                        },
+	                        markers: {
+	                          size: 4
+	                        },
+	                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+	                        fill: {
+	                          type: "gradient",
+	                          gradient: {
+	                            shadeIntensity: 1,
+	                            opacityFrom: 0.3,
+	                            opacityTo: 0.4,
+	                            stops: [0, 90, 100]
+	                          }
+	                        },
+	                        dataLabels: {
+	                          enabled: true
+	                        },
+	                        stroke: {
+	                          curve: 'smooth',
+	                          width: 2
+	                        },
+	                        xaxis: {
+	                          type: 'datetime',
+	                          categories: regdateSet
+	                        },
+	                        tooltip: {
+	                          x: {
+	                            format: 'yyyy/MM/dd'
+	                          },
+	                        }
+	                      }).render();
+						
+					}else{
+						str1 += "진행된 예약이 없습니다.";
+						$('#reportsChart').html(str1);
+					}
 					
-				if(res.length>0){
-					new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: '공간예약건수',
-                          data: rCntSet
-                        }, {
-                          name: '공간등록건수',
-                          data: sCntSet
-                        }, {
-                          name: '회원가입자수',
-                          data: uCntSet
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false,
-                            tools: {
-                            	download: false,
-                                selection: false,
-                                zoom: false,
-                                zoomin: false,
-                                zoomout: false,
-                                pan: false,
-                                reset: true | '<img src="/static/icons/reset.png" width="20">'
-                            }
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: true
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'string',
-                          categories: regdateSet
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'yyyy/MM/dd'
-                          },
-                        }
-                      }).render();
-					
-				}else{
-					str1 += "진행된 예약이 없습니다.";
-					$('#reportsChart').html(str1);
+				},
+				error : function(xhr, status, error) {
+					alert(status + " : " + error);
 				}
-				
-			},
-			error : function(xhr, status, error) {
-				alert(status + " : " + error);
-			}
-		});
+			});
 	}
      
 </script>
