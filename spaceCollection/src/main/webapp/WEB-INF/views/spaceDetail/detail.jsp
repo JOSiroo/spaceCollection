@@ -938,7 +938,7 @@ pageEncoding="UTF-8"%>
         	var startHour = $('.swiper-inBox.on').first().attr('id');
         	var endHour = $('.swiper-inBox.on').last().attr('id');
         	var parsedEndHour = parseInt(endHour)+1;
-        	if(endHour - parseInt(startHour) < parseInt(minTime.substr(0,minTime.length-2))){
+        	if((endHour - parseInt(startHour))+1 < parseInt(minTime.substr(0,minTime.length-2))){
 				alert('최소 이용 시간은' + minTime + '입니다');
 				return false;
         	}
