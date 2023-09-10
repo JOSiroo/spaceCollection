@@ -327,10 +327,15 @@ public class HostController {
 	public String spDetail(@RequestParam(defaultValue = "0") int sdNum, Model model) {
 		logger.info("세부 공간등록 보여주기");
 		
-		SpaceDetailVO sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
-		logger.info("sdVo = {}", sdVo);
-		FacilityVO  faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
-		logger.info("faVo = {}", faVo);
+		SpaceDetailVO sdVo = new SpaceDetailVO();
+		FacilityVO  faVo = new FacilityVO();
+		if (sdNum != 0) {
+			sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
+			logger.info("sdVo = {}", sdVo);
+			faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
+			logger.info("faVo = {}", faVo);
+			
+		}
 		
 		model.addAttribute("sdVo", sdVo);
 		model.addAttribute("faVo", faVo);
