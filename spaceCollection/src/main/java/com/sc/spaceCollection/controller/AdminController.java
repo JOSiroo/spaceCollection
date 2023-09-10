@@ -481,14 +481,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/board/download")
-	public ModelAndView download(@RequestParam(defaultValue = "0") int boardNum, @RequestParam String fileName, HttpServletRequest request) {
+	public ModelAndView download(@RequestParam String boardNum, @RequestParam String fileName, HttpServletRequest request) {
 		logger.info("다운로드 처리, 파라미터 boardNum={}", boardNum);
 		
 		//강제 다운로드 처리를 위한 뷰페이지로 보내준다
 		Map<String, Object> map = new HashMap<>();
 		//업로드 경로
 		String upPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
-		
+		logger.info("업로드 경로를 확인해보자 = {}", upPath);
 		File file = new File(upPath, fileName);
 		map.put("file", file);
 		//ModelAndView(String viewName, @Nullable Map<String, ?> model)
@@ -519,7 +519,6 @@ public class AdminController {
 	public String boardEdit(@RequestParam String boardTypeName, @ModelAttribute BoardVO boardVo, @ModelAttribute SpaceFileListVO spaceFileListVo,
 				HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multiFile, Model model) {
 		logger.info("게시판 수정, 파라미터 boardVo = {}, spaceFileListVo = {}", boardVo, spaceFileListVo);
-		logger.info("boardTypeName이 왜 두번 찍히냐 시발 = {}", boardTypeName);
 		
 		String transBtn = "";
 		try {

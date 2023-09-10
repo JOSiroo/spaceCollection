@@ -452,10 +452,12 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "승인 처리가 완료되었습니다.";
-			try {
-				admin.sendSpaceConfirmEmail(vo);
-			} catch (MessagingException e) {
-				e.printStackTrace();
+			if(vo.getUserEmail()!=null && !vo.getUserEmail().isEmpty()) {
+				try {
+					admin.sendSpaceConfirmEmail(vo);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -480,10 +482,12 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "거절 처리가 완료되었습니다.";
-			try {
-				admin.sendSpaceConfirmEmail(vo);
-			} catch (MessagingException e) {
-				e.printStackTrace();
+			if(vo.getUserEmail()!=null && !vo.getUserEmail().isEmpty()) {
+				try {
+					admin.sendSpaceConfirmEmail(vo);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -501,6 +505,11 @@ public class AdminSpaceController {
 		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
 		
 		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
+		for(int i=0; i<imgList.size(); i++) {
+			if(imgList.get(i).contains("license")) {
+				imgList.remove(i);
+			}
+		}
 		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		model.addAttribute("map", map);
@@ -554,6 +563,12 @@ public class AdminSpaceController {
 		spaceTotalInfo.put("spaceDetailList", spaceDetailList);
 		
 		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
+		for(int i=0; i<imgList.size(); i++) {
+			if(imgList.get(i).contains("license")) {
+				imgList.remove(i);
+			}
+		}
+		
 		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		logger.info("spaceTotalInfo = {}", spaceTotalInfo);
