@@ -156,6 +156,9 @@
 	.accordion-body {
     border: 30px solid #ffffff;
     }
+    img {
+    width: 800px;
+	}
 </style>
 
 <script type="text/javascript">
