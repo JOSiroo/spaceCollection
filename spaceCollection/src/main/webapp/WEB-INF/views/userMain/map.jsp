@@ -13,6 +13,18 @@
 <title>Insert title here</title>
 </head>
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+	font-family: 'Pretendard-Regular';
+}
+
 #mapWrapper{
 	width: 100%;
 	height: 95%;
@@ -34,6 +46,7 @@
  	background:#193D76;
  	padding-bottom:0.5%;
  	padding-top:0.5%;
+ 	font-family: 'Noto Sans KR', sans-serif;
  }
  .spaceType{
 	color : white;

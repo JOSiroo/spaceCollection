@@ -37,7 +37,7 @@ a.btn.btn-primary.py-2.px-3 {
     
 }
 .property-content{
- box-shadow: 5px 5px 15px 10px rgba(0, 0, 0, 0.2) !important;
+ box-shadow: 3px 3px 8px 8px rgba(0, 0, 0, 0.2) !important;
  padding:3% 6% 0% 6%!important;
  border-bottom-left-radius: 1rem;
  border-bottom-right-radius: 1rem;
@@ -55,7 +55,6 @@ a.btn.btn-primary.py-2.px-3 {
     height: 4px;
     background: #ffd014;
     margin-top:15px;
-    box-shadow: 0px 7px 10px 5px rgba(0, 0, 0, 0.15) !important;
  }
  #reviewBox{
     background: white;
@@ -102,6 +101,15 @@ div#place {
 }
 .contentBody{
 	height:40px;
+}
+.btn-primary:hover{
+	border:none;
+}
+.countup{
+	font-size:60px;
+}
+.col-lg-9{
+	width:100% !important;
 }
 </style>
 
@@ -170,7 +178,7 @@ div#place {
       <div class="container">
          <div class="row justify-content-center align-items-center">
             <div class="col-lg-9 text-center">
-               <h1 class="heading" data-aos="fade-up">Space Collection에 오신 것을 환영합니다.</h1>
+               <h1 class="heading" data-aos="fade-up" style="font-size:65px">Space Collection에 오신 것을 환영합니다.</h1>
             </div>
          </div>
       </div>

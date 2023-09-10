@@ -1,11 +1,13 @@
 package com.sc.spaceCollection.controller;
 
 import java.io.IOException;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -270,21 +272,37 @@ public class UserBoardController {
 	 	
 	 	@ResponseBody
 		@PostMapping("/couponList/couponWrite")
-		public CouponVO couponWrite(@ModelAttribute CouponVO vo, Model model) {
-	 		logger.info("확인용");
+		public Map<String, Object> couponWrite(@ModelAttribute CouponVO vo, Model model) {
+	 		logger.info("쿠폰 등록 컨트롤시작");
+	 		logger.info("쿠폰 값 확인 vo ={}", vo);
 	 		
-			int result = 0; 
-			//String userId = (String)session.getAttribute("userId");
-			int cnt = couponService.insertCoupon(vo);
-			logger.info("쿠폰 등록 결과 , cnt = {}", cnt);
-			logger.info("쿠폰 추가, vo = {}", vo);
-
-			model.addAttribute("vo", vo);
-			model.addAttribute("result", result);
-			
-			return vo;
-		}
-	   
+	 		Map<String, Object> result = new HashMap<>();
+	 		
+	 		int chk = 0;
+	 		chk = couponService.selectCheckCoupon(vo.getCouponName());
+	 		logger.info("중복확인 결과 chk={}", chk);
+	 		
+	 		if(chk>0) {
+	 			logger.info("중복쿠폰 있음 chk={}", chk);
+	 			result.put("status", "duplicate");
+	 	        result.put("vo", vo);
+	 	        result.put("chk", chk);
+	 	        return result;
+			}else if(chk==0) {
+				int cnt = couponService.insertCoupon(vo);
+		        logger.info("쿠폰 등록 결과, cnt = {}", cnt);
+		        logger.info("쿠폰 추가, vo = {}", vo);
+		        
+		        result.put("status", "success");
+		        result.put("vo", vo);
+		        result.put("cnt", cnt);
+		        return result;
+			}
+	 		return result;
+	 		
+	 		 
+	 	
+	 	}
 	
 	   @RequestMapping("/focusList")
 	   public String focusList(Model model) {

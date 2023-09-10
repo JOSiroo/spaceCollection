@@ -2516,8 +2516,8 @@ textarea.form-control-lg {
       -webkit-transition: none;
       -o-transition: none;
       transition: none; } }
-  .btn:hover {
-    color: #212529; }
+  /*.btn:hover {
+    color: #212529; }*/
   .btn-check:focus + .btn, .btn:focus {
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.25rem rgba(0, 32, 74, 0.25);
@@ -9801,10 +9801,10 @@ textarea {
   .btn.btn-primary {
     background: #193D76;
     color: #fff; }
-  .btn:hover {
+  /*.btn:hover {
     top: -2px;
     -webkit-box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); }
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); }*/
 
 .hero-slider-wrap .tns-controls {
   position: absolute;

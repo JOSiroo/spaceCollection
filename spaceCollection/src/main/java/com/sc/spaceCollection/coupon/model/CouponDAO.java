@@ -11,5 +11,6 @@ public interface CouponDAO {
 	int insertCoupon(CouponVO vo);
 	int countCoupon(int userNum);
 	List<CouponVO> selectUserCoupon(int userNum);
+	int selectCheckCoupon(String couponName);
 	
 }

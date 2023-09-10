@@ -176,24 +176,47 @@ $(function() {
             alert("유효하지 않은 쿠폰입니다.");
             return;
         }
-	    
-		var data = $('form[name=couponNum]').serialize();
-		console.log(data);
-	    $.ajax({
-	        url: "<c:url value='/user/couponList/couponWrite' />",
-	        method: 'post',
-	        data: data,
-	        success: function(data) {
-	        	 console.log("추가 성공");
+     
+			var data = $('form[name=couponNum]').serialize();
+			console.log(data);
+		    $.ajax({
+		        url: "<c:url value='/user/couponList/couponWrite' />",
+		        method: 'post',
+		        data: data,
+		        success: function(data) {
+       				console.log(data);
+	       				if(data.status === "duplicate"){
+	     						alert("이미 등록된 쿠폰입니다.");
+							    location.reload();
+							    return;
+	       				}else if(date.status === "success"){
+		        				console.log("추가 성공");
+	     						alert("쿠폰을 등록했습니다.");
+	     						console.log("쿠폰 추가 성공");
+							    location.reload();
+							    return;
+	       				}
+	       				
+		        	
+		        	/* if(date==1){
+     						alert("이미 등록된 쿠폰입니다.");
+		        	}else if(){
+	        				console.log("추가 성공");
      						alert("쿠폰을 등록했습니다.");
      						console.log("쿠폰 추가 성공");
-						    location.reload();  						
-	        },//success
-	    	error:function(xhr, status, error){
-				alert(status + " : " + error);
-			}
-	    });//ajax
-	});//#sendBt
+						    location.reload();
+						    return;
+		        	} */
+		        	
+		        },//success
+		    	error:function(xhr, status, error){
+					alert(status + " : " + error);
+				}
+		    });//ajax 
+		
+	    
+	});//#addCoupon
+	
 });	
 
 
@@ -234,19 +257,22 @@ $(function() {
 			</div>
 </article>
 	
-	<div class="couponList">
-			<form name="couponNum" method="post" action="<c:url value='/user/couponList/couponWrite'/>">
-				<input id="addCode" value="" name="couponName"  placeholder="쿠폰 일련번호를 입력하세요" type="text" />
-				<button id="addCoupon" type="button" >등록</button>
-				<input value="${guestVo.userNum } "  name="userNum" type="hidden" />
-				<input value="10" name="couponType" type="hidden" />
-			</form>	
-				<br><o>총 ${count }장</o>
-		<div class="CouponBox">
-			<ol class="list-group list-group-numbered" id="selectCoupon">
-			</ol>
+		<div class="couponList">
+				<form name="couponNum" method="post" action="<c:url value='/user/couponList/couponWrite'/>">
+					<input id="addCode" value="" name="couponName"  placeholder="쿠폰 일련번호를 입력하세요" type="text" />
+					<button id="addCoupon" type="button" >등록</button>
+					<input value="${guestVo.userNum } "  name="userNum" type="hidden" />
+					<input value="10" name="couponType" type="hidden" />
+				</form>	
+					<br><o>총 ${count }장</o>
+					
+			<div class="CouponBox">
+				<ol class="list-group list-group-numbered" id="selectCoupon">
+				</ol>
+			</div>
+			
 		</div>
-	</div>
+		
 </section>
 
 <%@ include file="/WEB-INF/views/form/userBottom.jsp" %> 
