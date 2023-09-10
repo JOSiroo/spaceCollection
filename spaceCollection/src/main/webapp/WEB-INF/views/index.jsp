@@ -72,6 +72,9 @@ a.btn.btn-primary.py-2.px-3 {
 	padding-right:1%;
 	padding-left:1%;
 }
+.newTitle{
+	 color: #193D76;
+}
 .newTitle:hover{
 	color:#ffd014;
 }
@@ -109,7 +112,7 @@ div#place {
 	border:none;
 }
 .countup{
-	font-size:60px;
+	font-size:100px;
 }
 .col-lg-9{
 	width:100% !important;
@@ -118,6 +121,14 @@ div#place {
 	background:lightgrey !important;
 	color:black !important;
 	transition:0.2s;
+}
+.caption{
+	color:black;
+	font-weight: bold;
+	font-size:16px;
+}
+.reviewName:hover{
+	color:#ffd014;
 }
 </style>
 
@@ -225,7 +236,7 @@ div#place {
 									</c:forEach>
 									<div class="property-content">
 										<div>
-											<h5 ><a class="newTitle" style="font-weight:900; color: #193D76;" href="<c:url value='detail?spaceNum=${map.SPACE_NUM}'/>">${map.SPACE_NAME}</a></h5>
+											<h5 ><a class="newTitle" style="font-weight:900;" href="<c:url value='detail?spaceNum=${map.SPACE_NUM}'/>">${map.SPACE_NAME}</a></h5>
 										</div>
 										<div class="price mb-2"><span>
 										<fmt:formatNumber value="${map.AVGPRICE }" pattern="#,###원" />
@@ -344,7 +355,7 @@ div#place {
 			                </c:choose> 
 			            </div>
 			            <!-- 리뷰 -->
-			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"><a href="<c:url value='/detail?spaceNum=${map.SPACE_NUM }'/>"> ${map.SPACE_NAME}<br>${map.SD_TYPE}</a></h3>
+			            <h3 class="h5 text-primary mb-4" style="font-weight: bold;"><a class="reviewName" href="<c:url value='/detail?spaceNum=${map.SPACE_NUM }'/>"> ${map.SPACE_NAME}<br>${map.SD_TYPE}</a></h3>
 			            <blockquote>
 			                <p>&ldquo;리뷰내용 ${map.REVIEW_CONTENT }&rdquo;</p>
 			            </blockquote>
@@ -367,19 +378,19 @@ div#place {
 		        <div class="col-4 col-sm-4 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.SPACE_COUNT}</span></span>
-		                <span class="caption text-black-50"># 등록 된 공간</span>
+		                <span class="caption text-black-100"># 등록 된 공간</span>
 		            </div>
 		        </div>
 		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.RESERVATION_COUNT}</span></span>
-		                <span class="caption text-black-50"># 예약 된 공간</span>
+		                <span class="caption text-black-100"># 예약 된 공간</span>
 		            </div>
 		        </div>
 		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.USER_COUNT}</span></span>
-		                <span class="caption text-black-50"># 사용자 수</span>
+		                <span class="caption text-black-100"># 사용자 수</span>
 		            </div>
 		        </div>
 			</div>

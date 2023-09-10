@@ -82,11 +82,17 @@ public class UserMainController {
       return "userMain/service";
    }
    
+   
    //회사소개
    @RequestMapping("/about")
    public String about() {
       return "userMain/about";
    }
+   
+   @RequestMapping("/captcha")
+	public String captcha() {
+		return "/userMain/captcha";
+	}
    
    //사업자
    @RequestMapping("/Certificate")
