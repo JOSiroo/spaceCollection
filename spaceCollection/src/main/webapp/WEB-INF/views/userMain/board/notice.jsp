@@ -209,7 +209,25 @@ function search() {
 </div>
 
 		<div class="pageBox">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			    <li class="page-item"><a class="page-link" id="prevBt" ><</a></li>
+					<c:forEach var="i" begin="1" end="${blockPages}">
+						<c:if test="${param.page == i}">
+					    	<li class="page-item active">
+					    		<a class="page-link">${i}</a>
+				    		</li>
+						</c:if>
+						<c:if test="${param.page != i}">
+					    	<li class="page-item"><a class="page-link">${i}</a></li>
+						</c:if>
+					</c:forEach>
+			    <li class="page-item"><a class="page-link" id = "nextBt">></a></li>
+			  </ul>
+			</nav>
 		</div>
+		
+		
 </section> 
 
 
