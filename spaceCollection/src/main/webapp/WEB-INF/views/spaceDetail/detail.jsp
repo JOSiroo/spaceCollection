@@ -248,7 +248,7 @@ pageEncoding="UTF-8"%>
 					</c:if>
 				</div>
 				<br>
-				<div class="sticky-top">
+				<div class="sticky-top" style="z-index:1">
 					<nav class="navbar navbar-expand-lg bg-light bd-highlight sticky-top custom-nav" style="justify-content:center !important; border-bottom : 1px #6d3bff solid;">
 					  <div>
 					    <div  id="navbarNav">
@@ -770,7 +770,7 @@ pageEncoding="UTF-8"%>
 				var begin = this.startHour;
 				var end = this.endHour;
 
-				for(var i = begin; i <= end; i++){
+				for(var i = begin; i < end; i++){
 					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
 					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
 					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
@@ -986,7 +986,7 @@ pageEncoding="UTF-8"%>
        		var selectedDate = $('.selectedDate').val();
             var startHour = $('.swiper-inBox.on').first().attr('id');
             var endHour = $('.swiper-inBox.on').last().attr('id');
-             
+            var parsedEndHour = parseInt(endHour)+1;
             IMP.request_pay({
                 pg: payType,
                 pay_method: 'card',
@@ -997,7 +997,7 @@ pageEncoding="UTF-8"%>
                     START_DAY: selectedDate,
                     START_HOUR: startHour,
                     END_DAY: selectedDate,
-                    END_HOUR: endHour,
+                    END_HOUR: parsedEndHour,
                     SD_NUM: sdNum,
                     RESERVE_PEOPLE: $('.people').val()
                 },
@@ -1027,8 +1027,7 @@ pageEncoding="UTF-8"%>
 
                 } else {
                     var msg = '결제에 실패하였습니다.';
-                    msg += '에러내용 : ' + rsp.error_msg;
-	                alert(msg);
+                    alert(msg);
                 }
             });
         }
