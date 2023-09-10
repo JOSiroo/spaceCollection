@@ -93,7 +93,7 @@
 				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastTotalPrice+"원)</span>";
 				str2 += "<br>";
 				if(Number(res.percent)>0){
-					str2 += "<span class='text-success small pt-1 fw-bold'>${pastPrice}% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
+					str2 += "<span class='text-success small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
 				}else if(Number(res.percent)<0){
 					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
 				}else{

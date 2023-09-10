@@ -103,7 +103,7 @@ public class AdminStaticController {
 			if(pastTotalPrice==0) {
 				percent = 0;
 			}else {
-				percent = (Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10))/10.0;
+				percent = Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10)/10.0;
 			}
 		} catch (ArithmeticException e) {
 			percent = 0;
