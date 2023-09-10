@@ -105,9 +105,10 @@
     	font-size: 14px;
     	display: table;
     	text-align: center;
+    	padding-top: 10px;
+    	border-radius: 0.3rem;
+    	margin-bottom: 2px;
 	}
-	
-	.edit {border-bottom: none;}
 	
 	.btns {
 		width: 56px;
@@ -148,7 +149,7 @@
 								</span> -->
 								<div class="btns">
 									<a class="bt edit" 
-										href="<c:url value='/host/registration/spDetail?sdNum=${sd.sdNum}&spaceNum=${param.spaceNum }' />">수정</a>
+										href="<c:url value='/host/registration/spDetail?sdNum=${sd.sdNum}&spaceNum=${param.spaceNum }&facilityNum=${sd.facilityNum }' />">수정</a>
 									<a class="bt delete" 
 										href="<c:url value='/host/registration/deleteSpaceDetail?sdNum=${sd.sdNum}' />">삭제</a>
 								</div>

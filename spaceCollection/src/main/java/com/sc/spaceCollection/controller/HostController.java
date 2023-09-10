@@ -327,10 +327,15 @@ public class HostController {
 	public String spDetail(@RequestParam(defaultValue = "0") int sdNum, Model model) {
 		logger.info("세부 공간등록 보여주기");
 		
-		SpaceDetailVO sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
-		logger.info("sdVo = {}", sdVo);
-		FacilityVO  faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
-		logger.info("faVo = {}", faVo);
+		SpaceDetailVO sdVo = new SpaceDetailVO();
+		FacilityVO  faVo = new FacilityVO();
+		if (sdNum != 0) {
+			sdVo = hostService.selectSpaceDetailBySdNum(sdNum);
+			logger.info("sdVo = {}", sdVo);
+			faVo = hostService.selectFacilityByFaNum(sdVo.getFacilityNum());
+			logger.info("faVo = {}", faVo);
+			
+		}
 		
 		model.addAttribute("sdVo", sdVo);
 		model.addAttribute("faVo", faVo);
@@ -376,11 +381,58 @@ public class HostController {
 		logger.info("세부 공간수정 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
 
 		int spaceDetail = hostService.updateSpaceDetail(spaceDetailVo);
+		logger.info("세부공간 수정 결과, spaceDetail = {}", spaceDetail);
+		
 		facilityVo.setFacilityNum(spaceDetailVo.getFacilityNum());
+		if (facilityVo.getFacWifi() == null) {
+			facilityVo.setFacWifi("");
+		}
+		if (facilityVo.getFacPrinter() == null) {
+			facilityVo.setFacPrinter("");
+		}
+		if (facilityVo.getFacChairTable() == null) {
+			facilityVo.setFacChairTable("");
+		}
+		if (facilityVo.getFacSmoke() == null) {
+			facilityVo.setFacSmoke("");
+		}
+		if (facilityVo.getFacRestRoom() == null) {
+			facilityVo.setFacRestRoom("");
+		}
+		if (facilityVo.getFacPC() == null) {
+			facilityVo.setFacPC("");
+		}
+		if (facilityVo.getFacTV() == null) {
+			facilityVo.setFacTV("");
+		}
+		if (facilityVo.getFacWhiteBoard() == null) {
+			facilityVo.setFacWhiteBoard("");
+		}
+		if (facilityVo.getFacElevator() == null) {
+			facilityVo.setFacElevator("");
+		}
+		if (facilityVo.getFacParking() == null) {
+			facilityVo.setFacParking("");
+		}
+		if (facilityVo.getFacFood() == null) {
+			facilityVo.setFacFood("");
+		}
+		if (facilityVo.getFacDrink() == null) {
+			facilityVo.setFacDrink("");
+		}
+		if (facilityVo.getFacCook() == null) {
+			facilityVo.setFacCook("");
+		}
+		if (facilityVo.getFacPet() == null) {
+			facilityVo.setFacPet("");
+		}
+		if (facilityVo.getFacAudio() == null) {
+			facilityVo.setFacAudio("");
+		}
 		int facility = hostService.updateFacility(facilityVo);
 		logger.info("세부공간 수정 결과, spaceDetail = {}, facility = {}", spaceDetail, facility);
 
-		return "redirect:/host/spaceDetailManage";
+		return "redirect:/host/spaceDetailManage?spaceNum=" + spaceDetailVo.getSpaceNum();
 	}
 	 
 	

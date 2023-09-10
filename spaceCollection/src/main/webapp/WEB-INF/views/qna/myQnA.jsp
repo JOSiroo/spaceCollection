@@ -13,7 +13,7 @@
 		background: -o-linear-gradient(bottom left, #F6F6F6 0%, #F6F6F6 100%);
 		background: linear-gradient(to top right, #F6F6F6 0%, #F6F6F6 100%);
 		width: 100%;
-		margin-top: 140px;
+		padding-top: 140px;
 		margin-right: 50px;
 		padding-bottom: 100px;
 	}
@@ -245,7 +245,6 @@
 	function QnAEditBtn(){
 		var qnaContent = document.getElementById('message-text').value;
 		var qnaNum = document.getElementById('editQnaNum').value;
-		alert("test");
 		 $.ajax({
 			url:"<c:url value='/editQna'/>",
 			type:"POST",

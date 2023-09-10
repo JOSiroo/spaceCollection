@@ -17,7 +17,7 @@
 
 	.userModify{
 		width: 100%;
-		margin-top: 250px;
+		padding-top: 250px;
 		margin-bottom: 250px;
 		display: flex;
 		justify-content: center;
