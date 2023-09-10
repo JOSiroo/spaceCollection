@@ -121,6 +121,9 @@ span#left{
 img#noCoupon {
     scale: 0.6;
 }
+h1 {
+    margin-top: 4%;
+}
 </style>
 
 <script>
@@ -211,7 +214,7 @@ $(function() {
 
 </script>
 
-<div style="text-align: center; padding-top:7%;padding-bottom:2%;">
+<div style="text-align: center; padding-top:20%;padding-bottom:2%;">
 	<h1>쿠폰 리스트</h1>
 </div>
 <section>
