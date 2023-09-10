@@ -11,54 +11,16 @@ section {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 1200px;
     margin: 0 auto;
-    margin-top: 300px;
-    margin-bottom: 200px;
 }
 .couponBox {
     text-align: center;
+    margin-top: 7%;
+    margin-bottom: 5%;
 }
 </style>
 
 <script>
-/* $(document).ready(function() {
-    $('#generateButton').click(function() {  
-						console.log("클릭");
-		    $.ajax({
-		        url: "<c:url value='/user/coupon2/couponWrite' />",
-		        method: 'post',
-		        data: data,
-		        success: function(data) {
-						console.log(data);
-		        },//success
-		    	error:function(xhr, status, error){
-					alert(status + " : " + error);
-				}
-		    });//ajax 
-	});//#addCoupon
-});	 */
-
-/* 
-	var generatedCoupon = "${num}"; // 서버에서 전달된 num 값
-	  alert("발행된 쿠폰 번호 : \"" + generatedCoupon + "\"");
-		   var num = $("${num}").serialize();
-		console.log(num);
-	  $.ajax({
-	    url: "<c:url value='/user/coupon2/couponWrite' />",
-	    method: 'post',
-	    data: sendDate,
-	    dataType : 'json',
-	    success: function(data) {
-	 alert("ajax 들어옴");
-				console.log(data);
-	    },//success
-		error:function(xhr, status, error){
-			alert(status + " : " + error);
-		}
-	});//ajax 	
-	     */
-	
 	
 	//값 받아서 알림창으로 출력
 	function generateCoupon() {
@@ -79,6 +41,20 @@ section {
 			            var inputElement = document.querySelector('input[name="couponSave"]');
 			            if (inputElement) {
 			                inputElement.value = "1";
+			                
+			                var data = $('form[name=couponAdd]').serialize();
+			                $.ajax({
+			            	    url: "<c:url value='/user/coupon2/couponWrite' />",
+			            	    method: 'post',
+			            	    data: data,
+			            	    success: function(data) {
+			            				console.log(data);
+			            	    },//success
+			            		error:function(xhr, status, error){
+			            			alert(status + " : " + error);
+			            		}
+			            	});//ajax
+			                
 			            }
 			            
 			        } else {
@@ -86,6 +62,9 @@ section {
 			            var inputElement = document.querySelector('input[name="couponSave"]');
 			            if (inputElement) {
 			                inputElement.value = "0";
+            				console.log("쿠폰 발급 초과됨");
+            				window.location.href = "<c:url value='/user/couponList' />";
+			                return;
 			            }
 			        }
 	}
@@ -113,12 +92,13 @@ section {
 		저장된 쿠폰은 쿠폰함에서 확인 하실 수 있습니다.<br>
 		* 쿠폰은 1일 1회까지만 지급됩니다. *
 		
-		<form action="<c:url value='/user/coupon2/couponWrite'/>" method="post" >
-			<br><input type="text" value=${userNum } />
-			<br><input type="text" value=${num } name="couponName"/>
-			<br><input type="text" name="couponSave" value=""/>
+		 <form action="<c:url value='/user/coupon2/couponWrite'/>" method="post" name="couponAdd">
+			<br><input type="hidden" value=${userNum } name="userNum"/>
+			<br><input type="hidden" value=${num } name="couponName"/>
+			<br><input type="hidden" value="10" name="couponType"/>
+			<br><input type="hidden" value="" name="couponSave"/>
 		</form>
-		
+		 
   </div> 
 </section>
 
