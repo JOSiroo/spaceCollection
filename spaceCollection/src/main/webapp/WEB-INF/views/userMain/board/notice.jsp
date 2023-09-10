@@ -209,20 +209,6 @@ function search() {
 </div>
 
 		<div class="pageBox">
-			<nav aria-label="Page navigation example">
-			  <ul class="pagination">
-			    <li class="page-item">
-			      <a class="page-link" id="previous" href="<c:url value='/userMain/board/notice?page=${param.page-1}'/>" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li class="page-item">
-			      <a class="page-link" id="next" href="<c:url value='/userMain/board/notice?page=${param.page+1}'/>" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>
 		</div>
 </section> 
 
