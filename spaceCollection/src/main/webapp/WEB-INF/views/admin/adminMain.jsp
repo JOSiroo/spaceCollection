@@ -6,6 +6,79 @@
 		cursor: pointer;
 	}
 	
+	@keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, -5%, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateZ(0);
+        }
+    }
+    
+    #line0{
+		animation: fadeInDown 0.1s
+	}
+	#line1{
+		animation: fadeInDown 0.5s
+	}
+	#line2{
+		animation: fadeInDown 0.9s
+	}
+	#line3{
+		animation: fadeInDown 1.3s
+	}
+	#line4{
+		animation: fadeInDown 1.7s
+	}
+	#line5{
+		animation: fadeInDown 2.1s
+	}
+	#line6{
+		animation: fadeInDown 2.5s
+	}
+	#line7{
+		animation: fadeInDown 2.9s
+	}
+	#line8{
+		animation: fadeInDown 3.3s
+	}
+	#line9{
+		animation: fadeInDown 3.7s
+	}
+	
+	#rline1{
+		animation: fadeInDown 0.1s
+	}
+	#rline2{
+		animation: fadeInDown 0.5s
+	}
+	#rline3{
+		animation: fadeInDown 0.9s
+	}
+	#rline4{
+		animation: fadeInDown 1.3s
+	}
+	#rline5{
+		animation: fadeInDown 1.7s
+	}
+	#rline6{
+		animation: fadeInDown 2.1s
+	}
+	#rline7{
+		animation: fadeInDown 2.5s
+	}
+	#rline8{
+		animation: fadeInDown 2.9s
+	}
+	#rline9{
+		animation: fadeInDown 3.3s
+	}
+	#rline10{
+		animation: fadeInDown 3.7s
+	}
+		
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -17,7 +90,7 @@
 		$.loadLineStatic();
 		setInterval(function() {
 			$.loadRecentReservation()	
-		}, 5000);
+		}, 8000);
 		
 	})
 	function rTotalCnt(val) {
@@ -188,8 +261,9 @@
 				
 				str1 += "| Today ( "+res.length+" 건 )";
 				if(res.length > 0){
+					var i=0;
 					$.each(res, function() {
-						str2 += "<tr>";
+						str2 += "<tr id='line"+i+"'>";
 						str2 += "<th scope='row'><a href='#'>"+this.RESERVATION_NUM+"</a></th>";
 						str2 += "<th>"+this.USER_ID+"</th>";
 						str2 += "<td><a href='#' class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
@@ -203,6 +277,8 @@
 						}
 						str2 += "</td>";
 						str2 += "</tr>";
+						
+						i++;
 					});
 				}else{
 					str2 += "<tr>";
@@ -231,7 +307,7 @@
 				if(res.list.length > 0){
 					var num = 1;
 					$.each(res.list, function() {
-						str2 += "<tr>";
+						str2 += "<tr id='rline"+num+"'>";
 						if(num == 1){
 							str2 += "<th scope='row' style='text-align: center'><img src='<c:url value='/images/1st.png'/>' style='width: 25px'></a></th>";
 						}else if(num == 2){
