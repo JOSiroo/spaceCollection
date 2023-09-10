@@ -180,7 +180,7 @@ public class ReservationServiceImpl implements ReservationService{
 			standard = "Today";
 			str = "전일";
 		}else if(intervalStandard.equals("month")){
-			standard = "This Week";
+			standard = "This Month";
 			str = "전월";
 		}else if(intervalStandard.equals("year")) {
 			standard = "This Year";
@@ -225,13 +225,49 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<Map<String, Object>> getRecentReservationList() {
-		return reservationDao.getRecentReservationList();
+		List<Map<String, Object>> list = reservationDao.getRecentReservationList();
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		for(Map<String, Object> map : list) {
+			map.put("RESERVER_PAY_DAY", map.get("RESERVER_PAY_DAY")+"");
+			map.put("RESERVE_PRICE", df.format(map.get("RESERVE_PRICE")));
+		}
+		
+		return list;
 	}
 
 	@Override
-	public List<Map<String, Object>> getReservationRank(String intervalStandard) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> getReservationRank(Map<String, Object> map) {
+		List<Map<String, Object>> list = reservationDao.getReservationRank(map);
+		
+		DecimalFormat df = new DecimalFormat("#,###");
+		for(Map<String, Object> map1 : list) {
+			map1.put("TOTALPRICE", df.format(map1.get("TOTALPRICE")));
+		}
+		
+		String standard = "";
+		String str = "";
+		
+		if(map.get("intervalStandard") == null || map.get("intervalStandard") == "") {
+			standard = "Today";
+			str = "전일";
+		}else if(map.get("intervalStandard").equals("month")){
+			standard = "This Month";
+			str = "전월";
+		}else if(map.get("intervalStandard").equals("year")) {
+			standard = "This Year";
+			str = "전년";
+		}
+		
+		
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("order", map.get("order"));
+		map2.put("standard", standard);
+		map2.put("str", str);
+		map2.put("list", list);
+		
+		return map2;
+		
 	}
 
 	

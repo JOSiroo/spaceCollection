@@ -571,5 +571,13 @@ public class HostController {
 		model.addAttribute("list", list);
         return "host/board/notice";
     }
-	
+	@RequestMapping("/deleteMemo")
+	@ResponseBody
+	public int deleteMemo(@RequestParam int memoNum) {
+		logger.info("메모삭제, 파라미터 memoNum = {}", memoNum);
+		int result = calendarService.deleteMemo(memoNum);
+		
+		
+		return result;
+	}
 }

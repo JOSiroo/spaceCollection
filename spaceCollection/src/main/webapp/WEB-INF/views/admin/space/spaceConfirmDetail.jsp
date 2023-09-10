@@ -342,20 +342,15 @@
 											data-bs-target="#carouselExampleIndicators"
 											<c:if test="${i==0 }">
 											data-bs-slide-to="${i }" 
-											class="active" aria-current="true"
+											class="active" aria-current="true" aria-label="Slide ${i+1 }"
 											</c:if>
 											<c:if test="${i>0 }">
 											data-bs-slide-to="${i }" 
-											class="active" aria-current="true"
+											aria-label="Slide ${i }"
 											</c:if>
 											aria-label="Slide ${i+1 }"></button>
+											<c:set var="i" value="${i+1 }"/>
 									</c:forEach>
-									<button type="button"
-										data-bs-target="#carouselExampleIndicators"
-										data-bs-slide-to="1" aria-label="Slide 2"></button>
-									<button type="button"
-										data-bs-target="#carouselExampleIndicators"
-										data-bs-slide-to="2" aria-label="Slide 3"></button>
 								</div>
 								<div class="carousel-inner">
 									<c:set var="i" value="0"/>

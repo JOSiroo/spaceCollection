@@ -8,12 +8,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.reservation.model.ReservationService;
+import com.sc.spaceCollection.statics.model.StaticsService;
+import com.sc.spaceCollection.statics.model.StaticsVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +26,7 @@ public class AdminStaticController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminStaticController.class);
 	
 	private final ReservationService reservationService;
+	private	final StaticsService staticsService;
 	
 	@RequestMapping("/adminMain/Ajax_getTotalReservation")
 	@ResponseBody
@@ -38,7 +40,7 @@ public class AdminStaticController {
 			standard = "Today";
 			str = "전일";
 		}else if(intervalStandard.equals("month")){
-			standard = "This Week";
+			standard = "This Month";
 			str = "전월";
 		}else if(intervalStandard.equals("year")) {
 			standard = "This Year";
@@ -104,7 +106,7 @@ public class AdminStaticController {
 			if(pastTotalPrice==0) {
 				percent = 0;
 			}else {
-				percent = (Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10))/10.0;
+				percent = Math.round((((double)(precentTotalPrice-pastTotalPrice)/pastTotalPrice)*100)*10)/10.0;
 			}
 		} catch (ArithmeticException e) {
 			percent = 0;
@@ -137,13 +139,38 @@ public class AdminStaticController {
 		return map;
 	}
 	
-	@RequestMapping("/adminMain")
-	public String getRecentReservationList(Model model) {
-		
+	@RequestMapping("/adminMain/Ajax_getRecentReservation")
+	@ResponseBody
+	public List<Map<String, Object>> getRecentReservationList() {
 		List<Map<String, Object>> list = reservationService.getRecentReservationList();
 		
-		model.addAttribute("list", list);
+		return list;
+	}
+	
+	@RequestMapping("/adminMain")
+	public String adminMain() {
 		
 		return "admin/adminMain";
+	}
+	
+	@RequestMapping("/adminMain/Ajax_getReservationRank")
+	@ResponseBody
+	public Map<String, Object> Ajax_getReservationRank(@RequestParam String intervalStandard, @RequestParam String order) {
+		Map<String, Object> paramMap = new HashMap<>();
+		
+		paramMap.put("order", order);
+		paramMap.put("intervalStandard", intervalStandard);
+		
+		Map<String, Object> map = reservationService.getReservationRank(paramMap);
+		
+		return map;
+	}
+	
+	@RequestMapping("/adminMain/Ajax_LineStatic")
+	@ResponseBody
+	public List<StaticsVO> Ajax_LineStatic() {
+		List<StaticsVO> list = staticsService.lineStatic();
+		
+		return list;
 	}
 }

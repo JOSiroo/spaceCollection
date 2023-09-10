@@ -104,7 +104,8 @@
 		    	        end: '${i.memoEndDay}',
 		    	        color:'${i.memoColor}',
 		    	        extendedProps: {
-		    	            content: '${i.memoContent}'
+		    	            content: '${i.memoContent}',
+		    	            num:'${i.memoNum}'
 		    	        }
 		    	      },
 					</c:forEach>
@@ -213,8 +214,10 @@
 		    	            	$("#modal").modal("show");
 		            		},
 		            		error:function(xhr, status, error){
+		            			console.log(data.event.extendedProps);
 		            			$('#memoModalHeader').text(data.event.title);
 		            			$('#memoModalBody').text(data.event.extendedProps.content);
+		            			$('#memoNum').val(data.event.extendedProps.num);
 		            			$("#memoModal").modal("show");
 		            		}
 		            	});//ajax
@@ -224,7 +227,22 @@
 	    	    });
 	    	  calendar.render();
 	    	});
-	    	
+	    
+	    function deleteMemo(){
+	    	$.ajax({
+	    		url:'<c:url value="/host/deleteMemo"/>',
+	    		data:{
+	    			memoNum:$('#memoNum').val()
+	    		},
+	    		success:function(data){
+	    			if(data === 1){
+	    				alert('메모삭제완료');
+	    			}
+	    			location.reload();
+	    		}
+	    	});
+	    }
+	    
 	    function addComma(value){
 		    value = value+"";
 	        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -612,7 +630,8 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">일정 삭제</button>
+						<input type="hidden" id="memoNum">
+					<button type="button" onclick="deleteMemo()" class="btn btn-primary">일정 삭제</button>
 				</div>
 			</div>
 		</div>

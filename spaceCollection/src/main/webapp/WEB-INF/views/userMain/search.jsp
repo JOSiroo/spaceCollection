@@ -154,11 +154,11 @@ p{
     padding: 2% 0% 1% 0%;
     
     .btn-group{
-		width: 40%;
+		width: 50%;
 	}
 	.dropdown{
 		margin-left: 2%;
-		width: 26%;
+		width:100%
 	}
 	.dropdown-toggle{
 		width:100%;
@@ -335,11 +335,12 @@ p{
 		background: lightgrey;
 	}
 	.order-select{
-	    width: 12%;
-	    margin-left: 64.2%;
 	}
 	#order-selectBox{
 		margin-bottom:15px;
+		width:10%;
+		float:right;
+		margin-right:12%;
 	}
 	.select-option:hover{
 		background-color: #ffd014 !important;
@@ -347,8 +348,9 @@ p{
 	.all-reset{
 		display : inline-block;
 		text-align:center;
+		margin-left:5%;
 		padding: 0% 0% 0% 0%;
-		width: 100%;
+		width:100%;
 	}
 	
 	#all-resetBtn{
@@ -364,7 +366,6 @@ p{
 	    border-width: 2px;
 	}
 	#all-resetBtn:hover{
-		border: #ffd014 4px solid;
 		background: white;
 	}
 	.nav-bar {
@@ -372,6 +373,12 @@ p{
     height: 3px;
     background: #ffd014;
     margin-bottom: 10px;
+}
+#mapBtn:hover{
+
+	#mapIcon{
+		color:white;
+	}
 }
 </style>
 <div class="search-wrapper"></div>
@@ -581,29 +588,33 @@ p{
 			</div>
 		</div><!-- 인원 -->
 	<c:if test="${!empty param.spaceTypeNo }">
-		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/> "style="margin-left:3%; width:24%">
+		<a href="<c:url value = '/search/map?spaceTypeNo=${param.spaceTypeNo}'/> "style="margin-left:1%;width:100%">
 	</c:if>
 	<c:if test="${!empty param.spaceName }">
-		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>"style="margin-left:3%; width:24%;">
+		<a href="<c:url value = '/search/map?spaceName=${param.spaceName}'/>"style="margin-left:1%;width:100%">
 	</c:if>
 	<c:if test="${empty param.spaceName && empty param.spaceTypeNo }">
-		<a href="<c:url value = '/search/map'/>"style="margin-left:3%; width:24%;">
+		<a href="<c:url value = '/search/map'/>"style="margin-left:1%;width:100%">
 	</c:if>
-	<button type="button" class="btn btn-outline-dark menu">지도</button></a>
+	<button type="button" id="mapBtn"class="btn btn-outline-dark menu"><span style="font-size:16px;"><i style="font-size:16px;" id="mapIcon" class="bi bi-geo-alt"></i>지도</span>
+	 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+	    <span class="badge rounded-pill text-bg-danger">Map!</span>
+	  </span>
+	</button></a>
+<a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >전체 초기화</button></a>
 </div>
 </div>
 <hr>
+	<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
+           onchange='this.size=1; this.blur();'>
+	  <option class = "select-option" selected>정렬</option>
+	  <option value="avgprice_desc" class = "select-option">가격 높은순</option>
+	  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
+	  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
+	  <option value="spaceRegDate_desc" class = "select-option">공간 등록순</option>
+	</select>
 <section class = "search-section">
 <div class="order-select">
-		<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
-            onchange='this.size=1; this.blur();'>
-		  <option class = "select-option" selected>정렬</option>
-		  <option value="avgprice_desc" class = "select-option">가격 높은순</option>
-		  <option value="avgprice_asc" class = "select-option">가격 낮은순</option>
-		  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
-		  <option value="spaceRegDate_desc" class = "select-option">공간 등록순</option>
-		</select>
-	<a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >전체 초기화</button></a>
 	</div>
 	<div class="container" >
 	  <div class="row" id = "data-container">
