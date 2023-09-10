@@ -263,9 +263,6 @@
 	            호스트센터 홈</a>
 	          </li>
 	          <li class="nav-item">
-	            <a class="nav-link" href="#">운영지표</a>
-	          </li>
-	          <li class="nav-item">
 	            <a class="nav-link" href="<c:url value='/host/calculate' />">정산</a>
 	          </li>
 	          <li class="nav-item">
