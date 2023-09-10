@@ -367,19 +367,19 @@ div#place {
 		        <div class="col-4 col-sm-4 col-md-4 col-lg-4" data-aos="fade-up" data-aos-delay="">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.SPACE_COUNT}</span></span>
-		                <span class="caption text-black-50"># 공간 예약 수</span>
+		                <span class="caption text-black-50"># 등록 된 공간</span>
 		            </div>
 		        </div>
 		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.RESERVATION_COUNT}</span></span>
-		                <span class="caption text-black-50"># 공간 예약 사용자</span>
+		                <span class="caption text-black-50"># 예약 된 공간</span>
 		            </div>
 		        </div>
 		        <div class="col-5 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="">
 		            <div class="counter-wrap mb-5 mb-lg-0">
 		                <span class="number"><span class="countup text-primary">${usercount.USER_COUNT}</span></span>
-		                <span class="caption text-black-50"># 판매되는 공간</span>
+		                <span class="caption text-black-50"># 사용자 수</span>
 		            </div>
 		        </div>
 			</div>
