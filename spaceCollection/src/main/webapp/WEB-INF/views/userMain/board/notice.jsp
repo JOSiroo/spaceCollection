@@ -156,8 +156,8 @@
 	.accordion-body {
     border: 30px solid #ffffff;
     }
-    img!important {
-    width: 100%;
+    img{
+    width: 100%!important;
 	}
 </style>
 
