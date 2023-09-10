@@ -354,9 +354,8 @@
 					var rCntSet = [];
 					
 					res.forEach(function(staticsVo) {
-						let date = new Date(staticsVo.day);
-						date.setDate(date.getDate()+1);
-					    var day = date;
+						
+					    var day = staticsVo.day;
 					    var scnt = staticsVo.scnt;
 					    var ucnt = staticsVo.ucnt;
 					    var rcnt = staticsVo.rcnt;
@@ -366,7 +365,6 @@
 					    uCntSet.push(ucnt);
 					    rCntSet.push(rcnt);
 					});
-					alert(regdateSet);
 						
 					if(res.length>0){
 						new ApexCharts(document.querySelector("#reportsChart"), {

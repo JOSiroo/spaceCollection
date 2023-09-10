@@ -18,7 +18,7 @@ public class StaticsServiceImpl implements StaticsService{
 	@Override
 	public List<StaticsVO> lineStatic() {
 		List<StaticsVO> list = staticsDao.lineStatic();
-		logger.info("리스트 날짜 확인 = {}", list);
+		
 		
 		return list;
 	}
