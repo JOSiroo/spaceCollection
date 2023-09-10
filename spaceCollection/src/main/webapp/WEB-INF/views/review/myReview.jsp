@@ -7,7 +7,7 @@
 	$(function(){
 		
 		if($('input[name=page]').val()>0){
-			var scrollPosition = $(document).height() - $(window).height() + 300;
+			var scrollPosition = $(document).height() - $(window).height() + 1000;
 			$('html, body').scrollTop(scrollPosition);
 		}
 		
@@ -39,9 +39,14 @@
 			$("form[name=frmPage]").submit();
 		});
 		
-		$(".deleteReview").
 		
 	});
+	
+	function deleteReview(reviewNum){
+		if(confirm( "선택한 리뷰를 삭제하시겠습니까?")){
+			location.href="/deleteMyReview?reviewNum="+reviewNum;
+		}
+	}
 	
 </script>
 <style type="text/css">
@@ -285,7 +290,7 @@
 				<br>
 				<div style="margin-left: 75%;">
 					 <span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
-					<a href="<c:url value='/deleteMyReview?reviewNum=${reviewMap["REVIEW_NUM"] }'/>" class="deleteReview">삭제</a>
+					<a onclick="deleteReview(${reviewMap['REVIEW_NUM'] })">삭제</a>
 					<!-- <a href="#">수정</a> -->
 				</div>
 				<!-- <div class="emptyLine">&nbsp;</div> -->

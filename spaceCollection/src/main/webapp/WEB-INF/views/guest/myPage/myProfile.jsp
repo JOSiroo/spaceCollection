@@ -215,9 +215,38 @@
 			 }
 			 
 		 });
+		 //등록하기
+		 $("#edit-hp").click(function(){
+			 var newHp = $("#edit-hp").prev().val();
+			 
+			 if(validate_hp(newHp) && newHp.length>10){
+				 $.ajax({ 
+					 url:"<c:url value='/guest/insertHp'/>",
+					 type:'post',
+					 data:{
+						userHp : $("input[name=userHp]").val(),
+					 },
+					 success:function(res){
+						 if(res){
+							 alert("정보수정이 완료되었습니다.");
+							 $("#dbUserHp").html(newHp);
+			        		 $("#dbUserHp").next().hide();
+							 $("#dbUserHp").show();
+			        		 $("#dbUserHp").next().next().text("변경하기");
+						 }
+						 
+					 },
+					 error:function(xhr,status,error){
+						 alert(error+"정보 수정의 실패했습니다.");
+					 }
+				 });//ajax
+			 }else{
+				 $('.error').text('\n전화번호 규칙에 맞지 않습니다.').css("color","#ea5454");
+			 }
+			 
+		 });
 		 
 		 $("#edit-pwd").click(function(){
-			 alert("하이");
 			 var newPwd = $("#userPwd").val();
 			 
 			 if(validate_userPwd(newPwd) && newPwd.length>8){
@@ -495,6 +524,7 @@
 		justify-content: center;
 	}
 	
+	
 </style>
 
 <div class="wrapProfile">
@@ -591,8 +621,29 @@
 							</div>
 						</c:if>
 						<c:if test="${empty guestVo.userHp }">
-							<a href="#" class="editInfo">등록하기</a>
+							<div class="userHp">
+								<div class="hiddenText">
+										<input type="text" class="edit-textbox" name="userHp" placeholder=" -를 제외한 번호">
+										<button type="button" class="edit-button" id="edit-hp">확인</button>
+										<br><span class="error"></span>
+								</div>
+								<a href="#" class="editInfo" id="insertHp">등록하기</a>
+							</div>
 						</c:if>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label>주소</label>
+						</th>
+						<td>
+							<div class="userAddress">
+								<p class="userInfo" id="dbUserAddress">${guestVo.address } 
+									<c:if test="${!empty guestVo.addressDetail }">
+										${guestVo.addressDetail }
+									</c:if>
+								</p>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -602,7 +653,7 @@
 						<td>
 							<div class="form-check form-switch" style="margin-left: -36px;">
 								<img alt="네이버로고.png" src="<c:url value='/images/naverLogo.png'/>" class="SNSLogo">
-								<label class="form-check-label">네이버 연동</label>
+								<label class="form-check-label">네이버 계정</label>
 								<input class="form-check-input" type="checkbox" name="naverLink" role="switch" id="flexSwitchCheckChecked" onclick="return false">
 							</div>
 						</td>
@@ -612,7 +663,7 @@
 						<td>
 							<div class="form-check form-switch" style="margin-left: -36px;">
 								<img alt="카카오로고.png" src="<c:url value='/images/kakaoLogo.jpg'/>" class="SNSLogo">
-								<label class="form-check-label">카카오 연동</label>
+								<label class="form-check-label">카카오 계정</label>
 								<input class="form-check-input" type="checkbox" name="kakaoLink" role="switch" id="flexSwitchCheckChecked" onclick="return false">
 							</div>
 							<a style="color: gray; font-size: 7px">소셜계정만 연동이 가능하며, 연동된 소셜계정은 해제가 불가합니다.</a>
