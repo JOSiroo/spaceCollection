@@ -1,5 +1,7 @@
 package com.sc.spaceCollection.statics.model;
 
-public interface StaticsService {
+import java.util.List;
 
+public interface StaticsService {
+	List<StaticsVO> lineStatic();
 }

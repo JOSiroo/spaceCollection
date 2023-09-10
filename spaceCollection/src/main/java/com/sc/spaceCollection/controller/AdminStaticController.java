@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sc.spaceCollection.reservation.model.ReservationService;
+import com.sc.spaceCollection.statics.model.StaticsService;
+import com.sc.spaceCollection.statics.model.StaticsVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ public class AdminStaticController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminStaticController.class);
 	
 	private final ReservationService reservationService;
+	private	final StaticsService staticsService;
 	
 	@RequestMapping("/adminMain/Ajax_getTotalReservation")
 	@ResponseBody
@@ -161,5 +164,13 @@ public class AdminStaticController {
 		Map<String, Object> map = reservationService.getReservationRank(paramMap);
 		
 		return map;
+	}
+	
+	@RequestMapping("/adminMain/Ajax_LineStatic")
+	@ResponseBody
+	public List<StaticsVO> Ajax_LineStatic() {
+		List<StaticsVO> list = staticsService.lineStatic();
+		
+		return list;
 	}
 }
