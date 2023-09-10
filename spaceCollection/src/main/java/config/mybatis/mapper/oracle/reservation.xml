@@ -87,7 +87,7 @@
 	<select id="getReservationCntByInterverStandard" parameterType="string" resultType="int">
 		select count(RESERVER_PAY_DAY) as reservationCnt
 		from adminStaticView
-		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<![CDATA[where RESERVATION_DEL_FLAG ='N' and  RESERVER_PAY_DAY >= trunc(sysdate)]]>
 		<if test="intervalStandard != null and intervalStandard !=''">
 			-(interval '1' ${intervalStandard})
 		</if>
@@ -96,7 +96,7 @@
 	<select id="getReservationCntByInterverStandard2" parameterType="string" resultType="int">
 		select count(RESERVER_PAY_DAY) as reservationCnt
 		from adminStaticView
-		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<![CDATA[where RESERVATION_DEL_FLAG ='N' and RESERVER_PAY_DAY >= trunc(sysdate)]]>
 		<if test="intervalStandard == null || intervalStandard ==''">
 			-(interval '1' day)
 		</if>
@@ -112,7 +112,7 @@
 	<select id="getReservationMoneyByInterverStandard" parameterType="string" resultType="int">
 		select nvl(sum(RESERVE_PRICE),0) as reservationMoney
 		from adminStaticView
-		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<![CDATA[where RESERVATION_DEL_FLAG ='N' and  RESERVER_PAY_DAY >= trunc(sysdate)]]>
 		<if test="intervalStandard != null and intervalStandard !=''">
 			-(interval '1' ${intervalStandard})
 		</if>
@@ -121,7 +121,7 @@
 	<select id="getReservationMoneyByInterverStandard2" parameterType="string" resultType="int">
 		select nvl(sum(RESERVE_PRICE),0) as reservationMoney
 		from adminStaticView
-		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<![CDATA[where RESERVATION_DEL_FLAG ='N' and  RESERVER_PAY_DAY >= trunc(sysdate)]]>
 		<if test="intervalStandard == null || intervalStandard ==''">
 			-(interval '1' day)
 		</if>
@@ -137,12 +137,32 @@
 	<select id="getReservationTypeByInterverStandard" parameterType="string" resultType="map">
 		select space_type_name, count(*) reservationCnt
 		from adminStaticView
-		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<![CDATA[where RESERVATION_DEL_FLAG ='N' and RESERVER_PAY_DAY >= trunc(sysdate)]]>
 		<if test="intervalStandard != null and intervalStandard !=''">
 			-(interval '1' ${intervalStandard})
 		</if>
 		<![CDATA[and RESERVER_PAY_DAY <= sysdate]]>
 		group by space_type_name
+	</select>
+	
+	<select id="getRecentReservationList" resultType="map">
+		select * from admin_recent_reservation_List_View
+	</select>
+	
+	<select id="getReservationRank" parameterType="hashMap" resultType="map">
+		select b.*, s.space_name
+		from
+		(select rownum, a.*
+		from
+		(select space_num,  count(*) totalCnt, sum(RESERVE_PRICE) totalPrice, sum(RESERVE_PEOPLE) totalPeople
+		from ADMIN_RESERVATION_LIST_VIEW
+		<![CDATA[where RESERVER_PAY_DAY >= trunc(sysdate)]]>
+		<if test="intervalStandard != null and intervalStandard !=''">
+			-(interval '1' ${intervalStandard})
+		</if>
+		group by space_num
+		order by ${order} desc) a
+		<![CDATA[where rownum<=10]]>)b join space s on s.space_num = b.space_num
 	</select>
 		
 </mapper>

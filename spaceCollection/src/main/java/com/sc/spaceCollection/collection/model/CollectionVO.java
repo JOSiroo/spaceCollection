@@ -13,4 +13,5 @@ public class CollectionVO {
 	private Timestamp scStartDay;
 	private Timestamp scFinishDay;
 	private int spaceNum;
+	private int scCode;
 }

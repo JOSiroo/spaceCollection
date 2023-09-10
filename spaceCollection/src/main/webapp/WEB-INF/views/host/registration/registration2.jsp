@@ -318,7 +318,7 @@
 	
 </style>
 
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1cbef86a434933ba0775fc1a7a75578b&libraries=services"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=daa469d4ff476714bf26432374f5ebff&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
@@ -877,9 +877,19 @@
 
 </script>
 
+<c:if test="${empty param.spaceTypeName }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/registration2/edit" />
+</c:if>
+<c:if test="${!empty param.spaceTypeName }" >
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/registration2/write" />
+</c:if>
+
+
 <article>
 	<div class="main">
-		<form name="frmRegi2" method="post" action="<c:url value='/host/registration/registration2' />"
+		<form name="frmRegi2" method="post" action="<c:url value='${url }' />"
 			enctype="multipart/form-data">
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
@@ -1411,7 +1421,7 @@
 			</div>
 			<div class="btBar">
 				<button type="button" class="btn btn-secondary" id="back" >이전</button>
-				<button type="button" class="btn btn-warning" id="next" >등록</button>
+				<button type="button" class="btn btn-warning" id="next" >${next }</button>
 			</div>
 			
 		</form>

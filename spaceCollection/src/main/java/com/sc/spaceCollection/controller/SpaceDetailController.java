@@ -56,7 +56,7 @@ public class SpaceDetailController {
 		String avgReview = "후기 없음";
 		if(reviewCnt.get("AVG") != null) {
 			float avg = Float.parseFloat(String.valueOf(reviewCnt.get("AVG")))/2.0F;
-			avgReview = Float.toString(avg) + "점";
+			avgReview = Float.toString(avg).substring(0,3) + "점";
 			logger.info("공간 상세 페이지, 4 = {}", avgReview);
 
 		}

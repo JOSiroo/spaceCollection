@@ -13,14 +13,15 @@ public class CollectionServiceImpl implements CollectionService{
 	private final CollectionDAO collectionDao;
 
 	@Override
-	public List<Map<String, Object>> showCollectionList(int scNum) {
-		return collectionDao.showCollectionList(scNum);
+	public List<Map<String, Object>> showCollectionList(int scCode) {
+		return collectionDao.showCollectionList(scCode);
 	}
 
 	@Override
-	public String selectCollectionName(int scNum) {
+	public Map<String, String> selectCollectionName(int scNum) {
 		return collectionDao.selectCollectionName(scNum);
 	}
+
 	
 	
 	

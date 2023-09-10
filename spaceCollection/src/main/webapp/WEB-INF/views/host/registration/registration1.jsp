@@ -113,7 +113,7 @@
 			} else {
 				alert('공간 유형을 선택하세요.');
 				
-				event.preventDefault();
+				return false;
 			}
 			
 		});

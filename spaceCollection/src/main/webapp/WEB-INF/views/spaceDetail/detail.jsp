@@ -446,7 +446,7 @@ pageEncoding="UTF-8"%>
 							<img alt="" id = "zzim" src="<c:url value = '/img/icons/zzim.png'/>" width="35">
 						</div></a>
 						
-						<a href = ""><div style = "display : inline-block; float : right; margin-right : 5%;" >
+						<a href = "https://docs.google.com/forms/d/e/1FAIpQLSeuiNC6V2HLHtm0dW-XLVu87KrVwNhTAxD0nddpUWLFYOJZOg/viewform"><div style = "display : inline-block; float : right; margin-right : 5%;" >
 							<img alt="" src="<c:url value = '/img/icons/report.png'/>" width="41">
 						</div></a>
 						
@@ -518,7 +518,7 @@ pageEncoding="UTF-8"%>
 									<ul class = "inAccordionUl">
 									 <li class = "inAccordionLi">
 									    <button class="inButton">시간 단위 예약하기(최소 ${detail.SD_MIN_TIME}부터)</button>
-									    <div class = "inContent" style="width: 100%">
+									    <div class = "inContent" style="width: 100%; animation:fadeInDown 1s">
 									    <hr>
 									    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
 										<div>
@@ -528,7 +528,7 @@ pageEncoding="UTF-8"%>
 											 <input type="hidden" class = 'calSdPrice' value="${detail.SD_PRICE }">
 										</div>
 									    <hr>
-										 <div class="swiper mySwiper" style="visibility:hidden">
+										 <div class="swiper mySwiper" style="visibility:hidden; animation:fadeInDown 0.8s;">
 										    <div class="swiper-wrapper">
 											    <fmt:parseNumber var="openTime" type="number" value="${detail.SD_OPEN_TIME}" />
 											    <fmt:parseNumber var="closeTime" type="number" value="${detail.SD_CLOSE_TIME}" />

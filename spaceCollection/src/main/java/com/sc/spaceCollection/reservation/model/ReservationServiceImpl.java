@@ -3,29 +3,17 @@ package com.sc.spaceCollection.reservation.model;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.spaceDetail.model.SpaceDetailDAO;
@@ -192,7 +180,7 @@ public class ReservationServiceImpl implements ReservationService{
 			standard = "Today";
 			str = "전일";
 		}else if(intervalStandard.equals("month")){
-			standard = "This Week";
+			standard = "This Month";
 			str = "전월";
 		}else if(intervalStandard.equals("year")) {
 			standard = "This Year";
@@ -216,13 +204,13 @@ public class ReservationServiceImpl implements ReservationService{
 			
 			try {
 				percent = Math.round(Double.parseDouble(map.get("RESERVATIONCNT")+"")/total*10)/10;
-				logger.info("ssss {}, {}",map.get("RESERVATIONCNT"), total);
+				
 			} catch (ArithmeticException e) {
 				percent = 0;
 			}
 			
 			map.put("percent", percent);
-			logger.info("map={}, zzzztotal = {}", map, total);
+			logger.info("map={}, total = {}", map, total);
 		}
 		
 		Map<String, Object> map = new HashMap<>();
@@ -232,9 +220,57 @@ public class ReservationServiceImpl implements ReservationService{
 		map.put("list", list);
 		map.put("total", totalTrans);
 		
-		logger.info("정상적으로 돌았음");
 		return map;
 	}
+
+	@Override
+	public List<Map<String, Object>> getRecentReservationList() {
+		List<Map<String, Object>> list = reservationDao.getRecentReservationList();
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		for(Map<String, Object> map : list) {
+			map.put("RESERVER_PAY_DAY", map.get("RESERVER_PAY_DAY")+"");
+			map.put("RESERVE_PRICE", df.format(map.get("RESERVE_PRICE")));
+		}
+		
+		return list;
+	}
+
+	@Override
+	public Map<String, Object> getReservationRank(Map<String, Object> map) {
+		List<Map<String, Object>> list = reservationDao.getReservationRank(map);
+		
+		DecimalFormat df = new DecimalFormat("#,###");
+		for(Map<String, Object> map1 : list) {
+			map1.put("TOTALPRICE", df.format(map1.get("TOTALPRICE")));
+		}
+		
+		String standard = "";
+		String str = "";
+		
+		if(map.get("intervalStandard") == null || map.get("intervalStandard") == "") {
+			standard = "Today";
+			str = "전일";
+		}else if(map.get("intervalStandard").equals("month")){
+			standard = "This Month";
+			str = "전월";
+		}else if(map.get("intervalStandard").equals("year")) {
+			standard = "This Year";
+			str = "전년";
+		}
+		
+		
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("order", map.get("order"));
+		map2.put("standard", standard);
+		map2.put("str", str);
+		map2.put("list", list);
+		
+		return map2;
+		
+	}
+
+	
 	
 	
 }

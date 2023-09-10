@@ -4,6 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface CollectionService {
-	List<Map<String, Object>> showCollectionList(int scNum);
-	String selectCollectionName(int scNum);
+	List<Map<String, Object>> showCollectionList(int scCode);
+	Map<String, String> selectCollectionName(int scNum);
 }

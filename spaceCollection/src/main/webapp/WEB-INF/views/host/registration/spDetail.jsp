@@ -211,6 +211,15 @@
 	
 </style>
 
+<c:if test="${empty param.sdNum }" >
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/spDetail/write" />
+</c:if>
+<c:if test="${!empty param.sdNum }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/spDetail/edit" />
+</c:if>
+
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
@@ -347,10 +356,19 @@
 
 </script>
 
+<%-- <c:if test="${empty param.sdType }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/registration2/edit" />
+</c:if>
+<c:if test="${!empty param.sdType }" >
+	<c:set var="next" value="등록" />
+	<c:set var="url" value="/host/registration/registration2/write" />
+</c:if> --%>
+
 <article>
 	<div class="main">
 		<form name="frmRegi3" method="post" action="<c:url value='/host/registration/spDetail' />">
-			<input type="hidden" name="spaceNum" value="131">
+			<input type="hidden" name="spaceNum" value="${param.spaceNum }">
 			<div class="heading">
 				<span class="hd1">세부 공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>

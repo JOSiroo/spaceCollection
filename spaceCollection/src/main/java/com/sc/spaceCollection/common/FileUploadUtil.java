@@ -141,7 +141,7 @@ public class FileUploadUtil {
 			resultMap.put("fileSize", fileSize);
 
 			resultList.add(resultMap);
-			logger.info("license = {}", resultList);
+			logger.info("license = ", resultList);
 		} // if	
 		
 		//spaceMain

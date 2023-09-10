@@ -116,6 +116,12 @@
 		width:20%;
 		padding: 3% 47% 0% 47%;	
 	}
+	button:hover{
+		background:#193D76;
+		color: white;
+		transition : 0.34s;
+	}
+	
 </style>
 <section>
 	<div class="reservation-header">
