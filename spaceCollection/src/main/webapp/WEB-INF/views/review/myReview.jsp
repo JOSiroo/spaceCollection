@@ -44,7 +44,7 @@
 	
 	function deleteReview(reviewNum){
 		if(confirm( "선택한 리뷰를 삭제하시겠습니까?")){
-			location.href="/deleteMyReview?reviewNum="+reviewNum;
+			location.href="<c:url value='/deleteMyReview?reviewNum="+reviewNum'/>;
 		}
 	}
 	
@@ -299,9 +299,16 @@
 		</c:if>
 		<c:if test="${!empty reviewMap }">
 		</c:if>
+		<c:if test="${param.page*5 < total }">
 			<div class="pagingDiv">
 				<button type="button" id="moreReview">리뷰 더보기</button>
 			</div> 
+		</c:if>
+		<c:if test="${param.page*5 > total }">
+			<div class="pagingDiv">
+				<label id="moreReview">리뷰 없음</label>
+			</div> 
+		</c:if>
 	</div>
 	</div>
 </div>

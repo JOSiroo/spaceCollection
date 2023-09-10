@@ -39,11 +39,7 @@
 	}
 	div#commentDiv {
     width: 100%;
-    margin-top: 20px;
-    margin-left: 3px;
-	}
-	div#CommentsBox {
-    margin-top: 40px;
+    margin-left: 5%;
 	}
 	#sendBt{
     scale: 0.7;
@@ -69,7 +65,31 @@
 	img.userIcon {
     width: 5.5%;
 	}
-	
+	.modal-body{
+    align-self: center !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+	}	
+	.modal-content{
+    width: 80% !important;
+	}
+	.modal-dialog {
+    margin-left: 38%;
+	}
+	button#cancelBt{
+	scale: 0.75;
+	} 
+	.modal-footer {
+    padding: 0px !important;
+	}
+	.btn-secondary:hover {
+    color: #fff;
+    background-color: #ffd014 !important;
+    border-color: #00ffff;
+	}
+	.comment-count {
+    margin-left: 5%;
+	}
 </style>
 
 <script>
@@ -265,10 +285,19 @@ $(function() {
 				    }
 			    
 				$('#cancelBt').click(function(){
-					var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
-				    console.log(sendDate);
-				    console.log(sendDate.commentContent);
 					
+					var textRes = $('input[name=commentContent]').val(); // 입력 양식 내용을 가져옴
+					console.log(textRes);
+
+					if (textRes === "") {
+					    alert("댓글 내용을 입력해주세요");
+					    console.log(commentContent);
+				    	location.reload();  						
+					    return;
+					}
+					
+					var sendDate = $('form[name=commentsFrm]').serialize(); //입력 양식 내용 쿼리 문자열로 만듬
+    						console.log(sendDate);
 				        $.ajax({
 				            url: "<c:url value='/user/board/boardDetail/commentsWrite' />",
 				            method: 'post',
@@ -283,13 +312,13 @@ $(function() {
 				    					    location.reload();  						
 				     						//$('#confirm1').modal('show');
 				    					 }else {
-				    						alert("댓글 내용을 입력해주세요");
+				    						//alert("댓글 내용을 입력해주세요");
 				     				       	location.reload();
 				    					}//if
 				            },//success
 				        	error:function(xhr, status, error){
-	    						alert("댓글 내용을 입력해주세요");
-				    			//alert(status + " : " + error);
+	    						//alert("댓글 내용을 입력해주세요");
+				    			alert(status + " : " + error);
 				    		}
 				        });//ajax
 				        
@@ -320,8 +349,14 @@ $(function() {
 	<section class="section2" >
 			<div class="comment-box" >
 	             <div class="comment-name">
+	            	  <form name="comment-count" var="count" items="${count }" action="#">
+			             	<div class="comment-count">
+			             	댓글 <span id="commentsContent">(${count })</span>
+			             	</div>
+		             </form>
+		             
 	             	<form name="commentsFrm" method="post" action="<c:url value='/user/board/boardDetail/commentsWrite'/>" onsubmit="return false">
-		                <div class="registering_comment"  style="position: absolute;"  var="vo" items="vo">
+		                <div class="registering_comment"  style=""  var="vo" items="vo">
 							<div class="col-sm-10" id="commentDiv"  >
 							<c:if test="${empty sessionScope.userId }">
 								<input type="text" name="commentContent" id="replyContentsNo" placeholder="로그인 후 글을 작성하실 수 있습니다." style="width: 450px;"/>
@@ -331,16 +366,11 @@ $(function() {
 							</c:if>
 								<button type="button" class="btn btn-primary" id="sendBt" >등록</button>
 			                </div>
-						<br><br>
 						<input type="hidden" name="boardNum" value="${map.BOARD_NUM }"/>							
 						</div> 
 					</form>
 				
-		             <form name="comment-count" var="count" items="${count }" action="#">
-		             	<div class="comment-count">
-		             	댓글 <span id="commentsContent">(${count })</span>
-		             	</div>
-		             </form>
+		            
 		             
 	             </div>
              <br>
@@ -348,7 +378,9 @@ $(function() {
 	         <div id="CommentsBox" >
 	             <form name="CommentsBox" method="post" action="#"  var="list1" items="${list1}">
 		             	<c:if test="${empty list }">  
-			  				<td colspan="5" class="align_center">글이 존재하지 않습니다.</td>
+		             		<div id="commentsMoreDiv" > 
+			  				<td colspan="5" class="align_center" id="nono">글이 존재하지 않습니다.</td>
+			  				</div>
 					  	</c:if>
 					  	<c:if test="${!empty list }">	
 							<div class="col align-center" >
@@ -376,12 +408,12 @@ $(function() {
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close""></button>
-				</div>
 				<div class="modal-body"></div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelBt"></button>
 					<button type="button" class="btn btn-danger" id="okBt"></button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelBt"></button>
 				</div>
 			</div>
 		</div>

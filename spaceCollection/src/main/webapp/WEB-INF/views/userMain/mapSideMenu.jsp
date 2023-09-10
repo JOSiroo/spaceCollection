@@ -74,30 +74,16 @@
     <button type="button" class="btn-close" id="sideBarClose" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-  <div class="dropdown mt-3">
-      <button id="orderBtn" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        정렬
-      </button>
-      <span id="orderParam"></span>
-      <br>
-      <br>
-      <hr>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">최신순</a></li>
-        <li><a class="dropdown-item" href="#">가격 낮은순</a></li>
-        <li><a class="dropdown-item" href="#">가격 높은순</a></li>
-      </ul>
-    </div>
     <div>
       <c:forEach var="map" items="${spaceMap}">
       <c:set var="vo" value="${map}" />
       	<a style="cursor:pointer; display: inline-block" onclick="panTo('${vo.key.latitude}',${vo.key.longitude})" class="movePoint">
       		${vo.key.spaceName}
    		</a>
-   			&nbsp;<span class="avgPrice"><fmt:formatNumber value="${map.value}" pattern="#,###원"/></span>
    			<a style="display:inline-block; float:right; margin-right:10px;"class="addressBtn" data-bs-toggle="collapse" href="#collapseExample${vo.key.spaceNum}" role="button" aria-expanded="false" aria-controls="collapseExample">
     			<i class="bi bi-arrow-down-square"></i>&nbsp;주소
   			</a>
+   			&nbsp;<span class="avgPrice" style="float:right; margin-right:10px;"><fmt:formatNumber value="${map.value}" pattern="#,###원"/></span>
   			<div class="collapse" id="collapseExample${vo.key.spaceNum}">
 			  <div class="card card-body">
 			  	${vo.key.spaceAddress} ${vo.key.spaceAddressDetail}

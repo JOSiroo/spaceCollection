@@ -179,7 +179,9 @@
 			transition:0.4s;
 		}
 	}
-	
+	.site-nav{
+		width:100% !important;
+	}
 </style>
 </head>
 
@@ -239,15 +241,16 @@
 							<input type="text" class="form-control px-4"
 								placeholder="공간명으로 찾아보세요" id="inputSearch" name="spaceName">
 							<button type="submit" class="btn btn-primary" id="searchBt">Search</button>
+							<button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+						      <i class="bi bi-list" id="sidemenubtcl"></i>
+						    </button>
 						</form>
 					</div>
 					
 					
 <!-- 사이드시작  -->      
 <div class="sidemenust">
-    <button class="sidemenubt" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-      <i class="bi bi-list" id="sidemenubtcl"></i>
-    </button>
+    
     
     <!--사이드메뉴 시작-->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" >
