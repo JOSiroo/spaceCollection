@@ -279,16 +279,16 @@
 
 				for(var i=0; i<res.length; i++){
 					regdateSet.push({
-						this[i].DAY;
+						this[i].day;
 					});
 					sCntSet.push({
-					    this.scnt
+					    this.scnt;
 					});
 					uCntSet.push({
-					    this.ucnt
+					    this.ucnt;
 					});
 					rCntSet.push({
-					    this.rcnt
+					    this.rcnt;
 					});
 				}
 				/* $.each(res, function() {
