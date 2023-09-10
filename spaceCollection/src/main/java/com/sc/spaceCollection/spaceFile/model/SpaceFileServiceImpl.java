@@ -36,16 +36,18 @@ public class SpaceFileServiceImpl implements SpaceFileService{
 	}
 
 	@Override
-	public List<String> selectLicenceImgBySpaceNum(String spaceNum) {
-		List<String> list = spaceFileDao.selectSpaceImgBySpaceNum("S"+spaceNum);
-		logger.info("asdfadsfsadffas={}", list);
-		for(int i=0; i<list.size(); i++) {
-			if(!list.get(i).contains("license")) {
-				list.remove(i);
-			}
-		}
-		logger.info("asdfadsfsadffas={}", list);
-		return list;
+	public String selectLicenceImgBySpaceNum(String spaceNum) {
+		List<String> list = spaceFileDao.selectSpaceImgBySpaceNum(spaceNum);
+		String str = list.get(0);
+		return str;
+	}
+	
+	@Override
+	public SpaceFileVO selectSpaceFileBySpaceNum(String spaceNum) {
+		
+		List<SpaceFileVO> list = spaceFileDao.selectSpaceFileByBoardNum(spaceNum);
+		SpaceFileVO vo = list.get(0);
+		return vo;
 	}
 	
 	

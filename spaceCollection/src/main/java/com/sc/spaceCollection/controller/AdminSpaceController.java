@@ -1,5 +1,6 @@
 package com.sc.spaceCollection.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -8,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.xmlbeans.impl.jam.mutable.MAnnotatedElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sc.spaceCollection.common.AjaxVO;
 import com.sc.spaceCollection.common.ConstUtil;
+import com.sc.spaceCollection.common.FileUploadUtil;
 import com.sc.spaceCollection.common.PaginationInfo;
 import com.sc.spaceCollection.common.SearchVO;
 import com.sc.spaceCollection.email.AdminEmailSender;
@@ -31,6 +33,7 @@ import com.sc.spaceCollection.space.model.SpaceListVO;
 import com.sc.spaceCollection.space.model.SpaceService;
 import com.sc.spaceCollection.space.model.SpaceVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileService;
+import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeListVO;
 import com.sc.spaceCollection.spaceType.model.SpaceTypeService;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryListVO;
@@ -38,6 +41,7 @@ import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryService;
 import com.sc.spaceCollection.spaceTypeCategory.model.SpaceTypeCategoryVO;
 
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -51,6 +55,7 @@ public class AdminSpaceController {
 	private final SpaceService spaceService;
 	private final SpaceFileService spaceFileService;
 	private final AdminEmailSender admin;
+	private final FileUploadUtil fileuploadUtil;
 	
 	@RequestMapping("/spaceTypeCategoryList")
 	public void spaceTypeCategoryList(@ModelAttribute SearchVO searchVo, Model model) {
@@ -504,7 +509,7 @@ public class AdminSpaceController {
 		Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(spaceNum);
 		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
 		
-		List<String> list = spaceFileService.selectLicenceImgBySpaceNum("S"+spaceNum);
+		String str = spaceFileService.selectLicenceImgBySpaceNum("S"+spaceNum);
 		
 		
 		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
@@ -514,12 +519,28 @@ public class AdminSpaceController {
 			}
 		}
 		
+		SpaceFileVO fileVo = spaceFileService.selectSpaceFileBySpaceNum("S"+spaceNum);
+		
 		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		model.addAttribute("map", map);
 		model.addAttribute("imgList", imgList);
-		model.addAttribute("list", list);
+		model.addAttribute("str", str);
+		model.addAttribute("spaceFileVo", fileVo);
 		return "admin/space/spaceConfirmDetail";
+	}
+	
+	@RequestMapping("/download")
+	public ModelAndView licenceDownload(@RequestParam String spaceNum, @RequestParam String fileName, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		String upPath = fileuploadUtil.getsUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+		logger.info("업로드 경로를 확인해보자 = {}", upPath);
+		File file = new File(upPath, fileName);
+		map.put("file", file);
+
+		ModelAndView mav = new ModelAndView("boardDownloadView", map);
+		
+		return mav;
 	}
 	
 	@RequestMapping("/space/ajax_spaceList")

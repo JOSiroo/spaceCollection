@@ -261,11 +261,9 @@
 									<span class="tag">사업자 등록증 파일 :</span>
 								</div>
 								<div class="col-9 back">
-									<c:forEach var="str" items="${map.list }">
-										<span><a href="#">
-												${str }									
-										</a></span>
-									</c:forEach>
+									<span><a href="<c:url value='/admin/space/download?spaceNum=${spaceFileVo.imgForeignKey }&fileName=${spaceFileVo.imgTempName }'/>">
+										${str }									
+									</a></span>
 								</div>
 							</div>
 							<div class="row">
