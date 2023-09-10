@@ -264,9 +264,9 @@
 					var i=0;
 					$.each(res, function() {
 						str2 += "<tr id='line"+i+"'>";
-						str2 += "<th scope='row'><a href='#'>"+this.RESERVATION_NUM+"</a></th>";
+						str2 += "<th scope='row'><a>"+this.RESERVATION_NUM+"</a></th>";
 						str2 += "<th>"+this.USER_ID+"</th>";
-						str2 += "<td><a href='#' class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
+						str2 += "<td><a class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
 						str2 += "<td>"+this.RESERVE_PRICE+"원</td>";
 						str2 += "<td><span>"+this.RESERVE_PEOPLE+"명</span></td>";
 						str2 += "<td>";

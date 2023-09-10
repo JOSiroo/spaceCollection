@@ -504,16 +504,21 @@ public class AdminSpaceController {
 		Map<String, Object> map = spaceService.selectSpaceConfirmDetailBySpaceNum(spaceNum);
 		logger.info("공간 승인 관리 상세보기 조회 결과, map = {}", map);
 		
+		List<String> list = spaceFileService.selectLicenceImgBySpaceNum("S"+spaceNum);
+		
+		
 		List<String> imgList = spaceFileService.selectSpaceImgBySpaceNum("S"+spaceNum);
 		for(int i=0; i<imgList.size(); i++) {
 			if(imgList.get(i).contains("license")) {
 				imgList.remove(i);
 			}
 		}
+		
 		logger.info("이미지 이름 imgList= {}", imgList);
 		
 		model.addAttribute("map", map);
 		model.addAttribute("imgList", imgList);
+		model.addAttribute("list", list);
 		return "admin/space/spaceConfirmDetail";
 	}
 	

@@ -239,14 +239,7 @@
 									<span>${map.SPACE_ADDRESS }</span>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-3 fr">
-									<span class="tag">제공 면적 :</span>
-								</div>
-								<div class="col-9 back">
-									<span>${map.SD_AREA } m<sup>2</sup></span>
-								</div>
-							</div>
+							
 							<div class="row">
 								<div class="col-3 fr">
 									<span class="tag">연락처 :</span>
@@ -268,7 +261,11 @@
 									<span class="tag">사업자 등록증 파일 :</span>
 								</div>
 								<div class="col-9 back">
-									<span><a href="#">사업자 등록증 파일이름.pdf</a></span>
+									<c:forEach var="str" items="${map.list }">
+										<span><a href="#">
+												${str }									
+										</a></span>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="row">

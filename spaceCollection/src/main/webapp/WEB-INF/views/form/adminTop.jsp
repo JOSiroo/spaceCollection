@@ -14,9 +14,6 @@
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 		$(function() {
-			$('#btLogout').click(function() {
-				location.href="<c:url value='/admin/adminLogout'/>";
-			});
 			
 		});
 </script>
