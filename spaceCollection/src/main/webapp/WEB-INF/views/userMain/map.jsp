@@ -105,7 +105,6 @@
  	font-weight: bold;
  	border:1px solid white;
  	display: inline-block;
- 	margin-left:14%;
  }
   @keyframes fadeInDown {
         0% {
@@ -151,7 +150,7 @@
 			<h4 style="font-weight: bold;">${title}</h4>
 		</div>
 			<button class="btn btn-primary" id="sideBar" type="button" data-bs-toggle="offcanvas" id="sideBarBt"data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-			  자세히 보기&nbsp;&nbsp;<i id="sideBar-icon" class="bi bi-layout-sidebar-inset"></i>
+			  공간 리스트&nbsp;&nbsp;<i id="sideBar-icon" class="bi bi-layout-sidebar-inset"></i>
 			</button>
 		<a class="closeMap" href="#" onclick="goBack()">
 			X
