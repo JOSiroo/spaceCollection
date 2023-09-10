@@ -67,15 +67,32 @@
 		}
 		.iconImg:hover{
 			transform:scale(1.3);
-			transition:0.5s;
+			transition:0.1s;
 		}
 		.iconImg{
-			transition:0.8s;
+			transition:0.3s;
+		}
+		.mainTitle{
+			
+		}
+		.mainTitle h1{
+			margin:0;
+			display: block;
+		}
+		.mainTitle div{
+			display: block;
 		}
     </style>
   
   	<section class="sectionIcon" >
-  	<h1 style="animation:fadeInDown 2s">어떤 공간을 찾고 있나요?</h1>
+  	<div class="mainTitle">
+  		<div class="row" style="display: flex;justify-content: center;">
+	  		<h1 style="animation:fadeInDown 1s; font-size:40px; color:#193D76">어떤 공간을 찾고 있나요?</h1>
+	  	</div>
+  		<div class="row" style="display: flex;justify-content: center; margin-bottom:50px;">
+	  		<div class="nav-bar" style="width:30%;"></div>
+	  	</div>
+  	</div>
     <div class="icon-container">
 	  <c:forEach var="i" begin="5" end="16">
   		<div class="icon" id="iconimage${i}" style="animation: fadeInDown ${(i / 5)/2}s">
