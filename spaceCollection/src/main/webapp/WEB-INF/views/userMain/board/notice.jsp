@@ -141,7 +141,7 @@
     background-color: #656565;
 	}
     .divBox2 {
-    width: 1000px;
+    width: 50%;
     margin-left: 24%;
 	}
 	span#span1 {
@@ -156,6 +156,9 @@
 	.accordion-body {
     border: 30px solid #ffffff;
     }
+    img{
+    width: 100%!important;
+	}
 </style>
 
 <script type="text/javascript">
@@ -168,50 +171,6 @@ function search() {
         window.location.href = currentUrl + '?' + params.toString();
 }
 
-/* function makeList(data) {
-	$.each(data, function(index) {
-		var str = "<div class='accordion accordion-flush' id='accordionFlushExample' var='list' items='list'>"
-			+ "<div class='accordion-item'>"
-			+ "<h2 class='accordion-header'>"
-			+ "<input type='text' name='boardNum' value="+this.BOARD_NUM+"/>"
-			+ "<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' "
-			+ "data-bs-target='#flush-collapse" + index + "' aria-expanded='false' "
-			+ "aria-controls='flush-collapse" + index + "'"
-			+ "style='background-color: " + (index % 2 == 0 ? '#eef1f3' : 'white') + ";'>"
-			+ "<span id='span1'>[ 공지사항 ]</span><span id='span2'>" + this.BOARD_TITLE + "</span></button></h2>"
-			+ "<div id='flush-collapse" + index + "' class='accordion-collapse collapse' data-bs-parent='#accordionFlushExample'>"
-			+ "<button type='button' class='btbt' id='delBt' >삭제</button>"
-			+ "<div class='accordion-body'>" + this.BOARD_CONTENT + "</div>"
-			+ "</div>"
-			+ "</div>"
-			+ "</div>";
-		$('.noticeLoad').append(str);
-	}); // each
-}// makeList
-
-var boardNum = ${param.boardNum};
-$.loadComment(boardNum);
-
-$.loadComment=function(boardNum) {
-$.ajax({
-	url : '<c:url value="/user/board/notice/noticeLoad?boardNum='+boardNum+'&page='+page+'"/>',
-	type: 'get',
-	success:function(data){
-		var str = "";
-		if(data!=null && data.length>0){
-			console.log(data);
-			makeList(data);
-			page++
-		}else{
-			str = "<span>등록된 공지사항이 없습니다.</span>";
-			$('.noticeLoad').append(str);
-		}
-	},
-	error:function(xhr, status, error){
-		alert(status + " : " + error);
-	}
-});//ajax
-}//loadComment */
 
 </script>
 
@@ -250,20 +209,6 @@ $.ajax({
 </div>
 
 		<div class="pageBox">
-			<nav aria-label="Page navigation example">
-			  <ul class="pagination">
-			    <li class="page-item">
-			      <a class="page-link" id="previous" href="<c:url value='/userMain/board/notice?page=${param.page-1}'/>" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li class="page-item">
-			      <a class="page-link" id="next" href="<c:url value='/userMain/board/notice?page=${param.page+1}'/>" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>
 		</div>
 </section> 
 

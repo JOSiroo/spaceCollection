@@ -32,35 +32,15 @@ public class LoginController {
 	
 	private final GuestService guestService;
 	private final Encryption encryption;
-	
 	@GetMapping("/login")
-	public String Login_get( HttpServletRequest request, Model model) {
+	public String Login_get() {
 		logger.info("로그인 화면 처리");
 		
-		HttpSession session = request.getSession();
-		
-		// 2페이지 이전 URL로 이동
-		String url = request.getHeader("referer");
-		
-		logger.info("url={}", url);
-		
-		if(url == null) {
-			url="login/login";
-			logger.info("url2={}", url);
-			return "login/login"; 
-		}
-		
-		String prevurl = url.substring(url.indexOf('n')+1);
-		logger.info("이전 페이지 ={}", prevurl);
-        session.setAttribute("prevurl", prevurl);
-		
-        model.addAttribute("url", url);
-        
 		return "login/login";
 	}
 	
 	@PostMapping("/login")
-	public String Login_post(@RequestParam String userId, @RequestParam String userPwd, HttpSession prevurl,
+	public String Login_post(@RequestParam String userId, @RequestParam String userPwd,
 			@RequestParam(required = false) String chkSave, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
 		
@@ -79,15 +59,11 @@ public class LoginController {
 
 		if (result == GuestService.LOGIN_OK) {
 			msg = userId + "님 로그인되었습니다.";
-			//url = "/";
+			url = "/";
+
 			// session
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
-			
-			//이전 페이지 
-			logger.info("prevurl={}", prevurl);
-			url = (String)session.getAttribute("prevurl");
-			logger.info("url 이전 페이지 ={}", url);
 
 			// cookie
 			Cookie ck = new Cookie("ck_userId", userId);
@@ -99,7 +75,6 @@ public class LoginController {
 				ck.setMaxAge(0); // 쿠키 제거
 				response.addCookie(ck);
 			}
-			
 		} else if (result == GuestService.PWD_DISAGREE) {
 			msg = "비밀번호가 일치하지 않습니다.";
 		} else if (result == GuestService.USERID_NONE) {

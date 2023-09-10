@@ -5,6 +5,7 @@
 	.dropdown-item{
 		cursor: pointer;
 	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -12,61 +13,37 @@
 		$.loadReservationTotalPrice();
 		$.loadReservationType();
 		$.loadReservationRank();
-		$.loadRecentReservation();
-		
-		$('#rd').click(function() {
-			$('#intervalStandard').val('');
-			$.loadReservationCnt();
-		});
-		$('#rm').click(function() {
-			$('#intervalStandard').val('month');
-			$.loadReservationCnt();
-		});
-		$('#ry').click(function() {
-			$('#intervalStandard').val('year');
-			$.loadReservationCnt();
-		});
-		
-		$('#md').click(function() {
-			$('#intervalStandardPrice').val('');
-			$.loadReservationTotalPrice();
-		});
-		$('#mm').click(function() {
-			$('#intervalStandardPrice').val('month');
-			$.loadReservationTotalPrice();
-		});
-		$('#my').click(function() {
-			$('#intervalStandardPrice').val('year');
-			$.loadReservationTotalPrice();
-		});
-		
-		$('#td').click(function() {
-			$('#intervalStandardType').val('');
-			$.loadReservationType();
-		});
-		$('#tm').click(function() {
-			$('#intervalStandardType').val('month');
-			$.loadReservationType();
-		});
-		$('#ty').click(function() {
-			$('#intervalStandardType').val('year');
-			$.loadReservationType();
-		});
-		
-		$('#rrd').click(function() {
-			$('#intervalStandardRank').val('');
-			$.loadReservationRank();
-		});
-		$('#rrm').click(function() {
-			$('#intervalStandardRank').val('month');
-			$.loadReservationRank();
-		});
-		$('#rry').click(function() {
-			$('#intervalStandardRank').val('year');
-			$.loadReservationRank();
-		});
+		$.loadRecentReservation()
+		$.loadLineStatic();
+		setInterval(function() {
+			$.loadRecentReservation()	
+		}, 5000);
 		
 	})
+	function rTotalCnt(val) {
+		$('#intervalStandard').val(val);
+		$.loadReservationCnt();
+	}
+	
+	function rTotalPrice(val) {
+		$('#intervalStandardPrice').val(val);
+		$.loadReservationTotalPrice();
+	}
+	
+	function rReserveType(val) {
+		$('#intervalStandardType').val(val);
+		$.loadReservationType();
+	}
+	
+	function rRankInterval(val) {
+		$('#intervalStandardRank').val(val);
+		$.loadReservationRank();
+	}
+	
+	function rRank(val) {
+		$('#order').val(val);
+		$.loadReservationRank();
+	}
 	
 	$.loadReservationCnt = function() {
 		$.ajax({
@@ -117,7 +94,7 @@
 				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastTotalPrice+"원)</span>";
 				str2 += "<br>";
 				if(Number(res.percent)>0){
-					str2 += "<span class='text-success small pt-1 fw-bold'>${pastPrice}% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
+					str2 += "<span class='text-success small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
 				}else if(Number(res.percent)<0){
 					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
 				}else{
@@ -211,9 +188,10 @@
 				
 				str1 += "| Today ( "+res.length+" 건 )";
 				if(res.length > 0){
-					$.each(res.list, function() {
+					$.each(res, function() {
 						str2 += "<tr>";
 						str2 += "<th scope='row'><a href='#'>"+this.RESERVATION_NUM+"</a></th>";
+						str2 += "<th>"+this.USER_ID+"</th>";
 						str2 += "<td><a href='#' class='text-primary'>"+this.SPACE_NAME+"-"+this.SD_TYPE+"</a></td>";
 						str2 += "<td>"+this.RESERVE_PRICE+"원</td>";
 						str2 += "<td><span>"+this.RESERVE_PEOPLE+"명</span></td>";
@@ -244,29 +222,39 @@
 		$.ajax({
 			url : "<c:url value = '/admin/adminMain/Ajax_getReservationRank'/>",
 			type : 'get',
-			data : "intervalStandard=" + $('#intervalStandardRank').val(),
+			data : "intervalStandard=" + $('#intervalStandardRank').val() +"&order=" + $('#order').val(),
 			dataType: 'json',
 			success : function(res) {
 				var str1 = "";
 				var str2 = "";
 				str1 += "| "+res.standard;
 				if(res.list.length > 0){
+					var num = 1;
 					$.each(res.list, function() {
 						str2 += "<tr>";
-						str2 += "<th scope='row'><a>"+1+"</a></th>";
+						if(num == 1){
+							str2 += "<th scope='row' style='text-align: center'><img src='<c:url value='/images/1st.png'/>' style='width: 25px'></a></th>";
+						}else if(num == 2){
+							str2 += "<th scope='row' style='text-align: center'><a><img src='<c:url value='/images/2nd.png'/>' style='width: 25px'></a></th>";
+						}else if(num == 3){
+							str2 += "<th scope='row' style='text-align: center'><a><img src='<c:url value='/images/3th.png'/>' style='width: 25px'></a></th>";
+						}else{
+							str2 += "<th scope='row' style='text-align: center'><a>"+num+"</a></th>";
+						}
 						str2 += "<td><a href='/spaceCollection/admin/space/spaceList/spaceDetail?spaceNum="+this.SPACE_NUM+"' class='text-primary fw-bold'>"+this.SPACE_NAME+"</a></td>";
 						str2 += "<td>"+this.TOTALCNT+" 건</td>";
 						str2 += "<td class='fw-bold'>"+this.TOTALPEOPLE+" 명</td>";
 						str2 += "<td style='text-align: right;'>"+this.TOTALPRICE+" 원</td>";
 						str2 += "</tr>";
+						
+						num++;
 					});
 				}else{
 					str2 += "<tr>";
 					str2 += "<td colspan='5'>예약 내역이 없어 순위를 표시할 수 없습니다.<td>";
 					str2 += "<tr>"
 				}
-				
-				$('#rStandard').html(str1);
+				$('#rrStandard').html(str1);
 				$('#totalReservationRank').html(str2);
 			},
 			error : function(xhr, status, error) {
@@ -274,7 +262,104 @@
 			}
 		});
 	}
-         
+     
+	
+	 $.loadLineStatic = function() {
+		$.ajax({
+			url : "<c:url value = '/admin/adminMain/Ajax_LineStatic'/>",
+			type : 'get',
+			data : "",
+			dataType: 'json',
+			success : function(res) {
+				
+				var regdateSet = [];
+				var sCntSet = [];
+				var uCntSet = [];
+				var rCntSet = [];
+				
+				res.forEach(function(staticsVo) {
+				    var day = staticsVo.day;
+				    var scnt = staticsVo.scnt;
+				    var ucnt = staticsVo.ucnt;
+				    var rcnt = staticsVo.rcnt;
+
+				    regdateSet.push(day);
+				    sCntSet.push(scnt);
+				    uCntSet.push(ucnt);
+				    rCntSet.push(rcnt);
+				});
+				
+					
+				if(res.length>0){
+					new ApexCharts(document.querySelector("#reportsChart"), {
+                        series: [{
+                          name: '공간예약건수',
+                          data: rCntSet
+                        }, {
+                          name: '공간등록건수',
+                          data: sCntSet
+                        }, {
+                          name: '회원가입자수',
+                          data: uCntSet
+                        }],
+                        chart: {
+                          height: 350,
+                          type: 'area',
+                          toolbar: {
+                            show: false,
+                            tools: {
+                            	download: false,
+                                selection: false,
+                                zoom: false,
+                                zoomin: false,
+                                zoomout: false,
+                                pan: false,
+                                reset: true | '<img src="/static/icons/reset.png" width="20">'
+                            }
+                          },
+                        },
+                        markers: {
+                          size: 4
+                        },
+                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                          }
+                        },
+                        dataLabels: {
+                          enabled: true
+                        },
+                        stroke: {
+                          curve: 'smooth',
+                          width: 2
+                        },
+                        xaxis: {
+                          type: 'datetime',
+                          categories: regdateSet
+                        },
+                        tooltip: {
+                          x: {
+                            format: 'yyyy/MM/dd'
+                          },
+                        }
+                      }).render();
+					
+				}else{
+					str1 += "진행된 예약이 없습니다.";
+					$('#reportsChart').html(str1);
+				}
+				
+			},
+			error : function(xhr, status, error) {
+				alert(status + " : " + error);
+			}
+		});
+	}
      
 </script>
 <main id="main" class="main">
@@ -303,10 +388,10 @@
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu" id="reservationCnt">
-								 		<li><a class="dropdown-item" href="#" id="rd">일</a></li>
-								    	<li><a class="dropdown-item" href="#" id="rm">월</a></li>
-								    	<li><a class="dropdown-item" href="#" id="ry">년</a></li>
+									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="reservationCnt">
+								 		<li><a class="dropdown-item" onclick="rTotalCnt('')">일</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalCnt('month')">월</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalCnt('year')">년</a></li>
 									</ul>
 							</div>
 							<div class="card-body">
@@ -339,10 +424,10 @@
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu">
-								 		<li><a class="dropdown-item" href="#" id="md">일</a></li>
-								    	<li><a class="dropdown-item" href="#" id="mm">월</a></li>
-								    	<li><a class="dropdown-item" href="#" id="my">년</a></li>
+									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+								 		<li><a class="dropdown-item" onclick="rTotalPrice('')">일</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalPrice('month')">월</a></li>
+								    	<li><a class="dropdown-item" onclick="rTotalPrice('year')">년</a></li>
 									</ul>
 							</div>
 							<div class="card-body">
@@ -389,10 +474,9 @@
 										<i class="bi bi-people"></i>
 									</div>
 									<div class="ps-3">
-										<h6>1244 명</h6>
+										<h6>12 명</h6>
 										<span class="text-danger small pt-1 fw-bold">12%</span> <span
 											class="text-muted small pt-2 ps-1">decrease</span>
-
 									</div>
 								</div>
 
@@ -402,15 +486,9 @@
 					</div>
 					<!-- 일일 방문자 수 -->
 
-					<!-- Reports -->
+					<!-- 종합 그래프 -->
 					<div class="col-12">
 						<div class="card">
-
-							<div class="filter">
-								<a class="icon" href="#" data-bs-toggle="dropdown"><i
-									class="bi bi-three-dots"></i></a>
-							</div>
-
 							<div class="card-body">
 								<h5 class="card-title" style="font-weight: bold;">
 									종합 그래프 <span>/Today</span>
@@ -420,60 +498,9 @@
 								<div id="reportsChart"></div>
 
 								<script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56, 40, 52, 52, 52, 52, 52],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41, 42, 51, 51, 51, 51, 51]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11, 21, 34, 34, 34, 34, 34]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2023-08-01 00:00:000","2023-08-02 00:00:000","2023-08-03 00:00:000","2023-08-04 00:00:000","2023-08-05 00:00:000",
-                        	  "2023-08-06 00:00:000","2023-08-07 00:00:000","2023-08-08 00:00:000","2023-08-09 00:00:000","2023-08-09 00:00:000","2023-08-09 00:00:000",
-                        	  "2023-08-09 00:00:000","2023-08-09 00:00:000",]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'yyyy/MM/dd'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-								<!-- End Line Chart -->
+                      
+                  				</script>
+								<!-- 종합 그래프 -->
 
 							</div>
 
@@ -516,22 +543,20 @@
 					<div class="col-12">
 						<div class="card top-selling">
 							<input type="hidden" name="intervalStandardRank" id="intervalStandardRank" value="">
+							<input type="hidden" name="order" id="order" value="totalPrice">
 							<div class="filter">
 								<a class="icon" href="#" data-bs-toggle="dropdown"><i
 									class="bi bi-three-dots"></i></a>
 								<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									<li class="dropdown-header text-start">
-										<h6>Filter</h6>
-									</li>
-									<li><a class="dropdown-item" id="rrd">Today</a></li>
-									<li><a class="dropdown-item" id="rrm">This Month</a></li>
-									<li><a class="dropdown-item" id="rry">This Year</a></li>
+									<li><a class="dropdown-item" onclick="rRankInterval('')">일</a></li>
+									<li><a class="dropdown-item" onclick="rRankInterval('month')">월</a></li>
+									<li><a class="dropdown-item" onclick="rRankInterval('year')">년</a></li>
 								</ul>
 							</div>
 
 							<div class="card-body pb-0">
 								<h5 class="card-title" style="font-weight:bold;">
-									예약 TOP 10 <span id="rStandard"></span>
+									예약 TOP 10 <span id="rrStandard"></span>
 								</h5>
 
 								<table class="table table-borderless">
@@ -539,9 +564,9 @@
 										<tr>
 											<th scope="col">순위</th>
 											<th scope="col">공간명</th>
-											<th scope="col">예약건수</th>
-											<th scope="col">이용 인원</th>
-											<th scope="col">예약 금액</th>
+											<th scope="col" style="cursor: pointer;" onclick="rRank('totalcnt')">예약건수</th>
+											<th scope="col" style="cursor: pointer;" onclick="rRank('totalpeople')">이용 인원</th>
+											<th scope="col" style="cursor: pointer;" onclick="rRank('totalprice')">예약 금액</th>
 										</tr>
 									</thead>
 									<tbody id="totalReservationRank">
@@ -655,13 +680,9 @@
 						<a class="icon" href="#" data-bs-toggle="dropdown"><i
 							class="bi bi-three-dots"></i></a>
 						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="dropdown-header text-start">
-								<h6>Filter</h6>
-							</li>
-
-							<li><a class="dropdown-item" id="td">Today</a></li>
-							<li><a class="dropdown-item" id="tm">This Month</a></li>
-							<li><a class="dropdown-item" id="ty">This Year</a></li>
+							<li><a class="dropdown-item" onclick="rReserveType('')">일</a></li>
+							<li><a class="dropdown-item" onclick="rReserveType('month')">월</a></li>
+							<li><a class="dropdown-item" onclick="rReserveType('year')">년</a></li>
 						</ul>
 					</div>
 
