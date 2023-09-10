@@ -140,9 +140,10 @@ public class UserBoardController {
 		 String userId = (String)session.getAttribute("userId");
 		 int userNum = guestService.selectUserInfo(userId).getUserNum();
 		 vo.setUserNum(userNum);
-		
+		 
 		logger.info("vo={}",vo);
 		int cnt = commentsService.insertComments(vo);
+		
 		logger.info("댓글 등록 결과, cnt = {}", cnt);
 		logger.info("댓글 등록, 파라미터 vo = {}", vo);
 		
@@ -197,8 +198,12 @@ public class UserBoardController {
 		logger.info("ajax - 댓글 수정, 파라미터 commentsVo = {}", commentContent, commentNum);
 		
 		CommentsVO vo = new CommentsVO();
+		
 		vo.setCommentContent(commentContent);
+		
 		vo.setCommentNum(Integer.parseInt(commentNum));
+		
+		
 		
 		int cnt = commentsService.updateComments(vo);
 		logger.info("ajax - 댓글 수정 결과, cnt = {}", cnt);
