@@ -68,6 +68,7 @@
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
+
 		<div class="d-flex align-items-center justify-content-between">
 			<a href="<c:url value='/admin/adminMain'/>"
 				class="logo d-flex align-items-center"> <img
@@ -210,7 +211,7 @@
 			</li>
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				href="http://localhost:9091/spaceCollection/admin/chatting"> <i class="bi bi-question-circle"></i> 
+				href="<c:url value='/admin/chatting'/>"> <i class="bi bi-question-circle"></i> 
 				<span>실시간 채팅</span>
 			</a></li>
 		</ul>
