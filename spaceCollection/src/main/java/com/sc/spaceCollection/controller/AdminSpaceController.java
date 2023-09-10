@@ -533,7 +533,7 @@ public class AdminSpaceController {
 	@RequestMapping("/download")
 	public ModelAndView licenceDownload(@RequestParam String spaceNum, @RequestParam String fileName, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<>();
-		String upPath = fileuploadUtil.getsUploadPath(request, ConstUtil.UPLOAD_FILE_FLAG);
+		String upPath = fileuploadUtil.getUploadPath(request, ConstUtil.UPLOAD_SPACE_IMAGE_FLAG);
 		logger.info("업로드 경로를 확인해보자 = {}", upPath);
 		File file = new File(upPath, fileName);
 		map.put("file", file);
