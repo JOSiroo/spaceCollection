@@ -372,14 +372,17 @@
         }
         
      	// 해당 값을 가지는 옵션을 선택
-        $('.re7').val('${refundVo.refund7Day}').prop("selected",true);
-        $('.re6').val("${refundVo.refund6Day}").prop("selected",true);
-        $('.re5').val('${refundVo.refund5Day}').prop("selected",true);
-        $('.re4').val('${refundVo.refund4Day}').prop("selected",true);
-        $('.re3').val('${refundVo.refund3Day}').prop("selected",true);
-        $('.re2').val('${refundVo.refund2Day}').prop("selected",true);
-        $('.re1').val('${refundVo.refund1Day}').prop("selected",true);
-        $('.re').val('${refundVo.refundDay}').prop("selected",true);
+     	if ('${refundVo.refund7Day}' !== '') {
+     		$('.re7').val('${refundVo.refund7Day}').prop("selected",true);
+            $('.re6').val("${refundVo.refund6Day}").prop("selected",true);
+            $('.re5').val('${refundVo.refund5Day}').prop("selected",true);
+            $('.re4').val('${refundVo.refund4Day}').prop("selected",true);
+            $('.re3').val('${refundVo.refund3Day}').prop("selected",true);
+            $('.re2').val('${refundVo.refund2Day}').prop("selected",true);
+            $('.re1').val('${refundVo.refund1Day}').prop("selected",true);
+            $('.re').val('${refundVo.refundDay}').prop("selected",true);
+     	}
+        
         
 		//공간 이름 정규화
         $(".spText.name").on("input", function() {
@@ -944,13 +947,23 @@
 
 </script>
 
-<c:if test="${empty param.spaceTypeName }" >
-	<c:set var="next" value="수정" />
-	<c:set var="url" value="/host/registration/registration2/edit" />
-</c:if>
 <c:if test="${!empty param.spaceTypeName }" >
 	<c:set var="next" value="등록" />
 	<c:set var="url" value="/host/registration/registration2/write" />
+	<c:set var="spaceNum" value="0" />
+	<c:set var="spaceZipcode" value="0" />
+	<c:set var="latitude" value="0" />
+	<c:set var="longitude" value="0" />
+	<c:set var="refundNum" value="0" />
+</c:if>
+<c:if test="${empty param.spaceTypeName }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/registration2/edit" />
+	<c:set var="spaceNum" value="${param.spaceNum }" />
+	<c:set var="spaceZipcode" value="${spaceVo.spaceZipcode }" />
+	<c:set var="latitude" value="${spaceVo.latitude }" />
+	<c:set var="longitude" value="${spaceVo.longitude }" />
+	<c:set var="refundNum" value="${spaceVo.refundNum }" />
 </c:if>
 
 
@@ -959,11 +972,11 @@
 		<form name="frmRegi2" method="post" action="<c:url value='${url }' />"
 			enctype="multipart/form-data">
 			
-			<input type="hidden" name="spaceNum" value="${pram.spaceNum }">
-			<input type="hidden" name="spaceZipcode" value="${spaceVo.spaceZipcode }">
-			<input type="hidden" name="latitude" value="${spaceVo.latitude }">
-			<input type="hidden" name="longitude" value="${spaceVo.longitude }">
-			<input type="hidden" name="refundNum" value="${spaceVo.refundNum }">
+			<input type="hidden" name="spaceNum" value="${spaceNum }">
+			<input type="hidden" name="spaceZipcode" value="${spaceZipcode }">
+			<input type="hidden" name="latitude" value="${latitude }">
+			<input type="hidden" name="longitude" value="${longitude }">
+			<input type="hidden" name="refundNum" value="${refundNum }">
 			
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>

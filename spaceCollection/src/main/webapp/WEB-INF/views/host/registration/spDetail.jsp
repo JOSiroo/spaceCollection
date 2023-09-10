@@ -280,9 +280,12 @@
         });
       	
      	// 해당 값을 가지는 옵션을 선택
-        $('.closeTime').val('${sdVo.sdCloseTime}').prop("selected",true);
-        $('.openTime').val('${sdVo.sdOpenTime}').prop("selected",true);
-        $('.minTime').val('${sdVo.sdMinTime}').prop("selected",true);
+     	if ('${sdVo.sdCloseTime}' != null) {
+     		$('.closeTime').val('${sdVo.sdCloseTime}').prop("selected",true);
+            $('.openTime').val('${sdVo.sdOpenTime}').prop("selected",true);
+            $('.minTime').val('${sdVo.sdMinTime}').prop("selected",true);
+     	}
+        
         
         // 가져온 값에 따라 체크박스 체크 여부 설정
         if ('${faVo.facWifi}' == "Y") {
