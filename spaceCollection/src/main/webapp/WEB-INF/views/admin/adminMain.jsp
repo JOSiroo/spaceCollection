@@ -365,6 +365,10 @@
 				    rCntSet.push(rcnt);
 				});
 				
+				alert(regdateSet);
+				alert(sCntSet);
+				alert(uCntSet);
+				alert(rCntSet);
 					
 				if(res.length>0){
 					new ApexCharts(document.querySelector("#reportsChart"), {
@@ -415,7 +419,7 @@
                           width: 2
                         },
                         xaxis: {
-                          type: 'datetime',
+                          type: 'string',
                           categories: regdateSet
                         },
                         tooltip: {

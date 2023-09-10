@@ -181,7 +181,7 @@ div#place {
       <div class="container">
          <div class="row justify-content-center align-items-center">
             <div class="col-lg-9 text-center">
-               <h1 class="heading" data-aos="fade-up" style="font-size:65px">Space Collection에 오신 것을 환영합니다.</h1>
+               <h1 class="heading" id="mainTitle" data-aos="fade-up" style="font-size:65px">Space Collection에 오신 것을 환영합니다.</h1>
             </div>
          </div>
       </div>

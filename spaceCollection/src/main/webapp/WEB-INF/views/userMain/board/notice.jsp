@@ -4,7 +4,7 @@
 
 <style type="text/css">
 	.reservation-header{
-		margin-top :120px;
+		padding-top :240px !important;
 		padding: 5% 20% 4% 20%;
 	}
 	.search-box{

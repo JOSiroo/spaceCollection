@@ -1,6 +1,7 @@
 package com.sc.spaceCollection.statics.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,14 @@ public class StaticsServiceImpl implements StaticsService{
 	private final StaticsDAO staticsDao;
 
 	@Override
-	public List<StaticsVO> lineStatic() {
-		List<StaticsVO> list = staticsDao.lineStatic();
+	public List<Map<String, Object>> lineStatic() {
+		List<Map<String, Object>> list = staticsDao.lineStatic();
 		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		for(StaticsVO vo : list) {
-//			vo.setDay((vo.getDay()+"").substring(0, 10));
-//		}
+		for(Map<String, Object> map : list) {
+			map.put("DAY", (map.get("DAY")+""))
+		}
+		
+
 		
 		return list;
 	}
