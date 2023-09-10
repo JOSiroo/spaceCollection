@@ -25,7 +25,6 @@ public class BoardDownloadView extends AbstractView{
 		File file = (File) model.get("file");
 		
 		if(file==null || file.exists() || file.canRead()) {
-			logger.info("들어왔니?");
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print("<script>alert('파일이 존재하지 않거나 손상되었습니다.');history.back();</script>");
