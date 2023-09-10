@@ -197,17 +197,6 @@ $(function() {
 							    return;
 	       				}
 	       				
-		        	
-		        	/* if(date==1){
-     						alert("이미 등록된 쿠폰입니다.");
-		        	}else if(){
-	        				console.log("추가 성공");
-     						alert("쿠폰을 등록했습니다.");
-     						console.log("쿠폰 추가 성공");
-						    location.reload();
-						    return;
-		        	} */
-		        	
 		        },//success
 		    	error:function(xhr, status, error){
 					alert(status + " : " + error);
