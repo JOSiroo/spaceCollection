@@ -7,6 +7,8 @@
 
 <style>
     .section1{
+    padding-top:5%;
+    width:100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,7 +36,6 @@
     width: 460px;
 	}
 	.alleventBox {
-    margin-top: 15%;
     margin-bottom: 8%;
 	}
 	div#commentDiv {
