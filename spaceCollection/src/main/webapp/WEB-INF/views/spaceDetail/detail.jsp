@@ -155,6 +155,9 @@ pageEncoding="UTF-8"%>
  	width: 60px !important;
  	height: 60px !important;
  }
+ .sticky-top{
+ 	top:125px !important;
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
