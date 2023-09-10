@@ -475,14 +475,14 @@ public class HostController {
 	@GetMapping("/registration/deleteSpaceDetail")
 	public String deleteSpaceDetail(@RequestParam(defaultValue = "0") int sdNum, 
 			@RequestParam(defaultValue = "0") int spaceNum, Model model) {
-		logger.info("세부공간 삭제, spaceNum = {}", sdNum);
+		logger.info("세부공간 삭제, spaceNum = {}, sdNum = {}", spaceNum, sdNum);
 		
 		String msg = "세부공간 삭제를 실패했습니다.", url = "/host/spaceDetailManage?spaceNum=" + spaceNum;
 		if (sdNum > 0) {
 			int cnt = hostService.deleteSpaceDetail(sdNum);
-			logger.info("cnt = {}", cnt);
+			logger.info("cnt = {}, spaceNum = {}", cnt, spaceNum);
 			
-			msg = sdNum + " 공간이 삭제되었습니다.";
+			msg = sdNum + " 세부공간이 삭제되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);
