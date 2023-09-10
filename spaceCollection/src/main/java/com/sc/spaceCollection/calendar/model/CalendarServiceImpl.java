@@ -23,4 +23,9 @@ public class CalendarServiceImpl implements CalendarService {
 		return calendarDao.selectMemoByUserNum(userNum);
 	}
 
+	@Override
+	public int deleteMemo(int memoNum) {
+		return calendarDao.deleteMemo(memoNum);
+	}
+
 }

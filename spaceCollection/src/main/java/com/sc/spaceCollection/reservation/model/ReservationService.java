@@ -23,5 +23,5 @@ public interface ReservationService {
 	int getReservationMoneyByInterverStandard2(String intervalStandard);
 	Map<String, Object> getReservationTypeByInterverStandard(String intervalStandard);
 	List<Map<String, Object>> getRecentReservationList();
-	List<Map<String, Object>> getReservationRank(String intervalStandard);
+	Map<String, Object> getReservationRank(Map<String, Object> map);
 }
