@@ -343,7 +343,7 @@ public class HostController {
 		return "host/registration/spDetail";
 	}
 	
-	@PostMapping("/registration/spDetail")
+	@PostMapping("/registration/spDetail/write")
 	public String spDetail_write(SpaceDetailVO spaceDetailVo, FacilityVO facilityVo) {
 		logger.info("세부 공간등록 처리, spaceDetailVo = {}, facilityVo = {}", spaceDetailVo, facilityVo);
 		
