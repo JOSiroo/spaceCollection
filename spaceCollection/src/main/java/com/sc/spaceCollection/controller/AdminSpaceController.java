@@ -452,10 +452,12 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "승인 처리가 완료되었습니다.";
-			try {
-				admin.sendSpaceConfirmEmail(vo);
-			} catch (MessagingException e) {
-				e.printStackTrace();
+			if(vo.getUserEmail()!=null && !vo.getUserEmail().isEmpty()) {
+				try {
+					admin.sendSpaceConfirmEmail(vo);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -480,10 +482,12 @@ public class AdminSpaceController {
 		String msg = "요청 처리중 문제가 발생하였습니다. 다시 시도해주시기 바랍니다.", url = "/admin/space/spaceConfirmList";
 		if(cnt>0) {
 			msg = "거절 처리가 완료되었습니다.";
-			try {
-				admin.sendSpaceConfirmEmail(vo);
-			} catch (MessagingException e) {
-				e.printStackTrace();
+			if(vo.getUserEmail()!=null && !vo.getUserEmail().isEmpty()) {
+				try {
+					admin.sendSpaceConfirmEmail(vo);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		

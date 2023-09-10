@@ -24,16 +24,21 @@
 		width: 100px;
 	}
 	
-	img{
-		width: auto;
-		height: auto;
-		object-fit: contain;
+	#carouselExampleIndicators{
+		width: 440px;
+	    height: 300px;
 	}
 	
-	#carouselExampleIndicators{
-		width: 100%;
-		aspect-ratio: 2.1;
+	.carousel-inner {
+	   width: 440px;
+	   height: 300px;
 	}
+	
+	#carouselExampleIndicators img{
+		width: 100%;
+	}
+	
+	
 	
 	i.bi.bi-exclamation-circle {
  		color: #ffd600;
@@ -148,47 +153,54 @@
 					<div class="card-body pt-4">
 						<div class="row-sm-3">
 							<div class="row-sm-3">
-								<h5 class="card-title">공간 이미지</h5>
-								<div id="carouselExampleIndicators" class="carousel slide">
-									<div class="carousel-indicators">
-										<c:set var="i" value="0"/>
-										<c:forEach var="imgName" items="${imgList }">
-											<button type="button"
-												data-bs-target="#carouselExampleIndicators"
-												<c:if test="${i==0 }">
-												data-bs-slide-to="${i }" 
-												class="active" aria-current="true"
-												</c:if>
-												<c:if test="${i>0 }">
-												data-bs-slide-to="${i }" 
-												class="active" aria-current="true"
-												</c:if>
-												aria-label="Slide ${i+1 }"></button>
-										</c:forEach>
+							<h5 class="card-title">공간 이미지</h5>
+							<div id="carouselExampleIndicators" class="carousel slide">
+								<div class="carousel-indicators">
+									<c:set var="i" value="0"/>
+									<c:forEach var="imgName" items="${imgList }">
 										<button type="button"
 											data-bs-target="#carouselExampleIndicators"
-											data-bs-slide-to="1" aria-label="Slide 2"></button>
-										<button type="button"
-											data-bs-target="#carouselExampleIndicators"
-											data-bs-slide-to="2" aria-label="Slide 3"></button>
-									</div>
-									<div class="carousel-inner">
-										<c:set var="i" value="0"/>
-										<c:forEach var="imgName" items="${imgList }">
 											<c:if test="${i==0 }">
-												<div class="carousel-item active">
+											data-bs-slide-to="${i }" 
+											class="active" aria-current="true" aria-label="Slide ${i+1 }"
 											</c:if>
 											<c:if test="${i>0 }">
-												<div class="carousel-item">
+											data-bs-slide-to="${i }" 
+											aria-label="Slide ${i }"
 											</c:if>
-												<img src="<c:url value='/space_images/${imgName }'/>"
-													class="d-block w-100">
-											</div>
+											aria-label="Slide ${i+1 }"></button>
 											<c:set var="i" value="${i+1 }"/>
-										</c:forEach>
-									</div>
+									</c:forEach>
 								</div>
+								<div class="carousel-inner">
+									<c:set var="i" value="0"/>
+									<c:forEach var="imgName" items="${imgList }">
+										<c:if test="${i==0 }">
+											<div class="carousel-item active">
+										</c:if>
+										<c:if test="${i>0 }">
+											<div class="carousel-item">
+										</c:if>
+											<img src="<c:url value='/space_images/${imgName }'/>"
+												class="d-block w-100">
+										</div>
+										<c:set var="i" value="${i+1 }"/>
+									</c:forEach>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#carouselExampleIndicators"
+									data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#carouselExampleIndicators"
+									data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
 							</div>
+						</div>
 							
 							<hr>
 							<h5 class="card-title">신청자 정보</h5>
