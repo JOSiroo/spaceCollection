@@ -23,8 +23,9 @@ public class BoardDownloadView extends AbstractView{
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		File file = (File) model.get("file");
+		logger.info("파일다운로드 로그 찍기 = {}", file);
 		
-		if(file==null || file.exists() || file.canRead()) {
+		if(file==null || !file.exists() || !file.canRead()) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print("<script>alert('파일이 존재하지 않거나 손상되었습니다.');history.back();</script>");
