@@ -129,6 +129,26 @@
 		where sd_num = #{sdNum}
 	</update>
 	
+	<select id="selectSpaceByspaceNum" resultType="spaceVo" parameterType="int">
+		select * from space
+		where space_num = #{spaceNum}
+	</select>
+	
+	<select id="selectSpaceTypeBySpaceTypeNo" resultType="spaceTypeVo" parameterType="int">
+		select * from space_type
+		where space_type_no = #{spaceTypeNo}
+	</select>
+	
+	<select id="selectTotalFacilityBySpaceNum" resultType="spaceTotalFacilityVo" parameterType="int">
+		select * from space_total_facility
+		where space_num = #{spaceNum}
+	</select>
+	
+	<select id="selectRefundByRefundNum" resultType="refundVo" parameterType="int">
+		select * from refund
+		where refund_num = #{refundNum}
+	</select>
+	
 	<update id="updateSpace" parameterType="spaceVo">
 		update space 
 		set SPACE_NAME = #{spaceName}, SPACE_BUSINESS_NUM = #{spaceBusinessNum}, SPACE_ZIPCODE = #{spaceZipcode}, 
@@ -181,19 +201,19 @@
 		where facility_Num = #{facilityNum}
 	</select>
 	
-	<delete id="deleteMainImg" parameterType="String">
+	<delete id="deleteMainImg" parameterType="int">
 		delete space_file
-		where img_temp_name like 'S' || #{imgTempName} || 'Main%'
+		where img_temp_name like 'S' || #{spaceNum} || 'Main%'
 	</delete>
 	
-	<delete id="deleteSubImg" parameterType="String">
+	<delete id="deleteSubImg" parameterType="int">
 		delete space_file
-		where img_temp_name like 'S' || #{imgTempName} || 'Sub%'
+		where img_temp_name like 'S' || #{spaceNum} || 'Sub%'
 	</delete>
 	
-	<delete id="deleteLicenseImg" parameterType="String">
+	<delete id="deleteLicenseImg" parameterType="int">
 		delete space_file
-		where img_temp_name like 'S' || #{imgTempName} || 'license%'
+		where img_temp_name like 'S' || #{spaceNum} || 'license%'
 	</delete>
 	
 	<select id="selectNotice" resultType="boardVo" parameterType="String">

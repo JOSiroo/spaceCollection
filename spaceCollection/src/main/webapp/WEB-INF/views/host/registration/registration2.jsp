@@ -323,6 +323,64 @@
 <script type="text/javascript" src="<c:url value='/js/space.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
+		
+		// 가져온 값에 따라 체크박스 체크 여부 설정
+        if ('${totalVo.facWifi}' == "Y") {
+        	$('input[name="facWifi"]').prop('checked', true);
+        }
+        if ('${totalVo.facPrinter}' == "Y") {
+        	$('input[name="facPrinter"]').prop('checked', true);
+        }
+        if ('${totalVo.facChairTable}' == "Y") {
+        	$('input[name="facChairTable"]').prop('checked', true);
+        }
+        if ('${totalVo.facSmoke}' == "Y") {
+          $('input[name="facSmoke"]').prop('checked', true);
+        }
+        if ('${totalVo.facRestRoom}' == "Y") {
+          $('input[name="facRestRoom"]').prop('checked', true);
+        }
+        if ('${totalVo.facPC}' == "Y") {
+          $('input[name="facPC"]').prop('checked', true);
+        }
+        if ('${totalVo.facTV}' == "Y") {
+          $('input[name="facTV"]').prop('checked', true);
+        }
+        if ('${totalVo.facWhiteBoard}' == "Y") {
+          $('input[name="facWhiteBoard"]').prop('checked', true);
+        }
+        if ('${totalVo.facElevator}' == "Y") {
+          $('input[name="facElevator"]').prop('checked', true);
+        }
+        if ('${totalVo.facParking}' == "Y") {
+          $('input[name="facParking"]').prop('checked', true);
+        }
+        if ('${totalVo.facFood}' == "Y") {
+          $('input[name="facFood"]').prop('checked', true);
+        }
+        if ('${totalVo.facDrink}' == "Y") {
+          $('input[name="facDrink"]').prop('checked', true);
+        }
+        if ('${totalVo.facCook}' == "Y") {
+          $('input[name="facCook"]').prop('checked', true);
+        }
+        if ('${totalVo.facPet}' == "Y") {
+          $('input[name="facPet"]').prop('checked', true);
+        }
+        if ('${totalVo.facAudio}' == "Y") {
+          $('input[name="facAudio"]').prop('checked', true);
+        }
+        
+     	// 해당 값을 가지는 옵션을 선택
+        $('.re7').val('${refundVo.refund7Day}').prop("selected",true);
+        $('.re6').val("${refundVo.refund6Day}").prop("selected",true);
+        $('.re5').val('${refundVo.refund5Day}').prop("selected",true);
+        $('.re4').val('${refundVo.refund4Day}').prop("selected",true);
+        $('.re3').val('${refundVo.refund3Day}').prop("selected",true);
+        $('.re2').val('${refundVo.refund2Day}').prop("selected",true);
+        $('.re1').val('${refundVo.refund1Day}').prop("selected",true);
+        $('.re').val('${refundVo.refundDay}').prop("selected",true);
+        
 		//공간 이름 정규화
         $(".spText.name").on("input", function() {
             var isValid = validate_spaceName($(".spText.name").val());
@@ -380,16 +438,22 @@
 		    $(this).prevAll('.typeTitle').first().addClass('checked');
 		});
 		
-		// URL에서 파라미터 값을 가져옵니다.
-		var spaceTypeNameParam = new URLSearchParams(window.location.search).get('spaceTypeName');
-
 		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
 		$('#${param.spaceTypeName}').addClass('checked');
-		
+			
 		//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
 		$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
-		
+			
 		$('#spaceTypeName').val($('.typeSub.checked').val());
+			
+		/* //수정일때 컨트롤러에서 받은 값도 표시
+		$('#${spaceTypeVo.spaceTypeName}').addClass('checked');
+			
+		//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
+		$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
+			
+		$('#spaceTypeName').val($('.typeSub.checked').val()); */
+
 		
 		//태그 확인 숨기기
 		$('.spTag').hide();
@@ -894,6 +958,13 @@
 	<div class="main">
 		<form name="frmRegi2" method="post" action="<c:url value='${url }' />"
 			enctype="multipart/form-data">
+			
+			<input type="hidden" name="spaceNum" value="${pram.spaceNum }">
+			<input type="hidden" name="spaceZipcode" value="${spaceVo.spaceZipcode }">
+			<input type="hidden" name="latitude" value="${spaceVo.latitude }">
+			<input type="hidden" name="longitude" value="${spaceVo.longitude }">
+			<input type="hidden" name="refundNum" value="${spaceVo.refundNum }">
+			
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
 				<span class="hd2">* 필수입력</span>
@@ -912,7 +983,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceName">
-						<input type="text" class="spText name" value="" name="spaceName"
+						<input type="text" class="spText name" value="${spaceVo.spaceName}" name="spaceName"
 							placeholder=" 고유 업체명을 입력해주세요. (예시) 인디워커스 하이브 회의실" maxlength="18">
 					</div>
 					<div class="boxnoti">
@@ -961,8 +1032,8 @@
 				</div>
 				<div class="boxContents">
 					<div class="spacepBusiness">
-						<input type="text" class="spBusiness" name="spaceBusinessNum" value="" 
-							maxlength="12" required >
+						<input type="text" class="spBusiness" name="spaceBusinessNum" 
+						value="${spaceVo.spaceBusinessNum }" maxlength="12" required >
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -997,7 +1068,8 @@
 				</div>
 				<div class="boxContents">
 					<div class="spacepTel">
-						<input type="text" class="spTel" name="spacePhoneNum" value="" maxlength="20" required >
+						<input type="text" class="spTel" name="spacePhoneNum" value="${spaceVo.spacePhoneNum }" 
+						maxlength="20" required >
 					</div>
 					<div class="boxnoti">
 						<img src="<c:url value='/images/pngwing.com.png' />" >
@@ -1019,7 +1091,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceIntro">
-						<input type="text" class="spText" value="" name="spaceIntro"
+						<input type="text" class="spText" value="${spaceVo.spaceIntro }" name="spaceIntro"
 							placeholder=" 공간의 특장점을 한 문장으로 작성해주세요." maxlength="27">
 					</div>
 				</div>
@@ -1046,7 +1118,7 @@
 					<div class="spaceInfo">
 						<textarea class="spText" name="spaceInfo"
 							placeholder=" 게스트들에게 필요한 공간 정보를 상세하게 소개해주세요. 툴팁을 클릭해 작성 가이드를 확인할 수 있습니다." 
-							maxlength="500" rows="6" ></textarea>
+							maxlength="500" rows="6" >${spaceVo.spaceInfo }</textarea>
 					</div>
 				</div>
 			</div>
@@ -1057,7 +1129,7 @@
 				</div>
 				<div class="boxContents">
 					<div class="spaceText">
-						<input type="text" class="spText floor" value="" maxlength="20"
+						<input type="text" class="spText floor" value="${spaceVo.spaceLocation }" maxlength="20"
 							name="spaceLocation" placeholder="층수 여부를 입력하세요. ex. 지상 1층, 지하 2층">
 					</div>
 				</div>
@@ -1250,10 +1322,12 @@
 						<div class="spZip1">
 							<input type="hidden" name="spaceZipcode" id="zipcode">
 							<input type="text" class="address" name="spaceAddress" id="address"
+								value="${spaceVo.spaceAddress }"
 								placeholder="실제 서비스되는 공간의 주소를 입력해주세요." readonly="readonly">
 						</div>
 						<div class="spZip2">
 							<input type="text" class="addressDetail" name="spaceAddressDetail" 
+								value="${spaceVo.spaceAddressDetail }"
 								id="addressDetail" placeholder="상세주소를 입력해주세요." >
 							<a id="sample6_extraAddress" ></a>
 							<input type="hidden" name="latitude">
@@ -1274,7 +1348,7 @@
 							<div class="opRefund">
 								<span>총 금액의</span>
 								<div>
-									<select class="form-select" name="refund7Day"
+									<select class="form-select re7" name="refund7Day"
 										aria-label="Default select example">
 										<option selected value="100%">100%</option>
 									</select>
@@ -1286,7 +1360,7 @@
 							<label class="lbRefund">이용 6일전</label>
 							<div class="opRefund">
 								<span>총 금액의</span>
-								<select class="form-select" name="refund6Day"
+								<select class="form-select re6" name="refund6Day"
 									aria-label="Default select example">
 									<option value="100%">100%</option>
 									<option value="90%">90%</option>
@@ -1307,7 +1381,7 @@
 							<label class="lbRefund">이용 5일전</label>
 							<div class="opRefund">
 								<span>총 금액의</span> 
-								<select class="form-select" name="refund5Day"
+								<select class="form-select re5" name="refund5Day"
 									aria-label="Default select example">
 									<option value="100%">100%</option>
 									<option value="90%">90%</option>
@@ -1328,7 +1402,7 @@
 							<label class="lbRefund">이용 4일전</label>
 							<div class="opRefund">
 								<span>총 금액의</span> 
-								<select class="form-select" name="refund4Day"
+								<select class="form-select re4" name="refund4Day"
 									aria-label="Default select example">
 									<option value="100%">100%</option>
 									<option value="90%">90%</option>
@@ -1349,7 +1423,7 @@
 							<label class="lbRefund">이용 3일전</label>
 							<div class="opRefund">
 								<span>총 금액의</span> 
-								<select class="form-select" name="refund3Day"
+								<select class="form-select re3" name="refund3Day"
 									aria-label="Default select example">
 									<option value="100%">100%</option>
 									<option value="90%">90%</option>
@@ -1370,7 +1444,7 @@
 							<label class="lbRefund">이용 2일전</label>
 							<div class="opRefund">
 								<span>총 금액의</span> 
-								<select class="form-select" name="refund2Day"
+								<select class="form-select re2" name="refund2Day"
 									aria-label="Default select example">
 									<option value="100%">100%</option>
 									<option value="90%">90%</option>
@@ -1391,7 +1465,7 @@
 							<label class="lbRefund">이용 전날</label>
 							<div class="opRefund">
 								<span>총 금액의</span> 
-								<select class="form-select" name="refund1Day"
+								<select class="form-select re1" name="refund1Day"
 									aria-label="Default select example">
 									<option value="100%">100%</option>
 									<option value="90%">90%</option>
@@ -1412,7 +1486,7 @@
 							<label class="lbRefund">이용 당일</label>
 							<div class="opRefund">
 								<span>총 금액의</span> 
-								<select class="form-select" name="refundDay"
+								<select class="form-select re" name="refundDay"
 									aria-label="Default select example">
 									<option selected value="0%">0%</option>
 								</select>

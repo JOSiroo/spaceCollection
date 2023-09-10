@@ -3,10 +3,12 @@ package com.sc.spaceCollection.host.model;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sc.spaceCollection.board.model.BoardVO;
+import com.sc.spaceCollection.controller.HostController;
 import com.sc.spaceCollection.facility.model.FacilityVO;
 import com.sc.spaceCollection.facility.model.SpaceToTalFacilityVO;
 import com.sc.spaceCollection.refund.model.RefundVO;
@@ -15,11 +17,13 @@ import com.sc.spaceCollection.spaceDetail.model.SpaceDetailVO;
 import com.sc.spaceCollection.spaceFile.model.SpaceFileVO;
 import com.sc.spaceCollection.userInfo.model.UserInfoVO;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class HostServiceImpl implements HostService {
+	private static final Logger logger = (Logger) LoggerFactory.getLogger(HostServiceImpl.class);
 	private final HostDAO hostDao;
 
 	@Override
@@ -143,8 +147,18 @@ public class HostServiceImpl implements HostService {
 	}
 
 	@Override
+	@Transactional
 	public int updateSpace(SpaceVO spaceVo) {
-		return hostDao.updateSpace(spaceVo);
+		int spaceNum = spaceVo.getSpaceNum();
+		
+		int liCnt = hostDao.deleteLicenseImg(spaceNum);
+		int MaCnt = hostDao.deleteMainImg(spaceNum);
+		int SubCnt = hostDao.deleteSubImg(spaceNum);
+		logger.info("liCnt = {}, maCnt = {}, subCnt = {}", liCnt, MaCnt, SubCnt);
+		
+		int cnt = hostDao.updateSpace(spaceVo);
+		
+		return cnt;
 	}
 
 	@Override
@@ -155,21 +169,6 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public int updateRefund(RefundVO refundVO) {
 		return hostDao.updateRefund(refundVO);
-	}
-
-	@Override
-	public int deleteLicenseImg(String fileName) {
-		return hostDao.deleteLicenseImg(fileName);
-	}
-
-	@Override
-	public int deleteMainImg(String fileName) {
-		return hostDao.deleteMainImg(fileName);
-	}
-
-	@Override
-	public int deleteSubImg(String fileName) {
-		return hostDao.deleteSubImg(fileName);
 	}
 
 	@Override
@@ -205,6 +204,26 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public List<BoardVO> selectNotice(String boardTypeId) {
 		return hostDao.selectNotice(boardTypeId);
+	}
+
+	@Override
+	public SpaceVO selectSpaceByspaceNum(int spaceNum) {
+		return hostDao.selectSpaceByspaceNum(spaceNum);
+	}
+
+	@Override
+	public SpaceTypeVO selectSpaceTypeBySpaceTypeNo(int spaceTypeNo) {
+		return hostDao.selectSpaceTypeBySpaceTypeNo(spaceTypeNo);
+	}
+
+	@Override
+	public SpaceToTalFacilityVO selectTotalFacilityBySpaceNum(int spaceNum) {
+		return hostDao.selectTotalFacilityBySpaceNum(spaceNum);
+	}
+
+	@Override
+	public RefundVO selectRefundByRefundNum(int refundNum) {
+		return hostDao.selectRefundByRefundNum(refundNum);
 	}
 
 
