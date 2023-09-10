@@ -39,7 +39,7 @@
 	}
 	img{
 		width: 20%;
-		border-radius: 60px;
+		border-radius: 50%;
 	}
 	
 	#title{
