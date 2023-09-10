@@ -57,19 +57,30 @@
 		margin-bottom: 5px;
 	}
 	
-	#carouselExampleIndicators{
-		width: 360px;
-	    height: 280px;
+	#carouselExampleIndicators {
+		width: 900px;
+		height: 550px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+		background-color: rgb(215, 215, 215);
+		padding: 10px;
 	}
-	
-	.carousel-inner {
-	    width: 360px;
-	    height: 280px;
-	}
-	
-	#carouselExampleIndicators img{
-		width: 100%;
-	}
+
+.carousel-inner {
+	width: 900px;
+	height: 550px;
+	margin: auto;
+} 
+
+#carouselExampleIndicators img {
+	display: block;
+	margin: auto;
+	object-fit: contain;
+	max-width: 70%;
+	max-height: 500px;
+}
 	
 	.confirm{
 		color: rgb(13,110,253);

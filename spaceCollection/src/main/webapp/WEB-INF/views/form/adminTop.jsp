@@ -11,8 +11,7 @@
 
 <title>SpaceCollection - 공간에 사람을 더하다.</title>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript"
-	src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 		$(function() {
 			$('#btLogout').click(function() {
@@ -20,7 +19,8 @@
 			});
 			
 		});
-	</script>
+</script>
+
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -67,6 +67,7 @@
 <body>
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
+
 
 		<div class="d-flex align-items-center justify-content-between">
 			<a href="<c:url value='/admin/adminMain'/>"
