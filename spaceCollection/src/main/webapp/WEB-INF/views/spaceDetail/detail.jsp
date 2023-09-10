@@ -1127,7 +1127,7 @@ pageEncoding="UTF-8"%>
 									+'</div>';
 						if('${sessionScope.userId}' === this.USER_ID){
 							htmlStr +='<div class="col-6 delete-dateCol">'
-									+'<a href="#" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
+									+'<a href="javascript:void(0)" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
 									+'</div>';
 						}
 							htmlStr +='</div>'
