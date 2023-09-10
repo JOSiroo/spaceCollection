@@ -21,6 +21,7 @@
 
 <style type="text/css">
 	section{
+		width:100%;
 	 	display: flex;
         flex-wrap: wrap;
         gap: 20px;
@@ -52,7 +53,6 @@
     margin-left: 10px;
 	}
 	.inner {
-	    margin-top: 230px;
 	    width: 1000px;
 	    /* align-content: center; */
 	    object-position: center;
@@ -71,6 +71,7 @@
 	}
 	section.wrapper.style1 {
 	    margin-bottom: 100px;
+		padding-top:100px;
 	}
 </style>
 <body>
