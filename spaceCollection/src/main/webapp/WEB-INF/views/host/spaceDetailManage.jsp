@@ -105,9 +105,10 @@
     	font-size: 14px;
     	display: table;
     	text-align: center;
+    	padding-top: 10px;
+    	border-radius: 0.3rem;
+    	margin-bottom: 2px;
 	}
-	
-	.edit {border-bottom: none;}
 	
 	.btns {
 		width: 56px;
