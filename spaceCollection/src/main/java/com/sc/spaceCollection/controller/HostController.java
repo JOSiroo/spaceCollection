@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sc.spaceCollection.board.model.BoardService;
+import com.sc.spaceCollection.board.model.BoardVO;
 import com.sc.spaceCollection.calendar.model.CalendarService;
 import com.sc.spaceCollection.calendar.model.CalendarVO;
 import com.sc.spaceCollection.common.ConstUtil;
@@ -55,8 +56,13 @@ public class HostController {
 	
 	
 	@RequestMapping("/index")
-	public String hostMain() {
+	public String hostMain(Model model) {
 		logger.info("호스트 메인 보여주기");
+		
+		List<BoardVO> boardVo = hostService.selectNotice("b00012");
+		logger.info("공지사항 조회, boardVo = {}", boardVo);
+		
+		model.addAttribute("boardVo", boardVo);
 		
 		return "host/index";
 	}
@@ -475,14 +481,14 @@ public class HostController {
 	@GetMapping("/registration/deleteSpaceDetail")
 	public String deleteSpaceDetail(@RequestParam(defaultValue = "0") int sdNum, 
 			@RequestParam(defaultValue = "0") int spaceNum, Model model) {
-		logger.info("세부공간 삭제, spaceNum = {}", sdNum);
+		logger.info("세부공간 삭제, spaceNum = {}, sdNum = {}", spaceNum, sdNum);
 		
 		String msg = "세부공간 삭제를 실패했습니다.", url = "/host/spaceDetailManage?spaceNum=" + spaceNum;
 		if (sdNum > 0) {
 			int cnt = hostService.deleteSpaceDetail(sdNum);
-			logger.info("cnt = {}", cnt);
+			logger.info("cnt = {}, spaceNum = {}", cnt, spaceNum);
 			
-			msg = sdNum + " 공간이 삭제되었습니다.";
+			msg = sdNum + " 세부공간이 삭제되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);

@@ -139,11 +139,11 @@
 		border-top: 2.5px solid #656565;
 	    border-bottom: 2.5px solid #656565;
 	    background-color: #656565;
+	    margin-bottom: 100px;
+		width: 60%;
+    	margin-left: 20%;
 	}
-     .divBox2 {
-    width: 50%;
-    margin-left: 24%;
-	}
+
 	span#span1 {
     font-weight: bold;
 	}

@@ -158,6 +158,17 @@ pageEncoding="UTF-8"%>
  .sticky-top{
  	top:125px !important;
  }
+ #QNAWrite:hover{
+ 	background:white;
+ 	color:black;
+ 	border:#193D76 1px solid !important;
+ }
+ .nav-item:hover{
+ 	background:rgba(255, 208, 20, 0.3) !important;
+ }
+ .navbar{
+ 	border-top:rgba(0,0,0,0.05) 2px solid !important;
+ }
 </style>
 <section class = "sapceDetailSection">
 	<input type="hidden" value="${userId}" id="userId">
