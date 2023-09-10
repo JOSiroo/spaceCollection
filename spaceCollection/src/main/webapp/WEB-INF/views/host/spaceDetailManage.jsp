@@ -12,7 +12,7 @@
 		justify-content: center;
 	}
 
-	.main {width: 1000px; display: inline-block;}
+	.main {width: 1200px; display: inline-block;}
 	
 	.regi {
 		text-align: center;
@@ -37,6 +37,7 @@
 	.boxManage {
 		width: 33.3%;
 		margin-bottom: 26px;
+		padding-right: 20px;
 		display: block;
 		float: left;
 	}
@@ -80,7 +81,7 @@
 	span {vertical-align: top;}
 	
 	.infoState {
-		padding: 20px 0 0 244px;
+		padding: 20px 0 0 290px;
     	min-height: 137px;
     	position: relative;
 	}
