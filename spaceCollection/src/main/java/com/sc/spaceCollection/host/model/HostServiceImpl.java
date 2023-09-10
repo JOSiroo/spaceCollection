@@ -186,6 +186,11 @@ public class HostServiceImpl implements HostService {
 		return hostDao.selectSpaceDetailBySpaceNum(spaceNum);
 	}
 
+	@Override
+	public int deleteSpaceDetail(int sdNum) {
+		return hostDao.deleteSpaceDetail(sdNum);
+	}
+
 
 
 }
