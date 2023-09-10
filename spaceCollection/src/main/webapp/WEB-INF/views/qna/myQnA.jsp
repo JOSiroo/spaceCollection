@@ -245,7 +245,6 @@
 	function QnAEditBtn(){
 		var qnaContent = document.getElementById('message-text').value;
 		var qnaNum = document.getElementById('editQnaNum').value;
-		alert("test");
 		 $.ajax({
 			url:"<c:url value='/editQna'/>",
 			type:"POST",
