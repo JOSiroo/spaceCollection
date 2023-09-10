@@ -125,7 +125,10 @@
 	.sidemenubt {
   	color: white !important;
 	}
-	
+	.sidemenubt:hover{
+		background:#ffd014;
+		transition: 0.3s;
+	}
 	.service_menu {
     padding: 0 0 20px;
     text-align: center;
@@ -162,6 +165,11 @@
     width: 100px;
     margin-left: 10px;
 	}
+	#searchBt:hover{
+		background:white;
+		color:black;
+	}
+	
 	#offcanvasDarkNavbar{
 	z-index:1051;
 	}
@@ -216,6 +224,13 @@
 	}
 	header{
 		height: auto !important;
+	}
+	.logo.float-start.yellow{
+		color:white !important;
+		transition:3s;
+	}
+	.logo.float-start{
+		transition:3s;
 	}
 </style>
 </head>
@@ -418,6 +433,18 @@
 			}
 		});
 	});
+	logoColorAnimation();
+	function logoColorAnimation() {
+		  // 이 함수가 실행될 때마다 원하는 작업을 수행하세요.
+		  var logo = document.getElementById('topLogo');
+			if(logo.classList.contains('yellow')){
+			  logo.classList.remove('yellow');
+			}else{
+			  logo.classList.add('yellow');
+			}
+		  // 다음 호출을 예약합니다.
+		  setTimeout(logoColorAnimation, 3100);
+		}
 	</script>
 
 	<a href="#"

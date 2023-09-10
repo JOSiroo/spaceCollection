@@ -114,6 +114,11 @@ div#place {
 .col-lg-9{
 	width:100% !important;
 }
+.btn:hover{
+	background:lightgrey !important;
+	color:black !important;
+	transition:0.2s;
+}
 </style>
 
 <script >
