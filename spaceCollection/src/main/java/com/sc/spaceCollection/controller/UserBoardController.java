@@ -55,6 +55,7 @@ public class UserBoardController {
 	private final UserInfoService userInfoService;
 	private final GuestService guestService;
 	private final CouponService couponService;
+	private final Coupon coupon;
 	
 	 //자주묻는질문
 	@RequestMapping("/faq")
@@ -218,17 +219,48 @@ public class UserBoardController {
 		    return "userMain/board/roulette";
 		}
 	   
-	   @RequestMapping("/coupon2")
-	   public String coupon2(HttpSession session, Model model) {
-		   String userId = (String)session.getAttribute("userId");
-		   
+	   @GetMapping("/coupon2")
+	   public String coupon2(GuestVO vo, HttpSession session, Model model) {
+		    String userId = (String)session.getAttribute("userId");
+		    logger.info("userId={}",userId);
+		    int userNum = guestService.selectUserInfo(userId).getUserNum();
+		    vo.setUserNum(userNum);
+		    logger.info("userNum={}",userNum);
+	   		
 		   String num = Coupon.generateCoupon();
 		   logger.info("num={}",num);
 		   model.addAttribute("num", num);
+		   model.addAttribute("userNum", userNum);
 		   
 		   return "userMain/board/coupon";
 	   }
-	
+	   
+		@PostMapping("/coupon2/couponWrite")
+		public String couponWrite2(@ModelAttribute CouponVO vo,
+								@RequestParam(defaultValue = "5")int couponSave,
+								@RequestParam(defaultValue = "0")int userNum,
+								@RequestParam(required = false)String couponName,
+								@RequestParam(defaultValue = "0")int couponType,
+								HttpSession session, Model model) {
+	   		logger.info("쿠폰 등록 컨트롤시작");
+		   
+	   		if(couponSave > 0 ) {
+		   		 vo.setUserNum(userNum);
+		         vo.setCouponName(couponName);
+		         vo.setCouponType(10);
+	   			
+	   			int cnt = couponService.insertCoupon(vo);
+	   			logger.info("쿠폰 등록 결과, cnt = {}", cnt);
+	   			logger.info("쿠폰 추가, vo = {}", vo);
+	   			return "user/coupon";
+	   		}
+	   		
+	   		logger.info("쿠폰은 하루만 ");
+	   		
+	        return "redirect:/userMain/board/couponList";
+	        
+	 	}
+	   	
 	 @RequestMapping("/couponList")
 	   public String couponList(CouponVO vo, HttpSession session, Model model) {
 		   String userId = (String)session.getAttribute("userId");
@@ -304,9 +336,6 @@ public class UserBoardController {
 		        return result;
 			}
 	 		return result;
-	 		
-	 		 
-	 	
 	 	}
 	
 	   @RequestMapping("/focusList")

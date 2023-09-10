@@ -1111,7 +1111,7 @@ pageEncoding="UTF-8"%>
 									+'</div>'
 									+'<div class="qnaBody">'+this.REVIEW_CONTENT+'</div>'
 									+'<div class="row" style="font-size:14px;">'
-									+'<div class="col-6 date-deleteCol">'
+									+'<div class="col-6 date-deleteCol" style="padding-right:28% !important">'
 									+'<span>'+(this.REVIEW_REG_DATE).substring(0,10)+'</span>'
 									+'</div>';
 						if('${sessionScope.userId}' === this.USER_ID){
