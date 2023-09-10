@@ -34,6 +34,7 @@ public interface HostDAO {
 	
 	//공간 삭제
 	int deleteSpace(int spaceNum);
+	int deleteSpaceDetail(int sdNum);
 	
 	//공간 수정
 	int updateSpace(SpaceVO spaceVo);

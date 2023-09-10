@@ -99,6 +99,7 @@
 	<select id="selectSpaceByUserNum" resultType="spaceVo" parameterType="int">
 		select * from space
 		where user_num = #{userNum} and del_flag is null
+		order by space_num desc
 	</select>
 	
 	<select id="selectSpaceFile" resultType="spaceFileVo" parameterType="int">
@@ -109,6 +110,7 @@
 	<select id="selectSpaceDetailBySpaceNum" resultType="spaceDetailVo" parameterType="int">
 		select * from space_detail
 		where space_num = #{spaceNum}
+		order by sd_num desc
 	</select>
 	
 	<update id="deleteSpace" parameterType="int">
@@ -118,9 +120,8 @@
 	</update>
 	
 	<update id="deleteSpaceDetail" parameterType="int">
-		update space
-		set del_flag = 'Y', space_out_date = sysdate
-		where space_num = #{spaceNum}
+		delete space_detail
+		where sd_num = #{sdNum}
 	</update>
 	
 	<update id="updateSpace" parameterType="spaceVo">

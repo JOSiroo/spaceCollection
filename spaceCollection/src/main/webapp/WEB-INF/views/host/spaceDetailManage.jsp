@@ -118,7 +118,7 @@
 <script type="text/javascript">
 	$(function() {
 		$('.delete').click(function() {
-			var cf = confirm('공간을 삭제하시겠습니까?');
+			var cf = confirm('세부공간을 삭제하시겠습니까?');
 			
 			if (!cf) {
 				alert('삭제가 취소되었습니다.');
@@ -148,7 +148,8 @@
 								</span> -->
 								<div class="btns">
 									<a class="bt edit" href="<c:url value='/host/registration/spDetail/edit' />">수정</a>
-									<a class="bt delete">삭제</a>
+									<a class="bt delete" 
+										href="<c:url value='/host/registration/deleteSpaceDetail?sdNum=${sd.sdNum}&spaceNum=${param.spaceNum }' />">삭제</a>
 								</div>
 							</div>
 						</div>

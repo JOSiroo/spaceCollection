@@ -189,7 +189,7 @@
 		height: 130px;
 		width: 150px;
 		font-size: 16px;
-		padding: 47px 14px 0 17px;
+		padding: 42px 5px 0 5px;
 		border-right: 1px solid gray;
 		text-align: center;
 		background: white;
