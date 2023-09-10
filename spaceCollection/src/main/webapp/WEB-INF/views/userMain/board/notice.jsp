@@ -141,7 +141,7 @@
     background-color: #656565;
 	}
     .divBox2 {
-    width: 1000px;
+    width: 50%;
     margin-left: 24%;
 	}
 	span#span1 {
@@ -157,7 +157,7 @@
     border: 30px solid #ffffff;
     }
     img {
-    width: 800px;
+    width: 100%;
 	}
 </style>
 
