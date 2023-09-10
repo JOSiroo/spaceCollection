@@ -52,16 +52,13 @@ public class OauthController {
 		    System.out.println("[Key]:" + key + " [Value]:" +  userInfo.get(key));
 		    String id=(String) userInfo.get("id");
 		    String nickname=(String) userInfo.get("nickname");
-		    String email=(String) userInfo.get("email");
 		    String image=(String) userInfo.get("profile_image");
 		    guestVo.setUserName(nickname); //VO에 받아온 kakao정보 넣기
 		    guestVo.setUserId("kakao_"+id);
-		    guestVo.setUserEmail(email);
 		    guestVo.setUserProfileImage(image);
 		    guestVo.setUserSnsCode("kakao");
-		    logger.info("카카오 정보 처리, KakaoVO=[UserName={},UserId={}, UserEmail={}, UserProfileImage={}, UserSnsCode={}]"
-		    		,guestVo.getUserName(),guestVo.getUserId(),guestVo.getUserEmail()
-		    		,guestVo.getUserProfileImage(),guestVo.getUserSnsCode());
+		    logger.info("카카오 정보 처리, KakaoVO=[UserName={},UserId={}, UserProfileImage={}, UserSnsCode={}]"
+		    		,guestVo.getUserName(),guestVo.getUserId(),guestVo.getUserProfileImage(),guestVo.getUserSnsCode());
 		    
 		    int cnt = guestService.selectKakaoUser(guestVo); //이미 카카오로 등록된 계정이 있는지 확인
 		    logger.info("카카오 회원 조회 결과, cnt={}",cnt);

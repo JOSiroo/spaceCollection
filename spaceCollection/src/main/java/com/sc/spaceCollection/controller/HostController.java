@@ -337,7 +337,7 @@ public class HostController {
 		int cnt = hostService.insertSpaceDetail(spaceDetailVo, facilityVo);
 		logger.info("세부공간 등록 결과, cnt = {}", cnt);
 		
-		return "redirect:/host/spaceManage";
+		return "redirect:/host/spaceDetailManage";
 	}
 
 	@RequestMapping("/spaceDetailManage")

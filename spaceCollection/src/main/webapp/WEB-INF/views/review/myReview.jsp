@@ -39,6 +39,8 @@
 			$("form[name=frmPage]").submit();
 		});
 		
+		$(".deleteReview").
+		
 	});
 	
 </script>
@@ -283,7 +285,7 @@
 				<br>
 				<div style="margin-left: 75%;">
 					 <span>등록일 : ${reviewMap['REVIEW_REG_DATE']}</span> | 
-					<a href="<c:url value='/deleteMyReview?reviewNum=${reviewMap["REVIEW_NUM"] }'/>">삭제</a>
+					<a href="<c:url value='/deleteMyReview?reviewNum=${reviewMap["REVIEW_NUM"] }'/>" class="deleteReview">삭제</a>
 					<!-- <a href="#">수정</a> -->
 				</div>
 				<!-- <div class="emptyLine">&nbsp;</div> -->

@@ -12,7 +12,7 @@
 		justify-content: center;
 	}
 
-	.main {width: 1000px; display: inline-block;}
+	.main {width: 1200px; display: inline-block;}
 	
 	.regi {
 		text-align: center;

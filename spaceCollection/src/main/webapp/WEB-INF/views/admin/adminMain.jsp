@@ -14,6 +14,7 @@
 		$.loadReservationType();
 		$.loadReservationRank();
 		$.loadRecentReservation()
+		$.loadLineStatic();
 		setInterval(function() {
 			$.loadRecentReservation()	
 		}, 10000);
@@ -93,7 +94,7 @@
 				str2 += "<span class='text-muted small pt-2 ps-1'>("+res.str+"</span><span class='text-muted small pt-2 ps-1'>"+res.pastTotalPrice+"원)</span>";
 				str2 += "<br>";
 				if(Number(res.percent)>0){
-					str2 += "<span class='text-success small pt-1 fw-bold'>${pastPrice}% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
+					str2 += "<span class='text-success small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>increase</span>";
 				}else if(Number(res.percent)<0){
 					str2 += "<span class='text-danger small pt-1 fw-bold'>"+res.percent+"% </span><span class='text-muted small pt-2 ps-1'>decrease</span>";
 				}else{
@@ -261,7 +262,120 @@
 			}
 		});
 	}
-         
+     
+	
+	 $.loadLineStatic = function() {
+		$.ajax({
+			url : "<c:url value = '/admin/adminMain/Ajax_LineStatic'/>",
+			type : 'get',
+			data : "",
+			dataType: 'json',
+			success : function(res) {
+				
+				var regdateSet = [];
+				var sCntSet = [];
+				var uCntSet = [];
+				var rCntSet = [];
+
+				for(var i=0; i<res.length; i++){
+					regdateSet.push({
+						this[i].DAY;
+					});
+					sCntSet.push({
+					    this.scnt
+					});
+					uCntSet.push({
+					    this.ucnt
+					});
+					rCntSet.push({
+					    this.rcnt
+					});
+				}
+				/* $.each(res, function() {
+					regdateSet.push({
+					    DAY;
+					});
+					sCntSet.push({
+					    this.scnt
+					});
+					uCntSet.push({
+					    this.ucnt
+					});
+					rCntSet.push({
+					    this.rcnt
+					});	
+				}); */
+					
+				if(res.length>0){
+					new ApexCharts(document.querySelector("#reportsChart"), {
+                        series: [{
+                          name: '공간예약건수',
+                          data: rCntSet
+                        }, {
+                          name: '공간등록건수',
+                          data: sCntSet
+                        }, {
+                          name: '회원가입자수',
+                          data: uCntSet
+                        }],
+                        chart: {
+                          height: 350,
+                          type: 'area',
+                          toolbar: {
+                            show: false,
+                            tools: {
+                            	download: false,
+                                selection: false,
+                                zoom: false,
+                                zoomin: false,
+                                zoomout: false,
+                                pan: false,
+                                reset: true | '<img src="/static/icons/reset.png" width="20">'
+                            }
+                          },
+                        },
+                        markers: {
+                          size: 4
+                        },
+                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                          }
+                        },
+                        dataLabels: {
+                          enabled: true
+                        },
+                        stroke: {
+                          curve: 'smooth',
+                          width: 2
+                        },
+                        xaxis: {
+                          type: 'datetime',
+                          categories: regdateSet
+                        },
+                        tooltip: {
+                          x: {
+                            format: 'yyyy/MM/dd'
+                          },
+                        }
+                      }).render();
+					
+				}else{
+					str1 += "진행된 예약이 없습니다.";
+					$('#reportsChart').html(str1);
+				}
+				
+			},
+			error : function(xhr, status, error) {
+				alert(status + " : " + error);
+			}
+		});
+	}
      
 </script>
 <main id="main" class="main">
@@ -400,67 +514,8 @@
 								<div id="reportsChart"></div>
 
 								<script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: '공간예약건수',
-                          data: [31, 40, 28, 51, 42, 20, 10]
-                        }, {
-                          name: '공간등록건수',
-                          data: [11, 32, 45, 32, 34, 52, 12]
-                        }, {
-                          name: '회원가입자수',
-                          data: [15, 11, 32, 18, 9, 24, 10]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false,
-                            tools: {
-                            	download: false,
-                                selection: false,
-                                zoom: false,
-                                zoomin: false,
-                                zoomout: false,
-                                pan: false,
-                                reset: true | '<img src="/static/icons/reset.png" width="20">'
-                            }
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: true
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2023-08-01 00:00:000","2023-08-02 00:00:000","2023-08-03 00:00:000","2023-08-04 00:00:000","2023-08-05 00:00:000",
-                        	  "2023-08-06 00:00:000","2023-08-07 00:00:000"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'yyyy/MM/dd'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
+                      
+                  				</script>
 								<!-- 종합 그래프 -->
 
 							</div>
