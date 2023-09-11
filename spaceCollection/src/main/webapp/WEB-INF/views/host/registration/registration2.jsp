@@ -878,6 +878,25 @@
 		$('#spaceTypeName').val(spaceTypeName);
 	}
 	
+	//태그 삭제
+	function tagRe(tagContainer) {
+		// 태그 삭제 이벤트 핸들러 등록
+        tagContainer.find('.tagClose').click(function() {
+            var tagRe = $(this).closest('.tagRe');
+            var index = tagRe.index();
+            facility.splice(index, 1); // 배열에서 제거
+            tagRe.remove(); // 화면에서 제거
+            
+         	// 남은 태그의 숫자를 다시 설정
+            tagContainer.find('.tagRe').each(function(i) {
+                $(this).find('.num').text((i + 1));
+            });
+
+            // hidden input 업데이트
+            $('#spaceFacility').val(facility.join('||'));
+        });
+	}
+	
 	var geocoder = new kakao.maps.services.Geocoder();
 
 	//우편번호
@@ -1158,7 +1177,18 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
 						<input type="button" class="btAdd tag" value="추가 ▽">
-						<div class="spTag tag" id="tag"></div>
+						<div class="spTag tag" id="tag">
+							<c:if test="${spaceVo.spaceTag != null }">
+								<c:set var="tagList" value="${fn:split(spaceVo.spaceTag, '/')}" />
+								<c:forEach var="tag" items="${tagList}" varStatus="loopStatus">
+									<span class="tagRe"># ${tag } 
+			        	    			<span class="tagClose"> 
+			        	    				<img class="imgClose" src="<c:url value='/images/btClose.png' />"/>
+			        	    			</span>
+			        	    		</span>
+								</c:forEach>
+							</c:if>
+						</div>
 						<input type="hidden" name="spaceTag" id="spaceTag">
 					</div>
 				</div>
@@ -1174,7 +1204,18 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd fa" value="추가 ▽">
-						<div class="spTag fa"></div>
+						<div class="spTag fa">
+							<c:if test="${spaceVo.spaceFacility != null }">
+								<c:set var="faList" value="${fn:split(spaceVo.spaceFacility, '||')}" />
+								<c:forEach var="fa" items="${faList}" varStatus="loopStatus">
+									<span class="tagRe"><span class="num">${loopStatus.index + 1} </span>. ${fa } 
+			        	    			<span class="tagClose">
+			        	    				<img class="imgClose" src="<c:url value='/images/btClose.png' />"/>
+			        	    			</span>
+			        	    		</span><br>
+								</c:forEach>
+							</c:if>
+						</div>
 						<input type="hidden" name="spaceFacility" id="spaceFacility">
 					</div>
 				</div>
@@ -1261,7 +1302,18 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 예약 시 확인해야 하는 주의사항을 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd pre" value="추가 ▽">
-						<div class="spTag pre"></div>
+						<div class="spTag pre">
+							<c:if test="${spaceVo.spaceWarn != null }">
+								<c:set var="WaList" value="${fn:split(spaceVo.spaceWarn, '||')}" />
+								<c:forEach var="Wa" items="${WaList}" varStatus="loopStatus">
+									<span class="tagRe"><span class="num">${loopStatus.index + 1} </span>. ${Wa } 
+			        	    			<span class="tagClose">
+			        	    				<img class="imgClose" src="<c:url value='/images/btClose.png' />"/>
+			        	    			</span>
+			        	    		</span><br>
+								</c:forEach>
+							</c:if>
+						</div>
 						<input type="hidden" name="spaceWarn" id="spaceWarn">
 					</div>
 				</div>

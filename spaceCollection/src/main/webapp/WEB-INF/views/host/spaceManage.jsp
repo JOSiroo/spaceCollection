@@ -171,7 +171,8 @@
 				<div class="ListBox">
 					<div class="inner">
 						<div class="infoArea">
-							<p class="spName">${spaceVo.spaceName }</p>
+							<a class="spName" 
+								href="<c:url value='/detail?spaceNum=${spaceVo.spaceNum }' />">${spaceVo.spaceName }</a>
 							<ul class="stateList">
 								<li class="date">공간번호 : ${spaceVo.spaceNum }</li>
 								<br>
