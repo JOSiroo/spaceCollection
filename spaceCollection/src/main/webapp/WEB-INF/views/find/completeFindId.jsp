@@ -103,7 +103,7 @@ function __doPostBack(eventTarget, eventArgument) {
 				<th style="width: 150px;">스페이스컬렉션ID</th>
 				<th style="width: 60px;">가입일</th>
 				<th style="width: 70px;">회원상태</th>
-				<th style="width: 60px;">탈퇴일</th>
+				<th style="width: 80px;">탈퇴일</th>
 			</tr>
 			<c:forEach var="guestVo" items="${guestVo }">
 				<tr>
