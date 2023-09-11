@@ -97,10 +97,7 @@
 	    padding-top: 6px;
 	    font-size: 14px;
 	    display: inline-block;
-	}
-	
-	.stateList .date {
-		color: #949494;
+	    color: #949494;
 	}
 	
 	li.btn {
@@ -173,22 +170,23 @@
 			<div class="spaceList">
 				<div class="ListBox">
 					<div class="inner">
-						<%-- <div class="imgBox">
-							<span class="img" style="background-image: url('../../../space_images/S118Main.jpeg');"></span>
-							<c:if test="${spaceVo.spaceRequestStatus == 'R' }">
-								<span class="lbWriting">공간 검수 중 입니다.</span>
-							</c:if>
-							<c:if test="${spaceVo.spaceRequestStatus == 'N' }">
-								<span class="lbWriting">공간 등록이 반려되었습니다.</span>
-							</c:if>
-						</div> <!-- imgBox --> --%>
 						<div class="infoArea">
-							<p class="spName">${spaceVo.spaceName }</p>
+							<a class="spName" 
+								href="<c:url value='/detail?spaceNum=${spaceVo.spaceNum }' />">${spaceVo.spaceName }</a>
 							<ul class="stateList">
-								<li class="date">공간번호 ${spaceVo.spaceNum }</li>
+								<li class="date">공간번호 : ${spaceVo.spaceNum }</li>
 								<br>
-								<li class="date">등록일 
+								<li class="date">등록일 : 
 									<fmt:formatDate value="${spaceVo.spaceRegDate }" pattern="yyyy.MM.dd"/>
+								</li><br>
+								<li class="state"> 승인여부 : 
+									<c:if test="${spaceVo.spaceRequestStatus == 'Y' }">
+										공간이 등록되었습니다.
+									</c:if>
+									<c:if test="${spaceVo.spaceRequestStatus == 'N' }">
+										<span style="color: #704de4;">공간 등록이 반려되었습니다.</span>
+										<span style="color: #c80606;">자세한 사항은 문의</span>
+									</c:if>
 								</li>
 							</ul>
 						</div>	<!-- infoArea -->
