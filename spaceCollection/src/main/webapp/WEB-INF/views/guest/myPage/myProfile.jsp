@@ -237,7 +237,6 @@
 						 
 					 },
 					 error:function(xhr,status,error){
-						 alert(error+"정보 수정의 실패했습니다.");
 					 }
 				 });//ajax
 			 }else{

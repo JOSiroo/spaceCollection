@@ -190,7 +190,7 @@
   </div>
 </div>
 <input type ="hidden" name="chkId" id="chkId">
-<input type="text" name="chkEmail" id="chkEmail" value="N">
+<input type="hidden" name="chkEmail" id="chkEmail" value="N">
 <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -237,6 +237,9 @@
 				//event.preventDefault();
 			}
 			
+			if($('#userHp').val().length<7){
+				alert("전화번호는 최소7자리 입니다.");
+			}
 			
 			if($('#chkId').val()!='Y'){
 		         alert('아이디 중복확인을 해주세요.');
