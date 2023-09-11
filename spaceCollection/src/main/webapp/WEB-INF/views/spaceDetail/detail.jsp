@@ -248,7 +248,7 @@ pageEncoding="UTF-8"%>
 					</c:if>
 				</div>
 				<br>
-				<div class="sticky-top">
+				<div class="sticky-top" style="z-index:1">
 					<nav class="navbar navbar-expand-lg bg-light bd-highlight sticky-top custom-nav" style="justify-content:center !important; border-bottom : 1px #6d3bff solid;">
 					  <div>
 					    <div  id="navbarNav">
@@ -599,7 +599,7 @@ pageEncoding="UTF-8"%>
 											<hr>
 											<div style="text-align: center;">
 												<a href="property-single.html" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#myModal" style="width: 40%">전화</a>
-												<a onclick="requestPay()"  class="btn btn-primary py-2 px-7" style="width: 40%">결제하기</a>
+												<a onclick="requestPay('${detail.SD_MIN_TIME}')"  class="btn btn-primary py-2 px-7" style="width: 40%">결제하기</a>
 											</div>
 										</div>
 							  		</li>
@@ -675,7 +675,7 @@ pageEncoding="UTF-8"%>
 	  var datepickerId = $(element).data("id");
 	  var sdNum = $(this).siblings('.calSdNum'); 
 	  var sdPrice = $(this).siblings('.calSdPrice');
-	  
+	  //new Date(new Date().setDate(new Date().getDate() + 1)),
 	  $(element).datepicker({
 	    language: 'ko',
 	    inline: true,
@@ -770,7 +770,7 @@ pageEncoding="UTF-8"%>
 				var begin = this.startHour;
 				var end = this.endHour;
 
-				for(var i = begin; i <= end; i++){
+				for(var i = begin; i < end; i++){
 					parent.find('.swiper-inBox.item-'+i+'th').addClass('reserved');
 					parent.find('.swiper-inBox.item-'+i+'th').prop('disabled', true);
 					parent.find('.swiper-inBox.item-'+i+'th').html('예약됨');
@@ -934,7 +934,16 @@ pageEncoding="UTF-8"%>
         var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
         
-        function requestPay() {
+        function requestPay(minTime) {
+        	var startHour = $('.swiper-inBox.on').first().attr('id');
+        	var endHour = $('.swiper-inBox.on').last().attr('id');
+        	var parsedEndHour = parseInt(endHour)+1;
+        	if((endHour - parseInt(startHour))+1 < parseInt(minTime.substr(0,minTime.length-2))){
+				alert('최소 이용 시간은' + minTime + '입니다');
+				return false;
+        	}
+        	
+        	
         	var userId = '${sessionScope.userId}';
         	if(userId === null || userId === ""){
         		alert('예약은 로그인 후 가능합니다');
@@ -986,7 +995,7 @@ pageEncoding="UTF-8"%>
        		var selectedDate = $('.selectedDate').val();
             var startHour = $('.swiper-inBox.on').first().attr('id');
             var endHour = $('.swiper-inBox.on').last().attr('id');
-             
+            var parsedEndHour = parseInt(endHour)+1;
             IMP.request_pay({
                 pg: payType,
                 pay_method: 'card',
@@ -997,7 +1006,7 @@ pageEncoding="UTF-8"%>
                     START_DAY: selectedDate,
                     START_HOUR: startHour,
                     END_DAY: selectedDate,
-                    END_HOUR: endHour,
+                    END_HOUR: parsedEndHour,
                     SD_NUM: sdNum,
                     RESERVE_PEOPLE: $('.people').val()
                 },
@@ -1027,8 +1036,7 @@ pageEncoding="UTF-8"%>
 
                 } else {
                     var msg = '결제에 실패하였습니다.';
-                    msg += '에러내용 : ' + rsp.error_msg;
-	                alert(msg);
+                    alert(msg);
                 }
             });
         }
@@ -1127,7 +1135,7 @@ pageEncoding="UTF-8"%>
 									+'</div>';
 						if('${sessionScope.userId}' === this.USER_ID){
 							htmlStr +='<div class="col-6 delete-dateCol">'
-									+'<a href="#" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
+									+'<a href="javascript:void(0)" style="font-size:14px;" onclick="deleteReview('+this.REVIEW_NUM+')">삭제하기</a>'
 									+'</div>';
 						}
 							htmlStr +='</div>'

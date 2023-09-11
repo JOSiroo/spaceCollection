@@ -84,16 +84,39 @@ public class HostController {
 	}
 	
 	@GetMapping("/registration/registration2")
-	public String registration2(Model model) {
+	public String registration2(@RequestParam(defaultValue = "0") int spaceNum, Model model) {
 		//1
-		logger.info("공간 입력 페이지 보여주기");
+		logger.info("공간 입력 페이지 보여주기, spaceNum = {}", spaceNum);
 		
 		//2
 		List<SpaceCategoryAllVO> type = hostService.selectSpaceCategory();
 		logger.info("type = {}", type);
 		
+		SpaceVO spaceVo = new SpaceVO();
+		SpaceTypeVO spaceTypeVo = new SpaceTypeVO();
+		SpaceToTalFacilityVO spaceToTalFacilityVO = new SpaceToTalFacilityVO();
+		RefundVO refundVo = new RefundVO();
+		
+		if (spaceNum > 0) {
+			spaceVo = hostService.selectSpaceByspaceNum(spaceNum);
+			logger.info("spaceVo = {}" + spaceVo);
+			
+			spaceTypeVo = hostService.selectSpaceTypeBySpaceTypeNo(spaceVo.getSpaceTypeNo());
+			logger.info("spaceTypeVo = {}", spaceTypeVo);
+			
+			spaceToTalFacilityVO = hostService.selectTotalFacilityBySpaceNum(spaceNum);
+			logger.info("spaceToTalFacilityVO = {}", spaceToTalFacilityVO);
+			
+			refundVo = hostService.selectRefundByRefundNum(spaceVo.getRefundNum());
+			logger.info("refundVo = {}", refundVo);
+		}
+		
 		//3
 		model.addAttribute("type", type);
+		model.addAttribute("spaceVo", spaceVo);
+		model.addAttribute("spaceTypeVo", spaceTypeVo);
+		model.addAttribute("totalVo", spaceToTalFacilityVO);
+		model.addAttribute("refundVo", refundVo);
 		
 		//4
 		return "host/registration/registration2";
@@ -214,8 +237,10 @@ public class HostController {
 	@PostMapping("/registration/registration2/edit")
 	public String registration2_edit(@ModelAttribute SpaceVO spaceVo, @ModelAttribute SpaceTypeVO spaceTypeVO,
 			RefundVO refundVo, SpaceToTalFacilityVO spaceTotalFacilityVo, HttpSession session, 
-			HttpServletRequest request, MultipartHttpServletRequest multiFile, Model model) {
-		logger.info("공간수정 처리, spaceVo = {}, spaceTypeVo = {}, refund = {}", spaceVo, spaceTypeVO, refundVo);
+			HttpServletRequest request, MultipartHttpServletRequest multiFile, 
+			@RequestParam(defaultValue = "0") int spaceNum, Model model) {
+		logger.info("공간수정 처리, spaceNum = {}, spaceVo = {}, spaceTypeVo = {}, refund = {}", 
+				spaceNum, spaceVo, spaceTypeVO, refundVo);
 		
 		//공간 번호 조회
 		SpaceTypeVO spaceTypeVO2 = hostService.selectSpaceTypeBySpaceTypeName(spaceTypeVO.getSpaceTypeName());
@@ -233,7 +258,7 @@ public class HostController {
 		spaceVo.setSpaceInfo(spaceInfo);
 		
 		//공간 수정
-		int spaceNum = spaceVo.getSpaceNum();
+		spaceVo.setSpaceNum(spaceNum);
 		int space = hostService.updateSpace(spaceVo);
 		logger.info("space = {}", space);
 		
@@ -538,7 +563,7 @@ public class HostController {
 		
 		int size = 5;
 		List<Map<String, Object>> list = hostService.selectHostReservation(page,size,userNum,status,order,keyword);
-		logger.info("호스트 예약 조회 결과 list = {}", list);
+		logger.info("호스트 예약 조회 결과 list = {}", list.size());
 		
 		model.addAttribute("list", list);
 		

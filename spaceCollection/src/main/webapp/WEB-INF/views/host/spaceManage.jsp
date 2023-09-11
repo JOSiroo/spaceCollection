@@ -173,15 +173,15 @@
 			<div class="spaceList">
 				<div class="ListBox">
 					<div class="inner">
-						<div class="imgBox">
-							<!-- <span class="img" style="background-image: url('../../../space_images/S118Main.jpeg');"></span> -->
+						<%-- <div class="imgBox">
+							<span class="img" style="background-image: url('../../../space_images/S118Main.jpeg');"></span>
 							<c:if test="${spaceVo.spaceRequestStatus == 'R' }">
 								<span class="lbWriting">공간 검수 중 입니다.</span>
 							</c:if>
 							<c:if test="${spaceVo.spaceRequestStatus == 'N' }">
 								<span class="lbWriting">공간 등록이 반려되었습니다.</span>
 							</c:if>
-						</div> <!-- imgBox -->
+						</div> <!-- imgBox --> --%>
 						<div class="infoArea">
 							<p class="spName">${spaceVo.spaceName }</p>
 							<ul class="stateList">

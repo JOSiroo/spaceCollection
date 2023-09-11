@@ -154,7 +154,7 @@ p{
     padding: 2% 0% 1% 0%;
     position:sticky;
     top:123px;
-    z-index:12;
+    z-index:1;
     background: white;
     transition:1s;
     
@@ -345,33 +345,61 @@ p{
 		margin-bottom:15px;
 		width:10%;
 		float:right;
-		margin-right:25%;
 	}
 	.select-option:hover{
 		background-color: #ffd014 !important;
 	}
 	.all-reset{
-		display : inline-block;
-		text-align:center;
 		margin-left:5%;
-		padding: 0% 0% 0% 0%;
 		width:100%;
 	}
 	
 	#all-resetBtn{
-		border: rgba(204,140,40, 0.6) 10px solid;
-		font-weight:bold;
-		font-size : 15px;
-	    background: #ffd014;
-		border-radius: 30px;
+		white-space: nowrap;
+		display: inline-block;
+	    text-decoration: none !important;
+	    border-radius: 30px;
 	    padding-top: 15px;
 	    padding-bottom: 15px;
 	    padding-left: 30px;
 	    padding-right: 30px;
 	    border-width: 2px;
+	    border-color: transparent;
+	    border: none !important;
+	    top: 0;
+	    position: relative;
+	    -webkit-transition: .3s all ease;
+	    -o-transition: .3s all ease;
+	    transition: .3s all ease;
+		font-weight:bold;
+		border: rgba(204,140,40, 0.6) 10px solid;
+	    background: #ffd014;
+		
 	}
-	#all-resetBtn:hover{
-		background: white;
+	#mapBtn{
+		white-space: nowrap;
+		display: inline-block;
+	    text-decoration: none !important;
+	    border-radius: 30px;
+	    padding-top: 15px;
+	    padding-bottom: 15px;
+	    padding-left: 30px;
+	    padding-right: 30px;
+	    border-width: 2px;
+	    border-color: transparent;
+	    border: 2px lightgrey solid !important;
+	    top: 0;
+	    position: relative;
+	    -webkit-transition: .3s all ease;
+	    -o-transition: .3s all ease;
+	    transition: .3s all ease;
+		font-weight:bold;
+	}
+	.all-reset:hover{
+		#all-resetBtn{
+			border:2px solid #ffd014 !important; 
+			background: white !important;
+		}
 	}
 	.nav-bar {
     width: 45px;
@@ -379,6 +407,7 @@ p{
     background: #ffd014;
     margin-bottom: 10px;
 }
+
 #mapBtn:hover{
 
 	#mapIcon{
@@ -606,10 +635,11 @@ p{
 	    <span class="badge rounded-pill text-bg-danger">Map!</span>
 	  </span>
 	</button></a>
-<a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >전체 초기화</button></a>
+<a class = "all-reset" onclick="allReset()"><button id = "all-resetBtn" type="button" class="menu" >초기화</button></a>
 </div>
 <br>
 <br>
+<div style=" padding-right: 25%;height: 20px;display: inline-block;width: 100%;">
 	<select class="form-select" id="order-selectBox" onfocus='this.size=4;' onblur='this.size=0;' 
            onchange='this.size=1; this.blur();'>
 	  <option class = "select-option" selected>정렬</option>
@@ -618,6 +648,7 @@ p{
 	  <option value="zzimCount_desc" class = "select-option">베스트 공간순</option>
 	  <option value="spaceRegDate_desc" class = "select-option">공간 등록순</option>
 	</select>
+</div>
 <br>
 </div>
 <hr>
@@ -916,7 +947,7 @@ function loadMoreData() {
 				console.log(space);
 				console.log(typeof(innerVal[index]));
 				
-				htmlStr += '<div class="col-sm-4">';
+				htmlStr += '<div class="col-sm-12 col-lg-4 col-md-6">';
 		        htmlStr += '<div class="card" style="width: 18rem;">';
 		        htmlStr += '<div id="carouselExampleAutoplaying'+num+'" class="carousel slide" data-bs-ride="carousel">';
 		        htmlStr += '<div class="carousel-inner">';
