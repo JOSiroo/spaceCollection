@@ -38,7 +38,6 @@ public class ExceptionHandlingController implements ErrorController {
 			int statusCode = Integer.valueOf(status.toString());
 
 			// 로그로 상태값을 기록 및 출력
-			logger.info("httpStatus : " + statusCode);
 
 			// 404 error
 			if (statusCode == HttpStatus.NOT_FOUND.value()) {
