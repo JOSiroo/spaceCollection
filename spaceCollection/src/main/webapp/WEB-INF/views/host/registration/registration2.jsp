@@ -372,14 +372,17 @@
         }
         
      	// 해당 값을 가지는 옵션을 선택
-        $('.re7').val('${refundVo.refund7Day}').prop("selected",true);
-        $('.re6').val("${refundVo.refund6Day}").prop("selected",true);
-        $('.re5').val('${refundVo.refund5Day}').prop("selected",true);
-        $('.re4').val('${refundVo.refund4Day}').prop("selected",true);
-        $('.re3').val('${refundVo.refund3Day}').prop("selected",true);
-        $('.re2').val('${refundVo.refund2Day}').prop("selected",true);
-        $('.re1').val('${refundVo.refund1Day}').prop("selected",true);
-        $('.re').val('${refundVo.refundDay}').prop("selected",true);
+     	if ('${refundVo.refund7Day}' !== '') {
+     		$('.re7').val('${refundVo.refund7Day}').prop("selected",true);
+            $('.re6').val("${refundVo.refund6Day}").prop("selected",true);
+            $('.re5').val('${refundVo.refund5Day}').prop("selected",true);
+            $('.re4').val('${refundVo.refund4Day}').prop("selected",true);
+            $('.re3').val('${refundVo.refund3Day}').prop("selected",true);
+            $('.re2').val('${refundVo.refund2Day}').prop("selected",true);
+            $('.re1').val('${refundVo.refund1Day}').prop("selected",true);
+            $('.re').val('${refundVo.refundDay}').prop("selected",true);
+     	}
+        
         
 		//공간 이름 정규화
         $(".spText.name").on("input", function() {
@@ -419,32 +422,6 @@
 			subTxt.text(txtLen + '자/' + maxLen + '자');
 		});
 		
-		$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
-		
-		//버튼 누르면 색 변환
-		$('.typeSub').click(function() {
-			var spaceType = $(this).closest('.spaceType');
-
-		    // 모든 버튼에서 클래스 제거
-		    spaceType.find('.typeSub').removeClass('checked');
-
-		    // 클릭한 버튼에 클래스 추가
-		    $(this).addClass('checked');
-
-		    // 모든 typeTitle 버튼을 초기화
-		    spaceType.find('.typeTitle').removeClass('checked');
-		    
-		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
-		    $(this).prevAll('.typeTitle').first().addClass('checked');
-		});
-		
-		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
-		$('#${param.spaceTypeName}').addClass('checked');
-			
-		//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
-		$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
-			
-		$('#spaceTypeName').val($('.typeSub.checked').val());
 			
 		/* //수정일때 컨트롤러에서 받은 값도 표시
 		$('#${spaceTypeVo.spaceTypeName}').addClass('checked');
@@ -456,7 +433,10 @@
 
 		
 		//태그 확인 숨기기
-		$('.spTag').hide();
+		if ('${param.spaceTypeName}' != null) {
+			$('.spTag').hide();
+		}
+		
 		
 		// 사용자가 입력한 값을 저장할 배열
         var tag = [];
@@ -860,8 +840,36 @@
 			$('form[name=frmRegi2]').submit();
 		});
 		
+$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
+		
+		//버튼 누르면 색 변환
+		$('.typeSub').click(function() {
+			var spaceType = $(this).closest('.spaceType');
+
+		    // 모든 버튼에서 클래스 제거
+		    spaceType.find('.typeSub').removeClass('checked');
+
+		    // 클릭한 버튼에 클래스 추가
+		    $(this).addClass('checked');
+
+		    // 모든 typeTitle 버튼을 초기화
+		    spaceType.find('.typeTitle').removeClass('checked');
+		    
+		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
+		    $(this).prevAll('.typeTitle').first().addClass('checked');
+		});
+		
+		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
+		if ('${param.spaceTypeName }' != null) {
+			$('#${param.spaceTypeName}').addClass('checked');
+			
+			//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
+			$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
+				
+			$('#spaceTypeName').val($('.typeSub.checked').val());
+		}
+		
 	});
-	
 
 	//스크롤이동
 	function scrollMove(val) {
@@ -873,6 +881,25 @@
 	//공간 타입 val넣기
 	function stNameHidden(spaceTypeName) {
 		$('#spaceTypeName').val(spaceTypeName);
+	}
+	
+	//태그 삭제
+	function tagRe(tagContainer) {
+		// 태그 삭제 이벤트 핸들러 등록
+        tagContainer.find('.tagClose').click(function() {
+            var tagRe = $(this).closest('.tagRe');
+            var index = tagRe.index();
+            facility.splice(index, 1); // 배열에서 제거
+            tagRe.remove(); // 화면에서 제거
+            
+         	// 남은 태그의 숫자를 다시 설정
+            tagContainer.find('.tagRe').each(function(i) {
+                $(this).find('.num').text((i + 1));
+            });
+
+            // hidden input 업데이트
+            $('#spaceFacility').val(facility.join('||'));
+        });
 	}
 	
 	var geocoder = new kakao.maps.services.Geocoder();
@@ -944,13 +971,23 @@
 
 </script>
 
-<c:if test="${empty param.spaceTypeName }" >
-	<c:set var="next" value="수정" />
-	<c:set var="url" value="/host/registration/registration2/edit" />
-</c:if>
 <c:if test="${!empty param.spaceTypeName }" >
 	<c:set var="next" value="등록" />
 	<c:set var="url" value="/host/registration/registration2/write" />
+	<c:set var="spaceNum" value="0" />
+	<c:set var="spaceZipcode" value="0" />
+	<c:set var="latitude" value="0" />
+	<c:set var="longitude" value="0" />
+	<c:set var="refundNum" value="0" />
+</c:if>
+<c:if test="${empty param.spaceTypeName }" >
+	<c:set var="next" value="수정" />
+	<c:set var="url" value="/host/registration/registration2/edit" />
+	<c:set var="spaceNum" value="${param.spaceNum }" />
+	<c:set var="spaceZipcode" value="${spaceVo.spaceZipcode }" />
+	<c:set var="latitude" value="${spaceVo.latitude }" />
+	<c:set var="longitude" value="${spaceVo.longitude }" />
+	<c:set var="refundNum" value="${spaceVo.refundNum }" />
 </c:if>
 
 
@@ -959,11 +996,11 @@
 		<form name="frmRegi2" method="post" action="<c:url value='${url }' />"
 			enctype="multipart/form-data">
 			
-			<input type="hidden" name="spaceNum" value="${pram.spaceNum }">
-			<input type="hidden" name="spaceZipcode" value="${spaceVo.spaceZipcode }">
-			<input type="hidden" name="latitude" value="${spaceVo.latitude }">
-			<input type="hidden" name="longitude" value="${spaceVo.longitude }">
-			<input type="hidden" name="refundNum" value="${spaceVo.refundNum }">
+			<input type="hidden" name="spaceNum" value="${spaceNum }">
+			<input type="hidden" name="spaceZipcode" value="${spaceZipcode }">
+			<input type="hidden" name="latitude" value="${latitude }">
+			<input type="hidden" name="longitude" value="${longitude }">
+			<input type="hidden" name="refundNum" value="${refundNum }">
 			
 			<div class="heading">
 				<span class="hd1">공간 정보를 입력해주세요.</span>
@@ -1145,7 +1182,18 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 선호할만한 주요 특징들을 키워드로 입력해주세요. (최대 5개)" maxlength="27">
 						<input type="button" class="btAdd tag" value="추가 ▽">
-						<div class="spTag tag" id="tag"></div>
+						<div class="spTag tag" id="tag">
+							<c:if test="${spaceVo.spaceTag != null }">
+								<c:set var="tagList" value="${fn:split(spaceVo.spaceTag, '/')}" />
+								<c:forEach var="tag" items="${tagList}" varStatus="loopStatus">
+									<span class="tagRe"># ${tag } 
+			        	    			<span class="tagClose"> 
+			        	    				<img class="imgClose" src="<c:url value='/images/btClose.png' />"/>
+			        	    			</span>
+			        	    		</span>
+								</c:forEach>
+							</c:if>
+						</div>
 						<input type="hidden" name="spaceTag" id="spaceTag">
 					</div>
 				</div>
@@ -1161,7 +1209,18 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 이용 가능한 시설에 대해 최대한 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd fa" value="추가 ▽">
-						<div class="spTag fa"></div>
+						<div class="spTag fa">
+							<c:if test="${spaceVo.spaceFacility != null }">
+								<c:set var="faList" value="${fn:split(spaceVo.spaceFacility, '||')}" />
+								<c:forEach var="fa" items="${faList}" varStatus="loopStatus">
+									<span class="tagRe"><span class="num">${loopStatus.index + 1} </span>. ${fa } 
+			        	    			<span class="tagClose">
+			        	    				<img class="imgClose" src="<c:url value='/images/btClose.png' />"/>
+			        	    			</span>
+			        	    		</span><br>
+								</c:forEach>
+							</c:if>
+						</div>
 						<input type="hidden" name="spaceFacility" id="spaceFacility">
 					</div>
 				</div>
@@ -1248,7 +1307,18 @@
 						<input type="text" class="spText" style="width: 850px;"
 							placeholder=" 게스트들이 예약 시 확인해야 하는 주의사항을 상세하게 입력해주세요. (최대 10개)" maxlength="100">
 						<input type="button" class="btAdd pre" value="추가 ▽">
-						<div class="spTag pre"></div>
+						<div class="spTag pre">
+							<c:if test="${spaceVo.spaceWarn != null }">
+								<c:set var="WaList" value="${fn:split(spaceVo.spaceWarn, '||')}" />
+								<c:forEach var="Wa" items="${WaList}" varStatus="loopStatus">
+									<span class="tagRe"><span class="num">${loopStatus.index + 1} </span>. ${Wa } 
+			        	    			<span class="tagClose">
+			        	    				<img class="imgClose" src="<c:url value='/images/btClose.png' />"/>
+			        	    			</span>
+			        	    		</span><br>
+								</c:forEach>
+							</c:if>
+						</div>
 						<input type="hidden" name="spaceWarn" id="spaceWarn">
 					</div>
 				</div>
