@@ -20,7 +20,7 @@
 		 	(
 		 		select * from qna_sd_view
 				where space_num = #{spaceNum} and qna_del_flag is null
-				order by qna_reg_date desc
+				order by qna_num desc
 		 	)A
 		 )
 		 <![CDATA[
