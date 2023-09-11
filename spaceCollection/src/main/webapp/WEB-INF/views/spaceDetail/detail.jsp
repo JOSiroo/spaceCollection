@@ -614,14 +614,14 @@ pageEncoding="UTF-8"%>
 				<div class="modal" id = "myModal" tabindex="-1" >
 				  <div class="modal-dialog">
 				    <div class="modal-content" style = "font-weight : bold">
-				      <div class="modal-header">
+				      <div class="modal-header" style="background:#ffd014;">
 				        <h4 class="modal-title" >${vo.spaceName}</h5>
 				      </div>
 				      <div class="modal-body">
-				        <p>전화번호 : ${vo.spacePhoneNum }</p>
+				        <h3>전화번호 : ${vo.spacePhoneNum }</h3>
 				      </div>
 				      <div class="modal-footer" style = "justify-content: center;">
-				        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
 				      </div>
 				    </div>
 				  </div>
