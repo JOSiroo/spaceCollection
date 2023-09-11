@@ -870,7 +870,6 @@ $('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활�
 		}
 		
 	});
-	
 
 	//스크롤이동
 	function scrollMove(val) {
