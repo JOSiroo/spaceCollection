@@ -422,32 +422,6 @@
 			subTxt.text(txtLen + '자/' + maxLen + '자');
 		});
 		
-		$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
-		
-		//버튼 누르면 색 변환
-		$('.typeSub').click(function() {
-			var spaceType = $(this).closest('.spaceType');
-
-		    // 모든 버튼에서 클래스 제거
-		    spaceType.find('.typeSub').removeClass('checked');
-
-		    // 클릭한 버튼에 클래스 추가
-		    $(this).addClass('checked');
-
-		    // 모든 typeTitle 버튼을 초기화
-		    spaceType.find('.typeTitle').removeClass('checked');
-		    
-		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
-		    $(this).prevAll('.typeTitle').first().addClass('checked');
-		});
-		
-		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
-		$('#${param.spaceTypeName}').addClass('checked');
-			
-		//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
-		$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
-			
-		$('#spaceTypeName').val($('.typeSub.checked').val());
 			
 		/* //수정일때 컨트롤러에서 받은 값도 표시
 		$('#${spaceTypeVo.spaceTypeName}').addClass('checked');
@@ -459,7 +433,10 @@
 
 		
 		//태그 확인 숨기기
-		$('.spTag').hide();
+		if ('${param.spaceTypeName}' != null) {
+			$('.spTag').hide();
+		}
+		
 		
 		// 사용자가 입력한 값을 저장할 배열
         var tag = [];
@@ -863,8 +840,36 @@
 			$('form[name=frmRegi2]').submit();
 		});
 		
+$('.typeTitle').prop('disabled', true); // 공간타입 타이틀버튼 비활성화
+		
+		//버튼 누르면 색 변환
+		$('.typeSub').click(function() {
+			var spaceType = $(this).closest('.spaceType');
+
+		    // 모든 버튼에서 클래스 제거
+		    spaceType.find('.typeSub').removeClass('checked');
+
+		    // 클릭한 버튼에 클래스 추가
+		    $(this).addClass('checked');
+
+		    // 모든 typeTitle 버튼을 초기화
+		    spaceType.find('.typeTitle').removeClass('checked');
+		    
+		    // 클릭한 버튼의 상위에 있는 typeTitle의 배경색 변경
+		    $(this).prevAll('.typeTitle').first().addClass('checked');
+		});
+		
+		// 가져온 spaceTypeName 값을 가진 버튼에 checked 클래스를 추가합니다.
+		if ('${param.spaceTypeName }' != null) {
+			$('#${param.spaceTypeName}').addClass('checked');
+			
+			//.typeSub에 해당하는 .typeTitle에도 checked 클래스 추가하기
+			$('.typeSub.checked').prevAll('.typeTitle').first().addClass('checked');
+				
+			$('#spaceTypeName').val($('.typeSub.checked').val());
+		}
+		
 	});
-	
 
 	//스크롤이동
 	function scrollMove(val) {
