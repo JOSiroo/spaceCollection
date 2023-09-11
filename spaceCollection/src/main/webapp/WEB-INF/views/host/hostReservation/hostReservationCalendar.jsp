@@ -288,7 +288,9 @@
 		border-top: #193D76 solid 4px;
 		border-bottom: #193D76 solid 4px;
 	}
-	
+	.fc .fc-popover{
+		z-index:10;
+	}
 	#calendar {
 		border: #193D76 solid 4px;
 	}
