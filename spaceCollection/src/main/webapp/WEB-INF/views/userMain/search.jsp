@@ -147,7 +147,12 @@ p{
 	border-radius: 2.2rem 0 0 0 !important;
 	background:linear-gradient(to right, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0));
 }
-
+.carousel-control-prev{
+	z-index:0;
+}
+.carousel-control-next{
+	z-index:0;
+}
 
 .asd{
 	text-align: center;
