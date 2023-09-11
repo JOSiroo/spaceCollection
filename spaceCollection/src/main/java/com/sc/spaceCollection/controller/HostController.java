@@ -563,7 +563,7 @@ public class HostController {
 		
 		int size = 5;
 		List<Map<String, Object>> list = hostService.selectHostReservation(page,size,userNum,status,order,keyword);
-		logger.info("호스트 예약 조회 결과 list = {}", list);
+		logger.info("호스트 예약 조회 결과 list = {}", list.size());
 		
 		model.addAttribute("list", list);
 		
