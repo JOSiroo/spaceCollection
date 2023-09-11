@@ -173,4 +173,6 @@ public class AdminStaticController {
 		
 		return list;
 	}
+	
+	
 }

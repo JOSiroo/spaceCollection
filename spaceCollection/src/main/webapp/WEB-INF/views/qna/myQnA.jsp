@@ -312,7 +312,7 @@
 						<br>
 						<div class="qnaContent">${map['QNA_CONTENT'] }<br></div>
 						<div class="editMenu">
-							<a class="answer">${map['SPACE_NAME'] }</a>
+							<a href="<c:url value='/detail?spaceNum=${map["SPACE_NUM"] }'/>" class="answer">${map['SPACE_NAME'] }</a>
 							${map['QNA_REG_DATE'] }
 							| <button type="button" class="btn btn-primary QNAWriteBt" id="QNAWrite" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 								수정
