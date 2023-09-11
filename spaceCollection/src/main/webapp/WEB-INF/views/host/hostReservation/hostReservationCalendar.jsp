@@ -478,9 +478,6 @@
 		background: #ffd014;
 	}
 	
-	.modal-footer {
-		background: #193D76;
-	}
 	
 	.modal-body {
 		padding: 2% 8% 2% 8%; 
