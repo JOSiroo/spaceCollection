@@ -238,8 +238,8 @@
 		        where user_num = #{userNum}
 		        <if test='status != null and status != ""'>
 		        		and
-		        	<if test="status == 'before'"><![CDATA[RESERVE_START_DAY >= sysdate ]]></if>
-		        	<if test="status == 'finished'"><![CDATA[RESERVE_START_DAY <= sysdate ]]></if>
+		        	<if test="status == 'before'"><![CDATA[RESERVE_START_DAY >= sysdate ]]> and RESERVATION_DEL_FLAG = 'N'</if>
+		        	<if test="status == 'finished'"><![CDATA[RESERVE_START_DAY <= sysdate ]]> and RESERVATION_DEL_FLAG = 'N'</if>
 		        	<if test="status == 'canceled'">RESERVATION_DEL_FLAG = 'Y'</if>
 		        </if>
 		        <if test='keyword != "" and keyword != null'>
