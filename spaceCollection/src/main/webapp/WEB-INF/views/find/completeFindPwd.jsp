@@ -108,7 +108,7 @@
 	</ul>
 	<h2 class="hiddenTit">비밀번호 재설정</h2>
 	<form name="frmResetPwd" class="validation-form" method="post" action="<c:url value='/guest/resetPwd'/>" novalidate>
-        <input type="text" name="userId" value="${userId }">
+        <input type="hidden" name="userId" value="${userId }">
 	<div class="contents">
 		<p class="stit">비밀번호 재설정을 위한 스페이스 컬렉션 비밀번호를 입력해주세요.</p>
 		<div class="findPwSec">
@@ -130,7 +130,7 @@
 				<dd>
 					<div class="inputCnts">
 						<div id="inputWrap" class="inputWrap "> <!-- error color <div class="inputWrap errorInput"> --> <!-- success color <div class="inputWrap successInput"> -->
-							<p class="inputTxtSec"><input name="chkPwd" type="password" id="chkPwd" class="inputTxt2 errorInput"  /></p>
+							<p class="inputTxtSec"><input name="chkPwd" type="password" id="chkPwd" class="inputTxt2 errorInput" placeholder="-문자/숫자/특수문자 3가지 조합 (8~30자)" /></p>
 						</div>
 							<span class="errorPwd"></span>
 						<p id="errorMsg" class="errorMsg"></p>

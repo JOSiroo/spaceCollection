@@ -61,7 +61,7 @@
 <body>
 <div class="popupFind2">
 	<ul class="find2Tab">
-		<li class="id"><a href="<c:url value='/guest/findPwd'/>" finda2sopt="FindId">스페이스 컬렉션ID찾기</a></li>	<!-- A094 -->
+		<li class="id"><a href="<c:url value='/guest/findId'/>" finda2sopt="FindId">스페이스 컬렉션ID찾기</a></li>	<!-- A094 -->
 		<li class="password"><a class="on">비밀번호찾기</a></li>
 	</ul>
 <form action="<c:url value='/guest/findPwd'/>" name="frmFindPwd" method="post">
@@ -74,7 +74,7 @@
 				<dd>
 					<div class="inputCnts">
 						<div id="inputWrap" class="inputWrap "> <!-- error color <div class="inputWrap errorInput"> --> <!-- success color <div class="inputWrap successInput"> -->
-							<p class="inputTxtSec"><input name="userId" type="hidden" id="userId" class="inputTxt2 errorInput" placeholder="스페이스 컬렉션ID를 입력해주세요." /></p>
+							<p class="inputTxtSec"><input name="userId" type="text" id="userId" class="inputTxt2 errorInput" placeholder="스페이스 컬렉션ID를 입력해주세요." /></p>
 							<div class="inputAlertSec">
 								<p class="delBt" style="display:none;"><button type="button"><span class="hidden">입력삭제</span></button></p>
 							</div>
