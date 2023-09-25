@@ -1,4 +1,3 @@
-![image](https://github.com/JOSiroo/spaceCollection/assets/135147602/ca9b7cf2-2a1c-4b48-9d2b-d46ac9aecfdf)
 <h1>공간 대여 플랫폼 SpaceCollection</h1>
 </div>
 
@@ -26,3 +25,10 @@
 
 🛠 라이브러리
 
+## 👨‍👩‍👧‍👦 팀원소개 및 업무분담
+![역할](https://github.com/JOSiroo/spaceCollection/assets/135147602/c6f08bdb-1cd2-46da-9357-7eeb4f546deb)
+
+
+
+
+## ✴️ 주요 페이지 소개
