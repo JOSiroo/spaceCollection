@@ -9,6 +9,10 @@
 	#editBt{
 		margin-right: 5px;
 	}
+	.row{
+		margin-bottom: 10px;
+	}
+	
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -78,44 +82,62 @@
  						<h5 class="card-title" style="font-weight: bold;">게시판 수정</h5>
  						<form id="frm" action="<c:url value='/admin/board/boardTypeEdit'/>" method="post">
  							<input type="hidden" name="boardTypeId" value="${param.boardTypeId }">
- 							<div class="row mb-3">
-                  				<label for="boardTypeName" class="col-sm-2 col-form-label">게시판 이름</label>
-                  				<div class="col-sm-10">
+ 							<div class="row">
+                  				<div class="col-2">
+                  					<label for="boardTypeName" class="col-form-label">게시판 이름</label>
+                  				</div>
+                  				<div class="col-6">
                     				<input type="text" class="form-control" name="boardTypeName" id="boardTypeName" value="${vo.boardTypeName }">
                   				</div>
                 			</div>
-                			<div class="form-check form-switch">
-                      			<input class="form-check-input" type="checkbox" name="boardTypeCommentOk" id="boardTypeCommentOk"
-                      			<c:if test="${vo.boardTypeCommentOk=='Y'}">
-                      				checked = "checked";
-                      			</c:if>>
-                      			<label class="form-check-label" for="boardTypeCommentOk">댓글 사용 여부</label>
-                    		</div>
-                			<div class="form-check form-switch">
-                      			<input class="form-check-input" type="checkbox" name="boardTypeFileOk" id="boardTypeFileOk"
-                      			<c:if test="${vo.boardTypeFileOk=='Y'}">
-                      				checked = "checked";
-                      			</c:if>>
-                      			<label class="form-check-label" for="boardTypeFileOk">첨부파일 사용 여부</label>
-                    		</div>
-                    		<div class="row mb-3">
-                  				<label for="boardTypeFileNum" class="col-sm-2 col-form-label">첨부 파일 개수</label>
-                  				<div class="col-sm-10">
+                			<div class="row">
+                				<div class="col-2">
+	                      			<label class="form-check-label" for="boardTypeCommentOk">댓글 사용 여부</label>
+                    			</div>
+                    			<div class="col-6 form-check form-switch">
+                    				<input class="form-check-input" type="checkbox" name="boardTypeCommentOk" id="boardTypeCommentOk"
+	                      			<c:if test="${vo.boardTypeCommentOk=='Y'}">
+	                      				checked = "checked";
+	                      			</c:if>>
+                    			</div>
+                			</div>
+                			<div class="row">
+	                			<div class="col-2">
+	                      			<label class="form-check-label" for="boardTypeFileOk">첨부파일 사용 여부</label>
+	                    		</div>
+	                    		<div class="col-6 form-check form-switch">
+	                    			<input class="form-check-input" type="checkbox" name="boardTypeFileOk" id="boardTypeFileOk"
+	                      			<c:if test="${vo.boardTypeFileOk=='Y'}">
+	                      				checked = "checked";
+	                      			</c:if>>
+	                    		</div>
+                			</div>
+                    		<div class="row">
+                  				<div class="col-2">
+                  					<label for="boardTypeFileNum" class="col-form-label">첨부 파일 개수</label>
+                  				</div>
+                  				<div class="col-6">
                     				<input type="text" class="form-control" name="boardTypeFileNum" id="boardTypeFileNum" value="${vo.boardTypeFileNum }">
                   				</div>
                 			</div>
-                    		<div class="row mb-3">
-                  				<label for="boardTypeFileSize" class="col-sm-2 col-form-label">첨부 파일 사이즈</label>
-                  				<div class="col-sm-10">
+                    		<div class="row">
+                    			<div class="col-2">
+	                  				<label for="boardTypeFileSize" class="col-form-label">첨부 파일 사이즈</label>
+                    			</div>
+                  				<div class="col-6">
                     				<input type="text" class="form-control" id="boardTypeFileSize" name="boardTypeFileSize" value="${vo.boardTypeFileSize }">
                   				</div>
                 			</div>
-                			<div class="form-check form-switch">
-                      			<input class="form-check-input" type="checkbox" id="boardTypeUse" name="boardTypeUse"<c:if test="${vo.boardTypeUse=='Y'}">
-                      				checked = "checked";
-                      			</c:if>>
-                      			<label class="form-check-label" for="boardTypeUse">게시판 활성화</label>
-                    		</div>
+                			<div class="row">
+	                			<div class="col-2">
+	                      			<label class="form-check-label" for="boardTypeUse">게시판 활성화</label>
+	                    		</div>
+	                    		<div class="col-6 form-check form-switch">
+	                    			<input class="form-check-input" type="checkbox" id="boardTypeUse" name="boardTypeUse"<c:if test="${vo.boardTypeUse=='Y'}">
+	                      				checked = "checked";
+	                      			</c:if>>
+	                    		</div>
+                			</div>
                 			
 							<button type="button" class="btn btn-secondary rounded-pill" id="cancelBt" data-bs-toggle="modal" data-bs-target="#confirm2">닫기</button>
 							<button type="button" class="btn btn-primary rounded-pill" id="editBt" data-bs-toggle="modal" data-bs-target="#confirm1">수정하기</button>

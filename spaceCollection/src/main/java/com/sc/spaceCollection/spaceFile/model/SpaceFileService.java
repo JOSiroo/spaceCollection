@@ -7,4 +7,6 @@ public interface SpaceFileService {
 	List<SpaceFileVO> selectSpaceFileByBoardNum(String boardNum);
 	int deleteSpaceFileByImgeTempName(String imgTempName);
 	List<String> selectSpaceImgBySpaceNum(String spaceNum);
+	String selectLicenceImgBySpaceNum(String spaceNum);
+	SpaceFileVO selectSpaceFileBySpaceNum(String spaceNum);
 }
