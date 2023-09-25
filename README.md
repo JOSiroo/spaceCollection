@@ -19,7 +19,7 @@
 ## 🖥️ 개발환경
 ![개발33](https://github.com/JOSiroo/spaceCollection/assets/135147602/a1ab0069-ad32-4c74-b65b-a9c3a21be505)
 
-## 🪄 사용된 API  
+## 🎇 사용된 API  
 ![API](https://github.com/JOSiroo/spaceCollection/assets/135147602/32227c50-021d-4309-82d7-a1ce2fdb2a89)
 
 ## 🛠 라이브러리
