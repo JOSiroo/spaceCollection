@@ -1,4 +1,4 @@
-![image](https://github.com/JOSiroo/spaceCollection/assets/135147602/0e14ca17-3ee1-4781-bfa7-ca65789782a1)<div align="center">
+![image](https://github.com/JOSiroo/spaceCollection/assets/135147602/ca9b7cf2-2a1c-4b48-9d2b-d46ac9aecfdf)
 <h1>공간 대여 플랫폼 SpaceCollection</h1>
 </div>
 
@@ -22,7 +22,7 @@
 
 
 ## 🪄 사용된 API  
-![API](https://github.com/JOSiroo/spaceCollection/assets/135147602/ea81930d-f8a6-4a9b-a1cb-b3b7b983438d)
+![API](https://github.com/JOSiroo/spaceCollection/assets/135147602/32227c50-021d-4309-82d7-a1ce2fdb2a89)
 
 🛠 라이브러리
 
