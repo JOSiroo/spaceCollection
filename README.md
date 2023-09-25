@@ -1,6 +1,7 @@
 <div align="center">
 <h1>공간 대여 플랫폼 SpaceCollection</h1>
 </div>
+
 ## ✔️스페이스 콜렉션
  
 
