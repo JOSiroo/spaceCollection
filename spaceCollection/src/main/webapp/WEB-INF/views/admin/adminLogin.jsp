@@ -17,6 +17,20 @@
    		display: block;
    		margin-block: -13px;
 	}
+	
+	#button{
+		width: 250px;
+		margin-top: -1px;
+	}
+	
+	#kakaoImg{
+		width: 225px;
+	}
+	
+	#kakaoLogin{
+		border: none;
+		background-color: white;
+	}
 </style>
 <script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
@@ -37,6 +51,10 @@
 					$('#confirm1').modal('show');
 					return false;
 				}
+			});
+			
+			$('#kakaoLogin').click(function() {
+				location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=15dc3b6f1122f8cd6e57caf12231842b&redirect_uri=http://59.6.102.18:9091/spaceCollection/admin/adminKakaoLogin';
 			});
 		});
 	</script>
@@ -108,6 +126,9 @@
 					<label class="form-check-label" for="exampleCheck1">아이디 저장</label>
   				</div>
   				<button type="submit" id="button" class="btn btn-primary">로그인</button>
+  				<button type="button" id="kakaoLogin">
+  					<img alt="카카오 로그인" src="<c:url value = '/img/icons/kakaoLogin.png'/>" id="kakaoImg"> 
+  				</button>
 			</form>
 		</div>
 	</section>

@@ -21,7 +21,7 @@ public class MvcConfiguration implements WebMvcConfigurer{
 		
 		
 		 registry.addInterceptor(new AdminLoginInterceptor())
-		 .excludePathPatterns("/admin/adminLogin") //exclude - 제외하고
+		 .excludePathPatterns("/admin/adminLogin", "/admin/adminKakaoLogin") //exclude - 제외하고
 		 .addPathPatterns("/admin/**");
 		 
 		
