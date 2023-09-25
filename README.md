@@ -1,4 +1,3 @@
-# space 싹싹김치 Collection
-싹싹김치요
+# 공간 대여 플랫폼 SpaceCollection
 
-머요 ㅋ
+
