@@ -57,7 +57,6 @@ function generateCoupon() {
               } else {
                   alert("쿠폰은 하루 한 번만 발급됩니다.");
                   window.location.href = "<c:url value='/user/couponList' />";
-              }
 }
 
 
