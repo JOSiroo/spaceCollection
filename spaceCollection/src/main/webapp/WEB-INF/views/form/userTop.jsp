@@ -203,6 +203,9 @@
 		position: sticky;
 		top: 0;
 	}
+	.menu-bg-wrap {
+	   border-radius: 0px !important;
+	}
 	#topContainer{
 		max-width: 100% !important;
 		width: 100% !important;
@@ -238,7 +241,7 @@
   	}
 	::-webkit-scrollbar-thumb{
 		background: #ffd014;
-		border-radius: 1rem;
+		border-radius: ;
 	} 
 </style>
 </head>
