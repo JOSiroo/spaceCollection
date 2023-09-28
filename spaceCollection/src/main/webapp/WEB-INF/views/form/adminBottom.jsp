@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <footer id="footer" class="footer">
 	<div class="copyright">
-		&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
+		&copy; Copyright <strong><span>SpaceCollection</span></strong>. All Rights
 		Reserved
 	</div>
 

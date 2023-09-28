@@ -10,12 +10,51 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <title>SpaceCollection - 공간에 사람을 더하다.</title>
-<script type="text/javascript"
-	src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
+<style type="text/css">
+	i.bi.bi-exclamation-circle {
+ 		color: #ffd600;
+   		font-size: 40px;
+   		display: block;
+   		margin-block: -13px;
+	}
+	
+	#button{
+		width: 250px;
+		margin-top: -1px;
+	}
+	
+	#kakaoImg{
+		width: 225px;
+	}
+	
+	#kakaoLogin{
+		border: none;
+		background-color: white;
+	}
+</style>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.7.0.min.js'/>"></script>
 <script type="text/javascript">
 		$(function() {
 			$('#logoutBtn').click(function() {
 				location.href="<c:url value='/admin/adminLogout'/>";
+			});
+			
+			$('#button').click(function() {
+				if($('#userId').val().trim().length<1){
+					$('.modal-body').html('아이디를 입력하세요.');
+					$('#confirm1').modal('show');
+					return false;
+				}
+				
+				if($('#pwd').val().trim().length<1){
+					$('.modal-body').html('비밀번호를 입력하세요.');
+					$('#confirm1').modal('show');
+					return false;
+				}
+			});
+			
+			$('#kakaoLogin').click(function() {
+				location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=15dc3b6f1122f8cd6e57caf12231842b&redirect_uri=http://59.6.102.18:9091/spaceCollection/admin/adminKakaoLogin';
 			});
 		});
 	</script>
@@ -86,10 +125,31 @@
 					
 					<label class="form-check-label" for="exampleCheck1">아이디 저장</label>
   				</div>
-  				<button type="submit" class="btn btn-primary">로그인</button>
+  				<button type="submit" id="button" class="btn btn-primary">로그인</button>
+  				<button type="button" id="kakaoLogin">
+  					<img alt="카카오 로그인" src="<c:url value = '/img/icons/kakaoLogin.png'/>" id="kakaoImg"> 
+  				</button>
 			</form>
 		</div>
 	</section>
+	<!-- Modal1 -->
+	<div class="modal fade" id="confirm1" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="bi bi-exclamation-circle"></i></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" id="confirm">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EndModal1 -->
 
 	<!-- Vendor JS Files -->
 	<script

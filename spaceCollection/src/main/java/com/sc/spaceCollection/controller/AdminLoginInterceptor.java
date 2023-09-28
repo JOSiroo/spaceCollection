@@ -23,7 +23,8 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("location.href='" + request.getContextPath() + "");
+			out.print("alert('로그인 후 이용이 가능합니다.');");
+			out.print("location.href='" + request.getContextPath() + "/admin/adminLogin';");
 			out.print("</script>");
 			
 			return false;

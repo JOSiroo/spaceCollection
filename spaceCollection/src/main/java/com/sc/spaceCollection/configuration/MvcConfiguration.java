@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.sc.spaceCollection.controller.AdminLoginInterceptor;
 import com.sc.spaceCollection.controller.LoginInterceptor;
 
 //Configuration을 붙혀서 설정파일임을 알려줘야함
@@ -18,11 +19,11 @@ public class MvcConfiguration implements WebMvcConfigurer{
 		.addPathPatterns("/host/registration/*", "/host/spaceManage", //저런 경로를 가진 것들은 인터셉트를 거치고 가도록 설정함
 				"/guest/*","/guest/myPage/*","/myReview","/login/memberOut","/myQnA", "/host/spaceDetailManage");
 		
-		/*
-		 * registry.addInterceptor(new AdminLoginInterceptor())
-		 * .excludePathPatterns("/admin/login/adminLogin") //exclude - 제외하고
-		 * .addPathPatterns("/admin/**");
-		 */
+		
+		 registry.addInterceptor(new AdminLoginInterceptor())
+		 .excludePathPatterns("/admin/adminLogin", "/admin/adminKakaoLogin") //exclude - 제외하고
+		 .addPathPatterns("/admin/**");
+		 
 		
 		
 	}

@@ -68,7 +68,7 @@
 			select rownum as RNUM, A.* from
 			(
 				select * from RESERVATION_SD_VIEW 
-				where RESERVATION_DEL_FLAG is null and USER_ID = #{userId}
+				where RESERVATION_DEL_FLAG ='N' and USER_ID = #{userId}
 				<include refid="searchWhere"/>
 				order by RESERVATION_NUM desc
 			)A

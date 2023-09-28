@@ -1,7 +1,6 @@
 package com.sc.spaceCollection.admin.model;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sc.spaceCollection.common.Encryption;
 

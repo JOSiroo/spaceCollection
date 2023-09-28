@@ -255,10 +255,7 @@
 					str = "<form name='trFrm' method='post' action=''>"
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-								str += "<td>"
-								str += "<input type='checkbox' name='commentsItemList["+i+"].boardNum' value='"+this.COMMENT_NUM+"'>"
-								str += "</td>"
-								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.COMMENT_NUM
+								str += "<td onclick='location.href='/spaceCollection/admin/board/boardDetail?boardNum="+this.BOARD_NUM+" style='cursor: pointer;''>" + this.COMMENT_NUM
 								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.BOARD_NUM
 								str += "</td>"
@@ -309,9 +306,6 @@
 					str = "<form name='trFrm' method='post' action=''>"
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>"
-								str += "<td>"
-								str += "<input type='checkbox' name='reviewItemList["+i+"].boardNum' value='"+this.REVIEW_NUM+"'>"
-								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.REVIEW_NUM
 								str += "</td>"
 								str += "<td onclick='location.href=';' style='cursor: pointer;'>" + this.RESERVATION_NUM
@@ -363,9 +357,6 @@
 					str = "<form name='trFrm' method='post' action=''>"
 						$.each(res.ajaxList, function() {
 								str += "<tr onmouseenter='mouseIn(this)' onmouseout='mouseOut(this)'>";
-								str += "<td>";
-								str += "<input type='checkbox' name='spaceItemList["+i+"].spaceNum' value='"+this.SPACE_NUM+"'>";
-								str += "</td>";
 								str += "<td onclick='location.href=';' style='cursor: pointer;''>" + this.SPACE_NUM;
 								str += "</td>";
 								if(this.SPACE_REQUEST_STATUS == '승인'){
@@ -786,16 +777,14 @@
 											<div class="row mb-3">
 												<table class="table">
 													<colgroup>
-														<col style="width: 5%;" />
-														<col style="width: 12%;" />
-														<col style="width: 12%;" />
-														<col style="width: 41%;" />
-														<col style="width: 15%;" />
-														<col style="width: 15%;" />
+														<col style="width: 13%;" />
+														<col style="width: 13%;" />
+														<col style="width: 42%;" />
+														<col style="width: 16%;" />
+														<col style="width: 16%;" />
 													</colgroup>
 													<thead>
 														<tr>
-															<th scope="col"><input type="checkbox" name="chkAll"></th>
 															<th scope="col">리뷰 번호</th>
 															<th scope="col">예약 번호</th>
 															<th scope="col">예약 장소</th>
@@ -852,16 +841,14 @@
 										<div class="row mb-3">
 											<table class="table">
 												<colgroup>
-													<col style="width: 5%;" />
-													<col style="width: 12%;" />
-													<col style="width: 12%;" />
-													<col style="width: 41%;" />
-													<col style="width: 15%;" />
-													<col style="width: 15%;" />
+													<col style="width: 13%;" />
+													<col style="width: 13%;" />
+													<col style="width: 42%;" />
+													<col style="width: 16%;" />
+													<col style="width: 16%;" />
 												</colgroup>
 												<thead>
 													<tr>
-														<th scope="col"><input type="checkbox" name="chkAll"></th>
 														<th scope="col">댓글 번호</th>
 														<th scope="col">게시물 번호</th>
 														<th scope="col">게시물 제목</th>
@@ -922,17 +909,15 @@
 										<div class="row mb-3">
 											<table class="table">
 												<colgroup>
-													<col style="width: 4%;" />
-													<col style="width: 13%;" />
-													<col style="width: 22%;" />
-													<col style="width: 22%;" />
-													<col style="width: 11%;" />
+													<col style="width: 14%;" />
+													<col style="width: 23%;" />
+													<col style="width: 23%;" />
+													<col style="width: 12%;" />
 													<col style="width: 14%;" />
 													<col style="width: 14%;" />
 												</colgroup>
 												<thead>
 													<tr>
-														<th scope="col"><input type="checkbox" name="chkAll"></th>
 														<th scope="col">공간 번호</th>
 														<th scope="col">공간명</th>
 														<th scope="col">공간 종류</th>
