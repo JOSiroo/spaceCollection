@@ -43,7 +43,9 @@
     
     4. 관리자
        3-1 메인페이지
+<br>
+<div align="center">
+<kbd><img src="https://github.com/JOSiroo/spaceCollection/assets/124752869/099a6692-8b6e-4811-a217-266232eada23" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
+</div>
 
-
-![무한스크롤gif](https://github.com/JOSiroo/spaceCollection/assets/124752869/099a6692-8b6e-4811-a217-266232eada23)
 
