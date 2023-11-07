@@ -74,8 +74,58 @@ https://github.com/eunjung15/backup_semipj2/assets/135147602/4055f39a-caf1-4ff5-
 
 <p> 3. 관리자
 
- ![통계 캡처](https://github.com/JOSiroo/spaceCollection/assets/137861436/2b54dffe-6108-4acf-96f1-71582b299813)
-<p> 3-1 메인페이지
+![일반로그인](https://github.com/JOSiroo/spaceCollection/assets/137861436/0dcac29f-037c-4039-a47a-bc9de114711e)
+<p> 3-1 로그인 구현
+<p>- SHA-256을 사용한 비밀번호 암호화를 통한 보안성 강화
+
+![카카오로그인](https://github.com/JOSiroo/spaceCollection/assets/137861436/00594506-2a5f-41d5-9d6b-87d91f8acfe6)
+<p> 3-2 카카오 로그인 구현
+<p>- 일반 계정을 통해 사전등록된 카카오 계정에 대해 로그인 기능 구현
+ 
+![통계 캡처](https://github.com/JOSiroo/spaceCollection/assets/137861436/2b54dffe-6108-4acf-96f1-71582b299813)
+<p> 3-3 메인페이지
+<p>- 현재 예약상태, 공간 등록 상태, 주요 뉴스 출력
+<p>- 각종 통계 자료를 일별, 월별, 년별로 비교하여 출력
+
+![네이버 뉴스](https://github.com/JOSiroo/spaceCollection/assets/137861436/2295b923-3e97-40be-8948-721c99ecc1cd)
+<p> 3-4 네이버 뉴스 api를 사용한 뉴스 검색 기능 구현
+<p>- 숙박업 영업에 영향이 큰 감염병을 기본 키워드로 뉴스 검색
+<p>- ajax를 활용하여 다른 키워드로 뉴스 검색 가능
+
+![정렬변경](https://github.com/JOSiroo/spaceCollection/assets/137861436/11ffb60f-2b67-4246-a159-b806779a495c)
+<p> 3-5 공간별 기준에 따른 정렬변경 기능 구현
+<p>- 화면 로딩 시 예약 금액을 기준으로 정렬
+<p>- 예약 건수, 이용 인원, 예약 금액 클릭 시 각 기준에 따라 정렬
+
+ ![게시판 생성](https://github.com/JOSiroo/spaceCollection/assets/137861436/a55d606a-dd38-4c94-a277-180505a5d285)
+
+![게시물 작성 및 다운로드](https://github.com/JOSiroo/spaceCollection/assets/137861436/ba68f123-79af-4398-9d50-ec81e7980030)
+
+![댓글 ajax](https://github.com/JOSiroo/spaceCollection/assets/137861436/a1daa0b8-0f6d-4c78-8738-715b7222628e)
+
+![공간카테고리](https://github.com/JOSiroo/spaceCollection/assets/137861436/9baa361d-b4e0-46c8-a2ff-db8e2a8eaa1c)
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
 
 
 
