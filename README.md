@@ -98,16 +98,61 @@ https://github.com/eunjung15/backup_semipj2/assets/135147602/4055f39a-caf1-4ff5-
 <p>- 예약 건수, 이용 인원, 예약 금액 클릭 시 각 기준에 따라 정렬
 
  ![게시판 생성](https://github.com/JOSiroo/spaceCollection/assets/137861436/a55d606a-dd38-4c94-a277-180505a5d285)
+<p> 3-6 동적 게시판 생성, 수정, 비활성 기능 구현
+<p>- 게시판의 성격에 따라 각종 기능 사용 여부를 체크하여 특정 기능을 활성 또는 비활성 할 수 있음
+<p>- 게시판의 개수가 10개가 초과될 경우, 페이징 기능 구현
 
 ![게시물 작성 및 다운로드](https://github.com/JOSiroo/spaceCollection/assets/137861436/ba68f123-79af-4398-9d50-ec81e7980030)
+<p> 3-7 게시물 생성, 수정, 삭제 기능 구현
+<p>- CKEditer api를 사용하여 텍스트 입력 및 이미지 업로드 기능 구현
+<p>- 게시판 설정에 따라 첨부파일 다운로드 가능
+<p>- 게시판 설정에 따라 댓글 작성 가능
+<p>- 체크 박스를 사용하여 여러 게시물 한번에 삭제 가능
+<p>- 게시물 제목, 작성자에 따라 검색 가능
 
 ![댓글 ajax](https://github.com/JOSiroo/spaceCollection/assets/137861436/a1daa0b8-0f6d-4c78-8738-715b7222628e)
+<p> 3-8 ajax를 활용한 댓글 페이징 구현
+<p>- 페이지 로딩 시 초기 5개의 댓글이 보여지며 '댓글 더 보기' 클릭 시 ajax를 활용하여 추가 댓글 로딩
+<p>- 더 이상 불러올 댓글이 없을 경우 '댓글 더 보기' 버튼 숨김
 
 ![공간카테고리](https://github.com/JOSiroo/spaceCollection/assets/137861436/9baa361d-b4e0-46c8-a2ff-db8e2a8eaa1c)
+<p> 3-9 공간카테고리 등록 기능 구현
+<p>- 공간카테고리 등록 기능 구현
+<p>- 체크 박스를 사용하여 여러 카테고리 활성/비활성 전환 가능
+ 
+![공간승인](https://github.com/JOSiroo/spaceCollection/assets/137861436/7beaf047-cb12-4d61-b9e4-84e8b4a7a6e8)
+<p> 3-10 공간 승인 기능 구현
+<p>- 호스트가 공간을 등록할 경우, 관리자가 작성 내용을 확인 후 승인 여부 결정
+<p>- 공간 승인 여부는 spring-boot-starter-mail 라이브러리를 사용하여 네이버 SMTP 서버를 통해 이메일 발송
+<p>- 거절 시 거절 사유 선택 가능
+<p>- 체크 박스를 활용하여 일괄 승인/거절 가능
+<p>- ajax 방식으로 페이징 처리
+<p>- ajax 방식으로 공간승인과 승인 내역을 tab을 통해 전환 가능
+<p>- 승인 내역 선택 시, 세부 승인 내역 확인 및 사업자등록증 다운로드 가능
+<p>- 공간 번호, 타입, 공간명, 신청인으로 검색 가능
 
+![엑셀저장](https://github.com/JOSiroo/spaceCollection/assets/137861436/20b7d511-78f9-4ae3-a420-40c5263f2ce2)
+<p> 3-11 회원 및 공간 관련 엑셀 다운로드 기능 구현
+<p>- poi라이브러리를 사용하여 엑셀 다운로드 기능 구현
+<p>- 다운로드를 원하는 항목을 선택하여 다운로드 가능
 
+![공간관리](https://github.com/JOSiroo/spaceCollection/assets/137861436/9a4dfa0f-bfe3-4328-b80b-810f2b6c53f3)
+<p> 3-12 공간 관리 기능 구현
+<p>- 승인된 공간의 정보, 공간 관리자 정보, 세부 공간 정보 등 확인 가능
+<p>- ajax 방식으로 페이징 처리
 
-
+![회원 검색 및 내역 조회](https://github.com/JOSiroo/spaceCollection/assets/137861436/ec63cd00-4898-43d2-ab16-b32dd968f4cd)
+<p> 3-13 회원 검색 및 세부 조회 기능 구현
+<p>- 아이디 또는 이름으로 검색 가능
+<p>- 체크 박스를 사용하여 일괄 탈퇴 가능
+<p>- 회원 정보, 예약 내역, 리뷰 내역 등 회원 정보 및 활동 내역 확인 가능
+<p>- 각 내역은 ajax 방식으로 페이징 처리
+<p>- 각 내역마다 검색 기능 구현
+ 
+![회원 탈퇴](https://github.com/JOSiroo/spaceCollection/assets/137861436/5ce4a544-0adb-4a1a-8830-f9ab0fd1b9d9)
+<p> 3-14 회원 탈퇴 기능 구현
+<p>- 회원 탈퇴 처리 시, 해당 회원의 아이디로 로그인 불가
+<p>- 정보는 사라지지 않으며 회원복구 시 로그인 가능
 
 
 
