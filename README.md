@@ -1,4 +1,3 @@
-![통계 캡처](https://github.com/JOSiroo/spaceCollection/assets/137861436/2b54dffe-6108-4acf-96f1-71582b299813)
 <div align="center">
 <h1>공간 대여 플랫폼 SpaceCollection</h1>
 </div>
@@ -74,7 +73,10 @@ https://github.com/eunjung15/backup_semipj2/assets/135147602/4055f39a-caf1-4ff5-
 </div>
 
 <p> 3. 관리자
+
+ ![통계 캡처](https://github.com/JOSiroo/spaceCollection/assets/137861436/2b54dffe-6108-4acf-96f1-71582b299813)
 <p> 3-1 메인페이지
+
 
 
 
