@@ -1,4 +1,4 @@
-
+![통계 캡처](https://github.com/JOSiroo/spaceCollection/assets/137861436/2b54dffe-6108-4acf-96f1-71582b299813)
 <div align="center">
 <h1>공간 대여 플랫폼 SpaceCollection</h1>
 </div>
@@ -38,10 +38,10 @@
        1-1 메인페이지
        1-2 이용약관
        
-    3. 호스트
+    2. 호스트
        2-1 메인페이지
     
-    4. 관리자
+    3. 관리자
        3-1 메인페이지
 <br>
 
@@ -72,5 +72,9 @@ https://github.com/eunjung15/backup_semipj2/assets/135147602/4055f39a-caf1-4ff5-
 <div align="center">
 <kbd><img src="https://github.com/JOSiroo/spaceCollection/assets/124752869/099a6692-8b6e-4811-a217-266232eada23" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
 </div>
+
+<p> 3. 관리자
+<p> 3-1 메인페이지
+
 
 
