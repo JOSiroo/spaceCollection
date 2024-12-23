@@ -53,6 +53,7 @@ https://github.com/eunjung15/space_pj3/assets/135147602/5499c4ab-d86a-4fba-b744-
 <p>- 누적 등록 공간, 예약, 사용자 출력 
 <p>- 관리자와 실시간 1:1 채팅
 
+
 https://github.com/eunjung15/space_pj3/assets/135147602/5c57f0a3-46ce-4a16-a374-d3e976990fe6
 <p> 1-2 게시판페이지
 <p>- 사용자 게시판 페이지(이벤트, 공지사항, 이용약관 등..)
@@ -66,11 +67,50 @@ https://github.com/eunjung15/backup_semipj2/assets/135147602/4055f39a-caf1-4ff5-
 <p>- 한 아이디당 1일 쿠폰은 한 번만 발급 가능
 <p>- 쿠폰 발급시 자동 저장되어 마이쿠폰함에 조회 가능
 
-
-
 <div align="center">
 <kbd><img src="https://github.com/JOSiroo/spaceCollection/assets/124752869/099a6692-8b6e-4811-a217-266232eada23" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
 </div>
+<p> 1-4 사용자(소비자) 상품 검색및 검색 결과 페이지(콘텐츠)
+<p>- 별도의 페이징 처리 없이 스크롤을 내리는것으로 다음 페이지를 로드 하도록 설계
+ 
+ <div align="center">
+<kbd><img src="https://github.com/user-attachments/assets/876d97ca-fb0c-4a26-bedf-48f9cba6d5f6" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
+</div>
+<p>- 각종 조건들을 추가함에 따라 각 조건들의 파라미터를 추가로 요청하여 검색결과를 출력하도록 설계
+
+<p> 1-5 사용자(소비자) 상품 검색및 검색 결과 페이지(지도)
+  <div align="center">
+<kbd><img src="https://github.com/user-attachments/assets/5354e838-cf90-4b76-bd9b-0cb3ee6b4581" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
+</div>
+<p> 검색 결과의 파라미터를 그대로 전송하여 kakao map api를 이용
+    해당되는 결과값의 저장되어있는 위도,경도를 이용하여 해당 위치에 플로팅을 표시
+<p> 해당 플로팅을 클릭했을때 해당 상품의 상세정보를 간략하게 보여주도록 설계
+
+
+<p> 1-6 상품 상세 페이지
+   <div align="center">
+<kbd><img src="https://github.com/user-attachments/assets/a04b9795-1b5e-4527-a2dc-4d0066600de8" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
+</div>
+<p> 사용자의 편의성을 위해 상세정보의 각 항목(공산소개,시설안내,유의사항,환불정책등)을 클릭했을때
+    해당 내용으로 즉시 스크롤바가 움직이게끔 설계
+<p> ajax를 이용 페이지의 로딩 없이 댓글및 후기를 페이징
+
+<p> 1-7 상품 예약
+   <div align="center">
+<kbd><img src="https://github.com/user-attachments/assets/5681eacf-e718-4376-b4d8-b20318255f48" alt="대체 텍스트" style="border: 20px solid black;"></kbd>
+</div>
+<p> 상품 예약시 원하는 시간대와 날짜를 선택 후 결제 할 수 있도록 kakao 결제 api와 포트원 api를 이용.
+<p> 해당 날짜 시간대에 결제가 완료되면 해당 날짜의 해당 시간은 선택이 불가능하도록 비활성화
+ 
+<p> 1-7 사용자(공급자) 예약 관리 페이지</p>
+https://github.com/user-attachments/assets/6abe5a83-6009-4b67-989d-5cebda6c9ab9
+
+
+
+
+
+
+
 
 <h3> 3. 관리자</h3>
 
